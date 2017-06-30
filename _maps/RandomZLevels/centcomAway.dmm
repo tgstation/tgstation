@@ -412,22 +412,19 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "bo" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bp" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bq" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3520,22 +3517,19 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/thunderdome)
 "kT" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/space,
 /area/space)
 "kU" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/space,
 /area/space)
 "kV" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,

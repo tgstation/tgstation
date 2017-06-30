@@ -618,7 +618,9 @@
 				if(emagged) //has to be here because otherwise it doesn't work
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
-					usr.Stun(200) //you can't run :^)
+					if(isliving(usr))
+						var/mob/living/L = usr
+						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 					sleep(50)

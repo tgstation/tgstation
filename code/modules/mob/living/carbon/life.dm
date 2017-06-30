@@ -16,9 +16,12 @@
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			O.on_life()
+	if(stat == DEAD)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+
 
 	if(stat != DEAD)
 		return 1
@@ -286,7 +289,7 @@
 		if(M.loc != src)
 			stomach_contents.Remove(M)
 			continue
-		if(istype(M, /mob/living/carbon) && stat != DEAD)
+		if(iscarbon(M) && stat != DEAD)
 			if(M.stat == DEAD)
 				M.death(1)
 				stomach_contents.Remove(M)
@@ -300,7 +303,6 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-
 	if(staminaloss)
 		adjustStaminaLoss(-3)
 
@@ -347,7 +349,7 @@
 			AdjustSleeping(20)
 			Unconscious(100)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)

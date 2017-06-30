@@ -686,6 +686,9 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")	
+	if (!eyes)
+		return
 	if(M.disabilities & BLIND)
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
@@ -697,11 +700,10 @@
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted()
 		M.blur_eyes(10)
-
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(M.eye_damage > 0)
+	else if(eyes.eye_damage > 0)
 		M.adjust_eye_damage(-1)
 	..()
 

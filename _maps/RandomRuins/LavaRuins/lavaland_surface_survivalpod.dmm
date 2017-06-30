@@ -19,9 +19,7 @@
 "e" = (
 /obj/structure/sign/mining/survival{
 	dir = 4;
-	icon_state = "survival";
-	pixel_x = 32;
-	tag = "icon-survival (EAST)"
+	pixel_x = 32
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -47,9 +45,7 @@
 "i" = (
 /obj/structure/sign/mining/survival{
 	dir = 8;
-	icon_state = "survival";
-	pixel_x = -32;
-	tag = "icon-survival (WEST)"
+	pixel_x = -32
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -107,7 +103,6 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/footprints{
-	tag = "icon-blood1 (NORTH)";
 	icon_state = "blood1";
 	dir = 1
 	},
@@ -131,7 +126,6 @@
 /area/lavaland/surface/outdoors)
 "t" = (
 /obj/effect/decal/cleanable/blood/footprints{
-	tag = "icon-blood1 (NORTH)";
 	icon_state = "blood1";
 	dir = 1
 	},
@@ -142,7 +136,6 @@
 /area/ruin/powered)
 "u" = (
 /obj/effect/decal/cleanable/blood/footprints{
-	tag = "icon-blood1 (WEST)";
 	icon_state = "blood1";
 	dir = 8
 	},
@@ -151,7 +144,6 @@
 /area/lavaland/surface/outdoors)
 "v" = (
 /obj/effect/decal/cleanable/blood/footprints{
-	tag = "icon-blood1 (WEST)";
 	icon_state = "blood1";
 	dir = 8
 	},
@@ -169,7 +161,6 @@
 "x" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/footprints{
-	tag = "icon-blood1 (NORTH)";
 	icon_state = "blood1";
 	dir = 1
 	},
@@ -180,7 +171,6 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/blood/footprints{
-	tag = "icon-blood1 (WEST)";
 	icon_state = "blood1";
 	dir = 8
 	},
@@ -188,7 +178,6 @@
 /area/lavaland/surface/outdoors)
 "z" = (
 /obj/effect/decal/cleanable/blood/footprints{
-	tag = "icon-blood1 (WEST)";
 	icon_state = "blood1";
 	dir = 8
 	},

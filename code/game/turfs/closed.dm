@@ -116,6 +116,28 @@
 	underlay_appearance.icon_state = "necro1"
 	return TRUE
 
+/turf/closed/indestructible/riveted/boss
+	name = "necropolis wall"
+	desc = "A thick, seemingly indestructible stone wall."
+	icon = 'icons/turf/walls/boss_wall.dmi'
+	icon_state = "wall"
+	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
+	explosion_block = 50
+	baseturf = /turf/closed/indestructible/riveted/boss
+
+/turf/closed/indestructible/riveted/boss/see_through
+	opacity = FALSE
+
+/turf/closed/indestructible/riveted/boss/hot
+	icon = 'icons/turf/walls/boss_wall_hot.dmi'
+	canSmoothWith = list(/turf/closed/indestructible/riveted/boss/hot)
+	baseturf = /turf/closed/indestructible/riveted/boss/hot
+
+/turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
+
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."

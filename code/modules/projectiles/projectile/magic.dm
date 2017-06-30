@@ -277,6 +277,8 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
+	to_chat(new_mob, config.policies["polymorph"])
+
 	qdel(M)
 	return new_mob
 
@@ -292,7 +294,7 @@
 	..()
 
 /atom/proc/animate_atom_living(var/mob/living/owner = null)
-	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, GLOB.protected_objects))
+	if((isitem(src) || istype(src, /obj/structure)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)

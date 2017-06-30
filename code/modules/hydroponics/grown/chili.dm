@@ -76,7 +76,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
-	if( istype(src.loc, /mob) )
+	if( ismob(src.loc) )
 		held_mob = src.loc
 		START_PROCESSING(SSobj, src)
 

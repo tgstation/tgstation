@@ -51,7 +51,6 @@
 	icon_state = "syndicate-orange"
 	item_state = "syndicate-orange"
 
-
 //Blue syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/blue
 	name = "blue space helmet"

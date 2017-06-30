@@ -203,8 +203,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	name = "floor"
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -260,7 +259,6 @@
 	})
 "ay" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /obj/effect/landmark/awaystart,
@@ -297,12 +295,7 @@
 	name = "UO45 Central Hall"
 	})
 "aB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4;
@@ -470,7 +463,6 @@
 	})
 "aR" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -659,9 +651,7 @@
 	name = "UO45 Central Hall"
 	})
 "bh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -967,7 +957,6 @@
 	})
 "bH" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -1502,7 +1491,6 @@
 	dir = 10
 	},
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/carpet{
@@ -1579,14 +1567,10 @@
 	name = "UO45 Central Hall"
 	})
 "cH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /obj/machinery/button/door{
@@ -1614,11 +1598,8 @@
 	name = "UO45 Central Hall"
 	})
 "cJ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -1630,11 +1611,8 @@
 	name = "UO45 Central Hall"
 	})
 "cK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -1646,11 +1624,8 @@
 	name = "UO45 Central Hall"
 	})
 "cL" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/machinery/button/door{
 	id = "awaydorm1";
@@ -2374,11 +2349,8 @@
 	name = "UO45 Central Hall"
 	})
 "dQ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5;
@@ -2401,11 +2373,8 @@
 	name = "UO45 Central Hall"
 	})
 "dS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2;
@@ -2433,11 +2402,8 @@
 	name = "UO45 Central Hall"
 	})
 "dV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -2592,9 +2558,8 @@
 	name = "UO45 Central Hall"
 	})
 "eh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -2675,11 +2640,8 @@
 	name = "UO45 Central Hall"
 	})
 "ep" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -2690,11 +2652,8 @@
 	})
 "eq" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -2724,11 +2683,8 @@
 	name = "UO45 Central Hall"
 	})
 "et" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plating{
 	broken = 1;
@@ -2815,7 +2771,6 @@
 	})
 "ez" = (
 /obj/structure/chair/office{
-	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -2846,7 +2801,6 @@
 	})
 "eC" = (
 /obj/structure/chair/office{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -2905,9 +2859,8 @@
 	name = "UO45 Central Hall"
 	})
 "eH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -2991,7 +2944,6 @@
 	})
 "eN" = (
 /obj/structure/chair/office{
-	icon_state = "chair";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3352,12 +3304,7 @@
 	name = "UO45 Central Hall"
 	})
 "fp" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -3376,12 +3323,7 @@
 	name = "UO45 Central Hall"
 	})
 "fr" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -3392,7 +3334,6 @@
 	})
 "fs" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/airalarm{
@@ -3519,11 +3460,8 @@
 	name = "UO45 Central Hall"
 	})
 "fA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/structure/chair/wood/normal,
 /turf/open/floor/carpet{
@@ -3732,11 +3670,8 @@
 	pixel_y = -23;
 	req_access = null
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/structure/dresser,
 /turf/open/floor/carpet{
@@ -4074,11 +4009,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "gt" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -4715,7 +4647,6 @@
 	})
 "hw" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4727,14 +4658,8 @@
 	name = "UO45 Gateway"
 	})
 "hx" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black{
@@ -4825,12 +4750,7 @@
 	name = "UO45 Research"
 	})
 "hF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -4880,7 +4800,6 @@
 	})
 "hJ" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/bar{
@@ -4998,9 +4917,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "hT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -5107,7 +5025,6 @@
 	})
 "ib" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black{
@@ -5127,7 +5044,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black{
@@ -5229,7 +5145,6 @@
 	})
 "im" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5288,7 +5203,6 @@
 	})
 "ir" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/processor,
@@ -5351,7 +5265,6 @@
 "iw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5484,9 +5397,7 @@
 	name = "UO45 Research"
 	})
 "iE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5547,12 +5458,7 @@
 	name = "UO45 Crew Quarters"
 	})
 "iK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -5647,11 +5553,8 @@
 	name = "UO45 Gateway"
 	})
 "iR" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /obj/structure/table,
 /obj/item/weapon/paper/pamphlet,
@@ -5677,14 +5580,11 @@
 	name = "UO45 Gateway"
 	})
 "iT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black{
@@ -5697,7 +5597,6 @@
 "iU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black{
@@ -5764,9 +5663,7 @@
 	})
 "iZ" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5803,7 +5700,6 @@
 	})
 "jc" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
@@ -5886,9 +5782,8 @@
 	name = "UO45 Gateway"
 	})
 "jh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -6224,11 +6119,8 @@
 	})
 "jJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -6344,7 +6236,6 @@
 	})
 "jS" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar{
@@ -6365,9 +6256,7 @@
 	name = "UO45 Crew Quarters"
 	})
 "jU" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -6725,11 +6614,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "kr" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -6864,11 +6750,8 @@
 	name = "UO45 Gateway"
 	})
 "kB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6969,9 +6852,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -7133,11 +7014,8 @@
 	name = "UO45 Research"
 	})
 "kU" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -7187,8 +7065,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	name = "floor"
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -7264,9 +7141,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "le" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -7435,9 +7311,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -7512,12 +7387,7 @@
 	name = "UO45 Gateway"
 	})
 "lu" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /obj/item/weapon/reagent_containers/spray/pepper,
@@ -7653,11 +7523,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2;
@@ -7849,9 +7716,8 @@
 	name = "UO45 Research"
 	})
 "lL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2;
@@ -7911,12 +7777,7 @@
 	name = "UO45 Crew Quarters"
 	})
 "lQ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7926,7 +7787,6 @@
 	})
 "lR" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -7939,7 +7799,6 @@
 	})
 "lS" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8112,11 +7971,8 @@
 	name = "UO45 Gateway"
 	})
 "me" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white{
@@ -8753,12 +8609,7 @@
 	name = "UO45 Crew Quarters"
 	})
 "mX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/button/door{
 	id = "awaydorm5";
 	name = "Door Bolt Control";
@@ -8768,7 +8619,6 @@
 	specialfunctions = 4
 	},
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/carpet{
@@ -8779,9 +8629,7 @@
 	name = "UO45 Crew Quarters"
 	})
 "mY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -8804,12 +8652,7 @@
 	name = "UO45 Engineering"
 	})
 "na" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /turf/open/floor/carpet{
@@ -8848,7 +8691,6 @@
 	})
 "nd" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -8871,7 +8713,6 @@
 	})
 "nf" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8954,11 +8795,8 @@
 	name = "UO45 Research"
 	})
 "nm" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -9488,9 +9326,7 @@
 	name = "UO45 Research"
 	})
 "nU" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9826,9 +9662,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -10207,11 +10041,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -10324,9 +10155,8 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
@@ -10358,7 +10188,6 @@
 	})
 "oV" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman{
@@ -10378,7 +10207,6 @@
 	})
 "oW" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman/super{
@@ -10403,7 +10231,6 @@
 	})
 "oX" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman{
@@ -10529,11 +10356,8 @@
 	name = "UO45 Research"
 	})
 "pf" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -10889,16 +10713,12 @@
 	name = "UO45 Engineering"
 	})
 "pE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
 	dir = 2;
-	external_pressure_bound = 0;
 	frequency = 1441;
 	icon_state = "in";
 	id_tag = "UO45_air_out";
-	internal_pressure_bound = 2000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	name = "air out"
 	},
 /turf/open/floor/engine{
 	name = "air floor";
@@ -11026,11 +10846,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "pQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/machinery/button/door{
 	id = "awaydorm4";
@@ -11048,11 +10865,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "pR" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -11069,11 +10883,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "pT" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -11085,11 +10896,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "pU" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/machinery/button/door{
 	id = "awaydorm6";
@@ -11146,7 +10954,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11270,13 +11077,10 @@
 	name = "UO45 Research"
 	})
 "qh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
 	external_pressure_bound = 120;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	name = "server vent"
 	},
 /turf/open/floor/circuit{
 	name = "Server Base";
@@ -11339,7 +11143,6 @@
 /obj/machinery/light/small,
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -11
 	},
 /obj/structure/mirror{
@@ -11354,7 +11157,6 @@
 	})
 "qn" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11495,7 +11297,6 @@
 "qx" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11883,9 +11684,8 @@
 	name = "UO45 Research"
 	})
 "qV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -11982,7 +11782,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer{
@@ -12062,9 +11861,7 @@
 	name = "UO45 Engineering"
 	})
 "ri" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -12180,9 +11977,8 @@
 	req_access = list(201);
 	start_charge = 100
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -12206,11 +12002,8 @@
 	name = "UO45 Engineering"
 	})
 "rr" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch for the engineering security doors.";
@@ -12455,11 +12248,8 @@
 	name = "UO45 Research"
 	})
 "rI" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white{
@@ -12681,12 +12471,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -12929,11 +12714,8 @@
 	name = "UO45 Engineering"
 	})
 "si" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /obj/structure/closet/secure_closet{
 	desc = "It's a secure locker for personnel. The first card swiped gains control.";
@@ -13066,15 +12848,11 @@
 	name = "UO45 Engineering"
 	})
 "sr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "UO45_mix_in";
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	name = "distro out"
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaycontent/a3{
@@ -13259,11 +13037,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "sG" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -13416,11 +13191,8 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
@@ -13808,11 +13580,8 @@
 	name = "UO45 Crew Quarters"
 	})
 "tt" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
@@ -13888,11 +13657,8 @@
 	name = "UO45 Engineering"
 	})
 "ty" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/structure/sign/securearea{
 	pixel_y = -32
@@ -13951,11 +13717,8 @@
 	name = "UO45 Engineering"
 	})
 "tC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 6
@@ -14698,11 +14461,8 @@
 	name = "UO45 Engineering"
 	})
 "uD" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime{
@@ -14847,11 +14607,8 @@
 	name = "UO45 Research"
 	})
 "uO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -14864,11 +14621,8 @@
 	name = "UO45 Research"
 	})
 "uP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -14880,7 +14634,6 @@
 	})
 "uQ" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -15029,8 +14782,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	name = "floor"
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15052,8 +14804,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	name = "floor"
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15071,8 +14822,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	name = "floor"
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15090,15 +14840,11 @@
 	name = "UO45 Engineering"
 	})
 "ve" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
-	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "UO45_n2_out";
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	name = "nitrogen out"
 	},
 /turf/open/floor/engine/n2,
 /area/awaycontent/a3{
@@ -15117,15 +14863,11 @@
 	name = "UO45 Engineering"
 	})
 "vg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
-	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "UO45_o2_out";
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	name = "oxygen out"
 	},
 /turf/open/floor/engine/o2,
 /area/awaycontent/a3{
@@ -15316,9 +15058,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -15790,11 +15531,8 @@
 	name = "UO45 Mining"
 	})
 "wd" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -15955,9 +15693,8 @@
 	name = "UO45 Engineering"
 	})
 "wp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -16081,11 +15818,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral{
@@ -16262,7 +15996,6 @@
 "wL" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/machinery/light/small,
@@ -16522,11 +16255,8 @@
 	name = "UO45 Engineering"
 	})
 "xe" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /obj/machinery/newscaster{
 	pixel_y = -28
@@ -16810,9 +16540,8 @@
 	name = "UO45 Mining"
 	})
 "xy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 8
@@ -16859,11 +16588,8 @@
 	name = "UO45 Mining"
 	})
 "xB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime{
@@ -16993,9 +16719,8 @@
 	name = "UO45 Mining"
 	})
 "xK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -17028,11 +16753,8 @@
 	name = "UO45 Mining"
 	})
 "xN" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -17211,11 +16933,8 @@
 	name = "UO45 Mining"
 	})
 "ya" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	heat_capacity = 1e+006
@@ -17225,11 +16944,8 @@
 	name = "UO45 Mining"
 	})
 "yb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel{
 	burnt = 1;
@@ -17343,9 +17059,7 @@
 	poweralm = 0
 	})
 "yj" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
@@ -17364,9 +17078,7 @@
 	poweralm = 0
 	})
 "yk" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -17384,9 +17096,7 @@
 	poweralm = 0
 	})
 "yl" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/plating/asteroid{
@@ -17405,9 +17115,7 @@
 	poweralm = 0
 	})
 "ym" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -17425,9 +17133,7 @@
 	poweralm = 0
 	})
 "yn" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
@@ -17462,9 +17168,7 @@
 	poweralm = 0
 	})
 "yp" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -17534,9 +17238,7 @@
 	poweralm = 0
 	})
 "yt" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -17608,9 +17310,7 @@
 	poweralm = 0
 	})
 "yx" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
@@ -17714,9 +17414,7 @@
 	poweralm = 0
 	})
 "yD" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
@@ -17735,9 +17433,7 @@
 	poweralm = 0
 	})
 "yE" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -17755,9 +17451,7 @@
 	poweralm = 0
 	})
 "yF" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -17794,9 +17488,7 @@
 	poweralm = 0
 	})
 "yH" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{

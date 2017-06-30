@@ -3,7 +3,7 @@
 	var/organnum = 0
 
 	if(def_zone)
-		if(islimb(def_zone))
+		if(isbodypart(def_zone))
 			return checkarmor(def_zone, type)
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(def_zone))
 		return checkarmor(affecting, type)
@@ -105,9 +105,7 @@
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
-		if(mind.martial_art && mind.martial_art.block_chance \
-		&& prob(mind.martial_art.block_chance) && in_throw_mode \
-		&& !stat && !knockdown && !stun)
+		if(mind.martial_art && prob(mind.martial_art.block_chance) && in_throw_mode && !stat && !IsKnockdown() && !IsStun())
 			return TRUE
 	return FALSE
 
