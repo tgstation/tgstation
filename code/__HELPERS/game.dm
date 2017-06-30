@@ -559,5 +559,5 @@
 		return
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = environment.return_pressure()
-	if(pressure <= 40)
+	if(pressure <= 50)
 		return TRUE
