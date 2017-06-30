@@ -18,6 +18,8 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 	var/filterToxins = TRUE //whether to filter toxins
 
+/obj/item/organ/liver/New()
+	..()
 	var/list/toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
 
 /obj/item/organ/liver/on_life()
