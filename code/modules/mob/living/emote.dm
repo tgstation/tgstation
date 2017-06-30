@@ -486,6 +486,9 @@
 
 /datum/emote/living/circle/run_emote(mob/user, params)
 	. = ..()
-	var/obj/item/weapon/circlegame/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
+	if(.)
+		var/obj/item/weapon/circlegame/N = new(user)
+		if(user.put_in_hands(N))
+			to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
+		else
+			qdel(N)
