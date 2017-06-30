@@ -111,7 +111,7 @@
 				blueprints = TRUE
 			CHECK_TICK
 	for(var/i in mobs)
-		desc += camera_get_mobdesc(mobs[i])
+		desc += camera_get_mobdesc(i)
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
 
