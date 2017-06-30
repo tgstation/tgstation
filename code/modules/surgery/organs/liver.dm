@@ -16,6 +16,9 @@
 	var/maxHealth = LIVER_DEFAULT_HEALTH
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
+	var/filterToxins = TRUE //whether to filter toxins
+
+	var/toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
@@ -29,12 +32,19 @@
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
 			if(C.reagents)
-				var/toxamount = C.reagents.get_reagent_amount("toxin")
-				if(toxamount <= toxTolerance && toxamount > 0)
-					C.reagents.remove_all("toxin", toxTolerance, 1)
-				else if(toxamount > toxTolerance)
-					damage += toxamount*toxLethality
 
+				if(filterToxins)
+					//handle liver toxin filtration
+					for(var/toxin in toxinList)
+						var/TID = toxin.id
+						var/toxamount = C.reagents.get_reagent_amount(TID)
+						if(toxamount <= toxTolerance && toxamount > 0)
+							C.reagents.remove_all_type("toxin", toxTolerance, 1)
+						else if(toxamount > toxTolerance)
+							damage += toxamount*toxLethality
+
+
+				//metabolize reagents
 				C.reagents.metabolize(C, can_overdose=1)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
