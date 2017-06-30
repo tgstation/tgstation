@@ -394,7 +394,7 @@
 	if(flush_count >= flush_every_ticks)
 		if(contents.len)
 			if(full_pressure)
-				INVOKE_ASYNC(src, .proc/do_flush)
+				do_flush()
 		flush_count = 0
 
 	updateDialog()
