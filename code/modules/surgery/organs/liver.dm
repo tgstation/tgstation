@@ -21,7 +21,7 @@
 
 /obj/item/organ/liver/New()
 	..()
-	list/toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
+	toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
