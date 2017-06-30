@@ -158,8 +158,8 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/StorePhotoInformation()
 	var/finalpath = GLOB.picture_log_folder
 	finalpath += "photos.json"
-	var/file = file(finalpath)
-	file << json_encode(GLOB.picture_logging_information)
+	var/F = file(finalpath)
+	F << json_encode(GLOB.picture_logging_information)
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	for(var/A in new_secret_satchels)

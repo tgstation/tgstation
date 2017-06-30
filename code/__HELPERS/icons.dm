@@ -645,14 +645,19 @@ The _flatIcons list is a cache for generated icon files.
 */
 
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode)
+// Mob passthrough requires explicit true/false/null checks!
+/proc/getFlatIcon(image/A, curdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode, mob_passthrough)
 	// We start with a blank canvas, otherwise some icon procs crash silently
+	if(isnull(mob_passthrough))
+		mob_passthrough = ismob(A)
+
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
 	if(!A)
 		return flat
 	if(A.alpha <= 0)
 		return flat
 	var/noIcon = FALSE
+
 
 	var/curicon
 	if(A.icon)
@@ -675,11 +680,8 @@ The _flatIcons list is a cache for generated icon files.
 		else
 			noIcon = TRUE // Do not render this object.
 
-	var/curdir
-	if(A.dir != 2)
+	if(mob_passthrough == FALSE)
 		curdir = A.dir
-	else
-		curdir = defdir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -753,10 +755,14 @@ The _flatIcons list is a cache for generated icon files.
 			continue
 
 		if(I == copy) // 'I' is an /image based on the object being flattened.
+			var/image/i = I
 			curblend = BLEND_OVERLAY
-			add = icon(I:icon, I:icon_state, I:dir)
+			if(mob_passthrough)
+				add = icon(i.icon, i.icon_state, curdir)
+			else
+				add = icon(i.icon, i.icon_state, i.dir)
 		else // 'I' is an appearance object.
-			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
+			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, mob_passthrough = mob_passthrough)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I:pixel_x+1)

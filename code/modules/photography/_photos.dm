@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(picture_logging_information, list())
 	picinfo["blueprints"] = has_blueprints
 	picinfo["logpath"] = finalpath
 	GLOB.picture_logging_information["[id]"] = picinfo
-	fcopy(icon(picture_image, dir = NORTH), finalpath)
+	fcopy(picture_image, finalpath)
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)
 	var/datum/picture/P = new
