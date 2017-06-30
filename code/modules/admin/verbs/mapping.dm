@@ -42,7 +42,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/print_pointers,
 	/client/proc/cmd_show_at_list,
 	/client/proc/cmd_show_at_markers,
-	/client/proc/manipulate_organs
+	/client/proc/manipulate_organs,
+	/client/proc/zlevel_picture
 ))
 
 /obj/effect/debugging/mapfix_marker
@@ -281,3 +282,64 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+
+/client/proc/zlevel_picture()
+	set category = "Mapping"
+	set name = "Take full zlevel picture"
+
+
+#ifdef TESTING
+	var/input = input("This command takes a full picture of the current zlevel and saves it to the server directory. THIS WILL LOCK UP THE SERVER AND GAME FOR A MEDIUM TO LONG PERIOD OF TIME \
+	DEPENDING ON HOW FAST THE HOST IS. ARE YOU SURE YOU WISH TO CONTINUE?", "ABORT", "NO") as text|null in list("NO", "YES")
+	if(input == "NO")
+		return
+
+	full_zlevel_picture(client.mob.z)
+
+/proc/full_zlevel_picture(z)
+	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/psize_x = world.maxx * world.icon_size
+	var/psize_y = world.maxy * world.icon_size
+	res.Scale(psize_x, psize_y)
+	var/xcomp = Floor(psize_x / 2) - 15
+	var/ycomp = Floor(psize_y / 2) - 15
+	var/list/turfs = Z_TURFS(z)
+	var/list/atoms = list()
+	for(var/turf/T in turfs)
+		atoms[T] = TRUE
+		for(var/atom/movable/A in T)
+			if(A.invisibility)
+				continue
+			atoms[T] = TRUE
+
+	var/list/sorted = list()
+	var/j
+	for(var/i = 1 to atoms.len)
+		var/atom/c = atoms[i]
+		for(j = sorted.len, j > 0, --j)
+			var/atom/c2 = sorted[j]
+			if(c2.layer <= c.layer)
+				break
+		sorted.Insert(j+1, c)
+
+	for(var/atom/A in sorted)
+		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
+		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
+		if(ismovableatom(A))
+			var/atom/movable/AM = A
+			xo += AM.step_x
+			yo += AM.step_y
+		var/icon/img = getFlatIcon(A)
+		res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
+
+	var/icon/final = new /icon()
+	final.Insert(res, "", SOUTH, 1, 0)
+
+	fcopy(final, "generated_map.png")
+
+#else
+	to_chat(usr, "<span class='userdanger'>This command is disabled in non-debug environments.</span>")
+
+#endif
+
+#define TESTING

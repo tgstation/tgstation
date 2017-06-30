@@ -157,7 +157,7 @@
 			if(A.invisibility)
 				if(!(see_ghosts && isobserver(A)))
 					continue
-			atoms[T] = TRUE
+			atoms[A] = TRUE
 		CHECK_TICK
 
 	var/list/sorted = list()
