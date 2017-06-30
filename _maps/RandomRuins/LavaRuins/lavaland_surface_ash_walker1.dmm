@@ -931,7 +931,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cn" = (
-/obj/structure/bonfire/with_grill,
+/obj/structure/bonfire/dense,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "co" = (
