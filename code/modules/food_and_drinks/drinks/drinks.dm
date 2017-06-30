@@ -326,7 +326,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
-	flags = 0
+	container_type = 0
 	spillable = FALSE
 	
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
@@ -342,7 +342,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_open_container())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		flags |= OPENCONTAINER
+		container_type = OPENCONTAINER
 		playsound(src, "can_open", 50, 1)
 		spillable = TRUE
 		return
