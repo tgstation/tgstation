@@ -907,6 +907,7 @@
 /area/lavaland/surface/outdoors)
 "cj" = (
 /obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ck" = (
@@ -930,7 +931,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cn" = (
-/obj/structure/bonfire,
+/obj/structure/bonfire/with_grill,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "co" = (
@@ -1152,32 +1153,40 @@
 /obj/structure/stone_tile/surrounding_tile/cracked,
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"cS" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
 aa
 aa
 aa
+ah
+ah
+ah
+ah
+ah
+ah
+ah
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ah
+ah
+ah
+ah
 aa
 aa
 aa
 "}
 (2,1,1) = {"
 aa
-aa
+ah
 ah
 ah
 ah
@@ -1199,6 +1208,7 @@ aa
 "}
 (3,1,1) = {"
 aa
+aa
 ah
 am
 as
@@ -1209,8 +1219,7 @@ ak
 as
 as
 ah
-ah
-bO
+cp
 bX
 bL
 bM
@@ -1220,6 +1229,7 @@ ah
 aa
 "}
 (4,1,1) = {"
+aa
 aa
 ah
 an
@@ -1233,7 +1243,6 @@ ak
 bK
 bM
 bM
-bM
 bN
 bM
 bY
@@ -1245,6 +1254,7 @@ aa
 aa
 aa
 ah
+ah
 as
 aB
 aN
@@ -1252,20 +1262,20 @@ aY
 bk
 bw
 ak
-bL
 bX
-cc
+cS
 bM
 bM
 cw
 bM
 bL
 ah
-aa
+ah
 "}
 (6,1,1) = {"
 aa
 aa
+ah
 ao
 ak
 aC
@@ -1274,7 +1284,6 @@ aM
 bl
 bx
 bD
-bM
 bY
 cg
 bM
@@ -1283,11 +1292,12 @@ cx
 cw
 cH
 ah
-aa
+ah
 "}
 (7,1,1) = {"
 aa
 aa
+ah
 ap
 as
 aD
@@ -1297,7 +1307,6 @@ bm
 by
 ak
 bN
-bM
 cg
 cl
 cq
@@ -1305,9 +1314,10 @@ bM
 cw
 cI
 ah
-aa
+ah
 "}
 (8,1,1) = {"
+aa
 aa
 ah
 ah
@@ -1318,7 +1328,6 @@ ba
 bn
 bz
 ak
-bM
 bZ
 ch
 cm
@@ -1327,12 +1336,13 @@ bY
 bM
 cJ
 ah
-aa
+ah
 "}
 (9,1,1) = {"
 aa
 ah
 ah
+ah
 as
 ak
 as
@@ -1340,7 +1350,6 @@ as
 as
 ak
 ak
-bM
 ca
 bV
 cn
@@ -1349,7 +1358,7 @@ cy
 cq
 bM
 ah
-aa
+ah
 "}
 (10,1,1) = {"
 aa
@@ -1371,7 +1380,7 @@ bN
 bM
 cK
 ah
-aa
+ah
 "}
 (11,1,1) = {"
 ab
@@ -1407,7 +1416,7 @@ ak
 ak
 ak
 bP
-bM
+bL
 bX
 bM
 bY
@@ -1431,7 +1440,7 @@ ak
 bQ
 bM
 cj
-bM
+bL
 ah
 ah
 ah
@@ -1453,7 +1462,7 @@ bG
 bR
 cd
 bM
-cc
+bM
 cu
 ah
 ah
