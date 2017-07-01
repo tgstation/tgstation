@@ -25,3 +25,26 @@
 /obj/item/goof_ai_tester/knight
 	name = "knight AI tester"
 	starting_world_state = list("crusading" = 0, "has_sword" = 1, "has_shield" = 1, "has_horse" = 1, "has_boat" = 0, "has_prayed" = 0, "at_holy_land" = 0)
+
+/obj/item/goof_pathfinding_ai
+	name = "goof pathfinding tester"
+
+/obj/item/goof_pathfinding_ai/attack_self(mob/user)
+	var/turf/my_loc = get_turf(user)
+	for(var/mob/living/carbon/human/goap/G in world)
+		G.ai_holder.override_idle = TRUE
+		goto remake_plan
+		remake_plan:
+			G.ai_holder.world_state["target"] = my_loc
+			G.ai_holder.world_state["has_target"] = 1
+			if(!G.Adjacent(G.ai_holder.world_state["target"]))
+				G.ai_holder.world_state["adjacent_to_target"] = 0
+			var/datum/goof_plan/P = G.ai_holder.create_plan(list("adjacent_to_target" = 1))
+			for(var/datum/goof_action/A in P.actions)
+				if(A.perform_action(G))
+					A.do_action(G.ai_holder.world_state)
+					continue
+				else
+					goto remake_plan
+		G.ai_holder.override_idle = FALSE
+		G.ai_holder.ramblers_lets_get_rambling = null

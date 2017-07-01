@@ -1,11 +1,6 @@
 /datum
 	var/var_edited = FALSE //Warrenty void if seal is broken
 	var/fingerprintslast = null
-	var/datum/goof_ai/ai_holder = null
-
-/datum/proc/create_ai(list/possible_actions)
-	ai_holder = new /datum/goof_ai
-	ai_holder.load_ai(possible_actions)
 
 /datum/proc/can_vv_get(var_name)
 	return TRUE
