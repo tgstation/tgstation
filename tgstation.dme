@@ -1727,6 +1727,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\wumborian_fugu.dm"
 #include "code\modules\mob\living\simple_animal\hostile\bosses\boss.dm"
 #include "code\modules\mob\living\simple_animal\hostile\bosses\paperwizard.dm"
+#include "code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\dragon.dm"
