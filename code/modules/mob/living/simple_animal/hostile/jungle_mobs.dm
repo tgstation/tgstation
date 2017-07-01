@@ -86,6 +86,8 @@
 
 ////Leaper////
 
+#define PLAYER_HOP_DELAY 25
+
 /mob/living/simple_animal/hostile/jungle/leaper
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("jungle")
@@ -120,6 +122,7 @@
 	robust_searching = 1
 	var/hopping = FALSE
 	var/hop_cooldown = 0 //Strictly for player controlled leapers
+	var/projectile_ready = FALSE //Check for making sure the visible tell lines up with player attacks
 
 /obj/item/projectile/leaper
 	name = "leaper bubble"
@@ -176,7 +179,7 @@
 /obj/structure/leaper_bubble/Destroy()
 	new /obj/effect/temp_visual/leaper_projectile_impact(get_turf(src))
 	playsound(src,'sound/effects/snap.ogg',50, 1, -1)
-	..()
+	return ..()
 
 /obj/structure/leaper_bubble/Crossed(atom/movable/AM)
 	if(isliving(AM))
@@ -188,7 +191,7 @@
 				var/mob/living/carbon/C = L
 				C.reagents.add_reagent("leaper_venom", 5)
 			qdel(src)
-	..()
+	return ..()
 
 /datum/reagent/toxin/leaper_venom
 	name = "Leaper venom"
@@ -228,7 +231,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/AttackingTarget()
 	if(isliving(target))
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/jungle/leaper/handle_automated_action()
 	if(hopping)
@@ -244,26 +247,27 @@
 			Hop()
 
 /mob/living/simple_animal/hostile/jungle/leaper/Life()
-	if(ranged_cooldown <= world.time && icon_state != "leaper_alert" && !stat && AIStatus != AI_ON)
-		icon_state = "leaper_alert"
-	..()
+	. = ..()
+	update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(prob(33))
+	if(prob(33) && AIStatus == AI_ON)
 		ranged_cooldown = 0 //Keeps em on their toes instead of a constant rotation
 	..()
 
 /mob/living/simple_animal/hostile/jungle/leaper/OpenFire()
 	if(ranged_cooldown <= world.time)
-		if(AIStatus != AI_ON && !hopping && icon_state == "leaper_alert")
+		if(AIStatus != AI_ON)
+			if(hopping)
+				return
 			if(isliving(target))
 				var/mob/living/L = target
 				if(L.incapacitated())
 					return //No stunlocking. Hop on them after you stun them, you donk.
-			icon_state = "leaper"
-			return ..()
-		if(AIStatus == AI_ON && hopping)
-			return ..()
+		if(AIStatus == AI_ON && !hopping)
+			return
+		. = ..()
+		update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Hop(player_hop = FALSE)
 	if(z != target.z)
@@ -275,9 +279,9 @@
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
 	if(player_hop)
 		new_turf = get_turf(target)
-		hop_cooldown = (world.time + 25)
-	if(AIStatus == AI_ON && ranged_cooldown <= world.time && icon_state != "leaper_alert")
-		icon_state = "leaper_alert"
+		hop_cooldown = world.time + PLAYER_HOP_DELAY
+	if(AIStatus == AI_ON)
+		update_icons()
 	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, .FinishHop))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
@@ -285,12 +289,11 @@
 	notransform = FALSE
 	pass_flags &= ~PASSMOB
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
-	if(target && icon_state == "leaper_alert" && AIStatus == AI_ON)
+	if(target && AIStatus == AI_ON)
 		face_atom(target)
 		sleep(5)
 		face_atom(target)
 		OpenFire(target)
-		icon_state = "leaper"
 	hopping = FALSE
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlop()
@@ -304,7 +307,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
 	density = TRUE
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		L.adjustBruteLoss(35)
 		if(!QDELETED(L)) // Some mobs are deleted on death
@@ -320,3 +323,16 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/throw_impact()
 	return
+
+/mob/living/simple_animal/hostile/jungle/leaper/update_icons()
+	. = ..()
+	if(stat)
+		icon_state = "leaper_dead"
+		return
+	if(ranged_cooldown <= world.time)
+		if(AIStatus == AI_ON && hopping || AIStatus != AI_ON)
+			icon_state = "leaper_alert"
+			return
+	icon_state = "leaper"
+
+#undef PLAYER_HOP_DELAY
