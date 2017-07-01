@@ -63,8 +63,11 @@
 			R.Load(ruins,ruin)
 			budget -= ruin.cost
 			if(!ruin.allow_duplicates)
-				ruins -= ruin.name
-				last_checked_ruin_index--
+				for(var/m in ruins)
+					var/datum/map_template/ruin/ruin_to_remove = ruins[m]
+					if(ruin_to_remove.id == ruin.id) //remove all ruins with the same ID, to make sure that ruins with multiple variants work properly
+						ruins -= ruin_to_remove.name
+						last_checked_ruin_index--
 			break
 
 	if(!overall_sanity)
