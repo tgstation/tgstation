@@ -56,7 +56,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
 	. = ..()
-	if(. && prob(7))
+	if(. && prob(12))
 		INVOKE_ASYNC(src, .proc/dash)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
