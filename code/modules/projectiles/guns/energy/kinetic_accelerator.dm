@@ -448,8 +448,7 @@
 			if(SM.reward_target == src) //we want to allow multiple people with bounty modkits to use them, but we need to replace our own marks so we don't multi-reward
 				SM.reward_target = null
 				qdel(SM)
-		var/datum/status_effect/syphon_mark/SM = L.apply_status_effect(STATUS_EFFECT_SYPHONMARK)
-		SM.reward_target = src
+		L.apply_status_effect(STATUS_EFFECT_SYPHONMARK, src)
 
 /obj/item/borg/upgrade/modkit/bounty/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target))

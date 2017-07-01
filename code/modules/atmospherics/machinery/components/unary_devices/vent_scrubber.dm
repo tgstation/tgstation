@@ -5,7 +5,7 @@
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "scrub_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 60
 	can_unwrench = 1
@@ -39,6 +39,10 @@
 	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on
+	on = TRUE
+	icon_state = "scrub_map_on"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)

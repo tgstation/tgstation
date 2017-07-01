@@ -240,7 +240,7 @@
 	var/obj/machinery/bsa/full/cannon
 	var/notice
 	var/target
-	use_power = 0
+	use_power = NO_POWER_USE
 	circuit = /obj/item/weapon/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"

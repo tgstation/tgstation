@@ -260,7 +260,7 @@
 	darkness_view = 8
 	flash_protect = 1
 
-/obj/item/clothing/glasses/night/cultblind/equipped(mob/user, slot)
+/obj/item/clothing/glasses/night/cultblind/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
@@ -283,7 +283,7 @@
 	icon_state ="shuttlecurse"
 	var/global/curselimit = 0
 
-/obj/item/device/shuttle_curse/attack_self(mob/user)
+/obj/item/device/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
 		user.Knockdown(100)
