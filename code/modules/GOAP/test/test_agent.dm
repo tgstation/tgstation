@@ -37,7 +37,7 @@
 
 /mob/living/carbon/firemaker/Initialize()
 	..()
-	icon = 'world.dmi'
+	icon = 'icons/obj/goap/world.dmi'
 	icon_state = "person"
 	var/datum/goap_agent/firemaker/F = new()
 	F.agent = src

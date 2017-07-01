@@ -1,18 +1,18 @@
 
 /obj/wood
-	icon = 'world.dmi'
+	icon = 'icons/obj/goap/world.dmi'
 	icon_state = "wood"
 
 /obj/tree
-	icon = 'world.dmi'
+	icon = 'icons/obj/goap/world.dmi'
 	icon_state = "tree"
 
 /obj/axe
-	icon = 'world.dmi'
+	icon = 'icons/obj/goap/world.dmi'
 	icon_state = "axe"
 
 /obj/fire
-	icon = 'world.dmi'
+	icon = 'icons/obj/goap/world.dmi'
 	icon_state = "fire"
 
 

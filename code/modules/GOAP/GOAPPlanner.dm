@@ -6,6 +6,7 @@
 	for(var/a in actions)
 		var/datum/goap_action/GA = a
 		GA.Reset()
+		CHECK_TICK
 
 	var/list/usable_actions = list()
 
@@ -15,6 +16,7 @@
 		if(GA.AdvancedPreconditions(agent, worldstate))
 			usable_actions += GA
 			world.log << "USABLE ACTION [GA]"
+		CHECK_TICK
 
 	//Oh god, trees! I hate this!
 
@@ -37,6 +39,7 @@
 		if(!cheapest || N.cost < cheapest.cost)
 			world.log << "CURRENT CHEAPEST [N.cost]"
 			cheapest = N
+		CHECK_TICK
 
 	//Go up the tree, from the cheapest bottom leaf
 	var/list/plan = list()
@@ -45,6 +48,7 @@
 		if(climber.action)
 			plan += climber.action
 		climber = climber.parent
+		CHECK_TICK
 	return plan
 
 
@@ -83,6 +87,8 @@
 				var/list/subtree = BuildPossiblePlans(node, usable_actions, goal)
 				for(var/i in subtree)
 					plan_tree += i
+					CHECK_TICK
+		CHECK_TICK
 
 	return plan_tree
 
@@ -107,6 +113,7 @@
 			return FALSE
 		else
 			world.log << "INSTATE [testkey]:[test] == [testkey]:[state] CALL LOC: [calling_loc]"
+		CHECK_TICK
 	return TRUE
 
 
@@ -121,3 +128,4 @@
 	for(var/spinners in riding_spinners_they_dont_stop)
 		var/fuck = riding_spinners_they_dont_stop[spinners]
 		world.log << "[spinners] = [fuck]"
+		CHECK_TICK

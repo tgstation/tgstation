@@ -35,20 +35,17 @@
 		world << "OH GOD HELP ME I DONT KNOW HOW TO THINK STRAIGHT"
 		return
 
-	spawn(0)
-		process() //In SS13 this will be removed
+	START_PROCESSING(SSgoap, src)
 
 
 /datum/goap_agent/process() //in SS13 this won't be /proc as it's already defined
-	while(TRUE) //in SS13, drop this while loop
-		switch(brain_state)
-			if(STATE_IDLE)
-				idle_state()
-			if(STATE_MOVINGTO)
-				moving_state()
-			if(STATE_ACTING)
-				act_state()
-		CHECK_TICK
+	switch(brain_state)
+		if(STATE_IDLE)
+			idle_state()
+		if(STATE_MOVINGTO)
+			moving_state()
+		if(STATE_ACTING)
+			act_state()
 
 /datum/goap_agent/proc/act_state()
 	if(!LAZYLEN(action_queue))
