@@ -246,7 +246,6 @@
 	var/obj/item/weapon/dnainjector/injector
 	damage = 5
 	hitsound_wall = "shatter"
-	check_ricochet = 0
 
 /obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
