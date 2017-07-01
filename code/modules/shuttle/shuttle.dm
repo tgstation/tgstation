@@ -847,8 +847,8 @@
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
 		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcomm
-		launch_status = SHUTTLE_ENDGAME
-
+		mode = SHUTTLE_ENDGAME
+		
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
 
