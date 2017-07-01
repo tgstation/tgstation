@@ -272,6 +272,10 @@
 	power_light = 0
 	poweralm = 0
 
+//ash walker nest
+/area/ruin/unpowered/ash_walkers
+	icon_state = "red"
+
 //Ruin of ancient Space Station
 
 /area/ruin/ancientstation
