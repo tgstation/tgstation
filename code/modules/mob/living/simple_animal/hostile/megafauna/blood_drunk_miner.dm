@@ -41,15 +41,23 @@ Difficulty: Medium
 	loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
-	stat_attack = UNCONSCIOUS
 	blood_volume = BLOOD_VOLUME_NORMAL
 	medal_type = MEDAL_PREFIX
 	var/obj/item/weapon/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform
 	var/dashing = FALSE
 	var/dash_cooldown = 15
+	var/guidance = FALSE
 	deathmessage = "falls to the ground, decaying into glowing particles."
 	death_sound = "bodyfall"
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
+	guidance = TRUE
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
+	. = ..()
+	if(. && prob(7))
+		INVOKE_ASYNC(src, .proc/dash)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
 	force = 6
@@ -108,15 +116,18 @@ Difficulty: Medium
 			visible_message("<span class='danger'>[src] butchers [L]!</span>",
 			"<span class='userdanger'>You butcher [L], restoring your health!</span>")
 			if(z != ZLEVEL_STATION && !client) //NPC monsters won't heal while on station
-				adjustBruteLoss(-L.maxHealth/2)
+				if(guidance)
+					adjustHealth(-L.maxHealth)
+				else
+					adjustHealth(-(L.maxHealth * 0.5))
 			L.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
 	miner_saw.melee_attack_chain(src, target)
+	if(guidance)
+		adjustHealth(-2)
 	transform_weapon()
 	INVOKE_ASYNC(src, .proc/quick_attack_loop)
-	if(prob(10))
-		INVOKE_ASYNC(src, .proc/dash)
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
