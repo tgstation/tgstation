@@ -1,0 +1,6 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - balance: "Disable beams now do 26 damage meaning it takes one less shot to down a guy."
+  - balance: "Tasers now cause the target to drop items with a %50 chance."
+  - balance: "Detectives revolver now causes the target to drop items with a %50 chance."
