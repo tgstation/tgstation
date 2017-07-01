@@ -113,7 +113,7 @@
 	description = "..."
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
-	cost = 0
+	cost = 5
 
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
