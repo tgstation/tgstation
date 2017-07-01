@@ -560,8 +560,14 @@
 /obj/item/weapon/circlegame
 	name = "circled hand"
 	desc = "If somebody looks at this while it's below your waist, you get to bop them."
+	special_examine_text = "They are holding their hand in a circle below their waist!"
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
 	flags = DROPDEL
 	attack_verb = list("bopped")
+
+/obj/item/weapon/circlegame/examine_reaction(mob/living/carbon/human/owner, mob/examiner)
+	to_chat(examiner, "<span class='userdanger'>You accidentally look at [owner]'s circled hand!</span>")
+	to_chat(owner, "<span class='notice'>You catch [examiner] glimpsing at your circled hand.</span>")
+	..()
