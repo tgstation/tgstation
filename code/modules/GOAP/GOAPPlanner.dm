@@ -12,10 +12,10 @@
 
 	for(var/a in actions)
 		var/datum/goap_action/GA = a
-		world.log << "CHECKING ACTION [GA]"
+		goap_debug("CHECKING ACTION [GA]")
 		if(GA.AdvancedPreconditions(agent, worldstate))
 			usable_actions += GA
-			world.log << "USABLE ACTION [GA]"
+			goap_debug("USABLE ACTION [GA]")
 		CHECK_TICK
 
 	//Oh god, trees! I hate this!
@@ -28,16 +28,16 @@
 	plan_tree = BuildPossiblePlans(start, usable_actions, goal)
 
 	if(!plan_tree.len)
-		world.log << "NO PLAN CREATED"
+		goap_debug("NO PLAN CREATED")
 		return null
 
 	//Cheapest path
 	var/datum/goap_plan_node/cheapest
 	for(var/node in plan_tree)
 		var/datum/goap_plan_node/N = node
-		world.log << "NODE IS [N.action] COST IS [N.cost]"
+		goap_debug("NODE IS [N.action] COST IS [N.cost]")
 		if(!cheapest || N.cost < cheapest.cost)
-			world.log << "CURRENT CHEAPEST [N.cost]"
+			goap_debug("CURRENT CHEAPEST [N.cost]")
 			cheapest = N
 		CHECK_TICK
 
@@ -60,7 +60,7 @@
 	var/list/plan_tree = list()
 
 	for(var/a in usable_actions)
-		world.log << "BPP: CHECKING USABLE ACTIONS: ACTION [a]"
+		goap_debug("BPP: CHECKING USABLE ACTIONS: ACTION [a]")
 		var/datum/goap_action/GA = a
 		if(InState(GA.preconditions, parent.state, "usable_actions"))
 			//What does the world look like if we run this action?
@@ -68,21 +68,21 @@
 			var/list/current_state = ShowMeTheFuture(parent.state, GA.effects)
 			pimp_my_debug(current_state, "current_state")
 			var/datum/goap_plan_node/node = new()
-			world.log << "MY PARENT IS: [parent.action]"
+			goap_debug("MY PARENT IS: [parent.action]")
 			node.parent = parent
 			var/fuckshit = parent.cost+GA.cost
 			node.cost = fuckshit
-			world.log << "MY COST:PARENT COST IS: [node.cost]:[parent.cost]"
+			goap_debug("MY COST:PARENT COST IS: [node.cost]:[parent.cost]")
 			node.state = current_state
 			node.action = GA
 
 			if(InState(goal, current_state, "add_to_plan_tree"))
-				world.log << "COMPLETED TREE, ADDING NODES, FINAL ACTION [GA]"
+				goap_debug("COMPLETED TREE, ADDING NODES, FINAL ACTION [GA]")
 				plan_tree += node
-				world.log << "CURRENT COST: [node.cost]"
+				goap_debug("CURRENT COST: [node.cost]")
 				pimp_my_debug(node.state, "node_state")
 			else
-				world.log << "HASN'T COMPLETED GOAL WITH [GA] PICK NEXT ACTION"
+				goap_debug("HASN'T COMPLETED GOAL WITH [GA] PICK NEXT ACTION")
 				usable_actions -= GA
 				var/list/subtree = BuildPossiblePlans(node, usable_actions, goal)
 				for(var/i in subtree)
@@ -109,10 +109,10 @@
 		if(test == null)
 			test = 0
 		if(test != state)
-			world.log << "INSTATE [testkey]:[test] != [testkey]:[state] CALL LOC: [calling_loc]"
+			goap_debug("INSTATE [testkey]:[test] != [testkey]:[state] CALL LOC: [calling_loc]")
 			return FALSE
 		else
-			world.log << "INSTATE [testkey]:[test] == [testkey]:[state] CALL LOC: [calling_loc]"
+			goap_debug("INSTATE [testkey]:[test] == [testkey]:[state] CALL LOC: [calling_loc]")
 		CHECK_TICK
 	return TRUE
 
@@ -124,8 +124,8 @@
 	var/datum/goap_action/action
 
 /proc/pimp_my_debug(list/riding_spinners_they_dont_stop, state_name = "default")
-	world.log << "CHECKING DAT STATE YO [state_name]"
+	goap_debug("CHECKING DAT STATE YO [state_name]")
 	for(var/spinners in riding_spinners_they_dont_stop)
 		var/fuck = riding_spinners_they_dont_stop[spinners]
-		world.log << "[spinners] = [fuck]"
+		goap_debug("[spinners] = [fuck]")
 		CHECK_TICK

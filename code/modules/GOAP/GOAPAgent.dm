@@ -3,6 +3,12 @@
 #define STATE_MOVINGTO	1
 #define STATE_ACTING	2
 
+#define GOAP_DEBUG 0
+
+/proc/goap_debug(text)
+	if(GOAP_DEBUG)
+		world.log << "GOAP: [text]"
+
 /datum/goap_agent
 	var/brain_state = STATE_IDLE
 	var/list/our_actions //The actions available to us (/datum/goap_action)
@@ -26,13 +32,13 @@
 	if(ispath(info))
 		info = new info()
 	else
-		world << "OH GOD HELP ME I DONT UNDERSTAND THE WORLD"
+		goap_debug("OH GOD HELP ME I DONT UNDERSTAND THE WORLD")
 		return
 
 	if(ispath(planner))
 		planner = new planner()
 	else
-		world << "OH GOD HELP ME I DONT KNOW HOW TO THINK STRAIGHT"
+		goap_debug("OH GOD HELP ME I DONT KNOW HOW TO THINK STRAIGHT")
 		return
 
 	START_PROCESSING(SSgoap, src)
@@ -59,11 +65,14 @@
 			var/range_check = curr_action.IsInRange(agent)
 			if(range_check)
 				if(!curr_action.Perform(agent))
-					world.log << "PERFORM FAILED [curr_action]"
+					goap_debug("PERFORM FAILED [curr_action]")
 					brain_state = STATE_IDLE
 					info.PlanAborted(curr_action)
 				else
-					world.log << "PERFORMED [curr_action]"
+					goap_debug("PERFORMED [curr_action]")
+					if(action_queue.len == 1 && action_queue[1] == curr_action)
+						brain_state = STATE_IDLE
+						return
 			else
 				brain_state = STATE_MOVINGTO
 
@@ -71,7 +80,7 @@
 	var/datum/goap_action/curr_action = action_queue[action_queue.len]
 
 	if(curr_action.RequiresInRange(agent) && !curr_action.target)
-		world.log << "An action ([curr_action]) requires a target, but did not get one set"
+		goap_debug("An action ([curr_action]) requires a target, but did not get one set")
 		brain_state = STATE_IDLE
 	else
 		MoveTo(curr_action)
@@ -83,11 +92,11 @@
 	var/list/plan = planner.Plan(agent, our_actions, worldstate, goal)
 
 	if(LAZYLEN(plan))
-		world.log << "I am gonna act"
-		world.log << plan.len
+		goap_debug("I am gonna act")
+		goap_debug(plan.len)
 
 		for(var/i in plan)
-			world << i
+			goap_debug(i)
 
 		action_queue = plan
 		info.PlanFound(goal, plan)
