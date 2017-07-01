@@ -32,6 +32,7 @@ doesn't have toxins access.
 	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
 
 	var/selected_category
+	var/current_tab = "settings"
 	var/list/datum/design/matching_designs = list() //for the search function
 	var/disk_slot_selected = 0
 	var/datum/techweb_node/selected_node
@@ -785,6 +786,8 @@ doesn't have toxins access.
 	var/list/data = list()
 	//Tabs
 	data["tabs"] = list("Technology", "View Node", "View Design", "Disk Operations", "Deconstructive Analyzer", "Protolathe", "Circuit Imprinter", "Settings")
+	//Selected tab
+	data["tab"] = current_tab
 	//Locking
 	data["locked"] = locked
 	//General Access
@@ -875,6 +878,22 @@ doesn't have toxins access.
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 		if("Resync")
 			to_chat(usr, "<span class='boldnotice'>[bicon(src)]: Resyncing with nearby machinery.</span>")
+		if("switchTechnology")
+			current_tab = "tech"
+		if("switchNode")
+			current_tab = "node"
+		if("switchDesign")
+			current_tab = "design"
+		if("switchDisk")
+			current_tab = "disk"
+		if("switchDecon")
+			current_tab = "decon"
+		if("switchProto")
+			current_tab = "proto"
+		if("switchCirc")
+			current_tab = "circ"
+		if("switchSettings")
+			current_tab = "settings"
 
 /obj/machinery/computer/rdconsole/proc/lock_console(mob/user)
 	locked = TRUE
