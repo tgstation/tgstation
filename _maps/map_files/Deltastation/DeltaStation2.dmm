@@ -93229,6 +93229,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dxQ" = (
@@ -156131,16 +156132,16 @@ cim
 brN
 brN
 bqq
-coe
+bkT
 cpL
-cqZ
+brH
 csr
-cub
+bmI
 cvE
 cwY
-cqZ
-cqZ
-cqZ
+brH
+brH
+brH
 brH
 bkT
 cFG
@@ -156166,10 +156167,10 @@ djZ
 dlM
 dnc
 doh
-dpQ
+dnc
 drt
 dsT
-dpQ
+dnc
 ego
 dwO
 dyc

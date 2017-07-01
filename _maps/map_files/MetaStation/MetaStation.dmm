@@ -45922,7 +45922,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "n2o_out"
+	id_tag = "n2o_out";
 	name = "n2o out"
 	},
 /turf/open/floor/engine/n2o,
@@ -49223,7 +49223,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "tox_out"
+	id_tag = "tox_out";
 	name = "toxin out"
 	},
 /turf/open/floor/engine/plasma,
@@ -52023,7 +52023,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "co2_out"
+	id_tag = "co2_out";
 	name = "co2 out"
 	},
 /turf/open/floor/engine/co2,
@@ -58890,7 +58890,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
 	frequency = 1441;
-	id_tag = "n2_out"
+	id_tag = "n2_out";
 	name = "n2 out"
 	},
 /turf/open/floor/engine/n2,
@@ -71200,6 +71200,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cFe" = (

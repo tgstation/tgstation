@@ -26588,6 +26588,7 @@
 	layer = 3;
 	pixel_x = 32
 	},
+/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bkp" = (
@@ -33644,7 +33645,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4;
 	external_pressure_bound = 140;
-	pressure_checks = 0
+	pressure_checks = 0;
 	name = "server vent"
 	},
 /turf/open/floor/circuit{
@@ -83911,12 +83912,12 @@ aaa
 aaa
 aaa
 cTg
-cTl
-cTn
-cTr
-cTu
-cTw
-cTz
+cTg
+cTi
+cTg
+cTi
+cTg
+cTg
 aaa
 bCq
 bPS
@@ -84167,13 +84168,13 @@ aaa
 aaa
 aaa
 aaa
-cTh
+cTg
 bGg
 cTo
 cMl
 bHx
 cTx
-cTA
+cTg
 aaa
 bLv
 bPR
@@ -84427,7 +84428,7 @@ bDi
 cTi
 bGh
 bHx
-cTs
+cTo
 bHx
 bLt
 bMF
@@ -84681,13 +84682,13 @@ bzP
 bAS
 bxu
 aaa
-cTj
+cTg
 bGg
-cTp
-cTt
+cTo
+cTo
 bHx
 bLs
-cTB
+cTg
 aaa
 bLv
 bPT
@@ -84938,13 +84939,13 @@ bzR
 byd
 bxx
 aaa
-cTk
-cTm
-cTq
+cTg
+cTg
+cTi
 bJc
-cTv
-cTy
-cTC
+cTi
+cTg
+cTg
 aaa
 bCq
 bPV
