@@ -26,7 +26,7 @@
 			else
 				var/ruin_key = ruins[last_checked_ruin_index] //get the ruin's key via index
 				ruin = ruins[ruin_key] //use that key to get the ruin datum itself
-				if(ruin.cost) //if it has a cost, cancel out and pick another, to ensure true randomness
+				if(ruin.cost >= 0) //if it has a non-negative cost, cancel out and pick another, to ensure true randomness
 					is_picking = TRUE
 					ruin = ruins[pick(ruins)]
 		else
@@ -61,7 +61,8 @@
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)
-			budget -= ruin.cost
+			if(ruin.cost >= 0)
+				budget -= ruin.cost
 			if(!ruin.allow_duplicates)
 				for(var/m in ruins)
 					var/datum/map_template/ruin/ruin_to_remove = ruins[m]
