@@ -22,7 +22,7 @@
 /obj/item/weapon/gun/ballistic/update_icon()
 	..()
 	if(current_skin)
-		icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 	else
 		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 
