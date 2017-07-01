@@ -26,7 +26,7 @@
 	. = ..()
 	update_desc()
 
-/obj/item/stack/spacecash/use()
+/obj/item/stack/spacecash/use(used, transfer = FALSE)
 	. = ..()
 	update_desc()
 
