@@ -258,7 +258,7 @@ Difficulty: Medium
 	density = TRUE
 	sleep(1)
 	swooping &= ~SWOOP_DAMAGEABLE
-	SetRecoveryTime(5)
+	SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
