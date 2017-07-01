@@ -13,7 +13,7 @@
 	desc = "A machine used to store data and network statistics."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
 	machinetype = 4
 	//heatgen = 50

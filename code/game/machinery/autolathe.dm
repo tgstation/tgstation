@@ -18,7 +18,7 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/busy = 0
