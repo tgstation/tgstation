@@ -1,4 +1,4 @@
-<link rel='ractive' href='./rdconsole/header.ract'>
+<link rel='ractive' href='./rdconsole/rdheader.ract'>
 <link rel='ractive' href='./rdconsole/techweb.ract'>
 <link rel='ractive' href='./rdconsole/nodeview.ract'>
 <link rel='ractive' href='./rdconsole/designview.ract'>
@@ -7,38 +7,46 @@
 <link rel='ractive' href='./rdconsole/protolathe.ract'>
 <link rel='ractive' href='./rdconsole/circuit.ract'>
 <link rel='ractive' href='./rdconsole/settings.ract'>
-
-<header/>
 {{#if data.locked}}
 	<ui-display title='CONSOLE LOCKED'>
 		<ui-button action='Unlock'>Unlock</ui-button>
 	</ui-display>
 {{/if}}
+
 {{#if !data.locked}}
-	<ui-tabs tabs='{{data.tabs}}'>
-		<tab name='Technology'>
-			<techweb/>
-		</tab>
-		<tab name='View Node'>
-			<nodeview/>
-		</tab>
-		<tab name='View Design'>
-			<designview/>
-		</tab>
-		<tab name='Disk Operations'>
-			<diskops/>
-		</tab>
-		<tab name='Deconstructive Analyzer'>
-			<destruct/>
-		</tab>
-		<tab name='Protolathe'>
-			<protolathe/>
-		</tab>
-		<tab name='Circuit Imprinter'>
-			<circuit/>
-		</tab>
-		<tab name='Settings'>
-			<settings/>
-		</tab>
-	</ui-tabs>
+<rdheader/>
+<ui-button action='switchTechnology' state='{{data.tab == "tech" ? "selected" : null}}'>Technology</ui-button>
+<ui-button action='switchNode' state='{{data.tab == "node" ? "selected" : null}}'>View Node</ui-button>
+<ui-button action='switchDesign' state='{{data.tab == "design" ? "selected" : null}}'>View Design</ui-button>
+<ui-button action='switchDisk' state='{{data.tab == "disk" ? "selected" : (data.hasDisk ? null : "disabled")}}'>Disk I/O</ui-button>
+<ui-button action='switchDecon' state='{{data.tab == "decon" ? "selected" : (data.destroy_linked ? null : "disabled")}}'>Deconstructive Analyzer</ui-button>
+<ui-button action='switchProto' state='{{data.tab =="proto" ? "selected" : (data.protolathe_linked ? null : "disabled")}}'>Protolathe</ui-button>
+<ui-button action='switchCirc' state='{{data.tab == "circ" ? "selected" : (data.circuit_linked ? null : "disabled")}}'>Circuit Imprinter</ui-button>
+<ui-button action='switchSettings' state='{{data.tab == "settings" ? "selected" : null}}'>Settings</ui-button>
+<ui-button action='Lock'>LOCK</ui-button>
+<br/><br/>
+{{#if data.tab == "tech"}}
+	<techweb/>
+{{/if}}
+{{#if data.tab == "node"}}
+	<nodeview/>
+{{/if}}
+{{#if data.tab == "design"}}
+	<designview/>
+{{/if}}
+{{#if data.tab == "disk"}}
+	<diskops/>
+{{/if}}
+{{#if data.tab == "decon"}}
+	<destruct/>
+{{/if}}
+{{#if data.tab == "proto"}}
+	<protolathe/>
+{{/if}}
+{{#if data.tab == "circ"}}
+	<circuit/>
+{{/if}}
+{{#if data.tab == "settings"}}
+	<settings/>
+{{/if}}
 {{/if}}

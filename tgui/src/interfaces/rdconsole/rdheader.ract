@@ -1,0 +1,1 @@
+<ui-section title='Research Points'>{{data.research_points_stored}}</ui-section>

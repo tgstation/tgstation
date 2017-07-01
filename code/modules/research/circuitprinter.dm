@@ -4,13 +4,8 @@ a /datum/desgin on the linked R&D console. You can then print them out in a fasi
 using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
-<<<<<<< HEAD
 /obj/machinery/rnd/circuit_imprinter
-	name = "Circuit Imprinter"
-=======
-/obj/machinery/r_n_d/circuit_imprinter
 	name = "circuit imprinter"
->>>>>>> tgstation/master
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
 	container_type = OPENCONTAINER
