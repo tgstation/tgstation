@@ -6,7 +6,8 @@
 /obj/item/projectile/bullet/weakbullet2/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.drop_item()
+		if(prob(50))
+			C.drop_item()
 		..()
 
 
