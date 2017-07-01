@@ -14,11 +14,20 @@
 	var/overall_sanity = 100
 	var/list/ruins = potentialRuins.Copy()
 
+	var/is_picking = FALSE
+	var/last_checked_ruin_index = 0
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
 		var/datum/map_template/ruin/ruin = null
 		if(ruins && ruins.len)
-			ruin = ruins[pick(ruins)]
+			last_checked_ruin_index++
+			if(is_picking)
+				ruin = ruins[pick(ruins)]
+			else
+				ruin = ruins[ruins[last_checked_ruin_index]] //ruins with no cost come first, so they'll get picked really often
+				if(ruin.cost) //if it has a cost, cancel out and pick another
+					is_picking = TRUE
+					ruin = ruins[pick(ruins)]
 		else
 			log_world("Ruin loader had no ruins to pick from with [budget] left to spend.")
 			break
@@ -54,6 +63,7 @@
 			budget -= ruin.cost
 			if(!ruin.allow_duplicates)
 				ruins -= ruin.name
+				last_checked_ruin_index--
 			break
 
 	if(!overall_sanity)
