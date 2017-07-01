@@ -27,6 +27,7 @@
 	prev_access = access_card.access
 	goap_ai = new()
 	goap_ai.agent = src
+	goap_ai.given_pathfind_access = access_card
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()

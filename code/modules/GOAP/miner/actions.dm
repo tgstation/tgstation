@@ -22,6 +22,8 @@
 /datum/goap_action/miner/clear_hand/Perform(atom/agent)
 	var/mob/living/carbon/human/H = agent
 	var/obj/item/I = H.get_active_held_item()
+	if(H.get_empty_held_indexes())
+		return TRUE
 	if(!I.equip_to_best_slot(H))
 		H.drop_item()
 	if(H.get_empty_held_indexes())

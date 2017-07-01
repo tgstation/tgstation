@@ -22,7 +22,11 @@
 
 	var/atom/agent //The actual atom that uses this brain (who knows, maybe you want to give a donut intelligence?)
 
-
+	var/list/path
+	var/turf/dest
+	var/turf/last_node
+	var/tries = 0
+	var/obj/item/weapon/card/id/given_pathfind_access
 /datum/goap_agent/New()
 	..()
 
@@ -83,7 +87,14 @@
 		goap_debug("An action ([curr_action]) requires a target, but did not get one set")
 		brain_state = STATE_IDLE
 	else
-		MoveTo(curr_action)
+		if(!path || !path.len)
+			path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, id=given_pathfind_access)
+			if(!path || !path.len) // still can't path
+				goap_debug("Can't path to plan, giving up")
+				brain_state = STATE_IDLE
+				return 0
+		last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
+		MoveTo(curr_action, path)
 
 /datum/goap_agent/proc/idle_state()
 	var/list/worldstate = info.GetWorldState(src)
@@ -104,10 +115,24 @@
 	else
 		info.PlanFailed(goal)
 
-/datum/goap_agent/proc/MoveTo(datum/goap_action/action)
-	if(action.target)
-		if(get_dist(agent, action.target) > 1)
-			step_towards(agent, action.target)
-		if(get_dist(agent, action.target) <= 1)
-			action.inn_range = TRUE
-			brain_state = STATE_ACTING
+/datum/goap_agent/proc/MoveTo(datum/goap_action/curr_action, list/path)
+	var/turf/dest = get_turf(curr_action.target)
+	if(!path)
+		return 0
+	if(dest != last_node || tries >= 3)
+		path = null // force a new path
+		return 0
+	if(path.len > 1)
+		step_towards(agent, path[1])
+		if(get_turf(agent) == path[1]) //Successful move
+			path -= path[1]
+			tries = 0
+		else
+			tries++
+			return 0
+	else if(path.len == 1)
+		step_to(src, dest)
+		path = list()
+		curr_action.inn_range = TRUE
+		brain_state = STATE_ACTING
+	return 1
