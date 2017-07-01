@@ -29,7 +29,7 @@
 		qdel(H.gloves)
 
 	var/obj/item/clothing/suit/space/space_ninja/theSuit = new(H)
-	var/obj/item/weapon/katana/energy/EK = new(H)
+	var/obj/item/weapon/dash/energy_katana/EK = new(H)
 	theSuit.energyKatana = EK
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)

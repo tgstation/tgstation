@@ -134,3 +134,13 @@
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+
+//Secbot and ED209 judgement criteria bitflag values
+#define JUDGE_EMAGGED 1
+#define JUDGE_IDCHECK 2
+#define JUDGE_WEAPONCHECK 4
+#define JUDGE_RECORDCHECK 8
+//ED209's ignore monkeys
+#define JUDGE_IGNOREMONKEYS 16
+
+#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5

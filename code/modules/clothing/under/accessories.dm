@@ -83,6 +83,14 @@
 	item_color = "waistcoat"
 	minimize_when_attached = FALSE
 
+/obj/item/clothing/accessory/maidapron
+	name = "maid apron"
+	desc = "The best part of a maid costume."
+	icon_state = "apron"
+	item_state = "apronchef" //probably close enough
+	item_color = "apron"
+	minimize_when_attached = FALSE
+
 //////////
 //Medals//
 //////////

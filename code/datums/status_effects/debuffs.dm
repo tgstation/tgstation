@@ -4,26 +4,22 @@
 	tick_interval = 0
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	var/update_canmove = TRUE
+	var/needs_update_stat = FALSE
 
-/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, updating_canmove)
-	..()
-	if(isnum(updating_canmove))
-		update_canmove = updating_canmove
-	if(update_canmove)
-		owner.update_canmove()
-		if(issilicon(owner))
-			owner.update_stat()
-
-/datum/status_effect/incapacitating/on_apply()
+/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	if(isnum(set_duration))
+		duration = set_duration
 	. = ..()
-	update_canmove = TRUE
+	if(.)
+		if(updating_canmove)
+			owner.update_canmove()
+			if(needs_update_stat || issilicon(owner))
+				owner.update_stat()
 
 /datum/status_effect/incapacitating/on_remove()
-	if(update_canmove)
-		owner.update_canmove()
-		if(issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
-			owner.update_stat()
+	owner.update_canmove()
+	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
+		owner.update_stat()
 
 //STUN
 /datum/status_effect/incapacitating/stun
@@ -36,22 +32,23 @@
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
+	needs_update_stat = TRUE
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
 	alert_type = /obj/screen/alert/status_effect/asleep
+	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
-	..()
-	if(update_canmove)
-		owner.update_stat()
-	if(iscarbon(owner)) //to avoid repeated istypes
-		carbon_owner = owner
-	if(ishuman(owner))
-		human_owner = owner
+	. = ..()
+	if(.)
+		if(iscarbon(owner)) //to avoid repeated istypes
+			carbon_owner = owner
+		if(ishuman(owner))
+			human_owner = owner
 
 /datum/status_effect/incapacitating/sleeping/Destroy()
 	carbon_owner = null
@@ -68,11 +65,6 @@
 			carbon_owner.handle_dreams()
 		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
 			owner.emote("snore")
-
-/datum/status_effect/incapacitating/sleeping/on_remove()
-	..()
-	if(update_canmove)
-		owner.update_stat()
 
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -163,8 +155,13 @@
 	"Move towards the mania motor.", "Come closer.", "Get over here already!", "Keep your eyes on the motor.")
 	var/static/list/flee_messages = list("Oh, NOW you flee.", "Get back here!", "If you were smarter, you'd come back.", "Only fools run.", "You'll be back.")
 	var/static/list/turnoff_messages = list("Why would they turn it-", "What are these idi-", "Fools, fools, all of-", "Are they trying to c-", "All this effort just f-")
-	var/static/list/powerloss_messages = list("\"Oh, the id**ts di***t s***e en**** pow**...\"", "\"D*dn't **ey mak* an **te***c*i*n le**?\"", "\"The** f**ls for**t t* make a ***** *f-\"", \
-	"\"No, *O, you **re so cl***-\"", "You hear a yell of frustration, cut off by static.")
+	var/static/list/powerloss_messages = list("\"Oh, the id**ts di***t s***e en**** pow**...\"" = TRUE, "\"D*dn't **ey mak* an **te***c*i*n le**?\"" = TRUE, "\"The** f**ls for**t t* make a ***** *f-\"" = TRUE, \
+	"\"No, *O, you **re so cl***-\"" = TRUE, "You hear a yell of frustration, cut off by static." = FALSE)
+
+/datum/status_effect/maniamotor/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/powered/mania_motor/new_motor)
+	. = ..()
+	if(.)
+		motor = new_motor
 
 /datum/status_effect/maniamotor/Destroy()
 	motor = null
@@ -183,7 +180,8 @@
 			if(motor.total_accessable_power() > motor.mania_cost)
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
-				to_chat(owner, "<span class='sevtug[span_part]'>[text2ratvar(pick(powerloss_messages))]</span>")
+				var/pickedmessage = pick(powerloss_messages)
+				to_chat(owner, "<span class='sevtug[span_part]'>[powerloss_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>")
 			warned_turnoff = TRUE
 		severity = max(severity - 2, 0)
 		if(!severity)
@@ -246,6 +244,11 @@
 	var/mutable_appearance/marked_underlay
 	var/obj/item/weapon/twohanded/required/kinetic_crusher/hammer_synced
 
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/kinetic_crusher/new_hammer_synced)
+	. = ..()
+	if(.)
+		hammer_synced = new_hammer_synced
+
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
@@ -265,3 +268,75 @@
 /datum/status_effect/crusher_mark/be_replaced()
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
+
+/datum/status_effect/saw_bleed
+	id = "saw_bleed"
+	duration = -1 //removed under specific conditions
+	tick_interval = 6
+	alert_type = null
+	var/mutable_appearance/bleed_overlay
+	var/mutable_appearance/bleed_underlay
+	var/bleed_amount = 3
+	var/bleed_buildup = 3
+	var/delay_before_decay = 5
+	var/bleed_damage = 200
+	var/needs_to_bleed = FALSE
+
+/datum/status_effect/saw_bleed/Destroy()
+	if(owner)
+		owner.cut_overlay(bleed_overlay)
+		owner.underlays -= bleed_underlay
+	QDEL_NULL(bleed_overlay)
+	return ..()
+
+/datum/status_effect/saw_bleed/on_apply()
+	if(owner.stat == DEAD)
+		return FALSE
+	bleed_overlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
+	bleed_underlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
+	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
+	var/icon_height = I.Height()
+	bleed_overlay.pixel_x = -owner.pixel_x
+	bleed_overlay.pixel_y = Floor(icon_height * 0.25)
+	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
+	bleed_underlay.pixel_x = -owner.pixel_x
+	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
+	bleed_underlay.alpha = 40
+	owner.add_overlay(bleed_overlay)
+	owner.underlays += bleed_underlay
+	return ..()
+
+/datum/status_effect/saw_bleed/tick()
+	if(owner.stat == DEAD)
+		qdel(src)
+	else
+		add_bleed(-1)
+
+/datum/status_effect/saw_bleed/proc/add_bleed(amount)
+	owner.cut_overlay(bleed_overlay)
+	owner.underlays -= bleed_underlay
+	bleed_amount += amount
+	if(bleed_amount)
+		if(bleed_amount >= 10)
+			needs_to_bleed = TRUE
+			qdel(src)
+		else
+			if(amount > 0)
+				tick_interval += delay_before_decay
+			bleed_overlay.icon_state = "bleed[bleed_amount]"
+			bleed_underlay.icon_state = "bleed[bleed_amount]"
+			owner.add_overlay(bleed_overlay)
+			owner.underlays += bleed_underlay
+	else
+		qdel(src)
+
+/datum/status_effect/saw_bleed/on_remove()
+	if(needs_to_bleed)
+		var/turf/T = get_turf(owner)
+		new /obj/effect/temp_visual/bleed/explode(T)
+		for(var/d in GLOB.alldirs)
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
+		playsound(T, "desceration", 200, 1, -1)
+		owner.adjustBruteLoss(bleed_damage)
+	else
+		new /obj/effect/temp_visual/bleed(get_turf(owner))

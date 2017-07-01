@@ -6,7 +6,7 @@
 	req_access = list(GLOB.access_security) //reqaccess to access all stored items
 	density = 0
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500
 	var/list/stored_items = list()

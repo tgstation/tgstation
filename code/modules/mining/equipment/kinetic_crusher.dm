@@ -34,7 +34,7 @@
 	to_chat(user, "<span class='notice'>Does <b>80</b> damage if the target is backstabbed, instead of <b>50</b>.</span>")
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
-		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
+		to_chat(user, "<span class='notice'>It has \a [T] attached, which cause [T.effect_desc()].</span>")
 
 /obj/item/weapon/twohanded/required/kinetic_crusher/attackby(obj/item/A, mob/living/user)
 	if(istype(A, /obj/item/weapon/crowbar))
@@ -133,9 +133,8 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		var/had_effect = (L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)) //used as a boolean
-		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK, hammer_synced)
 		if(hammer_synced)
-			CM.hammer_synced = hammer_synced
 			for(var/t in hammer_synced.trophies)
 				var/obj/item/crusher_trophy/T = t
 				T.on_mark_application(target, CM, had_effect)
@@ -250,6 +249,19 @@
 	. = ..()
 	if(.)
 		H.charge_time += bonus_value
+
+//blood-drunk hunter
+/obj/item/crusher_trophy/miner_eye
+	name = "eye of a blood-drunk hunter"
+	desc = "Its pupil is collapsed and turned to mush. Suitable as a trophy for a kinetic crusher."
+	icon_state = "hunter_eye"
+	denied_type = /obj/item/crusher_trophy/miner_eye
+
+/obj/item/crusher_trophy/miner_eye/effect_desc()
+	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
+
+/obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(STATUS_EFFECT_BLOODDRUNK)
 
 //ash drake
 /obj/item/crusher_trophy/tail_spike
