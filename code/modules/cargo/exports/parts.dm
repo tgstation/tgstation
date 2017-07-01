@@ -15,18 +15,7 @@
 	unit_name = "solar panel control board"
 	export_types = list(/obj/item/weapon/circuitboard/computer/solar_control)
 
-
-
 /datum/export/swarmer
 	cost = 2000
 	unit_name = "deactivated alien deconstruction drone"
-	export_types = list(/obj/item/device/unactivated_swarmer)
-
-/datum/export/swarmer/applies_to(obj/O, contr = 0, emag = 0)
-	if(!..())
-		return FALSE
-
-	var/obj/item/device/unactivated_swarmer/S = O
-	if(!S.crit_fail)
-		return FALSE
-	return TRUE
+	export_types = list(/obj/item/device/deactivated_swarmer)
