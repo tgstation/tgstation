@@ -27,6 +27,8 @@
 	var/turf/last_node
 	var/tries = 0
 	var/obj/item/weapon/card/id/given_pathfind_access
+	var/movement_type = 2
+	var/turf/current_loc
 /datum/goap_agent/New()
 	..()
 
@@ -49,6 +51,7 @@
 
 
 /datum/goap_agent/process() //in SS13 this won't be /proc as it's already defined
+	goap_debug("GOAP Processing: [agent]")
 	switch(brain_state)
 		if(STATE_IDLE)
 			idle_state()
@@ -71,11 +74,13 @@
 				if(!curr_action.Perform(agent))
 					goap_debug("PERFORM FAILED [curr_action]")
 					brain_state = STATE_IDLE
+					path = list()
 					info.PlanAborted(curr_action)
 				else
 					goap_debug("PERFORMED [curr_action]")
 					if(action_queue.len == 1 && action_queue[1] == curr_action)
 						brain_state = STATE_IDLE
+						path = list()
 						return
 			else
 				brain_state = STATE_MOVINGTO
@@ -87,14 +92,26 @@
 		goap_debug("An action ([curr_action]) requires a target, but did not get one set")
 		brain_state = STATE_IDLE
 	else
-		if(!path || !path.len)
-			path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, id=given_pathfind_access)
-			if(!path || !path.len) // still can't path
-				goap_debug("Can't path to plan, giving up")
-				brain_state = STATE_IDLE
-				return 0
-		last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
-		MoveTo(curr_action, path)
+		switch(movement_type)
+			if(1) // AStar, Full
+				if(!path || !path.len)
+					path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, id=given_pathfind_access)
+					if(!path || !path.len) // still can't path
+						goap_debug("Can't path to plan, giving up")
+						brain_state = STATE_IDLE
+						return 0
+				last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
+				current_loc = get_turf(agent)
+				addtimer(CALLBACK(src, .proc/check_stuck), 50)
+				MoveTo_AStar(curr_action, path)
+			if(2) // AStar, Fake
+				MoveTo_FakeStar(curr_action)
+			if(3) // No Pathfinding, Straight Line
+				MoveTo(curr_action)
+
+/datum/goap_agent/proc/check_stuck()
+	if(current_loc == get_turf(agent))
+		path = list() // null out dat path
 
 /datum/goap_agent/proc/idle_state()
 	var/list/worldstate = info.GetWorldState(src)
@@ -115,7 +132,7 @@
 	else
 		info.PlanFailed(goal)
 
-/datum/goap_agent/proc/MoveTo(datum/goap_action/curr_action, list/path)
+/datum/goap_agent/proc/MoveTo_AStar(datum/goap_action/curr_action, list/path)
 	var/turf/dest = get_turf(curr_action.target)
 	if(!path)
 		return 0
@@ -136,3 +153,19 @@
 		curr_action.inn_range = TRUE
 		brain_state = STATE_ACTING
 	return 1
+
+/datum/goap_agent/proc/MoveTo_FakeStar(datum/goap_action/action)
+	if(action.target)
+		if(get_dist(agent, action.target) > 1)
+			step_to(agent, action.target)
+		if(get_dist(agent, action.target) <= 1)
+			action.inn_range = TRUE
+			brain_state = STATE_ACTING
+
+/datum/goap_agent/proc/MoveTo(datum/goap_action/action)
+	if(action.target)
+		if(get_dist(agent, action.target) > 1)
+			step_towards(agent, action.target)
+		if(get_dist(agent, action.target) <= 1)
+			action.inn_range = TRUE
+			brain_state = STATE_ACTING

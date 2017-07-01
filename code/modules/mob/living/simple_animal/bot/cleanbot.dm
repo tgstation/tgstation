@@ -30,10 +30,11 @@
 	goap_ai.given_pathfind_access = access_card
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
+	var/last_emagged = emagged
 	..()
-	goap_ai.our_actions += new /datum/goap_action/cleanbot/foam()
-	goap_ai.our_actions += new /datum/goap_action/cleanbot/clean_faces()
-
+	if(last_emagged != 2)
+		goap_ai.our_actions += new /datum/goap_action/cleanbot/foam()
+		goap_ai.our_actions += new /datum/goap_action/cleanbot/clean_faces()
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
 	icon_state = "cleanbot[on]"
