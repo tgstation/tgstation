@@ -20,12 +20,13 @@
 		// Pick a ruin
 		var/datum/map_template/ruin/ruin = null
 		if(ruins && ruins.len)
-			last_checked_ruin_index++
+			last_checked_ruin_index++ //ruins with no cost come first in the ruin list, so they'll get picked really often
 			if(is_picking)
 				ruin = ruins[pick(ruins)]
 			else
-				ruin = ruins[ruins[last_checked_ruin_index]] //ruins with no cost come first, so they'll get picked really often
-				if(ruin.cost) //if it has a cost, cancel out and pick another
+				var/ruin_key = ruins[last_checked_ruin_index] //get the ruin's key via index
+				ruin = ruins[ruin_key] //use that key to get the ruin datum itself
+				if(ruin.cost) //if it has a cost, cancel out and pick another, to ensure true randomness
 					is_picking = TRUE
 					ruin = ruins[pick(ruins)]
 		else
