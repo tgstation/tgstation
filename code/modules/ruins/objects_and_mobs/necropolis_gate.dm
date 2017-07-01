@@ -4,6 +4,7 @@
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
+	flags = ON_BORDER
 	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
@@ -24,6 +25,7 @@
 
 /obj/structure/necropolis_gate/Initialize()
 	. = ..()
+	setDir(SOUTH)
 	var/turf/sight_blocker_turf = get_turf(src)
 	if(sight_blocker_distance)
 		for(var/i in 1 to sight_blocker_distance)
@@ -32,6 +34,7 @@
 			sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
 	if(sight_blocker_turf)
 		sight_blocker = new (sight_blocker_turf) //we need to block sight in a different spot than most things do
+		sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 	icon_state = "gate_bottom"
 	top_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_top")
 	top_overlay.layer = EDGED_TURF_LAYER
@@ -53,9 +56,22 @@
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
+/obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target, height=0)
+	if(get_dir(loc, target) == dir)
+		return !density
+	return 1
+
+/obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
+	if(get_dir(O.loc, target) == dir)
+		return !density
+	return 1
+
 /obj/structure/opacity_blocker
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "gate_blocker"
+	layer = EDGED_TURF_LAYER
+	pixel_x = -32
+	pixel_y = -32
 	mouse_opacity = 0
 	opacity = TRUE
 
@@ -94,6 +110,7 @@
 					break
 				sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
 		if(sight_blocker_turf)
+			sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 			sight_blocker.forceMove(sight_blocker_turf)
 		sleep(2.5)
 		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
