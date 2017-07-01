@@ -122,7 +122,7 @@
 	robust_searching = 1
 	var/hopping = FALSE
 	var/hop_cooldown = 0 //Strictly for player controlled leapers
-	var/projectile_ready = FALSE //Check for making sure the visible tell lines up with player attacks
+	var/projectile_ready = FALSE //Stopping AI leapers from firing whenever they want, and only doing it after a hop has finished instead
 
 /obj/item/projectile/leaper
 	name = "leaper bubble"
@@ -199,13 +199,23 @@
 	description = "A toxin spat out by leapers that while harmless in small doses, quickly creates a toxic reaction if too much is in the body."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
-	taste_description = "frog"
+	taste_description = "french cuisine"
 	taste_mult = 1.3
 
 /datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/M)
 	if(volume >= 10)
 		M.adjustToxLoss(5, 0)
 	..()
+
+/obj/effect/temp_visual/leaper_crush
+	name = "Grim tidings"
+	desc = "Incoming leaper!"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "lily_pad"
+	layer = BELOW_MOB_LAYER
+	pixel_x = -32
+	pixel_y = -32
+	duration = 30
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize()
 	. = ..()
@@ -234,7 +244,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/jungle/leaper/handle_automated_action()
-	if(hopping)
+	if(hopping || projectile_ready)
 		return
 	. = ..()
 	if(target)
@@ -251,22 +261,24 @@
 	update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(prob(33) && AIStatus == AI_ON)
+	if(prob(33) && !ckey)
 		ranged_cooldown = 0 //Keeps em on their toes instead of a constant rotation
 	..()
 
 /mob/living/simple_animal/hostile/jungle/leaper/OpenFire()
+	face_atom(target)
 	if(ranged_cooldown <= world.time)
-		if(AIStatus != AI_ON)
+		if(ckey)
 			if(hopping)
 				return
 			if(isliving(target))
 				var/mob/living/L = target
 				if(L.incapacitated())
 					return //No stunlocking. Hop on them after you stun them, you donk.
-		if(AIStatus == AI_ON && !hopping)
+		if(AIStatus == AI_ON && !projectile_ready)
 			return
-		. = ..()
+		. = ..(target)
+		projectile_ready = FALSE
 		update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Hop(player_hop = FALSE)
@@ -280,7 +292,8 @@
 	if(player_hop)
 		new_turf = get_turf(target)
 		hop_cooldown = world.time + PLAYER_HOP_DELAY
-	if(AIStatus == AI_ON)
+	if(AIStatus == AI_ON && ranged_cooldown <= world.time)
+		projectile_ready = TRUE
 		update_icons()
 	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, .FinishHop))
 
@@ -288,25 +301,27 @@
 	density = TRUE
 	notransform = FALSE
 	pass_flags &= ~PASSMOB
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
-	if(target && AIStatus == AI_ON)
-		face_atom(target)
-		sleep(5)
-		face_atom(target)
-		OpenFire(target)
 	hopping = FALSE
+	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
+	if(target && AIStatus == AI_ON && projectile_ready)
+		face_atom(target)
+		addtimer(CALLBACK(src, .proc/OpenFire, target), 5)
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlop()
 	var/turf/new_turf = get_turf(target)
 	hopping = TRUE
-	new /obj/effect/temp_visual/dragon_swoop(new_turf)
-	sleep(30)
+	notransform = TRUE
+	new /obj/effect/temp_visual/leaper_crush(new_turf)
+	addtimer(CALLBACK(src, .proc/BellyFlopHop, new_turf), 30)
+
+/mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlopHop(turf/T)
 	density = FALSE
-	throw_at(new_turf, get_dist(src,new_turf),1,src, FALSE, callback = CALLBACK(src, .proc/Crush))
+	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, .proc/Crush))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
 	density = TRUE
+	notransform = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		L.adjustBruteLoss(35)
@@ -317,6 +332,9 @@
 			var/throwtarget = get_edge_target_turf(src, throw_dir)
 			L.throw_at(throwtarget, 3, 1)
 			visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
+	if(ckey)//Lessens ability to chain stun as a player
+		ranged_cooldown = ranged_cooldown_time + world.time
+		update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/Goto()
 	return
@@ -330,7 +348,7 @@
 		icon_state = "leaper_dead"
 		return
 	if(ranged_cooldown <= world.time)
-		if(AIStatus == AI_ON && hopping || AIStatus != AI_ON)
+		if(AIStatus == AI_ON && projectile_ready || ckey)
 			icon_state = "leaper_alert"
 			return
 	icon_state = "leaper"
