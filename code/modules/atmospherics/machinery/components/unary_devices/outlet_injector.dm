@@ -2,7 +2,7 @@
 	name = "air injector"
 	desc = "Has a valve and pump attached to it"
 	icon_state = "inje_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
