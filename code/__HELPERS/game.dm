@@ -559,5 +559,5 @@
 		return
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = environment.return_pressure()
-	if(pressure <= 50)
+	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		return TRUE
