@@ -212,7 +212,9 @@
 	desc = "UNTZ UNTZ UNTZ"
 
 /datum/action/item_action/toggle_headphones/Trigger()
-	target.toggle(owner)
+	var/obj/item/clothing/ears/headphones/H = target
+	if(istype(H))
+		target.toggle(owner)
 
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
