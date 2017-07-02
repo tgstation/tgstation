@@ -301,7 +301,7 @@
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = 1)
-			playsound(loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+			playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
 			ejectItem(TRUE)
@@ -313,7 +313,7 @@
 			R.add_reagent(chosenchem , 50)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = 1)
-			playsound(loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+			playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
 			ejectItem(TRUE)
@@ -332,7 +332,7 @@
 		visible_message("[src] raises [exp_on]'s temperature.")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
-			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			chosenchem = pick("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
@@ -385,7 +385,7 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
 			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
-			playsound(loc, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
+			playsound(src, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
 			chosenchem = pick("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
@@ -400,7 +400,7 @@
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = 1)
-			playsound(loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+			playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
 			ejectItem(TRUE)
@@ -435,14 +435,14 @@
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
-			playsound(loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
+			playsound(src, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at(src,10,1)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
-			playsound(loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
+			playsound(src, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			var/list/throwAt = list()
 			for(var/atom/movable/AM in oview(7,src))
@@ -460,7 +460,7 @@
 
 	if(exp == SCANTYPE_DISCOVER)
 		visible_message("[src] scans the [exp_on], revealing its true nature!")
-		playsound(loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
+		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/weapon/relic/R = loaded_item
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
@@ -635,19 +635,19 @@
 	smoke.start()
 
 /obj/item/weapon/relic/proc/corgicannon(mob/user)
-	playsound(loc, "sparks", rand(25,50), 1)
+	playsound(src, "sparks", rand(25,50), 1)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/weapon/relic/proc/clean(mob/user)
-	playsound(loc, "sparks", rand(25,50), 1)
+	playsound(src, "sparks", rand(25,50), 1)
 	var/obj/item/weapon/grenade/chem_grenade/cleaner/CL = new/obj/item/weapon/grenade/chem_grenade/cleaner(get_turf(user))
 	CL.prime()
 	warn_admins(user, "Smoke", 0)
 
 /obj/item/weapon/relic/proc/flash(mob/user)
-	playsound(loc, "sparks", rand(25,50), 1)
+	playsound(src, "sparks", rand(25,50), 1)
 	var/obj/item/weapon/grenade/flashbang/CB = new/obj/item/weapon/grenade/flashbang(user.loc)
 	CB.prime()
 	warn_admins(user, "Flash")
@@ -684,11 +684,6 @@
 	counter = 0
 	QDEL_LIST_IN(dupes, rand(10, 100))
 	warn_admins(user, "Rapid duplicator", 0)
-
-/obj/item/weapon/relic/proc/del_dupes(list/dupes, counter)
-	for(counter = 1; counter <= dupes.len; counter++)
-		var/obj/item/weapon/relic/R = dupes[counter]
-		qdel(R)
 
 /obj/item/weapon/relic/proc/explode(mob/user)
 	to_chat(user, "<span class='danger'>[src] begins to heat up!</span>")
