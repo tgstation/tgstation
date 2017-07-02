@@ -400,7 +400,7 @@
 	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
-		flush()
+		do_flush()
 
 	if(stat & NOPOWER) // won't charge if no power
 		return
