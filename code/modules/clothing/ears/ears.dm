@@ -17,7 +17,7 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 	SET_SECONDARY_FLAG(src, HEALS_EARS)
 
