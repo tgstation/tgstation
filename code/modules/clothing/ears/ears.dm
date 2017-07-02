@@ -25,7 +25,7 @@
 	name = "headphones"
 	desc = "Unce unce unce unce. Boop!"
 	icon = 'icons/obj/clothing/accessories.dmi'
-	icon_state = "headphones"
+	icon_state = "headphones_off"
 	item_state = "headphones_off"
 	slot_flags = SLOT_EARS | SLOT_HEAD | SLOT_NECK		//Fluff item, put it whereever you want!
 	actions_types = list(/datum/action/item_action/toggle_headphones)
@@ -43,4 +43,5 @@
 	else
 		item_state = item_state_off
 		icon_state = icon_state_off
+	owner.update_inv_ears()
 	to_chat(owner, "<span class='notice'>You turn the music [headphones_on? "on. Untz Untz Untz!" : "off."]</span>")
