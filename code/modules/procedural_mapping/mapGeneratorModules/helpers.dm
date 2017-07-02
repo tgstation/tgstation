@@ -21,16 +21,26 @@
 	spawnableAtoms = list()
 	spawnableTurfs = list()
 	var/deletemobs = TRUE
+	var/deleteturfs = TRUE
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/generate()
 	if(!mother)
 		return
 	for(var/V in mother.map)
 		var/turf/T = V
-		T.empty(delmobs = deletemobs)
+		T.empty(deleteturfs? null : isclosedturf(T)? /turf/closed/wall : /turf/open/floor/plating, delmobs = deletemobs, forceop = TRUE)
+		if(!T.initialized)
+			T.Initialize(mapload = TRUE)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs
 	deletemobs = FALSE
+
+/datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs
+	deleteturfs = FALSE
+
+/datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete
+	deletemobs = FALSE
+	deleteturfs = FALSE
 
 //Only places atoms/turfs on area borders
 /datum/mapGeneratorModule/border

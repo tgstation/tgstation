@@ -342,7 +342,12 @@
 				if(cornerA && cornerB)
 					if(!generator_path)
 						to_chat(user, "<span class='warning'>Select generator type first.</span>")
+						return
 					var/datum/mapGenerator/G = new generator_path
+					if(istype(G, /datum/mapGenerator/repair/reload_station_map))
+						if(GLOB.reloading_map)
+							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
+							return
 					G.defineRegion(cornerA,cornerB,1)
 					G.generate()
 					cornerA = null

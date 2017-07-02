@@ -71,6 +71,8 @@ SUBSYSTEM_DEF(air)
 
 
 /datum/controller/subsystem/air/fire(resumed = 0)
+	if(map_loading)
+		return					//Runtimes will occur if things are still being initialized.
 	var/timer = world.tick_usage
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)

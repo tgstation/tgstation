@@ -17,7 +17,6 @@
 //All
 #define CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all
 
-
 /datum/mapGenerator
 
 	//Map information

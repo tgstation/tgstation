@@ -206,14 +206,14 @@
 		qdel(L)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
-	return ChangeTurf(path, defer_change, ignore_air)
+/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
+	return ChangeTurf(path, defer_change, ignore_air, forceop)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(!path)
 		return
-	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
+	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
 	var/old_baseturf = baseturf
@@ -417,7 +417,7 @@
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space, delmobs = TRUE)
+/turf/proc/empty(turf_type=/turf/open/space, delmobs = TRUE, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/turf/T0 = src
 	for(var/A in T0.GetAllContents())
@@ -433,7 +433,7 @@
 			continue
 		qdel(A, force=TRUE)
 
-	T0.ChangeTurf(turf_type)
+	T0.ChangeTurf(turf_type, FALSE, FALSE, forceop)
 
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
