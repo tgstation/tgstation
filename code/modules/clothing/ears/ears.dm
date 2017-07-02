@@ -25,24 +25,23 @@
 	name = "headphones"
 	desc = "Unce unce unce unce. Boop!"
 	icon = 'icons/obj/clothing/accessories.dmi'
-	icon_state = "headphones_off"
-	item_state = "headphones_off"
+	icon_state = "headphones"
+	item_state = "headphones"
 	slot_flags = SLOT_EARS | SLOT_HEAD | SLOT_NECK		//Fluff item, put it whereever you want!
 	actions_types = list(/datum/action/item_action/toggle_headphones)
-	var/icon_state_on = "headphones_on"
-	var/icon_state_off = "headphones_off"
-	var/item_state_on = "headphones_on"
-	var/item_state_off = "headphones_off"
 	var/headphones_on = FALSE
+
+/obj/item/clothing/ears/headphones/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/ears/headphones/update_icon()
+	icon_state = "[initial(icon_state)]_[headphones_on? "on" : "off"]"
+	item_state = "[initial(item_state)]_[headphones_on? "on" : "off"]"
 
 /obj/item/clothing/ears/headphones/proc/toggle(owner)
 	headphones_on = !headphones_on
-	if(headphones_on)
-		item_state = item_state_on
-		icon_state = icon_state_on
-	else
-		item_state = item_state_off
-		icon_state = icon_state_off
+	update_icon()
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.update_inv_ears()
