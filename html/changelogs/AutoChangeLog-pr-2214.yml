@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Reskinnable guns no longer become invisible after firing a single shot."

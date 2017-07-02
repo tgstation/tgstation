@@ -1,4 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "brain damage should no longer attempt to emote/say things while unconcious"
