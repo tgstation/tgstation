@@ -26,7 +26,7 @@
 		return			//This is only for reloading station blocks!
 	GLOB.reloading_map = TRUE
 	var/static/dmm_suite/reloader = new
-	var/list/bounds = reloader.load_map(file(SSmapping.config.GetFullMapPath()),measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = ZLEVEL_STATION, cropMap=TRUE, lower_crop_x = mother1.x_low, upper_crop_x = mother1.x_high, lower_crop_y = mother1.y_low, upper_crop_y = mother1.y_high)
+	var/list/bounds = reloader.load_map(file(SSmapping.config.GetFullMapPath()),measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = ZLEVEL_STATION, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
 
 	to_chat(usr, "<span class='boldnotice'>LOADING COMPLETE: BLOCK [bounds[MAP_MINX]]/[bounds[MAP_MINY]]/[bounds[MAP_MINZ]] TO [bounds[MAP_MAXX]]/[bounds[MAP_MAXY]]/[bounds[MAP_MAXZ]]. INITIALIZING ATOMS.</span>")
 
@@ -94,6 +94,8 @@
 	x_high = max(start.x, end.x)
 	y_high = max(start.y, end.y)
 	z = ZLEVEL_STATION
+
+GLOBAL_VAR_INIT(reloading_map, FALSE)
 
 /datum/mapGenerator/repair/reload_station_map/generate(clean = cleanload)
 	to_chat(usr, "<span class='notice'>Generating [x_low]/[y_low] to [x_high]/[y_high] with zlevel [z] and cleanload [cleanload]</span>")
