@@ -90,7 +90,7 @@ Notes:
 	return TRUE
 
 /datum/tooltip/proc/do_hide()
-	winshow(owner, control, 0)
+	winshow(owner, control, FALSE)
 
 /* TG SPECIFIC CODE */
 
