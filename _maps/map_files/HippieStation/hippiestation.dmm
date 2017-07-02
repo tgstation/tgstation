@@ -21391,6 +21391,7 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
 "aWt" = (
@@ -67388,6 +67389,24 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"cWo" = (
+/obj/structure/statue/bananium/clown,
+/turf/open/floor/plasteel/redyellow,
+/area/hippie/clown)
+"cWp" = (
+/obj/structure/window{
+	desc = "In case of HONK, break glass";
+	dir = 4;
+	icon_state = "window"
+	},
+/obj/structure/window,
+/obj/structure/window{
+	icon_state = "window";
+	dir = 1
+	},
+/obj/item/weapon/bikehorn/golden,
+/turf/open/floor/plasteel/redyellow,
+/area/hippie/clown)
 
 (1,1,1) = {"
 aaa
@@ -81903,7 +81922,7 @@ aQD
 ayl
 cTn
 aUl
-aUl
+cWp
 aWs
 cTv
 cTA
@@ -82416,7 +82435,7 @@ aLB
 aQK
 ayl
 cTn
-aUl
+cWo
 cTr
 aXN
 aUO
@@ -86052,7 +86071,7 @@ cEl
 bLv
 cVJ
 cVQ
-cVW
+cVV
 bCq
 bVx
 caf
@@ -86307,7 +86326,7 @@ aaa
 aaa
 aaa
 bCq
-cVK
+cVJ
 cVR
 cVX
 bCq
@@ -86564,9 +86583,9 @@ aaa
 aaa
 aaa
 bLv
-cVL
-cVS
-bSn
+cVJ
+cVR
+cVX
 bCq
 bCq
 cbj
@@ -86821,10 +86840,10 @@ akD
 akD
 aaa
 bCq
-cVM
-bRd
-bSn
-cVY
+cVJ
+cVR
+cVX
+cVV
 bCq
 cbk
 bLv
@@ -87079,8 +87098,8 @@ akD
 aaa
 bLv
 bPR
-bRd
-bSn
+cVR
+cVX
 cVZ
 bCq
 bVy
@@ -87335,9 +87354,9 @@ bLt
 bMF
 aaa
 bCq
-cVN
+cVJ
 bRf
-bSn
+cVX
 bTu
 bCq
 bVB
@@ -87592,9 +87611,9 @@ bLs
 akD
 aaa
 bLv
-cVO
+cVJ
 bRe
-bSn
+cVX
 bTt
 bCq
 bVA
@@ -91458,7 +91477,7 @@ bES
 bES
 bES
 cWl
-cWn
+cWl
 bES
 bES
 bES
