@@ -10,7 +10,7 @@
 	zone = "chest"
 	slot = "liver"
 	desc = "Pairing suggestion: chianti and fava beans."
-	var/damage = 0 //liver damage, 0 is no damage, 100 causes liver failure
+	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure
 	var/alcohol_tolerance = ALCOHOL_RATE
 	var/failing //is this liver failing?
 	var/maxHealth = LIVER_DEFAULT_HEALTH
@@ -22,7 +22,6 @@
 /obj/item/organ/liver/New()
 	..()
 	toxinList = typesof(/datum/reagent/toxin)
-
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
