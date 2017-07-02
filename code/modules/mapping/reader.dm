@@ -29,21 +29,21 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x = 0, upper_crop_x = INFINITY, lower_crop_y = 0, upper_crop_y = INFINITY)
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	space_key = null
 	#ifdef TESTING
 	turfsSkipped = 0
 	#endif
-	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y)
 	#ifdef TESTING
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 	Master.StopLoadingMap()
 
-/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = 0, x_upper = INFINITY, y_lower = 0, y_upper = INFINITY)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -63,6 +63,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
 
+
 		// "aa" = (/type{vars=blah})
 		if(dmmRegex.group[1]) // Model
 			var/key = dmmRegex.group[1]
@@ -81,7 +82,12 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 			if(!key_len)
 				throw EXCEPTION("Coords before model definition in DMM")
 
-			var/xcrdStart = text2num(dmmRegex.group[3]) + x_offset - 1
+			var/curr_x = text2num(dmmRegex.group[3])
+
+			if(curr_x > x_upper || curr_x < x_lower)
+				continue								//X cropping.
+
+			var/xcrdStart = cuur_x + x_offset - 1
 			//position of the currently processed square
 			var/xcrd
 			var/ycrd = text2num(dmmRegex.group[4]) + y_offset - 1
@@ -129,6 +135,8 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 					maxx = max(maxx, xcrdStart + length(line) / key_len - 1)
 			else
 				for(var/line in gridLines)
+					if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+						continue
 					if(ycrd <= world.maxy && ycrd >= 1)
 						xcrd = xcrdStart
 						for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
@@ -343,7 +351,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 /dmm_suite/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
-	
+
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(what as text,trim_quotes=0)

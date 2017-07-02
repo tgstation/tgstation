@@ -417,10 +417,12 @@
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space)
+/turf/proc/empty(turf_type=/turf/open/space, delmobs = TRUE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/turf/T0 = src
 	for(var/A in T0.GetAllContents())
+		if(!delmobs && ismob(A))
+			continue
 		if(istype(A, /mob/dead))
 			continue
 		if(istype(A, /obj/effect/landmark))

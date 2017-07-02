@@ -51,4 +51,11 @@
 	modules = list(/datum/mapGeneratorModule/bottomLayer/repressurize)
 
 /datum/mapGenerator/massdelete
+	var/deletemobs = TRUE
+	for(var/V in mother.map)
+		var/turf/T = V
+		T.empty(delmobs = deletemobs)
+
+/datum/mapGeneratorModule/bottomLaywer/massdelete/no_delete_mobs
+	deletemobs = FALSE
 	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete)
