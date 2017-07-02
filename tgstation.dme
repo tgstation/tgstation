@@ -1735,6 +1735,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\megafauna.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\swarmer.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\basilisk.dm"
+#include "code\modules\mob\living\simple_animal\hostile\mining_mobs\curse_blob.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\goldgrub.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\goliath.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\gutlunch.dm"

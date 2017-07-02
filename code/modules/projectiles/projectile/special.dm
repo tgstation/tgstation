@@ -337,3 +337,47 @@
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/temp_visual/gravpush(Z)
 
+/obj/effect/ebeam/curse_arm
+	name = "curse arm"
+	layer = LARGE_MOB_LAYER
+
+/obj/item/projectile/curse_hand
+	name = "curse hand"
+	icon_state = "cursehand"
+	layer = LARGE_MOB_LAYER
+	damage_type = BURN
+	damage = 20
+	knockdown = 16
+	speed = 4
+	range = 8
+	forcedodge = TRUE
+	var/datum/beam/arm
+	var/handedness = 0
+
+/obj/item/projectile/curse_hand/Initialize(mapload)
+	. = ..()
+	handedness = prob(50)
+	icon_state = "[icon_state][handedness]"
+
+/obj/item/projectile/curse_hand/fire(setAngle)
+	if(starting)
+		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
+	..()
+
+/obj/item/projectile/curse_hand/prehit(atom/target)
+	if(target == original)
+		forcedodge = FALSE
+	return ..()
+
+/obj/item/projectile/curse_hand/Destroy()
+	if(arm)
+		arm.End()
+	var/turf/T = get_step(loc, dir)
+	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
+	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
+		qdel(G)
+	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
+	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm, beam_sleep_time = 1)
+	for(var/obj/effect/ebeam/B in D.elements)
+		animate(B, alpha = 0, time = 32)
+	return ..()

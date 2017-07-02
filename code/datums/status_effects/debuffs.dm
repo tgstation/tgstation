@@ -340,3 +340,84 @@
 		owner.adjustBruteLoss(bleed_damage)
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
+
+/mob/living/proc/apply_necropolis_curse(set_curse)
+	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
+	if(!set_curse)
+		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
+	if(QDELETED(C))
+		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+	else
+		C.apply_curse(set_curse)
+		C.duration += 3000 //additional curses add 5 minutes
+
+/datum/status_effect/necropolis_curse
+	id = "necrocurse"
+	duration = 12000 //you're cursed for 20 minutes have fun
+	tick_interval = 50
+	alert_type = null
+	var/curse_flags = NONE
+	var/effect_last_activation = 0
+	var/effect_cooldown = 100
+
+/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
+	. = ..()
+	if(.)
+		apply_curse(set_curse)
+
+/datum/status_effect/necropolis_curse/on_remove()
+	remove_curse(curse_flags)
+
+/datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
+	curse_flags |= set_curse
+	if(CURSE_BLINDING & curse_flags)
+		owner.overlay_fullscreen("curse", /obj/screen/fullscreen/curse, 1)
+
+/datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
+	if(CURSE_BLINDING & remove_curse)
+		owner.clear_fullscreen("curse", 50)
+	curse_flags &= ~remove_curse
+
+/datum/status_effect/necropolis_curse/tick()
+	if(owner.stat == DEAD)
+		return
+	if(CURSE_WASTING & curse_flags)
+		var/obj/effect/temp_visual/dir_setting/curse/C = new (owner.loc, owner.dir)
+		animate(C, alpha = 0, time = C.duration)
+		owner.adjustFireLoss(0.5)
+	if(effect_last_activation <= world.time)
+		effect_last_activation = world.time + effect_cooldown
+		if(CURSE_SPAWNING & curse_flags)
+			var/turf/spawn_turf
+			var/sanity = 10
+			while(!spawn_turf && sanity)
+				spawn_turf = locate(owner.x + pick(rand(10, 15), rand(-10, -15)), owner.y + pick(rand(10, 15), rand(-10, -15)), owner.z)
+				sanity--
+			if(spawn_turf)
+				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
+				C.set_target = owner
+				C.GiveTarget()
+		if(CURSE_GRASPING & curse_flags)
+			var/turf/spawn_turf
+			switch(owner.dir)
+				if(NORTH)
+					spawn_turf = locate(owner.x, owner.y - 5, owner.z)
+				if(SOUTH)
+					spawn_turf = locate(owner.x, owner.y + 5, owner.z)
+				if(EAST)
+					spawn_turf = locate(owner.x - 5, owner.y, owner.z)
+				if(WEST)
+					spawn_turf = locate(owner.x + 5, owner.y, owner.z)
+			if(spawn_turf)
+				INVOKE_ASYNC(src, .proc/grasp, spawn_turf)
+
+/datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
+	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	var/turf/ownerloc = get_turf(owner)
+	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
+	C.current = spawn_turf
+	C.starting = spawn_turf
+	C.yo = ownerloc.y - spawn_turf.y
+	C.xo = ownerloc.x - spawn_turf.x
+	C.original = owner
+	C.fire()
