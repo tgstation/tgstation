@@ -3282,6 +3282,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "afw" = (
@@ -6933,6 +6940,10 @@
 	pixel_x = -26;
 	pixel_y = 0
 	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -6943,6 +6954,13 @@
 	dir = 4;
 	on = 1;
 	scrub_Toxins = 0
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/brig)
@@ -6955,6 +6973,11 @@
 	tag = "icon-manifold (EAST)";
 	icon_state = "manifold";
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
