@@ -6,28 +6,29 @@
 	density = 1
 	anchored = 1
 	var/obj/item/bodypart/storedpart = null
-	var/list/style_list_options = list("standard", "engineer", "security")
-	var/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments_standard.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi')
+	var/initial_icon_state = null
+	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments_standard.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi')
 	obj_integrity = 200
 	max_integrity = 200
 
+/obj/machinery/aug_manipulator/Initialize()
+    initial_icon_state = initial(icon_state)
+    return ..()
 
 /obj/machinery/aug_manipulator/update_icon()
 	cut_overlays()
 
 	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
+		icon_state = "[initial_icon_state]-broken"
 		return
 
 	if(storedpart)
-		add_overlay("[initial(icon_state)]-closed")
+		add_overlay("[initial_icon_state]-closed")
 
 	if(powered())
-		icon_state = initial(icon_state)
+		icon_state = initial_icon_state
 	else
-		icon_state = "[initial(icon_state)]-off"
-
-	return
+		icon_state = "[initial_icon_state]-off"
 
 /obj/machinery/aug_manipulator/Destroy()
 	if(storedpart)
@@ -100,8 +101,7 @@
 		add_fingerprint(user)
 
 		if(storedpart)
-			var/augstyle = ""
-			augstyle = input(user, "Select style.", "Augment Custom Fitting") as null|anything in style_list_options
+			var/augstyle = input(user, "Select style.", "Augment Custom Fitting") as null|anything in style_list_icons
 			if(!augstyle)
 				return
 			if(!in_range(src, user))
@@ -124,7 +124,7 @@
 		return
 
 	if(storedpart)
-		storedpart.loc = get_turf(src.loc)
+		storedpart.forceMove(get_turf(src))
 		storedpart = null
 		update_icon()
 	else
