@@ -43,8 +43,8 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	#endif
 	Master.StopLoadingMap()
 
-/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = 0, x_upper = INFINITY, y_lower = 0, y_upper = INFINITY)
-	to_chat(world, "<span class='notice'>Maploader: Loading [dmm_file] with offsets [x_offset]/[y_offset]/[z_offset] with cropping set to [cropMap], measureOnly set to [measureOnly], \
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY)
+	to_chat(usr, "<span class='notice'>Maploader: Loading [dmm_file] with offsets [x_offset]/[y_offset]/[z_offset] with cropping set to [cropMap], measureOnly set to [measureOnly], \
 	no_changeturf set to [no_changeturf], with map cropping set to [x_lower]/[y_lower] to [x_upper]/[y_upper]</span>")
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
@@ -63,7 +63,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 	var/stored_index = 1
 
-	to_chat(world, "<span class='notice'>Maploader initialized. Loop processing.</span>")
+	to_chat(usr, "<span class='notice'>Maploader initialized. Loop processing.</span>")
 
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
@@ -85,7 +85,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 		// (1,1,1) = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
 		else if(dmmRegex.group[3]) // Coords
 			if(!key_len)
-				to_chat(world, "<span class='warning'>ABORT: Coords before model definition in DMM")
+				to_chat(usr, "<span class='warning'>ABORT: Coords before model definition in DMM")
 				throw EXCEPTION("Coords before model definition in DMM")
 
 			var/curr_x = text2num(dmmRegex.group[3])
