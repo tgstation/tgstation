@@ -387,6 +387,17 @@ CREATE TABLE `SS13_round` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+--
+-- Table structure for table `SS13_schema_revision`
+--
+DROP TABLE IF EXISTS `SS13_schema_revision`;
+CREATE TABLE `SS13_schema_revision` (
+  `major` TINYINT(3) unsigned NOT NULL,
+  `minor` TINYINT(3) unsigned NOT NULL,
+  `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`major`,`minor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

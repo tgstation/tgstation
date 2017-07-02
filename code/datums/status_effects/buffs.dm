@@ -70,7 +70,7 @@
 	return ..()
 
 /datum/status_effect/vanguard_shield/on_apply()
-	add_logs(owner, null, "gained Vanguard stun immunity")
+	owner.log_message("gained Vanguard stun immunity", INDIVIDUAL_ATTACK_LOG)
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	owner.SetStun(0, FALSE)
@@ -105,7 +105,7 @@
 		else
 			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
-		add_logs(owner, null, "lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]")
+		owner.log_message("lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]", INDIVIDUAL_ATTACK_LOG)
 
 
 /datum/status_effect/inathneqs_endowment
@@ -120,7 +120,7 @@
 	alerttooltipstyle = "clockcult"
 
 /datum/status_effect/inathneqs_endowment/on_apply()
-	add_logs(owner, null, "gained Inath-neq's invulnerability")
+	owner.log_message("gained Inath-neq's invulnerability", INDIVIDUAL_ATTACK_LOG)
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
 	var/oldcolor = owner.color
 	owner.color = "#1E8CE1"
@@ -133,7 +133,7 @@
 	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
-	add_logs(owner, null, "lost Inath-neq's invulnerability")
+	owner.log_message("lost Inath-neq's invulnerability", INDIVIDUAL_ATTACK_LOG)
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
@@ -185,7 +185,7 @@
 	..()
 
 /datum/status_effect/his_grace/on_apply()
-	add_logs(owner, null, "gained His Grace's stun immunity")
+	owner.log_message("gained His Grace's stun immunity", INDIVIDUAL_ATTACK_LOG)
 	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
 	return ..()
 
@@ -209,7 +209,7 @@
 	owner.adjustCloneLoss(-grace_heal)
 
 /datum/status_effect/his_grace/on_remove()
-	add_logs(owner, null, "lost His Grace's stun immunity")
+	owner.log_message("lost His Grace's stun immunity", INDIVIDUAL_ATTACK_LOG)
 	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
 		owner.stun_absorption -= "hisgrace"
 
@@ -261,4 +261,114 @@
 /datum/status_effect/cult_master/on_remove()
 	deathrattle()
 	. = ..()
+
+/datum/status_effect/blooddrunk
+	id = "blooddrunk"
+	duration = 10
+	tick_interval = 0
+	alert_type = /obj/screen/alert/status_effect/blooddrunk
+	var/last_health = 0
+	var/last_bruteloss = 0
+	var/last_fireloss = 0
+	var/last_toxloss = 0
+	var/last_oxyloss = 0
+	var/last_cloneloss = 0
+	var/last_staminaloss = 0
+
+/obj/screen/alert/status_effect/blooddrunk
+	name = "Blood-Drunk"
+	desc = "You are drunk on blood! Your pulse thunders in your ears! Nothing can harm you!" //not true, and the item description mentions its actual effect
+	icon_state = "blooddrunk"
+
+/datum/status_effect/blooddrunk/on_apply()
+	. = ..()
+	if(.)
+		owner.maxHealth *= 10
+		owner.bruteloss *= 10
+		owner.fireloss *= 10
+		owner.toxloss *= 10
+		owner.oxyloss *= 10
+		owner.cloneloss *= 10
+		owner.staminaloss *= 10
+		owner.updatehealth()
+		last_health = owner.health
+		last_bruteloss = owner.getBruteLoss()
+		last_fireloss = owner.getFireLoss()
+		last_toxloss = owner.getToxLoss()
+		last_oxyloss = owner.getOxyLoss()
+		last_cloneloss = owner.getCloneLoss()
+		last_staminaloss = owner.getStaminaLoss()
+		owner.log_message("gained blood-drunk stun immunity", INDIVIDUAL_ATTACK_LOG)
+		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
+		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
+
+/datum/status_effect/blooddrunk/tick() //multiply the effect of healing by 10
+	if(owner.health > last_health)
+		var/needs_health_update = FALSE
+		var/new_bruteloss = owner.getBruteLoss()
+		if(new_bruteloss < last_bruteloss)
+			var/heal_amount = (new_bruteloss - last_bruteloss) * 10
+			owner.adjustBruteLoss(heal_amount, updating_health = FALSE)
+			new_bruteloss = owner.getBruteLoss()
+			needs_health_update = TRUE
+		last_bruteloss = new_bruteloss
+
+		var/new_fireloss = owner.getFireLoss()
+		if(new_fireloss < last_fireloss)
+			var/heal_amount = (new_fireloss - last_fireloss) * 10
+			owner.adjustFireLoss(heal_amount, updating_health = FALSE)
+			new_fireloss = owner.getFireLoss()
+			needs_health_update = TRUE
+		last_fireloss = new_fireloss
+
+		var/new_toxloss = owner.getToxLoss()
+		if(new_toxloss < last_toxloss)
+			var/heal_amount = (new_toxloss - last_toxloss) * 10
+			owner.adjustToxLoss(heal_amount, updating_health = FALSE)
+			new_toxloss = owner.getToxLoss()
+			needs_health_update = TRUE
+		last_toxloss = new_toxloss
+
+		var/new_oxyloss = owner.getOxyLoss()
+		if(new_oxyloss < last_oxyloss)
+			var/heal_amount = (new_oxyloss - last_oxyloss) * 10
+			owner.adjustOxyLoss(heal_amount, updating_health = FALSE)
+			new_oxyloss = owner.getOxyLoss()
+			needs_health_update = TRUE
+		last_oxyloss = new_oxyloss
+
+		var/new_cloneloss = owner.getCloneLoss()
+		if(new_cloneloss < last_cloneloss)
+			var/heal_amount = (new_cloneloss - last_cloneloss) * 10
+			owner.adjustCloneLoss(heal_amount, updating_health = FALSE)
+			new_cloneloss = owner.getCloneLoss()
+			needs_health_update = TRUE
+		last_cloneloss = new_cloneloss
+
+		var/new_staminaloss = owner.getStaminaLoss()
+		if(new_staminaloss < last_staminaloss)
+			var/heal_amount = (new_staminaloss - last_staminaloss) * 10
+			owner.adjustStaminaLoss(heal_amount, updating_health = FALSE)
+			new_staminaloss = owner.getStaminaLoss()
+			needs_health_update = TRUE
+		last_staminaloss = new_staminaloss
+
+		if(needs_health_update)
+			owner.updatehealth()
+			owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
+	last_health = owner.health
+
+/datum/status_effect/blooddrunk/on_remove()
+	tick()
+	owner.maxHealth *= 0.1
+	owner.bruteloss *= 0.1
+	owner.fireloss *= 0.1
+	owner.toxloss *= 0.1
+	owner.oxyloss *= 0.1
+	owner.cloneloss *= 0.1
+	owner.staminaloss *= 0.1
+	owner.updatehealth()
+	owner.log_message("lost blood-drunk stun immunity", INDIVIDUAL_ATTACK_LOG)
+	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
+		owner.stun_absorption -= "blooddrunk"
 

@@ -1,7 +1,7 @@
 /client/proc/create_poll()
 	set name = "Create Poll"
 	set category = "Special Verbs"
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")

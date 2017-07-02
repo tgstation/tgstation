@@ -1,3 +1,22 @@
+28 June 2017, by oranges
+Added schema_revision to store the current db revision, why start at 3.0?
+
+because:
+15:09 <+MrStonedOne> 1.0 was erro, 2.0 was when i removed erro_, 3.0 was when jordie made all the strings that hold numbers numbers
+
+CREATE TABLE `schema_revision` (
+`major` TINYINT(3) UNSIGNED NOT NULL ,
+`minor` TINYINT(3) UNSIGNED NOT NULL ,
+`date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+PRIMARY KEY ( `major`,`minor` )
+) ENGINE = INNODB;
+
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (3, 0);
+
+Remember to add a prefix to the table name if you use them.
+
+----------------------------------------------------
+
 26 June 2017, by Jordie0608
 
 Modified table 'poll_option', adding the column 'default_percentage_calc'.

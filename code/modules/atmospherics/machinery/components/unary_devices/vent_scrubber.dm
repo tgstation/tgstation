@@ -5,7 +5,7 @@
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "scrub_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 60
 	can_unwrench = 1

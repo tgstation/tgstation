@@ -14,10 +14,11 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 
-/obj/item/stack/wrapping_paper/Destroy()
-	if(!amount)
-		new /obj/item/weapon/c_tube(get_turf(src))
-	return ..()
+/obj/item/stack/wrapping_paper/use(used, transfer)
+	var/turf/T = get_turf(src)
+	..()
+	if(QDELETED(src) && !transfer)
+		new /obj/item/weapon/c_tube(T)
 
 
 /*
@@ -99,10 +100,11 @@
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
 	user.log_message("<font color='blue'>Has used [name] on [target]</font>", INDIVIDUAL_ATTACK_LOG)
 
-/obj/item/stack/packageWrap/Destroy()
-	if(!amount)
-		new /obj/item/weapon/c_tube(get_turf(src))
-	return ..()
+/obj/item/stack/packageWrap/use(used, transfer = FALSE)
+	var/turf/T = get_turf(src)
+	..()
+	if(QDELETED(src) && !transfer)
+		new /obj/item/weapon/c_tube(T)
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
