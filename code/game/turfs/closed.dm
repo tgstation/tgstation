@@ -5,6 +5,9 @@
 	density = 1
 	blocks_air = 1
 
+/turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
+
 /turf/closed/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
@@ -23,9 +26,6 @@
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
-
-
-
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
@@ -110,6 +110,11 @@
 	icon_state = "necro"
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
+
+/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "necro1"
+	return TRUE
 
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"

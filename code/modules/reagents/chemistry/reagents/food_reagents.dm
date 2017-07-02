@@ -510,16 +510,64 @@
 /datum/reagent/consumable/honey
 	name = "honey"
 	id = "honey"
-	description = "Sweet sweet honey, decays into sugar."
+	description = "Sweet sweet honey, decays into sugar and has natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",3)
-	if(prob(20))
-		M.heal_bodypart_damage(3,1)
+	if(prob(55))
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+		M.adjustOxyLoss(-1*REM, 0)
+		M.adjustToxLoss(-1*REM, 0)
 	..()
+
+/datum/reagent/consumable/mayonnaise
+	name = "Mayonnaise"
+	id = "mayonnaise"
+	description = "An white and oily mixture of mixed egg yolks."
+	color = "#DFDFDF"
+	taste_description = "mayonnaise"
+
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	id = "tearjuice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+
+/datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	var/unprotected = FALSE
+	switch(method)
+		if(INGEST)
+			unprotected = TRUE
+		if(INJECT)
+			unprotected = FALSE
+		else	//Touch or vapor
+			if(!M.is_mouth_covered() && !M.is_eyes_covered())
+				unprotected = TRUE
+	if(unprotected)
+		if(!M.getorganslot("eye_sight"))	//can't blind somebody with no eyes
+			to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
+		else
+			if(!M.eye_blurry)
+				to_chat(M, "<span class = 'warning'>Tears well up in your eyes!</span>")
+			M.blind_eyes(2)
+			M.blur_eyes(5)
+	..()
+
+/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/M)
+	..()
+	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
+		M.blur_eyes(4)
+		if(prob(10))
+			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
+			M.blind_eyes(2)
 
 
 ////Lavaland Flora Reagents////

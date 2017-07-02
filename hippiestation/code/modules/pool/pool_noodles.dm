@@ -23,22 +23,22 @@
 		user.emote("spin")
 
 /obj/item/toy/poolnoodle/red
-	item_state = "rednoodle"
+	item_state = "noodlered"
 
 /obj/item/toy/poolnoodle/blue
-	item_state = "bluenoodle"
+	item_state = "noodleblue"
 
 /obj/item/toy/poolnoodle/yellow
-	item_state = "yellownoodle"
+	item_state = "noodleyellow"
 
 /obj/item/toy/poolnoodle/red/Initialize()
-	..()
+	. = ..()
 	color = "#ff4c4c"
 
 /obj/item/toy/poolnoodle/blue/Initialize()
-	..()
+	. = ..()
 	color = "#3232ff"
 
 /obj/item/toy/poolnoodle/yellow/Initialize()
-	..()
+	. = ..()
 	color = "#ffff66"

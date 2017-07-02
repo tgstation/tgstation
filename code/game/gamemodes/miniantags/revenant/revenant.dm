@@ -14,8 +14,8 @@
 	var/icon_reveal = "revenant_revealed"
 	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
-	var/stasis = 0
-	incorporeal_move = 3
+	var/stasis = FALSE
+	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
@@ -102,7 +102,7 @@
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = FALSE
-		incorporeal_move = 3
+		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
@@ -205,6 +205,7 @@
 /mob/living/simple_animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
+	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
 	revealed = TRUE
@@ -221,9 +222,8 @@
 	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
 	R.client_to_revive = client //If the essence reforms, the old revenant is put back in the body
 	R.revenant = src
-	invisibility = INVISIBILITY_ABSTRACT 
-	revealed = 0
-	stasis = 1
+	invisibility = INVISIBILITY_ABSTRACT
+	revealed = FALSE
 	ghostize(0)//Don't re-enter invisible corpse
 	return
 
@@ -236,7 +236,7 @@
 		return
 	revealed = TRUE
 	invisibility = 0
-	incorporeal_move = 0
+	incorporeal_move = FALSE
 	if(!unreveal_time)
 		to_chat(src, "<span class='revendanger'>You have been revealed!</span>")
 		unreveal_time = world.time + time
@@ -309,15 +309,15 @@
 
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
-	unreveal_time = 0 
+	unreveal_time = 0
 	notransform = 0
 	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE
-	incorporeal_move = 3
+	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	alpha=255
-	stasis = 0
+	stasis = FALSE
 
 
 //reforming

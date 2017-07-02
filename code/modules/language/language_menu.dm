@@ -76,7 +76,7 @@
 
 	switch(action)
 		if("select_default")
-			if(language_datum)
+			if(language_datum && AM.can_speak_in_language(language_datum))
 				language_holder.selected_default_language = language_datum
 				. = TRUE
 		if("grant_language")

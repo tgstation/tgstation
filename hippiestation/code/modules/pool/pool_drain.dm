@@ -10,9 +10,10 @@
 	var/timer = 0
 	var/cooldown
 	var/obj/machinery/poolcontroller/poolcontrol = null
+	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
 /obj/machinery/drain/Initialize()
-	..()
+	. = ..()
 	for(var/obj/machinery/poolcontroller/control in range(srange,src))
 		src.poolcontrol += control
 
@@ -37,13 +38,9 @@
 				for(var/mob/living/carbon/human/whirlm in orange(2,src))
 					step_away(whirlm,src)
 			else if(timer == 0)
-				for(var/turf/open/pool/water/undrained in range(5,src))
-					undrained.name = "poolwater"
-					undrained.desc = "You're safer here than in the deep."
-					undrained.icon_state = "turf"
-					undrained.drained = 0
-				for(var/obj/overlay/water/undrained2 in range(5,src))
-					undrained2.icon_state = "overlay"
+				for(var/turf/open/pool/undrained in range(5,src))
+					undrained.filled = TRUE
+					undrained.update_icon()
 				for(var/obj/effect/effect/waterspout/undrained3 in range(1,src))
 					qdel(undrained3)
 				poolcontrol.drained = 0
@@ -85,13 +82,9 @@
 							continue
 
 			else if(timer == 0)
-				for(var/turf/open/pool/water/drained in range(5,src))
-					drained.name = "Drained Pool"
-					drained.desc = "Don't fall in!"
-					drained.icon_state = "drained"
-					drained.drained = 1
-				for(var/obj/overlay/water/drained2 in range(5,src))
-					drained2.icon_state = "0"
+				for(var/turf/open/pool/drained in range(5,src))
+					drained.filled = FALSE
+					drained.update_icon()
 				for(var/obj/effect/whirlpool/drained3 in range(1,src))
 					qdel(drained3)
 				for(var/obj/machinery/poolcontroller/drained4 in range(5,src))
@@ -102,7 +95,7 @@
 
 /obj/effect/whirlpool
 	name = "Whirlpool"
-	icon = 'icons/effects/96x96.dmi'
+	icon = 'hippiestation/icons/effects/96x96.dmi'
 	icon_state = "whirlpool"
 	layer = 5
 	anchored = TRUE
@@ -113,17 +106,15 @@
 
 /obj/effect/effect/waterspout
 	name = "Waterspout"
-	icon_state = "smoke"
-	opacity = 1
+	icon_state = "waterspout"
 	color = "#3399AA"
 	layer = 5
 	anchored = TRUE
 	mouse_opacity = 0
-	icon = 'icons/effects/96x96.dmi'
+	icon = 'hippiestation/icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	alpha = 255
-
+	alpha = 120
 
 /obj/machinery/poolfilter
 	name = "Filter"
@@ -131,11 +122,13 @@
 	icon_state = "filter"
 	desc = "The part of the pool that swallows dangerous stuff and ID's"
 	anchored = TRUE
+	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
 /obj/machinery/poolfilter/emag_act(user as mob)
 	if(!emagged)
 		to_chat(user, "<span class='warning'>You disable the [src]'s shark filter! Run!</span>")
 		emagged = TRUE
+		do_sparks(5, TRUE, src)
 		src.icon_state = "filter_b"
 		spawn(50)
 			if(prob(50))

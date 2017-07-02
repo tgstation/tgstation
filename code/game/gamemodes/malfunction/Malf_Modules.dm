@@ -1,3 +1,4 @@
+#define DEFAULT_DOOMSDAY_TIMER 4500
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -35,14 +36,15 @@
 		return
 
 	to_chat(src, "<span class='notice'>Doomsday device armed.</span>")
-	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
 	set_security_level("delta")
-	nuking = 1
-	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
+	nuking = TRUE
+	var/obj/machinery/doomsday_device/DOOM = new (src)
 	doomsday_device = DOOM
 	doomsday_device.start()
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
-	for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
+	for(var/pinpointer in GLOB.pinpointer_list)
+		var/obj/item/weapon/pinpointer/P = pinpointer
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 /obj/machinery/doomsday_device
@@ -50,34 +52,32 @@
 	name = "doomsday device"
 	icon_state = "nuclearbomb_base"
 	desc = "A weapon which disintegrates all organic life in a large area."
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	verb_exclaim = "blares"
 	var/timing = FALSE
-	var/default_timer = 4500
 	var/obj/effect/countdown/doomsday/countdown
 	var/detonation_timer
-	var/list/milestones = list()
+	var/list/milestones
 
-/obj/machinery/doomsday_device/New()
-	..()
+/obj/machinery/doomsday_device/Initialize()
+	. = ..()
 	countdown = new(src)
+	milestones = list()
 
 /obj/machinery/doomsday_device/Destroy()
-	if(countdown)
-		qdel(countdown)
-		countdown = null
+	QDEL_NULL(countdown)
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
 	for(var/A in GLOB.ai_list)
-		var/mob/living/silicon/ai/Mlf = A
-		if(Mlf.doomsday_device == src)
-			Mlf.doomsday_device = null
-	. = ..()
+		var/mob/living/silicon/ai/AI = A
+		if(AI.doomsday_device == src)
+			AI.doomsday_device = null
+	return ..()
 
 /obj/machinery/doomsday_device/proc/start()
-	detonation_timer = world.time + default_timer
+	detonation_timer = world.time + DEFAULT_DOOMSDAY_TIMER
 	timing = TRUE
 	countdown.start()
 	START_PROCESSING(SSfastprocess, src)
@@ -90,26 +90,26 @@
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
-		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
+		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
+		return
 	if(!timing)
 		STOP_PROCESSING(SSfastprocess, src)
 		return
 	var/sec_left = seconds_remaining()
-	if(sec_left <= 0)
+	if(!sec_left)
 		timing = FALSE
 		detonate(T.z)
 	else
 		var/key = num2text(sec_left)
 		if(!(sec_left % 60) && !(key in milestones))
 			milestones[key] = TRUE
-			var/message = "[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
-			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
+			minor_announce("[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 
-/obj/machinery/doomsday_device/proc/detonate(z_level = 1)
+/obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION)
 	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/Alarm.ogg'
+		M << 'sound/machines/alarm.ogg'
 	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
@@ -194,7 +194,7 @@
 	set desc = "Detonate all RCDs on the station, while sparing onboard cyborg RCDs."
 	set waitfor = FALSE
 
-	if(!canUseTopic() || malf_cooldown)
+	if(!canUseTopic() || malf_cooldown > world.time)
 		return
 
 	for(var/I in GLOB.rcd_list)
@@ -203,9 +203,7 @@
 			RCD.detonate_pulse()
 
 	to_chat(src, "<span class='warning'>RCD detonation pulse emitted.</span>")
-	malf_cooldown = TRUE
-	sleep(100)
-	malf_cooldown = FALSE
+	malf_cooldown = world.time + 100
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"
@@ -446,7 +444,7 @@
 	set name = "Reactivate Cameranet"
 	set category = "Malfunction"
 
-	if(!canUseTopic() || malf_cooldown)
+	if(!canUseTopic() || malf_cooldown > world.time)
 		return
 	var/fixedcams = 0 //Tells the AI how many cams it fixed. Stats are fun.
 
@@ -469,9 +467,7 @@
 				break
 	to_chat(src, "<span class='notice'>Diagnostic complete! Operations completed: [fixedcams].</span>")
 
-	malf_cooldown = 1
-	spawn(30) //Lag protection
-		malf_cooldown = 0
+	malf_cooldown = world.time + 30
 
 /datum/AI_Module/large/upgrade_cameras
 	module_name = "Upgrade Camera Network"
@@ -608,3 +604,6 @@
 		eyeobj.relay_speech = TRUE
 	to_chat(src, "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>")
 	verbs -= /mob/living/silicon/ai/proc/surveillance
+
+
+#undef DEFAULT_DOOMSDAY_TIMER

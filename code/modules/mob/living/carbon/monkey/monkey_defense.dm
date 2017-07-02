@@ -1,11 +1,3 @@
-
-/mob/living/carbon/monkey/get_eye_protection()
-	var/number = ..()
-	if(istype(src.wear_mask, /obj/item/clothing/mask))
-		var/obj/item/clothing/mask/MFP = src.wear_mask
-		number += MFP.flash_protect
-	return number
-
 /mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
 	if(health < 0 && ishuman(M))
 		var/mob/living/carbon/human/H = M

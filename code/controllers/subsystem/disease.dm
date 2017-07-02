@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(disease)
 	name = "Disease"
 	flags = SS_KEEP_TIMING|SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()

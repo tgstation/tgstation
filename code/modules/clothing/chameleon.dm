@@ -420,8 +420,8 @@
 	var/badmin_mode = FALSE
 	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
 
-/obj/item/weapon/gun/energy/laser/chameleon/New()
-	..()
+/obj/item/weapon/gun/energy/laser/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/gun
 	chameleon_action.chameleon_name = "Gun"
@@ -558,8 +558,8 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/New()
-	..()
+/obj/item/device/radio/headset/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/radio/headset
 	chameleon_action.chameleon_name = "Headset"

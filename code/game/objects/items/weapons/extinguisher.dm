@@ -42,8 +42,9 @@
 /obj/item/weapon/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
-
+	reagents.add_reagent("water", max_water - 10)
+	reagents.add_reagent("cryogenic_fluid", 10) //improved turf extinguishing
+	
 /obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"

@@ -34,18 +34,66 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/effects.dmi', "ghostalertsie")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
+	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
 
-	narsie_spawn_animation()
+/obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
+	var/list/souls_needed = list()
+	var/soul_goal = 0
+	var/souls = 0
+	var/resolved = FALSE
 
-	sleep(70)
-	SSshuttle.emergency.request(null, set_coefficient = 0.1) // Cannot recall
+/obj/singularity/narsie/large/cult/proc/resize(var/ratio)
+	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
+	ntransform.Scale(ratio)
+	animate(src, transform = ntransform, time = 40, easing = EASE_IN|EASE_OUT)
+
+/obj/singularity/narsie/large/cult/Initialize()
+	. = ..()
+	GLOB.cult_narsie = src
+	deltimer(GLOB.blood_target_reset_timer)
+	GLOB.blood_target = src
+	resize(0.6)
+	for(var/datum/mind/cult_mind in SSticker.mode.cult)
+		if(isliving(cult_mind.current))
+			var/mob/living/L = cult_mind.current
+			L.narsie_act()
+	for(var/mob/living/player in GLOB.player_list)
+		if(player.stat != DEAD && player.loc.z == ZLEVEL_STATION && !iscultist(player))
+			souls_needed[player] = TRUE
+	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
+	INVOKE_ASYNC(src, .proc/begin_the_end)
+
+/obj/singularity/narsie/large/cult/proc/begin_the_end()
+	sleep(50)
+	priority_announce("An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
+	sleep(550)
+	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: TWO MINUTES. ","Central Command Higher Dimensional Affairs")
+	sleep(50)
+	set_security_level("delta")
+	SSshuttle.registerHostileEnvironment(src)
+	SSshuttle.lockdown = TRUE
+	sleep(1150)
+	if(resolved == FALSE)
+		resolved = TRUE
+		world << sound('sound/machines/alarm.ogg')
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
+
+/obj/singularity/narsie/large/cult/Destroy()
+	GLOB.cult_narsie = null
+	return ..()
+
+/proc/ending_helper()
+	SSticker.force_ending = 1
+
+/proc/cult_ending_helper(var/no_explosion = 0)
+	SSticker.station_explosion_cinematic(no_explosion, "cult", null)
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
-	new /obj/effect/particle_effect/smoke/sleeping(src.loc)
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = src.loc)
 
 
 /obj/singularity/narsie/process()
@@ -82,7 +130,8 @@
 
 
 /obj/singularity/narsie/consume(atom/A)
-	A.narsie_act()
+	if(isturf(A))
+		A.narsie_act()
 
 
 /obj/singularity/narsie/ex_act() //No throwing bombs at her either.
@@ -134,7 +183,7 @@
 		return
 	to_chat(target, "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>")
 	target = food
-	if(isliving(target))
+	if(ishuman(target))
 		to_chat(target, "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>")
 	else
 		to_chat(target, "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
@@ -163,4 +212,6 @@
 	sleep(11)
 	move_self = 1
 	icon = initial(icon)
+
+
 

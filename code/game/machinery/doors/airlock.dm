@@ -72,16 +72,18 @@
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
+	var/obj/item/weapon/note //Any papers pinned to the airlock
 	var/detonated = 0
 	var/doorOpen = 'sound/machines/airlock.ogg'
-	var/doorClose = 'sound/machines/AirlockClose.ogg'
-	var/doorDeni = 'sound/machines/DeniedBeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/BoltsUp.ogg'
-	var/boltDown = 'sound/machines/BoltsDown.ogg'
-	var/noPower = 'sound/machines/DoorClick.ogg'
+	var/doorClose = 'sound/machines/airlockclose.ogg'
+	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
+	var/boltUp = 'sound/machines/boltsup.ogg'
+	var/boltDown = 'sound/machines/boltsdown.ogg'
+	var/noPower = 'sound/machines/doorclick.ogg'
 
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -97,14 +99,15 @@
 	var/static/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Initialize()
-	..()
+	. = ..()
 	wires = new /datum/wires/airlock(src)
-	if(src.closeOtherId != null)
-		spawn (5)
-			for (var/obj/machinery/door/airlock/A in GLOB.airlocks)
-				if(A.closeOtherId == src.closeOtherId && A != src)
-					src.closeOther = A
-					break
+	if (cyclelinkeddir)
+		cyclelinkairlock()
+	if(frequency)
+		set_frequency(frequency)
+
+	if(closeOtherId != null)
+		addtimer(CALLBACK(.proc/update_other_id), 5)
 	if(glass)
 		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_METAL)
@@ -120,13 +123,14 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-/obj/machinery/door/airlock/Initialize()
-	..()
-	if (cyclelinkeddir)
-		cyclelinkairlock()
-	if(frequency)
-		set_frequency(frequency)
+
 	update_icon()
+
+/obj/machinery/door/airlock/proc/update_other_id()
+	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
+		if(A.closeOtherId == closeOtherId && A != src)
+			closeOther = A
+			break
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
@@ -179,18 +183,17 @@
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
 	var/runed = prob(20)
-	if(prob(20))
-		if(glass)
-			if(runed)
-				new/obj/machinery/door/airlock/cult/glass(T)
-			else
-				new/obj/machinery/door/airlock/cult/unruned/glass(T)
+	if(glass)
+		if(runed)
+			new/obj/machinery/door/airlock/cult/glass(T)
 		else
-			if(runed)
-				new/obj/machinery/door/airlock/cult(T)
-			else
-				new/obj/machinery/door/airlock/cult/unruned(T)
-		qdel(src)
+			new/obj/machinery/door/airlock/cult/unruned/glass(T)
+	else
+		if(runed)
+			new/obj/machinery/door/airlock/cult(T)
+		else
+			new/obj/machinery/door/airlock/cult/unruned(T)
+	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
 	if(glass)
@@ -200,14 +203,11 @@
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
-	qdel(wires)
-	wires = null
+	QDEL_NULL(wires)
 	if(charge)
 		qdel(charge)
 		charge = null
-	if(electronics)
-		qdel(electronics)
-		electronics = null
+	QDEL_NULL(electronics)
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
@@ -215,7 +215,13 @@
 	if(id_tag)
 		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
+	qdel(note)
 	return ..()
+
+/obj/machinery/door/airlock/handle_atom_del(atom/A)
+	if(A == note)
+		note = null
+		update_icon()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
@@ -335,16 +341,14 @@
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 	if(!hasPower())		// unpowered, no shock
 		return FALSE
-	if(hasShocked)
+	if(hasShocked > world.time)
 		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you
 	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 1, check_range))
-		hasShocked = TRUE
-		spawn(10)
-			hasShocked = FALSE
+		hasShocked = world.time + 10
 		return TRUE
 	else
 		return FALSE
@@ -373,6 +377,8 @@
 	var/mutable_appearance/weld_overlay
 	var/mutable_appearance/damag_overlay
 	var/mutable_appearance/sparks_overlay
+	var/mutable_appearance/note_overlay
+	var/notetype = note_type()
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -397,6 +403,8 @@
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_DENY)
 			if(!hasPower())
@@ -418,6 +426,8 @@
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -437,6 +447,8 @@
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -451,6 +463,8 @@
 					panel_overlay = get_airlock_overlay("panel_closing_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_closing", note_overlay_file)
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -465,6 +479,8 @@
 					panel_overlay = get_airlock_overlay("panel_open", overlays_file)
 			if(obj_integrity < (0.75 * max_integrity))
 				damag_overlay = get_airlock_overlay("sparks_open", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_open", note_overlay_file)
 
 		if(AIRLOCK_OPENING)
 			frame_overlay = get_airlock_overlay("opening", icon)
@@ -479,6 +495,8 @@
 					panel_overlay = get_airlock_overlay("panel_opening_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_opening", note_overlay_file)
 
 	cut_overlays()
 	add_overlay(frame_overlay)
@@ -488,6 +506,7 @@
 	add_overlay(weld_overlay)
 	add_overlay(sparks_overlay)
 	add_overlay(damag_overlay)
+	add_overlay(note_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/obj/machinery/door/airlock/A
@@ -516,6 +535,12 @@
 		to_chat(user, "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
 	if(charge && panel_open)
 		to_chat(user, "<span class='warning'>Something is wired up to the airlock's electronics!</span>")
+	if(note)
+		if(!in_range(user, src))
+			to_chat(user, "There's a [note.name] pinned to the front. You can't read it from here.")
+		else
+			to_chat(user, "There's a [note.name] pinned to the front...")
+			note.examine(user)
 
 	if(panel_open)
 		switch(security_level)
@@ -1098,6 +1123,12 @@
 		to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>")
 		playsound(src.loc, C.usesound, 50, 1)
 		src.update_icon()
+	else if(istype(C, /obj/item/weapon/wirecutters) && note)
+		user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
+		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+		note.forceMove(get_turf(user))
+		note = null
+		update_icon()
 	else if(is_wire_tool(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))
@@ -1123,6 +1154,16 @@
 		update_icon()
 		C.forceMove(src)
 		charge = C
+	else if(istype(C, /obj/item/weapon/paper) || istype(C, /obj/item/weapon/photo))
+		if(note)
+			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.<spa>")
+			return
+		if(!user.transferItemToLoc(C, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [C]!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
+		note = C
+		update_icon()
 	else
 		return ..()
 
@@ -1136,7 +1177,7 @@
 								"<span class='italics'>You hear welding.</span>")
 				playsound(loc, W.usesound, 40, 1)
 				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					welded = !welded
 					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
@@ -1149,7 +1190,7 @@
 									"<span class='italics'>You hear welding.</span>")
 					playsound(loc, W.usesound, 40, 1)
 					if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 						obj_integrity = max_integrity
 						stat &= ~BROKEN
 						user.visible_message("[user.name] has repaired [src].", \
@@ -1553,6 +1594,14 @@
 			qdel(src)
 			return TRUE
 	return FALSE
+
+/obj/machinery/door/airlock/proc/note_type() //Returns a string representing the type of note pinned to this airlock
+	if(!note)
+		return
+	else if(istype(note, /obj/item/weapon/paper))
+		return "note"
+	else if(istype(note, /obj/item/weapon/photo))
+		return "photo"
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

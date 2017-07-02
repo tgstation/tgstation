@@ -23,7 +23,7 @@
 /obj/item/latexballon/proc/burst()
 	if (!air_contents || icon_state != "latexballon_blow")
 		return
-	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
+	playsound(src, 'sound/weapons/gunshot.ogg', 100, 1)
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
 	if(isliving(loc))

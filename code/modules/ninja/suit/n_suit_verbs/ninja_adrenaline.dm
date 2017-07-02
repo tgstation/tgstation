@@ -1,12 +1,6 @@
-
-
 //Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
 //Movement impairing would indicate drugs and the like.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
-	set name = "Adrenaline Boost"
-	set desc = "Inject a secret chemical that will counteract all movement-impairing effect."
-	set category = "Ninja Ability"
-	set popup_menu = 0
 
 	if(!ninjacost(0,N_ADRENALINE))//Have to make sure stat is not counted for this ability.
 		var/mob/living/carbon/human/H = affecting
@@ -25,4 +19,3 @@
 		a_boost--
 		to_chat(H, "<span class='notice'>There are <B>[a_boost]</B> adrenaline boosts remaining.</span>")
 		s_coold = 3
-	return

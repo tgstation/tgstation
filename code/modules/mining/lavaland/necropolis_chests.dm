@@ -1,5 +1,6 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
+
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
 	desc = "It's watching you closely."
@@ -10,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,25)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -27,19 +28,17 @@
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
-			new /obj/item/clothing/head/culthood(src)
-			new /obj/item/clothing/suit/cultrobes(src)
-			new /obj/item/weapon/bedsheet/cult(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/resonator_blast(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/heart/cursed(src)
+			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/weapon/sord(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
@@ -47,7 +46,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -65,11 +64,76 @@
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
+		if(26)
+			new /obj/item/book_of_babel(src)
+		if(27)
+			new /obj/item/borg/upgrade/modkit/lifesteal(src)
+			new /obj/item/weapon/bedsheet/cult(src)
+		if(28)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/bounty(src)
 
+//KA modkit design discs
+/obj/item/weapon/disk/design_disk/modkit_disc
+	name = "KA Mod Disk"
+	desc = "A design disc containing the design for a unique kinetic accelerator modkit."
+	icon_state = "datadisk1"
+	var/modkit_design = /datum/design/unique_modkit
 
+/obj/item/weapon/disk/design_disk/modkit_disc/Initialize()
+	. = ..()
+	blueprints[1] = new modkit_design
+
+/obj/item/weapon/disk/design_disk/modkit_disc/mob_and_turf_aoe
+	name = "Offensive Mining Explosion Mod Disk"
+	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+
+/obj/item/weapon/disk/design_disk/modkit_disc/rapid_repeater
+	name = "Rapid Repeater Mod Disk"
+	modkit_design = /datum/design/unique_modkit/rapid_repeater
+
+/obj/item/weapon/disk/design_disk/modkit_disc/resonator_blast
+	name = "Resonator Blast Mod Disk"
+	modkit_design = /datum/design/unique_modkit/resonator_blast
+
+/obj/item/weapon/disk/design_disk/modkit_disc/bounty
+	name = "Death Syphon Mod Disk"
+	modkit_design = /datum/design/unique_modkit/bounty
+
+/datum/design/unique_modkit
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+	req_tech = list("materials" = 12) //can't be normally obtained
+	build_type = PROTOLATHE | MECHFAB
+
+/datum/design/unique_modkit/offensive_turf_aoe
+	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
+	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
+	id = "hyperaoemod"
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_GOLD = 3000, MAT_DIAMOND = 4000)
+	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
+
+/datum/design/unique_modkit/rapid_repeater
+	name = "Kinetic Accelerator Rapid Repeater Mod"
+	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
+	id = "repeatermod"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_URANIUM = 8000, MAT_BLUESPACE = 2000)
+	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
+
+/datum/design/unique_modkit/resonator_blast
+	name = "Kinetic Accelerator Resonator Blast Mod"
+	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
+	id = "resonatormod"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
+	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
+
+/datum/design/unique_modkit/bounty
+	name = "Kinetic Accelerator Death Syphon Mod"
+	desc = "A device which causes kinetic accelerators to permenantly gain damage against creature types killed with it."
+	id = "bountymod"
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
+	reagents_list = list("blood" = 40)
+	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
-
 /obj/item/device/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
@@ -343,6 +407,24 @@
 			add_fingerprint(usr)
 
 
+
+
+//Book of Babel
+
+/obj/item/book_of_babel
+	name = "Book of Babel"
+	desc = "An ancient tome written in countless tongues."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "book1"
+	w_class = 2
+
+/obj/item/book_of_babel/attack_self(mob/user)
+	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
+	user.grant_all_languages(omnitongue=TRUE)
+	new /obj/effect/decal/cleanable/ash(get_turf(user))
+	qdel(src)
+
+
 //Boat
 
 /obj/vehicle/lavaboat
@@ -391,7 +473,7 @@
 
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
 	to_chat(user, "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
-	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 	new /obj/vehicle/lavaboat/dragon(get_turf(src))
 	qdel(src)
 
@@ -466,6 +548,13 @@
 			new /obj/item/weapon/gun/magic/wand/fireball(src)
 		if(4)
 			new /obj/item/weapon/dragons_blood(src)
+
+/obj/structure/closet/crate/necropolis/dragon/crusher
+	name = "firey dragon chest"
+
+/obj/structure/closet/crate/necropolis/dragon/crusher/PopulateContents()
+	..()
+	new /obj/item/crusher_trophy/tail_spike(src)
 
 /obj/item/weapon/melee/ghost_sword
 	name = "\improper spectral blade"
@@ -652,7 +741,7 @@
 		if(!istype(T))
 			return
 		if(!istype(T, turf_type))
-			var/obj/effect/overlay/temp/lavastaff/L = new /obj/effect/overlay/temp/lavastaff(T)
+			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
 			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
@@ -664,7 +753,7 @@
 					message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
 					log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
 					timer = world.time + create_cooldown
-					playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+					playsound(T,'sound/magic/fleshtostone.ogg', 200, 1)
 			else
 				timer = world.time
 			qdel(L)
@@ -673,28 +762,13 @@
 			if(T.TerraformTurf(reset_turf_type))
 				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
 				timer = world.time + reset_cooldown
-				playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+				playsound(T,'sound/magic/fleshtostone.ogg', 200, 1)
 
-/obj/effect/overlay/temp/lavastaff
+/obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
 	duration = 50
 
-///Bubblegum
-
-/obj/item/mayhem
-	name = "mayhem in a bottle"
-	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "vial"
-
-/obj/item/mayhem/attack_self(mob/user)
-	for(var/mob/living/carbon/human/H in range(7,user))
-		var/obj/effect/mine/pickup/bloodbath/B = new(H)
-		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
-	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
-	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
-	qdel(src)
-
+//Bubblegum
 /obj/structure/closet/crate/necropolis/bubblegum
 	name = "bubblegum chest"
 
@@ -707,6 +781,27 @@
 			new /obj/item/blood_contract(src)
 		if(3)
 			new /obj/item/weapon/gun/magic/staff/spellblade(src)
+
+/obj/structure/closet/crate/necropolis/bubblegum/crusher
+	name = "bloody bubblegum chest"
+
+/obj/structure/closet/crate/necropolis/bubblegum/crusher/PopulateContents()
+	..()
+	new /obj/item/crusher_trophy/demon_claws(src)
+
+/obj/item/mayhem
+	name = "mayhem in a bottle"
+	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+/obj/item/mayhem/attack_self(mob/user)
+	for(var/mob/living/carbon/human/H in range(7,user))
+		var/obj/effect/mine/pickup/bloodbath/B = new(H)
+		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
+	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
+	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
+	qdel(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -751,6 +846,23 @@
 			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
 
 	qdel(src)
+
+//Colossus
+/obj/structure/closet/crate/necropolis/colossus
+	name = "colossus chest"
+
+/obj/structure/closet/crate/necropolis/colossus/PopulateContents()
+	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
+	var/random_crystal = pick(choices)
+	new random_crystal(src)
+	new /obj/item/organ/vocal_cords/colossus(src)
+
+/obj/structure/closet/crate/necropolis/colossus/crusher
+	name = "angelic colossus chest"
+
+/obj/structure/closet/crate/necropolis/colossus/crusher/PopulateContents()
+	..()
+	new /obj/item/crusher_trophy/blaster_tubes(src)
 
 //Hierophant
 /obj/item/weapon/hierophant_club
@@ -800,7 +912,9 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				new /obj/effect/overlay/temp/hierophant/chaser(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				C.damage = 30
+				C.monster_damage_boost = FALSE
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -854,8 +968,8 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
-				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
-				new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
+				playsound(T,'sound/magic/blind.ogg', 200, 1, -4)
+				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
 				user.visible_message("<span class='hierophant_warning'>[user] places a strange machine beneath [user.p_their()] feet!</span>", \
@@ -882,8 +996,8 @@
 	timer = world.time + 50
 	INVOKE_ASYNC(src, .proc/prepare_icon_update)
 	beacon.icon_state = "hierophant_tele_on"
-	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE1 = new /obj/effect/overlay/temp/hierophant/telegraph/edge(user.loc)
-	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE2 = new /obj/effect/overlay/temp/hierophant/telegraph/edge(beacon.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
 	if(do_after(user, 40, target = user) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
@@ -895,10 +1009,10 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		new /obj/effect/overlay/temp/hierophant/telegraph(T, user)
-		new /obj/effect/overlay/temp/hierophant/telegraph(source, user)
-		playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
-		playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
+		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
+		playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
+		playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
@@ -917,13 +1031,13 @@
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
-		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
-		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(source, user)
+		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
+			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
 			B.damage = 30
 		for(var/t in RANGE_TURFS(1, source))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
+			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
@@ -968,10 +1082,10 @@
 /obj/item/weapon/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)
 		return
-	new /obj/effect/overlay/temp/hierophant/telegraph/cardinal(T, user)
+	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	new /obj/effect/overlay/temp/hierophant/blast(T, user, friendly_fire_check)
+	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
 	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
@@ -984,15 +1098,18 @@
 	for(var/i in 1 to range)
 		if(!J)
 			return
-		new /obj/effect/overlay/temp/hierophant/blast(J, user, friendly_fire_check)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
+		B.damage = 30
+		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)
 
 /obj/item/weapon/hierophant_club/proc/aoe_burst(turf/T, mob/living/user) //make a 3x3 blast around a target
 	if(!T)
 		return
-	new /obj/effect/overlay/temp/hierophant/telegraph(T, user)
+	new /obj/effect/temp_visual/hierophant/telegraph(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
-		new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
+		B.damage = 15 //keeps monster damage boost due to lower damage

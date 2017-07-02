@@ -38,6 +38,9 @@
 		if (job && job <= last_asset_job && !(job in completed_asset_jobs))
 			completed_asset_jobs += job
 			return
+		else if (job in completed_asset_jobs) //byond bug ID:2256651
+			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
+			src << browse("...", "window=asset_cache_browser")
 
 	if (!holder && config.minutetopiclimit)
 		var/minute = round(world.time, 600)
@@ -109,6 +112,12 @@
 			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
+		if("chat")
+			return chatOutput.Topic(href, href_list)
+
+	switch(href_list["action"])
+		if("openLink")
+			src << link(href_list["link"])
 
 	..()	//redirect to hsrc.Topic()
 
@@ -158,6 +167,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
+	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -236,6 +246,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 	. = ..()	//calls mob.Login()
 
+	chatOutput.start() // Starts the chat
+
 	if(alert_mob_dupe_login)
 		set waitfor = FALSE
 		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
@@ -282,13 +294,12 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
+		
 		if(!check_rights_for(src, R_ADMIN) && check_rights_for(src, R_MENTOR))
 			mentor_memo_output("Show")
 
-
 	add_verbs_from_config()
-	set_client_age_from_db(tdata)
-	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
+	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -348,9 +359,9 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	var/list/topmenus = GLOB.menulist[/datum/menu]
+	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
 	for (var/thing in topmenus)
-		var/datum/menu/topmenu = thing
+		var/datum/verbs/menu/topmenu = thing
 		var/topmenuname = "[topmenu]"
 		if (topmenuname == "[topmenu.type]")
 			var/list/tree = splittext(topmenuname, "/")
@@ -359,13 +370,13 @@ GLOBAL_LIST(external_rsc_urls)
 		var/list/entries = topmenu.Generate_list(src)
 		for (var/child in entries)
 			winset(src, "[url_encode(child)]", "[entries[child]]")
-			if (!ispath(child, /datum/menu))
+			if (!ispath(child, /datum/verbs/menu))
 				var/atom/verb/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)
-		var/datum/menu/menuitem = GLOB.menulist[thing]
+		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
 
@@ -448,14 +459,15 @@ GLOBAL_LIST(external_rsc_urls)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
-	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
 		return
 	if(query_get_client_age.NextRow())
-		player_age = text2num(query_get_client_age.item[1])
+		player_join_date = query_get_client_age.item[1]
+		player_age = text2num(query_get_client_age.item[2])
 		if(!account_join_date)
-			account_join_date = query_get_client_age.item[2]
-			account_age = text2num(query_get_client_age.item[3])
+			account_join_date = query_get_client_age.item[3]
+			account_age = text2num(query_get_client_age.item[4])
 			if(!account_age)
 				account_join_date = sanitizeSQL(findJoinDate())
 				if(!account_join_date)
@@ -472,8 +484,11 @@ GLOBAL_LIST(external_rsc_urls)
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[config.internet_address_to_use]' LIKE '', '0', '[config.internet_address_to_use]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
+	if(new_player)
+		player_age = -1
+	. = player_age
 
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
@@ -656,3 +671,7 @@ GLOBAL_LIST(external_rsc_urls)
 		CRASH("change_view called without argument.")
 
 	view = new_size
+
+/client/proc/AnnouncePR(announcement)
+	if(prefs && prefs.chat_toggles & CHAT_PULLR)
+		to_chat(src, announcement)

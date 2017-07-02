@@ -238,7 +238,7 @@
 			visible_message("<span class='danger'>[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!</span>")
 			for(var/mob/living/m in oview(1, src))
 				m.apply_damage(15, BRUTE, pick("head","chest","groin"))
-				investigate_log("Experimentor dealt minor brute to [m].", "experimentor")
+				investigate_log("Experimentor dealt minor brute to [m].", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions!</span>")
@@ -248,7 +248,7 @@
 			var/mob/living/target = locate(/mob/living) in oview(7,src)
 			if(target)
 				var/obj/item/throwing = loaded_item
-				investigate_log("Experimentor has thrown [loaded_item] at [target]", "experimentor")
+				investigate_log("Experimentor has thrown [loaded_item] at [target]", INVESTIGATE_EXPERIMENTOR)
 				ejectItem()
 				if(throwing)
 					throwing.throw_at(target, 10, 1)
@@ -259,7 +259,7 @@
 			visible_message("[exp_on] has activated an unknown subroutine!")
 			cloneMode = TRUE
 			cloneCount = badThingCoeff
-			investigate_log("Experimentor has made a clone of [exp_on]", "experimentor")
+			investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and leaking radiation!</span>")
@@ -278,7 +278,7 @@
 			var/newPath = pickWeighted(valid_items)
 			loaded_item = new newPath(src)
 			visible_message("<span class='warning'>[src] malfunctions, transforming [savedName] into [loaded_item]!</span>")
-			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", "experimentor")
+			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", INVESTIGATE_EXPERIMENTOR)
 			if(istype(loaded_item,/obj/item/weapon/grenade/chem_grenade))
 				var/obj/item/weapon/grenade/chem_grenade/CG = loaded_item
 				CG.prime()
@@ -295,7 +295,7 @@
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
-			investigate_log("Experimentor has released [chosenchem] smoke.", "experimentor")
+			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -315,14 +315,14 @@
 			qdel(R)
 			ejectItem(TRUE)
 			warn_admins(usr, "[chosenchem] smoke")
-			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", "experimentor")
+			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("[src] malfunctions, spewing harmless gas.")
 			throwSmoke(src.loc)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] melts [exp_on], ionizing the air around it!</span>")
 			empulse(src.loc, 4, 6)
-			investigate_log("Experimentor has generated an Electromagnetic Pulse.", "experimentor")
+			investigate_log("Experimentor has generated an Electromagnetic Pulse.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_HEAT)
@@ -336,14 +336,14 @@
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
-			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", "experimentor")
+			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			var/turf/start = get_turf(src)
 			var/mob/M = locate(/mob/living) in view(src, 3)
 			var/turf/MT = get_turf(M)
 			if(MT)
 				visible_message("<span class='danger'>[src] dangerously overheats, launching a flaming fuel orb!</span>")
-				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", "experimentor")
+				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", INVESTIGATE_EXPERIMENTOR)
 				var/obj/item/projectile/magic/aoe/fireball/FB = new /obj/item/projectile/magic/aoe/fireball(start)
 				FB.original = MT
 				FB.current = start
@@ -353,7 +353,7 @@
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!</span>")
 			explosion(src.loc, -1, 0, 0, 0, 0, flame_range = 2)
-			investigate_log("Experimentor started a fire.", "experimentor")
+			investigate_log("Experimentor started a fire.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, melting [exp_on] and leaking hot air!</span>")
@@ -367,14 +367,14 @@
 				removed.temperature = min((removed.temperature*heat_capacity + 100000)/heat_capacity, 1000)
 			env.merge(removed)
 			air_update_turf()
-			investigate_log("Experimentor has released hot air.", "experimentor")
+			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, activating its emergency coolant systems!</span>")
 			throwSmoke(src.loc)
 			for(var/mob/living/m in oview(1, src))
 				m.apply_damage(5, BURN, pick("head","chest","groin"))
-				investigate_log("Experimentor has dealt minor burn damage to [m]", "experimentor")
+				investigate_log("Experimentor has dealt minor burn damage to [m]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_COLD)
@@ -388,13 +388,13 @@
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
-			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", "experimentor")
+			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent("frostoil" , 50)
-			investigate_log("Experimentor has released frostoil gas.", "experimentor")
+			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -413,7 +413,7 @@
 				removed.temperature = (removed.temperature*heat_capacity - 75000)/heat_capacity
 			env.merge(removed)
 			air_update_turf()
-			investigate_log("Experimentor has released cold air.", "experimentor")
+			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!</span>")
@@ -433,14 +433,14 @@
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
-			investigate_log("Experimentor has triggered the 'throw things' reaction.", "experimentor")
+			investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at(src,10,1)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
-			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", "experimentor")
+			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			var/list/throwAt = list()
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
@@ -460,7 +460,7 @@
 		playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/weapon/relic/R = loaded_item
 		R.reveal()
-		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", "experimentor")
+		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
 
 	//Global reactions
@@ -476,32 +476,32 @@
 			if(trackedIan)
 				throwSmoke(trackedIan.loc)
 				trackedIan.loc = src.loc
-				investigate_log("Experimentor has stolen Ian!", "experimentor") //...if anyone ever fixes it...
+				investigate_log("Experimentor has stolen Ian!", INVESTIGATE_EXPERIMENTOR) //...if anyone ever fixes it...
 			else
 				new /mob/living/simple_animal/pet/dog/corgi(src.loc)
-				investigate_log("Experimentor has spawned a new corgi.", "experimentor")
+				investigate_log("Experimentor has spawned a new corgi.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
 			visible_message("<span class='warning'>Experimentor draws the life essence of those nearby!</span>")
 			for(var/mob/living/m in view(4,src))
 				to_chat(m, "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>")
 				m.apply_damage(50, BRUTE, "chest")
-				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", "experimentor")
+				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", INVESTIGATE_EXPERIMENTOR)
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='warning'>[src] encounters a run-time error!</span>")
 			throwSmoke(src.loc)
 			if(trackedRuntime)
 				throwSmoke(trackedRuntime.loc)
 				trackedRuntime.loc = src.loc
-				investigate_log("Experimentor has stolen Runtime!", "experimentor")
+				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
 				new /mob/living/simple_animal/pet/cat(src.loc)
-				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", "experimentor")
+				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 76)
 			visible_message("<span class='warning'>[src] begins to smoke and hiss, shaking violently!</span>")
 			use_power(500000)
-			investigate_log("Experimentor has drained power from its APC", "experimentor")
+			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 
 	spawn(resetTime)
 		icon_state = "h_lathe"

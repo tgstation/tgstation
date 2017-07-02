@@ -109,7 +109,6 @@
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
-	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -379,6 +378,12 @@
 	if(.)
 		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
 
+/datum/spellbook_entry/item/plasma_fist
+	name = "Plasma Fist Scroll"
+	desc = "Consider this more of a "spell bundle." This artifact is NOT reccomended for weaklings. An ancient scroll that will teach you the art of Plasma Fist. With it's various combos you can knock people down in the area around you, light them on fire and finally perform the PLASMA FIST that will gib your target."
+	item_path = /obj/item/weapon/plasma_fist_scroll
+	cost = 1
+
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
 	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
@@ -479,13 +484,13 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_guns)
+	return (!config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(0, user, 25)
 	active = 1
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	return 1
 
@@ -496,13 +501,13 @@
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_magic)
+	return (!config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(1, user, 25)
 	active = 1
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	return 1
 
@@ -514,13 +519,13 @@
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_events)
+	return (!config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
 	summonevents()
 	times++
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return 1
 

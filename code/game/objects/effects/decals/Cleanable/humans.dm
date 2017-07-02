@@ -129,7 +129,7 @@
 	name = "footprints"
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "nothingwhatsoever"
-	desc = "where might they lead?"
+	desc = "WHOSE FOOTPRINTS ARE THESE?"
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0
@@ -180,7 +180,7 @@
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "some <B>[initial(S.name)]</B> \icon[S]\n"
+			. += "some <B>[initial(S.name)]</B> [bicon(initial(S.icon))]\n"
 
 	to_chat(user, .)
 

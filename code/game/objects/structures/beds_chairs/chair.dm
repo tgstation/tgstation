@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -37,10 +37,9 @@
 	return attack_hand(user)
 
 /obj/structure/chair/narsie_act()
-	if(prob(20))
-		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
@@ -51,7 +50,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		E.setDir(dir)
 		E.part = SK
 		SK.loc = E
@@ -235,14 +234,14 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
+	materials = list(MAT_METAL = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/narsie_act()
-	if(prob(20))
-		var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
 	plant(user)
@@ -319,6 +318,7 @@
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
+	materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()

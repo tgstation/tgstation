@@ -3,7 +3,7 @@
 ////////////////////////////////////////
 
 /datum/design/disk/normal
-	name = "hard disk drive"
+	name = "Hard Disk Drive"
 	id = "hdd_basic"
 	req_tech = list("programming" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
@@ -12,7 +12,7 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/advanced
-	name = "advanced hard disk drive"
+	name = "Advanced Hard Disk Drive"
 	id = "hdd_advanced"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
@@ -21,7 +21,7 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/super
-	name = "super hard disk drive"
+	name = "Super Hard Disk Drive"
 	id = "hdd_super"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
@@ -30,7 +30,7 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/cluster
-	name = "cluster hard disk drive"
+	name = "Cluster Hard Disk Drive"
 	id = "hdd_cluster"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
@@ -39,7 +39,7 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/small
-	name = "solid state drive"
+	name = "Solid State Drive"
 	id = "ssd_small"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
@@ -48,7 +48,7 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/micro
-	name = "micro solid state drive"
+	name = "Micro Solid State Drive"
 	id = "ssd_micro"
 	req_tech = list("programming" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
@@ -59,7 +59,7 @@
 
 // Network cards
 /datum/design/netcard/basic
-	name = "network card"
+	name = "Network Card"
 	id = "netcard_basic"
 	req_tech = list("programming" = 2, "engineering" = 1)
 	build_type = IMPRINTER
@@ -69,7 +69,7 @@
 	category = list("Computer Parts")
 
 /datum/design/netcard/advanced
-	name = "advanced network card"
+	name = "Advanced Network Card"
 	id = "netcard_advanced"
 	req_tech = list("programming" = 4, "engineering" = 2)
 	build_type = IMPRINTER
@@ -79,7 +79,7 @@
 	category = list("Computer Parts")
 
 /datum/design/netcard/wired
-	name = "wired network card"
+	name = "Wired Network Card"
 	id = "netcard_wired"
 	req_tech = list("programming" = 5, "engineering" = 3)
 	build_type = IMPRINTER
@@ -91,7 +91,7 @@
 
 // Data disks
 /datum/design/portabledrive/basic
-	name = "data disk"
+	name = "Data Disk"
 	id = "portadrive_basic"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
@@ -101,7 +101,7 @@
 	category = list("Computer Parts")
 
 /datum/design/portabledrive/advanced
-	name = "advanced data disk"
+	name = "Advanced Data Disk"
 	id = "portadrive_advanced"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
@@ -111,7 +111,7 @@
 	category = list("Computer Parts")
 
 /datum/design/portabledrive/super
-	name = "super data disk"
+	name = "Super Data Disk"
 	id = "portadrive_super"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
@@ -123,7 +123,7 @@
 
 // Card slot
 /datum/design/cardslot
-	name = "ID card slot"
+	name = "ID Card Slot"
 	id = "cardslot"
 	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
@@ -133,7 +133,7 @@
 
 // Intellicard slot
 /datum/design/aislot
-	name = "Intellicard slot"
+	name = "Intellicard Slot"
 	id = "aislot"
 	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
@@ -143,7 +143,7 @@
 
 // Mini printer
 /datum/design/miniprinter
-	name = "miniprinter"
+	name = "Miniprinter"
 	id = "miniprinter"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
@@ -154,7 +154,7 @@
 
 // APC Link
 /datum/design/APClink
-	name = "area power connector"
+	name = "Area Power Connector"
 	id = "APClink"
 	req_tech = list("programming" = 2, "powerstorage" = 3, "engineering" = 2)
 	build_type = PROTOLATHE
@@ -165,7 +165,7 @@
 
 // Batteries
 /datum/design/battery/controller
-	name = "power cell controller"
+	name = "Power Cell Controller"
 	id = "bat_control"
 	req_tech = list("powerstorage" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
@@ -174,7 +174,7 @@
 	category = list("Computer Parts")
 
 /datum/design/battery/normal
-	name = "battery module"
+	name = "Battery Module"
 	id = "bat_normal"
 	req_tech = list("powerstorage" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
@@ -183,7 +183,7 @@
 	category = list("Computer Parts")
 
 /datum/design/battery/advanced
-	name = "advanced battery module"
+	name = "Advanced Battery Module"
 	id = "bat_advanced"
 	req_tech = list("powerstorage" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
@@ -192,7 +192,7 @@
 	category = list("Computer Parts")
 
 /datum/design/battery/super
-	name = "super battery module"
+	name = "Super Battery Module"
 	id = "bat_super"
 	req_tech = list("powerstorage" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
@@ -201,7 +201,7 @@
 	category = list("Computer Parts")
 
 /datum/design/battery/nano
-	name = "nano battery module"
+	name = "Nano Battery Module"
 	id = "bat_nano"
 	req_tech = list("powerstorage" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
@@ -210,7 +210,7 @@
 	category = list("Computer Parts")
 
 /datum/design/battery/micro
-	name = "micro battery module"
+	name = "Micro Battery Module"
 	id = "bat_micro"
 	req_tech = list("powerstorage" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
@@ -221,7 +221,7 @@
 
 // Processor unit
 /datum/design/cpu
-	name = "processor board"
+	name = "Processor Board"
 	id = "cpu_normal"
 	req_tech = list("programming" = 3, "engineering" = 2)
 	build_type = IMPRINTER
@@ -231,7 +231,7 @@
 	category = list("Computer Parts")
 
 /datum/design/cpu/small
-	name = "microprocessor"
+	name = "Microprocessor"
 	id = "cpu_small"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
@@ -241,7 +241,7 @@
 	category = list("Computer Parts")
 
 /datum/design/cpu/photonic
-	name = "photonic processor board"
+	name = "Photonic Processor Board"
 	id = "pcpu_normal"
 	req_tech = list("programming" = 5, "engineering" = 4)
 	build_type = IMPRINTER
@@ -251,7 +251,7 @@
 	category = list("Computer Parts")
 
 /datum/design/cpu/photonic/small
-	name = "photonic microprocessor"
+	name = "Photonic Microprocessor"
 	id = "pcpu_small"
 	req_tech = list("programming" = 4, "engineering" = 3)
 	build_type = IMPRINTER

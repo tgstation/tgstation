@@ -2,12 +2,12 @@
 	name = "Admin ID"
 	desc = "Magic card that opens everything."
 	icon_state = "fingerprint1"
-	registered_name = "Admin"
+	registered_name = null
 	assignment = "General"
 
-/obj/item/weapon/card/id/admin/New()
+/obj/item/weapon/card/id/admin/Initialize()
+	. = ..()
 	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()+get_ert_access("commander")
-	..()
 
 /proc/spawntestdummy(var/mob/usr)
 	SSblackbox.inc("admin_secrets_fun_used",1)
@@ -15,6 +15,7 @@
 	message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
 	var/turf/T = get_turf(usr)
 	var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(T)
+	D.unascend_animation()
 	usr.client.cmd_assume_direct_control(D)
 	D.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(D), slot_w_uniform)
 	D.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(D), slot_shoes)

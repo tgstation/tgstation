@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Being converted to clockcult will briefly cause your world to turn yellow and you to hear the machines of Reebe, matching the description in the messages."
+  - spellcheck: "The messages for being converted and for failing conversion to clockcult have been updated."

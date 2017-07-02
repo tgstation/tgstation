@@ -56,7 +56,7 @@ CLOTHESMATE
 		/obj/item/clothing/neck/stripedredscarf=1,
 		/obj/item/clothing/neck/stripedbluescarf=1,
 		/obj/item/clothing/neck/stripedgreenscarf=1,
-		/obj/item/clothing/tie/waistcoat=1,
+		/obj/item/clothing/accessory/waistcoat=1,
 		/obj/item/clothing/under/skirt/black=1,
 		/obj/item/clothing/under/skirt/blue=1,
 		/obj/item/clothing/under/skirt/red=1,
@@ -281,12 +281,12 @@ AUTODROBE
 		/obj/item/clothing/head/kitty = 1,
 		/obj/item/clothing/under/skirt/black = 1,
 		/obj/item/clothing/head/beret = 1,
-		/obj/item/clothing/tie/waistcoat = 1,
+		/obj/item/clothing/accessory/waistcoat = 1,
 		/obj/item/clothing/under/suit_jacket = 1,
 		/obj/item/clothing/head/that =1,
 		/obj/item/clothing/under/kilt = 1,
 		/obj/item/clothing/head/beret = 1,
-		/obj/item/clothing/tie/waistcoat = 1,
+		/obj/item/clothing/accessory/waistcoat = 1,
 		/obj/item/clothing/glasses/monocle =1,
 		/obj/item/clothing/head/bowler = 1,
 		/obj/item/weapon/cane = 1,
@@ -443,6 +443,7 @@ MEGASEED SERVITOR
 		/obj/item/seeds/grass = 3,
 		/obj/item/seeds/lemon = 3,
 		/obj/item/seeds/lime = 3,
+		/obj/item/seeds/onion = 3,
 		/obj/item/seeds/orange = 3,
 		/obj/item/seeds/potato = 3,
 		/obj/item/seeds/poppy = 3,
@@ -469,6 +470,7 @@ MEGASEED SERVITOR
 		/obj/item/seeds/plump = 2,
 		/obj/item/seeds/reishi = 2,
 		/obj/item/seeds/cannabis = 3,
+		/obj/item/seeds/starthistle = 2,
 		/obj/item/seeds/random = 2
 		)
 	premium = list(
@@ -492,19 +494,34 @@ NUTRIMAX
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 	products = list(
-		/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez = 30,
-		/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z = 20,
-		/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh = 10,
-		/obj/item/weapon/reagent_containers/spray/pestspray = 20,
-		/obj/item/weapon/reagent_containers/syringe = 5,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/eznutriment = 30,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/left4zed = 20,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/robustharvest = 10,
+//		/obj/item/weapon/reagent_containers/glass/bottle/precision/mutagen = 30,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/ash = 25,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/ammonia = 20,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/saltpetre = 15,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/diethylamine = 10,
+		/obj/item/weapon/reagent_containers/spray/plantbgone = 5,
+		/obj/item/weapon/reagent_containers/spray/weedspray = 5,
+		/obj/item/weapon/reagent_containers/spray/pestspray = 5,
+		/obj/item/weapon/reagent_containers/syringe = 3,
 		/obj/item/weapon/storage/bag/plants = 5,
+		/obj/item/weapon/storage/box/disks_plantgene = 1,
+		/obj/item/device/plant_analyzer = 4,
 		/obj/item/weapon/cultivator = 3,
 		/obj/item/weapon/shovel/spade = 3,
-		/obj/item/device/plant_analyzer = 4
 		)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,
-		/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5
+		/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 5,
+		/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone = 5,
+		/obj/item/weapon/reagent_containers/dropper = 3,
+		/obj/item/weapon/hatchet = 3
+		)
+	premium = list(
+		/obj/item/weapon/watertank = 2,
+		/obj/item/weapon/scythe = 3
 		)
 
 /*
@@ -537,6 +554,15 @@ SECTECH
 		/obj/item/weapon/storage/fancy/donut_box = 2
 		)
 
+/obj/machinery/vending/security/pre_throw(obj/item/I)
+	if(istype(I, /obj/item/weapon/grenade))
+		var/obj/item/weapon/grenade/G = I
+		G.preprime()
+	else if(istype(I, /obj/item/device/flashlight))
+		var/obj/item/device/flashlight/F = I
+		F.on = TRUE
+		F.update_brightness()
+
 /*
 
 BOOZE O MAT
@@ -544,6 +570,7 @@ BOOZE O MAT
 */
 /obj/machinery/vending/boozeomat
 	name = "\improper Booze-O-Mat"
+	icon = 'icons/obj/vending.dmi'
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	icon_deny = "boozeomat-deny"
@@ -725,7 +752,7 @@ CHOCOLATE
 	desc = "Uh oh!"
 
 /obj/machinery/vending/snack/random/Initialize()
-    ..()
+    . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
     new T(get_turf(src))
     qdel(src)
@@ -778,6 +805,11 @@ CIGARETTE
 		/obj/item/clothing/mask/vape = 3,
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims = 3
 		)
+
+/obj/machinery/vending/cigarette/pre_throw(obj/item/I)
+	if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
+		L.set_lit(TRUE)
 
 /*
 
@@ -843,7 +875,7 @@ SODA
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
-    ..()
+    . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))
     qdel(src)
@@ -936,7 +968,6 @@ PDA TECH
 
 /obj/machinery/vending/cart
 	name = "\improper PTech"
-	icon = 'icons/obj/vending.dmi'
 	desc = "Cartridges for PDAs"
 	product_slogans = "Carts to go!"
 	icon_state = "cart"
@@ -951,5 +982,30 @@ PDA TECH
 					/obj/item/weapon/cartridge/captain = 3,
 					/obj/item/weapon/cartridge/quartermaster = 10
 					)
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
+
+/obj/machinery/vending/toyliberationstation
+	name = "\improper Syndicate Donksoft Toy Vendor"
+	desc = "A ages 8 and up approved vendor that dispenses toys. If you were to find the right wires, you can unlock the adult mode setting!"
+	icon_state = "syndi"
+	req_access_txt = "1"
+	product_slogans = "Get your cool toys today!;Trigger a valid hunter today!;Quality toy weapons for cheap prices!;Give them to HoPs for all access!;Give them to HoS to get perma briged!"
+	vend_reply = "Come back for more!"
+	products = list(/obj/item/weapon/gun/ballistic/automatic/toy/unrestricted = 10,
+					/obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
+					/obj/item/weapon/gun/ballistic/shotgun/toy/unrestricted = 10,
+					/obj/item/toy/sword = 10, /obj/item/ammo_box/foambox = 20,
+					/obj/item/toy/foamblade = 10,
+					/obj/item/toy/syndicateballoon = 10,
+					/obj/item/clothing/suit/syndicatefake = 5,
+					/obj/item/clothing/head/syndicatefake = 5)
+	contraband = list(/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow = 10,
+						/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted = 10,
+						/obj/item/weapon/gun/ballistic/automatic/l6_saw/toy/unrestricted = 10,
+						/obj/item/ammo_box/foambox/riot = 20,
+						/obj/item/toy/katana = 10,
+						/obj/item/weapon/twohanded/dualsaber/toy = 5,
+						/obj/item/toy/cards/deck/syndicate = 10)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF

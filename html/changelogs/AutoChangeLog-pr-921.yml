@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Squishy plants will now affect walls and other turfs they get squished on"

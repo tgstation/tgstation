@@ -98,7 +98,7 @@
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/c45nostamina
-	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
@@ -119,7 +119,7 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 200
 	health = 200
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
 				/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
@@ -131,7 +131,7 @@
 	minimum_distance = 10
 	retreat_distance = 10
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 /mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
 	..()
@@ -150,7 +150,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("syndicate")

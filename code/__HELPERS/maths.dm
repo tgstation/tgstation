@@ -130,6 +130,22 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	var/t = round((val - min) / d)
 	return val - (t * d)
 
+#define NORM_ROT(rot) ((((rot % 360) + (rot - round(rot, 1))) > 0) ? ((rot % 360) + (rot - round(rot, 1))) : (((rot % 360) + (rot - round(rot, 1))) + 360))
+
+/proc/get_angle_of_incidence(face_angle, angle_in, auto_normalize = TRUE)
+
+	var/angle_in_s = NORM_ROT(angle_in)
+	var/face_angle_s = NORM_ROT(face_angle)
+	var/incidence = face_angle_s - angle_in_s
+	var/incidence_s = incidence
+	while(incidence_s < -90)
+		incidence_s += 180
+	while(incidence_s > 90)
+		incidence_s -= 180
+	if(auto_normalize)
+		return incidence_s
+	else
+		return incidence
 
 //A logarithm that converts an integer to a number scaled between 0 and 1 (can be tweaked to be higher).
 //Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
@@ -140,8 +156,6 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 		return size_factor + scaling_modifier //scale mod of 0 results in a number from 0 to 1. A scale modifier of +0.5 returns 0.5 to 1.5
 		//to_chat(world, "Transform multiplier of [src] is [size_factor + scaling_modifer]")
-
-
 
 //converts a uniform distributed random number into a normal distributed one
 //since this method produces two random numbers, one is saved for subsequent calls

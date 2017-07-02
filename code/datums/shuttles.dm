@@ -72,7 +72,7 @@
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
-	name = "An Asteroid With Engines Strapped To It"
+	name = "Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
@@ -161,6 +161,12 @@
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
 	credit_cost = 1000
 
+/datum/map_template/shuttle/emergency/cere
+	suffix = "cere"
+	name = "Cere Station Emergency Shuttle"
+	description = "The large, beefed-up version of the box-standard shuttle. Includes an expanded brig, fully stocked medbay, enhanced cargo storage with mech chargers, \
+		an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
+
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
 	name = "Hyperfractal Gigashuttle"
@@ -229,6 +235,10 @@
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
 	name = "NT White UFO"
+
+/datum/map_template/shuttle/whiteship/cere
+	suffix = "cere"
+	name = "NT Construction Vessel"
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"

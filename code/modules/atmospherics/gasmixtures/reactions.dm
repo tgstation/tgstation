@@ -76,7 +76,6 @@
 /datum/gas_reaction/freon/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
 	if(location && location.freon_gas_act())
-		air.gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
 		. = REACTING
 
 //water vapor: puts out fires?

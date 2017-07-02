@@ -7,11 +7,12 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 
 SUBSYSTEM_DEF(air)
-	name = "Air"
+	name = "Atmospherics"
 	init_order = INIT_ORDER_AIR
 	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_turfs = 0
 	var/cost_groups = 0

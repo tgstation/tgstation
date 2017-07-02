@@ -31,7 +31,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/wrestling/Initialize()
-	..()
+	. = ..()
 	color = pick("white","green","yellow")
 
 /datum/action/slam/var/action_icon = 'hippiestation/icons/mob/actions.dmi'

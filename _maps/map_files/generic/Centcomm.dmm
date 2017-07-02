@@ -144,6 +144,8 @@
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "ay" = (
+/obj/effect/holodeck_effect/mobspawner/penguin,
+/obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/item/toy/snowball{
 	pixel_x = 0;
 	pixel_y = 6
@@ -302,6 +304,7 @@
 	},
 /area/holodeck/rec_center/lounge)
 "aT" = (
+/obj/effect/holodeck_effect/mobspawner/penguin_baby,
 /obj/structure/flora/tree/pine,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
@@ -2648,7 +2651,7 @@
 /turf/open/floor/circuit,
 /area/ctf)
 "hq" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "hr" = (
 /obj/effect/turf_decal/stripes/line,
@@ -3700,7 +3703,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 50
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "jY" = (
 /turf/open/floor/plasteel/brown{
@@ -4260,7 +4263,7 @@
 /area/centcom/control)
 "ln" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lo" = (
 /obj/structure/table/reinforced,
@@ -4415,11 +4418,11 @@
 /area/centcom/control)
 "lF" = (
 /obj/structure/flora/grass/brown,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lG" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lH" = (
 /turf/closed/indestructible/fakeglass{
@@ -4433,7 +4436,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lJ" = (
 /turf/closed/indestructible/riveted,
@@ -4636,7 +4639,7 @@
 /area/syndicate_mothership/control)
 "mh" = (
 /obj/item/toy/figure/syndie,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "mi" = (
 /obj/machinery/newscaster/security_unit,
@@ -4769,7 +4772,7 @@
 /area/centcom/control)
 "mz" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "mA" = (
 /turf/closed/indestructible/fakeglass,
@@ -5590,8 +5593,8 @@
 /obj/item/clothing/under/skirt/black,
 /obj/item/clothing/under/shorts/black,
 /obj/item/clothing/under/pants/track,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/neck/stripedredscarf,
@@ -5976,7 +5979,7 @@
 	},
 /area/wizard_station)
 "pk" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/space)
 "pl" = (
 /obj/machinery/computer/shuttle/syndicate/recall,
@@ -6941,7 +6944,7 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "rl" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
@@ -6960,7 +6963,7 @@
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
 "ro" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
@@ -7776,7 +7779,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 18
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/space)
 "th" = (
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -8097,7 +8100,7 @@
 	name = "\improper FOURTH WALL";
 	pixel_x = -32
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "tS" = (
 /turf/open/floor/wood,
@@ -8332,14 +8335,14 @@
 	},
 /area/syndicate_mothership/control)
 "ux" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/assault_pod)
 "uy" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
@@ -9745,7 +9748,7 @@
 /area/centcom/evac)
 "yc" = (
 /obj/structure/statue/uranium/nuke,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "yd" = (
 /obj/structure/table/wood,
@@ -11175,7 +11178,7 @@
 /obj/structure/rack,
 /obj/item/clothing/head/that,
 /obj/item/clothing/under/suit_jacket,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/waistcoat,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "BI" = (
@@ -11379,7 +11382,7 @@
 /obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
-/obj/item/clothing/tie/lawyers_badge{
+/obj/item/clothing/accessory/lawyers_badge{
 	desc = "A badge of upmost glory.";
 	name = "thunderdome badge"
 	},
@@ -11400,7 +11403,7 @@
 /obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
-/obj/item/clothing/tie/medal/silver{
+/obj/item/clothing/accessory/medal/silver{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,
@@ -11605,11 +11608,11 @@
 	name = "Thunderdome Plaque";
 	pixel_y = -32
 	},
-/obj/item/clothing/tie/medal/gold{
+/obj/item/clothing/accessory/medal/gold{
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/clothing/tie/medal/gold,
+/obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/plasteel/grimy,
 /area/tdome/tdomeobserve)
 "CF" = (
@@ -11625,7 +11628,7 @@
 	name = "Thunderdome Plaque";
 	pixel_y = -32
 	},
-/obj/item/clothing/tie/medal{
+/obj/item/clothing/accessory/medal{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,
@@ -12212,7 +12215,7 @@
 	name = "Thunderdome Blast Door"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -12243,7 +12246,7 @@
 	name = "General Supply"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -12394,7 +12397,7 @@
 /area/tdome/arena)
 "Ey" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -13716,7 +13719,7 @@
 /area/tdome/arena_source)
 "IS" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena_source)
@@ -13765,7 +13768,7 @@
 /area/tdome/arena_source)
 "Jd" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena_source)
@@ -14078,7 +14081,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Kh" = (
 /obj/machinery/light{
@@ -14104,7 +14107,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Kk" = (
 /obj/structure/chair{
@@ -14123,7 +14126,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Km" = (
 /obj/effect/turf_decal/stripes/line,
@@ -14141,7 +14144,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Kp" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14657,7 +14660,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Lx" = (
 /obj/structure/flora/grass/brown,
@@ -14665,7 +14668,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Ly" = (
 /obj/structure/flora/grass/brown,
@@ -14897,6 +14900,27 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Mg" = (
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	dir = 1;
+	icon_state = "cutout_ntsec";
+	name = "Private Security Officer"
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/centcom/evac)
+"Mh" = (
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	icon_state = "cutout_ntsec";
+	name = "Private Security Officer"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -65195,7 +65219,7 @@ sv
 wW
 xt
 xQ
-xZ
+Mg
 yC
 yC
 yU
@@ -65454,7 +65478,7 @@ xp
 xR
 xZ
 yC
-yC
+Mh
 yV
 qk
 aa
@@ -71987,14 +72011,14 @@ fj
 fy
 fC
 fN
-fO
-fO
-fO
-fO
-fO
-fO
-fO
-fO
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -72244,14 +72268,14 @@ fi
 fv
 fC
 fN
-fO
+ab
 fR
 fR
 fR
 fR
 fR
 fR
-fO
+ab
 aa
 aa
 aa
@@ -72501,16 +72525,16 @@ ag
 ag
 ag
 ab
-fO
+ab
 fS
 fS
 fS
 fS
 fS
 fS
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -72758,7 +72782,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -72767,7 +72791,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73015,7 +73039,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73024,7 +73048,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73272,7 +73296,7 @@ fl
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73281,7 +73305,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73529,7 +73553,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73538,7 +73562,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73786,7 +73810,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73795,7 +73819,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -74043,16 +74067,16 @@ ag
 ag
 ag
 ab
-fO
+ab
 fT
 fT
 fT
 fT
 fT
 fT
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -78155,16 +78179,16 @@ fr
 em
 fI
 fN
-fO
+ab
 fT
 fT
 fT
 fT
 fT
 fT
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -78412,7 +78436,7 @@ en
 en
 fJ
 fN
-fO
+ab
 ab
 ab
 ab
@@ -78421,7 +78445,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -78669,7 +78693,7 @@ ag
 ag
 ag
 ab
-fO
+ab
 ab
 ab
 ab
@@ -78678,7 +78702,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -78926,7 +78950,7 @@ dP
 dP
 dP
 fN
-fO
+ab
 ab
 ab
 ab
@@ -78935,7 +78959,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -79183,7 +79207,7 @@ fs
 fB
 fK
 fN
-fO
+ab
 ab
 ab
 ab
@@ -79192,7 +79216,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -79440,7 +79464,7 @@ ft
 fB
 fL
 fN
-fO
+ab
 ab
 ab
 ab
@@ -79449,7 +79473,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -79697,16 +79721,16 @@ fu
 fB
 fM
 fN
-fO
+ab
 fS
 fS
 fS
 fS
 fS
 fS
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -79954,14 +79978,14 @@ dT
 dT
 dT
 fN
-fO
+ab
 fW
 fW
 fW
 fW
 fW
 fW
-fO
+ab
 aa
 aa
 aa
@@ -80211,14 +80235,14 @@ ag
 ag
 ag
 ab
-fO
-fO
-fO
-fO
-fO
-fO
-fO
-fO
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa

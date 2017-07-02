@@ -24,6 +24,8 @@
 	var/datum/lighting_corner/C
 	var/thing
 	for (thing in corners)
+		if(!thing)
+			continue
 		C = thing
 		C.update_active()
 
@@ -33,7 +35,7 @@
 		return
 
 	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A))
+	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
 		return
 
 	if (!lighting_corners_initialised)
@@ -45,6 +47,8 @@
 	var/datum/lighting_corner/C
 	var/datum/light_source/S
 	for (thing in corners)
+		if(!thing)
+			continue
 		C = thing
 		if (!C.active) // We would activate the corner, calculate the lighting for it.
 			for (thing in C.affecting)
@@ -61,6 +65,8 @@
 	var/thing
 	var/datum/lighting_corner/L
 	for (thing in corners)
+		if(!thing)
+			continue
 		L = thing
 		totallums += L.lum_r + L.lum_b + L.lum_g
 
@@ -113,12 +119,18 @@
 			lighting_clear_overlay()
 
 /turf/proc/get_corners()
+	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
+		return null
+	if (!lighting_corners_initialised)
+		generate_missing_corners()
 	if (has_opaque_atom)
 		return null // Since this proc gets used in a for loop, null won't be looped though.
 
 	return corners
 
 /turf/proc/generate_missing_corners()
+	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
+		return
 	lighting_corners_initialised = TRUE
 	if (!corners)
 		corners = list(null, null, null, null)

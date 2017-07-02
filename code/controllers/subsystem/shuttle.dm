@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(shuttle)
 	wait = 10
 	init_order = INIT_ORDER_SHUTTLE
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
+	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/mobile = list()
 	var/list/stationary = list()
@@ -24,6 +25,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergencyLastCallLoc
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
+	var/emergencyNoRecall = FALSE
 	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
@@ -46,7 +48,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
-	if(!emergency)
+	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
@@ -214,7 +216,27 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.")
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
+	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
+		return
+	emergency.cancel()
+
+	if(!admiral_message)
+		admiral_message = pick(GLOB.admiral_messages)
+	var/intercepttext = "<font size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</font><hr>\
+						To whom it may concern:<br><br>\
+						We have taken note of the situation upon [station_name()] and have come to the \
+						conclusion that it does not warrant the abandonment of the station.<br>\
+						If you do not agree with our opinion we suggest that you open a direct \
+						line with us and explain the nature of your crisis.<br><br>\
+						<i>This message has been automatically generated based upon readings from long \
+						range diagnostic tools. To assure the quality of your request every finalized report \
+						is reviewed by an on-call rear admiral.<br>\
+						<b>Rear Admiral's Notes:</b> \
+						[admiral_message]"
+	print_command_report(intercepttext, announce = TRUE)
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -300,7 +322,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/AI/shuttledock.ogg', "Priority")
+			null, 'sound/ai/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -504,3 +526,13 @@ SUBSYSTEM_DEF(shuttle)
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
+
+
+/datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
+	var/area/current = get_area(A)
+	if(istype(current, /area/shuttle) && !istype(current,/area/shuttle/transit))
+		return TRUE
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return TRUE
+

@@ -26,6 +26,11 @@
 		return
 	..()
 
+/obj/item/weapon/melee/cultblade/ghost
+	name = "eldritch sword"
+	force = 19 //can't break normal airlocks
+	flags = NODROP|DROPDEL
+
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
@@ -100,11 +105,17 @@
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
+/obj/item/clothing/head/culthood/alt/ghost
+	flags = NODROP|DROPDEL
+
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
 	desc = "An armored set of robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+
+/obj/item/clothing/suit/cultrobes/alt/ghost
+	flags = NODROP|DROPDEL
 
 
 /obj/item/clothing/head/magus
@@ -193,7 +204,7 @@
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
-		new /obj/effect/overlay/temp/cult/sparks(get_turf(owner))
+		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
@@ -203,7 +214,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
 	. = list()
 	if(!isinhands && current_charges)
-		. += mutable_appearance('icons/effects/effects.dmi', "shield-cult", MOB_LAYER + 0.01)
+		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
@@ -290,7 +301,7 @@
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
 		SSshuttle.emergency.setTimer(timer)
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
-		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, 1)
 		qdel(src)
 		sleep(20)
 		var/global/list/curses
@@ -345,14 +356,14 @@
 		if(uses <= 0)
 			icon_state ="shifter_drained"
 		playsound(mobloc, "sparks", 50, 1)
-		new /obj/effect/overlay/temp/dir_setting/cult/phase/out(mobloc, C.dir)
+		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
 		C.forceMove(destination)
 		if(pulled)
 			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 
-		new /obj/effect/overlay/temp/dir_setting/cult/phase(destination, C.dir)
+		new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
 		playsound(destination, "sparks", 50, 1)
 
@@ -364,13 +375,13 @@
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 1
-	icon_state = "torch-on"
-	item_state = "torch-on"
+	icon_state = "torch"
+	item_state = "torch"
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
 	on = 1
-	var/charges = 3
+	var/charges = 5
 
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
@@ -396,6 +407,9 @@
 		if(!iscultist(cultist_to_receive))
 			to_chat(user, "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
 			log_game("Void torch failed - target was deconverted")
+			return
+		if(A in user.GetAllContents())
+			to_chat(user, "<span class='cultitalic'>[A] must be on a surface in order to teleport it!</span>")
 			return
 		to_chat(user, "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
 		cultist_to_receive.put_in_hands(A)

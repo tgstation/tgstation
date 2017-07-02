@@ -4,6 +4,7 @@
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = 1
 	device_type = TRINARY
+	layer = GAS_FILTER_LAYER
 
 	var/flipped = 0
 

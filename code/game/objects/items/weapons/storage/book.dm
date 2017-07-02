@@ -85,8 +85,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		playsound(src.loc, "punch", 25, 1, -1)
 	return 1
 
-/obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
-
+/obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+	
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -105,7 +105,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='danger'>The book sizzles in your hands.</span>")
 		user.take_bodypart_damage(0,10)
 		return
-
+	
+	if (!heal_mode)
+		return ..()
+	
 	var/smack = 1
 
 	if (M.stat != DEAD)
@@ -156,3 +159,38 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 
 /obj/item/weapon/storage/book/bible/booze/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
+
+/obj/item/weapon/storage/book/bible/syndicate
+	icon_state ="ebook"
+	deity_name = "The Syndicate"
+	throw_speed = 2
+	throwforce = 18
+	throw_range = 7
+	force = 18
+	hitsound = 'sound/weapons/sear.ogg'
+	damtype = BURN
+	name = "Syndicate Tome"
+	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
+	var/uses = 1
+
+
+	
+/obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
+	if (uses)
+		H.mind.isholy = TRUE
+		uses -= 1
+		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
+		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+		H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
+		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood.</span>")
+		var/ownername = H.real_name
+		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
+
+/obj/item/weapon/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+	if (user.a_intent == INTENT_HELP)
+		return ..()
+	else
+		return ..(M,user,heal_mode = FALSE)
+
+/obj/item/storage/book/bible/syndicate/add_blood(list/blood_dna)
+	return FALSE

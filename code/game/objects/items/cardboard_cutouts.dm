@@ -10,9 +10,9 @@
 	// add an entry in change_appearance() if you add to here
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
-		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
+		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
-		"Laughter Demon")
+		"Laughter Demon", "Private Security Officer")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
@@ -22,7 +22,7 @@
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -142,6 +142,10 @@
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
 				alpha = 75 //Spooky sneaking!
+		if("Xenomorph Maid")
+			name = "lusty xenomorph maid ([rand(1, 999)])"
+			desc = "A cardboard cutout of a xenomorph maid."
+			icon_state = "cutout_lusty"
 		if("Swarmer")
 			name = "Swarmer ([rand(1, 999)])"
 			desc = "A cardboard cutout of a swarmer."
@@ -168,6 +172,10 @@
 			desc = "A cardboard cutout of a laughter demon."
 			icon = 'icons/mob/mob.dmi'
 			icon_state = "bowmon"
+		if("Private Security Officer")
+			name = "Private Security Officer"
+			desc = "A cardboard cutout of a private security officer."
+			icon_state = "cutout_ntsec"
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)

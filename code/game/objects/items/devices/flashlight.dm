@@ -36,6 +36,11 @@
 		A.UpdateButtonIcon()
 	return 1
 
+/obj/item/device/flashlight/suicide_act(mob/living/carbon/human/user)
+	user.visible_message("<span class='suicide'>[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (FIRELOSS)
+	
+
 
 /obj/item/device/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
@@ -52,6 +57,10 @@
 			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
+		if(flashlight_power < 1)
+			to_chat(user, "<span class='warning'>\The [src] isn't bright enough to see anything!</span> ")
+			return
+		
 		switch(user.zone_selected)
 			if("eyes")
 				if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))
@@ -162,18 +171,18 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			new /obj/effect/overlay/temp/medical_holosign(T,user) //produce a holographic glow
+			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
 
-/obj/effect/overlay/temp/medical_holosign
+/obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
 	desc = "A small holographic glow that indicates a medic is coming to treat a patient."
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/overlay/temp/medical_holosign/Initialize(mapload, creator)
+/obj/effect/temp_visual/medical_holosign/Initialize(mapload, creator)
 	. = ..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)

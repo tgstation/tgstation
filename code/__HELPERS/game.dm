@@ -424,7 +424,7 @@
 	switch(ignore_category ? askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
-			if((world.time-time_passed)>poll_time)
+			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
 				M << 'sound/machines/buzz-sigh.ogg'
 				candidates -= M
@@ -449,15 +449,13 @@
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
 
-	pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
-
-	return candidates
+	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
 /proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
-
+	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
 		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
@@ -472,17 +470,17 @@
 			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
 				continue
 
-		showCandidatePollWindow(M, poll_time, Question, group, ignore_category, time_passed, flashwindow)
+		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
-	for(var/mob/M in group)
+	for(var/mob/M in result)
 		if(!M.key || !M.client)
-			group -= M
+			result -= M
 
-	listclearnulls(group)
+	listclearnulls(result)
 
-	return group
+	return result
 
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
 	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
@@ -501,53 +499,6 @@
 			++i
 	return L
 
-/proc/pollCultists(var/mob/living/Nominee) // Cult Master Poll
-	if(world.time < CULT_POLL_WAIT)
-		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
-		return
-	for(var/datum/mind/B in SSticker.mode.cult)
-		if(B.current)
-			B.current.verbs -= /mob/living/proc/cult_master
-			if(!B.current.incapacitated())
-				B.current << 'sound/hallucinations/im_here1.ogg'
-				to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>")
-	sleep(250)
-	var/list/asked_cultists = list()
-	for(var/datum/mind/B in SSticker.mode.cult)
-		if(B.current && B.current != Nominee && !B.current.incapacitated())
-			B.current << 'sound/magic/exit_blood.ogg'
-			asked_cultists += B.current
-	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 1200, group = asked_cultists)
-	sleep(300)
-	if(QDELETED(Nominee) || Nominee.incapacitated())
-		for(var/datum/mind/B in SSticker.mode.cult)
-			if(B.current)
-				B.current.verbs += /mob/living/proc/cult_master
-				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has died in the process of attempting to win the cult's support!")
-		return FALSE
-	if(!Nominee.mind)
-		for(var/datum/mind/B in SSticker.mode.cult)
-			if(B.current)
-				B.current.verbs += /mob/living/proc/cult_master
-				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone insane and catatonic in the process of attempting to win the cult's support!")
-		return FALSE
-	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
-		for(var/datum/mind/B in SSticker.mode.cult)
-			if(B.current)
-				B.current.verbs += /mob/living/proc/cult_master
-				if(!B.current.incapacitated())
-					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.")
-		return FALSE
-	SSticker.mode.remove_cultist(Nominee.mind, FALSE)
-	Nominee.mind.add_antag_datum(ANTAG_DATUM_CULT_MASTER)
-	GLOB.cult_mastered = TRUE
-	for(var/datum/mind/B in SSticker.mode.cult)
-		if(!B.current.incapacitated())
-			to_chat(B.current,"<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!")
-	return TRUE
-
 /proc/poll_helper(var/mob/living/M)
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
@@ -555,7 +506,8 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new//The mob being spawned.
+	SSjob.SendToLateJoin(new_character)
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()

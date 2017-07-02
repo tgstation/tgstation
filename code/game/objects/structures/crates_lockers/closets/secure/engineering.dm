@@ -26,6 +26,7 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/weapon/door_remote/chief_engineer(src)
 	new /obj/item/weapon/pipe_dispenser(src)
+	new /obj/item/weapon/inducer(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
@@ -37,6 +38,8 @@
 	..()
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
+	new /obj/item/weapon/inducer(src)
+	new /obj/item/weapon/inducer(src)	
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
 	for(var/i in 1 to 3)

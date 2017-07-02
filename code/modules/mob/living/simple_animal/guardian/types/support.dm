@@ -34,7 +34,7 @@
 		C.adjustFireLoss(-5)
 		C.adjustOxyLoss(-5)
 		C.adjustToxLoss(-5)
-		var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(C))
+		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(C))
 		if(namedatum)
 			H.color = namedatum.colour
 		if(C == summoner)
@@ -136,11 +136,11 @@
 		to_chat(src, "<span class='danger'><B>You need to hold still!</span></B>")
 		return
 
-	new /obj/effect/overlay/temp/guardian/phase/out(T)
+	new /obj/effect/temp_visual/guardian/phase/out(T)
 	if(isliving(A))
 		var/mob/living/L = A
 		L.flash_act()
 	A.visible_message("<span class='danger'>[A] disappears in a flash of light!</span>", \
 	"<span class='userdanger'>Your vision is obscured by a flash of light!</span>")
 	do_teleport(A, beacon, 0)
-	new /obj/effect/overlay/temp/guardian/phase(get_turf(A))
+	new /obj/effect/temp_visual/guardian/phase(get_turf(A))

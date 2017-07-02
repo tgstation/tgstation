@@ -41,18 +41,20 @@
 
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
-	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
+	maxHealth = 500 // not an IMPOSSIBLE amount, but still near impossible.
 	ascended = TRUE
 	health = maxHealth
 	icon_state = "arch_devil"
 
 /mob/living/carbon/true_devil/proc/set_name()
-	name = mind.devilinfo.truename
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	name = devilinfo.truename
 	real_name = name
 
 /mob/living/carbon/true_devil/Login()
 	..()
-	mind.announceDevilLaws()
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devilinfo.greet()
 	mind.announce_objectives()
 
 
@@ -60,19 +62,19 @@
 	stat = DEAD
 	..(gibbed)
 	drop_all_held_items()
-	INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo/proc/beginResurrectionCheck, src)
+	INVOKE_ASYNC(mind.has_antag_datum(ANTAG_DATUM_DEVIL), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] <b>[src]</b>!\n"
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))
 			if(I.blood_DNA)
-				msg += "<span class='warning'>It is holding \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+				msg += "<span class='warning'>It is holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
-				msg += "It is holding \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+				msg += "It is holding [bicon(I)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
 	if(!client && stat != DEAD)

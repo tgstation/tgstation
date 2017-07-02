@@ -30,10 +30,8 @@
 
 	create_internal_organs()
 
-	..()
+	. = ..()
 
-/mob/living/carbon/monkey/Initialize()
-	..()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 

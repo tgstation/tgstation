@@ -9,6 +9,9 @@
 	anchored = 1
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
+		new /datum/data/mining_equipment("1 Marker Beacon",		/obj/item/stack/marker_beacon,											10),
+		new /datum/data/mining_equipment("10 Marker Beacons",	/obj/item/stack/marker_beacon/ten,										100),
+		new /datum/data/mining_equipment("30 Marker Beacons",	/obj/item/stack/marker_beacon/thirty,									300),
 		new /datum/data/mining_equipment("Whiskey",				/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,			100),
 		new /datum/data/mining_equipment("Absinthe",			/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100),
 		new /datum/data/mining_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,							150),
@@ -19,7 +22,7 @@
 		new /datum/data/mining_equipment("Stabilizing Serum",	/obj/item/weapon/hivelordstabilizer,									400),
 		new /datum/data/mining_equipment("Fulton Beacon",		/obj/item/fulton_core,													400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule,										400),
-		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,									500),
+		new /datum/data/mining_equipment("GAR Meson Scanners",	/obj/item/clothing/glasses/meson/gar,									500),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,								600),
@@ -36,6 +39,7 @@
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,							2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,										2000),
 		new /datum/data/mining_equipment("Super Resonator",		/obj/item/weapon/resonator/upgraded,									2500),
+		new /datum/data/mining_equipment("Luxury Shelter Capsule",	/obj/item/weapon/survivalcapsule/luxury,							3000),
 		new /datum/data/mining_equipment("KA White Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer,								100),
 		new /datum/data/mining_equipment("KA Adjustable Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer/adjustable,				150),
 		new /datum/data/mining_equipment("KA Super Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod,								250),
@@ -182,12 +186,13 @@
 		if("Extraction and Rescue Kit")
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
+			new /obj/item/stack/marker_beacon/thirty(loc)
 		if("Crusher Kit")
 			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
 		if("Mining Conscription Kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
+			new /obj/item/weapon/storage/backpack/duffelbag/mining_conscript(loc)
 
 	SSblackbox.add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -212,11 +217,10 @@
 		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
 		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
 		new /datum/data/mining_equipment("Sulphuric Acid",			/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,        		500),
-		new /datum/data/mining_equipment("Brute First-Aid Kit",		/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Grey Slime Extract",		/obj/item/slime_extract/grey,				       		           		1000),
 		new /datum/data/mining_equipment("Modification Kit",    	/obj/item/borg/upgrade/modkit/trigger_guard, 		                	1700),
 		new /datum/data/mining_equipment("The Liberator's Legacy",  /obj/item/weapon/storage/box/rndboards,      			      			2000),
-
+		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/weapon/bedsheet/rd/royal_cape, 500)
 		)
 
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem(null)
@@ -278,11 +282,11 @@
 		qdel(src)
 	..()
 
-/obj/item/weapon/storage/backpack/dufflebag/mining_conscript
+/obj/item/weapon/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
+/obj/item/weapon/storage/backpack/duffelbag/mining_conscript/New()
 	..()
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)

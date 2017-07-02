@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Tablets with IDs in them now show the ID's name when examining someone with that tablet in their ID slot, similar to a PDA would."

@@ -1,0 +1,12 @@
+author: "Guyonbroadway"
+delete-after: True
+changes: 
+  - balance: "Taser bolts now deal 80 stamina damage and force people to drop items."
+  - balance: "Improvised stun prods deal 80 stamina damage that ignores armour and force people to drop items."
+  - balance: "The detectives revolver now deals 65 stamina damage, 15 brute and forces people to drop items."
+  - balance: "Taser and disabler beams have had their shot cost adjusted, with a standard taser you have 8 taser bolts or 12 disabler beams. Enough to drop four nerds if your aim is on point."
+  - balance: "Syndiacte Sniper Rifles still have a stun, but it has been reduced to one tick (not that it matters when you are so slow the followup shot is both easy to land and will put you in crit anyway)"
+  - balance: "Bulldog shotguns taser rounds also match the tasers change, but they count as bullets so are better vs certain types of defences."
+  - balance: "Yes I took into account the R&D guns."
+  - balance: "Yes the mechs too"
+  - experiment: "Disabler beams now travel faster so you can peg fleeing targets more easily (You can still just about outrun them on ephedrine though)"

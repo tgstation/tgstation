@@ -164,6 +164,3 @@
 
 /datum/species/skeleton
 	teeth_type = /obj/item/stack/teeth/human
-
-/datum/species/lizard
-	teeth_type = /obj/item/stack/teeth/lizard

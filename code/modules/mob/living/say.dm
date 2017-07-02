@@ -102,11 +102,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(stat == DEAD)
+		if(message == "*fart" || message == "*scream") //Avoid deachat spam via the hotkeys
+			return
 		say_dead(original_message)
 		return
 
 	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
+
+	if(is_nearcrit()) //in_critical variable is handled separately.
+		if(!(message_mode in crit_allowed_modes))
+			message_mode = MODE_WHISPER
 
 	if(in_critical)
 		if(!(crit_allowed_modes[message_mode]))

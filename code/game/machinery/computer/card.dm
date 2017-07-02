@@ -24,7 +24,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
-	var/change_position_cooldown = 60
+	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
@@ -45,6 +45,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/opened_positions = list();
 
 	light_color = LIGHT_COLOR_BLUE
+
+/obj/machinery/computer/card/Initialize()
+	. = ..()
+	change_position_cooldown = config.id_console_jobslot_delay
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))

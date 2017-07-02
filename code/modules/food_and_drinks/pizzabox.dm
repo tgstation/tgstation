@@ -67,6 +67,7 @@
 			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
 			bomb_overlay.pixel_y = 5
 			add_overlay(bomb_overlay)
+	else
 		icon_state = "pizzabox[boxes.len + 1]"
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(box.boxtag != "")
@@ -79,7 +80,7 @@
 		return
 	open = !open
 	if(open && !bomb_defused)
-		audible_message("<span class='warning'>\icon[src] *beep*</span>")
+		audible_message("<span class='warning'>[bicon(src)] *beep*</span>")
 		bomb_active = TRUE
 		START_PROCESSING(SSobj, src)
 	update_icon()

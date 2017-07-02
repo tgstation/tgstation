@@ -292,8 +292,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 180
 	chem_volume = 50
 
-/obj/item/clothing/mask/cigarette/rollie/New()
-	..()
+/obj/item/clothing/mask/cigarette/rollie/Initialize()
+	. = ..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -306,8 +306,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old roach, or for non-stoners, a used rollup."
 	icon_state = "roach"
 
-/obj/item/weapon/cigbutt/roach/New()
-	..()
+/obj/item/weapon/cigbutt/roach/Initialize()
+	. = ..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -375,7 +375,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/packeditem = 0
 
 /obj/item/clothing/mask/cigarette/pipe/Initialize()
-	..()
+	. = ..()
 	name = "empty [initial(name)]"
 
 /obj/item/clothing/mask/cigarette/pipe/Destroy()
@@ -470,8 +470,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/lit = 0
+	var/fancy = TRUE
 	heat = 1500
 	resistance_flags = FIRE_PROOF
+	light_color = LIGHT_COLOR_FIRE
 
 /obj/item/weapon/lighter/update_icon()
 	if(lit)
@@ -482,37 +484,28 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
 	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
-/obj/item/weapon/lighter/greyscale
-	name = "cheap lighter"
-	desc = "A cheap-as-free lighter."
-	icon_state = "lighter"
-
-/obj/item/weapon/lighter/greyscale/Initialize()
-	. = ..()
-	add_atom_colour(color2hex(randomColor(1)), FIXED_COLOUR_PRIORITY)
-	update_icon()
-
-/obj/item/weapon/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/base_overlay = mutable_appearance(icon,"[initial(icon_state)]_base")
-	base_overlay.appearance_flags = RESET_COLOR //the edging doesn't change color
+/obj/item/weapon/lighter/proc/set_lit(new_lit)
+	lit = new_lit
 	if(lit)
-		base_overlay.icon_state = "[initial(icon_state)]_on"
-	add_overlay(base_overlay)
-
-/obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+		force = 5
+		damtype = "fire"
+		hitsound = 'sound/items/welder.ogg'
+		attack_verb = list("burnt", "singed")
+		set_light(1)
+		START_PROCESSING(SSobj, src)
+	else
+		hitsound = "swing_hit"
+		force = 0
+		attack_verb = null //human_defense.dm takes care of it
+		set_light(0)
+		STOP_PROCESSING(SSobj, src)
+	update_icon()
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.is_holding(src))
 		if(!lit)
-			lit = 1
-			update_icon()
-			force = 5
-			damtype = "fire"
-			hitsound = 'sound/items/welder.ogg'
-			attack_verb = list("burnt", "singed")
-			if(!istype(src, /obj/item/weapon/lighter/greyscale))
+			set_lit(TRUE)
+			if(fancy)
 				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
 				var/prot = FALSE
@@ -532,20 +525,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
-			set_light(1)
-			START_PROCESSING(SSobj, src)
 		else
-			lit = 0
-			update_icon()
-			hitsound = "swing_hit"
-			force = 0
-			attack_verb = null //human_defense.dm takes care of it
-			if(!istype(src, /obj/item/weapon/lighter/greyscale))
+			set_lit(FALSE)
+			if(fancy)
 				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
 				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
-			set_light(0)
-			STOP_PROCESSING(SSobj, src)
 	else
 		. = ..()
 
@@ -560,7 +545,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(M == user)
 			cig.attackby(src, user)
 		else
-			if(!istype(src, /obj/item/weapon/lighter/greyscale))
+			if(fancy)
 				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. [user.p_their(TRUE)] arm is as steady as the unflickering flame they light \the [cig] with.</span>")
 			else
 				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
@@ -572,6 +557,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/lighter/is_hot()
 	return lit * heat
+
+
+/obj/item/weapon/lighter/greyscale
+	name = "cheap lighter"
+	desc = "A cheap-as-free lighter."
+	icon_state = "lighter"
+	fancy = FALSE
+
+/obj/item/weapon/lighter/greyscale/Initialize()
+	. = ..()
+	add_atom_colour(color2hex(randomColor(1)), FIXED_COLOUR_PRIORITY)
+	update_icon()
+
+/obj/item/weapon/lighter/greyscale/update_icon()
+	cut_overlays()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon,"[initial(icon_state)]_base")
+	base_overlay.appearance_flags = RESET_COLOR //the edging doesn't change color
+	if(lit)
+		base_overlay.icon_state = "[initial(icon_state)]_on"
+	add_overlay(base_overlay)
+
+/obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
+	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 ///////////
 //ROLLING//
@@ -622,14 +630,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	playsound(user.loc,'sound/items/eatfood.ogg', 50, 1)
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
-	..()
+/obj/item/clothing/mask/vape/Initialize()
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE)
 	reagents.add_reagent("nicotine", 50)
 	if(!icon_state)
-		if(!param_color)
-			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
+		var/param_color = pick("red","blue","black","white","green","purple","yellow","orange")
 		icon_state = "[param_color]_vape"
 		item_state = "[param_color]_vape"
 

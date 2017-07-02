@@ -24,14 +24,15 @@
 	maxHealth = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
-	..()
+	. = ..()
+
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
 	qdel(udder)
 	udder = null
@@ -50,14 +51,12 @@
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
-		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-		if(SV)
-			SV.eat(src)
+		eat_plants()
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/structure/spacevine) in step)
+					if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
 						Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -67,9 +66,22 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-		if(SV)
-			SV.eat(src)
+		eat_plants()
+
+/mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
+	var/eaten = FALSE
+	var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+	if(SV)
+		SV.eat(src)
+		eaten = TRUE
+
+	var/obj/structure/glowshroom/GS = locate(/obj/structure/glowshroom) in loc
+	if(GS)
+		qdel(GS)
+		eaten = TRUE
+
+	if(eaten && prob(10))
+		say("Nom")
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -108,7 +120,7 @@
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
@@ -182,7 +194,7 @@
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/chick/Initialize()
-	..()
+	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
@@ -237,7 +249,7 @@
 	var/static/chicken_count = 0
 
 /mob/living/simple_animal/chicken/Initialize()
-	..()
+	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
 	icon_state = "[icon_prefix]_[body_color]"
@@ -296,10 +308,9 @@
 	name = "udder"
 
 /obj/item/udder/Initialize()
-	reagents = new(50)
-	reagents.my_atom = src
+	create_reagents(50)
 	reagents.add_reagent("milk", 20)
-	..()
+	. = ..()
 
 /obj/item/udder/proc/generateMilk()
 	if(prob(5))

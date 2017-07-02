@@ -5,8 +5,8 @@
 #define MAX_TIMER 9000
 
 #define PRESET_SHORT 1200
-#define PRESET_MEDIUM 3000
-#define PRESET_LONG 6000
+#define PRESET_MEDIUM 1800
+#define PRESET_LONG 3000
 
 
 
@@ -58,6 +58,9 @@
 		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
 			if(C.id == id)
 				targets += C
+		for(var/obj/machinery/disposal/trapdoor/T in urange(20, src))
+			if(T.id == src.id)
+				targets += T
 
 	if(!targets.len)
 		stat |= BROKEN
@@ -103,6 +106,8 @@
 			continue
 		C.locked = 1
 		C.update_icon()
+	for(var/obj/machinery/disposal/trapdoor/T in targets)
+		T.close()
 	return 1
 
 
@@ -132,6 +137,8 @@
 			continue
 		C.locked = 0
 		C.update_icon()
+	for(var/obj/machinery/disposal/trapdoor/T in targets)
+		T.open()
 
 	return 1
 
@@ -212,7 +219,7 @@
 	if(..())
 		return
 	. = TRUE
-	
+
 	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE

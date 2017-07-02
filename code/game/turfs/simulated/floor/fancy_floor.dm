@@ -140,7 +140,7 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
+	canSmoothWith = list(/turf/open/floor/carpet)
 	flags = NONE
 
 /turf/open/floor/carpet/Initialize()
@@ -158,8 +158,20 @@
 		if(smooth)
 			queue_smooth_neighbors(src)
 
-/turf/open/floor/carpet/narsie_act()
-	return
+/turf/open/floor/carpet/black
+	icon = 'icons/turf/floors/carpet_black.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/black
+	canSmoothWith = list(/turf/open/floor/carpet/black)
+
+
+/turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
+	. = (prob(probability) || force)
+	for(var/I in src)
+		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
+		if(ismob(A) || .)
+			A.narsie_act()
 
 /turf/open/floor/carpet/break_tile()
 	broken = 1
@@ -169,14 +181,21 @@
 	burnt = 1
 	update_icon()
 
+/turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 
-turf/open/floor/fakepit
+/turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
 	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
-	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
+	canSmoothWith = list(/turf/open/floor/fakepit)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
+
+/turf/open/floor/fakepit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
@@ -187,4 +206,10 @@ turf/open/floor/fakepit
 
 /turf/open/floor/fakespace/Initialize()
 	..()
-	icon_state = "[rand(0,25)]"
+	icon_state = SPACE_ICON_STATE
+
+/turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/space.dmi'
+	underlay_appearance.icon_state = SPACE_ICON_STATE
+	underlay_appearance.plane = PLANE_SPACE
+	return TRUE

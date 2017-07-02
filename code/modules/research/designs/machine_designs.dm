@@ -90,6 +90,22 @@
 	build_path = /obj/item/weapon/circuitboard/machine/quantumpad
 	category = list ("Teleportation Machinery")
 
+/datum/design/board/launchpad
+	name = "Machine Design (Bluespace Launchpad Board)"
+	desc = "The circuit board for a bluespace Launchpad."
+	id = "launchpad"
+	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 2, "engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/machine/launchpad
+	category = list ("Teleportation Machinery")
+
+/datum/design/board/launchpad_console
+	name = "Machine Design (Bluespace Launchpad Console Board)"
+	desc = "The circuit board for a bluespace launchpad Console."
+	id = "launchpad_console"
+	req_tech = list("programming" = 4, "bluespace" = 3, "plasmatech" = 3)
+	build_path = /obj/item/weapon/circuitboard/computer/launchpad_console
+	category = list ("Teleportation Machinery")
+
 /datum/design/board/teleconsole
 	name = "Computer Design (Teleporter Console)"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."

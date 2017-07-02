@@ -7,6 +7,7 @@
 	obj_integrity = 350
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	layer = ABOVE_WINDOW_LAYER
 
 	var/on = FALSE
 	state_open = FALSE
@@ -26,10 +27,10 @@
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/New()
-	..()
+/obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
+	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
+	var/obj/item/weapon/circuitboard/machine/cryo_tube/B = new
 	B.apply_default_parts(src)
 
 	radio = new(src)
@@ -112,7 +113,7 @@
 	var/turf/T = get_turf(src)
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
+		if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.

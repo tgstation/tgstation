@@ -23,7 +23,7 @@
 
 			new_mob.key = key
 
-		The Login proc will handle making a new mob for that mobtype (including setting up stuff like mind.name). Simple!
+		The Login proc will handle making a new mind for that mobtype (including setting up stuff like mind.name). Simple!
 		However if you want that mind to have any special properties like being a traitor etc you will have to do that
 		yourself.
 
@@ -50,30 +50,33 @@
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 	var/linglink
-
+	var/datum/martial_art/martial_art
+	var/static/default_martial_art = new/datum/martial_art
 	var/miming = 0 // Mime's vow of silence
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
-	var/datum/devilinfo/devilinfo //Information about the devil, if any.
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
+	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
-
 	var/datum/language_holder/language_holder
 
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
+	martial_art = default_martial_art
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	if(islist(antag_datums))
 		for(var/i in antag_datums)
-			qdel(i)
+			var/datum/antagonist/antag_datum = i
+			if(antag_datum.delete_on_death)
+				qdel(i)
 		antag_datums = null
 	return ..()
 
@@ -144,6 +147,7 @@
 		A.on_removal()
 		return TRUE
 
+
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
@@ -184,15 +188,7 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		SSticker.mode.traitors -= src
-		if(isAI(current))
-			var/mob/living/silicon/ai/A = current
-			A.set_zeroth_law("")
-			A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-			A.malf_picker.remove_verbs(A)
-			qdel(A.malf_picker)
-	special_role = null
-	remove_antag_equip()
+		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -260,6 +256,67 @@
 	if(gang_datum)
 		gang_datum.remove_gang_hud(src)
 
+/datum/mind/proc/equip_traitor(var/employer = "The Syndicate", var/silent = FALSE)
+	if(!current)
+		return
+	var/mob/living/carbon/human/traitor_mob = current
+	if (!istype(traitor_mob))
+		return
+	. = 1
+
+	var/list/all_contents = traitor_mob.GetAllContents()
+	var/obj/item/device/pda/PDA = locate() in all_contents
+	var/obj/item/device/radio/R = locate() in all_contents
+	var/obj/item/weapon/pen/P = locate() in all_contents //including your PDA-pen!
+
+	var/obj/item/uplink_loc
+
+	if(traitor_mob.client && traitor_mob.client.prefs)
+		switch(traitor_mob.client.prefs.uplink_spawn_loc)
+			if(UPLINK_PDA)
+				uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = R
+				if(!uplink_loc)
+					uplink_loc = P
+			if(UPLINK_RADIO)
+				uplink_loc = R
+				if(!uplink_loc)
+					uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = P
+			if(UPLINK_PEN)
+				uplink_loc = P
+				if(!uplink_loc)
+					uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = R
+
+	if (!uplink_loc)
+		if(!silent) to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
+		. = 0
+	else
+		var/obj/item/device/uplink/U = new(uplink_loc)
+		U.owner = "[traitor_mob.key]"
+		uplink_loc.hidden_uplink = U
+
+		if(uplink_loc == R)
+			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
+
+			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
+
+		else if(uplink_loc == PDA)
+			PDA.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+
+			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
+
+		else if(uplink_loc == P)
+			P.traitor_unlock_degrees = rand(1, 360)
+
+			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
@@ -324,7 +381,9 @@
 		"nuclear",
 		"traitor", // "traitorchan",
 		"monkey",
-		"clockcult"
+		"clockcult",
+		"devil",
+		"ninja"
 	)
 	var/text = ""
 
@@ -595,8 +654,9 @@
 	if(SSticker.mode.config_tag == "devil")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(src in SSticker.mode.devils)
-		if(devilinfo && !devilinfo.ascendable)
+	var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
+	if(devilinfo)
+		if(!devilinfo.ascendable)
 			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
 		else
 			text += "<a href='?src=\ref[src];devil=devil'>DEVIL</a>|<b>ASCENDABLE DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
@@ -611,9 +671,27 @@
 		text += "|Disabled in Prefs"
 	sections["devil"] = text
 
+/** NINJA ***/
+	text = "ninja"
+	if(SSticker.mode.config_tag == "ninja")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	var/datum/antagonist/ninja/ninjainfo = has_antag_datum(ANTAG_DATUM_NINJA)
+	if(ninjainfo)
+		if(ninjainfo.helping_station)
+			text += "<a href='?src=\ref[src];ninja=clear'>employee</a> | syndicate | <b>NANOTRASEN</b> | <b><a href='?src=\ref[src];ninja=equip'>EQUIP</a></b>"
+		else
+			text += "<a href='?src=\ref[src];ninja=clear'>employee</a> | <b>SYNDICATE</b> | nanotrasen | <b><a href='?src=\ref[src];ninja=equip'>EQUIP</a></b>"
+	else
+		text += "<b>EMPLOYEE</b> | <a href='?src=\ref[src];ninja=syndicate'>syndicate</a> | <a href='?src=\ref[src];ninja=nanotrasen'>nanotrasen</a> | <a href='?src=\ref[src];ninja=random'>random allegiance</a>"
+	if(current && current.client && (ROLE_NINJA in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	sections["ninja"] = text
 
-	/** SILICON ***/
 
+/** SILICON ***/
 	if(issilicon(current))
 		text = "silicon"
 		var/mob/living/silicon/robot/robot = current
@@ -965,7 +1043,7 @@
 		if(!G || (src in G.bosses))
 			return
 		SSticker.mode.remove_gangster(src,0,2,1)
-		G.bosses += src
+		G.bosses[src] = GANGSTER_BOSS_STARTING_INFLUENCE
 		gang_datum = G
 		special_role = "[G.name] Gang Boss"
 		G.add_gang_hud(src)
@@ -1133,57 +1211,38 @@
 	else if (href_list["traitor"])
 		switch(href_list["traitor"])
 			if("clear")
+				to_chat(current, "<span class='userdanger'>You have been brainwashed!</span>")
 				remove_traitor()
-				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>")
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 				SSticker.mode.update_traitor_icons_removed(src)
 
 			if("traitor")
 				if(!(src in SSticker.mode.traitors))
-					SSticker.mode.traitors += src
-					special_role = "traitor"
-					to_chat(current, "<span class='boldannounce'>You are a traitor!</span>")
 					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
 					log_admin("[key_name(usr)] has traitor'ed [current].")
-					if(isAI(current))
-						var/mob/living/silicon/ai/A = current
-						SSticker.mode.add_law_zero(A)
-					SSticker.mode.update_traitor_icons_added(src)
+					make_Traitor()
 
 			if("autoobjectives")
-				SSticker.mode.forge_traitor_objectives(src)
-				to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
+				var/datum/antagonist/traitor/traitordatum = has_antag_datum(ANTAG_DATUM_TRAITOR)
+				if(!traitordatum)
+					message_admins("[key_name_admin(usr)] has traitor'ed [current] as part of autoobjectives.")
+					log_admin("[key_name(usr)] has traitor'ed [current] as part of autoobjectives.")
+					make_Traitor()
+				else
+					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
+					traitordatum.forge_traitor_objectives()
+					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["devil"])
+		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])
 			if("clear")
 				if(src in SSticker.mode.devils)
-					if(istype(current,/mob/living/carbon/true_devil/))
-						if(devilinfo)
-							devilinfo.regress_blood_lizard()
-						else
-							to_chat(usr, "<span class='warning'>Something went wrong with removing the devil, we were unable to find an attached devilinfo.</span>.")
-					SSticker.mode.devils -= src
-					special_role = null
-					to_chat(current, "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>")
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-					RemoveSpell(/obj/effect/proc_holder/spell/aimed/fireball/hellish)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
+					remove_devil(current)
 					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
-					devilinfo = null
-					if(issilicon(current))
-						var/mob/living/silicon/S = current
-						S.clear_law_sixsixsix(current)
 					log_admin("[key_name(usr)] has de-devil'ed [current].")
-				else if(src in SSticker.mode.sintouched)
+				if(src in SSticker.mode.sintouched)
 					SSticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
@@ -1196,12 +1255,7 @@
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
-				SSticker.mode.devils += src
-				special_role = "devil"
-				SSticker.mode.finalize_devil(src, FALSE)
-				SSticker.mode.add_devil_objectives(src, 2)
-				announceDevilLaws()
-				announce_objectives()
+				add_devil(current, FALSE)
 				message_admins("[key_name_admin(usr)] has devil'ed [current].")
 				log_admin("[key_name(usr)] has devil'ed [current].")
 			if("ascendable_devil")
@@ -1213,12 +1267,7 @@
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
-				SSticker.mode.devils += src
-				special_role = "devil"
-				SSticker.mode.finalize_devil(src, TRUE)
-				SSticker.mode.add_devil_objectives(src, 2)
-				announceDevilLaws()
-				announce_objectives()
+				add_devil(current, TRUE)
 				message_admins("[key_name_admin(usr)] has devil'ed [current].  The devil has been marked as ascendable.")
 				log_admin("[key_name(usr)] has devil'ed [current]. The devil has been marked as ascendable.")
 			if("sintouched")
@@ -1229,7 +1278,28 @@
 				else
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
-
+	else if(href_list["ninja"])
+		var/datum/antagonist/ninja/ninjainfo = has_antag_datum(ANTAG_DATUM_NINJA)
+		switch(href_list["ninja"])
+			if("clear")
+				remove_ninja(current)
+				message_admins("[key_name_admin(usr)] has de-ninja'ed [current].")
+				log_admin("[key_name(usr)] has de-ninja'ed [current].")
+			if("equip")
+				ninjainfo.equip_space_ninja()
+				return
+			if("nanotrasen")
+				add_ninja(current, ANTAG_DATUM_NINJA_FRIENDLY)
+				message_admins("[key_name_admin(usr)] has friendly ninja'ed [current].")
+				log_admin("[key_name(usr)] has friendly ninja'ed [current].")
+			if("syndicate")
+				add_ninja(current, ANTAG_DATUM_NINJA)
+				message_admins("[key_name_admin(usr)] has syndie ninja'ed [current].")
+				log_admin("[key_name(usr)] has syndie ninja'ed [current].")
+			if("random")
+				add_ninja(current)
+				message_admins("[key_name_admin(usr)] has random ninja'ed [current].")
+				log_admin("[key_name(usr)] has random ninja'ed [current].")
 	else if(href_list["abductor"])
 		switch(href_list["abductor"])
 			if("clear")
@@ -1274,7 +1344,6 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
@@ -1339,9 +1408,11 @@
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
-				if(!SSticker.mode.equip_traitor(current, !(src in SSticker.mode.traitors)))
+				if(!equip_traitor())
 					to_chat(usr, "<span class='danger'>Equipping a syndicate failed!</span>")
-				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
+					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
+				else
+					log_admin("[key_name(usr)] gave [current] an uplink.")
 
 	else if (href_list["obj_announce"])
 		announce_objectives()
@@ -1357,7 +1428,7 @@
 		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()
-	var/list/L = current.get_contents()
+	var/list/L = current.GetAllContents()
 	for (var/obj/item/I in L)
 		if (I.hidden_uplink)
 			return I.hidden_uplink
@@ -1369,12 +1440,10 @@
 		qdel(H)
 
 /datum/mind/proc/make_Traitor()
-	if(!(src in SSticker.mode.traitors))
-		SSticker.mode.traitors += src
-		special_role = "traitor"
-		SSticker.mode.forge_traitor_objectives(src)
-		SSticker.mode.finalize_traitor(src)
-		SSticker.mode.greet_traitor(src)
+	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
+		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
+		return traitordatum
+		
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))
@@ -1433,7 +1502,7 @@
 		special_role = "Wizard"
 		assigned_role = "Wizard"
 		if(!GLOB.wizardstart.len)
-			current.loc = pick(GLOB.latejoin)
+			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)
@@ -1480,7 +1549,6 @@
 	qdel(flash)
 	take_uplink()
 	var/fail = 0
-//	fail |= !SSticker.mode.equip_traitor(current, 1)
 	fail |= !SSticker.mode.equip_revolutionary(current)
 
 
@@ -1541,6 +1609,9 @@
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
+
+/datum/mind/proc/owns_soul()
+	return soulOwner == src
 
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)

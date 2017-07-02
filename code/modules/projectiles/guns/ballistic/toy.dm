@@ -5,7 +5,7 @@
 	icon_state = "saber"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/toy/smg
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	force = 0
 	throwforce = 0
 	burst_size = 3
@@ -23,7 +23,7 @@
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/gunshot.ogg'
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
@@ -35,9 +35,9 @@
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
 
-/obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot/New()
+/obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot/Initialize()
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted
 	pin = /obj/item/device/firing_pin

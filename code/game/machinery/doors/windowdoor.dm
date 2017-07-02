@@ -176,9 +176,9 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
@@ -328,7 +328,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/door/window(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()

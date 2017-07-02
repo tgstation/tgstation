@@ -33,7 +33,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
+	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
@@ -66,9 +66,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
 // the power cable object
-/obj/structure/cable/New()
-	..()
-
+/obj/structure/cable/Initialize()
+	. = ..()
 
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	var/dash = findtext(icon_state, "-")
@@ -131,7 +130,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
-		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
+		investigate_log("was cut by [key_name(usr, usr.client)] in [get_area(T)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
 
@@ -510,6 +509,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
+	full_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -528,8 +528,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/New(loc, new_amount = null, var/param_color = null)
-	..()
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, param_color = null)
+	. = ..()
 	if(new_amount) // MAXCOIL by default
 		amount = new_amount
 	if(param_color)
@@ -780,9 +780,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 /obj/item/stack/cable_coil/cut
 	item_state = "coil_red2"
 
-/obj/item/stack/cable_coil/cut/New(loc)
-	..()
-	src.amount = rand(1,2)
+/obj/item/stack/cable_coil/cut/Initialize(mapload)
+	. =..()
+	amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
@@ -820,10 +820,11 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	item_color = "white"
 	icon_state = "coil_white"
 
-/obj/item/stack/cable_coil/random/New()
+/obj/item/stack/cable_coil/random/Initialize(mapload)
+	. = ..()
 	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
-	..()
+
 
 /obj/item/stack/cable_coil/random/five
 	amount = 5

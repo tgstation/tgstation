@@ -5,6 +5,7 @@
 	item_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
+	modifystate = TRUE
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
@@ -16,9 +17,9 @@
 /obj/item/weapon/gun/energy/pulse/prize
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/energy/pulse/prize/New()
+/obj/item/weapon/gun/energy/pulse/prize/Initialize()
 	. = ..()
-	GLOB.poi_list |= src
+	GLOB.poi_list += src
 	var/msg = "A pulse rifle prize has been created at [ADMIN_COORDJMP(src)]"
 
 	message_admins(msg)
@@ -39,7 +40,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = SLOT_BELT
 	icon_state = "pulse_carbine"
-	item_state = "pulse"
+	item_state = null
 	cell_type = "/obj/item/weapon/stock_parts/cell/pulse/carbine"
 	can_flashlight = 1
 	flight_x_offset = 18
@@ -56,7 +57,6 @@
 	icon_state = "pulse_pistol"
 	item_state = "gun"
 	cell_type = "/obj/item/weapon/stock_parts/cell/pulse/pistol"
-	can_charge = 0
 
 /obj/item/weapon/gun/energy/pulse/pistol/loyalpin
 	pin = /obj/item/device/firing_pin/implant/mindshield

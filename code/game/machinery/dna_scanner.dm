@@ -9,6 +9,7 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
+	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
@@ -98,6 +99,13 @@
 
 		open_machine()
 
+/obj/machinery/dna_scannernew/proc/locate_computer(type_)
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		var/C = locate(type_, get_step(src, dir))
+		if(C)
+			return C
+	return null
+
 /obj/machinery/dna_scannernew/close_machine()
 	if(!state_open)
 		return 0
@@ -105,22 +113,19 @@
 	..()
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	var/mob/living/mob_occupant = occupant
-	if(mob_occupant)
-		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
+	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
+	if(istype(mob_occupant))
+		if(locate_computer(/obj/machinery/computer/cloning))
 			if(!mob_occupant.suiciding && !(mob_occupant.disabilities & NOCLONE) && !mob_occupant.hellbound)
 				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
-		var/obj/machinery/computer/scan_consolenew/console
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			console = locate(/obj/machinery/computer/scan_consolenew, get_step(src, dir))
-			if(console)
-				console.on_scanner_close()
-				break
-	return 1
+	// DNA manipulators cannot operate on severed heads or brains
+	if(isliving(occupant))
+		var/obj/machinery/computer/scan_consolenew/console = locate_computer(/obj/machinery/computer/scan_consolenew)
+		if(console)
+			console.on_scanner_close()
+
+	return TRUE
 
 /obj/machinery/dna_scannernew/open_machine()
 	if(state_open)

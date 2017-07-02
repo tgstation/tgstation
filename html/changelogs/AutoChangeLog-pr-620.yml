@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - rscadd: "The Prototype Emitter, will function like an ordinary emitter while also charging a secondary power supply that will allow a buckled user to manually fire the emitter. Returning to automatic fire will have the emitter continue to fire at the last target struck by manual fire."

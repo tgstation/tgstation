@@ -149,7 +149,7 @@
 			var/obj/item/wallframe/flasher/F = new(get_turf(src))
 			transfer_fingerprints_to(F)
 			F.id = id
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)

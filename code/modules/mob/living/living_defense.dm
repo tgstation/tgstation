@@ -25,13 +25,19 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-//this returns the mob's protection against eye damage (number between -1 and 2)
+//this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
 	return 0
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
 	return 0
+
+/mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+	return FALSE
+
+/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return
@@ -103,7 +109,7 @@
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
 				take_overall_damage(0, rand(M.force/2, M.force))
-				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				M.mech_toxin_damage(src)
 			else
@@ -291,7 +297,7 @@
 
 /mob/living/singularity_act()
 	var/gain = 20
-	investigate_log("([key_name(src)]) has been consumed by the singularity.","singulo") //Oh that's where the clown ended up!
+	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -305,18 +311,25 @@
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return FALSE
+	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
+		GLOB.cult_narsie.resize(1.1)
+		GLOB.cult_narsie.souls_needed -= src
+		GLOB.cult_narsie.souls += 1
+		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
+			GLOB.cult_narsie.resolved = TRUE
+			world << sound('sound/machines/alarm.ogg')
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
 	else
-		switch(rand(1, 10))
+		switch(rand(1, 6))
 			if(1)
 				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
 			if(2)
 				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
 			if(3 to 6)
 				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
-			if(6 to 10)
-				new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return TRUE

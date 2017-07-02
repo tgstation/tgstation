@@ -11,7 +11,7 @@
 		 /obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/cream
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/meatpie
 	name = "Meat pie"
@@ -22,7 +22,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/tofupie
 	name = "Tofu pie"
@@ -31,7 +31,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/tofupie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/xenopie
 	name = "Xeno pie"
@@ -40,7 +40,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/xeno = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/xemeatpie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/cherrypie
 	name = "Cherry pie"
@@ -49,7 +49,7 @@
 		 /obj/item/weapon/reagent_containers/food/snacks/grown/cherries = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/cherrypie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/berryclafoutis
 	name = "Berry clafoutis"
@@ -58,7 +58,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/bearypie
 	name = "Beary Pie"
@@ -68,7 +68,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/bear = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/amanitapie
 	name = "Amanita pie"
@@ -77,7 +77,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/amanita_pie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/plumppie
 	name = "Plump pie"
@@ -86,7 +86,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/applepie
 	name = "Apple pie"
@@ -95,7 +95,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/applepie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/pumpkinpie
 	name = "Pumpkin pie"
@@ -106,7 +106,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/pumpkinpie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/goldenappletart
 	name = "Golden apple tart"
@@ -117,7 +117,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/grapetart
 	name = "Grape tart"
@@ -128,7 +128,7 @@
 	        /obj/item/weapon/reagent_containers/food/snacks/grown/grapes = 3
 	        )
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/grapetart
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/blumpkinpie
 	name = "Blumpkin pie"
@@ -139,7 +139,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/blumpkinpie
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/dulcedebatata
 	name = "Dulce de batata"
@@ -149,7 +149,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
-	category = CAT_PIE
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/frostypie
 	name = "Frosty pie"
@@ -158,4 +158,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/frostypie
-	category = CAT_PIE
+	subcategory = CAT_PIE

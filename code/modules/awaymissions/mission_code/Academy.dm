@@ -64,17 +64,18 @@
 		next_check = world.time + cooldown
 
 /obj/structure/academy_wizard_spawner/proc/give_control()
+	set waitfor = FALSE
+	
 	if(!current_wizard)
 		return
-	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
-		var/mob/dead/observer/chosen = null
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
+	var/mob/dead/observer/chosen = null
 
-		if(candidates.len)
-			chosen = pick(candidates)
-			message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
-			current_wizard.ghostize() // on the off chance braindead defender gets back in
-			current_wizard.key = chosen.key
+	if(candidates.len)
+		chosen = pick(candidates)
+		message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
+		current_wizard.ghostize() // on the off chance braindead defender gets back in
+		current_wizard.key = chosen.key
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc

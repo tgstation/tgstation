@@ -26,8 +26,6 @@ Possible to do for anyone motivated enough:
 
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
-
-GLOBAL_LIST_EMPTY(holopads)
 #define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
@@ -53,19 +51,18 @@ GLOBAL_LIST_EMPTY(holopads)
 	var/static/list/holopads = list()
 
 /obj/machinery/holopad/Initialize()
-	..()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
 	B.apply_default_parts(src)
 	holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
-		LAZYADD(holo_calls, outgoing_call)
+		outgoing_call.ConnectionFailure(src)
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		HC.ConnectionFailure(src)
-	LAZYCLEARLIST(holo_calls)
 
 	for (var/I in masters)
 		clear_holo(I)
@@ -76,7 +73,14 @@ GLOBAL_LIST_EMPTY(holopads)
 	if (powered())
 		stat &= ~NOPOWER
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
+		if(outgoing_call)
+			outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/obj_break()
+	. = ..()
+	if(outgoing_call)
+		outgoing_call.ConnectionFailure(src)
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4
@@ -101,21 +105,10 @@ GLOBAL_LIST_EMPTY(holopads)
 		return
 	return ..()
 
-/obj/machinery/holopad/proc/CheckCallClose()
-	for(var/I in holo_calls)
-		var/datum/holocall/HC = I
-		if(usr == HC.eye)
-			HC.Disconnect(HC.calling_holopad)	//disconnect via clicking the called holopad
-			return TRUE
-	return FALSE
-
-/obj/machinery/holopad/Click(location,control,params)
-	if(!CheckCallClose())
-		return ..()
-
 /obj/machinery/holopad/AltClick(mob/living/carbon/human/user)
-	if(!CheckCallClose())
-		interact(user)
+	if(isAI(user))
+		hangup_all_calls()
+		return
 
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
@@ -158,6 +151,12 @@ GLOBAL_LIST_EMPTY(holopads)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+
+//Stop ringing the AI!!
+/obj/machinery/holopad/proc/hangup_all_calls()
+	for(var/I in holo_calls)
+		var/datum/holocall/HC = I
+		HC.Disconnect(src)
 
 /obj/machinery/holopad/Topic(href, href_list)
 	if(..() || isAI(usr))
@@ -294,7 +293,7 @@ GLOBAL_LIST_EMPTY(holopads)
 			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 			Hologram.Impersonation = user
 
-		Hologram.language_holder = user.get_language_holder()
+		Hologram.copy_known_languages_from(user,replace = TRUE)
 		Hologram.mouse_opacity = 0//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.anchored = 1//So space wind cannot drag it.

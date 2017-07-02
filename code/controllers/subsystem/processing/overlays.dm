@@ -1,9 +1,10 @@
 PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_TICKER|SS_FIRE_IN_LOBBY
+	flags = SS_TICKER
 	wait = 1
 	priority = 500
 	init_order = INIT_ORDER_OVERLAY
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP 
 
 	stat_tag = "Ov"
 	currentrun = null
@@ -160,7 +161,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
 		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
+/atom/proc/copy_overlays(atom/other, cut_old)	//copys our_overlays from another atom
 	if(!other)
 		if(cut_old)
 			cut_overlays()
@@ -189,3 +190,18 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 
 /image/proc/cut_overlays(x)
 	overlays.Cut()
+
+/image/proc/copy_overlays(atom/other, cut_old)
+	if(!other)
+		if(cut_old)
+			cut_overlays()
+		return
+
+	var/list/cached_other = other.our_overlays
+	if(cached_other)
+		if(cut_old || !overlays.len)
+			overlays = cached_other.Copy()
+		else
+			overlays |= cached_other
+	else if(cut_old)
+		cut_overlays()

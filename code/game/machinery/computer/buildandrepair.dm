@@ -42,7 +42,7 @@
 			if(istype(P, /obj/item/weapon/circuitboard/computer) && !circuit)
 				if(!user.drop_item())
 					return
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
@@ -78,7 +78,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
 					if(do_after(user, 20*P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 2)
@@ -106,7 +106,7 @@
 					to_chat(user, "<span class='warning'>You need two glass sheets to continue construction!</span>")
 					return
 				else
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 					if(do_after(user, 20, target = src))
 						if(G.get_amount() >= 2 && state == 3)
@@ -159,6 +159,10 @@
 	name = "Turbine Computer (Computer Board)"
 	build_path = /obj/machinery/computer/turbine_computer
 	origin_tech = "programming=4;engineering=4;powerstorage=4"
+/obj/item/weapon/circuitboard/computer/launchpad_console
+	name = "Launchpad Control Console (Computer Board)"
+	build_path = /obj/machinery/computer/launchpad
+	origin_tech = "programming=3;bluespace=3;plasmatech=2"
 /obj/item/weapon/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
 	build_path = /obj/machinery/computer/message_monitor
@@ -170,7 +174,7 @@
 /obj/item/weapon/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
-	origin_tech = "programming=3;bio=3"
+	origin_tech = "programming=3;biotech=3"
 /obj/item/weapon/circuitboard/computer/base_construction
 	name = "circuit board (Aux Mining Base Construction Console)"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction

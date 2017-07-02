@@ -14,7 +14,7 @@
 	light_color = "#BE8700"
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
-	var/proselytize_range = 10
+	var/convert_range = 10
 	dangerous_possession = TRUE
 
 /obj/structure/destructible/clockwork/massive/ratvar/Initialize()
@@ -28,7 +28,7 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0, 0)
+	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0, null, FALSE, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
@@ -49,7 +49,7 @@
 /obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
-		T = get_step(A, A.dir) //please don't run into a window like a bird, ratvar
+		T = get_step(T, dir) //please don't run into a window like a bird, ratvar
 	forceMove(T)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Process_Spacemove()
@@ -58,10 +58,10 @@
 /obj/structure/destructible/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
 		return
-	for(var/I in circlerangeturfs(src, proselytize_range))
+	for(var/I in circlerangeturfs(src, convert_range))
 		var/turf/T = I
 		T.ratvar_act()
-	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
+	for(var/I in circleviewturfs(src, round(convert_range * 0.5)))
 		var/turf/T = I
 		T.ratvar_act(TRUE)
 	var/dir_to_step_in = pick(GLOB.cardinal)
@@ -117,12 +117,10 @@
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
 				shake_camera(M, 4, 3)
-		var/ratvar_chance = min(SSticker.mode.servants_of_ratvar.len, 50)
-		var/narsie_chance = SSticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in GLOB.player_list)
-			narsie_chance++
+		var/ratvar_chance = min(LAZYLEN(SSticker.mode.servants_of_ratvar), 50)
+		var/narsie_chance = min(LAZYLEN(SSticker.mode.cult), 50)
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
-		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
+		narsie_chance = rand(base_victory_chance, narsie_chance)
 		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break

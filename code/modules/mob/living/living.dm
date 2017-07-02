@@ -241,7 +241,7 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
+	return (health < 0 && health > -100 && stat == UNCONSCIOUS)
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -446,7 +446,7 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
+	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
 /mob/living/movement_delay(ignorewalk = 0)
@@ -794,9 +794,6 @@
 	return 1
 
 /mob/living/carbon/proc/update_stamina()
-	return
-
-/mob/living/carbon/human/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
@@ -805,26 +802,28 @@
 			setStaminaLoss(health - 2)
 	update_health_hud()
 
+/mob/living/carbon/alien/update_stamina()
+	return
+
 /mob/living/proc/owns_soul()
 	if(mind)
 		return mind.soulOwner == mind
-	return 1
+	return TRUE
 
 /mob/living/proc/return_soul()
 	hellbound = 0
 	if(mind)
-		if(mind.soulOwner.devilinfo)//Not sure how this could happen, but whatever.
-			mind.soulOwner.devilinfo.remove_soul(mind)
+		var/datum/antagonist/devil/devilInfo = mind.soulOwner.has_antag_datum(ANTAG_DATUM_DEVIL)
+		if(devilInfo)//Not sure how this could be null, but let's just try anyway.
+			devilInfo.remove_soul(mind)
 		mind.soulOwner = mind
 
 /mob/living/proc/has_bane(banetype)
-	if(mind)
-		if(mind.devilinfo)
-			return mind.devilinfo.bane == banetype
-	return 0
+	var/datum/antagonist/devil/devilInfo = is_devil(src)
+	return devilInfo && banetype == devilInfo.bane
 
 /mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(mind && mind.devilinfo)
+	if(mind && mind.has_antag_datum(ANTAG_DATUM_DEVIL))
 		return check_devil_bane_multiplier(weapon, attacker)
 	return 1
 
