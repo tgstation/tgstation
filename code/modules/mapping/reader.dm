@@ -29,7 +29,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x = 0, upper_crop_x = INFINITY, lower_crop_y = 0, upper_crop_y = INFINITY)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num, upper_crop_x as num, lower_crop_y as num, upper_crop_y as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	space_key = null
@@ -87,7 +87,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 			if(curr_x > x_upper || curr_x < x_lower)
 				continue								//X cropping.
 
-			var/xcrdStart = cuur_x + x_offset - 1
+			var/xcrdStart = curr_x + x_offset - 1
 			//position of the currently processed square
 			var/xcrd
 			var/ycrd = text2num(dmmRegex.group[4]) + y_offset - 1

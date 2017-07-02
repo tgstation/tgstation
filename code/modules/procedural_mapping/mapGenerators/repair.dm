@@ -17,12 +17,13 @@
 	allowAtomsOnSpace = TRUE
 
 /datum/mapGeneratorModule/reload_station_map/generate()
-	if(!mother)
+	if(!istype(mother, /datum/mapGenerator/repair/reload_station_map))
 		return
-	if(mother.z != ZLEVEL_STATION)
+	var/datum/mapGenerator/repair/reload_station_map/mother1 = mother
+	if(mother1.z != ZLEVEL_STATION)
 		return			//This is only for reloading station blocks!
 	var/static/dmm_suite/reloader = new
-	reloader.load_map(config.GetFullMapPath(), z_offset = ZLEVEL_STATION, cropMap=TRUE, lower_crop_x = mother.x_low, upper_crop_x = mother.x_high, lower_crop_y = mother.y_low, upper_crop_y = mother.y_high)
+	reloader.load_map(config.GetFullMapPath(), z_offset = ZLEVEL_STATION, cropMap=TRUE, lower_crop_x = mother1.x_low, upper_crop_x = mother1.x_high, lower_crop_y = mother1.y_low, upper_crop_y = mother1.y_high)
 
 /datum/mapGenerator/repair
 	modules = list(/datum/mapGeneratorModule/bottomLayer/repairFloorPlasteel,
@@ -38,7 +39,7 @@
 	/datum/mapGeneratorModule/bottomLayer/repressurize)
 
 /datum/mapGenerator/repair/reload_station_map
-	modules = list(datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs)
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs)
 	var/x_low = 0
 	var/x_high = 0
 	var/y_low = 0
