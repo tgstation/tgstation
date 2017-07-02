@@ -2220,6 +2220,7 @@
 #include "hippiestation\code\modules\client\preferences.dm"
 #include "hippiestation\code\modules\client\preferences_savefile.dm"
 #include "hippiestation\code\modules\client\who.dm"
+#include "hippiestation\code\modules\client\loadout\loadout.dm"
 #include "hippiestation\code\modules\clothing\clothing.dm"
 #include "hippiestation\code\modules\clothing\head.dm"
 #include "hippiestation\code\modules\clothing\mask.dm"
