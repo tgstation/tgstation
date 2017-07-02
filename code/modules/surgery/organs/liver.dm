@@ -45,7 +45,7 @@
 							toxamount += C.reagents.get_reagent_amount(T.type)
 
 					if(toxamount <= toxTolerance && toxamount > 0)
-						C.reagents.remove_all_type("toxin", toxTolerance, 1)
+						C.reagents.remove_all_type(/datum/reagent/toxin, toxTolerance, 1)
 					else if(toxamount > toxTolerance)
 						damage += toxamount*toxLethality
 
