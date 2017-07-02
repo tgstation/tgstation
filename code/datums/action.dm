@@ -211,6 +211,9 @@
 	name = "Toggle Headphones"
 	desc = "UNTZ UNTZ UNTZ"
 
+/datum/action/item_action/toggle_headphones/Trigger()
+	target.toggle(owner)
+
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
 	desc = "Toggles if the club's blasts cause friendly fire."

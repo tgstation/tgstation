@@ -35,7 +35,7 @@
 	var/item_state_off = "headphones_off"
 	var/headphones_on = FALSE
 
-/obj/item/clothing/ears/headphones/ui_action_click(owner, action)
+/obj/item/clothing/ears/headphones/proc/toggle(owner)
 	headphones_on = !headphones_on
 	if(headphones_on)
 		item_state = item_state_on
@@ -43,5 +43,7 @@
 	else
 		item_state = item_state_off
 		icon_state = icon_state_off
-	owner.update_inv_ears()
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.update_inv_ears()
 	to_chat(owner, "<span class='notice'>You turn the music [headphones_on? "on. Untz Untz Untz!" : "off."]</span>")
