@@ -35,8 +35,8 @@
 
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
-	if(SStitle.icon)
-		icon = SStitle.icon
+	if(SStitle.current_icon)
+		SStitle.SyncAppearance()
 	..()
 
 /turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
@@ -44,7 +44,8 @@
 	if(.)
 		switch(var_name)
 			if("icon")
-				SStitle.icon = icon
+				SStitle.current_icon = icon
+				SStitle.SyncAppearance()
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'

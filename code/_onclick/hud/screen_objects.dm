@@ -556,8 +556,8 @@
 		alpha = 0
 
 	if(!use_previous_title)
-		if(SStitle.icon)
-			icon = SStitle.icon
+		if(SStitle.current_icon)
+			icon = SStitle.current_icon
 	else
 		if(!SStitle.previous_icon)
 			qdel(src)

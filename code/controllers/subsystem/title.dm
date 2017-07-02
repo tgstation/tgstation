@@ -3,12 +3,13 @@ SUBSYSTEM_DEF(title)
 	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/file_path
-	var/icon/icon
+	var/mutable_appearance/map_badge
+	var/icon/current_icon
 	var/icon/previous_icon
 	var/turf/closed/indestructible/splashscreen/splash_turf
 
 /datum/controller/subsystem/title/PreInit()
-	if(file_path && icon)
+	if(file_path && current_icon)
 		return
 
 	if(fexists("data/previous_title.dat"))
@@ -37,18 +38,28 @@ SUBSYSTEM_DEF(title)
 
 		file_path = "config/title_screens/images/[pick(title_screens)]"
 		
-		icon = new(fcopy_rsc(file_path))
+		current_icon = new(fcopy_rsc(file_path))
 
-		if(splash_turf)
-			splash_turf.icon = icon
+	var/icon/mbi = new(SSmapping.config.badge_file)
+	map_badge = new(mbi)
+	map_badge.alpha = 150
+	map_badge.pixel_x = (current_icon ? current_icon.Width() : 480) - mbi.Width()
+	
+	SyncAppearance()
+	
+/datum/controller/subsystem/title/proc/SyncAppearance()
+	if(splash_turf)	
+		splash_turf.icon = current_icon
+		splash_turf.cut_overlays()
+		splash_turf.add_overlay(map_badge)
+		splash_turf.compile_overlays()	//high prio
 
 /datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("icon")
-				if(splash_turf)
-					splash_turf.icon = icon
+			if("current_icon")
+				SyncAppearance()
 
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
@@ -62,7 +73,8 @@ SUBSYSTEM_DEF(title)
 		S.Fade(FALSE,FALSE)
 
 /datum/controller/subsystem/title/Recover()
-	icon = SStitle.icon
+	map_badge = SStitle.map_badge
+	current_icon = SStitle.current_icon
 	splash_turf = SStitle.splash_turf
 	file_path = SStitle.file_path
 	previous_icon = SStitle.previous_icon
