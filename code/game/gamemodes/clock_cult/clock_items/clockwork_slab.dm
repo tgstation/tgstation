@@ -1,8 +1,8 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between you and the City of Cogs. It produces components,  contains information, and is your most vital tool as a servant.\n\
-	Use the <span class='brass'>Hierophant Network</span> action button to discreetly talk with other servants.\n\
+	clockwork_desc = "A link between you and the Celestial Derelict. It produces components,  contains information, and is your most vital tool as a Servant.\n\
+	Use the <span class='brass'>Hierophant Network</span> action button to discreetly talk with other Servants.\n\
 	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
@@ -231,7 +231,7 @@
 	if(!user.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You cannot speak into the slab!</span>")
 		return FALSE
-	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
+	var/message = stripped_input(user, "Enter a message to send to your fellow Servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
 		return FALSE
 	clockwork_say(user, text2ratvar("Servants, hear my words: [html_decode(message)]"), TRUE)
@@ -313,7 +313,7 @@
 			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
 		var/production_text_addon = ""
 		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon servant above <b>[SCRIPT_SERVANT_REQ]</b>"
+			production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
 		production_time = production_time/600
 		var/list/production_text
 		if(round(production_time))
@@ -331,8 +331,11 @@
 
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
-		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a servant, advice for what to do next, and \
-		pointers for serving the master well. You should recommended that you check this area for help if you get stuck or need guidance on what to do next.<br>")
+		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \
+		pointers for serving the master well. You should recommended that you check this area for help if you get stuck or need guidance on what to do next.<br><br>\
+		\
+		<i>Disclaimer: Many objects, terms, and phrases, such as Servant, Cache, and Slab, are capitalized like proper nouns. This is a quirk of the Ratvarian language; \
+		do not let it confuse you! You are free to use the names in pronoun form when speaking in normal languages.")
 	return textlist.Join()
 
 //Gets text for a certain section. "Default" is used for when you first open Recollection.
@@ -350,37 +353,37 @@
 			dat += "You can browse the above sections as you please. They're designed to be read in order, but feel free to pick and choose between them."
 		if("Getting Started")
 			dat += "<font color=#BE8700 size=3>Getting Started</font><br><br>"
-			dat += "Welcome, servant! This section houses the utmost basics of being a servant of Ratvar, and is much more informal than the other sections. Being a servant of \
+			dat += "Welcome, Servant! This section houses the utmost basics of being a Servant of Ratvar, and is much more informal than the other sections. Being a Servant of \
 			Ratvar is a very complex role, with many systems, objects, and resources to use effectively and creatively.<br><br>"
-			dat += "This section of your clockwork slab covers everything that servants have to be aware of, but is a long read because of how in-depth the systems are. Knowing \
-			how to use the tools at your disposal makes all the difference between a clueless servant and a great one.<br><br>"
-			dat += "If this is your first time being a servant, relax. It's very much possible that you'll fail, but it's impossible to learn without making mistakes. For the time \
-			being, use the Hierophant Network button in the top left-hand corner of your screen to try and get in touch with your fellow servants; ignore the others for now. This button \
-			will let you send messages across space and time to any other servant in the game world. This makes it great for coordinating, and you should use it often! <i>Note:</i> Using \
+			dat += "This section of your clockwork slab covers everything that Servants have to be aware of, but is a long read because of how in-depth the systems are. Knowing \
+			how to use the tools at your disposal makes all the difference between a clueless Servant and a great one.<br><br>"
+			dat += "If this is your first time being a Servant, relax. It's very much possible that you'll fail, but it's impossible to learn without making mistakes. For the time \
+			being, use the Hierophant Network button in the top left-hand corner of your screen to try and get in touch with your fellow Servants; ignore the others for now. This button \
+			will let you send messages across space and time to all other Servants. This makes it great for coordinating, and you should use it often! <i>Note:</i> Using \
 			this will cause you to whisper your message aloud, so doing so in a public place is very suspicious and you should try to restrict it to private use.<br><br>"
 			dat += "If you aren't willing or don't have the time to read through every section, you can still help your teammates! Ask if they've set up a base. If they have, head there \
-			and ask however you can help; chances are there's always something. If not, it's your job as a servant to get one up and running! Try to find a secluded, low-traffic area, \
+			and ask however you can help; chances are there's always something. If not, it's your job as a Servant to get one up and running! Try to find a secluded, low-traffic area, \
 			like the auxilary base or somewhere deep in maintenance. You'll want to go into the Drivers section of the slab and look for <i>Tinkerer's Cache.</i> Find a nice spot and \
 			create one. This serves as a storage for <i>components,</i> the cult's primary resource. (Your slab's probably produced a few by now.) By attacking that cache with this \
-			slab, you'll offload all your components into it, and all servants will be able to use those components from any distance - all tinkerer's caches are linked!<br><br>"
+			slab, you'll offload all your components into it, and all Servants will be able to use those components from any distance - all Tinkerer's Caches are linked!<br><br>"
 			dat += "Once you have a base up and running, contact your fellows and let them know. You should come back here often to drop off the slab's components, and your fellows \
 			should do the same, either in this cache or in ones of their own.<br><br>"
 			dat += "If you think you're confident in taking further steps to help the cult, feel free to move onto the other sections. If not, let your allies know that you're new and \
-			would appreciate the help they might offer you. Most experienced servants would be happy to help; if everyone is inexperienced, then you'll have to step out of your comfort \
+			would appreciate the help they might offer you. Most experienced Servants would be happy to help; if everyone is inexperienced, then you'll have to step out of your comfort \
 			zone and read onto the other sections. It's very likely that you might fail, but don't worry too much about it; you can't learn effectively without making mistakes.<br><br>"
 			dat += "For now, welcome! If you're looking to learn, you should start with the <b>Basics</b> section, then move onto <b>Components</b> and <b>Scripture</b>. At the very \
-			least, you should read the <b><i>Conversion</i></b> section, as it outlines the most important aspects of being a servant. Good luck!<br><br>"
+			least, you should read the <b><i>Conversion</i></b> section, as it outlines the most important aspects of being a Servant. Good luck!<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Basics")
 			dat += "<font color=#BE8700 size=3>Servant Basics</font><br><br>"
-			dat += "The first thing any servant should know is their slab, inside and out. The clockwork slab is by far your most important tool. It allows you to speak with your \
-			fellow servants, create components that fuel many of your abilities, use those abilities, and should be kept safe and hidden on your person at all times. If you have not \
-			done so already, it's a good idea to check for any fellow servants using the Hierophant Network button in the top-left corner of your screen; as Inath-Neq would agree, \
-			teamwork is an instrumental component of success.<br><br>" //get it? component? ha!
-			dat += "As a servant of Ratvar, the tools you are given focus around building and maintaining bases and outposts. A great deal of your power comes from stationary \
+			dat += "The first thing any Servant should know is their slab, inside and out. The clockwork slab is by far your most important tool. It allows you to speak with your \
+			fellow Servants, create components that fuel many of your abilities, use those abilities, and should be kept safe and hidden on your person at all times. If you have not \
+			done so already, it's a good idea to check for any fellow Servants using the Hierophant Network button in the top-left corner of your screen; due to the cult's nature, \
+			teamwork is an instrumental component of your success.<br><br>" //get it? component? ha!
+			dat += "As a Servant of Ratvar, the tools you are given focus around building and maintaining bases and outposts. A great deal of your power comes from stationary \
 			structures, and without constructing a base somewhere, it's essentially impossible to succeed. Finding a good spot to build a base can be difficult, and it's recommended \
 			that you choose an area in low-traffic part of the station (such as the auxilary base). Make sure to disconnect any cameras in the area beforehand.<br><br>"
-			dat += "Because of how complex being a servant is, it isn't possible to fit much information into this section. It's highly recommended that you read the <b>Components</b> \
+			dat += "Because of how complex being a Servant is, it isn't possible to fit much information into this section. It's highly recommended that you read the <b>Components</b> \
 			and <b>Scripture</b> sections next. Not knowing how these two systems work will cripple both you and your fellows, and lead to a frustrating experience for everyone.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Terminology")
@@ -388,9 +391,9 @@
 			dat += "<i>This isn't intended to be read all at once; you are advised to treat it moreso as a glossary.</i><br><br>"
 			dat += "<font color=#BE8700 size=3>General</font><br>"
 			dat += "<font color=#BE8700><b>Servant:</b></font> A person or robot who serves Ratvar. You are one of these.<br>"
-			dat += "<font color=#BE8700><b>Cache:</b></font> A <i>tinkerer's cache</i>, which is a structure that stores and creates components.<br>"
+			dat += "<font color=#BE8700><b>Cache:</b></font> A <i>Tinkerer's Cache</i>, which is a structure that stores and creates components.<br>"
 			dat += "<font color=#BE8700><b>CV:</b></font> Construction Value. All clockwork structures, floors, and walls increase this number.<br>"
-			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into servants of Ratvar.<br>"
+			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into Servants of Ratvar.<br>"
 			dat += "<font color=#BE8700><b>BE:</b></font> Belligerent Eye, a component type used in offensive scriptures.<br>"
 			dat += "<font color=#BE8700><b>VG:</b></font> Vanguard Cogwheel, a component type used in defensive scriptures.<br>"
 			dat += "<font color=#BE8700><b>GC:</b></font> Geis Capacitor, a component type used in mind-related scriptures.<br>"
@@ -398,11 +401,11 @@
 			dat += "<font color=#BE8700><b>HA:</b></font> Hierophant Ansible, a component type used in energy scriptures.<br>"
 			dat += "<font color=#BE8700><b>Ark:</b></font> The cult's win condition, a huge structure that needs to be defended.<br><br>"
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
-			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
+			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
 			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can stun everything in an area after a delay.<br>"
 			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (x-ray, night vision) but damage the wearer's eyes.<br>"
 			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon.<br>"
-			dat += "<font color=#BE8700><b>Proselytizer/Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
+			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"
 			dat += "<font color=#BE8700><b>Vessel:</b></font> A soul vessel, a clockwork brain used to activate constructs.<br>"
 			dat += "<font color=#BE8700><b>Shell:</b></font> A construct shell of some type that can accept a soul vessel to activate.<br>"
@@ -410,7 +413,7 @@
 			dat += "<font color=#BE8700><b>Fragment:</b></font> An anim[prob(1) ? "e" : "a"] fragment, which is a fragile but powerful offensive construct.<br>"
 			dat += "<font color=#BE8700><b>Marauder:</b></font> A clockwork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
 			dat += "<font color=#BE8700 size=3>Structures (* = requires power)</font><br>"
-			dat += "<font color=#BE8700><b>Warden:</b></font> An ocular warden, which is a ranged turret that damages non-servants that see it.<br>"
+			dat += "<font color=#BE8700><b>Warden:</b></font> An ocular warden, which is a ranged turret that damages non-Servants that see it.<br>"
 			dat += "<font color=#BE8700><b>Daemon*:</b></font> A tinkerer's daemon, which quickly creates components.<br>"
 			dat += "<font color=#BE8700><b>Lens*:</b></font> An interdiction lens, which sabotages machinery in a large area to create power.<br>"
 			dat += "<font color=#BE8700><b>Obelisk*:</b></font> A clockwork obelisk, which can broadcast large messages and allows limited teleportation.<br>"
@@ -418,8 +421,8 @@
 			dat += "<font color=#BE8700><b>Prism*:</b></font> A prolonging prism, which delays the shuttle for two minutes at a huge power cost.<br><br>"
 			dat += "<font color=#BE8700 size=3>Sigils</font><br>"
 			dat += "<i>Note: Sigils can be stacked on top of one another, making certain sigils very effective when paired!</i><br>"
-			dat += "<font color=#BE8700><b>Transgression:</b></font> Stuns the first non-servant to cross it for ten seconds and blinds others nearby. Disappears on use.<br>"
-			dat += "<font color=#BE8700><b>Submission:</b></font> Converts the first non-servant to stand on the sigil for seven seconds. Disappears on use.<br>"
+			dat += "<font color=#BE8700><b>Transgression:</b></font> Stuns the first non-Servant to cross it for ten seconds and blinds others nearby. Disappears on use.<br>"
+			dat += "<font color=#BE8700><b>Submission:</b></font> Converts the first non-Servant to stand on the sigil for seven seconds. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Accession:</b></font> Identical to the Sigil of Submission, but doesn't disappear on use. It can also convert a single mindshielded target, but will disappear after doing this.<br>"
 			dat += "<font color=#BE8700><b>Transmission:</b></font> Stores power for clockwork structures. Feeding it brass sheets will create power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
@@ -434,7 +437,7 @@
 				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
 			var/production_text_addon = ""
 			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-				production_text_addon = ", which increases for each human or silicon servant above <b>[SCRIPT_SERVANT_REQ]</b>"
+				production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
 			production_time = production_time/600
 			var/list/production_text
 			if(round(production_time))
@@ -450,38 +453,38 @@
 			production_text += production_text_addon
 			production_text = production_text.Join()
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
-			dat += "<b>Components</b> are your primary resource as a servant. There are five types of component, with each one being used in different roles:<br><br>"
+			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "<font color=#6E001A>Belligerent Eyes</font> are aggressive and judgemental, and are used in offensive scripture;<br>"
 			dat += "<font color=#1E8CE1>Vanguard Cogwheels</font> are defensive and repairing, and are used in defensive scripture;<br>"
-			dat += "<font color=#AF0AAF>[prob(1) ? "Guvax" : "Geis"] Capacitors</font> are for conversion and control, and are used in mind-related scripture;<br>" //References the old name
+			dat += "<font color=#AF0AAF>Geis Capacitors</font> are for conversion and control, and are used in mind-related scripture;<br>" //References the old name
 			dat += "<font color=#5A6068>Replicant Alloy</font> is a strong, malleable metal and is used for construction and creation;<br>"
 			dat += "<font color=#DAAA18>Hierophant Ansibles</font> are for transmission and power, and are used in power and teleportation scripture<br><br>"
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
 			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>[production_text]</b>. This number will increase \
-			as the amount of servants in the covenant increase; additionally, slabs can only produce components when held by a servant, and holding more than one slab will cause both \
+			as the amount of Servants in the covenant increase; additionally, slabs can only produce components when held by a Servant, and holding more than one slab will cause both \
 			of them to halt progress until one of them is removed from their person.<br><br>"
 			dat += "Your slab has an internal storage of components, but it isn't meant to be the main one. Instead, there's a <b>global storage</b> of components that can be \
 			added to through various ways. Anything that needs components will first draw them from the global storage before attempting to draw them from the slab. Most methods of \
-			component production add to the global storage. You can also offload components from your slab into the global storage by using it on a tinkerer's cache, a structure whose \
+			component production add to the global storage. You can also offload components from your slab into the global storage by using it on a Tinkerer's Cache, a structure whose \
 			primary purpose is to do just that (although it will also slowly produce components when placed near a brass wall.)<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Scripture")
 			dat += "<font color=#BE8700 size=3>The Ancient Scripture</font><br><br>"
 			dat += "If you have experience with the Nar-Sian cult (or the \"blood cult\") then you will know of runes. They are the manifestations of the Geometer's power, and where most \
-			of the cult's supernatural ability comes from. The servant equivalent of runes is called <b>scripture</b>, and unlike runes, scripture is loaded into your clockwork slab.<br><br>"
+			of the cult's supernatural ability comes from. The Servant equivalent of runes is called <b>scripture</b>, and unlike runes, scripture is loaded into your clockwork slab.<br><br>"
 			dat += "Each piece of scripture has widely-varying effects. Your most important scripture, <i>Geis</i>, is obvious and suspicious, but charges your slab with energy and allows \
-			you to attack a non-servant in melee range to restrain them and begin converting them into a servant. This is just one example; each piece of scripture can be simple or \
+			you to attack a non-Servant in melee range to restrain them and begin converting them into a Servant. This is just one example; each piece of scripture can be simple or \
 			complex, be obvious or have hidden mechanics that can only be found through trial and error.<br><br>"
 			dat += "Any given piece of scripture has a component cost listed in its \"Recite\" button. The acronyms for the components should be obvious if you've read about components \
 			already; reciting this piece of scripture will consume the listed components, first from the global storage and then from your slab. Note that failing to recite a piece of \
 			scripture will <i>not</i> consume the components required to recite it.<br><br>"
-			dat += "It should also be noted that some scripture cannot be recited alone. Especially with more powerful scripture, you may need multiple servants to recite a piece of \
-			scripture; both of you will need to stand still until the recital completes. <i>Only human and silicon servants are valid for scripture recital!</i> Constructs cannot help \
+			dat += "It should also be noted that some scripture cannot be recited alone. Especially with more powerful scripture, you may need multiple Servants to recite a piece of \
+			scripture; both of you will need to stand still until the recital completes. <i>Only human and silicon Servants are valid for scripture recital!</i> Constructs cannot help \
 			in reciting scripture.<br><br>"
-			dat += "Finally, scripture is separated into four \"tiers\" based on power: Drivers, Scripts, Applications, and Judgement.[prob(1) ? "(If you're looking for Revenant, don't \
-			ask.)" : ""] You can view the requirements to unlock each tier in its scripture list. Once a tier is unlocked, it's unlocked permanently; the cult only needs to fill the \
+			dat += "Finally, scripture is separated into four \"tiers\" based on power: Drivers, Scripts, Applications, and Judgement.[prob(1) ? "(The Revenant tier was removed a long time ago. \
+			Get with the times.)" : ""] You can view the requirements to unlock each tier in its scripture list. Once a tier is unlocked, it's unlocked permanently; the cult only needs to fill the \
 			requirement for unlocking a tier once!<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Power")
@@ -495,24 +498,24 @@
 			dat += "Generating power is less easy. The most reliable and efficient way is using brass sheets; attacking a sigil of transmission with brass sheets will convert them \
 			to power, at a rate of <b>[POWER_FLOOR]W</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> \
 			section.) There are also structures that <i>generate</i> power instead of consuming it; for instance, the interdiction lens sabotages all non-clockwork machines in a \
-			very large area and creates power from doing so. This allows servants to simultaneously cripple an entire department as well as fueling their own machinery.<br><br>"
+			very large area and creates power from doing so. This allows Servants to simultaneously cripple an entire department as well as fueling their own machinery.<br><br>"
 			dat += "Without power, many structures will not function, making a base vulnerable to attack. For this reason, it is critical that you keep an eye on your power reserves and \
 			ensure that they remain comfortably high.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Conversion")
 			dat += "<font color=#BE8700 size=3>Growing the Ranks</font><br><br>"
-			dat += "Because the servants of Ratvar are a cult, the main method to gain more power is to \"enlighten\" normal crew into new servants. When a crewmember is converted, \
-			they become a full-fledged servant, ready and willing to serve the cause of Ratvar. It should also be noted that <i>silicon crew, such as cyborgs and the AI, can be \
+			dat += "Because the Servants of Ratvar are a cult, the main method to gain more power is to \"enlighten\" normal crew into new Servants. When a crewmember is converted, \
+			they become a full-fledged Servant, ready and willing to serve the cause of Ratvar. It should also be noted that <i>silicon crew, such as cyborgs and the AI, can be \
 			converted just like normal crew</i> and will gain special abilities; this is covered later. This section will also cover converting the station's structure itself; walls, \
 			floors, windows, tables, and other objects can all be converted into clockwork versions, and serve an important purpose.<br><br>"
 			dat += "<font color=#BE8700><b>Methods of Conversion:</b></font> There are several ways to convert humans and silicons. The first and most readily-available of these is \
 			<b>Geis</b>, a Driver-tier scripture. Using it whispers an invocation very quickly - this is incredibly obvious - and charges your slab with power. In addition to <i>making \
-			the slab visible in your hand,</i> you can now use it on a target within melee range to bind them and begin converting them. While there are six or fewer servants, they are \
-			unable to escape this binding, meaning that unless you are interrupted, the target is as good as yours. However, the scripture becomes slower for every servant human or \
-			silicon servant past [SCRIPT_SERVANT_REQ], and the bindings can be resisted past this, meaning that eventually other methods become more desirable.<br><br>"
+			the slab visible in your hand,</i> you can now use it on a target within melee range to bind them and begin converting them. While there are six or fewer Servants, they are \
+			unable to escape this binding, meaning that unless you are interrupted, the target is as good as yours. However, the scripture becomes slower for every Servant human or \
+			silicon Servant past [SCRIPT_SERVANT_REQ], and the bindings can be resisted past this, meaning that eventually other methods become more desirable.<br><br>"
 			dat += "The other three methods of conversion are the <b>sigils of submission and accession</b>, whose purpose is to do so, and the <b>mania motor.</b> The sigil of \
-			submission is a sigil that, when stood on by a non-servant for seven full seconds, will convert that non-servant. This time requirement does not scale with \
-			servants, making it the preferred option after Geis becomes too inefficient. It is, however, consumed after use; the sigil of accession solves this problem, and serves as a \
+			submission is a sigil that, when stood on by a non-Servant for seven full seconds, will convert that non-Servant. This time requirement does not scale with \
+			Servants, making it the preferred option after Geis becomes too inefficient. It is, however, consumed after use; the sigil of accession solves this problem, and serves as a \
 			permanent conversion sigil. The mania motor is generally unreliable, only converting those who stand near it for an extended period.<br><br>"
 			dat += "<font color=#BE8700><b>Converting Humans:</b></font> For obvious reasons, humans are the most common conversion target. Because every crew member is different, and \
 			may be armed with different equipment, you should take precautions to ensure that they aren't able to resist. If able, removing a headset is essential, as is restraining \
@@ -524,7 +527,7 @@
 			However, they are also much, much harder to subdue, especially cyborgs. The easiest way to convert a cyborg is by using a flash or a sigil of transgression to stun it, \
 			then very quickly using Geis to restrain them. If you stack a sigil of transgression and one of the conversion sigils, a crossing cyborg will be stunned and helpless to \
 			escape in time before the other sigil converts them.<br><br>"
-			dat += "Converting AIs is very often the hardest task of the cult, and has been the downfall of countless successful servants. Their omnipresence across the station, \
+			dat += "Converting AIs is very often the hardest task of the cult, and has been the downfall of countless successful Servants. Their omnipresence across the station, \
 			coupled with their secure location and ability to lock themselves securely, makes them a powerful target. However, once the AI itself is reached, it is usually completely \
 			helpless to resist its own conversion. A very common tactic is to take advantage of a converted cyborg to rush the AI before it is able to react.<br><br>"
 			dat += "Even once an AI is converted, care must be taken to ensure that it remains hidden. Not only does the AI's core become brassy and thus obvious to an outside \
@@ -532,13 +535,13 @@
 			is at all a priority. This is suspicious and will rapidly lead to the crew checking on it, which usually results in the cult's outing. It is, however, necessary to convert \
 			all AIs present on the station before the Ark becomes invokable, so this must be done at some point.<br><br>"
 			dat += "<font color=#BE8700><b>Converting the Station:</b></font> Converted objects all serve a purpose and are important to the cult's success. To convert objects, \
-			a servant needs to use a <b>replica fabricator,</b> a handheld tool that uses power to convert objects to clockwork versions. Different clockwork objects have different \
-			effects and are often crucial. The most noteworthy are <b>clockwork walls,</b> which automatically \"link\" to any nearby tinkerer's caches, causing them to <b>slowly \
-			generate components.</b> This is incredibly useful for obvious reasons, and creating a clockwork wall near every tinkerer's cache should be prioritized. Clockwork floors \
-			will slowly heal any toxin damage suffered by servants standing on them, and clockwork airlocks can only be opened by servants.<br><br>"
+			a Servant needs to use a <b>replica fabricator,</b> a handheld tool that uses power to replace objects with clockwork versions. Different clockwork objects have different \
+			effects and are often crucial. The most noteworthy are <b>clockwork walls,</b> which automatically \"link\" to any nearby Tinkerer's Caches, causing them to <b>slowly \
+			generate components.</b> This is incredibly useful for obvious reasons, and creating a clockwork wall near every Tinkerer's Cache should be prioritized. Clockwork floors \
+			will slowly heal any toxin damage suffered by Servants standing on them, and clockwork airlocks can only be opened by Servants.<br><br>"
 			dat += "The replica fabricator itself is also worth nothing. In addition to converting objects, it can also create brass sheets at the cost of power by using the \
 			fabricator in-hand. It can also be used to repair any damaged clockwork structures.<br><br>"
-			dat += "Converting objects is almost as, if not as important as, converting new servants. A base is impossible to manage without clockwork walls at the very least, and \
+			dat += "Converting objects is almost as, if not as important as, converting new Servants. A base is impossible to manage without clockwork walls at the very least, and \
 			once the cult has been outed and the crew are actively searching, there is little reason not to use as many as possible.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		else
