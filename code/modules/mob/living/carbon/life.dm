@@ -410,7 +410,7 @@
 
 /mob/living/carbon/proc/liver_failure()
 	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
-		reagents.remove_all_type("corazone", 1) //corazone slowly deletes itself.
+		reagents.remove_all_type(/datum/reagent/medicine/corazone, 1) //corazone slowly deletes itself.
 		return
 	adjustToxLoss(8)
 	if(prob(30))
