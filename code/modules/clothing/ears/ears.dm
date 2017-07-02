@@ -45,4 +45,6 @@
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.update_inv_ears()
+		H.update_inv_neck()
+		H.update_inv_head()
 	to_chat(owner, "<span class='notice'>You turn the music [headphones_on? "on. Untz Untz Untz!" : "off."]</span>")
