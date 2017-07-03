@@ -458,7 +458,7 @@ Proc for attack log creation, because really why not
 	var/turf/say_turf = get_turf(user)
 
 	var/sayloc = ""
-	if(sayloc)
+	if(say_turf)
 		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
 
 
