@@ -79,7 +79,7 @@ proc/goap_debug(text)
 				return
 	. = FALSE
 
-/datum/goap_agent/process() //in SS13 this won't be /proc as it's already defined
+/datum/goap_agent/process()
 	if(!agent)
 		return FALSE
 	if(actions_halted)
