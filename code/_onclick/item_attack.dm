@@ -9,6 +9,8 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
+	if(devicecrafting_holder)
+		devicecrafting_holder.on_attack_self(user)
 	return
 
 /obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
@@ -19,6 +21,29 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
+	if(devicecrafting_holder)
+		if(istype(I, /obj/item/devicecrafting/device))
+			var/obj/item/devicecrafting/device/D = I
+			if(devicecrafting_holder.devices.len == devicecrafting_holder.max_devices)
+				user << "You can't add any more devices to this frame!"
+				return
+			else
+				user << "You add [D] to [src]."
+				user.drop_item()
+				D.forceMove(src)
+				devicecrafting_holder.add_device(D)
+				return
+		else if(istype(I, /obj/item/weapon/screwdriver))
+			if(devicecrafting_holder.devices.len)
+				user << "You remove all the devices from [src]."
+				for(var/obj/item/devicecrafting/device/DE in devicecrafting_holder.devices)
+					DE.loc = get_turf(src)
+					devicecrafting_holder.devices -= DE
+				return
+			else
+				user << "There are no devices to remove!"
+				return
+		devicecrafting_holder.on_attackby(I,user)
 	return I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
@@ -91,6 +116,8 @@
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(devicecrafting_holder)
+		devicecrafting_holder.on_afterattack(target,user,proximity_flag)
 	return
 
 

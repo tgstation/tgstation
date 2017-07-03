@@ -211,13 +211,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		cut_overlay(GLOB.fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
-
-
 /obj/proc/tesla_act(var/power)
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+	if(devicecrafting_holder)
+		devicecrafting_holder.on_tesla(power_bounced) // charge your batteries
 
 /obj/proc/reset_shocked()
 	being_shocked = 0

@@ -340,7 +340,29 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-
+	if(devicecrafting_holder)
+		if(istype(W, /obj/item/devicecrafting/device))
+			var/obj/item/devicecrafting/device/D = W
+			if(devicecrafting_holder.devices.len == devicecrafting_holder.max_devices)
+				user << "You can't add any more devices to this frame!"
+				return
+			else
+				user << "You add [D] to [src]."
+				user.drop_item()
+				D.forceMove(src)
+				devicecrafting_holder.add_device(D)
+				return
+		else if(istype(W, /obj/item/weapon/screwdriver))
+			if(devicecrafting_holder.devices.len)
+				user << "You remove all the devices from [src]."
+				for(var/obj/item/devicecrafting/device/DE in devicecrafting_holder.devices)
+					DE.loc = get_turf(src)
+					devicecrafting_holder.devices -= DE
+				return
+			else
+				user << "There are no devices to remove!"
+				return
+		devicecrafting_holder.on_attackby(W,user)
 /obj/item/proc/handle_mass_pickup(obj/item/weapon/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	for(var/obj/item/I in things)
 		things -= I

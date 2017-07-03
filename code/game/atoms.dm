@@ -284,7 +284,6 @@
 				to_chat(user, "[total_volume] units of various reagents")
 		else
 			to_chat(user, "Nothing.")
-
 /atom/proc/relaymove()
 	return
 
