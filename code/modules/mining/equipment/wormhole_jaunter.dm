@@ -92,7 +92,7 @@
 	if(istype(M, /obj/effect) || !istype(M))
 		return
 
-	if(M.anchored && !istype(M, /obj/mecha) && !ismob(M))
+	if(M.anchored && (!ismob(M) || (istype(M, /obj/mecha) && !mech_sized)))
 		return
 
 	if(do_teleport(M, hard_target, 6))
