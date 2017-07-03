@@ -172,18 +172,13 @@
 	return ..()
 
 /obj/item/projectile/kinetic/prehit(atom/target)
-	var/turf/target_turf = get_turf(target)
-	if(!isturf(target_turf))
-		return
 	. = ..()
 	if(.)
 		if(kinetic_gun)
 			var/list/mods = kinetic_gun.get_modkits()
 			for(var/obj/item/borg/upgrade/modkit/M in mods)
 				M.projectile_prehit(src, target, kinetic_gun)
-		var/datum/gas_mixture/environment = target_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure > 50)
+		if(!lavaland_equipment_pressure_check(get_turf(target)))
 			name = "weakened [name]"
 			damage = damage * pressure_decrease
 			pressure_decrease_active = TRUE
@@ -472,7 +467,7 @@
 //Indoors
 /obj/item/borg/upgrade/modkit/indoors
 	name = "decrease pressure penalty"
-	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in a high pressure environment."
+	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
 	modifier = 2
 	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
