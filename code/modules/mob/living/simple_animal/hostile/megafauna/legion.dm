@@ -38,7 +38,7 @@ Difficulty: Medium
 	minimum_distance = 5
 	ranged_cooldown_time = 20
 	var/size = 5
-	var/charging = 0
+	performing_action = 0
 	medal_type = MEDAL_PREFIX
 	score_type = LEGION_SCORE
 	pixel_y = -90
@@ -50,6 +50,7 @@ Difficulty: Medium
 	idle_vision_range = 13
 	appearance_flags = 0
 	mouse_opacity = 1
+	infest_targets = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()
@@ -65,16 +66,8 @@ Difficulty: Medium
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
-	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/L = target
-		if(L.stat == UNCONSCIOUS)
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-			A.infest(L)
-
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
-	if(world.time >= ranged_cooldown && !charging)
+	if(world.time >= ranged_cooldown && !performing_action)
 		if(prob(75))
 			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 			A.GiveTarget(target)
@@ -88,7 +81,7 @@ Difficulty: Medium
 			retreat_distance = 0
 			minimum_distance = 0
 			speed = 0
-			charging = 1
+			performing_action = 1
 			addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
@@ -96,7 +89,7 @@ Difficulty: Medium
 	retreat_distance = 5
 	minimum_distance = 5
 	speed = 2
-	charging = 0
+	performing_action = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)

@@ -52,52 +52,67 @@
 
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
-
+	var/datum/goap_agent/lavaland/goap_ai
+	var/ai_type = /datum/goap_agent/lavaland
+	var/make_ai = TRUE
 
 /mob/living/simple_animal/hostile/Initialize()
 	. = ..()
 
 	if(!targets_from)
 		targets_from = src
-	environment_target_typecache = typecacheof(environment_target_typecache)
+	environment_target_typecache = GLOB.goap_smashable_objs
 	wanted_objects = typecacheof(wanted_objects)
+	if(make_ai)
+		goap_ai = new ai_type()
+		goap_ai.agent = src
+		goap_ai.movement_type = 3
 
+/mob/living/simple_animal/hostile/handle_automated_action()
+	if(!goap_ai)
+		if(AIStatus == AI_OFF)
+			return 0
+		var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
+
+		if(environment_smash)
+			EscapeConfinement()
+
+		if(AICanContinue(possible_targets))
+			DestroySurroundings()
+			if(!MoveToTarget(possible_targets))     //if we lose our target
+				if(AIShouldSleep(possible_targets))	// we try to acquire a new one
+					AIStatus = AI_IDLE				// otherwise we go idle
+	return 1
 
 /mob/living/simple_animal/hostile/Destroy()
 	targets_from = null
+	qdel(goap_ai)
 	return ..()
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
+		if(goap_ai)
+			goap_ai.actions_halted = TRUE
 		return 0
-
-/mob/living/simple_animal/hostile/handle_automated_action()
-	if(AIStatus == AI_OFF)
-		return 0
-	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
-
-	if(environment_smash)
-		EscapeConfinement()
-
-	if(AICanContinue(possible_targets))
-		DestroySurroundings()
-		if(!MoveToTarget(possible_targets))     //if we lose our target
-			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				AIStatus = AI_IDLE				// otherwise we go idle
-	return 1
+	else
+		if(goap_ai)
+			goap_ai.actions_halted = FALSE
+		return 1
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
-		FindTarget(list(user), 1)
+	if(!goap_ai)
+		if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
+			FindTarget(list(user), 1)
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
-		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
-			FindTarget(list(P.firer), 1)
-		Goto(P.starting, move_to_delay, 3)
+	if(!goap_ai)
+		if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
+			if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
+				FindTarget(list(P.firer), 1)
+			Goto(P.starting, move_to_delay, 3)
 	return ..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////

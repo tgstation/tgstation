@@ -11,7 +11,7 @@
 	if(B.emagged == 2)
 		if(prob(15))
 			.["foamSpewed"] = TRUE
-		var/list/viewl = oview(10, agent.agent)
+		var/list/viewl = spiral_range(10, agent.agent)
 		var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 		if(C)
 			.["cleanFaces"] = TRUE

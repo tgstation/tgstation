@@ -50,12 +50,12 @@
 	effects["hasPickaxe"] = TRUE
 
 /datum/goap_action/miner/get_pickaxe/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = oview(10, agent)
 	var/mob/living/carbon/human/H = agent
 	var/obj/item/weapon/pickaxe/pickax = locate(/obj/item/weapon/pickaxe) in H.get_contents()
 	if(pickax != null)
 		target = pickax
 	else
+		var/list/viewl = spiral_range(10, agent)
 		var/obj/item/weapon/pickaxe/P = locate(/obj/item/weapon/pickaxe) in viewl
 		target = P
 	return (target != null)
@@ -95,7 +95,7 @@
 	effects["turfMined"] = TRUE
 
 /datum/goap_action/miner/mine_turf/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = oview(10, agent)
+	var/list/viewl = spiral_range(10, agent)
 	var/turf/closed/mineral/T = locate(/turf/closed/mineral) in viewl
 	target = T
 	return (target != null)

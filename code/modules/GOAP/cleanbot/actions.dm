@@ -10,7 +10,7 @@
 	effects["cleanedMess"] = TRUE
 
 /datum/goap_action/cleanbot/clean_decal/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = oview(10, agent)
+	var/list/viewl = spiral_range(10, agent)
 	var/obj/effect/decal/cleanable/P = locate(/obj/effect/decal/cleanable) in viewl
 	target = P
 	return (target != null)
@@ -27,7 +27,7 @@
 	return TRUE
 
 /datum/goap_action/cleanbot/clean_decal/CheckDone(atom/agent)
-	return (target == null)
+	return QDELETED(target)
 /*
 Cleaning trash items up
 */
@@ -43,7 +43,7 @@ Cleaning trash items up
 	effects["cleanedMess"] = TRUE
 
 /datum/goap_action/cleanbot/clean_item/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = oview(10, agent)
+	var/list/viewl = spiral_range(10, agent)
 	var/obj/item/trash/P = locate(/obj/item/trash) in viewl
 	target = P
 	return (target != null)
@@ -59,7 +59,7 @@ Cleaning trash items up
 	return TRUE
 
 /datum/goap_action/cleanbot/clean_item/CheckDone(atom/agent)
-	return (target == null)
+	return QDELETED(target)
 
 /*
 Removing pests
@@ -77,7 +77,7 @@ Removing pests
 	effects["cleanedMess"] = TRUE
 
 /datum/goap_action/cleanbot/clean_animal/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = oview(10, agent)
+	var/list/viewl = spiral_range(10, agent)
 	var/mob/living/simple_animal/cockroach/C = locate(/mob/living/simple_animal/cockroach) in viewl
 	var/mob/living/simple_animal/mouse/M = locate(/mob/living/simple_animal/mouse) in viewl
 	if(C)
@@ -125,16 +125,17 @@ MAKE THAT FOAM
 /datum/goap_action/cleanbot/foam/Perform(atom/agent)
 	var/mob/living/simple_animal/bot/B = agent
 	if(prob(75))
-		var/turf/open/T = B.loc
+		var/turf/open/T = get_turf(B)
 		if(istype(T))
 			T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
 	else
 		B.visible_message("<span class='danger'>[B] whirs and bubbles violently, before releasing a plume of froth!</span>")
 		new /obj/effect/particle_effect/foam(B.loc)
+	action_done = TRUE
 	return TRUE
 
 /datum/goap_action/cleanbot/foam/CheckDone(atom/agent)
-	return TRUE
+	return action_done
 
 /*
 """CLEAN""" FACES
@@ -152,7 +153,7 @@ MAKE THAT FOAM
 	effects["cleanFaces"] = TRUE
 
 /datum/goap_action/cleanbot/clean_faces/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = oview(10, agent)
+	var/list/viewl = spiral_range(10, agent)
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 	if(C)
 		target = C
@@ -174,7 +175,8 @@ MAKE THAT FOAM
 	C.emote("scream")
 	playsound(B.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	C.acid_act(5, 2, 100)
+	action_done = TRUE
 	return TRUE
 
 /datum/goap_action/cleanbot/clean_faces/CheckDone(atom/agent)
-	return TRUE
+	return action_done

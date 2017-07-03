@@ -1,3 +1,13 @@
+GLOBAL_LIST_INIT(goap_smashable_objs, typecacheof(list(
+	/obj/machinery,
+	/obj/structure/window,
+	/obj/structure/closet,
+	/obj/structure/table,
+	/obj/structure/grille,
+	/obj/structure/girder,
+	/obj/structure/rack,
+	/obj/structure/barricade)))
+
 
 #define STATE_IDLE		0
 #define STATE_MOVINGTO	1
@@ -5,7 +15,7 @@
 
 #define GOAP_DEBUG 0
 
-/proc/goap_debug(text)
+proc/goap_debug(text)
 	if(GOAP_DEBUG)
 		world.log << "GOAP: [text]"
 
@@ -27,8 +37,10 @@
 	var/turf/last_node
 	var/tries = 0
 	var/obj/item/weapon/card/id/given_pathfind_access
-	var/movement_type = 2
+	var/movement_type = 1
 	var/turf/current_loc
+	var/is_megafauna = FALSE
+	var/actions_halted = FALSE
 /datum/goap_agent/New()
 	..()
 
@@ -49,8 +61,29 @@
 
 	START_PROCESSING(SSgoap, src)
 
+/datum/goap_agent/Destroy()
+	STOP_PROCESSING(SSgoap, src)
+	..()
+
+/datum/goap_agent/proc/able_to_run()
+	if(!agent)
+		STOP_PROCESSING(SSgoap, src)
+		qdel(src)
+		. = FALSE
+		return
+	for(var/I in GLOB.living_mob_list)
+		var/mob/M = I
+		if(M != null)
+			if(M.z == agent.z && M.client && get_dist(M, agent) <= 14)
+				. = TRUE
+				return
+	. = FALSE
 
 /datum/goap_agent/process() //in SS13 this won't be /proc as it's already defined
+	if(!agent)
+		return FALSE
+	if(actions_halted)
+		return FALSE
 	goap_debug("GOAP Processing: [agent]")
 	switch(brain_state)
 		if(STATE_IDLE)
@@ -92,26 +125,35 @@
 		goap_debug("An action ([curr_action]) requires a target, but did not get one set")
 		brain_state = STATE_IDLE
 	else
+		var/dense_garbage = null
+		for(var/obj/I in get_turf(curr_action.target))
+			if(I.density)
+				dense_garbage = 1
+				break
+		var/proc_to_use = /turf/proc/reachableAdjacentTurfs
+		if(movement_type == 4)
+			proc_to_use = /turf/proc/reachableSmashAdjacentTurfs
 		switch(movement_type)
-			if(1) // AStar, Full
+			if(1, 4) // AStar, Full
 				if(!path || !path.len)
-					path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, id=given_pathfind_access)
+					if(!isturf(curr_action.target))
+						path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
+					else
+						path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
 					if(!path || !path.len) // still can't path
 						goap_debug("Can't path to plan, giving up")
 						brain_state = STATE_IDLE
 						return 0
 				last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
 				current_loc = get_turf(agent)
-				addtimer(CALLBACK(src, .proc/check_stuck), 50)
+				curr_action.PerformWhileMoving(agent)
 				MoveTo_AStar(curr_action, path)
 			if(2) // AStar, Fake
+				curr_action.PerformWhileMoving(agent)
 				MoveTo_FakeStar(curr_action)
 			if(3) // No Pathfinding, Straight Line
+				curr_action.PerformWhileMoving(agent)
 				MoveTo(curr_action)
-
-/datum/goap_agent/proc/check_stuck()
-	if(current_loc == get_turf(agent))
-		path = list() // null out dat path
 
 /datum/goap_agent/proc/idle_state()
 	var/list/worldstate = info.GetWorldState(src)
@@ -136,18 +178,14 @@
 	var/turf/dest = get_turf(curr_action.target)
 	if(!path)
 		return 0
-	if(dest != last_node || tries >= 3)
+	if(!last_node.Adjacent(dest))
 		path = null // force a new path
 		return 0
 	if(path.len > 1)
 		step_towards(agent, path[1])
 		if(get_turf(agent) == path[1]) //Successful move
 			path -= path[1]
-			tries = 0
-		else
-			tries++
-			return 0
-	else if(path.len == 1)
+	if(path.len == 1)
 		step_to(src, dest)
 		path = list()
 		curr_action.inn_range = TRUE

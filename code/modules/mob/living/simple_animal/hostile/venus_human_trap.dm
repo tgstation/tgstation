@@ -79,38 +79,37 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/venus_human_trap/handle_automated_action()
-	if(..())
-		for(var/mob/living/L in grasping)
-			if(L.stat == DEAD)
-				var/datum/beam/B = grasping[L]
-				if(B)
-					B.End()
-				grasping -= L
+	for(var/mob/living/L in grasping)
+		if(L.stat == DEAD)
+			var/datum/beam/B = grasping[L]
+			if(B)
+				B.End()
+			grasping -= L
 
-			//Can attack+pull multiple times per cycle
-			if(L.Adjacent(src))
-				L.attack_animal(src)
-			else
-				if(prob(grasp_pull_chance))
-					setDir(get_dir(src,L) )//staaaare
-					step(L,get_dir(L,src)) //reel them in
-					L.Knockdown(60) //you can't get away now~
+		//Can attack+pull multiple times per cycle
+		if(L.Adjacent(src))
+			L.attack_animal(src)
+		else
+			if(prob(grasp_pull_chance))
+				setDir(get_dir(src,L) )//staaaare
+				step(L,get_dir(L,src)) //reel them in
+				L.Knockdown(60) //you can't get away now~
 
-		if(grasping.len < max_grasps)
-			grasping:
-				for(var/mob/living/L in view(grasp_range, src))
-					if(L == src || faction_check_mob(L) || (L in grasping) || L == target)
-						continue
-					for(var/t in getline(src,L))
-						for(var/a in t)
-							var/atom/A = a
-							if(A.density && A != L)
-								continue grasping
-					if(prob(grasp_chance))
-						to_chat(L, "<span class='userdanger'>\The [src] has you entangled!</span>")
-						grasping[L] = Beam(L, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
+	if(grasping.len < max_grasps)
+		grasping:
+			for(var/mob/living/L in view(grasp_range, src))
+				if(L == src || faction_check_mob(L) || (L in grasping) || L == target)
+					continue
+				for(var/t in getline(src,L))
+					for(var/a in t)
+						var/atom/A = a
+						if(A.density && A != L)
+							continue grasping
+				if(prob(grasp_chance))
+					to_chat(L, "<span class='userdanger'>\The [src] has you entangled!</span>")
+					grasping[L] = Beam(L, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 
-						break //only take 1 new victim per cycle
+					break //only take 1 new victim per cycle
 
 
 /mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/the_target)

@@ -163,6 +163,19 @@ Actual Adjacent procs :
 			L.Add(T)
 	return L
 
+//Returns turfs that are passable including ones we can smash
+/turf/proc/reachableSmashAdjacentTurfs(caller, ID, simulated_only)
+	var/list/L = new()
+	var/turf/T
+
+	for(var/dir in GLOB.cardinal)
+		T = get_step(src,dir)
+		if(simulated_only && !istype(T))
+			continue
+		if(!T.density && !LinkBlockedSmashable(T,caller))
+			L.Add(T)
+	return L
+
 //Returns adjacent turfs in cardinal directions that are reachable via atmos
 /turf/proc/reachableAdjacentAtmosTurfs()
 	return atmos_adjacent_turfs
@@ -178,4 +191,15 @@ Actual Adjacent procs :
 		if(!O.CanAStarPass(ID, rdir, caller))
 			return 1
 
+	return 0
+
+/turf/proc/LinkBlockedSmashable(turf/T, caller)
+	for(var/obj/W in src)
+		if(W.density)
+			if(!is_type_in_typecache(W, GLOB.goap_smashable_objs))
+				return 1
+	for(var/obj/O in T)
+		if(O.density)
+			if(!is_type_in_typecache(O, GLOB.goap_smashable_objs))
+				return 1
 	return 0

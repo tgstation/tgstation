@@ -9,6 +9,7 @@
 
 	var/inn_range = FALSE //Actions usually require you to be close to some target/goal object
 	var/atom/target //Actions usually act on some kind of target/goal object
+	var/action_done = FALSE
 
 
 //Reset any state variables between uses
@@ -17,12 +18,16 @@
 /datum/goap_action/proc/Reset()
 	inn_range = FALSE
 	target = null
+	action_done = FALSE
 
 
 //Designed to be overriden to have more advanced preconditions
 //If you use a target, set it in this
 //If unused, return TRUE anyway
 /datum/goap_action/proc/AdvancedPreconditions(atom/agent, list/worldstate)
+	return TRUE
+
+/datum/goap_action/proc/PerformWhileMoving(atom/agent)
 	return TRUE
 
 

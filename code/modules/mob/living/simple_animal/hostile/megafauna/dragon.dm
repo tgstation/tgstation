@@ -16,7 +16,7 @@ It acts as a melee creature, chasing down and attacking its target while also us
 Whenever possible, the drake will breathe fire in the four cardinal directions, igniting and heavily damaging anything caught in the blast.
 It also often causes fire to rain from the sky - many nearby turfs will flash red as a fireball crashes into them, dealing damage to anything on the turfs.
 The drake also utilizes its wings to fly into the sky, flying after its target and attempting to slam down on them. Anything near when it slams down takes huge damage.
- - Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
+ - Sometimes it will chain these performing_action attacks over and over, making swiftness a necessity.
  - Sometimes, it will spew fire while flying at its target.
 
 When an ash drake dies, it leaves behind a chest that can contain four things:
@@ -54,7 +54,6 @@ Difficulty: Medium
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
-	var/swooping = NONE
 	var/swoop_cooldown = 0
 	medal_type = MEDAL_PREFIX
 	score_type = DRAKE_SCORE
@@ -71,36 +70,36 @@ Difficulty: Medium
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (swooping & SWOOP_INVULNERABLE))
+	if(!forced && (performing_action & SWOOP_INVULNERABLE))
 		return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/visible_message()
-	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
+	if(performing_action & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
-	if(!swooping)
+	if(!performing_action)
 		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
-	if(!swooping)
+	if(!performing_action)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Move()
-	if(!swooping)
+	if(!performing_action)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
-	if(!swooping)
+	if(!performing_action)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
-	if(swooping)
+	if(performing_action)
 		return
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -159,7 +158,7 @@ Difficulty: Medium
 	swoop_attack(swoop_duration = 30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain, atom/movable/manual_target, swoop_duration = 40)
-	if(stat || swooping)
+	if(stat || performing_action)
 		return
 	if(manual_target)
 		target = manual_target
@@ -167,7 +166,7 @@ Difficulty: Medium
 		return
 	swoop_cooldown = world.time + 200
 	stop_automated_movement = TRUE
-	swooping |= SWOOP_DAMAGEABLE
+	performing_action |= SWOOP_DAMAGEABLE
 	density = FALSE
 	icon_state = "shadow"
 	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
@@ -190,10 +189,10 @@ Difficulty: Medium
 		sleep(1)
 		if(QDELETED(src) || stat == DEAD) //we got hit and died, rip us
 			qdel(F)
-			swooping &= ~SWOOP_DAMAGEABLE
+			performing_action &= ~SWOOP_DAMAGEABLE
 			return
 	animate(src, transform = matrix()*0.7, time = 7)
-	swooping |= SWOOP_INVULNERABLE
+	performing_action |= SWOOP_INVULNERABLE
 	mouse_opacity = 0
 	sleep(7)
 	var/list/flame_hit = list()
@@ -234,7 +233,7 @@ Difficulty: Medium
 	new /obj/effect/temp_visual/dragon_swoop(loc)
 	animate(src, transform = oldtransform, time = 5)
 	sleep(5)
-	swooping &= ~SWOOP_INVULNERABLE
+	performing_action &= ~SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)
 	icon_state = "dragon"
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
@@ -257,7 +256,7 @@ Difficulty: Medium
 
 	density = TRUE
 	sleep(1)
-	swooping &= ~SWOOP_DAMAGEABLE
+	performing_action &= ~SWOOP_DAMAGEABLE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))

@@ -16,7 +16,7 @@
 
 /datum/goap_info_provider/miner/GetGoal(datum/goap_agent/agent)
 	. = list()
-	var/list/viewl = oview(10, agent.agent)
+	var/list/viewl = spiral_range(10, agent.agent)
 	if(agent.agent)
 		if(ismob(agent.agent))
 			.["agent_alive"] = TRUE

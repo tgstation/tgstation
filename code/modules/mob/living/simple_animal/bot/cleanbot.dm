@@ -22,19 +22,14 @@
 	. = ..()
 	icon_state = "cleanbot[on]"
 
-	var/datum/job/janitor/J = new/datum/job/janitor
-	access_card.access += J.get_access()
+	var/datum/job/captain/C = new/datum/job/captain
+	access_card.access += C.get_access()
 	prev_access = access_card.access
 	goap_ai = new()
 	goap_ai.agent = src
 	goap_ai.given_pathfind_access = access_card
+	goap_ai.movement_type = 1
 
-/mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
-	var/last_emagged = emagged
-	..()
-	if(last_emagged != 2)
-		goap_ai.our_actions += new /datum/goap_action/cleanbot/foam()
-		goap_ai.our_actions += new /datum/goap_action/cleanbot/clean_faces()
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
 	icon_state = "cleanbot[on]"
