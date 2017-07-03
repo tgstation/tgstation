@@ -90,7 +90,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
-	showChat()
+	if(owner.prefs.fancy_chat)
+		showChat()
 
 
 	for(var/message in messageQueue)
@@ -98,10 +99,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	messageQueue = null
 	sendClientData()
-	
+
 	//do not convert to to_chat()
 	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
-	
+
 	pingLoop()
 
 /datum/chatOutput/proc/showChat()
@@ -243,17 +244,17 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	message = replacetext(message, "\proper", "")
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
-	
+
 	for(var/I in targets)
 		//Grab us a client if possible
 		var/client/C = grab_client(I)
-		
+
 		if (!C)
 			continue
-		
+
 		//Send it to the old style output window.
 		C << original_message
-		
+
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue
 

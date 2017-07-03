@@ -106,6 +106,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/menuoptions
 
+	var/fancy_chat = TRUE
+
 /datum/preferences/New(client/C)
 	parent = C
 	custom_names["ai"] = pick(GLOB.ai_names)
