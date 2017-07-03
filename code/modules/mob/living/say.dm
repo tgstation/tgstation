@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_talk(src,"[mind.changeling.changelingID]/[src.key] : [message]",LOGSAY)
+				log_talk(src,"[mind.changeling.changelingID]/[key] : [message]",LOGSAY)
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)

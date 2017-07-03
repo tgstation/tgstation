@@ -454,7 +454,7 @@ Proc for attack log creation, because really why not
 			to_chat(M, message)
 
 
-/proc/log_talk(atom/user,message,type)
+/proc/log_talk(mob/user,message,logtype)
 	var/turf/say_turf = get_turf(user)
 
 	var/sayloc = ""
@@ -462,11 +462,9 @@ Proc for attack log creation, because really why not
 		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
 
 
-
-
 	var/logmessage = "[message] [sayloc]"
 
-	switch(type)
+	switch(logtype)
 
 		if(LOGDSAY)
 			log_dsay(logmessage)
@@ -487,6 +485,6 @@ Proc for attack log creation, because really why not
 		if(LOGOOC)
 			log_ooc(logmessage)
 		else
-			warning("ERROR: invalid speech logging type detected. [type]. Defaulting to say")
+			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
 			log_say(logmessage)
 
