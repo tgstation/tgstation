@@ -27,6 +27,9 @@
 	flight_x_offset = 18
 	flight_y_offset = 11
 
+/obj/item/weapon/gun/energy/ionrifle/carbine/pin
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
