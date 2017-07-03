@@ -11,8 +11,6 @@
 	new /obj/item/clothing/under/shorts/red(src)
 	new /obj/item/clothing/under/shorts/blue(src)
 	new /obj/item/clothing/under/shorts/green(src)
-	for(var/i in 1 to 4)
-		new /obj/item/clothing/ears/headphones(src)
 	if(prob(3))
 		new /obj/item/clothing/under/jabroni(src)
 
