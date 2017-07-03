@@ -29,6 +29,7 @@
 	var/radio_channel = "Medical"
 	
 	var/running_bob_anim = FALSE
+	var/opening = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -225,6 +226,7 @@
 	container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = 0)
+	opening = FALSE
 	if(!state_open && !panel_open)
 		on = FALSE
 		..()
@@ -242,8 +244,14 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
-	open_machine()
-	return
+	if(opening)
+		return
+	opening = TRUE
+	to_chat(user, "<span class='notice'>You begin to struggle out of [src].</span>")
+	if(do_mob(user, user, 50))
+		open_machine()
+	else
+		opening = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
@@ -356,7 +364,7 @@
 	return //we don't see the pipe network while inside cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
-	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/blind)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.
