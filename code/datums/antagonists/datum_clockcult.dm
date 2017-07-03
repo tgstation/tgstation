@@ -154,8 +154,8 @@
 	SSticker.mode.servants_of_ratvar -= owner
 	SSticker.mode.update_servant_icons_removed(owner)
 	if(!silent)
-		owner.current.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>", \
-		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
+		owner.current.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>")
+		to_chat(owner, "<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
 	owner.current.log_message("<font color=#BE8700>Has renounced the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	owner.wipe_memory()
 	owner.special_role = null
