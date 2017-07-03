@@ -26,6 +26,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
 	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
+	var/brain_mob_failure_message = "<span class='danger'>The positronic brain's personality matrix is corrupted! Attempting to reboot...</span>"
+	var/brain_mob_restore_message = "<span class='notice'>Success! Personality matrix restored from backup.</span>"
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
@@ -42,6 +44,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
+	if(!brainmob)
+		to_chat(user, brain_mob_failure_message)
+		brainmob = new(src)
+		to_chat(user, brain_mob_restore_message)
 	if(is_occupied())
 		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
 		return

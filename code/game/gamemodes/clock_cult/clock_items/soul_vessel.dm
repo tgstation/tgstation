@@ -19,6 +19,8 @@
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
 	recharge_message = "<span class='warning'>The soul vessel's internal geis capacitor is still recharging!</span>"
+	brain_mob_failure_message = "<span class='warning'>The soul vessel's internal geis capacitor is cracked! Attempting to repair...</span>"
+	brain_mob_restore_message = "<span class='notice'>Success! The internal capacitor has been mended using material from the casing.</span>"
 	possible_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
