@@ -3,10 +3,46 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /datum/newscaster
 
+/proc/newscomment_from_json(jsontext)
+	var/datum/newscaster/feed_comment/FC = new
+	FC.from_json(jsontext)
+	return FC
+
+/proc/newsmessage_from_json(jsontext)
+	var/datum/newscaster/feed_message/FM = new
+	FM.from_json(jsontext)
+	return FM
+
+/proc/newschannel_from_json(jsontext)
+	var/datum/newscaster/feed_channel/FC = new
+	FC.from_json(jsontext)
+	return FC
+
+/datum/newscaster/proc/to_json()
+
+/datum/newscaster/proc/from_json(jsontext)
+
 /datum/newscaster/feed_comment
 	var/author = ""
 	var/body = ""
 	var/time_stamp = ""
+
+/datum/newscaster/feed_comment/to_json()
+	var/list/L = list()
+	L["author"] = author
+	L["body"] = body
+	L["time_stamp"] = time_stamp
+	return json_encode(L)
+
+/datum/newscaster/feed_comment/from_json(jsontext)
+	var/list/L = json_decode(jsontext)
+	if(L["author"])
+		author = L["author"]
+	if(L["body"])
+		body = L["body"]
+	if(L["time_stamp"])
+		time_stemp = L["time_stamp"]
+	return TRUE
 
 /datum/newscaster/feed_message
 	var/author =""
@@ -22,6 +58,64 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/creationTime
 	var/authorCensor
 	var/bodyCensor
+
+/datum/newscaster/feed_message/to_json(include_comments = TRUE, bicon_image = FALSE)
+	var/list/L = list()
+	L["author"] = author
+	L["body"] = body
+	L["is_admin_message"] = is_admin_message
+	L["time_stamp"] = time_stamp
+	L["caption"] = caption
+	L["creationTime"] = creationTime
+	L["authorCensor"] = authorCensor
+	L["bodyCensor"] = bodyCensor
+	if(include_comments)
+		var/list/l = list()
+		for(var/v in comments)
+			var/datum/newscaster/feed_comment/FC = v
+			l += FC.to_json()
+		L["comments"] = l
+	else
+		L["comments"] = list()
+	L["locked"] = locked
+	L["authorCensorTime"] = authorCensorTime
+	L["bodyCensorTime"] = bodyCensorTime
+	if(bicon_image)
+		L["img"] = icon2base64(img, "CSN_json")
+	else
+		L["img"] = null
+	return json_encode(L)
+
+/datum/newscaster/feed_message/from_json(jsontext)
+	var/list/L = json_decode(jsontext)
+	if(L["author"])
+		author = L["author"]
+	if(L["body"])
+		body = L["body"]
+	if(L["is_admin_message"])
+		is_admin_message = L["is_admin_message"]
+	if(L["time_stamp"])
+		time_stamp = L["time_stamp"]
+	if(L["caption"])
+		caption = L["caption"]
+	if(L["creationTime"])
+		creationTime = L["creationTime"]
+	if(L["authorCensor"])
+		authorCensor = L["authorCensor"]
+	if(L["bodyCensor"])
+		bodyCensor = L["bodyCensor"]
+	if(L["comments"])
+		for(var/v in L["comments"])
+			comments += newscomment_from_json(v)
+	if(L["locked"])
+		locked = L["locked"]
+	if(L["authorCensorTime"]
+		authorCensorTime = L["authorCensorTime"]
+	if(L["bodyCensorTime"]
+		bodyCensorTime = L["bodyCensorTime"]
+	if(!isnull(L["img"]))
+		img = base64toicon(L["img"])
+	return TRUE
 
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -65,6 +159,28 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/list/DclassCensorTime = list()
 	var/authorCensor
 	var/is_admin_channel = 0
+
+/datum/newscaster/feed_channel/to_json(include_messages = TRUE, include_comments = TRUE, bicon_pictures = FALSE)
+	var/list/L = list()
+	L["channel_name"] = channel_name
+
+	if(include_messages)
+		var/list/l = list()
+		for(var/v in messages)
+			var/datum/newscaster/feed_message/FM = v
+			l += FM.to_json()
+		L["messages"] = l
+	else
+		L["messages"] = list()
+
+	L["locked"] = locked
+	L["censored"] = censored
+	L["authorCensorTime"] = authorCensorTime
+	L["DclassCensorTime"] = DclassCensorTime
+	L["authorCensor"] = authorCensor
+	L["is_admin_channel"] = is_admin_channel
+
+	return json_encode(L)
 
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)

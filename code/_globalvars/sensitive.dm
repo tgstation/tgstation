@@ -1,6 +1,6 @@
 //Server API key
 GLOBAL_REAL_VAR(comms_key) = "default_pwd"
-GLOBAL_REAL_VAR(comms_allowed) = FALSE //By default, the server does not allow messages to be sent to it, unless the key is strong enough (this is to prevent misconfigured servers from becoming vulnerable)
+GLOBAL_REAL_VAR(comms_allowed) = TRUE //By default, the server does not allow messages to be sent to it, unless the key is strong enough (this is to prevent misconfigured servers from becoming vulnerable)
 
 GLOBAL_REAL_VAR(medal_hub)
 GLOBAL_REAL_VAR(medal_pass) = " "

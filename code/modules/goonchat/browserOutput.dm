@@ -98,10 +98,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	messageQueue = null
 	sendClientData()
-	
+
 	//do not convert to to_chat()
 	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
-	
+
 	pingLoop()
 
 /datum/chatOutput/proc/showChat()
@@ -177,6 +177,13 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
+/proc/base64toicon(text, iconKey = "import")	//Kill me.
+	var/savefile/s = GLOB.iconCache
+	s.ImportText(iconKey, text)
+	var/icon/i
+	s[iconKey] >> i
+	return i
+
 /proc/bicon(thing)
 	if (!thing)
 		return
@@ -243,17 +250,17 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	message = replacetext(message, "\proper", "")
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
-	
+
 	for(var/I in targets)
 		//Grab us a client if possible
 		var/client/C = grab_client(I)
-		
+
 		if (!C)
 			continue
-		
+
 		//Send it to the old style output window.
 		C << original_message
-		
+
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue
 
