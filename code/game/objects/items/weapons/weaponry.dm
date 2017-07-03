@@ -564,10 +564,10 @@
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	flags = DROPDEL
+	flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
 /obj/item/weapon/circlegame/examine_reaction(mob/living/carbon/human/owner, mob/examiner)
 	to_chat(examiner, "<span class='userdanger'>You accidentally look at [owner]'s circled hand!</span>")
 	to_chat(owner, "<span class='notice'>You catch [examiner] glimpsing at your circled hand.</span>")
-	..()
+	return ..()
