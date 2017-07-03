@@ -240,9 +240,7 @@
 		return 0
 	if(issilicon(owner.current))
 		return 0
-
-	var/area/A = get_area(owner.current)
-	if(SSshuttle.emergency.areaInstance != A)
+	if(get_area(owner.current) in SSshuttle.emergency.shuttle_areas)
 		return 0
 
 	return SSshuttle.emergency.is_hijacked()
@@ -259,8 +257,7 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
+	var/in_shuttle = FALSE
 	for(var/mob/living/player in GLOB.player_list) //Make sure nobody else is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
@@ -270,25 +267,14 @@
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
-				if(get_area(player) == A)
+				if(get_area(player) in SSshuttle.emergency.shuttle_areas)
 					var/location = get_turf(player.mind.current)
-					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return 0
-
-	for(var/mob/living/player in GLOB.player_list) //Make sure at least one of you is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
-					var/location = get_turf(player.mind.current)
-					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return 1
-	return 0
+					if(!istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+						if(player.real_name != owner.current.real_name)
+							return FALSE
+						else
+							in_shuttle = TRUE
+	return in_shuttle
 
 /datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
@@ -301,14 +287,12 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
 	for(var/mob/living/player in GLOB.player_list)
 		if(issilicon(player))
 			continue
 		if(player.mind)
 			if(player.stat != DEAD)
-				if(get_area(player) == A)
+				if(get_area(player) in SSshuttle.emergency.shuttle_areas)
 					return 0
 
 	return 1
@@ -323,10 +307,8 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
 	for(var/mob/living/player in GLOB.player_list)
-		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
+		if(get_area(player) in SSshuttle.emergency.shuttle_areas && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
 				return 0

@@ -74,7 +74,7 @@
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
-/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area/A)
+/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area_type)
 	if(!_dir)
 		_dir = dir
 	if(!_x)
@@ -105,8 +105,8 @@
 			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
 			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
 			var/turf/T = locate(xi, yi, _z)
-			if(A)
-				if(get_area(T) == A)
+			if(area_type)
+				if(istype(get_area(T), area_type))
 					. += T
 				else
 					. += null
@@ -142,6 +142,7 @@
 	name = "dock"
 
 	var/turf_type = /turf/open/space
+	var/baseturf_type = /turf/open/space
 	var/area_type = /area/space
 	var/last_dock_time
 
@@ -175,9 +176,8 @@
 /obj/docking_port/stationary/transit/proc/dezone()
 	for(var/i in assigned_turfs)
 		var/turf/T = i
-		if(T.type == turf_type)
-			T.ChangeTurf(/turf/open/space)
-			T.flags |= UNUSED_TRANSIT_TURF
+		T.empty(/turf/open/space, /turf/open/space)
+		T.flags |= UNUSED_TRANSIT_TURF
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
@@ -195,7 +195,8 @@
 	name = "shuttle"
 	icon_state = "pinonclose"
 
-	var/area/shuttle/areaInstance
+	var/area_type = /area/shuttle
+	var/list/area/shuttle/shuttle_areas
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/last_timer_length
@@ -217,7 +218,7 @@
 
 	var/launch_status = NOLAUNCH
 
-	var/knockdown = TRUE //Will it knock down mobs when it docks?
+	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	// A timid shuttle will not register itself with the shuttle subsystem
 	// All shuttle templates are timid
@@ -237,7 +238,7 @@
 		destination = null
 		previous = null
 		assigned_transit = null
-		areaInstance = null
+		shuttle_areas = null
 	. = ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
@@ -245,19 +246,16 @@
 	if(!timid)
 		register()
 
-	var/area/A = get_area(src)
-	if(istype(A, /area/shuttle))
-		areaInstance = A
-
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
 	if(name == "shuttle")
 		name = "shuttle[SSshuttle.mobile.len]"
 
-	if(!areaInstance)
-		areaInstance = new()
-		areaInstance.name = name
-		areaInstance.contents += return_ordered_turfs()
+	shuttle_areas = list()
+	var/list/all_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	for(var/T in all_turfs)
+		var/turf/curT = T
+		shuttle_areas |= curT.loc
 
 	initial_engines = count_engines()
 	current_engines = initial_engines
@@ -378,32 +376,42 @@
 /obj/docking_port/mobile/proc/jumpToNullSpace()
 	// Destroys the docking port and the shuttle contents.
 	// Not in a fancy way, it just ceases.
-	var/obj/docking_port/stationary/S0 = get_docked()
+	var/obj/docking_port/stationary/current_dock = get_docked()
+
 	var/turf_type = /turf/open/space
+	var/baseturf_type = /turf/open/space
 	var/area_type = /area/space
 	// If the shuttle is docked to a stationary port, restore its normal
 	// "empty" area and turf
-	if(S0)
-		if(S0.turf_type)
-			turf_type = S0.turf_type
-		if(S0.area_type)
-			area_type = S0.area_type
+	if(current_dock)
+		if(current_dock.turf_type)
+			turf_type = current_dock.turf_type
+		if(current_dock.baseturf_type)
+			baseturf_type = current_dock.baseturf_type
+		if(current_dock.area_type)
+			area_type = current_dock.area_type
 
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	var/list/shuttle_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/area/shuttle_area = locate("[area_type]")
 
 	//remove area surrounding docking port
-	if(areaInstance.contents.len)
-		var/area/A0 = locate("[area_type]")
-		if(!A0)
-			A0 = new area_type(null)
-		for(var/turf/T0 in L0)
-			A0.contents += T0
+	if(shuttle_area.contents.len)
+		var/area/underlying_area = locate("[area_type]")
+		if(!underlying_area)
+			underlying_area = new area_type(null)
+		for(var/i in shuttle_turfs)
+			var/turf/T = i
+			var/area/old_area = T.loc
+			underlying_area.contents += T
+			T.change_area(old_area, underlying_area)
 
-	for(var/i in L0)
-		var/turf/T0 =i
-		if(!T0)
+	for(var/i in shuttle_turfs)
+		var/turf/T = i
+		if(!T)
 			continue
-		T0.empty(turf_type)
+		T.empty(turf_type, baseturf_type)
+
+	shuttle_area.afterShuttleMove()
 
 	qdel(src, force=TRUE)
 
@@ -418,7 +426,7 @@
 	ripples.Cut()
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, area_type)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	var/list/ripple_turfs = list()
@@ -441,115 +449,133 @@
 
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
-/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
-	if(S1.get_docked() == src)
-		remove_ripples()
-		return
+/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/new_dock, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
+
+	if(new_dock.get_docked() == src)
+		remove_ripples()
+		return DOCKING_COMPLETE
+
 	if(!force)
-		if(!check_dock(S1))
-			return -1
+		if(!check_dock(new_dock))
+			return DOCKING_BLOCKED
 		if(!canMove())
-			return -1
+			return DOCKING_IMMOBILIZED
 
-	var/obj/docking_port/stationary/S0 = get_docked()
-	var/turf_type = /turf/open/space
-	var/area_type = /area/space
-	if(S0)
-		if(S0.turf_type)
-			turf_type = S0.turf_type
-		if(S0.area_type)
-			area_type = S0.area_type
+	var/obj/docking_port/stationary/old_dock = get_docked()
+	var/turf_type = /turf/open/space //The turf that gets placed under where the shuttle moved from
+	var/baseturf_type = /turf/open/space //The baseturf that the gets assigned to the turf_type above
+	var/area_type = /area/space //The area that gets placed under where the shuttle moved from
+	if(old_dock) //Dock overwrites
+		if(old_dock.turf_type)
+			turf_type = old_dock.turf_type
+		if(old_dock.baseturf_type)
+			baseturf_type = old_dock.baseturf_type
+		if(old_dock.area_type)
+			area_type = old_dock.area_type
 
-	var/destination_turf_type = S1.turf_type
+	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
+	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
+	var/list/old_contents = list() //Lists of turfs to only move contents but not move the turf
+	var/list/new_contents = list() //For structures etc that act attached to the ship
 
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
-	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
+	var/area/underlying_old_area = locate("[area_type]")
+	if(!underlying_old_area)
+		underlying_old_area = new area_type(null)
 
-	var/rotation = dir2angle(S1.dir)-dir2angle(dir)
-	if ((rotation % 90) != 0)
-		rotation += (rotation % 90) //diagonal rotations not allowed, round up
-	rotation = SimplifyDegrees(rotation)
+	var/rotation = 0
+	if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
+		rotation = dir2angle(new_dock)-dir2angle(dir)
+		if ((rotation % 90) != 0)
+			rotation += (rotation % 90) //diagonal rotations not allowed, round up
+		rotation = SimplifyDegrees(rotation)
 
-	//remove area surrounding docking port
-	if(areaInstance.contents.len)
-		var/area/A0 = locate("[area_type]")
-		if(!A0)
-			A0 = new area_type(null)
-		for(var/turf/T0 in L0)
-			var/area/old = T0.loc
-			A0.contents += T0
-			T0.change_area(old, A0)
-	if (istype(S1, /obj/docking_port/stationary/transit))
-		areaInstance.parallax_movedir = preferred_direction
-	else
-		areaInstance.parallax_movedir = FALSE
+	var/test_output = "WHY IS ROTATION [rotation]"
+	to_chat(world, test_output)
+
 	remove_ripples()
 
+	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
+	var/list/areas_to_move = list() //list containing all unique areas so we don't call beforeShuttleMove multiple times on the same area
+
+	/****************************************All beforeShuttleMove procs*****************************************/
+
+	var/index = 1
+	for(var/T in old_turfs)
+		var/turf/oldT = T
+		var/area/old_area = oldT.loc
+		var/move_turf = TRUE //Should this turf be moved, if false remove from the turf list
+		if(!(old_area in shuttle_areas))
+			move_turf = FALSE
+		var/turf/newT = new_turfs[index]
+		if(!(oldT.fromShuttleMove(newT, turf_type, baseturf_type) && newT.toShuttleMove(oldT)))			//turfs
+			move_turf = FALSE
+		for(var/thing in oldT)
+			var/atom/movable/moving_atom = thing
+			if(moving_atom.beforeShuttleMove(newT, rotation)) 											//atoms
+				old_contents += oldT
+				new_contents += newT
+		if(!move_turf)
+			old_turfs.Cut(index,index+1)
+			new_turfs.Cut(index,index+1)
+			continue
+		areas_to_move |= old_area
+		index++
+
+	for(var/thing in areas_to_move)
+		var/area/internal_area = thing
+		internal_area.beforeShuttleMove() 																//areas
+
+	if(!old_turfs.len) //This should only happen if no shuttle area has been specified
+		return DOCKING_AREA_EMPTY
+
+	/*******************************************All onShuttleMove procs******************************************/
+
 	//move or squish anything in the way ship at destination
-	roadkill(L0, L1, S1.dir)
-
-
-	for(var/i in 1 to L0.len)
-		var/turf/T0 = L0[i]
-		if(!T0)
+	//doing this just before actualy moving tiles after turfs have chosen if they want to move
+	roadkill(old_turfs, new_turfs, new_dock.dir)
+	
+	for(var/i in 1 to old_turfs.len)
+		var/turf/oldT = old_turfs[i]
+		var/turf/newT = new_turfs[i]
+		if(!oldT || !newT) //This really shouldn't happen
 			continue
-		var/turf/T1 = L1[i]
-		if(!T1)
+		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force) 						//turfs
+		for(var/thing in oldT)
+			var/atom/movable/moving_atom = thing
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force) 									//atoms
+			moved_atoms += thing
+		var/area/shuttle_area = oldT.loc
+		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) 									//areas
+
+	for(var/i in 1 to old_contents.len) //This is for moving atoms that need to move without their turf
+		var/turf/oldT = old_contents[i] //I'll figure out a way of merging these loops eventualy, probably
+		var/turf/newT = new_contents[i]
+		if(!oldT || !newT)
 			continue
-		if(T0.type == T0.baseturf)
-			continue
-		for(var/atom/movable/AM in T0)
-			AM.beforeShuttleMove(T1, rotation)
+		for(var/thing in oldT)
+			var/atom/movable/moving_atom = thing
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force)									//atoms
+			moved_atoms += thing
+	
+	/******************************************All afterShuttleMove procs****************************************/
+	
+	for(var/i in 1 to new_turfs.len)
+		var/turf/oldT = old_turfs[i]
+		var/turf/newT = new_turfs[i]
+		newT.afterShuttleMove(oldT)																		//turfs
 
-	var/list/moved_atoms = list()
+	for(var/thing in moved_atoms)
+		var/atom/movable/moved_object = thing
+		moved_object.afterShuttleMove(movement_force)														//atoms
 
-	for(var/i in 1 to L0.len)
-		var/turf/T0 = L0[i]
-		if(!T0)
-			continue
-		var/turf/T1 = L1[i]
-		if(!T1)
-			continue
-		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
-			T0.copyTurf(T1)
-			T1.baseturf = destination_turf_type
-			var/area/old = T1.loc
-			areaInstance.contents += T1
-			T1.change_area(old, areaInstance)
+	underlying_old_area.afterShuttleMove()
 
-			//copy over air
-			if(isopenturf(T1))
-				var/turf/open/Ts1 = T1
-				Ts1.copy_air_with_tile(T0)
+	for(var/thing in areas_to_move)
+		var/area/internal_area = thing
+		internal_area.afterShuttleMove()																//areas
 
-			//move mobile to new location
-			for(var/atom/movable/AM in T0)
-				if(AM.onShuttleMove(T1, rotation, knockdown))
-					moved_atoms += AM
-
-		if(rotation)
-			T1.shuttleRotate(rotation)
-
-		SSair.remove_from_active(T1)
-		T1.CalculateAdjacentTurfs()
-		SSair.add_to_active(T1,1)
-
-		T0.ChangeTurf(turf_type)
-
-		SSair.remove_from_active(T0)
-		T0.CalculateAdjacentTurfs()
-		SSair.add_to_active(T0,1)
-
-	for(var/am in moved_atoms)
-		var/atom/movable/AM = am
-		AM.afterShuttleMove()
-
-	check_poddoors()
-	S1.last_dock_time = world.time
-
-	loc = S1.loc
-	setDir(S1.dir)
+	return DOCKING_SUCCESS
 
 /obj/docking_port/mobile/proc/findRoundstartDock()
 	return SSshuttle.getDock(roundstart_move)
@@ -573,9 +599,6 @@
 		var/turf/T1 = L1[i]
 		if(!T0 || !T1)
 			continue
-		if(T0.type == T0.baseturf)
-			continue
-		// The corresponding tile will not be changed, so no roadkill
 
 		for(var/atom/movable/AM in T1)
 			if(ismob(AM))
@@ -643,14 +666,19 @@
 				create_ripples(destination, tl)
 
 	var/obj/docking_port/stationary/S0 = get_docked()
-	if(areaInstance.parallax_movedir && istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= PARALLAX_LOOP_TIME)
-		parallax_slowdown()
+	if(istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= PARALLAX_LOOP_TIME)
+		for(var/place in shuttle_areas)
+			var/area/shuttle/shuttle_area = place
+			if(shuttle_area.parallax_movedir)
+				parallax_slowdown()
 
 /obj/docking_port/mobile/proc/parallax_slowdown()
-	areaInstance.parallax_movedir = FALSE
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		shuttle_area.parallax_movedir = FALSE
 	if(assigned_transit && assigned_transit.assigned_area)
 		assigned_transit.assigned_area.parallax_movedir = FALSE
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, area_type)
 	for (var/thing in L0)
 		var/turf/T = thing
 		for (var/thing2 in T)
@@ -740,9 +768,11 @@
 
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
 /obj/docking_port/mobile/proc/getControlConsole()
-	for(var/obj/machinery/computer/shuttle/S in areaInstance)
-		if(S.shuttleId == id)
-			return S
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/obj/machinery/computer/shuttle/S in shuttle_area)
+			if(S.shuttleId == id)
+				return S
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
@@ -785,9 +815,11 @@
 
 /obj/docking_port/mobile/proc/count_engines()
 	. = 0
-	for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
-		if(!QDELETED(E))
-			. += E.engine_power
+	for(var/thing in shuttle_areas)
+		var/area/shuttle/areaInstance = thing
+		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
+			if(!QDELETED(E))
+				. += E.engine_power
 
 // Double initial engines to get to 0.5 minimum
 // Lose all initial engines to get to 2

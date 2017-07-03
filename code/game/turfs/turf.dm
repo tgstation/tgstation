@@ -201,7 +201,7 @@
 	return ChangeTurf(path, defer_change, ignore_air)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf = FALSE)
 	if(!path)
 		return
 	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
@@ -212,7 +212,10 @@
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
-	W.baseturf = old_baseturf
+	if(new_baseturf)
+		W.baseturf = new_baseturf
+	else
+		W.baseturf = old_baseturf
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
@@ -222,10 +225,6 @@
 /turf/proc/AfterChange(ignore_air = FALSE) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
 	CalculateAdjacentTurfs()
-
-	if(!can_have_cabling())
-		for(var/obj/structure/cable/C in contents)
-			C.deconstruct()
 
 	//update firedoor adjacency
 	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
@@ -246,7 +245,7 @@
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	if(blocks_air)
+	if(blocks_air || !air) //This is dirty tbh
 		return
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
@@ -408,7 +407,7 @@
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space)
+/turf/proc/empty(turf_type=/turf/open/space, baseturf_type)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/turf/T0 = src
 	for(var/A in T0.GetAllContents())
@@ -422,7 +421,7 @@
 			continue
 		qdel(A, force=TRUE)
 
-	T0.ChangeTurf(turf_type)
+	T0.ChangeTurf(turf_type, FALSE, FALSE, baseturf_type)
 
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
