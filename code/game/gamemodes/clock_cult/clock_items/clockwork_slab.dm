@@ -539,9 +539,9 @@
 			effects and are often crucial. The most noteworthy are <b>clockwork walls,</b> which automatically \"link\" to any nearby Tinkerer's Caches, causing them to <b>slowly \
 			generate components.</b> This is incredibly useful for obvious reasons, and creating a clockwork wall near every Tinkerer's Cache should be prioritized. Clockwork floors \
 			will slowly heal any toxin damage suffered by Servants standing on them, and clockwork airlocks can only be opened by Servants.<br><br>"
-			dat += "The replica fabricator itself is also worth nothing. In addition to converting objects, it can also create brass sheets at the cost of power by using the \
+			dat += "The replica fabricator itself is also worth noting. In addition to replacing objects, it can also create brass sheets at the cost of power by using the \
 			fabricator in-hand. It can also be used to repair any damaged clockwork structures.<br><br>"
-			dat += "Converting objects is almost as, if not as important as, converting new Servants. A base is impossible to manage without clockwork walls at the very least, and \
+			dat += "Replacing objects is almost as, if not as important as, converting new Servants. A base is impossible to manage without clockwork walls at the very least, and \
 			once the cult has been outed and the crew are actively searching, there is little reason not to use as many as possible.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		else
