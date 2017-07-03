@@ -382,9 +382,10 @@
 	if(owner.stat == DEAD)
 		return
 	if(CURSE_WASTING & curse_flags)
-		new /obj/effect/temp_visual/dir_setting/curse(owner.loc, owner.dir)
+		var/obj/effect/temp_visual/dir_setting/curse/C = new (owner.loc, owner.dir)
+		C.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		playsound(owner, 'sound/effects/curse5.ogg', 20, 1, -1)
-		owner.adjustFireLoss(0.5)
+		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
 		if(CURSE_SPAWNING & curse_flags)
