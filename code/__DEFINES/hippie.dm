@@ -32,3 +32,4 @@ GLOBAL_VAR_INIT(HIPPIE_MENTOR_OOC_COLOUR, "#FF3E96")
 #define SUITGEAR		"Suit"
 #define NECKGEAR		"Neck"
 #define ACCESSORYGEAR	"Accessory"
+//possible to-do: use actual slot defines instead of making more(?)

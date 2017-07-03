@@ -2138,6 +2138,7 @@
 #include "hippiestation\code\_globalvars\logging.dm"
 #include "hippiestation\code\_globalvars\lists\flavor_misc.dm"
 #include "hippiestation\code\_globalvars\lists\names.dm"
+#include "hippiestation\code\_HELPERS\_lists.dm"
 #include "hippiestation\code\_HELPERS\_logging.dm"
 #include "hippiestation\code\_HELPERS\mobs.dm"
 #include "hippiestation\code\_HELPERS\names.dm"

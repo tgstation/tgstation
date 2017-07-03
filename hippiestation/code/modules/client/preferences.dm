@@ -23,7 +23,6 @@
 	return dat
 
 /datum/preferences/proc/process_hippie_link(mob/user, list/href_list)
-	to_chat(world, "maincall")
 	if(href_list["task"] == "input")
 		if(href_list["preference"] == "moth_wings")
 			var/new_moth_wings
@@ -31,29 +30,27 @@
 			if(new_moth_wings)
 				features["moth_wings"] = new_moth_wings
 	if(href_list["preference"] == "gear")
-		to_chat(world, "secondcall")
 		if(href_list["clear_loadout"])
-			to_chat(world, "1")
 			LAZYCLEARLIST(chosen_gear)
 			save_preferences()
 		if(href_list["select_category"])
-			to_chat(world, "2")
 			for(var/i in gear_categories)
-				to_chat(world, i)
 				var/datum/gear_category/category = i
-				if(istype(category, href_list["select_category"]))
+				var/the_path = text2path(href_list["select_category"])
+				if(!the_path)
+					return
+				if(istype(category, the_path))
 					gear_tab = i
 		if(href_list["toggle_gear_path"])
-			to_chat(world, "3")
-			var/datum/gear/G = href_list["toggle_gear_path"]
-			if(is_type_in_list(G, gear_tab.gear_list))//just to be sure you're not being a cunt and trying to exploit me
-				to_chat(world, "4")
-				if((!(href_list["toggle_gear_path"])) && is_type_in_list(G, chosen_gear))//toggling off and the item effectively is in chosen gear)
-					to_chat(world, "5")
+			var/datum/gear/G = text2path(href_list["toggle_gear_path"])
+			if(!G)
+				return
+			if(is_type_in_ref_list(G, gear_tab.gear_list))//just to be sure you're not being a cunt and trying to exploit me
+				var/toggle = text2num(href_list["toggle_gear"])
+				if(!toggle && (G in chosen_gear))//toggling off and the item effectively is in chosen gear)
 					LAZYREMOVE(chosen_gear, G)
 					gear_points += initial(G.cost)
-				else if(href_list["toggle_gear_path"] && (!(is_type_in_list(G, chosen_gear))))
-					to_chat(world, "6")
+				else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
 					if(gear_points >= initial(G.cost))
 						LAZYADD(chosen_gear, G)
 						gear_points -= initial(G.cost)
@@ -101,11 +98,11 @@
 			var/datum/gear/gear = j
 			var/class_link = ""
 			if(gear.type in chosen_gear)
-				class_link = "class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[gear.type];toggle_gear=1'"
+				class_link = "class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[gear.type];toggle_gear=0'"
 			else if(gear_points <= 0)
 				class_link = "class='linkOff'"
 			else
-				class_link = "href='?_src_=prefs;preference=gear;toggle_gear_path=[gear.type];toggle_gear=0'"
+				class_link = "href='?_src_=prefs;preference=gear;toggle_gear_path=[gear.type];toggle_gear=1'"
 			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [class_link]>[gear.name]</a></td>"
 			. += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 			if(islist(gear.locked_to_roles))

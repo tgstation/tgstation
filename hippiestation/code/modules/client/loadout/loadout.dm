@@ -25,7 +25,7 @@
 	var/name = "gear name"
 	var/category = "none"
 	var/description = "why do i exist"
-	var/path//item-to-spawn path
+	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
 	var/list/locked_to_roles // use LAZYADD in Initialize() and add the roles your item is locked to
 
