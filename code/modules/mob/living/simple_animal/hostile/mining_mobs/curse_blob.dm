@@ -15,6 +15,7 @@
 	melee_damage_upper = 10
 	melee_damage_type = BURN
 	attacktext = "slashes"
+	attack_sound = 'sound/effects/curseattack.ogg'
 	throw_message = "passes through the smokey body of"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -27,6 +28,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/Initialize(mapload)
 	. = ..()
 	timerid = QDEL_IN(src, 600)
+	playsound(src, 'sound/effects/curse1.ogg', 100, 1, -1)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Destroy()
 	new /obj/effect/temp_visual/dir_setting/curse/blob(loc, dir)

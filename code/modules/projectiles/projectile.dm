@@ -161,6 +161,8 @@
 	var/turf/target_turf = get_turf(A)
 
 	if(!prehit(A))
+		if(forcedodge)
+			loc = target_turf
 		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!

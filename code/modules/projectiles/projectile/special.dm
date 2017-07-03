@@ -344,6 +344,7 @@
 /obj/item/projectile/curse_hand
 	name = "curse hand"
 	icon_state = "cursehand"
+	hitsound = 'sound/effects/curse4.ogg'
 	layer = LARGE_MOB_LAYER
 	damage_type = BURN
 	damage = 20
@@ -367,11 +368,15 @@
 /obj/item/projectile/curse_hand/prehit(atom/target)
 	if(target == original)
 		forcedodge = FALSE
+	else if(!isturf(target))
+		return FALSE
 	return ..()
 
 /obj/item/projectile/curse_hand/Destroy()
 	if(arm)
 		arm.End()
+	if(forcedodge)
+		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
 	var/turf/T = get_step(loc, dir)
 	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)

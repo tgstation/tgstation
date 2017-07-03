@@ -353,7 +353,7 @@
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 12000 //you're cursed for 20 minutes have fun
+	duration = 9000 //you're cursed for 15 minutes have fun
 	tick_interval = 50
 	alert_type = null
 	var/curse_flags = NONE
@@ -382,8 +382,8 @@
 	if(owner.stat == DEAD)
 		return
 	if(CURSE_WASTING & curse_flags)
-		var/obj/effect/temp_visual/dir_setting/curse/C = new (owner.loc, owner.dir)
-		animate(C, alpha = 0, time = C.duration)
+		new /obj/effect/temp_visual/dir_setting/curse(owner.loc, owner.dir)
+		playsound(owner, 'sound/effects/curse5.ogg', 10, 1, -1)
 		owner.adjustFireLoss(0.5)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
@@ -399,20 +399,46 @@
 				C.GiveTarget()
 		if(CURSE_GRASPING & curse_flags)
 			var/turf/spawn_turf
+			var/random_grab = rand(1, 4) //grab them from a random direction other than the one faced
 			switch(owner.dir)
 				if(NORTH)
-					spawn_turf = locate(owner.x, owner.y - 5, owner.z)
+					switch(random_grab)
+						if(1)
+							spawn_turf = locate(owner.x - 5, owner.y, owner.z) //EAST
+						if(2)
+							spawn_turf = locate(owner.x + 5, owner.y, owner.z) //WEST
+						else
+							spawn_turf = locate(owner.x, owner.y - 5, owner.z) //SOUTH
 				if(SOUTH)
-					spawn_turf = locate(owner.x, owner.y + 5, owner.z)
+					switch(random_grab)
+						if(1)
+							spawn_turf = locate(owner.x - 5, owner.y, owner.z) //EAST
+						if(2)
+							spawn_turf = locate(owner.x + 5, owner.y, owner.z) //WEST
+						else
+							spawn_turf = locate(owner.x, owner.y + 5, owner.z) //NORTH
 				if(EAST)
-					spawn_turf = locate(owner.x - 5, owner.y, owner.z)
+					switch(random_grab)
+						if(1)
+							spawn_turf = locate(owner.x, owner.y - 5, owner.z) //SOUTH
+						if(2)
+							spawn_turf = locate(owner.x, owner.y + 5, owner.z) //NORTH
+						else
+							spawn_turf = locate(owner.x - 5, owner.y, owner.z) //EAST
 				if(WEST)
-					spawn_turf = locate(owner.x + 5, owner.y, owner.z)
+					switch(random_grab)
+						if(1)
+							spawn_turf = locate(owner.x, owner.y - 5, owner.z) //SOUTH
+						if(2)
+							spawn_turf = locate(owner.x, owner.y + 5, owner.z) //NORTH
+						else
+							spawn_turf = locate(owner.x + 5, owner.y, owner.z) //WEST
 			if(spawn_turf)
 				INVOKE_ASYNC(src, .proc/grasp, spawn_turf)
 
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	playsound(spawn_turf, 'sound/effects/curse2.ogg', 100, 1, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
 	C.current = spawn_turf
