@@ -92,6 +92,9 @@
 	if(istype(M, /obj/effect) || !istype(M))
 		return
 
+	if(M.anchored && !istype(M, /obj/mecha) && !ismob(M))
+		return
+
 	if(do_teleport(M, hard_target, 6))
 		// KERPLUNK
 		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
