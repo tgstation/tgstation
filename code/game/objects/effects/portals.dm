@@ -71,6 +71,8 @@
 	link_portal(_linked)
 	hardlinked = automatic_link
 	creator = _creator
+	if(isturf(hard_target_override))
+		hard_target = hard_target_override
 
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink
