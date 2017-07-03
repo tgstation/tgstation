@@ -97,3 +97,16 @@
 	icon_state = "multitool"
 	toolspeed = 0.1
 	origin_tech = "magnets=5;engineering=5;abductor=3"
+
+/obj/item/device/multitool/abductor/syndi
+	name = "multitool"
+	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "multitool"
+	toolspeed = 0.5
+	origin_tech = "magnets=1;engineering=2;syndicate=1"
+
+/obj/item/device/multitool/abductor/syndi/red
+	name = "syndicate multitool"
+	desc = "Expensive varient of the standard multitool. Displays the function of each wire to the user."
+	icon_state = "multitool-red"

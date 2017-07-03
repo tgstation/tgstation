@@ -113,6 +113,28 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
+/obj/item/weapon/storage/toolbox/syndicate/stealth
+
+/obj/item/weapon/storage/toolbox/syndicate/stealth/PopulateContents()
+	new /obj/item/weapon/screwdriver/nuke(src)
+	new /obj/item/weapon/wrench/syndie(src)
+	new /obj/item/weapon/weldingtool/largetank/syndie(src)
+	new /obj/item/weapon/crowbar/syndie(src)
+	new /obj/item/weapon/wirecutters/syndie(src)
+	new /obj/item/device/multitool/abductor/syndi(src)
+	new /obj/item/clothing/gloves/combat(src)
+
+/obj/item/weapon/storage/toolbox/syndicate/modern
+
+/obj/item/weapon/storage/toolbox/syndicate/modern/PopulateContents()
+	new /obj/item/weapon/screwdriver/nuke(src)
+	new /obj/item/weapon/wrench/syndie/red(src)
+	new /obj/item/weapon/weldingtool/largetank/syndie/red(src)
+	new /obj/item/weapon/crowbar/syndie/red(src)
+	new /obj/item/weapon/wirecutters/syndie/red(src)
+	new /obj/item/device/multitool/abductor/syndi/red(src)
+	new /obj/item/clothing/gloves/combat(src)
+
 /obj/item/weapon/storage/toolbox/drone
 	name = "mechanical toolbox"
 	icon_state = "blue"

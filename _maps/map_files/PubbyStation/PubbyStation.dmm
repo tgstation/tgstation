@@ -50276,7 +50276,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/syndie/red,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -50533,12 +50533,12 @@
 	},
 /area/shuttle/syndicate)
 "cgz" = (
-/obj/item/weapon/wrench,
-/obj/item/device/assembly/infra,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/wrench/syndie/red,
+/obj/item/device/assembly/infra,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -50560,11 +50560,9 @@
 	},
 /area/shuttle/syndicate)
 "cgB" = (
-/obj/item/weapon/weldingtool/largetank{
-	pixel_y = 3
-	},
-/obj/item/device/multitool,
 /obj/structure/table/reinforced,
+/obj/item/weapon/weldingtool/largetank/syndie/red,
+/obj/item/device/multitool/abductor/syndi/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -51422,12 +51420,12 @@
 	},
 /area/shuttle/syndicate)
 "ciK" = (
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/item/weapon/crowbar/red,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/storage/toolbox/syndicate/modern,
+/obj/item/weapon/crowbar/syndie/red,
 /turf/open/floor/plasteel/podhatch{
 	dir = 10
 	},
@@ -82974,7 +82972,7 @@ aAs
 aDJ
 bcJ
 bcI
-beP
+bdD
 bdG
 bgX
 bia
@@ -87066,18 +87064,18 @@ aJk
 aKl
 aHQ
 aMu
-bVG
+aHQ
 bVI
 aPg
 aQm
-bVG
+aHQ
 aSj
-bVG
+aHQ
 aTS
 aUS
-bVG
+aHQ
 bVI
-bVG
+aHQ
 axi
 aDd
 bar

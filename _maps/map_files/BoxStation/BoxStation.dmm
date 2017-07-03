@@ -33644,7 +33644,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4;
 	external_pressure_bound = 140;
-	pressure_checks = 0
+	pressure_checks = 0;
 	name = "server vent"
 	},
 /turf/open/floor/circuit{
@@ -61253,7 +61253,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/syndie/red,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -61482,12 +61482,12 @@
 	},
 /area/shuttle/syndicate)
 "cJl" = (
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/item/weapon/crowbar/red,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/storage/toolbox/syndicate/modern,
+/obj/item/weapon/crowbar/syndie/red,
 /turf/open/floor/plasteel/podhatch{
 	dir = 10
 	},
@@ -61748,12 +61748,12 @@
 	},
 /area/shuttle/syndicate)
 "cJY" = (
-/obj/item/weapon/wrench,
-/obj/item/device/assembly/infra,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/wrench/syndie/red,
+/obj/item/device/assembly/infra,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -61775,11 +61775,9 @@
 	},
 /area/shuttle/syndicate)
 "cKa" = (
-/obj/item/weapon/weldingtool/largetank{
-	pixel_y = 3
-	},
-/obj/item/device/multitool,
 /obj/structure/table/reinforced,
+/obj/item/weapon/weldingtool/largetank/syndie/red,
+/obj/item/device/multitool/abductor/syndi/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -83911,12 +83909,12 @@ aaa
 aaa
 aaa
 cTg
-cTl
-cTn
-cTr
-cTu
-cTw
-cTz
+cTg
+cTi
+cTg
+cTi
+cTg
+cTg
 aaa
 bCq
 bPS
@@ -84167,13 +84165,13 @@ aaa
 aaa
 aaa
 aaa
-cTh
+cTg
 bGg
 cTo
 cMl
 bHx
 cTx
-cTA
+cTg
 aaa
 bLv
 bPR
@@ -84427,7 +84425,7 @@ bDi
 cTi
 bGh
 bHx
-cTs
+cTo
 bHx
 bLt
 bMF
@@ -84681,13 +84679,13 @@ bzP
 bAS
 bxu
 aaa
-cTj
+cTg
 bGg
-cTp
-cTt
+cTo
+cTo
 bHx
 bLs
-cTB
+cTg
 aaa
 bLv
 bPT
@@ -84938,13 +84936,13 @@ bzR
 byd
 bxx
 aaa
-cTk
-cTm
-cTq
+cTg
+cTg
+cTi
 bJc
-cTv
-cTy
-cTC
+cTi
+cTg
+cTg
 aaa
 bCq
 bPV

@@ -57,6 +57,18 @@
 	toolspeed = 0.1
 	origin_tech = "materials=5;engineering=5;abductor=3"
 
+/obj/item/weapon/wrench/syndie
+	name = "wrench"
+	desc = "A wrench with common uses. Can be found in your hand."
+	icon_state = "wrench"
+	toolspeed = 0.5
+
+/obj/item/weapon/wrench/syndie/red
+	name = "syndicate wrench"
+	desc = "Anti-grav crystals in this wrench assist in slightly loosening bolts."
+	icon_state = "wrench_syndie"
+	toolspeed = 0.5
+
 /obj/item/weapon/wrench/power
 	name = "hand drill"
 	desc = "A simple powered hand drill. It's fitted with a bolt bit."
@@ -280,6 +292,18 @@
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
 	desc = "This cuts wires."
+	toolspeed = 0.5
+
+/obj/item/weapon/wirecutters/syndie
+	name = "wirecutters"
+	desc = "This cuts wires."
+	icon_state = "cutters_red"
+	toolspeed = 0.5
+
+/obj/item/weapon/wirecutters/syndie/red
+	name = "syndicate wirecutters"
+	desc = "Special wirecutters with a powered grip designed to assist in cutting thick wires."
+	icon_state = "cutters_syndie"
 	toolspeed = 0.5
 
 /obj/item/weapon/wirecutters/power
@@ -578,6 +602,17 @@
 	desc = "An advanced welder designed to be used in robotic systems."
 	toolspeed = 0.5
 
+/obj/item/weapon/weldingtool/largetank/syndie
+	name = "industrial welding tool"
+	desc = "A slightly larger welder with a larger tank."
+	toolspeed = 0.5
+
+/obj/item/weapon/weldingtool/largetank/syndie/red
+	name = "syndicate welding tool"
+	desc = "Special syndicate issue welding tool, has an expanded fuel capacity and operates faster."
+	icon_state ="indwelder_syndie"
+	toolspeed = 0.5
+
 /obj/item/weapon/weldingtool/largetank/flamethrower_screwdriver()
 	return
 
@@ -693,6 +728,18 @@
 	icon_state = "crowbar"
 	toolspeed = 0.1
 	origin_tech = "combat=4;engineering=4;abductor=3"
+
+/obj/item/weapon/crowbar/syndie
+	name = "crowbar"
+	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
+	icon_state = "crowbar_red"
+	toolspeed = 0.5
+
+/obj/item/weapon/crowbar/syndie/red
+	name = "syndicate crowbar"
+	desc = "Syndicate issue crowbar with hidden internal boosters designed to assist in manual labour tasks."
+	icon_state = "crowbar_syndie"
+	toolspeed = 0.5
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

@@ -13,7 +13,7 @@
 	new /obj/item/device/radio/headset/syndicate(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/weapon/storage/belt/military(src)
-	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/crowbar/syndie/red(src)
 	new /obj/item/clothing/glasses/night(src)
 	return
 
