@@ -32,6 +32,7 @@
 	new /obj/item/weapon/storage/box/flashes(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/gun/energy/ionrifle/carbine/pin(src)
 
 /obj/structure/closet/secure_closet/ertMed
 	name = "medical closet"
