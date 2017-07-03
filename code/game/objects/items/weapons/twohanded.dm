@@ -177,16 +177,21 @@
 	else
 		unwield(user)
 
+/obj/item/weapon/twohanded/required/dropped(mob/living/user)
+	unwield(user)
+	..()
+
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
 		user.dropItemToGround(src)
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+	if(!wielded)
+		return
 	if(show_message)
 		to_chat(user, "<span class='notice'>You drop [src].</span>")
 	..(user, FALSE)
-	user.dropItemToGround(src)
 
 /*
  * Fireaxe
