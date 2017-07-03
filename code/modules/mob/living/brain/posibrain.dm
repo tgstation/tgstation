@@ -41,15 +41,26 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
-	if(!brainmob || brainmob.key)
+	if(!brainmob)
+		to_chat(user, "<span class='warning'>[src]'s personality matrix is corrupted! Attempting to reboot...</span>")
+		brainmob = new(src)
+		if(!brainmob) //something went really wrong!
+			to_chat(user, "<span class='danger'>[src] failed to reboot! Tell the admins about this immediately, because it shouldn't be happening.</span>")
+		else
+			to_chat(user, "<span class='notice'>Success! [src]'s personality matrix has been restored, and it is again operational.</span>")
+		return
+	if(is_occupied())
+		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
 		return
 	if(next_ask > world.time)
+		to_chat(user, "<span class='warning'>[src] isn't ready to activate again yet! Give it some time to recharge.</span>")
 		return
 	//Start the process of requesting a new ghost.
 	to_chat(user, begin_activation_message)
 	ping_ghosts("requested", FALSE)
 	next_ask = world.time + askDelay
 	searching = TRUE
+	update_icon()
 	addtimer(CALLBACK(src, .proc/check_success), askDelay)
 
 /obj/item/device/mmi/posibrain/proc/check_success()
@@ -80,7 +91,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(is_occupied() || jobban_isbanned(user,"posibrain"))
 		return
-	
+
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || QDELETED(src))
 		return
@@ -109,7 +120,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(QDELETED(brainmob))
 		return
 	if(is_occupied()) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		to_chat(candidate, "This brain has already been taken! Please try your possession again later!")
+		to_chat(candidate, "<span class='warning'>This [name] was taken over before you could get to it! Perhaps it might be available later?</span>")
 		return FALSE
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)
@@ -123,7 +134,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	GLOB.living_mob_list += brainmob
 
 	visible_message(new_mob_message)
-	update_icon()
+	check_success()
 	return TRUE
 
 
