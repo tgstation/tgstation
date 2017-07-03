@@ -67,6 +67,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
+	slot_flags = SLOT_BELT
 	sharpness = IS_SHARP
 	obj_integrity = 200
 	max_integrity = 200

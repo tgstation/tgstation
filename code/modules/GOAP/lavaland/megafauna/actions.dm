@@ -63,6 +63,9 @@
 
 /datum/goap_action/lavaland/your_guts/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = spiral_range(10, agent)
+	var/mob/living/simple_animal/hostile/megafauna/MF = agent
+	if(MF.recovery_time >= world.time)
+		return
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 	if(C)
 		target = C
