@@ -353,7 +353,7 @@
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 9000 //you're cursed for 15 minutes have fun
+	duration = 6000 //you're cursed for 10 minutes have fun
 	tick_interval = 50
 	alert_type = null
 	var/curse_flags = NONE
@@ -383,7 +383,7 @@
 		return
 	if(CURSE_WASTING & curse_flags)
 		new /obj/effect/temp_visual/dir_setting/curse(owner.loc, owner.dir)
-		playsound(owner, 'sound/effects/curse5.ogg', 10, 1, -1)
+		playsound(owner, 'sound/effects/curse5.ogg', 20, 1, -1)
 		owner.adjustFireLoss(0.5)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
@@ -438,7 +438,7 @@
 
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 100, 1, -1)
+	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
 	C.current = spawn_turf
