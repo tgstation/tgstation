@@ -120,7 +120,7 @@
 	id = "hierophant"
 	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
 	suffix = "lavaland_surface_hierophant.dmm"
-	cost = 0
+	cost = -1
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner

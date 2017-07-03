@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
 	banned += generateMapList("config/spaceruinblacklist.txt")
 
-	for(var/item in subtypesof(/datum/map_template/ruin))
+	for(var/item in sortList(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
 		var/datum/map_template/ruin/ruin_type = item
 		// screen out the abstract subtypes
 		if(!initial(ruin_type.id))
