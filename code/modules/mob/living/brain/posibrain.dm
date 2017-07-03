@@ -25,6 +25,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
+	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
@@ -41,19 +42,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
-	if(!brainmob)
-		to_chat(user, "<span class='warning'>[src]'s personality matrix is corrupted! Attempting to reboot...</span>")
-		brainmob = new(src)
-		if(!brainmob) //something went really wrong!
-			to_chat(user, "<span class='danger'>[src] failed to reboot! Tell the admins about this immediately, because it shouldn't be happening.</span>")
-		else
-			to_chat(user, "<span class='notice'>Success! [src]'s personality matrix has been restored, and it is again operational.</span>")
-		return
 	if(is_occupied())
 		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
 		return
 	if(next_ask > world.time)
-		to_chat(user, "<span class='warning'>[src] isn't ready to activate again yet! Give it some time to recharge.</span>")
+		to_chat(user, recharge_message)
 		return
 	//Start the process of requesting a new ghost.
 	to_chat(user, begin_activation_message)
