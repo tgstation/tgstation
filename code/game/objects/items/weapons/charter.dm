@@ -51,11 +51,6 @@
 	log_game("[key_name(user)] has proposed to name the station as \
 		[new_name]")
 
-	if(standard_station_regex.Find(new_name))
-		to_chat(user, "Your name has been automatically approved.")
-		rename_station(new_name, user.name, user.real_name, key_name(user))
-		return
-
 	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
