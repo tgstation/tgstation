@@ -172,8 +172,8 @@
 /datum/clockwork_scripture/geis/scripture_effects()
 	. = add_servant_of_ratvar(target)
 	if(.)
-		target.log_message("<font color=#AF0AAF>Conversion was done with Geis, by [invoker.name][invoker.ckey ? "([invoker.ckey])":""].</font>", INDIVIDUAL_ATTACK_LOG)
-		invoker.log_message("<font color=#AF0AAF>Converted [target.name][target.ckey ? "([target.ckey])":""] with Geis.</font>", INDIVIDUAL_ATTACK_LOG)
+		target.log_message("<font color=#BE8700>Conversion was done with Geis, by [invoker.name][invoker.ckey ? "([invoker.ckey])":""].</font>", INDIVIDUAL_ATTACK_LOG)
+		invoker.log_message("<font color=#BE8700>Converted [target.name][target.ckey ? "([target.ckey])":""] with Geis.</font>", INDIVIDUAL_ATTACK_LOG)
 
 
 //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.

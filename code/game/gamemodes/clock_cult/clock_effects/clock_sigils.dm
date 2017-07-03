@@ -121,7 +121,7 @@
 	if(is_eligible_servant(L))
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 	if(add_servant_of_ratvar(L))
-		L.log_message("<font color=#AF0AAF>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
+		L.log_message("<font color=#BE8700>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
 	L.Knockdown(60) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
@@ -163,7 +163,7 @@
 
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
 	if(L.isloyal())
-		L.log_message("<font color=#AF0AAF>Had their mindshield implant broken by a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
+		L.log_message("<font color=#BE8700>Had their mindshield implant broken by a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
 		delete_on_finish = TRUE
 		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
 		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")

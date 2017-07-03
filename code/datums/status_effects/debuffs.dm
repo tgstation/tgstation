@@ -216,7 +216,7 @@
 			if(is_eligible_servant(owner))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
 				if(add_servant_of_ratvar(owner))
-					owner.log_message("<font color=#AF0AAF>Conversion was done with a Mania Motor.</font>", INDIVIDUAL_ATTACK_LOG)
+					owner.log_message("<font color=#BE8700>Conversion was done with a Mania Motor.</font>", INDIVIDUAL_ATTACK_LOG)
 			owner.Unconscious(100)
 		else
 			if(prob(severity * 0.15))
