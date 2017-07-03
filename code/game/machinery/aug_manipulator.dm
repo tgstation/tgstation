@@ -7,7 +7,7 @@
 	anchored = 1
 	var/obj/item/bodypart/storedpart = null
 	var/initial_icon_state = null
-	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments_standard.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi')
+	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments_standard.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 	obj_integrity = 200
 	max_integrity = 200
 
