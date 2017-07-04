@@ -30,6 +30,8 @@
 
 	var/datum/proximity_monitor/proximity_monitor
 
+	var/use_costly_bicon = FALSE	//some shit shows the whole DMI file for some reason so we use getFlatIcon for those instead
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -264,7 +266,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "[bicon(src)] That's [f_name]")
+	to_chat(user, "[use_costly_bicon ? costly_bicon(src) : bicon(src)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)
