@@ -1,7 +1,7 @@
-/client/proc/forumlink(msg as text)
-	set category = "OOC"
+/client/proc/forumlink()
 	set name = "Link Forum"
 	set desc = "Link your BYOND key with your forum account"
+	set category = "OOC"
 
 	if(!config.token_generator)
 		to_chat(usr, "<span class='danger'>The token generator URL is not set in the server configuration.</span>")
