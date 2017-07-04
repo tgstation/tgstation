@@ -367,9 +367,10 @@
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = ((power / 10) * sqrt( 1 / max(get_dist(l, src),1))) * PROCESSING_HANDICAP
 		l.rad_act(rads)
-	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
-		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
-			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
+	if(has_gas)		//no gas no power for you!
+		for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
+			if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
+				R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
 
 /obj/machinery/power/supermatter_shard/proc/SM_autoprocess_damage(datum/gas_mixture/removed, turf/T)
 	damage_archived = damage
@@ -381,9 +382,10 @@
 		damage = max(damage + ((max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER) * PROCESSING_HANDICAP, 0)
 		damage = max(damage + ((max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER) * PROCESSING_HANDICAP, 0)
 		//healing damage
-		if(combined_gas < MOLE_PENALTY_THRESHOLD)
-			damage = max(damage + ((min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ) * PROCESSING_HANDICAP), 0)
-		//capping damage
+		if(has_gas)		//No gas you go kaboom.
+			if(combined_gas < MOLE_PENALTY_THRESHOLD)
+				damage = max(damage + ((min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ) * PROCESSING_HANDICAP), 0)
+			//capping damage
 		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 		if(damage > damage_archived && prob(10))
 			playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
