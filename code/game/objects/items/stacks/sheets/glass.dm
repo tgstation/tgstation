@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
 	resistance_flags = ACID_PROOF
