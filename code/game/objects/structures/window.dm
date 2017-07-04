@@ -15,7 +15,7 @@
 	var/heat_resistance = 800
 	var/decon_speed = 30
 	var/wtype = "glass"
-	var/fulltile = 0
+	var/fulltile = FALSE
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
@@ -449,7 +449,7 @@
 	heat_resistance = 4000
 	armor = list(melee = 85, bullet = 20, laser = 0, energy = 0, bomb = 60, bio = 100, rad = 100, fire = 99, acid = 100)
 	max_integrity = 100
-	explosion_block = 1.5
+	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/rglass/plasma
 
 /obj/structure/window/plasma/reinforced/unanchored
