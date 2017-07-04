@@ -7,5 +7,5 @@ INTERNET_ADDRESS_TO_USE 0.0.0.0.0
 #Token provider URL (HTTP only because BYOND is garbage)
 TOKEN_GENERATOR http://127.0.0.1:9000/storeCkey.php
 
-#Token consumer URL (HTTP only because BYOND is garbage)
+#Token consumer URL
 TOKEN_COMSUMER http://127.0.0.1:9000/byondLinker.php
