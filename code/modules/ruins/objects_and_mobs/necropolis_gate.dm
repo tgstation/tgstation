@@ -226,6 +226,10 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	else
 		return QDEL_HINT_LETMELIVE
 
+#define STABLE 0 //The tile is stable and won't collapse/sink when crossed.
+#define COLLAPSE_ON_CROSS 1 //The tile is unstable and will temporary become unusable when crossed.
+#define DESTROY_ON_CROSS 2 //The tile is nearly broken and will permanently become unusable when crossed.
+#define UNIQUE_EFFECT 3 //The tile has some sort of unique effect when crossed.
 //stone tiles for boss arenas
 /obj/structure/stone_tile
 	name = "stone tile"
@@ -236,16 +240,67 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
 	var/tile_random_sprite_max = 24
+	var/fall_on_cross = STABLE //If the tile has some sort of effect when crossed
+	var/fallen = FALSE //If the tile is unusable
 
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
 
 /obj/structure/stone_tile/Destroy(force)
-	if(force)
+	if(force || fallen)
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
+
+/obj/structure/stone_tile/Crossed(atom/movable/AM)
+	if(fallen)
+		return
+	var/obj/item/I
+	if(istype(AM, /obj/item))
+		I = AM
+	var/mob/living/L = AM
+	if(isliving(AM))
+		L = AM
+	if(!istype(get_turf(src), /turf/open/floor/plating/lava)) //no lava to sink into
+		return
+	switch(fall_on_cross)
+		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
+			if(I && I.w_class >= WEIGHT_CLASS_BULKY) //too heavy!
+				collapse()
+			if(L && !(L.movement_type & FLYING) && L.mob_size >= MOB_SIZE_HUMAN) //too big!
+				collapse()
+		if(UNIQUE_EFFECT)
+			crossed_effect(AM)
+
+/obj/structure/stone_tile/proc/collapse()
+	var/break_that_sucker
+	if(fall_on_cross == DESTROY_ON_CROSS)
+		break_that_sucker = TRUE
+	playsound(src, 'sound/effects/pressureplate.ogg', 50, TRUE)
+	for(var/i in 1 to 5)
+		animate(src, pixel_x = pixel_x + rand(-1, 1), pixel_y = pixel_y = rand(-1, 1), time = 1)
+		sleep(1)
+	if(break_that_sucker)
+		playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
+	else
+		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
+	animate(src, alpha = 0, pixel_y = pixel_y - 3, time = 10)
+	fallen = TRUE
+	if(break_that_sucker)
+		QDEL_IN(src, 10)
+	else
+		addtimer(CALLBACK(src, .proc/rebuild), 60)
+
+/obj/structure/stone_tile/proc/rebuild()
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y) - 5
+	animate(src, alpha = initial(alpha), pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 30)
+	sleep(30)
+	fallen = FALSE
+
+/obj/structure/stone_tile/proc/crossed_effect(atom/movable/AM)
+	return
 
 /obj/structure/stone_tile/block
 	name = "stone block"
@@ -397,3 +452,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 /obj/structure/stone_tile/surrounding_tile/burnt/hot
 	icon = 'icons/turf/boss_floors_hot.dmi'
+
+#undef STABLE
+#undef COLLAPSE_ON_CROSS
+#undef DESTROY_ON_CROSS
+#undef UNIQUE_EFFECT
