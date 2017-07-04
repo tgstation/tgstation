@@ -40,7 +40,7 @@
 					config.internet_address_to_use = value
 				if ("token_generator")
 					config.token_generator = value
-				if ("token_consumer")
+				else
 					config.token_consumer = value
 		else
 			GLOB.world_game_log << "Unknown setting in configuration: '[name]'"
