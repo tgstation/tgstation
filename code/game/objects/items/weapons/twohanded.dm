@@ -177,8 +177,8 @@
 	else
 		unwield(user)
 
-/obj/item/weapon/twohanded/required/dropped(mob/living/user)
-	unwield(user)
+/obj/item/weapon/twohanded/required/dropped(mob/living/user, show_message = TRUE)
+	unwield(user, show_message)
 	..()
 
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
