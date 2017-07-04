@@ -48,21 +48,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		new_tile.add_fingerprint(user)
-	else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
-		var/obj/item/stack/sheet/mineral/plasma/V = W
-		if (V.get_amount() >= 2 && get_amount() >= 1)
-			var/obj/item/stack/sheet/glass/plasma/RG = new (user.loc)
-			RG.add_fingerprint(user)
-			var/obj/item/stack/sheet/glass/G = src
-			src = null
-			var/replace = user.get_inactive_held_item()==G
-			V.use(1)
-			G.use(1)
-			if (!G && replace)
-				user.put_in_hands(RG)
-		else
-			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
-			return
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
