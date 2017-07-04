@@ -10280,8 +10280,7 @@
 /area/maintenance/arrivals/north)
 "axe" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -32343,7 +32342,6 @@
 /area/medical/sleeper)
 "bwD" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -34083,7 +34081,6 @@
 /area/medical/sleeper)
 "bAq" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -46430,7 +46427,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1;
+	dir = 1
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -50357,7 +50354,7 @@
 	dir = 4;
 	name = "Research Monitor";
 	network = list("RD");
-	pixel_x = -24;
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/heads/chief)
@@ -56749,7 +56746,6 @@
 /area/shuttle/escape)
 "cxS" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -57374,7 +57370,6 @@
 /area/shuttle/abandoned)
 "czC" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,

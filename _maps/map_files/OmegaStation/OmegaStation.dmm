@@ -22637,7 +22637,6 @@
 /area/shuttle/escape)
 "aLA" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/machinery/vending/wallmed{
@@ -22653,7 +22652,6 @@
 /area/shuttle/escape)
 "aLC" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -29390,7 +29388,6 @@
 /area/medical/medbay/zone3)
 "aXS" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30815,7 +30812,6 @@
 /area/medical/medbay/zone3)
 "bax" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/machinery/newscaster{

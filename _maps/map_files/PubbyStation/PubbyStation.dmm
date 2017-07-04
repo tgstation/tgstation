@@ -18739,8 +18739,7 @@
 /area/solar/starboard)
 "aOK" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -31962,7 +31961,6 @@
 /area/medical/sleeper)
 "bqO" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue,

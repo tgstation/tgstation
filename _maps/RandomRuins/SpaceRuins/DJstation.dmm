@@ -212,7 +212,6 @@
 /area/djstation)
 "aL" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,

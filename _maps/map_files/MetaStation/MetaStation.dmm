@@ -60451,7 +60451,6 @@
 /area/medical/surgery)
 "cld" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -60483,7 +60482,6 @@
 /area/medical/sleeper)
 "clh" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{

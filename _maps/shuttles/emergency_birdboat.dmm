@@ -292,7 +292,6 @@
 /area/shuttle/escape)
 "aX" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
