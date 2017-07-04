@@ -9,7 +9,7 @@
 	category = list("initial")
 
 
-/datum/design/plastitanium_alloy
+/datum/design/plaglass_alloy
 	name = "Plasma + Titanium alloy"
 	id = "plastitanium"
 	build_type = SMELTER
