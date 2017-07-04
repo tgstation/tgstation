@@ -33,13 +33,14 @@
 			continue
 
 		if(type == "config") //Add new config options here.
-			if ("mentor_mobname_only")
-				config.mentors_mobname_only = 1
-			if ("internet_address_to_use")
-				config.internet_address_to_use = value
-			if ("token_generator")
-				config.token_generator = value
-			if ("token_consumer")
-				config.token_consumer = value
+			switch(name)
+				if ("mentor_mobname_only")
+					config.mentors_mobname_only = 1
+				if ("internet_address_to_use")
+					config.internet_address_to_use = value
+				if ("token_generator")
+					config.token_generator = value
+				if ("token_consumer")
+					config.token_consumer = value
 		else
 			GLOB.world_game_log << "Unknown setting in configuration: '[name]'"
