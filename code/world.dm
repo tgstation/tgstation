@@ -200,6 +200,8 @@
 					CM.overrideCooldown()
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
+			if(input["crossmessage"] == "Newscaster Relay")
+				handleIncomingNewscasterRelay(input["newsdatum_type"], input["newsdatum_json"])
 
 	else if("adminmsg" in input)	//tgs2 support
 		if(!key_valid)
