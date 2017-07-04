@@ -286,7 +286,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 	else
 		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
-	animate(src, alpha = 0, pixel_y = pixel_y - 3, time = 10)
+	animate(src, alpha = 0, pixel_y = pixel_y - 3, time = 5)
 	fallen = TRUE
 	if(break_that_sucker)
 		QDEL_IN(src, 10)
