@@ -51,6 +51,7 @@
 	. = ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
+	M.mind.assigned_role = "Ghost Role"	//Fallback to keep it from being set to assistant and tainting stats.
 	return
 
 /obj/effect/mob_spawn/proc/equip(mob/M)
@@ -260,6 +261,9 @@
 		var/obj/item/I = locate(del_type) in H
 		qdel(I)
 
+/obj/effect/mob_spawn/human/doctor/special(mob/living/L)
+	L.mind.assigned_role = "Space Doctor"
+
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
 	outfit = /datum/outfit/job/engineer/gloved
@@ -306,6 +310,9 @@
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
 
+/obj/effect/mob_spawn/human/bartender/special(mob/living/L)
+	L.mind.assigned_role = "Space Bartender"
+
 /datum/outfit/spacebartender
 	name = "Space Bartender"
 	uniform = /obj/item/clothing/under/rank/bartender
@@ -340,6 +347,9 @@
 	if(visualsOnly)
 		return
 	H.dna.add_mutation(STONER)
+
+/obj/effect/mob_spawn/human/beach/special(mob/living/L)
+	L.mind.assigned_role = "Beach Bum"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
@@ -432,6 +442,9 @@
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
 
+/obj/effect/mob_spawn/human/skeleton/special(mob/living/L)
+	L.mind.assigned_role = "Skeleton"
+
 /obj/effect/mob_spawn/human/zombie
 	name = "rotting corpse"
 	mob_name = "zombie"
@@ -444,6 +457,8 @@
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
 
+/obj/effect/mob_spawn/human/zombie/special(mob/living/L)
+	L.mind.assigned_role = "Zombie"
 
 /obj/effect/mob_spawn/human/abductor
 	name = "abductor"
@@ -472,6 +487,9 @@
 		return
 	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
 	qdel(user)
+
+/obj/effect/mob_spawn/human/alive/space_bar_patron/special(mob/living/L)
+	L.mind.assigned_role = "Space Bar Patron"
 
 /datum/outfit/cryobartender
 	name = "Cryogenic Bartender"

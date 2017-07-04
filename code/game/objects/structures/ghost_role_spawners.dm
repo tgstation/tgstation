@@ -19,6 +19,7 @@
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
 	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
 	new_spawn.real_name = plant_name
+	new_spawn.mind.assigned_role = "Lifebringer"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude" //You're a plant, partner
@@ -47,6 +48,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
+	new_spawn.mind.assigned_role = "Ash Walker"
 	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
 
 	new_spawn.grant_language(/datum/language/draconic)
@@ -89,6 +91,7 @@
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
 	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
+	new_spawn.mind.assigned_role = "Exile"
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
@@ -152,6 +155,10 @@
 				H.real_name = H.dna.species.random_name()
 		else
 			H.real_name = name
+	if(has_owner)
+		new_spawn.mind.assigned_role = "Servant Golem"
+	else
+		new_spawn.mind.assigned_role = "Free Golem"
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
 	if(isgolem(user) && can_transfer)
@@ -227,6 +234,9 @@
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
 			outfit.back = /obj/item/weapon/storage/backpack
 
+/obj/effect/mob_spawn/human/hermit/special(mob/living/L)
+	L.mind.assigned_role = "Hermit"
+
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
@@ -239,6 +249,9 @@
 	flavour_text = "<font size=3><b>W</b></font><b>hat...? Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
 	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
 	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
+
+/obj/effect/mob_spawn/human/doctor/alive/lavaland/special(mob/living/L)
+	L.mind.assigned_role = "Translocated Vet"
 
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
@@ -256,6 +269,7 @@
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
 	L.name = L.real_name
+	L.mind.assigned_role = "Escaped Prisoner"
 
 /obj/effect/mob_spawn/human/prisoner_transport/Initialize(mapload)
 	. = ..()
@@ -316,6 +330,9 @@
 	back = /obj/item/weapon/storage/backpack/security
 	belt = /obj/item/weapon/storage/belt/security/full
 
+/obj/effect/mob_spawn/human/hotel_staff/special(mob/living/L)
+	L.mind.assigned_role = "Hotel Staff"
+
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
@@ -354,6 +371,7 @@
 		spell.friend = L
 		spell.charge_counter = spell.charge_max
 		L.mind.hasSoul = FALSE
+		L.mind.assigned_role = "SuperFriend"
 		var/mob/living/carbon/human/H = L
 		var/obj/item/worn = H.wear_id
 		var/obj/item/weapon/card/id/id = worn.GetID()
@@ -380,6 +398,9 @@
 	icon_state = "sleeper_s"
 	id_access_list = list(GLOB.access_syndicate)
 	outfit = /datum/outfit/syndicate_empty
+
+/obj/effect/mob_spawn/human/syndicate/special(mob/living/L)
+	L.mind.assigned_role = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
 
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
@@ -456,6 +477,9 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/weapon/card/id/away/old/sec
 
+/obj/effect/mob_spawn/human/oldsec/special(mob/living/L)
+	L.mind.assigned_role = "Ancient Crew"
+
 /obj/effect/mob_spawn/human/oldsec/Destroy()
 	new/obj/structure/showcase/oldpod(get_turf(src))
 	return ..()
@@ -477,6 +501,9 @@
 	shoes = /obj/item/clothing/shoes/workboots
 	id = /obj/item/weapon/card/id/away/old/eng
 
+/obj/effect/mob_spawn/human/oldeng/special(mob/living/L)
+	L.mind.assigned_role = "Ancient Crew"
+
 /obj/effect/mob_spawn/human/oldeng/Destroy()
 	new/obj/structure/showcase/oldpod(get_turf(src))
 	return ..()
@@ -497,6 +524,9 @@
 	uniform = /obj/item/clothing/under/rank/scientist
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/weapon/card/id/away/old/sci
+
+/obj/effect/mob_spawn/human/oldsci/special(mob/living/L)
+	L.mind.assigned_role = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/oldpod(get_turf(src))

@@ -137,6 +137,9 @@
 	id_access_list = list(GLOB.access_syndicate)
 	outfit = /datum/outfit/lavaland_syndicate
 
+/obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/L)
+	L.mind.assigned_role = "Lavaland Syndicate"
+
 /datum/outfit/lavaland_syndicate
 	name = "Lavaland Syndicate Agent"
 	r_hand = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
