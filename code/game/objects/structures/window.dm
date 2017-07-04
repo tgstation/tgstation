@@ -11,7 +11,7 @@
 	obj_integrity = 25
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
-	var/reinf = 0
+	var/reinf = FALSE
 	var/heat_resistance = 800
 	var/decon_speed = 30
 	var/wtype = "glass"
@@ -417,7 +417,7 @@
 	name = "reinforced window"
 	desc = "A window that is reinforced with metal rods."
 	icon_state = "rwindow"
-	reinf = 1
+	reinf = TRUE
 	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	max_integrity = 50
@@ -431,7 +431,7 @@
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
 	icon_state = "plasmawindow"
-	reinf = 0
+	reinf = FALSE
 	heat_resistance = 2500
 	armor = list(melee = 75, bullet = 5, laser = 0, energy = 0, bomb = 45, bio = 100, rad = 100, fire = 90, acid = 100)
 	max_integrity = 50
@@ -444,8 +444,8 @@
 /obj/structure/window/plasma/reinforced
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
-	icon_state = "plasmawindow"
-	reinf = 1
+	icon_state = "rplasmawindow"
+	reinf = TRUE
 	heat_resistance = 4000
 	armor = list(melee = 85, bullet = 20, laser = 0, energy = 0, bomb = 60, bio = 100, rad = 100, fire = 99, acid = 100)
 	max_integrity = 100
@@ -476,7 +476,7 @@
 	icon_state = "window"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
@@ -490,7 +490,7 @@
 	icon_state = "plasma_window"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 60
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
@@ -504,7 +504,7 @@
 	icon_state = "rplasma_window"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 120
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	glass_amount = 2
@@ -517,7 +517,7 @@
 	icon_state = "r_window"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 
@@ -530,7 +530,7 @@
 	icon_state = "r_window"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 1000
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
@@ -544,7 +544,7 @@
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
 	dir = FULLTILE_WINDOW_DIR
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
@@ -567,9 +567,9 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	wtype = "shuttle"
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
-	reinf = 1
+	reinf = TRUE
 	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	smooth = SMOOTH_TRUE
@@ -644,7 +644,7 @@
 	icon_state = "clockwork_window"
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 120
