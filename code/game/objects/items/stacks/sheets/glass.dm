@@ -35,6 +35,52 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /obj/item/stack/sheet/glass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.glass_recipes
 	..()
+	
+/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = W
+		if (get_amount() < 1 || CC.get_amount() < 5)
+			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
+			return
+		CC.use(5)
+		use(1)
+		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
+		var/obj/item/stack/light_w/new_tile = new(user.loc)
+		new_tile.add_fingerprint(user)
+	else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/mineral/plasma/V = W
+		if (V.get_amount() >= 2 && src.get_amount() >= 1)
+			var/obj/item/stack/sheet/glass/plasma/RG = new (user.loc)
+			RG.add_fingerprint(user)
+			var/obj/item/stack/sheet/glass/G = src
+			src = null
+			var/replace = (user.get_inactive_held_item()==G)
+			V.use(1)
+			G.use(1)
+			if (!G && replace)
+				user.put_in_hands(RG)
+		else
+			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
+			return
+	else if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/V = W
+		if (V.get_amount() >= 1 && src.get_amount() >= 1)
+			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
+			RG.add_fingerprint(user)
+			var/obj/item/stack/sheet/glass/G = src
+			src = null
+			var/replace = (user.get_inactive_held_item()==G)
+			V.use(1)
+			G.use(1)
+			if (!G && replace)
+				user.put_in_hands(RG)
+		else
+			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
+			return
+	else
+		return ..()
+
 
 
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
@@ -47,7 +93,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
 	icon_state = "sheet-plasmaglass"
-	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "plasmatech=2;materials=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 100)
 	resistance_flags = ACID_PROOF
@@ -139,7 +185,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough and nearly fire-proof!"
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-plasmarglass"
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2;plasmatech=2"
 	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	resistance_flags = ACID_PROOF
