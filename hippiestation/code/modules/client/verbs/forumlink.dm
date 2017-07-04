@@ -1,4 +1,4 @@
-/client/proc/linkforum(msg as text)
+/client/proc/forumlink(msg as text)
 	set category = "OOC"
 	set name = "Link Forum"
 	set desc = "Link your BYOND key with your forum account"
