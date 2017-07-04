@@ -92,11 +92,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	loaded = TRUE
 	showChat()
 
-
-	for(var/message in messageQueue)
-		to_chat(owner, message)
-
-	messageQueue = null
+	if(!SSgoonchat.last_fire)
+		DispatchMessages()
 	sendClientData()
 
 	//do not convert to to_chat()
@@ -155,6 +152,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				log_admin_private("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = TRUE
+
+/datum/chatOutput/proc/DispatchMessages(client/C = owner)
+	// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
+	C << output(url_encode(url_encode(messageQueue.Join("<br>"))), "browseroutput:output")
+	messageQueue.Cut()
 
 //Called by js client every 60 seconds
 /datum/chatOutput/proc/ping()
@@ -254,16 +256,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		//Send it to the old style output window.
 		C << original_message
 
-		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+		var/datum/chatOutput/CO = C.chatOutput
+
+		if(!CO || CO.broken) // A player who hasn't updated his skin file.
 			continue
 
-		if(!C.chatOutput.loaded)
-			//Client still loading, put their messages in a queue
-			C.chatOutput.messageQueue += message
-			continue
-
-		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		C << output(url_encode(url_encode(message)), "browseroutput:output")
+		CO.messageQueue += message
+		if(CO.loaded && !SSgoonchat.last_fire)
+			CO.DispatchMessages(C)
 
 /proc/grab_client(target)
 	if(istype(target, /client))
