@@ -430,7 +430,7 @@
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
-	icon_state = "plasmawindow"
+	icon_state = "plasma_window"
 	reinf = FALSE
 	heat_resistance = 2500
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 00, "acid" = 100)
