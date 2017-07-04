@@ -426,6 +426,34 @@
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
+	
+/obj/structure/window/plasma
+	name = "plasma window"
+	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
+	icon_state = "plasmawindow"
+	reinf = 0
+	heat_resistance = 2500
+	armor = list(melee = 75, bullet = 5, laser = 0, energy = 0, bomb = 45, bio = 100, rad = 100, fire = 90, acid = 100)
+	max_integrity = 50
+	explosion_block = 1
+	glass_type = /obj/item/stack/sheet/glass/plasma
+
+/obj/structure/window/plasma/unanchored
+	anchored = FALSE
+
+/obj/structure/window/plasma/reinforced
+	name = "reinforced plasma window"
+	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
+	icon_state = "plasmawindow"
+	reinf = 1
+	heat_resistance = 4000
+	armor = list(melee = 85, bullet = 20, laser = 0, energy = 0, bomb = 60, bio = 100, rad = 100, fire = 99, acid = 100)
+	max_integrity = 100
+	explosion_block = 1.5
+	glass_type = /obj/item/stack/sheet/rglass/plasma
+
+/obj/structure/window/plasma/reinforced/unanchored
+	anchored = FALSE
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -455,6 +483,26 @@
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
+	anchored = FALSE
+	
+/obj/structure/window/plasma/fulltile
+	icon_state = "plasmawindow"
+	max_integrity = 60
+	fulltile = 1
+	flags = PREVENT_CLICK_UNDER
+	glass_amount = 2
+
+/obj/structure/window/plasma/fulltile/unanchored
+	anchored = FALSE
+	
+/obj/structure/window/plasma/reinforced/fulltile
+	icon_state = "plasmarwindow"
+	max_integrity = 120
+	fulltile = 1
+	flags = PREVENT_CLICK_UNDER
+	glass_amount = 2
+
+/obj/structure/window/plasma/reinforced/fulltile/unanchored
 	anchored = FALSE
 
 /obj/structure/window/reinforced/fulltile
