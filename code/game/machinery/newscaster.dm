@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(L["body"])
 		body = L["body"]
 	if(L["time_stamp"])
-		time_stemp = L["time_stamp"]
+		time_stamp = L["time_stamp"]
 	return TRUE
 
 /datum/newscaster/feed_message
@@ -109,9 +109,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 			comments += newscomment_from_json(v)
 	if(L["locked"])
 		locked = L["locked"]
-	if(L["authorCensorTime"]
+	if(L["authorCensorTime"])
 		authorCensorTime = L["authorCensorTime"]
-	if(L["bodyCensorTime"]
+	if(L["bodyCensorTime"])
 		bodyCensorTime = L["bodyCensorTime"]
 	if(!isnull(L["img"]))
 		img = base64toicon(L["img"])
@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(L["channel_name"])
 		channel_name = L["channel_name"]
 	if(L["messages"])
-		for(var/v in L["messages"]
+		for(var/v in L["messages"])
 			messages += newsmessage_from_json(v)
 	if(L["locked"])
 		locked = L["locked"]
