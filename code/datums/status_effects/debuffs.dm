@@ -397,7 +397,7 @@
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
-		if(curse_flags & CURSE_SPAWNINGcurse_flags)
+		if(curse_flags & CURSE_SPAWNING)
 			var/turf/spawn_turf
 			var/sanity = 10
 			while(!spawn_turf && sanity)
