@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/list/l = list()
 		for(var/v in messages)
 			var/datum/newscaster/feed_message/FM = v
-			l += FM.to_json()
+			l += FM.to_json(include_comments, bicon_pictures)
 		L["messages"] = l
 	else
 		L["messages"] = list()
@@ -181,6 +181,28 @@ GLOBAL_LIST_EMPTY(allCasters)
 	L["is_admin_channel"] = is_admin_channel
 
 	return json_encode(L)
+
+/datum/newscaster/feed_channel/from_json(jsontext)
+	var/list/L = json_decode(jsontext)
+	if(L["channel_name"])
+		channel_name = L["channel_name"]
+	if(L["messages"])
+		for(var/v in L["messages"]
+			messages += newsmessage_from_json(v)
+	if(L["locked"])
+		locked = L["locked"]
+	if(L["censored"])
+		censored = L["censored"]
+	if(L["authorCensorTime"])
+		authorCensorTime = L["authorCensorTime"]
+	if(L["DclassCensorTime"])
+		DclassCensorTime = L["DclassCensorTime"]
+	if(L["authorCensor"])
+		authorCensor = L["authorCensor"]
+	if(L["is_admin_channel"])
+		is_admin_channel = L["is_admin_channel"]
+
+	return TRUE
 
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
