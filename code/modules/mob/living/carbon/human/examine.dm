@@ -15,82 +15,59 @@
 	//uniform
 	if(w_uniform && !(slot_w_uniform in obscured))
 		//accessory
-		if(w_uniform.examine_reaction(src, user))
-			msg += "[w_uniform.special_examine_text]\n"
-		else
-			var/accessory_msg
-			if(istype(w_uniform,/obj/item/clothing/under))
-				var/obj/item/clothing/under/U = w_uniform
-				if(U.attached_accessory)
-					accessory_msg += " with [bicon(U.attached_accessory)] \a [U.attached_accessory]"
+		var/accessory_msg
+		if(istype(w_uniform,/obj/item/clothing/under))
+			var/obj/item/clothing/under/U = w_uniform
+			if(U.attached_accessory)
+				accessory_msg += " with [bicon(U.attached_accessory)] \a [U.attached_accessory]"
 
-			if(w_uniform.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
-			else
-				msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][accessory_msg].\n"
+		if(w_uniform.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
+		else
+			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][accessory_msg].\n"
 
 	//head
 	if(head)
-		if(head.examine_reaction(src, user))
-			msg += "[head.special_examine_text]\n"
+		if(head.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
 		else
-			if(head.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
-			else
-				msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head.\n"
-
+			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head.\n"
 
 	//suit/armor
 	if(wear_suit)
-		if(wear_suit.examine_reaction(src, user))
-			msg += "[wear_suit.special_examine_text]\n"
+		if(wear_suit.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
 		else
-			if(wear_suit.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
-			else
-				msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit].\n"
-			wear_suit.examine_reaction(src, user)
+			msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit].\n"
 
 		//suit/armor storage
 		if(s_store)
-			if(s_store.examine_reaction(src,user))
-				msg += "[s_store.special_examine_text]\n"
+			if(s_store.blood_DNA)
+				msg += "<span class='warning'>[t_He] [t_is] carrying [bicon(s_store)] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
 			else
-				if(s_store.blood_DNA)
-					msg += "<span class='warning'>[t_He] [t_is] carrying [bicon(s_store)] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
-				else
-					msg += "[t_He] [t_is] carrying [bicon(s_store)] \a [s_store] on [t_his] [wear_suit.name].\n"
+				msg += "[t_He] [t_is] carrying [bicon(s_store)] \a [s_store] on [t_his] [wear_suit.name].\n"
 
 	//back
 	if(back)
-		if(back.examine_reaction(src, user))
-			msg += "[back.special_examine_text]\n"
+		if(back.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
 		else
-			if(back.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
-			else
-				msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
+			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(I.examine_reaction(src, user))
-			msg += "[I.special_examine_text]\n"
-		else
-			if(!(I.flags & ABSTRACT))
-				if(I.blood_DNA)
-					msg += "<span class='warning'>[t_He] [t_is] holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
-				else
-					msg += "[t_He] [t_is] holding [bicon(I)] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
+		if(!(I.flags & ABSTRACT))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>[t_He] [t_is] holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "[t_He] [t_is] holding [bicon(I)] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//gloves
 	if(gloves && !(slot_gloves in obscured))
-		if(gloves.examine_reaction(src, user))
-			msg += "[gloves.special_examine_text]\n"
+		if(gloves.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
 		else
-			if(gloves.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
-			else
-				msg += "[t_He] [t_has] [bicon(gloves)] \a [gloves] on [t_his] hands.\n"
+			msg += "[t_He] [t_has] [bicon(gloves)] \a [gloves] on [t_his] hands.\n"
 	else if(blood_DNA)
 		var/hand_number = get_num_arms()
 		if(hand_number)
@@ -107,64 +84,42 @@
 
 	//belt
 	if(belt)
-		if(belt.examine_reaction(src, user))
-			msg += "[belt.special_examine_text]\n"
+		if(belt.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(belt)] [belt.gender==PLURAL?"some":"a"] blood-stained [belt.name] about [t_his] waist!</span>\n"
 		else
-			if(belt.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_has] [bicon(belt)] [belt.gender==PLURAL?"some":"a"] blood-stained [belt.name] about [t_his] waist!</span>\n"
-			else
-				msg += "[t_He] [t_has] [bicon(belt)] \a [belt] about [t_his] waist.\n"
+			msg += "[t_He] [t_has] [bicon(belt)] \a [belt] about [t_his] waist.\n"
 
 	//shoes
 	if(shoes && !(slot_shoes in obscured))
-		if(shoes.examine_reaction(src, user))
-			msg += "[shoes.special_examine_text]\n"
+		if(shoes.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(shoes)] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
-			if(shoes.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(shoes)] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
-			else
-				msg += "[t_He] [t_is] wearing [bicon(shoes)] \a [shoes] on [t_his] feet.\n"
+			msg += "[t_He] [t_is] wearing [bicon(shoes)] \a [shoes] on [t_his] feet.\n"
 
 	//mask
 	if(wear_mask && !(slot_wear_mask in obscured))
-		if(wear_mask.examine_reaction(src, user))
-			msg += "[wear_mask.special_examine_text]\n"
+		if(wear_mask.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(wear_mask)] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
 		else
-			if(wear_mask.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_has] [bicon(wear_mask)] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
-			else
-				msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
+			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
 
-	//accessories
 	if (wear_neck && !(slot_neck in obscured))
-		if(wear_neck.examine_reaction(src, user))
-			msg += "[wear_neck.special_examine_text]\n"
-		else
-			msg += "[t_He] [t_is] wearing [bicon(wear_neck)] \a [src.wear_neck] around [t_his] neck.\n"
+		msg += "[t_He] [t_is] wearing [bicon(wear_neck)] \a [src.wear_neck] around [t_his] neck.\n"
 
 	//eyes
 	if(glasses && !(slot_glasses in obscured))
-		if(glasses.examine_reaction(src, user))
-			msg += "[glasses.special_examine_text]\n"
+		if(glasses.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
 		else
-			if(glasses.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
-			else
-				msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
+			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
 
 	//ears
 	if(ears && !(slot_ears in obscured))
-		if(ears.examine_reaction(src, user))
-			msg += "[ears.special_examine_text]\n"
-		else
-			msg += "[t_He] [t_has] [bicon(ears)] \a [ears] on [t_his] ears.\n"
+		msg += "[t_He] [t_has] [bicon(ears)] \a [ears] on [t_his] ears.\n"
 
 	//ID
 	if(wear_id)
-		if(wear_id.examine_reaction(src, user))
-			msg += "[wear_id.special_examine_text]\n"
-		else
-			msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
+		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
 
 	//Jitters
 	switch(jitteriness)

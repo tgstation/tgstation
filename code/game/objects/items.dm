@@ -67,7 +67,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
-	var/special_examine_text //If an object should have different description text while it's being worn on a human and the human is examined, set this.
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
@@ -371,12 +370,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
 	return 0
-
-/obj/item/proc/examine_reaction(mob/living/carbon/human/owner, mob/examiner)
-	if(special_examine_text)
-		return TRUE
-	else
-		return FALSE
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
 	return ITALICS | REDUCE_RANGE
