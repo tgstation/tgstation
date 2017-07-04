@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			RG.add_fingerprint(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
-			var/replace = (user.get_inactive_held_item()==G)
+			var/replace = user.get_inactive_held_item()==G
 			V.use(1)
 			G.use(1)
 			if (!G && replace)
