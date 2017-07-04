@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.glass_recipes
-	..()
+	return ..()
 	
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/plasma/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.pglass_recipes
-	..()
+	return ..()
 	
 /obj/item/stack/sheet/glass/plasma/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 
 /obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.reinforced_glass_recipes
-	..()
+	return ..()
 	
 GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/plasma/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 
 /obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.prglass_recipes
-	..()
+	return ..()
 
 
 /obj/item/weapon/shard
