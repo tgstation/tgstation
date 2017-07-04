@@ -1,5 +1,4 @@
 #define MINER_DASH_RANGE 4
-#define MINER_GUN_RANGE 3
 #define MEDAL_PREFIX "Blood-drunk Miner"
 /*
 
@@ -74,7 +73,7 @@ Difficulty: Medium
 	damage = 20
 	speed = 0.9
 	icon_state = "ka_tracer"
-	range = MINER_GUN_RANGE
+	range = MINER_DASH_RANGE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
 	. = ..()
@@ -145,14 +144,14 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) > MINER_GUN_RANGE && dash_cooldown <= world.time)
+	if(get_dist(src, target) > MINER_DASH_RANGE && dash_cooldown <= world.time)
 		INVOKE_ASYNC(src, .proc/dash, target)
 	else
 		shoot_ka()
 	transform_weapon()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/shoot_ka()
-	if(next_move <= world.time && ranged_cooldown <= world.time && get_dist(src, target) <= MINER_GUN_RANGE && !Adjacent(target))
+	if(next_move <= world.time && ranged_cooldown <= world.time && get_dist(src, target) <= MINER_DASH_RANGE && !Adjacent(target))
 		ranged_cooldown = world.time + ranged_cooldown_time
 		visible_message("<span class='danger'>[src] fires the proto-kinetic accelerator!</span>")
 		face_atom(target)
