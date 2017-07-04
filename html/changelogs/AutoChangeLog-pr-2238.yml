@@ -1,4 +1,0 @@
-author: "That Really Good Soda Flavor"
-delete-after: True
-changes: 
-  - bugfix: "Martial arts will no longer be transferred in cloning, etc. if they are temporary (i.e. wrestling, krav maga)."
