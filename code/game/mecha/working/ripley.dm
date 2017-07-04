@@ -3,8 +3,8 @@
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
 	step_in = 4 //Move speed, lower is faster.
-	var/fast_pressure_step_in = 4 //step_in while in normal pressure conditions
-	var/slow_pressure_step_in = 2 //step_in while in better pressure conditions
+	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
+	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
 	max_temperature = 20000
 	obj_integrity = 200
 	max_integrity = 200
