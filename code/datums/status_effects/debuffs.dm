@@ -359,36 +359,45 @@
 	var/curse_flags = NONE
 	var/effect_last_activation = 0
 	var/effect_cooldown = 100
+	var/obj/effect/temp_visual/curse/wasting_effect = new
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
 	if(.)
 		apply_curse(set_curse)
 
+/datum/status_effect/necropolis_curse/Destroy()
+	if(!QDELETED(wasting_effect))
+		qdel(wasting_effect)
+	return ..()
+
 /datum/status_effect/necropolis_curse/on_remove()
 	remove_curse(curse_flags)
 
 /datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
 	curse_flags |= set_curse
-	if(CURSE_BLINDING & curse_flags)
+	if(curse_flags & CURSE_BLINDING)
 		owner.overlay_fullscreen("curse", /obj/screen/fullscreen/curse, 1)
 
 /datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
-	if(CURSE_BLINDING & remove_curse)
+	if(remove_curse & CURSE_BLINDING)
 		owner.clear_fullscreen("curse", 50)
 	curse_flags &= ~remove_curse
 
 /datum/status_effect/necropolis_curse/tick()
 	if(owner.stat == DEAD)
 		return
-	if(CURSE_WASTING & curse_flags)
-		var/obj/effect/temp_visual/dir_setting/curse/C = new (owner.loc, owner.dir)
-		C.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
+	if(curse_flags & CURSE_WASTING)
+		wasting_effect.forceMove(owner.loc)
+		wasting_effect.setDir(owner.dir)
+		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
+		wasting_effect.alpha = 255
+		animate(wasting_effect, alpha = 0, time = 32)
 		playsound(owner, 'sound/effects/curse5.ogg', 20, 1, -1)
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
-		if(CURSE_SPAWNING & curse_flags)
+		if(curse_flags & CURSE_SPAWNINGcurse_flags)
 			var/turf/spawn_turf
 			var/sanity = 10
 			while(!spawn_turf && sanity)
@@ -398,42 +407,9 @@
 				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
 				C.set_target = owner
 				C.GiveTarget()
-		if(CURSE_GRASPING & curse_flags)
-			var/turf/spawn_turf
-			var/random_grab = rand(1, 4) //grab them from a random direction other than the one faced
-			switch(owner.dir)
-				if(NORTH)
-					switch(random_grab)
-						if(1)
-							spawn_turf = locate(owner.x - 5, owner.y, owner.z) //EAST
-						if(2)
-							spawn_turf = locate(owner.x + 5, owner.y, owner.z) //WEST
-						else
-							spawn_turf = locate(owner.x, owner.y - 5, owner.z) //SOUTH
-				if(SOUTH)
-					switch(random_grab)
-						if(1)
-							spawn_turf = locate(owner.x - 5, owner.y, owner.z) //EAST
-						if(2)
-							spawn_turf = locate(owner.x + 5, owner.y, owner.z) //WEST
-						else
-							spawn_turf = locate(owner.x, owner.y + 5, owner.z) //NORTH
-				if(EAST)
-					switch(random_grab)
-						if(1)
-							spawn_turf = locate(owner.x, owner.y - 5, owner.z) //SOUTH
-						if(2)
-							spawn_turf = locate(owner.x, owner.y + 5, owner.z) //NORTH
-						else
-							spawn_turf = locate(owner.x - 5, owner.y, owner.z) //EAST
-				if(WEST)
-					switch(random_grab)
-						if(1)
-							spawn_turf = locate(owner.x, owner.y - 5, owner.z) //SOUTH
-						if(2)
-							spawn_turf = locate(owner.x, owner.y + 5, owner.z) //NORTH
-						else
-							spawn_turf = locate(owner.x + 5, owner.y, owner.z) //WEST
+		if(curse_flags & CURSE_GRASPING)
+			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
+			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
 			if(spawn_turf)
 				INVOKE_ASYNC(src, .proc/grasp, spawn_turf)
 
@@ -448,3 +424,10 @@
 	C.xo = ownerloc.x - spawn_turf.x
 	C.original = owner
 	C.fire()
+
+/obj/effect/temp_visual/curse
+	icon_state = "curse"
+
+/obj/effect/temp_visual/curse/Initialize()
+	. = ..()
+	deltimer(timerid)
