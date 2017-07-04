@@ -89,6 +89,8 @@
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
 		return 0
+	if(istype(AM, /obj/structure/stone_tile))
+		return 0
 	//Flies right over the chasm
 	if(isliving(AM))
 		var/mob/MM = AM
