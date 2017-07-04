@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		new_tile.add_fingerprint(user)
 	else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
 		var/obj/item/stack/sheet/mineral/plasma/V = W
-		if (V.get_amount() >= 2 && src.get_amount() >= 1)
+		if (V.get_amount() >= 2 && get_amount() >= 1)
 			var/obj/item/stack/sheet/glass/plasma/RG = new (user.loc)
 			RG.add_fingerprint(user)
 			var/obj/item/stack/sheet/glass/G = src
@@ -66,14 +66,14 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && src.get_amount() >= 1)
-			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
+			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
 			RG.add_fingerprint(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
-			var/replace = (user.get_inactive_held_item()==G)
+			var/replace = user.get_inactive_held_item()==G
 			V.use(1)
 			G.use(1)
-			if (!G && replace)
+			if(QDELETED(G) && replace)
 				user.put_in_hands(RG)
 		else
 			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 			var/replace = (user.get_inactive_held_item()==G)
 			V.use(1)
 			G.use(1)
-			if (!G && replace)
+			if(QDELETED(G) && replace)
 				user.put_in_hands(RG)
 		else
 			to_chat(user, "<span class='warning'>You need one rod and one sheet of plamsa glass to make reinforced plasma glass!</span>")
@@ -152,6 +152,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/rglass
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
+	..()
 	add_fingerprint(user)
 
 /obj/item/stack/sheet/rglass/cyborg
