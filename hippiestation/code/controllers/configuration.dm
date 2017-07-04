@@ -1,9 +1,11 @@
 /datum/configuration
 	var/mentors_mobname_only = 0	// Only display mob name to mentors in mentorhelps
 	var/internet_address_to_use = null
+	var/token_generator = null
+	var/token_consumer = null
 
 //Here we can load hippie specific config settings.
-//They go in hippiestation/config/config.txt
+//They go in config/hippiestation_config.txt
 /proc/load_hippie_config(filename, type = "config")
 	var/list/Lines = world.file2list(filename)
 
@@ -35,5 +37,9 @@
 				config.mentors_mobname_only = 1
 			if ("internet_address_to_use")
 				config.internet_address_to_use = value
+			if ("token_generator")
+				config.token_generator = value
+			if ("token_consumer")
+				config.token_consumer = value
 		else
 			GLOB.world_game_log << "Unknown setting in configuration: '[name]'"
