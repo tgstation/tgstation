@@ -255,6 +255,9 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		return QDEL_HINT_LETMELIVE
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
+	var/turf/T = get_turf(src)
+	if(!istype(T, /turf/open/floor/plating/lava) && !istype(T, /turf/open/chasm)) //nothing to sink or fall into
+		return
 	if(falling || fallen)
 		return
 	var/obj/item/I
@@ -263,8 +266,6 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	var/mob/living/L = AM
 	if(isliving(AM))
 		L = AM
-	if(!istype(get_turf(src), /turf/open/floor/plating/lava)) //no lava to sink into
-		return
 	switch(fall_on_cross)
 		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
 			if(I && I.w_class >= WEIGHT_CLASS_BULKY) //too heavy!
