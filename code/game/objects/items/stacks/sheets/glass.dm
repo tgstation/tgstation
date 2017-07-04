@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	name = "plasma glass"
 	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
-	icon_state = "sheet-plasmaglass"
+	icon_state = "sheet-pglass"
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "plasmatech=2;materials=2"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	name = "reinforced plasma glass"
 	desc = "A glass sheet made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough and nearly fire-proof!"
 	singular_name = "reinforced plasma glass sheet"
-	icon_state = "sheet-plasmarglass"
+	icon_state = "sheet-prglass"
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2;plasmatech=2"
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
