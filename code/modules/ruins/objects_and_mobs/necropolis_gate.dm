@@ -242,6 +242,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	var/tile_random_sprite_max = 24
 	var/fall_on_cross = STABLE //If the tile has some sort of effect when crossed
 	var/fallen = FALSE //If the tile is unusable
+	var/falling = FALSE //If the tile is falling
 
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
@@ -254,7 +255,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		return QDEL_HINT_LETMELIVE
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
-	if(fallen)
+	if(falling || fallen)
 		return
 	var/obj/item/I
 	if(istype(AM, /obj/item))
@@ -274,6 +275,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			crossed_effect(AM)
 
 /obj/structure/stone_tile/proc/collapse()
+	falling = TRUE
 	var/break_that_sucker
 	if(fall_on_cross == DESTROY_ON_CROSS)
 		break_that_sucker = TRUE
@@ -297,6 +299,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	pixel_y = initial(pixel_y) - 5
 	animate(src, alpha = initial(alpha), pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 30)
 	sleep(30)
+	falling = FALSE
 	fallen = FALSE
 
 /obj/structure/stone_tile/proc/crossed_effect(atom/movable/AM)
