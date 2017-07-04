@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 ))
 
 /obj/item/stack/sheet/glass/plasma
-	name = "plasmaglass"
+	name = "plasma glass"
 	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
 	icon_state = "sheet-plasmaglass"
