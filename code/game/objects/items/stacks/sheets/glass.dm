@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/plasma
 	name = "plasmaglass"
-	desc = "Glass that seems to have plasma in it."
+	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
 	icon_state = "sheet-plasmaglass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 
 /obj/item/stack/sheet/rglass/plasma
 	name = "reinforced plasma glass"
-	desc = "Plasma glass which seems to have rods or something stuck in them."
+	desc = "A glass sheet made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough and nearly fire-proof!"
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-plasmarglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
