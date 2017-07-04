@@ -8,7 +8,7 @@
 	icon_state = "rtg"
 	density = 1
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	// You can buckle someone to RTG, then open its panel. Fun stuff.
 	can_buckle = TRUE

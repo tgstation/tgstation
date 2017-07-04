@@ -1,5 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Added dash weapons, which let you do a short teleport within line of sight."
-  - rscadd: "The ninjas energy katana now lets him dash. He can no longer teleport with right click."

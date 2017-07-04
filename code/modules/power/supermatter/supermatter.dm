@@ -49,6 +49,12 @@
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
 
+//If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
+#define SUPERMATTER_DELAM_PERCENT 5
+#define SUPERMATTER_EMERGENCY_PERCENT 25
+#define SUPERMATTER_DANGER_PERCENT 50
+#define SUPERMATTER_WARNING_PERCENT 100
+
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
@@ -164,6 +170,41 @@
 
 /obj/machinery/power/supermatter_shard/get_spans()
 	return list(SPAN_ROBOT)
+
+#define CRITICAL_TEMPERATURE 10000
+
+/obj/machinery/power/supermatter_shard/proc/get_status()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return SUPERMATTER_ERROR
+	var/datum/gas_mixture/air = T.return_air()
+	if(!air)
+		return SUPERMATTER_ERROR
+
+	if(get_integrity() < SUPERMATTER_DELAM_PERCENT)
+		return SUPERMATTER_DELAMINATING
+
+	if(get_integrity() < SUPERMATTER_EMERGENCY_PERCENT)
+		return SUPERMATTER_EMERGENCY
+
+	if(get_integrity() < SUPERMATTER_DANGER_PERCENT)
+		return SUPERMATTER_DANGER
+
+	if((get_integrity() < SUPERMATTER_WARNING_PERCENT) || (air.temperature > CRITICAL_TEMPERATURE))
+		return SUPERMATTER_WARNING
+
+	if(air.temperature > (CRITICAL_TEMPERATURE * 0.8))
+		return SUPERMATTER_NOTIFY
+
+	if(power > 5)
+		return SUPERMATTER_NORMAL
+	return SUPERMATTER_INACTIVE
+
+/obj/machinery/power/supermatter_shard/proc/get_integrity()
+	var/integrity = damage / explosion_point
+	integrity = round(100 - integrity * 100)
+	integrity = integrity < 0 ? 0 : integrity
+	return integrity
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	var/turf/T = get_turf(src)
