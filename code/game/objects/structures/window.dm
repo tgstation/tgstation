@@ -432,7 +432,7 @@
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
 	icon_state = "plasma_window"
 	reinf = FALSE
-	heat_resistance = 2500
+	heat_resistance = 25000
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 00, "acid" = 100)
 	max_integrity = 50
 	explosion_block = 1
@@ -446,7 +446,7 @@
 	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
 	icon_state = "rplasmawindow"
 	reinf = TRUE
-	heat_resistance = 4000
+	heat_resistance = 50000
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 100
 	explosion_block = 2
