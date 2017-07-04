@@ -244,6 +244,20 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, listen_ooc)()
 /datum/verbs/menu/Settings/listen_ooc/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_OOC
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, fancy_chat)()
+	set name = "Enable/Disable Goon chat"
+	set category = "Preferences"
+	set desc = "Enable or disable the goon chat"
+
+	usr.client.prefs.fancy_chat = !usr.client.prefs.fancy_chat
+	var/fancy = usr.client.prefs.fancy_chat
+	winset(usr, "output", "is-visible=[fancy ? "false" : "true"]")
+	winset(usr, "browseroutput", "is-disabled=[fancy ? "true" : "false"];is-visible=[fancy ? "true" : "false"]")
+
+	to_chat(usr, "You now have the [fancy ? "goon" : "regular"] chat window.")
+	SSblackbox.add_details("preferences_verb", "Toggle Goon Chat|[fancy ? "ON" : "OFF"]")
+/datum/verbs/menu/Settings/fancy_chat/Get_checked(client/C)
+	return C.prefs.fancy_chat
 
 GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
