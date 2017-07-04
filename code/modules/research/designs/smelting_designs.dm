@@ -9,7 +9,7 @@
 	category = list("initial")
 
 
-/datum/design/plaglass_alloy
+/datum/design/plastitanium_alloy
 	name = "Plasma + Titanium alloy"
 	id = "plastitanium"
 	build_type = SMELTER
@@ -17,7 +17,7 @@
 	build_path = /obj/item/stack/sheet/mineral/plastitanium
 	category = list("initial")
 
-/datum/design/plastitanium_alloy
+/datum/design/plaglass_alloy
 	name = "Plasma + Glass alloy"
 	id = "plasmaglass"
 	build_type = SMELTER
