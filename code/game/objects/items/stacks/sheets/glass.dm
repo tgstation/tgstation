@@ -55,8 +55,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
-			G.use(1)
-			if(QDELETED(G) && replace)
+			src.use(1)
+			if(QDELETED(src) && replace)
 				user.put_in_hands(RG)
 		else
 			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
@@ -99,8 +99,8 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 			RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
-			G.use(1)
-			if(QDELETED(G) && replace)
+			src.use(1)
+			if(QDELETED(src) && replace)
 				user.put_in_hands(RG)
 		else
 			to_chat(user, "<span class='warning'>You need one rod and one sheet of plamsa glass to make reinforced plasma glass!</span>")
