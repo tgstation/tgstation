@@ -28272,6 +28272,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/chemical,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "blR" = (
@@ -40362,6 +40363,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/chemical,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "bKL" = (
@@ -67394,17 +67396,7 @@
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
 "cWp" = (
-/obj/structure/window{
-	desc = "In case of HONK, break glass";
-	dir = 4;
-	icon_state = "window"
-	},
-/obj/structure/window,
-/obj/structure/window{
-	icon_state = "window";
-	dir = 1
-	},
-/obj/item/weapon/bikehorn/golden,
+/obj/structure/reagent_dispensers/water_cooler/honk,
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
 
