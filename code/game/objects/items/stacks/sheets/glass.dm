@@ -36,24 +36,39 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	recipes = GLOB.glass_recipes
 	..()
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
+
+GLOBAL_LIST_INIT(pglass_recipes, list ( \
+	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
+))
+
+/obj/item/stack/sheet/glass/plasma
+	name = "plasmaglass"
+	desc = "Glass that seems to have plasma in it."
+	singular_name = "plasma glass sheet"
+	icon_state = "sheet-plasmaglass"
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	origin_tech = "plasmatech=2;materials=2"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 100)
+	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/glass/plasma
+
+/obj/item/stack/sheet/glass/plasma/fifty
+	amount = 50
+
+/obj/item/stack/sheet/glass/plasma/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.pglass_recipes
+	..()
+	
+/obj/item/stack/sheet/glass/plasma/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
-		if (get_amount() < 1 || CC.get_amount() < 5)
-			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
-			return
-		CC.use(5)
-		use(1)
-		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
-		var/obj/item/stack/light_w/new_tile = new(user.loc)
-		new_tile.add_fingerprint(user)
-	else if(istype(W, /obj/item/stack/rods))
+
+	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && src.get_amount() >= 1)
-			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
+			var/obj/item/stack/sheet/rglass/plasma/RG = new (user.loc)
 			RG.add_fingerprint(user)
-			var/obj/item/stack/sheet/glass/G = src
+			var/obj/item/stack/sheet/glass/plasma/G = src
 			src = null
 			var/replace = (user.get_inactive_held_item()==G)
 			V.use(1)
@@ -61,10 +76,11 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			if (!G && replace)
 				user.put_in_hands(RG)
 		else
-			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
+			to_chat(user, "<span class='warning'>You need one rod and one sheet of plamsa glass to make reinforced plasma glass!</span>")
 			return
 	else
 		return ..()
+
 
 
 /*
@@ -89,6 +105,9 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
 
+/obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
+
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()
 	var/datum/robot_energy_storage/glasource
@@ -108,6 +127,26 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 
 /obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.reinforced_glass_recipes
+	..()
+	
+GLOBAL_LIST_INIT(prglass_recipes, list ( \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
+))
+
+/obj/item/stack/sheet/rglass/plasma
+	name = "reinforced plasma glass"
+	desc = "Plasma glass which seems to have rods or something stuck in them."
+	singular_name = "reinforced plasma glass sheet"
+	icon_state = "sheet-plasmarglass"
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	origin_tech = "materials=2;plasmatech=2"
+	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
+	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/rglass/plasma
+
+/obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.prglass_recipes
 	..()
 
 
