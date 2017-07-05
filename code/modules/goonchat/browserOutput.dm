@@ -90,7 +90,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
-	showChat()
+	if(owner.prefs.fancy_chat)
+		showChat()
 
 
 	for(var/message in messageQueue)

@@ -157,6 +157,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
+	S["fancy_chat"]		    >> fancy_chat
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -221,6 +222,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["menuoptions"]		<< menuoptions
 	S["enable_tips"]		<< enable_tips
 	S["tip_delay"]			<< tip_delay
+	S["fancy_chat"]	        << fancy_chat
 
 	return 1
 
