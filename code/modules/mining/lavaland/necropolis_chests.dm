@@ -134,6 +134,8 @@
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
+
+//Wisp Lantern
 /obj/item/device/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
@@ -179,7 +181,6 @@
 			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
 	..()
 
-//Wisp Lantern
 /obj/effect/wisp
 	name = "friendly wisp"
 	desc = "Happy to light your way."
@@ -188,29 +189,54 @@
 	luminosity = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
+//Red/Blue Cubes
 /obj/item/device/warp_cube
 	name = "blue cube"
 	desc = "A mysterious blue cube."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blue_cube"
+	var/teleport_color = "#3FBAFD"
 	var/obj/item/device/warp_cube/linked
-
-
-//Red/Blue Cubes
+	var/teleporting = FALSE
 
 /obj/item/device/warp_cube/attack_self(mob/user)
 	if(!linked)
 		to_chat(user, "[src] fizzles uselessly.")
 		return
-	new /obj/effect/particle_effect/smoke(user.loc)
-	user.forceMove(get_turf(linked))
+	if(teleporting)
+		return
+	teleporting = TRUE
+	linked.teleporting = TRUE
+	var/turf/T = get_turf(src)
+	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
 	SSblackbox.add_details("warp_cube","[src.type]")
-	new /obj/effect/particle_effect/smoke(user.loc)
+	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
+	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
+	user.forceMove(link_holder) //mess around with loc so the user can't wander around
+	sleep(2.5)
+	if(QDELETED(user))
+		qdel(link_holder)
+		return
+	if(QDELETED(linked))
+		user.forceMove(get_turf(link_holder))
+		qdel(link_holder)
+		return
+	link_holder.forceMove(get_turf(linked))
+	sleep(2.5)
+	if(QDELETED(user))
+		qdel(link_holder)
+		return
+	teleporting = FALSE
+	if(!QDELETED(linked))
+		linked.teleporting = FALSE
+	user.forceMove(get_turf(link_holder))
+	qdel(link_holder)
 
 /obj/item/device/warp_cube/red
 	name = "red cube"
 	desc = "A mysterious red cube."
 	icon_state = "red_cube"
+	teleport_color = "#FD3F48"
 
 /obj/item/device/warp_cube/red/Initialize()
 	..()
@@ -218,6 +244,12 @@
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
+
+/obj/effect/warp_cube
+	mouse_opacity = 0
+
+/obj/effect/warp_cube/ex_act(severity, target)
+	return
 
 //Meat Hook
 /obj/item/weapon/gun/magic/hook
