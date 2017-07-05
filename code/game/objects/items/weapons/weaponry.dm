@@ -556,3 +556,12 @@
 				bug.death(1)
 			else
 				qdel(target)
+
+/obj/item/weapon/circlegame
+	name = "circled hand"
+	desc = "If somebody looks at this while it's below your waist, you get to bop them."
+	icon_state = "madeyoulook"
+	force = 0
+	throwforce = 0
+	flags = DROPDEL | ABSTRACT
+	attack_verb = list("bopped")
