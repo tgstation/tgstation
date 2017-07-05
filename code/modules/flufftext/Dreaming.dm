@@ -1,10 +1,4 @@
-GLOBAL_LIST_INIT(globalDreamMessages,list(
-		"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
-		"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",
-		"light","a scientist","a monkey","a catastrophe","a loved one","a gun","warmth","freezing","the sun",
-		"a hat","the Luna","a ruined station","a planet","plasma","air","the medical bay","the bridge","blinking lights",
-		"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
-		"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying"))
+GLOBAL_LIST_INIT(globalDreamMessages,world.file2list("strings/dreamthings.txt"))
 
 
 /mob/living/carbon/proc/handle_dreams()
