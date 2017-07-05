@@ -19,6 +19,10 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
+	stop_sound_channel(CHANNEL_HEARTBEAT)
+	var/obj/item/organ/heart/H = getorganslot("heart")
+	if(H)
+		H.beat = BEAT_NONE
 
 	. = ..()
 
