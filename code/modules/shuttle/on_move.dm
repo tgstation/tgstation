@@ -72,6 +72,7 @@ All ShuttleMove procs go here
 	oldT.change_area(src, underlying_old_area)
 
 	var/area/old_dest_area = newT.loc
+	old_dest_area.contents -= newT
 	contents += newT
 	newT.change_area(old_dest_area, src)
 	return TRUE
@@ -305,9 +306,19 @@ All ShuttleMove procs go here
 /atom/movable/light/onShuttleMove()
 	return FALSE
 
+/obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force)
+	var/obj/docking_port/mobile/docked_port = get_docked()
+	if(!docked_port)
+		docked_port = locate(/obj/docking_port/mobile) in newT
+
+	if(docked_port && locate(/obj/docking_port/stationary) in newT)
+		return FALSE 	//There's a mobile dock that's moving to the new turf to be with another stationary dock! After all I did for them...
+
+	. = ..()
+
 obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
-	return FALSE
+	return 0
 
 /obj/effect/abstract/proximity_checker/onShuttleMove()
 	//timer so it only happens once

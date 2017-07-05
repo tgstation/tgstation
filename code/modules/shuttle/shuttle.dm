@@ -181,6 +181,8 @@
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
+		if(get_docked())
+			to_chat("A transit dock was destroyed while something was docked to it.")
 		SSshuttle.transit -= src
 		if(owner)
 			owner = null
@@ -252,10 +254,12 @@
 		name = "shuttle[SSshuttle.mobile.len]"
 
 	shuttle_areas = list()
-	var/list/all_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
 	for(var/T in all_turfs)
 		var/turf/curT = T
-		shuttle_areas |= curT.loc
+		var/area/cur_area = curT.loc
+		if(istype(cur_area, area_type))
+			shuttle_areas |= cur_area
 
 	initial_engines = count_engines()
 	current_engines = initial_engines
@@ -447,8 +451,7 @@
 	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
 		pod.check()
 
-//this is the main proc. It instantly moves our mobile port to stationary port S1
-//it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
+//this is the main proc. It instantly moves our mobile port to stationary port new_dock
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/new_dock, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
 
@@ -476,7 +479,7 @@
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
-	var/list/old_contents = list() //Lists of turfs to only move contents but not move the turf
+	var/list/old_contents = list() //Lists of turfs to only move contents and area but not move the turf
 	var/list/new_contents = list() //For structures etc that act attached to the ship
 
 	var/area/underlying_old_area = locate("[area_type]")
@@ -490,13 +493,10 @@
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
 		rotation = SimplifyDegrees(rotation)
 
-	var/test_output = "WHY IS ROTATION [rotation]"
-	to_chat(world, test_output)
-
 	remove_ripples()
 
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
-	var/list/areas_to_move = list() //list containing all unique areas so we don't call beforeShuttleMove multiple times on the same area
+	var/list/areas_to_move = list() //list containing all unique areas so we don't call (before|after)ShuttleMove multiple times on the same area
 
 	/****************************************All beforeShuttleMove procs*****************************************/
 
@@ -508,11 +508,11 @@
 		if(!(old_area in shuttle_areas))
 			move_turf = FALSE
 		var/turf/newT = new_turfs[index]
-		if(!(oldT.fromShuttleMove(newT, turf_type, baseturf_type) && newT.toShuttleMove(oldT)))			//turfs
+		if(!(oldT.fromShuttleMove(newT, turf_type, baseturf_type) && newT.toShuttleMove(oldT)))				//turfs
 			move_turf = FALSE
 		for(var/thing in oldT)
 			var/atom/movable/moving_atom = thing
-			if(moving_atom.beforeShuttleMove(newT, rotation)) 											//atoms
+			if(moving_atom.beforeShuttleMove(newT, rotation)) 												//atoms
 				old_contents += oldT
 				new_contents += newT
 		if(!move_turf)
@@ -524,9 +524,9 @@
 
 	for(var/thing in areas_to_move)
 		var/area/internal_area = thing
-		internal_area.beforeShuttleMove() 																//areas
+		internal_area.beforeShuttleMove() 																	//areas
 
-	if(!old_turfs.len) //This should only happen if no shuttle area has been specified
+	if(!old_turfs.len && !old_contents.len) //This should only happen if no shuttle area has been specified
 		return DOCKING_AREA_EMPTY
 
 	/*******************************************All onShuttleMove procs******************************************/
@@ -543,10 +543,10 @@
 		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force) 						//turfs
 		for(var/thing in oldT)
 			var/atom/movable/moving_atom = thing
-			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force) 									//atoms
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force) 								//atoms
 			moved_atoms += thing
 		var/area/shuttle_area = oldT.loc
-		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) 									//areas
+		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) 										//areas
 
 	for(var/i in 1 to old_contents.len) //This is for moving atoms that need to move without their turf
 		var/turf/oldT = old_contents[i] //I'll figure out a way of merging these loops eventualy, probably
@@ -557,13 +557,15 @@
 			var/atom/movable/moving_atom = thing
 			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force)									//atoms
 			moved_atoms += thing
+		var/area/shuttle_area = oldT.loc
+		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)											//area
 	
 	/******************************************All afterShuttleMove procs****************************************/
 	
 	for(var/i in 1 to new_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
-		newT.afterShuttleMove(oldT)																		//turfs
+		newT.afterShuttleMove(oldT)																			//turfs
 
 	for(var/thing in moved_atoms)
 		var/atom/movable/moved_object = thing
@@ -573,7 +575,7 @@
 
 	for(var/thing in areas_to_move)
 		var/area/internal_area = thing
-		internal_area.afterShuttleMove()																//areas
+		internal_area.afterShuttleMove()																	//areas
 
 	return DOCKING_SUCCESS
 
