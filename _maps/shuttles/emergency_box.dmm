@@ -335,7 +335,6 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
