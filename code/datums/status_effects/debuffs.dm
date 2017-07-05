@@ -63,7 +63,6 @@
 		cycle = 1
 		var/comfort = 1
 		for(var/obj/structure/bed/bed in orange(owner,0))
-			to_chat(world, "On a bed")
 			comfort+= bed.comfort
 			break //Only count the first bed.
 		for(var/obj/item/weapon/bedsheet/bedsheet in orange(owner,0))
