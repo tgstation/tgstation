@@ -49956,9 +49956,7 @@
 /turf/closed/wall,
 /area/aisat)
 "bRb" = (
-/obj/machinery/computer/crew{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/crew/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -50712,9 +50710,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bSm" = (
-/obj/machinery/computer/med_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -60455,7 +60451,6 @@
 /area/medical/surgery)
 "cld" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -60487,7 +60482,6 @@
 /area/medical/sleeper)
 "clh" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -78832,9 +78826,7 @@
 	},
 /area/shuttle/syndicate)
 "cTF" = (
-/obj/machinery/computer/camera_advanced{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -86403,9 +86395,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "djY" = (
-/obj/machinery/computer/secure_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

@@ -199,7 +199,7 @@
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.first_name()
 
-		else if(L.mind && dd_hasprefix(message, L.mind.assigned_role))
+		else if(L.mind && L.mind.assigned_role && dd_hasprefix(message, L.mind.assigned_role))
 			specific_listeners += L //focus on those with the specified job
 			//Cut out the job so it doesn't trigger commands
 			found_string = L.mind.assigned_role
