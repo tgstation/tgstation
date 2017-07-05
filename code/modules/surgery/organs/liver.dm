@@ -27,8 +27,7 @@
 	var/mob/living/carbon/C = owner
 
 	//slowly heal liver damage
-	if(damage > 0)
-		damage -= 0.01//in most cases the pure toxin damage from too much alcohol will kill you first.
+	damage = max(0, damage - 0.1)
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
 
