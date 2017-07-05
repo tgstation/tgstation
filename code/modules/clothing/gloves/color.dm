@@ -27,7 +27,7 @@
 	name = "worn out insulated gloves"
 
 /obj/item/clothing/gloves/color/fyellow/old/Initialize()
-	= ..()
+	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
 /obj/item/clothing/gloves/color/black
