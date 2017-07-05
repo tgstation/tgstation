@@ -349,9 +349,10 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		GLOB.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason")
-		if(!GLOB.admin_delay_notice)
-			GLOB.admin_delay_notice = "An admin has already delayed the round end."
+		if(!SSticker.delay_end)
+			GLOB.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
+			if(GLOB.admin_delay_notice == null)
+				return
 		SSticker.delay_end = !SSticker.delay_end
 		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
@@ -362,7 +363,7 @@
 			return
 
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
-		if(alert(usr, "This will end the round, are you SURE you want to do this? [GLOB.admin_delay_notice ? "An admin has already delayed the round end for the following reason: [GLOB.admin_delay_notice]" : ""]", "Confirmation", "Yes", "No") == "Yes")
+		if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
 			if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
 				SSticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
