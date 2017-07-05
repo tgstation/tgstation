@@ -149,7 +149,7 @@
 	},
 /area/ruin/deepstorage/crusher)
 "av" = (
-/obj/structure/window/reinforced/highpressure{
+/obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
 /obj/machinery/conveyor{
@@ -1440,7 +1440,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
