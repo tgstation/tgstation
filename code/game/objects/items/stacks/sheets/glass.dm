@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
-			src.use(1)
+			use(1)
 			if(QDELETED(src) && replace)
 				user.put_in_hands(RG)
 		else
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 			RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
-			src.use(1)
+			use(1)
 			if(QDELETED(src) && replace)
 				user.put_in_hands(RG)
 		else
@@ -133,8 +133,8 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/rglass
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
-	..()
 	add_fingerprint(user)
+	..()
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()
