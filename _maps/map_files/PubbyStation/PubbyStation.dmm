@@ -6802,7 +6802,7 @@
 	},
 /area/bridge)
 "aoQ" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/computer/aifixer,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
 	},
