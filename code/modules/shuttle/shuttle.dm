@@ -533,18 +533,18 @@
 
 	//move or squish anything in the way ship at destination
 	//doing this just before actualy moving tiles after turfs have chosen if they want to move
-	roadkill(old_turfs, new_turfs, new_dock.dir)
+	roadkill(old_turfs, new_turfs, new_dock.dir) //This should maybe be replaced with before shuttle move procs instead
 	
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
 		if(!oldT || !newT) //This really shouldn't happen
 			continue
-		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force) 						//turfs
 		for(var/thing in oldT)
 			var/atom/movable/moving_atom = thing
 			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force) 								//atoms
 			moved_atoms += thing
+		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force) 						//turfs
 		var/area/shuttle_area = oldT.loc
 		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) 										//areas
 
@@ -576,6 +576,9 @@
 	for(var/thing in areas_to_move)
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
+
+	new_dock.last_dock_time = world.time
+	setDir(new_dock.dir)
 
 	return DOCKING_SUCCESS
 

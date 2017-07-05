@@ -103,7 +103,10 @@ All ShuttleMove procs go here
 
 /************************************Turf move procs************************************/
 
-
+/turf/open/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force)
+	. = ..()
+	var/turf/open/newOpen = newT
+	newOpen.copy_air_with_tile(src)
 
 /************************************Machinery move procs************************************/
 
