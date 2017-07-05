@@ -408,7 +408,7 @@
 		return liver.damage
 
 /mob/living/carbon/proc/applyLiverDamage(var/obj/item/organ/liver/L, var/d)
-	if(liver)
+	if(L)
 		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
