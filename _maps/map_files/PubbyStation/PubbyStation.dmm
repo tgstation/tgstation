@@ -23620,9 +23620,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
-	name = "Captain's Office APC";
+	name = "Mech Bay APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
