@@ -18,10 +18,6 @@
 /obj/item/device/radio/beacon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
 	return
 
-/obj/item/device/radio/beacon/send_hear()
-	return null
-
-
 /obj/item/device/radio/beacon/verb/alter_signal(t as text)
 	set name = "Alter Beacon's Signal"
 	set category = "Object"

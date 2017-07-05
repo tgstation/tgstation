@@ -5,10 +5,10 @@
 	icon_state = "cypherkey"
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "engineering=2;bluespace=1"
-	var/translate_binary = 0
 	var/syndie = 0
 	var/independent = FALSE
 	var/list/channels = list()
+	var/list/translate_languages	//list of languages it will translate to the radio's target language
 
 /obj/item/device/encryptionkey/syndicate
 	name = "syndicate encryption key"
@@ -22,7 +22,7 @@
 	name = "binary translator key"
 	desc = "An encryption key for a radio headset.  To access the binary channel, use :b."
 	icon_state = "bin_cypherkey"
-	translate_binary = 1
+	translate_languages = list(/datum/language/machine)
 	origin_tech = "syndicate=3;engineering=4;bluespace=3"
 
 /obj/item/device/encryptionkey/headset_sec

@@ -16,7 +16,6 @@
 	var/b_stat = 0
 	var/broadcasting = 0
 	var/listening = 1
-	var/translate_binary = 0
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
@@ -40,6 +39,7 @@
 
 	var/command = FALSE //If we are speaking into a command headset, our text can be BOLD
 	var/use_command = FALSE
+	var/datum/language/translation_target = /datum/language/common	//language messages are translated into if the keyslot has a translator
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
@@ -47,7 +47,6 @@
 
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
-	translate_binary = 0
 	syndie = 0
 	independent = FALSE
 
@@ -57,9 +56,6 @@
 				continue
 			channels += ch_name
 			channels[ch_name] = keyslot.channels[ch_name]
-
-		if(keyslot.translate_binary)
-			translate_binary = 1
 
 		if(keyslot.syndie)
 			syndie = 1
@@ -496,12 +492,33 @@
 			return -1
 	return canhear_range
 
-/obj/item/device/radio/proc/send_hear(freq, level)
+/obj/item/device/radio/proc/ReceiveBroadcast(rendered, atom/movable/virtualspeaker/virt, datum/language/language, message, freq, list/spans)
 
 	var/range = receive_range(freq, level)
-	if(range > -1)
-		return get_hearers_in_view(canhear_range, src)
+	if(range <= -1)
+		return 0
 
+	var/list/hearers = get_hearers_in_view(range, src)
+	. = hearers.len
+
+	for(var/I in hearers)
+		var/atom/movable/AM = I
+		AM.Hear(rendered, virt, language, message, freq, spans)
+
+	//translation
+	
+	var/datum/language/tt = translation_target
+	if(language == tt)
+		return
+	
+	var/list/trans = keyslot ? keyslot.translate_languages : null
+	if(!(LAZYLEN(trans) && is_type_in_typecache(language, trans)))
+		return
+
+	rendered = virt.compose_message(virt, tt, message, freq, spans)
+	for(var/I in hearers)
+		var/atom/movable/AM = I
+		AM.Hear(rendered, virt, tt, message, freq, spans)
 
 /obj/item/device/radio/examine(mob/user)
 	..()
