@@ -455,9 +455,11 @@
 	uniform = /obj/item/clothing/under/rank/security
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/weapon/card/id/away/old/sec
+	r_pocket = /obj/item/weapon/restraints/handcuffs
+	l_pocket = /obj/item/device/assembly/flash/handheld
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
-	new/obj/structure/showcase/oldpod(get_turf(src))
+	new/obj/structure/showcase/oldpod/used(get_turf(src))
 	return ..()
 
 /obj/effect/mob_spawn/human/oldeng
@@ -476,9 +478,11 @@
 	uniform = /obj/item/clothing/under/rank/engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	id = /obj/item/weapon/card/id/away/old/eng
+	gloves = /obj/item/clothing/gloves/color/fyellow/old
+	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
-	new/obj/structure/showcase/oldpod(get_turf(src))
+	new/obj/structure/showcase/oldpod/used(get_turf(src))
 	return ..()
 
 /obj/effect/mob_spawn/human/oldsci
@@ -497,7 +501,8 @@
 	uniform = /obj/item/clothing/under/rank/scientist
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/weapon/card/id/away/old/sci
+	l_pocket = /obj/item/stack/medical/bruise_pack
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
-	new/obj/structure/showcase/oldpod(get_turf(src))
+	new/obj/structure/showcase/oldpod/used(get_turf(src))
 	return ..()
