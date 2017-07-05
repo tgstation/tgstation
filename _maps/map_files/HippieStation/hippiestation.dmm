@@ -20646,8 +20646,10 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/hippie/mime)
 "aUO" = (
-/obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
+/obj/structure/displaycase/captain{
+	desc = "In case of HONK, break glass.";
+	start_showpiece_type = /obj/item/weapon/bikehorn/golden
+	},
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
 "aUP" = (
@@ -22115,6 +22117,7 @@
 /obj/item/device/flashlight/lamp/bananalamp{
 	pixel_y = 3
 	},
+/obj/item/weapon/storage/crayons,
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
 "aXO" = (
@@ -67392,7 +67395,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cWo" = (
-/obj/structure/statue/bananium/clown,
+/obj/structure/statue/bananium/clown{
+	anchored = 1
+	},
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
 "cWp" = (
