@@ -174,6 +174,7 @@ Contains:
 	armor = list(melee = 30, bullet = 50, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 0, acid = 95)
 	slowdown = 0
 	strip_delay = 130
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
