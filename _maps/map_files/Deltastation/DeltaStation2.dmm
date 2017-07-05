@@ -531,6 +531,7 @@
 /area/construction/mining/aux_base)
 "abk" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -1090,6 +1091,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
 "acf" = (
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -113126,6 +113128,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/checkpoint2)
+"epT" = (
+/obj/structure/closet/toolcloset,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 4
+	},
+/area/construction/mining/aux_base)
 
 (1,1,1) = {"
 aaa
@@ -155578,7 +155586,7 @@ aaG
 abk
 abt
 abK
-abK
+epT
 acf
 aaG
 acy
