@@ -20,6 +20,7 @@
 	var/oxy_damage = 0
 	var/burn_damage = 0
 	var/mob_color //Change the mob's color
+	var/assignedrole
 	density = 1
 	anchored = 1
 	var/banType = "lavaland"
@@ -51,7 +52,6 @@
 	. = ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
-	M.mind.assigned_role = "Ghost Role"	//Fallback to keep it from being set to assistant and tainting stats.
 	return
 
 /obj/effect/mob_spawn/proc/equip(mob/M)
@@ -83,6 +83,8 @@
 		if(objectives)
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
+		if(assignedrole)
+			M.mind.assigned_role = assignedrole
 		special(M, name)
 		MM.name = M.real_name
 	if(uses > 0)
@@ -101,6 +103,7 @@
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
 	var/id_access_list = null	//Allows you to manually add access to an ID card.
+	assignedrole = "Ghost Role"
 
 	var/husk = null
 	//these vars are for lazy mappers to override parts of the outfit
@@ -252,6 +255,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space doctor!"
+	assignedrole = "Space Doctor"
 
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
 	..()
@@ -260,9 +264,6 @@
 	for(var/del_type in del_types)
 		var/obj/item/I = locate(del_type) in H
 		qdel(I)
-
-/obj/effect/mob_spawn/human/doctor/special(mob/living/L)
-	L.mind.assigned_role = "Space Doctor"
 
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
@@ -309,9 +310,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
-
-/obj/effect/mob_spawn/human/bartender/special(mob/living/L)
-	L.mind.assigned_role = "Space Bartender"
+	assignedrole = "Space Bartender"
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -335,6 +334,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a beach bum!"
+	assignedrole = "Beach Bum"
 
 /datum/outfit/beachbum
 	name = "Beach Bum"
@@ -347,9 +347,6 @@
 	if(visualsOnly)
 		return
 	H.dna.add_mutation(STONER)
-
-/obj/effect/mob_spawn/human/beach/special(mob/living/L)
-	L.mind.assigned_role = "Beach Bum"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
@@ -449,6 +446,7 @@
 	name = "rotting corpse"
 	mob_name = "zombie"
 	mob_species = /datum/species/zombie
+	assignedrole = "Zombie"
 
 /obj/effect/mob_spawn/human/zombie/alive
 	death = FALSE
@@ -456,9 +454,6 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
-
-/obj/effect/mob_spawn/human/zombie/special(mob/living/L)
-	L.mind.assigned_role = "Zombie"
 
 /obj/effect/mob_spawn/human/abductor
 	name = "abductor"
@@ -480,6 +475,7 @@
 	permanent = TRUE
 	uses = -1
 	outfit = /datum/outfit/spacebartender
+	assignedrole = "Space Bar Patron"
 
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
@@ -487,9 +483,6 @@
 		return
 	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
 	qdel(user)
-
-/obj/effect/mob_spawn/human/alive/space_bar_patron/special(mob/living/L)
-	L.mind.assigned_role = "Space Bar Patron"
 
 /datum/outfit/cryobartender
 	name = "Cryogenic Bartender"
