@@ -18,17 +18,14 @@ LINEN BINS
 	w_class = WEIGHT_CLASS_TINY
 	item_color = "white"
 	resistance_flags = FLAMMABLE
-	var/comfort = 0
+	var/comfort = 0.5
 	var/dreamSound
 	var/dreamMessage
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
 /obj/item/weapon/bedsheet/Initialize()
-	.=..()
-	setDreamMessages()
-
-/obj/item/weapon/bedsheet/proc/setDreamMessages()
+	. = ..()
 	dreamMessage = list()
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
@@ -63,7 +60,7 @@ LINEN BINS
 /obj/item/weapon/bedsheet/green
 	icon_state = "sheetgreen"
 	item_color = "green"
-	
+
 /obj/item/weapon/bedsheet/grey
 	icon_state = "sheetgrey"
 	item_color = "grey"
@@ -82,7 +79,8 @@ LINEN BINS
 	icon_state = "sheetUSA"
 	item_color = "sheetUSA"
 
-/obj/item/weapon/bedsheet/patriot/setDreamMessages()
+/obj/item/weapon/bedsheet/patriot/Initialize()
+	.=..()
 	dreamMessage = list("America", "Freedom", "Fireworks", "Bald Eagles")
 
 /obj/item/weapon/bedsheet/rainbow
@@ -105,7 +103,8 @@ LINEN BINS
 	icon_state = "sheetmime"
 	item_color = "mime"
 
-/obj/item/weapon/bedsheet/mime/setDreamMessages()
+/obj/item/weapon/bedsheet/mime/Initialize()
+	.=..()
 	dreamMessage = list("Silence", "Nothingness", "Emptiness", "...")
 
 /obj/item/weapon/bedsheet/clown
@@ -114,7 +113,8 @@ LINEN BINS
 	icon_state = "sheetclown"
 	item_color = "clown"
 
-/obj/item/weapon/bedsheet/clown/setDreamMessages()
+/obj/item/weapon/bedsheet/clown/Initialize()
+	.=..()
 	dreamMessage = list("Honk", "Laughter", "Pranking someone", "Slipping", "Pie", "HOOOOOOOOOONK", "Funny", "Jokes", "Bananna")
 	dreamSound = 'sound/items/bikehorn.ogg'
 
@@ -125,7 +125,8 @@ LINEN BINS
 	item_color = "captain"
 	comfort = 1.5
 
-/obj/item/weapon/bedsheet/captain/setDreamMessages()
+/obj/item/weapon/bedsheet/captain/Initialize()
+	.=..()
 	dreamMessage = list("Authority", "Subjugate", "Leadership", "Comdom")
 
 /obj/item/weapon/bedsheet/rd
@@ -134,7 +135,8 @@ LINEN BINS
 	icon_state = "sheetrd"
 	item_color = "director"
 
-/obj/item/weapon/bedsheet/rd/setDreamMessages()
+/obj/item/weapon/bedsheet/rd/Initialize()
+	.=..()
 	dreamMessage = list("Explosions", "Experimentation", "SCIENCE!", "Xenobiology")
 
 // for Free Golems.
@@ -142,7 +144,8 @@ LINEN BINS
 	name = "Royal Cape of the Liberator"
 	desc = "Majestic."
 
-/obj/item/weapon/bedsheet/rd/royal_cape/setDreamMessages()
+/obj/item/weapon/bedsheet/rd/royal_cape/Initialize()
+	.=..()
 	dreamMessage = list("Yeah, sure, go do whatever.")
 
 /obj/item/weapon/bedsheet/medical
@@ -157,7 +160,8 @@ LINEN BINS
 	icon_state = "sheetcmo"
 	item_color = "cmo"
 
-/obj/item/weapon/bedsheet/cmo/setDreamMessages()
+/obj/item/weapon/bedsheet/cmo/Initialize()
+	.=..()
 	dreamMessage = list("Disease", "Medicine", "Injury", "Vaccines", "Cyro tubes", "Sleepers", "Runtime")
 
 /obj/item/weapon/bedsheet/hos
@@ -166,7 +170,8 @@ LINEN BINS
 	icon_state = "sheethos"
 	item_color = "hosred"
 
-/obj/item/weapon/bedsheet/hos/setDreamMessages()
+/obj/item/weapon/bedsheet/hos/Initialize()
+	.=..()
 	dreamMessage = list("Space law", "Harmbaton", "Imprisonment", "Grey tide", "Gulag", "Handcuffs", "Tazer")
 
 /obj/item/weapon/bedsheet/hop
@@ -175,7 +180,8 @@ LINEN BINS
 	icon_state = "sheethop"
 	item_color = "hop"
 
-/obj/item/weapon/bedsheet/hop/setDreamMessages()
+/obj/item/weapon/bedsheet/hop/Initialize()
+	.=..()
 	dreamMessage = list("Ian", "Promotions", "All Access", "ID cards")
 
 /obj/item/weapon/bedsheet/ce
@@ -184,7 +190,8 @@ LINEN BINS
 	icon_state = "sheetce"
 	item_color = "chief"
 
-/obj/item/weapon/bedsheet/ce/setDreamMessages()
+/obj/item/weapon/bedsheet/ce/Initialize()
+	.=..()
 	dreamMessage = list("Poly", "Singularity", "Hull breach", "SuperMatter", "Electricity", "Tesla", "Insulated Gloves")
 
 /obj/item/weapon/bedsheet/qm
@@ -193,7 +200,8 @@ LINEN BINS
 	icon_state = "sheetqm"
 	item_color = "qm"
 
-/obj/item/weapon/bedsheet/ce/setDreamMessages()
+/obj/item/weapon/bedsheet/qm/Initialize()
+	.=..()
 	dreamMessage = list("Paperwork", "Crate", "Shipping", "Shuttle", "Boxes", "Cargotechs")
 
 /obj/item/weapon/bedsheet/brown
@@ -216,7 +224,8 @@ LINEN BINS
 	icon_state = "sheetsyndie"
 	item_color = "syndie"
 
-/obj/item/weapon/bedsheet/syndie/setDreamMessages()
+/obj/item/weapon/bedsheet/syndie/Initialize()
+	.=..()
 	dreamMessage = list("Get dat fukkin disk", "Telecrystals", "Die Gloriously", "Powersink", "Emag", "E-sword")
 
 /obj/item/weapon/bedsheet/cult
@@ -225,7 +234,8 @@ LINEN BINS
 	icon_state = "sheetcult"
 	item_color = "cult"
 
-/obj/item/weapon/bedsheet/cult/setDreamMessages()
+/obj/item/weapon/bedsheet/cult/Initialize()
+	.=..()
 	dreamMessage = list("Nar-sie", "Runes", "Arcane Tome", "</i><span class='narsie'>NAR-SIE HAS RISEN</span><i>")
 	dreamSound = 'sound/hallucinations/im_here1.ogg'
 
@@ -235,7 +245,8 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
-/obj/item/weapon/bedsheet/syndie/setDreamMessages()
+/obj/item/weapon/bedsheet/wiz/Initialize()
+	.=..()
 	dreamMessage = list("EI NATH!", "Hocus Pocus", "Casting magic missile at the darkness", "Beards", "Staff", "Robe and wizard hat", "Sandals", "UNLIMITED POWER!")
 
 /obj/item/weapon/bedsheet/nanotrasen

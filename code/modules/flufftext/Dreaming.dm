@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(globalDreamMessages,list(
 
 
 /mob/living/carbon/proc/handle_dreams()
-	if(stat != UNCONSCIOUS || InCritical())
+	if(InCritical())
 		return
 	var/list/dreams = list()
 	for(var/obj/item/weapon/bedsheet/bedsheet in range(0,src))
@@ -16,7 +16,13 @@ GLOBAL_LIST_INIT(globalDreamMessages,list(
 			continue
 		dreams += bedsheet.dreamMessage
 		if(bedsheet.dreamSound && prob(10))
-			src << bedsheet.dreamSound
+			playsound_local(get_turf(src), bedsheet.dreamSound, rand(40,100))
 	if(!length(dreams))
 		dreams = GLOB.globalDreamMessages
-	to_chat(src, "<span class='notice'><i>... [pick(dreams)] ...</i></span>")
+	show_dream("<span class='notice'><i>... [pick(dreams)] ...</i></span>")
+	for(var/i in 1 to rand(1, rand(2,6)))
+		addtimer(CALLBACK(src, .proc/show_dream, "<span class='notice'><i>... [pick(dreams)] ...</i></span>"),40*i+rand(0,30))
+
+/mob/living/carbon/proc/show_dream(message)
+	if(!InCritical() && stat == UNCONSCIOUS)
+		to_chat(src, message)
