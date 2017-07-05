@@ -35,12 +35,15 @@
 	needs_update_stat = TRUE
 
 //SLEEPING
+#define SLEEP_CYCLE 2
+
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
 	alert_type = /obj/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
+	var/cycle = 0
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
@@ -56,20 +59,40 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.staminaloss)
-		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
-	if(human_owner && human_owner.drunkenness)
-		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
-		if(carbon_owner)
-			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
-			owner.emote("snore")
+	if(cycle == SLEEP_CYCLE) //This is expensive, so we don't want to run it every tick.
+		cycle = 1
+		var/comfort = 1
+		for(var/obj/structure/bed/bed in orange(owner,0))
+			to_chat(world, "On a bed")
+			comfort+= bed.comfort
+			break //Only count the first bed.
+		for(var/obj/item/weapon/bedsheet/bedsheet in orange(owner,0))
+			if(bedsheet.loc != owner.loc) // bedsheets in your backpack/neck don't give you comfort
+				continue
+			comfort+= bedsheet.comfort
+			break //Only count the first bedsheet
+		if(human_owner && human_owner.drunkenness)
+			comfort += 1 //Aren't naps SO much better when drunk?
+			human_owner.drunkenness *= 1-.01*comfort*SLEEP_CYCLE //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
+		if(owner.staminaloss)
+			owner.adjustStaminaLoss(-0.35*comfort*SLEEP_CYCLE) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+		if(prob(SLEEP_CYCLE))
+			if(carbon_owner)
+				carbon_owner.handle_dreams()
+				if(comfort>1)//You don't heal if you're just sleeping on the floor without a blanket.
+					carbon_owner.adjustBruteLoss(-1*comfort)
+					carbon_owner.adjustFireLoss(-1*comfort)
+			if(prob(30) && owner.health > HEALTH_THRESHOLD_CRIT)
+				owner.emote("snore")
+	else
+		cycle++
 
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
+
+#undef SLEEP_CYCLE
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
