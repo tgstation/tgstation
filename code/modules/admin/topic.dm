@@ -354,8 +354,8 @@
 			if(SSticker.admin_delay_notice == null)
 				return
 		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
+		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end for reason: [SSticker.admin_delay_notice]" : "has made the round end normally"].")
+		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end for reason: [SSticker.admin_delay_notice]" : "has made the round end normally"].</span>")
 		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["end_round"])
