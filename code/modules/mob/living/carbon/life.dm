@@ -389,16 +389,18 @@
 
 /mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
-	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)) || liver.damage >= 100)
-		liver.failing = TRUE
+	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)) || liver && liver.damage >= 100)
+		if(liver)
+			liver.failing = TRUE
 		liver_failure()
-	else
+	else if(liver)
 		liver.failing = FALSE
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
-	if(liver.failing)
-		return TRUE
+	if(liver)
+		if(liver.failing)
+			return TRUE
 
 /mob/living/carbon/proc/return_liver_damage()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
@@ -406,7 +408,8 @@
 		return liver.damage
 
 /mob/living/carbon/proc/applyLiverDamage(var/obj/item/organ/liver/L, var/d)
-	L.damage += d
+	if(liver)
+		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
 	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
