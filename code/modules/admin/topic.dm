@@ -350,8 +350,8 @@
 			return
 
 		if(!SSticker.delay_end)
-			GLOB.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-			if(GLOB.admin_delay_notice == null)
+			SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
+			if(SSticker.admin_delay_notice == null)
 				return
 		SSticker.delay_end = !SSticker.delay_end
 		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
