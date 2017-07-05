@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - rscadd: "You can now play the circle game and prank your coworkers by using the \"circle\" emote."
