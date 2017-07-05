@@ -198,7 +198,6 @@
 /area/shuttle/escape)
 "aK" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,

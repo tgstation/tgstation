@@ -10,6 +10,9 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/machinery/computer/crew/syndie
+	icon_keyboard = "syndie_key"
+
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
