@@ -444,7 +444,7 @@
 /obj/structure/window/plasma/reinforced
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
-	icon_state = "plasmawindow"
+	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
