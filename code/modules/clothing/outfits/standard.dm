@@ -346,7 +346,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	l_pocket = /obj/item/weapon/melee/energy/sword/saber
 	r_pocket = /obj/item/weapon/shield/energy
-	suit_store = /obj/item/weapon/tank/internals/emergency_oxygen
+	suit_store = /obj/item/weapon/tank/internals/oxygen
 	belt = /obj/item/weapon/gun/ballistic/revolver/mateba
 	r_hand = /obj/item/weapon/gun/energy/pulse/loyalpin
 	id = /obj/item/weapon/card/id
