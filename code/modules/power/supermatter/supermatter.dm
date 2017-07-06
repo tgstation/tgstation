@@ -202,13 +202,13 @@
 
 /obj/machinery/power/supermatter_shard/proc/alarm()
 	if(get_status() == SUPERMATTER_DELAMINATING)
-		playsound(get_turf(src), 'sound/misc/bloblarm.ogg', 100)
+		playsound(src, 'sound/misc/bloblarm.ogg', 100)
 	if(get_status() == SUPERMATTER_EMERGENCY)
-		playsound(get_turf(src), 'sound/machines/engine_alert1.ogg', 100)
+		playsound(src, 'sound/machines/engine_alert1.ogg', 100)
 	if(get_status() == SUPERMATTER_DANGER)
-		playsound(get_turf(src), 'sound/machines/engine_alert2.ogg', 100)
+		playsound(src, 'sound/machines/engine_alert2.ogg', 100)
 	if(get_status() == SUPERMATTER_WARNING)
-		playsound(get_turf(src), 'sound/machines/terminal_alert.ogg', 75)
+		playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
 /obj/machinery/power/supermatter_shard/proc/get_integrity()
 	var/integrity = damage / explosion_point
