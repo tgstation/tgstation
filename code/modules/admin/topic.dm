@@ -355,9 +355,9 @@
 				return
 		SSticker.delay_end = !SSticker.delay_end
 		var/reason = SSticker.admin_delay_notice //laziness
-		var/msg = "[key_name(usr)] delayed the round end.[reason ? " Reason: [reason]" : ""]"
-		log_admin(msg)
-		message_admins("<span class='adminnotice'>[msg]</span>")
+		var/msg = "delayed the round end.[reason ? " Reason: [reason]" : ""]"
+		log_admin("[key_name(usr)] [msg]")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] [msg]</span>")
 		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["end_round"])
