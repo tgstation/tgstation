@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
+	is_reflectable = 1
 
 /obj/item/projectile/energy/chameleon
 	nodamage = TRUE

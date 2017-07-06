@@ -13,6 +13,7 @@
 	light_color = LIGHT_COLOR_RED
 	ricochets_max = 50	//Honk!
 	ricochet_chance = 80
+	is_reflectable = 1
 
 /obj/item/projectile/beam/laser
 
