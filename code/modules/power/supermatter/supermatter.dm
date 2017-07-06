@@ -479,8 +479,6 @@
 /obj/machinery/power/supermatter_shard/attack_robot(mob/user)
 	if(Adjacent(user))
 		return attack_hand(user)
-	else
-		return
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user)
 	return
