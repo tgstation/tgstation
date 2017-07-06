@@ -1,7 +1,8 @@
 //B.O.S.S.: Bluespace Object Support System
 
-
-
+//contains:
+//the main BOSS machine and variants
+//the BOSS receiver
 
 //BOSS machine//
 /obj/machinery/boss
@@ -26,10 +27,22 @@
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
-	if(checkTech && O.origin_tech)
+	var/accept_item = TRUE
+
+	if(checkTech)
+		if(!O.origin_tech)
+			accept_item = FALSE
+
+	if(!user.drop_item())
+		to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+		return
+
+	if(accept_item)
 		O.forceMove(get_turf(src))
+		stored_items += O
+		return
 
 
-//BOSS beacon//
+//BOSS receiver//
 
 
