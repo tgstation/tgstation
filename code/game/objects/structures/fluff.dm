@@ -65,6 +65,7 @@
 	pixel_x = -16
 	density = TRUE
 	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."

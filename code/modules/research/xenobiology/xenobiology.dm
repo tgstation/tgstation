@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
+	container_type = INJECTABLE
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -332,7 +333,7 @@
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on items or vehicles!</span>")
 		return
-	if(istype(C, /obj/item))
+	if(isitem(C))
 		var/obj/item/I = C
 		if(I.slowdown <= 0)
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
@@ -401,10 +402,10 @@
 
 	if(L.gender == MALE)
 		L.gender = FEMALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 	else
 		L.gender = MALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 	L.regenerate_icons()
 	qdel(src)
 
@@ -533,6 +534,7 @@
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 	Serve [user], and assist [user.p_them()] in completing their goals at any cost.")
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
+	G.mind.assigned_role = "Servant Golem"
 
 	G.mind.enslave_mind_to_creator(user)
 
@@ -577,7 +579,7 @@
 				var/mob/living/M = A
 				if(M in immune)
 					continue
-				M.Stun(10, 1, 1)
+				M.Stun(200, 1, 1)
 				M.anchored = 1
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
@@ -607,7 +609,7 @@
 
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
-	M.AdjustStunned(-10, 1, 1)
+	M.AdjustStun(-200, 1, 1)
 	M.anchored = 0
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M

@@ -33,7 +33,7 @@
 	var/yes_code = FALSE
 	var/safety = TRUE
 	var/obj/item/weapon/disk/nuclear/auth = null
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/previous_level = ""
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
@@ -42,8 +42,8 @@
 	var/obj/effect/countdown/nuclearbomb/countdown
 	var/static/bomb_set
 
-/obj/machinery/nuclearbomb/New()
-	..()
+/obj/machinery/nuclearbomb/Initialize()
+	. = ..()
 	countdown = new(src)
 	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
@@ -81,14 +81,14 @@
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
-/obj/machinery/nuclearbomb/syndicate/New()
+/obj/machinery/nuclearbomb/syndicate/Initialize()
+	. = ..()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
 	if(existing)
 		qdel(src)
 		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
 		return 0
 	tag = "syndienuke"
-	return ..()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))
@@ -450,7 +450,7 @@
 	if(istype(SSticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
 		var/datum/game_mode/nuclear/NM = SSticker.mode
-		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		NM.syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
 		NM.nuke_off_station = off_station
 
 	SSticker.station_explosion_cinematic(off_station,null,src)

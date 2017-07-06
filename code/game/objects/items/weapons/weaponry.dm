@@ -440,6 +440,11 @@
 	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
+/obj/item/weapon/melee/chainofcommand/tailwhip/kitty
+	name = "cat o' nine tails"
+	desc = "A whip fashioned from the severed tails of cats."
+	icon_state = "catwhip"
+
 /obj/item/weapon/melee/skateboard
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
@@ -551,3 +556,12 @@
 				bug.death(1)
 			else
 				qdel(target)
+
+/obj/item/weapon/circlegame
+	name = "circled hand"
+	desc = "If somebody looks at this while it's below your waist, you get to bop them."
+	icon_state = "madeyoulook"
+	force = 0
+	throwforce = 0
+	flags = DROPDEL | ABSTRACT
+	attack_verb = list("bopped")

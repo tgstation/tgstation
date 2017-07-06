@@ -25,13 +25,19 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-//this returns the mob's protection against eye damage (number between -1 and 2)
+//this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
 	return 0
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
 	return 0
+
+/mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+	return FALSE
+
+/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return
@@ -98,7 +104,7 @@
 			step_away(src,M,15)
 		switch(M.damtype)
 			if(BRUTE)
-				Paralyse(1)
+				Unconscious(20)
 				take_overall_damage(rand(M.force/2, M.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
@@ -365,6 +371,7 @@
 /mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(A != src)
 		end_pixel_y = get_standard_pixel_y_offset(lying)
-	used_item = get_active_held_item()
+	if(!used_item)
+		used_item = get_active_held_item()
 	..()
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

@@ -28,7 +28,7 @@
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,								600),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,								600),
 		new /datum/data/mining_equipment("Jaunter",				/obj/item/device/wormhole_jaunter,										750),
-		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/weapon/twohanded/required/mining_hammer,						750),
+		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/weapon/twohanded/required/kinetic_crusher,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator,						750),
 		new /datum/data/mining_equipment("Resonator",			/obj/item/weapon/resonator,												800),
 		new /datum/data/mining_equipment("Fulton Pack",			/obj/item/weapon/extraction_pack,										1000),
@@ -188,7 +188,7 @@
 			new /obj/item/fulton_core(loc)
 			new /obj/item/stack/marker_beacon/thirty(loc)
 		if("Crusher Kit")
-			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
+			new /obj/item/weapon/twohanded/required/kinetic_crusher(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
 		if("Mining Conscription Kit")

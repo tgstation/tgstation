@@ -48,10 +48,10 @@
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
-				if (prob(40))
+				if(prob(40))
 					damage = rand(10, 15)
-					if ( (paralysis < 5)  && (health > 0) )
-						Paralyse(rand(10, 15))
+					if(AmountUnconscious() < 100 && health > 0)
+						Unconscious(rand(200, 300))
 						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>", null, 5)
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
@@ -66,10 +66,10 @@
 				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
 					"<span class='userdanger'>[M] has attempted to punch [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 		if("disarm")
-			if (!paralysis)
+			if(!IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
-					Paralyse(2)
+					Knockdown(40)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
@@ -88,8 +88,8 @@
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					if (paralysis < 15)
-						Paralyse(rand(10, 15))
+					if(AmountUnconscious() < 300)
+						Unconscious(rand(200, 300))
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>[M] has wounded [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
@@ -114,7 +114,7 @@
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
-				Weaken(10)
+				Knockdown(20)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
@@ -192,14 +192,14 @@
 			damage_clothes(200, BRUTE, "bomb")
 			adjustEarDamage(30, 120)
 			if(prob(70))
-				Paralyse(10)
+				Unconscious(200)
 
 		if(3)
 			take_overall_damage(30, 0)
 			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)
 			if (prob(50))
-				Paralyse(8)
+				Unconscious(160)
 
 
 	//attempt to dismember bodyparts
