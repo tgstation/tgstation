@@ -109,7 +109,6 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged_cooldown_time = 30
 	pixel_x = -16
-	pixel_y = -16
 	icon = 'icons/mob/jungle/arachnid.dmi'
 	icon_state = "leaper"
 	icon_living = "leaper"
@@ -383,7 +382,7 @@
 	icon_living = "mook"
 	icon_dead = "mook_dead"
 	pixel_x = -16
-	pixel_y = -16
+	pixel_y = -8
 	ranged = 1
 	ranged_cooldown_time = 10
 	pass_flags = LETPASSTHROW
@@ -402,8 +401,8 @@
 			return 1
 	return ..()
 
-/mob/living/simple_animal/death()
-	desc = "A deceased and unhealthy looking primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..."//Can you guess the twist
+/mob/living/simple_animal/hostile/jungle/mook/death()
+	desc = "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..."//Can you guess the twist
 	return ..()
 
 /mob/living/simple_animal/hostile/jungle/mook/AttackingTarget()
