@@ -110,6 +110,7 @@
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
 		wearer.user_movement_hooks -= src
+	wearer = null
 	if(istype(changeto))
 		wearer = changeto
 		wearer.user_movement_hooks += src
