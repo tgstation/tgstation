@@ -383,11 +383,11 @@
 	icon_dead = "mook_dead"
 	pixel_x = -16
 	pixel_y = -8
-	ranged = 1
+	ranged = TRUE
 	ranged_cooldown_time = 10
 	pass_flags = LETPASSTHROW
-	robust_searching = 1
-	stat_attack = 1
+	robust_searching = TRUE
+	stat_attack = UNCONSCIOUS
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	death_sound = 'sound/voice/mook_death.ogg'
 	aggro_vision_range = 15 //A little more aggressive once in combat to balance out their really low HP
@@ -398,7 +398,7 @@
 	if(istype(O, /mob/living/simple_animal/hostile/jungle/mook))
 		var/mob/living/simple_animal/hostile/jungle/mook/M = O
 		if(M.attack_state == MOOK_ATTACK_ACTIVE && M.throwing)
-			return 1
+			return TRUE
 	return ..()
 
 /mob/living/simple_animal/hostile/jungle/mook/death()
@@ -487,12 +487,12 @@
 		if(!struck_target_leap)
 			update_icons()
 		struck_target_leap = FALSE
-		if(prob(40) && !ckey)
+		if(prob(40))
 			attack_state = MOOK_ATTACK_NEUTRAL
 			if(target)
 				if(isliving(target))
 					var/mob/living/L = target
-					if(L.incapacitated() && L.stat < 2)
+					if(L.incapacitated() && L.stat != DEAD)
 						addtimer(CALLBACK(src, .proc/WarmupAttack, TRUE), ATTACK_INTERMISSION_TIME)
 						return
 			addtimer(CALLBACK(src, .proc/WarmupAttack), ATTACK_INTERMISSION_TIME)
@@ -538,8 +538,6 @@
 					var/anydir = pick(GLOB.cardinal)
 					Move(get_step(src, anydir), anydir)
 					continue
-
-
 
 /mob/living/simple_animal/hostile/jungle/mook/handle_automated_action()
 	if(attack_state)
