@@ -429,7 +429,6 @@
 /mob/living/simple_animal/hostile/jungle/mook/proc/WarmupAttack(forced_slash_combo = FALSE)
 	if(attack_state == MOOK_ATTACK_NEUTRAL && target)
 		attack_state = MOOK_ATTACK_WARMUP
-		notransform = TRUE
 		walk(src,0)
 		update_icons()
 		if(prob(50) && get_dist(src,target) <= 3 || forced_slash_combo)
@@ -503,7 +502,6 @@
 /mob/living/simple_animal/hostile/jungle/mook/proc/ResetNeutral()
 	if(attack_state == MOOK_ATTACK_RECOVERY)
 		attack_state = MOOK_ATTACK_NEUTRAL
-		notransform = FALSE
 		ranged_cooldown = world.time + ranged_cooldown_time
 		update_icons()
 		if(target && !stat)
@@ -516,17 +514,32 @@
 		var/mob/living/L = hit_atom
 		if(CanAttack(L))
 			L.attack_animal(src)
-			icon_state = "mook_strike"
 			struck_target_leap = TRUE
+			density = TRUE
+			update_icons()
+	var/mook_under_us = FALSE
 	for(var/A in get_turf(src))
+		if(struck_target_leap && mook_under_us)
+			break
 		if(A == src)
 			continue
-		if(istype(A, /mob/living/simple_animal/hostile/jungle/mook))
-			var/mob/living/simple_animal/hostile/jungle/mook/M = A
-			if(!M.stat)
-				var/anydir = pick(GLOB.cardinal)
-				Move(get_step(src, anydir), anydir)
-				break
+		if(isliving(A))
+			var/mob/living/ML = A
+			if(!struck_target_leap && CanAttack(ML))//Check if some joker is attempting to use rest to evade us
+				struck_target_leap = TRUE
+				ML.attack_animal(src)
+				density = TRUE
+				update_icons()
+				continue
+			if(istype(ML, /mob/living/simple_animal/hostile/jungle/mook) && !mook_under_us)//If we land on the same tile as another mook, spread out so we don't stack our sprite on the same tile
+				var/mob/living/simple_animal/hostile/jungle/mook/M = ML
+				if(!M.stat)
+					mook_under_us = TRUE
+					var/anydir = pick(GLOB.cardinal)
+					Move(get_step(src, anydir), anydir)
+					continue
+
+
 
 /mob/living/simple_animal/hostile/jungle/mook/handle_automated_action()
 	if(attack_state)
