@@ -71,7 +71,9 @@
 
 /obj/machinery/hivebot_swarm_core/proc/defend_the_swarm()
 	var/atom/movable/threat_to_swarm = src.threat_to_swarm
-	var/mob/living/L = istype(L, /mob) && !L.stat ? threat_to_swarm : null
+	var/mob/living/L = threat_to_swarm
+	if(!istype(L) || L.stat)
+		L = null
 	if(QDELETED(threat_to_swarm) || !threat_to_swarm in view(7, src) || L)
 		say("TARGET LOST. RESUMING FABRICATION ROUTINE.")
 		threat_to_swarm = null
