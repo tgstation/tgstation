@@ -52,7 +52,7 @@
 		var/turf/padturf = get_turf(T)
 		var/padloc
 		if(padturf)
-			padloc = "([padturf.x],[padturf.y],[padturf.z])"
+			padloc = COORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
 		log_talk(src,"HOLOPAD [padloc]: [key_name(src)] : [message]", LOGSAY)
