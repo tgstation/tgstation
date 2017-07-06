@@ -166,17 +166,6 @@
 	else
 		use_power = NO_POWER_USE
 
-
-		// Overload conditions:
-		/* // Eeeehhh kinda stupid
-		if(on)
-			if(electricity_level > 11)
-				if(prob(electricity_level))
-					explosion(loc, 0, 1, 2, 3) // ooo dat shit EXPLODES son
-					spawn(2)
-						qdel(src)
-		*/
-
 	updateicon()
 
 
@@ -249,9 +238,9 @@
 /obj/machinery/magnetic_controller/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src, frequency)
-	. = ..()
 	magnets = null
 	rpath = null
+	. = ..()
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
