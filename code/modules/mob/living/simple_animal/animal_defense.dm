@@ -29,6 +29,7 @@
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
 			"<span class='userdanger'>[user] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		adjustBruteLoss(15)
+		updatehealth()
 		return 1
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)

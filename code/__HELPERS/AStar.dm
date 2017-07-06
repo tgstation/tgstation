@@ -181,6 +181,8 @@ Actual Adjacent procs :
 	return atmos_adjacent_turfs
 
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
+	if(is_type_in_typecache(T, GLOB.dangerous_turfs))
+		return 1
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
@@ -194,6 +196,8 @@ Actual Adjacent procs :
 	return 0
 
 /turf/proc/LinkBlockedSmashable(turf/T, caller)
+	if(is_type_in_typecache(T, GLOB.dangerous_turfs))
+		return 1
 	for(var/obj/W in src)
 		if(W.density)
 			if(!is_type_in_typecache(W, GLOB.goap_smashable_objs))

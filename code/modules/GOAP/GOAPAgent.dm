@@ -8,12 +8,16 @@ GLOBAL_LIST_INIT(goap_smashable_objs, typecacheof(list(
 	/obj/structure/rack,
 	/obj/structure/barricade)))
 
+GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
+	/turf/open/floor/plating/lava,
+	/turf/open/chasm)))
+
 
 #define STATE_IDLE		0
 #define STATE_MOVINGTO	1
 #define STATE_ACTING	2
 
-#define GOAP_DEBUG 0
+#define GOAP_DEBUG 1
 
 proc/goap_debug(text)
 	if(GOAP_DEBUG)
@@ -37,10 +41,18 @@ proc/goap_debug(text)
 	var/turf/last_node
 	var/tries = 0
 	var/obj/item/weapon/card/id/given_pathfind_access
-	var/movement_type = 1
+	var/movement_type = 1 // 1 = normal A*(expensive but near perfect), 2 = Fake A*(rarely works), 3 = Dumb Movement(cheapest), 4 = A* for Lavaland Mobs(use if Enviro-Smash + advanced pathfinding is needed)
 	var/turf/current_loc
 	var/is_megafauna = FALSE
 	var/actions_halted = FALSE
+	var/already_acting = FALSE
+
+/datum/goap_agent/proc/has_action(var/ACT)
+	for(var/datum/goap_action/A in our_actions)
+		if(istype(A, ACT) && !A.OnCooldown())
+			return TRUE
+	return FALSE
+
 /datum/goap_agent/New()
 	..()
 
@@ -104,17 +116,25 @@ proc/goap_debug(text)
 			curr_action = action_queue[action_queue.len]
 			var/range_check = curr_action.IsInRange(agent)
 			if(range_check)
-				if(!curr_action.Perform(agent))
-					goap_debug("PERFORM FAILED [curr_action]")
-					brain_state = STATE_IDLE
-					path = list()
-					info.PlanAborted(curr_action)
+				if(already_acting)
+					return
 				else
-					goap_debug("PERFORMED [curr_action]")
-					if(action_queue.len == 1 && action_queue[1] == curr_action)
+					already_acting = TRUE
+					if(!curr_action.Perform(agent))
+						goap_debug("PERFORM FAILED [curr_action]")
 						brain_state = STATE_IDLE
 						path = list()
-						return
+						info.PlanAborted(curr_action)
+						already_acting = FALSE
+					else
+						goap_debug("PERFORMED [curr_action]")
+						if(action_queue.len == 1 && action_queue[1] == curr_action)
+							brain_state = STATE_IDLE
+							path = list()
+							already_acting = FALSE
+							return
+						already_acting = FALSE
+
 			else
 				brain_state = STATE_MOVINGTO
 
@@ -195,7 +215,8 @@ proc/goap_debug(text)
 /datum/goap_agent/proc/MoveTo_FakeStar(datum/goap_action/action)
 	if(action.target)
 		if(get_dist(agent, action.target) > 1)
-			step_to(agent, action.target)
+			if(!is_type_in_typecache(get_step(agent, get_dir(agent, action.target)), GLOB.dangerous_turfs))
+				step_to(agent, action.target)
 		if(get_dist(agent, action.target) <= 1)
 			action.inn_range = TRUE
 			brain_state = STATE_ACTING
@@ -203,7 +224,8 @@ proc/goap_debug(text)
 /datum/goap_agent/proc/MoveTo(datum/goap_action/action)
 	if(action.target)
 		if(get_dist(agent, action.target) > 1)
-			step_towards(agent, action.target)
+			if(!is_type_in_typecache(get_step(agent, get_dir(agent, action.target)), GLOB.dangerous_turfs))
+				step_towards(agent, action.target)
 		if(get_dist(agent, action.target) <= 1)
 			action.inn_range = TRUE
 			brain_state = STATE_ACTING

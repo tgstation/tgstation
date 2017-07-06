@@ -10,6 +10,8 @@
 	var/inn_range = FALSE //Actions usually require you to be close to some target/goal object
 	var/atom/target //Actions usually act on some kind of target/goal object
 	var/action_done = FALSE
+	var/cooldown
+	var/cooldown_time
 
 
 //Reset any state variables between uses
@@ -20,6 +22,11 @@
 	target = null
 	action_done = FALSE
 
+/datum/goap_action/proc/OnCooldown(atom/agent, list/worldstate)
+	if(cooldown)
+		return (cooldown_time >= world.time)
+	else
+		return TRUE
 
 //Designed to be overriden to have more advanced preconditions
 //If you use a target, set it in this

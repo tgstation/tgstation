@@ -115,6 +115,14 @@
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
 
+/datum/map_template/ruin/lavaland/russians
+	name = "Russian Command Post"
+	id = "russians"
+	description = "Cyka blyat."
+	suffix = "lavaland_ruin_russians.dmm"
+	cost = -1
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"

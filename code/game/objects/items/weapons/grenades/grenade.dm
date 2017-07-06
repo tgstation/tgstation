@@ -53,20 +53,21 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 
-/obj/item/weapon/grenade/proc/preprime(mob/user)
+/obj/item/weapon/grenade/proc/preprime(mob/user, log = 1)
 	if(user)
 		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
 	playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	add_fingerprint(user)
-	var/turf/bombturf = get_turf(src)
-	var/area/A = get_area(bombturf)
-	if(user)
-		var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
-		GLOB.bombers += message
-		message_admins(message)
-		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
+	if(log)
+		var/turf/bombturf = get_turf(src)
+		var/area/A = get_area(bombturf)
+		if(user)
+			var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
+			GLOB.bombers += message
+			message_admins(message)
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
 
 	addtimer(CALLBACK(src, .proc/prime), det_time)
 
