@@ -2146,6 +2146,7 @@
 #include "hippiestation\code\_onclick\hud\human.dm"
 #include "hippiestation\code\_onclick\hud\stamina.dm"
 #include "hippiestation\code\controllers\configuration.dm"
+#include "hippiestation\code\controllers\subsystem\job.dm"
 #include "hippiestation\code\controllers\subsystem\throwing.dm"
 #include "hippiestation\code\controllers\subsystem\ticker.dm"
 #include "hippiestation\code\datums\mutations.dm"

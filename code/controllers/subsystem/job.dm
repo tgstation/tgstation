@@ -394,7 +394,7 @@ SUBSYSTEM_DEF(job)
 
 	if(H.mind)
 		H.mind.assigned_role = rank
-
+	equip_loadout(N, H)
 	if(job)
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))

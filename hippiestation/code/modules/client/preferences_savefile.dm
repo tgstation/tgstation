@@ -1,4 +1,4 @@
-/datum/preferences/proc/hippie_pref_load(savefile/S)
+/datum/preferences/proc/hippie_character_pref_load(savefile/S)
 	//moths
 	S["feature_moth_wings"]		>> features["moth_wings"]
 	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list)
@@ -12,7 +12,7 @@
 			LAZYADD(chosen_gear, path)
 			gear_points -= initial(path.cost)
 
-/datum/preferences/proc/hippie_pref_save(savefile/S)
+/datum/preferences/proc/hippie_character_pref_save(savefile/S)
 	//moths
 	S["feature_moth_wings"]		<< features["moth_wings"]
 	//gear loadout
