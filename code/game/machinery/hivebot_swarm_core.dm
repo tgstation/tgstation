@@ -84,7 +84,8 @@
 			if(L)
 				L.adjustFireLoss(15)
 			else
-				threat_to_swarm.take_damage(15, "fire", "laser")
+				var/obj/threat = threat_to_swarm
+				threat.take_damage(15, "fire", "laser")
 			playsound(src, 'sound/weapons/plasma_cutter.ogg', 50, 1)
 			playsound(threat_to_swarm, 'sound/weapons/sear.ogg', 50, 1)
 		if("swarm")
@@ -109,10 +110,13 @@
 	for(var/mob/living/L in target) //you fucked up now
 		L.visible_message("<span class='warning'>[src]'s buzzsaw rips into [L]!</span>", "<span class='userdanger'>[src]'s buzzsaw rips into you!</span>")
 		L.emote("scream")
-	for(var/i in 1 to 5)
-		for(var/mob/living/L in target)
-			L.adjustBruteLoss(rand(20, 30)) //Guaranteed crit at least
-			L.Knockdown(40)
-			playsound(L, "desecration", 75, 1)
-			playsound(L, 'sound/effects/splat.ogg', 50, 1)
-		sleep(5)
+		var/datum/callback/cb = CALLBACK(src, .proc/saw_target, L)
+		cb.Invoke()
+		for(var/I in 1 to 4)
+			addtimer(cb, 5 * I)
+
+/obj/machinery/hivebot_swarm_core/proc/saw_target(mob/living/L)
+	L.adjustBruteLoss(rand(20, 30)) //Guaranteed crit at least
+	L.Knockdown(40)
+	playsound(L, "desecration", 75, 1)
+	playsound(L, 'sound/effects/splat.ogg', 50, 1)
