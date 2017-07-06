@@ -139,6 +139,10 @@
 /obj/item/projectile/Bump(atom/A, yes)
 	if(!yes) //prevents double bumps.
 		return
+	if(isliving(A))
+		var/mob/living/L = A
+		if((A.buckled == firer) && !ignore_source_check)
+			return
 	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
