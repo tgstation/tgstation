@@ -349,9 +349,9 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		if(!SSticker.admin_delay_notice)
+		if(SSticker.delay_end)
 			SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-			if(SSticker.admin_delay_notice == null)
+			if(!SSticker.admin_delay_notice)
 				return
 		SSticker.delay_end = !SSticker.delay_end
 		var/reason = SSticker.admin_delay_notice //laziness
