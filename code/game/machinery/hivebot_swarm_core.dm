@@ -70,7 +70,7 @@
 	say("SUBJECT STATUS: THREAT TO SWARM. TARGET LOCKED.")
 
 /obj/machinery/hivebot_swarm_core/proc/defend_the_swarm()
-	var/threat_to_swarm = src.threat_to_swarm
+	var/atom/movable/threat_to_swarm = src.threat_to_swarm
 	var/mob/living/L = istype(L, /mob) && !L.stat ? threat_to_swarm : null
 	if(QDELETED(threat_to_swarm) || !threat_to_swarm in view(7, src) || L)
 		say("TARGET LOST. RESUMING FABRICATION ROUTINE.")
@@ -84,7 +84,7 @@
 			if(L)
 				L.adjustFireLoss(15)
 			else
-				threat.take_damage(15, "fire", "laser")
+				threat_to_swarm.take_damage(15, "fire", "laser")
 			playsound(src, 'sound/weapons/plasma_cutter.ogg', 50, 1)
 			playsound(threat_to_swarm, 'sound/weapons/sear.ogg', 50, 1)
 		if("swarm")
@@ -112,7 +112,7 @@
 	for(var/i in 1 to 5)
 		for(var/mob/living/L in target)
 			L.adjustBruteLoss(rand(20, 30)) //Guaranteed crit at least
-			L.Weaken(2)
+			L.Knockdown(40)
 			playsound(L, "desecration", 75, 1)
 			playsound(L, 'sound/effects/splat.ogg', 50, 1)
 		sleep(5)
