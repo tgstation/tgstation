@@ -8,7 +8,6 @@
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
 	max_integrity = 25
-	obj_integrity = 25
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
@@ -425,7 +424,7 @@
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
-	
+
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
@@ -477,7 +476,7 @@
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
-	
+
 /obj/structure/window/plasma/fulltile
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasmawindow"
@@ -491,7 +490,7 @@
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
-	
+
 /obj/structure/window/plasma/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasmawindow"
@@ -643,7 +642,6 @@
 	dir = FULLTILE_WINDOW_DIR
 	opacity = TRUE
 	max_integrity = 15
-	obj_integrity = 15
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
