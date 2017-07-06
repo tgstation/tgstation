@@ -53,7 +53,7 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 
-/obj/item/weapon/grenade/proc/preprime(mob/user, log = 1)
+/obj/item/weapon/grenade/proc/preprime(mob/user, log = TRUE)
 	if(user)
 		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
 	playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)

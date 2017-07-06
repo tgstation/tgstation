@@ -88,9 +88,7 @@
 				goap_debug("HASN'T COMPLETED GOAL WITH [GA] PICK NEXT ACTION")
 				usable_actions -= GA
 				var/list/subtree = BuildPossiblePlans(node, usable_actions, goal)
-				for(var/i in subtree)
-					plan_tree += i
-					CHECK_TICK
+				plan_tree += subtree
 		CHECK_TICK
 
 	return plan_tree

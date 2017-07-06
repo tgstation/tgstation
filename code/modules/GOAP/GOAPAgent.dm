@@ -55,8 +55,6 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	return FALSE
 
 /datum/goap_agent/New()
-	..()
-
 	our_actions = list()
 	action_queue = list()
 
@@ -76,7 +74,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 
 /datum/goap_agent/Destroy()
 	STOP_PROCESSING(SSgoap, src)
-	..()
+	return ..()
 
 /datum/goap_agent/proc/able_to_run()
 	if(!agent)
@@ -202,10 +200,10 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 /datum/goap_agent/proc/MoveTo_AStar(datum/goap_action/curr_action, list/path)
 	var/turf/dest = get_turf(curr_action.target)
 	if(!path)
-		return 0
+		return FALSE
 	if(!last_node.Adjacent(dest))
 		path = null // force a new path
-		return 0
+		return FALSE
 	if(path.len > 1)
 		step_towards(agent, path[1])
 		if(get_turf(agent) == path[1]) //Successful move
@@ -215,7 +213,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		path = list()
 		curr_action.inn_range = TRUE
 		brain_state = STATE_ACTING
-	return 1
+	return TRUE
 
 /datum/goap_agent/proc/MoveTo_FakeStar(datum/goap_action/action)
 	if(action.target)
