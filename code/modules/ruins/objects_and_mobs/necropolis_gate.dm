@@ -255,10 +255,10 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		return QDEL_HINT_LETMELIVE
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
+	if(falling || fallen)
+		return
 	var/turf/T = get_turf(src)
 	if(!istype(T, /turf/open/floor/plating/lava) && !istype(T, /turf/open/chasm)) //nothing to sink or fall into
-		return
-	if(falling || fallen)
 		return
 	var/obj/item/I
 	if(istype(AM, /obj/item))
@@ -275,13 +275,10 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 /obj/structure/stone_tile/proc/collapse()
 	falling = TRUE
-	var/break_that_sucker
-	if(fall_on_cross == DESTROY_ON_CROSS)
-		break_that_sucker = TRUE
+	var/break_that_sucker = fall_on_cross == DESTROY_ON_CROSS
 	playsound(src, 'sound/effects/pressureplate.ogg', 50, TRUE)
-	for(var/i in 1 to 5)
-		animate(src, pixel_x = pixel_x + rand(-1, 1), pixel_y = pixel_y = rand(-1, 1), time = 1)
-		sleep(1)
+	Shake(-1, -1, 25)
+	sleep(5)
 	if(break_that_sucker)
 		playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 	else
@@ -291,7 +288,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(break_that_sucker)
 		QDEL_IN(src, 10)
 	else
-		addtimer(CALLBACK(src, .proc/rebuild), 60)
+		addtimer(CALLBACK(src, .proc/rebuild), 55)
 
 /obj/structure/stone_tile/proc/rebuild()
 	pixel_x = initial(pixel_x)
