@@ -55,7 +55,7 @@
 	if(pickax != null)
 		target = pickax
 	else
-		var/list/viewl = spiral_range(10, agent)
+		var/list/viewl = oview(10, agent)
 		var/obj/item/weapon/pickaxe/P = locate(/obj/item/weapon/pickaxe) in viewl
 		target = P
 	return (target != null)
@@ -95,7 +95,7 @@
 	effects["turfMined"] = TRUE
 
 /datum/goap_action/miner/mine_turf/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/turf/closed/mineral/T = locate(/turf/closed/mineral) in viewl
 	target = T
 	return (target != null)

@@ -10,7 +10,7 @@
 	effects["cleanedMess"] = TRUE
 
 /datum/goap_action/cleanbot/clean_decal/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/obj/effect/decal/cleanable/P = locate(/obj/effect/decal/cleanable) in viewl
 	target = P
 	return (target != null)
@@ -43,7 +43,7 @@ Cleaning trash items up
 	effects["cleanedMess"] = TRUE
 
 /datum/goap_action/cleanbot/clean_item/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/obj/item/trash/P = locate(/obj/item/trash) in viewl
 	target = P
 	return (target != null)
@@ -77,7 +77,7 @@ Removing pests
 	effects["cleanedMess"] = TRUE
 
 /datum/goap_action/cleanbot/clean_animal/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/mob/living/simple_animal/cockroach/C = locate(/mob/living/simple_animal/cockroach) in viewl
 	var/mob/living/simple_animal/mouse/M = locate(/mob/living/simple_animal/mouse) in viewl
 	if(C)
@@ -153,7 +153,7 @@ MAKE THAT FOAM
 	effects["cleanFaces"] = TRUE
 
 /datum/goap_action/cleanbot/clean_faces/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 	if(C)
 		target = C

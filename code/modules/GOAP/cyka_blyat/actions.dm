@@ -10,7 +10,7 @@
 	effects["enemyDead"] = TRUE
 
 /datum/goap_action/russian/attack/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 	if(C && !C.stat)
 		target = C
@@ -46,7 +46,7 @@
 	var/mob/living/simple_animal/hostile/russian/RU = agent
 	if(!RU.ammo_left)
 		return FALSE
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 	if(C && !C.stat)
 		target = C
@@ -83,7 +83,7 @@
 	var/mob/living/simple_animal/hostile/russian/A = agent
 	if(A.grenade_to_throw == null)
 		return FALSE
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 	if(C && !C.stat)
 		target = C
@@ -158,7 +158,7 @@
 	effects["allyNeedsHealed"] = FALSE
 
 /datum/goap_action/russian/medic/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	for(var/mob/living/simple_animal/hostile/russian/R in viewl)
 		if(!R.stat)
 			if(R.health < (R.maxHealth/2))
@@ -202,7 +202,7 @@
 	effects["allyNeedsAmmo"] = FALSE
 
 /datum/goap_action/russian/resupply/AdvancedPreconditions(atom/agent, list/worldstate)
-	var/list/viewl = spiral_range(10, agent)
+	var/list/viewl = oview(10, agent)
 	for(var/mob/living/simple_animal/hostile/russian/R in viewl)
 		if(!R.stat)
 			if(!R.reloads_left)
