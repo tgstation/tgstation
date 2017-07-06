@@ -150,12 +150,16 @@ function tag_pr($payload, $opened) {
 	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', 'icons' => 'Sprites', 'sounds' => 'Sound');
+	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
+	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
 		else
 			$remove[] = $tag;
+	foreach($addonlytags as $tree => $tag)
+		if(has_tree_been_edited($payload, $tree))
+			$tags[] = $tag;
 
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)
