@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 #define STATE_MOVINGTO	1
 #define STATE_ACTING	2
 
-#define GOAP_DEBUG 1
+#define GOAP_DEBUG 0
 
 proc/goap_debug(text)
 	if(GOAP_DEBUG)
