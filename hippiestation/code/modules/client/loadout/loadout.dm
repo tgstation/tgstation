@@ -19,21 +19,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	var/description = "why do i exist"
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
-	var/list/restricted_roles // use LAZYADD in Initialize() and add the roles your item is locked to
+	var/list/restricted_roles
 
 /datum/gear/New()
 	..()
 	if(!description && path)
 		var/obj/O = path
 		description = initial(O.desc)
-
-/datum/gear/test
-	name = "fuck you"
-	description = "i'm cool"
-	category = slot_head
-
-/datum/gear/test2
-	name = "fuck you2"
-	description = "i'm cool2"
-	category = slot_back
-	path = /obj/item/weapon/storage/backpack/clown

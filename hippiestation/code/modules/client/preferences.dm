@@ -1,3 +1,7 @@
+#define DEFAULT_SLOT_AMT	1
+#define HANDS_SLOT_AMT		2
+#define BACKPACK_SLOT_AMT	3
+
 /datum/preferences
 	features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
 	var/gear_points = 5
@@ -48,6 +52,9 @@
 				LAZYREMOVE(chosen_gear, G.type)
 				gear_points += initial(G.cost)
 			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
+				if(!is_loadout_slot_available(G.category))
+					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
+					return
 				if(gear_points >= initial(G.cost))
 					LAZYADD(chosen_gear, G.type)
 					gear_points -= initial(G.cost)
@@ -71,6 +78,7 @@
 			gear_tab = GLOB.loadout_items[1]
 		. += "<table align='center' width='100%'>"
 		. += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E67300" : "#3366CC"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+		. += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
 		. += "<tr><td colspan=4><center><b>"
 		var/firstcat = TRUE
 		for(var/i in GLOB.loadout_items)
@@ -109,3 +117,21 @@
 					. += "</font>"
 			. += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
 		. += "</table>"
+
+/datum/preferences/proc/is_loadout_slot_available(slot)
+	var/list/L
+	LAZYINITLIST(L)
+	for(var/i in chosen_gear)
+		var/datum/gear/G = i
+		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
+		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
+	switch(slot)
+		if(slot_in_backpack)
+			if(L[slot_to_string(slot_in_backpack)] < BACKPACK_SLOT_AMT)
+				return TRUE
+		if(slot_hands)
+			if(L[slot_to_string(slot_hands)] < HANDS_SLOT_AMT)
+				return TRUE
+		else
+			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
+				return TRUE
