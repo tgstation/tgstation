@@ -129,6 +129,5 @@
 /proc/pimp_my_debug(list/riding_spinners_they_dont_stop, state_name = "default")
 	goap_debug("CHECKING DAT STATE YO [state_name]")
 	for(var/spinners in riding_spinners_they_dont_stop)
-		var/fuck = riding_spinners_they_dont_stop[spinners]
-		goap_debug("[spinners] = [fuck]")
+		goap_debug("[spinners] = [riding_spinners_they_dont_stop[spinners]]")
 		CHECK_TICK

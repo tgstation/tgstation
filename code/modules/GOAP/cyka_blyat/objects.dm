@@ -21,7 +21,7 @@
 	new /obj/item/ammo_box/a357(get_turf(src))
 	new /obj/item/ammo_box/a357(get_turf(src))
 	new /obj/item/ammo_box/a357(get_turf(src))
-	..()
+	. = ..()
 
 /obj/item/russian_reload
 	icon = 'icons/mob/russians.dmi'

@@ -86,7 +86,6 @@
 
 /mob/living/simple_animal/hostile/Destroy()
 	targets_from = null
-	qdel(goap_ai)
 	return ..()
 
 /mob/living/simple_animal/hostile/Life()

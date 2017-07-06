@@ -173,7 +173,7 @@ MAKE THAT FOAM
 		"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
 	B.say(phrase)
 	C.emote("scream")
-	playsound(B.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(B, 'sound/effects/spray2.ogg', 50, 1, -6)
 	C.acid_act(5, 2, 100)
 	action_done = TRUE
 	return TRUE

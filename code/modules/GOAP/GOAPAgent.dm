@@ -17,11 +17,12 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 #define STATE_MOVINGTO	1
 #define STATE_ACTING	2
 
-#define GOAP_DEBUG 0
+#define GOAP_DEBUG_ENABLE 0
 
-proc/goap_debug(text)
-	if(GOAP_DEBUG)
-		world.log << "GOAP: [text]"
+#if GOAP_DEBUG_ENABLE
+	#define goap_debug(X) world.log << "GOAP: [X]"
+#else
+	#define goap_debug(X) ;
 
 /datum/goap_agent
 	var/brain_state = STATE_IDLE
@@ -80,7 +81,7 @@ proc/goap_debug(text)
 /datum/goap_agent/proc/able_to_run()
 	if(!agent)
 		STOP_PROCESSING(SSgoap, src)
-		qdel(src)
+		QDEL_NULL(src)
 		. = FALSE
 		return
 	for(var/I in GLOB.living_mob_list)

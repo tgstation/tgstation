@@ -182,28 +182,28 @@ Actual Adjacent procs :
 
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	if(is_type_in_typecache(T, GLOB.dangerous_turfs))
-		return 1
+		return TRUE
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
-			return 1
+			return TRUE
 	for(var/obj/O in T)
 		if(!O.CanAStarPass(ID, rdir, caller))
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /turf/proc/LinkBlockedSmashable(turf/T, caller)
 	if(is_type_in_typecache(T, GLOB.dangerous_turfs))
-		return 1
+		return TRUE
 	for(var/obj/W in src)
 		if(W.density)
 			if(!is_type_in_typecache(W, GLOB.goap_smashable_objs))
-				return 1
+				return TRUE
 	for(var/obj/O in T)
 		if(O.density)
 			if(!is_type_in_typecache(O, GLOB.goap_smashable_objs))
-				return 1
-	return 0
+				return TRUE
+	return FALSE

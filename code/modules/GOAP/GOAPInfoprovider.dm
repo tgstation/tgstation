@@ -9,7 +9,6 @@
 	//Used to ensure we don't try again if the world hasn't changed, mainly for performance
 
 /datum/goap_info_provider/New()
-	..()
 	failures_past = list()
 
 
