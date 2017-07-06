@@ -145,6 +145,10 @@ proc/goap_debug(text)
 		goap_debug("An action ([curr_action]) requires a target, but did not get one set")
 		brain_state = STATE_IDLE
 	else
+		if(get_dist(agent, curr_action.target) > 20)
+			goap_debug("An action ([curr_action]) has a target that is too far away to path to reasonably.")
+			brain_state = STATE_IDLE
+			return
 		var/dense_garbage = null
 		for(var/obj/I in get_turf(curr_action.target))
 			if(I.density)
