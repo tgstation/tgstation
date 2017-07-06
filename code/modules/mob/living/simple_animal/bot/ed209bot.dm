@@ -153,7 +153,7 @@ Auto Patrol[]"},
 			update_controls()
 
 /mob/living/simple_animal/bot/ed209/proc/judgement_criteria()
-	var/final = FALSE 
+	var/final = FALSE
 	if(idcheck)
 		final = final|JUDGE_IDCHECK
 	if(check_records)
