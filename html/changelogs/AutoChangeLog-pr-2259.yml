@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Heartbeat sounds no longer play indefinitely if your body is destroyed."
