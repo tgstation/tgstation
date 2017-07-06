@@ -84,7 +84,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 		// (1,1,1) = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
 		else if(dmmRegex.group[3]) // Coords
 			if(!key_len)
-				to_chat(usr, "<span class='warning'>ABORT: Coords before model definition in DMM")
+				to_chat(usr, "<span class='warning'>ABORT: Coords before model definition in DMM</span>")
 				throw EXCEPTION("Coords before model definition in DMM")
 
 			var/curr_x = text2num(dmmRegex.group[3])
