@@ -22,14 +22,3 @@ All new defines go in here!
 GLOBAL_VAR_INIT(HIPPIE_MENTOR_OOC_COLOUR, "#FF3E96")
 #define R_MENTOR 8192
 #define R_MAXPERMISSION 8192
-
-//Loadout
-#define HEADGEAR 		"Head"
-#define MASKGEAR 		"Mask"
-#define UNIFORMGEAR 	"Uniform"
-#define GLOVESGEAR		"Gloves"
-#define SHOESGEAR		"Shoes"
-#define SUITGEAR		"Suit"
-#define NECKGEAR		"Neck"
-#define ACCESSORYGEAR	"Accessory"
-//possible to-do: use actual slot defines instead of making more(?)
