@@ -14,6 +14,7 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a sentient ecosystem - an example of the mastery over life that your creators possessed. Your masters, benevolent as they were, created uncounted \
 	seed vaults and spread them across the universe to every planet they could chart. You are in one such seed vault. Your goal is to cultivate and spread life wherever it will go while waiting \
 	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
+	assignedrole = "Lifebringer"
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
@@ -44,6 +45,7 @@
 	density = 0
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
+	assignedrole = "Ash Walker"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
@@ -82,6 +84,7 @@
 	mob_species = /datum/species/shadow
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are cursed. Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you \
 	did so, it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland.</b>"
+	assignedrole = "Exile"
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
@@ -152,6 +155,10 @@
 				H.real_name = H.dna.species.random_name()
 		else
 			H.real_name = name
+	if(has_owner)
+		new_spawn.mind.assigned_role = "Servant Golem"
+	else
+		new_spawn.mind.assigned_role = "Free Golem"
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
 	if(isgolem(user) && can_transfer)
@@ -193,6 +200,7 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou've been stranded in this godless prison of a planet for longer than you can remember. Each day you barely scrape by, and between the terrible \
 	conditions of your makeshift shelter, the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
+	assignedrole = "Hermit"
 
 /obj/effect/mob_spawn/human/hermit/Initialize(mapload)
 	. = ..()
@@ -239,6 +247,7 @@
 	flavour_text = "<font size=3><b>W</b></font><b>hat...? Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
 	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
 	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
+	assignedrole = "Translocated Vet"
 
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
@@ -252,6 +261,7 @@
 	death = FALSE
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you. You remember that you were convicted of "
+	assignedrole = "Escaped Prisoner"
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
@@ -290,6 +300,7 @@
 	outfit = /datum/outfit/hotelstaff
 	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\
 		dereliction of duty!"
+	assignedrole = "Hotel Staff"
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
@@ -334,6 +345,7 @@
 	id_access = "assistant"
 	var/obj/effect/proc_holder/spell/targeted/summon_friend/spell
 	var/datum/mind/owner
+	assignedrole = "SuperFriend"
 
 /obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
 	. = ..()
@@ -380,6 +392,7 @@
 	icon_state = "sleeper_s"
 	id_access_list = list(GLOB.access_syndicate)
 	outfit = /datum/outfit/syndicate_empty
+	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
 
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
@@ -457,6 +470,7 @@
 	id = /obj/item/weapon/card/id/away/old/sec
 	r_pocket = /obj/item/weapon/restraints/handcuffs
 	l_pocket = /obj/item/device/assembly/flash/handheld
+	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
 	new/obj/structure/showcase/oldpod/used(get_turf(src))
@@ -480,6 +494,7 @@
 	id = /obj/item/weapon/card/id/away/old/eng
 	gloves = /obj/item/clothing/gloves/color/fyellow/old
 	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
 	new/obj/structure/showcase/oldpod/used(get_turf(src))
@@ -502,6 +517,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/weapon/card/id/away/old/sci
 	l_pocket = /obj/item/stack/medical/bruise_pack
+	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/oldpod/used(get_turf(src))
