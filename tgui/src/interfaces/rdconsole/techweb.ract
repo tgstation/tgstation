@@ -1,4 +1,3 @@
-
 <ui-display title='Available for Research'>
 	{{#each data.techweb_avail}}
 		<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
