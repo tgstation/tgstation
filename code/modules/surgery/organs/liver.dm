@@ -67,6 +67,6 @@
 
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"
-	icon_state = "pliver" //xenomorph liver? It's just a black liver so it fits.
+	icon_state = "pliver" 
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 
