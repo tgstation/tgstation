@@ -263,7 +263,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	var/obj/item/I
 	if(istype(AM, /obj/item))
 		I = AM
-	var/mob/living/L = AM
+	var/mob/living/L
 	if(isliving(AM))
 		L = AM
 	switch(fall_on_cross)
