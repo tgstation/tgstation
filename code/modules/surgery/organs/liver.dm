@@ -64,3 +64,9 @@
 	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.
 	desc = "A mutant liver designed to handle the unique diet of a flyperson."
 	alcohol_tolerance = 0.007 //flies eat vomit, so a lower alcohol tolerance is perfect!
+
+/obj/item/organ/liver/plasmaman
+	name = "reagent processing crystal"
+	icon_state = "pliver" //xenomorph liver? It's just a black liver so it fits.
+	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+
