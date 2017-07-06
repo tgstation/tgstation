@@ -192,6 +192,7 @@
 	QDEL_NULL(part_cap)
 	QDEL_NULL(part_laser)
 	QDEL_NULL(part_bin)
+	QDEL_NULL(ion_trail)
 	STOP_PROCESSING(SSflightpacks, src)
 	. = ..()
 
