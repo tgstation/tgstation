@@ -84,7 +84,7 @@ The use of this is not allowed in this project as it makes finding definitions v
 
 The previous code made compliant:
 
-```c++
+```DM
 /datum/datum1
 	var/varname1
 	var/varname2
@@ -116,7 +116,7 @@ In DM, this is optional, but omitting it makes finding definitions harder.
 ### Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
-```C++
+```DM
 //Good
 var/path_type = /obj/item/weapon/baseball_bat
 
@@ -186,7 +186,7 @@ This is clearer and enhances readability of your code! Get used to doing it!
 ### Use early return
 Do not enclose a proc in an if-block when returning on a condition is more feasible
 This is bad:
-````
+````DM
 /datum/datum1/proc/proc1()
 	if (thing1)
 		if (!thing2)
@@ -194,7 +194,7 @@ This is bad:
 				do stuff
 ````
 This is good:
-````
+````DM
 /datum/datum1/proc/proc1()
 	if (!thing1)
 		return
@@ -253,25 +253,32 @@ The following coding styles are not only not enforced at all, but are generally 
 * Spaces after control statements
 	* `if()` and `if ()` - nobody cares!
 
-#### Operators and spaces:
+### Operators
+#### Spacing
 (this is not strictly enforced, but more a guideline for readability's sake)
 
 * Operators that should be separated by spaces
 	* Boolean and logic operators like &&, || <, >, ==, etc (but not !)
+	* Bitwise AND &
 	* Argument separator operators like , (and ; when used in a forloop)
 	* Assignment operators like = or += or the like
 * Operators that should not be separated by spaces
-	* Bitwise operators like & or |
+	* Bitwise OR |
 	* Access operators like . and :
 	* Parentheses ()
 	* logical not !
 
 Math operators like +, -, /, *, etc are up in the air, just choose which version looks more readable.
 
-### Dream Maker Quirks/Tricks:
+#### Use
+* Bitwise AND - '&'
+	* Should be written as ```bitfield & bitflag``` NEVER ```bitflag & bitfield```, both are valid, but the latter is confusing and nonstandard.
+
+
+### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
-#### In-To for-loops: 
+#### In-To for-loops
 ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```; if you want ```<``` then you should write it as ```1 to some_value-1```).
 
 HOWEVER, if either ```some_value``` or ```i``` changes within the body of the for (underneath the ```for(...)``` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for-loop!
@@ -279,7 +286,7 @@ HOWEVER, if either ```some_value``` or ```i``` changes within the body of the fo
 
 #### Istypeless for loops
 A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
-```
+```DM
 var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
 var/obj/item/sword/best_sword = null
 for(var/obj/item/sword/S in bag_of_items)
@@ -287,7 +294,7 @@ for(var/obj/item/sword/S in bag_of_items)
     		best_sword = S
 ```
 The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using ```istype()``` (or some internal-magic similar to ```istype()``` - this is BYOND, after all). This is fine in its current state for ```bag_of_items```, but if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
-```
+```DM
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword = null
 for(var/obj/item/sword/S in bag_of_swords)
@@ -298,7 +305,7 @@ specifies a type for DM to filter by.
 
 With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
-```
+```DM
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword = null
 for(var/s in bag_of_swords)
@@ -311,7 +318,7 @@ Of course, if the list contains data of a mixed type then the above optimisation
 #### Dot variable
 Like other languages in the C family, DM has a ```.``` or "Dot" operator, used for accessing variables/members/functions of an object instance.
 eg:
-```
+```DM
 var/mob/living/carbon/human/H = YOU_THE_READER
 H.gib()
 ```
@@ -325,7 +332,7 @@ With ```.``` being everpresent in every proc, can we use it as a temporary varia
 
 DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
 
-```
+```DM
 mob
     var
         global

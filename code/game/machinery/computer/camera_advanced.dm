@@ -13,6 +13,9 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/camera_advanced/syndie
+	icon_keyboard = "syndie_key"
+
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
 	eyeobj.origin = src
