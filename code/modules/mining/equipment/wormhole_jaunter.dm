@@ -89,9 +89,9 @@
 	mech_sized = TRUE //save your ripley
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
-	if(istype(M, /obj/effect) || !istype(M))
+	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
 		return
-
+		
 	if(M.anchored && (!ismob(M) || (istype(M, /obj/mecha) && !mech_sized)))
 		return
 
