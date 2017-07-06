@@ -11,11 +11,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
-#define SCREWYHUD_NONE 0
-#define SCREWYHUD_CRIT 1
-#define SCREWYHUD_DEAD 2
-#define SCREWYHUD_HEALTHY 3
-
 /mob/living/carbon
 	var/image/halimage
 	var/image/halbody

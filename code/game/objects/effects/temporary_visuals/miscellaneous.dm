@@ -109,6 +109,41 @@
 	icon_state = "tailsweep"
 	duration = 4
 
+/obj/effect/temp_visual/dir_setting/curse
+	icon_state = "curse"
+	duration = 32
+	var/fades = TRUE
+
+/obj/effect/temp_visual/dir_setting/curse/Initialize(mapload, set_dir)
+	. = ..()
+	if(fades)
+		animate(src, alpha = 0, time = 32)
+
+/obj/effect/temp_visual/dir_setting/curse/blob
+	icon_state = "curseblob"
+
+/obj/effect/temp_visual/dir_setting/curse/grasp_portal
+	icon = 'icons/effects/64x64.dmi'
+	layer = LARGE_MOB_LAYER
+	pixel_y = -16
+	pixel_x = -16
+	duration = 32
+	fades = FALSE
+
+/obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading
+	duration = 32
+	fades = TRUE
+
+/obj/effect/temp_visual/dir_setting/curse/hand
+	icon_state = "cursehand"
+
+/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
+	. = ..()
+	update_icon()
+
+/obj/item/projectile/curse_hand/update_icon()
+	icon_state = "[icon_state][handedness]"
+
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/mob.dmi'
