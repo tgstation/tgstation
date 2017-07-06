@@ -200,6 +200,16 @@
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
+/obj/machinery/power/supermatter_shard/proc/alarm()
+	if(get_status() == SUPERMATTER_DELAMINATING)
+		playsound(get_turf(src), 'sound/misc/bloblarm.ogg', 100)
+	if(get_status() == SUPERMATTER_EMERGENCY)
+		playsound(get_turf(src), 'sound/machines/engine_alert1.ogg', 100)
+	if(get_status() == SUPERMATTER_DANGER)
+		playsound(get_turf(src), 'sound/machines/engine_alert2.ogg', 100)
+	if(get_status() == SUPERMATTER_WARNING)
+		playsound(get_turf(src), 'sound/machines/terminal_alert.ogg', 75)
+
 /obj/machinery/power/supermatter_shard/proc/get_integrity()
 	var/integrity = damage / explosion_point
 	integrity = round(100 - integrity * 100)
@@ -381,6 +391,7 @@
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_DELAY)
+			alarm()
 			var/stability = num2text(round((damage / explosion_point) * 100))
 
 			if(damage > emergency_point)
