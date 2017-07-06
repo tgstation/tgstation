@@ -49,7 +49,7 @@
 		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
-	..()
+	. = ..()
 	if(direct)
 		setDir(direct)
 	if(reinf && anchored)
