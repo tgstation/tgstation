@@ -50,7 +50,6 @@
 
 /obj/structure/window/Initialize(mapload, direct)
 	..()
-	obj_integrity = max_integrity
 	if(direct)
 		setDir(direct)
 	if(reinf && anchored)
