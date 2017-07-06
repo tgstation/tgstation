@@ -369,6 +369,7 @@
 /datum/status_effect/necropolis_curse/Destroy()
 	if(!QDELETED(wasting_effect))
 		qdel(wasting_effect)
+		wasting_effect = null
 	return ..()
 
 /datum/status_effect/necropolis_curse/on_remove()
@@ -411,9 +412,10 @@
 			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
 			if(spawn_turf)
-				INVOKE_ASYNC(src, .proc/grasp, spawn_turf)
+				grasp(spawn_turf)
 
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
+	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
 	var/turf/ownerloc = get_turf(owner)

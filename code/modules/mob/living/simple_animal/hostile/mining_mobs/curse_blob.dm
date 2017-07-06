@@ -33,13 +33,13 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/Destroy()
 	new /obj/effect/temp_visual/dir_setting/curse/blob(loc, dir)
 	doing_move_loop = FALSE
-	deltimer(timerid)
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Goto(move_target, delay, minimum_distance)
-	INVOKE_ASYNC(src, .proc/move_loop, target, delay)
+	move_loop(target, delay)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
+	set waitfor = FALSE
 	if(doing_move_loop)
 		return
 	doing_move_loop = TRUE
@@ -78,40 +78,21 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attack_hand(mob/living/carbon/human/H)
-	if(H != set_target)
-		return
-	return ..()
+#define IGNORE_PROC_IF_NOT_TARGET(X) /mob/living/simple_animal/hostile/asteroid/curseblob/##X(AM) { if (AM == set_target) return ..(); }
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attack_hulk(mob/living/carbon/human/H, does_attack_animation = 0)
-	if(H != set_target)
-		return
-	return ..()
+IGNORE_PROC_IF_NOT_TARGET(attack_hand)
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attack_paw(mob/living/carbon/monkey/M)
-	if(M != set_target)
-		return
-	return ..()
+IGNORE_PROC_IF_NOT_TARGET(attack_hulk)
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attack_alien(mob/living/carbon/alien/humanoid/A)
-	if(A != set_target)
-		return
-	return ..()
+IGNORE_PROC_IF_NOT_TARGET(attack_paw)
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L != set_target)
-		return
-	return ..()
+IGNORE_PROC_IF_NOT_TARGET(attack_alien)
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attack_animal(mob/living/simple_animal/S)
-	if(S != set_target)
-		return
-	return ..()
+IGNORE_PROC_IF_NOT_TARGET(attack_larva)
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attack_slime(mob/living/simple_animal/slime/S)
-	if(S != set_target)
-		return
-	return ..()
+IGNORE_PROC_IF_NOT_TARGET(attack_animal)
+
+IGNORE_PROC_IF_NOT_TARGET(attack_slime)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/bullet_act(obj/item/projectile/Proj)
 	if(Proj.firer != set_target)
@@ -122,3 +103,5 @@
 	if(L != set_target)
 		return
 	return ..()
+
+#undef IGNORE_PROC_IF_NOT_TARGET

@@ -139,6 +139,9 @@
 
 /obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
 	. = ..()
+	update_icon()
+
+/obj/item/projectile/curse_hand/update_icon()
 	icon_state = "[icon_state][handedness]"
 
 /obj/effect/temp_visual/wizard
