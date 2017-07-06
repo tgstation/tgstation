@@ -38,6 +38,7 @@
 	var/grenade_to_throw = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
 
 	ai_type = /datum/goap_agent/russian
+	make_ai = TRUE
 
 
 /mob/living/simple_animal/hostile/russian/death()

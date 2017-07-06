@@ -54,7 +54,7 @@
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 	var/datum/goap_agent/lavaland/goap_ai
 	var/ai_type = /datum/goap_agent/lavaland
-	var/make_ai = TRUE
+	var/make_ai = FALSE
 
 /mob/living/simple_animal/hostile/Initialize()
 	. = ..()
