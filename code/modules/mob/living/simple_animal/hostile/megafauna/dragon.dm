@@ -42,7 +42,7 @@ Difficulty: Medium
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
-	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -259,6 +259,7 @@ Difficulty: Medium
 	density = TRUE
 	sleep(1)
 	swooping &= ~SWOOP_DAMAGEABLE
+	SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -336,7 +337,7 @@ Difficulty: Medium
 	duration = 5
 
 /obj/effect/temp_visual/dragon_flight
-	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
 	pixel_x = -16

@@ -265,8 +265,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

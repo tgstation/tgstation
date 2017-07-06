@@ -837,7 +837,7 @@
 		for(var/obj/machinery/hydroponics/h in range(1,src))
 			h.update_icon()
 
-	else if(istype(O, /obj/item/weapon/shovel/spade) && unwrenchable)
+	else if(istype(O, /obj/item/weapon/shovel/spade))
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
@@ -929,7 +929,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	density = 0
-	use_power = 0
+	use_power = NO_POWER_USE
 	unwrenchable = 0
 
 /obj/machinery/hydroponics/soil/update_icon_hoses()

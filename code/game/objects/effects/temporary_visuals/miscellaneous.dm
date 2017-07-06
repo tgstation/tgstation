@@ -162,9 +162,15 @@
 /obj/effect/temp_visual/decoy/fading/fivesecond
 	duration = 50
 
+/obj/effect/temp_visual/decoy/fading/halfsecond
+	duration = 5
+
 /obj/effect/temp_visual/small_smoke
 	icon_state = "smoke"
 	duration = 50
+
+/obj/effect/temp_visual/small_smoke/halfsecond
+	duration = 5
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'

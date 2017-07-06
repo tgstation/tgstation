@@ -278,7 +278,7 @@ Difficulty: Very Hard
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
 	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
@@ -380,7 +380,7 @@ Difficulty: Very Hard
 	icon_state = "anomaly_crystal"
 	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	use_power = 0
+	use_power = NO_POWER_USE
 	density = 1
 	flags = HEAR
 	var/activation_method

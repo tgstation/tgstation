@@ -464,7 +464,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //LINK FUNCTIONS===================================
 
 			else//Cartridge menu linking
-				mode = text2num(href_list["choice"])
+				mode = max(text2num(href_list["choice"]), 0)
 
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
