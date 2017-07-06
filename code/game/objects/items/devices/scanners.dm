@@ -148,8 +148,9 @@ MASS SPECTROMETER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.return_liver_damage() > 10)
-			to_chat(user, "\t<span class='alert'>[H.return_liver_damage() > 45 ? "severe" : "minor"] liver damage detected.</span>")
+		var/ldamage = H.return_liver_damage()
+		if(ldamage > 10)
+			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "severe" : "minor"] liver damage detected.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)

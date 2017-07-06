@@ -19,8 +19,8 @@
 	var/filterToxins = TRUE //whether to filter toxins
 	var/list/toxinList
 
-/obj/item/organ/liver/New()
-	..()
+/obj/item/organ/liver/Initialize()
+	. = ..()
 	toxinList = typesof(/datum/reagent/toxin)
 
 /obj/item/organ/liver/on_life()
@@ -49,7 +49,7 @@
 
 
 				//metabolize reagents
-				C.reagents.metabolize(C, can_overdose=1)
+				C.reagents.metabolize(C, can_overdose=TRUE)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
 				to_chat(C, "<span = 'notice'>[pick("You feel nauseous.", "You feel a dull pain in your lower body.", "You feel confused.")]</span>")
@@ -67,6 +67,6 @@
 
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"
-	icon_state = "pliver" 
+	icon_state = "pliver"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 
