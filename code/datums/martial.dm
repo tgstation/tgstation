@@ -83,8 +83,6 @@
 			store(H.mind.martial_art,H)
 		else
 			H.mind.martial_art.on_remove(H)
-			if(H.mind.martial_art != H.mind.default_martial_art && !H.mind.martial_art.base)
-				QDEL_NULL(H.mind.martial_art)
 	else if(make_temporary)
 		base = H.mind.default_martial_art
 	if(help_verb)
@@ -93,11 +91,11 @@
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)
-	if(H.mind && base)
-		if(H.mind.default_martial_art != base && !base.base)
-			QDEL_NULL(base)
 	M.on_remove(H)
-	base = M
+	if(M.base) //Checks if M is temporary, if so it will not be stored.
+		base = M.base
+	else //Otherwise, M is stored.
+		base = M
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.mind.martial_art != src)
