@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
-		log_say("[src.real_name]/[src.key] : [input]")
+		log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -387,7 +387,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 
-	log_say("[src.real_name]/[src.key] : [text]")
+	log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
 
 //FORCE RECALL/RESET
 
@@ -552,6 +552,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	G.summoner = user
 	G.key = key
 	G.mind.enslave_mind_to_creator(user)
+	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)
 		if("tech")
 			to_chat(user, "[G.tech_fluff_string]")

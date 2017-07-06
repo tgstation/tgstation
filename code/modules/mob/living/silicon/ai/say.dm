@@ -40,7 +40,7 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
-	log_say("[key_name(src)] : [message]")
+
 
 	message = trim(message)
 
@@ -49,6 +49,13 @@
 
 	var/obj/machinery/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
+		var/turf/padturf = get_turf(T)
+		var/padloc
+		if(padturf)
+			padloc = COORD(padturf)
+		else
+			padloc = "(UNKNOWN)"
+		log_talk(src,"HOLOPAD [padloc]: [key_name(src)] : [message]", LOGSAY)
 		send_speech(message, 7, T, "robot", get_spans(), language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
