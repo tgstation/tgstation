@@ -18,7 +18,7 @@
 
 /obj/machinery/rnd/Initialize()
 	. = ..()
-	wires = new /datum/wires/r_n_d(src)
+	wires = new /datum/wires/rnd(src)
 
 /obj/machinery/rnd/Destroy()
 	qdel(wires)
@@ -68,7 +68,7 @@
 /obj/machinery/rnd/proc/disconnect_console()
 	linked_console = null
 
-//proc used to handle inserting items or reagents into r_n_d machines
+//proc used to handle inserting items or reagents into rnd machines
 /obj/machinery/rnd/proc/Insert_Item(obj/item/I, mob/user)
 	return
 
