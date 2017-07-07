@@ -30,15 +30,15 @@
 	multiple_receivers = FALSE
 
 /obj/machinery/boss_sender/sci/Initialize()
-	..()
 	for(var/obj/machinery/boss_receiver/B in GLOB.boss_receivers)
 		if(B.is_mining_receiver)
 			linked = B
 			return
 
 /obj/machinery/boss_sender/attack_hand(mob/user)
-	switch(alert(user,,"[src.name] panel","Send items","Remove an item"))
+	switch(alert(user,,"[src.name] panel","Send all items","Remove an item"))
 		if("Send all items")
+
 			if(multiple_receivers)
 				var/input = input("Select a B.O.S.S. receiver unit.", "[src.name] panel", null, null) as null|anything in GLOB.boss_receivers
 				if(input)
@@ -48,7 +48,7 @@
 
 			if(linked)
 				for(var/obj/item/I in src.contents)
-					I.forceMove(linked)
+					I.forceMove(linked) //might have to use Exit() here
 				to_chat(user, "Items sent to receiver.")
 		if("Remove an item")
 			var/input = input("Select an item to remove.", "[src.name] panel", null, null) as null|anything in src.contents
@@ -85,5 +85,4 @@
 	is_mining_receiver = TRUE
 
 /obj/machinery/boss_receiver/sci/Initialize()
-	..()
 	GLOB.boss_receivers += src
