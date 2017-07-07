@@ -501,7 +501,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
+		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.viruses)
 		// Make toxins vomit look different
 		if(toxvomit)
 			V.icon_state = "vomittox_[pick(1,4)]"

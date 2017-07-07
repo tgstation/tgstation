@@ -81,8 +81,18 @@
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
+	var/virus_chance = 20 //chance for the vomit to contain viruses
 
-/obj/effect/decal/cleanable/vomit/attack_hand(var/mob/user)
+/obj/effect/decal/cleanable/vomit/New(loc, list/virus_list)
+	..()
+	if(virus_list && virus_list.len)
+		for(var/datum/disease/D in virus_list)
+			if(prob(virus_chance))
+				var/datum/disease/viruus = D.Copy(1)
+				viruses += viruus
+				viruus.holder = src
+
+/obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
@@ -96,6 +106,8 @@
 							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
 							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
 			reagents.trans_to(H, reagents.total_volume)
+			for(var/datum/disease/D in viruses)
+				H.ForceContractDisease(D)
 			qdel(src)
 
 /obj/effect/decal/cleanable/vomit/Destroy()
