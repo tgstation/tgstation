@@ -285,7 +285,6 @@
 /area/shuttle/escape)
 "aX" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/noslip,

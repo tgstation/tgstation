@@ -109,6 +109,41 @@
 	icon_state = "tailsweep"
 	duration = 4
 
+/obj/effect/temp_visual/dir_setting/curse
+	icon_state = "curse"
+	duration = 32
+	var/fades = TRUE
+
+/obj/effect/temp_visual/dir_setting/curse/Initialize(mapload, set_dir)
+	. = ..()
+	if(fades)
+		animate(src, alpha = 0, time = 32)
+
+/obj/effect/temp_visual/dir_setting/curse/blob
+	icon_state = "curseblob"
+
+/obj/effect/temp_visual/dir_setting/curse/grasp_portal
+	icon = 'icons/effects/64x64.dmi'
+	layer = LARGE_MOB_LAYER
+	pixel_y = -16
+	pixel_x = -16
+	duration = 32
+	fades = FALSE
+
+/obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading
+	duration = 32
+	fades = TRUE
+
+/obj/effect/temp_visual/dir_setting/curse/hand
+	icon_state = "cursehand"
+
+/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
+	. = ..()
+	update_icon()
+
+/obj/item/projectile/curse_hand/update_icon()
+	icon_state = "[icon_state][handedness]"
+
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/mob.dmi'
@@ -345,3 +380,31 @@
 	icon_state = "bleed10"
 	duration = 12
 	shrink = FALSE
+
+/obj/effect/temp_visual/warp_cube
+	duration = 5
+	var/outgoing = TRUE
+
+/obj/effect/temp_visual/warp_cube/Initialize(mapload, atom/teleporting_atom, warp_color, new_outgoing)
+	. = ..()
+	if(teleporting_atom)
+		outgoing = new_outgoing
+		appearance = teleporting_atom.appearance
+		setDir(teleporting_atom.dir)
+		if(warp_color)
+			color = list(warp_color, warp_color, warp_color, list(0,0,0))
+			set_light(1.4, 1, warp_color)
+		mouse_opacity = 0
+		var/matrix/skew = transform
+		skew = skew.Turn(180)
+		skew = skew.Interpolate(transform, 0.5)
+		if(!outgoing)
+			transform = skew * 2
+			skew = teleporting_atom.transform
+			alpha = 0
+			animate(src, alpha = teleporting_atom.alpha, transform = skew, time = duration)
+		else
+			skew *= 2
+			animate(src, alpha = 0, transform = skew, time = duration)
+	else
+		return INITIALIZE_HINT_QDEL

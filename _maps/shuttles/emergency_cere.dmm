@@ -827,7 +827,6 @@
 /area/shuttle/escape)
 "cu" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -890,7 +889,6 @@
 /area/shuttle/escape)
 "cD" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -979,7 +977,6 @@
 /area/shuttle/escape)
 "cL" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side,
@@ -993,7 +990,6 @@
 /area/shuttle/escape)
 "cN" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{

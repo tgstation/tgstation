@@ -1063,7 +1063,6 @@
 	dir = 8
 	},
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/holofloor{
@@ -1080,7 +1079,6 @@
 /area/holodeck/rec_center/medical)
 "dn" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/holofloor{
@@ -4566,7 +4564,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/structure/mirror/magic/badmin{
+/obj/structure/mirror{
 	pixel_x = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5216,7 +5214,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/mirror/magic/badmin{
+/obj/structure/mirror{
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/vault{
@@ -9212,7 +9210,6 @@
 /area/centcom/control)
 "xK" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9233,7 +9230,6 @@
 /area/centcom/control)
 "xM" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -11100,7 +11096,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
@@ -11135,7 +11130,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
@@ -11167,7 +11161,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/white,
@@ -11261,7 +11254,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/white,
@@ -11304,7 +11296,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
@@ -11349,7 +11340,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/corner,
@@ -11371,7 +11361,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -11452,7 +11441,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -12655,7 +12643,6 @@
 /area/centcom/evac)
 "Gt" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -14442,6 +14429,9 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
+/area/centcom/evac)
+"Mi" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/evac)
 
 (1,1,1) = {"
@@ -41143,7 +41133,7 @@ Gs
 GE
 Gs
 GV
-FN
+Mi
 FN
 FN
 Hl
@@ -54201,9 +54191,9 @@ ru
 lJ
 vX
 qA
-wL
-wL
-wL
+ry
+ry
+ry
 qA
 yp
 lJ
@@ -54972,9 +54962,9 @@ ru
 lJ
 wa
 qA
-wL
-wL
-wL
+ry
+ry
+ry
 qA
 ys
 mU
@@ -59348,7 +59338,7 @@ it
 yA
 yI
 lA
-zf
+Ki
 zt
 it
 zH
