@@ -14438,6 +14438,9 @@
 	dir = 5
 	},
 /area/centcom/evac)
+"Mi" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -41138,7 +41141,7 @@ Gs
 GE
 Gs
 GV
-FN
+Mi
 FN
 FN
 Hl
@@ -54196,9 +54199,9 @@ ru
 lJ
 vX
 qA
-wL
-wL
-wL
+ry
+ry
+ry
 qA
 yp
 lJ
@@ -54967,9 +54970,9 @@ ru
 lJ
 wa
 qA
-wL
-wL
-wL
+ry
+ry
+ry
 qA
 ys
 mU
@@ -59343,7 +59346,7 @@ it
 yA
 yI
 lA
-zf
+Ki
 zt
 it
 zH
