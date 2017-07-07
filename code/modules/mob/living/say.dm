@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_WHISPER)
 		message_range = 1
 		spans |= SPAN_ITALICS
-		log_whisper("[src.name]/[src.key] : [message]")
+		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
 		if(in_critical)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
-		log_say("[name]/[key] : [message]")
+		log_talk(src,"[name]/[key] : [message]",LOGSAY)
 
 	message = treat_message(message)
 	if(!message)
@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				log_talk(src,"[mind.changeling.changelingID]/[key] : [message]",LOGSAY)
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)

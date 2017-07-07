@@ -7532,6 +7532,16 @@
 	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel,
 /area/security/warden)
 "aox" = (
@@ -9563,6 +9573,10 @@
 /obj/item/weapon/pen,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
+	},
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -14692,7 +14706,7 @@
 "aBO" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aBQ" = (
@@ -15288,7 +15302,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCW" = (
@@ -15296,7 +15310,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCX" = (
@@ -15319,7 +15333,7 @@
 /area/engine/engineering)
 "aCZ" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aDa" = (
@@ -18081,7 +18095,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -24637,7 +24651,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aVk" = (
@@ -32967,7 +32981,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
-/obj/machinery/computer/teleporter,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
 	},
@@ -45922,7 +45936,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "n2o_out"
+	id_tag = "n2o_out";
 	name = "n2o out"
 	},
 /turf/open/floor/engine/n2o,
@@ -49223,7 +49237,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "tox_out"
+	id_tag = "tox_out";
 	name = "toxin out"
 	},
 /turf/open/floor/engine/plasma,
@@ -49956,9 +49970,7 @@
 /turf/closed/wall,
 /area/aisat)
 "bRb" = (
-/obj/machinery/computer/crew{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/crew/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -50712,9 +50724,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bSm" = (
-/obj/machinery/computer/med_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -52023,7 +52033,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "co2_out"
+	id_tag = "co2_out";
 	name = "co2 out"
 	},
 /turf/open/floor/engine/co2,
@@ -58890,7 +58900,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
 	frequency = 1441;
-	id_tag = "n2_out"
+	id_tag = "n2_out";
 	name = "n2 out"
 	},
 /turf/open/floor/engine/n2,
@@ -60455,7 +60465,6 @@
 /area/medical/surgery)
 "cld" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -60487,7 +60496,6 @@
 /area/medical/sleeper)
 "clh" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -78832,9 +78840,7 @@
 	},
 /area/shuttle/syndicate)
 "cTF" = (
-/obj/machinery/computer/camera_advanced{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -82459,7 +82465,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dbb" = (
@@ -84047,7 +84053,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dee" = (
@@ -84055,7 +84061,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "def" = (
@@ -84071,7 +84077,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dei" = (
@@ -84366,7 +84372,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "deT" = (
@@ -84494,7 +84500,7 @@
 "dfk" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dfm" = (
@@ -84502,7 +84508,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dfp" = (
@@ -86403,9 +86409,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "djY" = (
-/obj/machinery/computer/secure_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -86968,7 +86972,7 @@
 /area/engine/supermatter)
 "dlN" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dlO" = (
@@ -117229,7 +117233,7 @@ akD
 akD
 alU
 ano
-aov
+apH
 apN
 are
 asu
@@ -117743,7 +117747,7 @@ ajw
 akF
 alZ
 anq
-aov
+aoA
 aoy
 arg
 asw

@@ -484,14 +484,12 @@
 /area/shuttle/escape)
 "bD" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bE" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,

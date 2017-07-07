@@ -173,8 +173,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
-			message_admins("[user ? "key_name_admin(user)":"Unknown"] has released Legion!")
-			log_game("[user ? "key_name(user)":"Unknown"] released Legion.")
+			message_admins("[user ? key_name_admin(user):"Unknown"] has released Legion!")
+			log_game("[user ? key_name(user):"Unknown"] released Legion.")
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
@@ -340,60 +340,3 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "burnt stone surrounding tile"
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
-
-//hot stone tiles, cosmetic only
-/obj/structure/stone_tile/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-//hot cracked stone tiles, cosmetic only
-/obj/structure/stone_tile/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-//hot burnt stone tiles, cosmetic only
-/obj/structure/stone_tile/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'

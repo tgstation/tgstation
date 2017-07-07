@@ -104,7 +104,7 @@ Contains:
 	icon_state = "void"
 	item_state = "void"
 	desc = "A Centcom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
-	slowdown = TRUE
+	slowdown = 4
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/multitool)
 
 	//Space santa outfit suit
@@ -238,7 +238,7 @@ Contains:
 	armor = list(melee = 20, bullet = 40, laser = 30, energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = ACID_PROOF | FIRE_PROOF
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"
@@ -249,7 +249,8 @@ Contains:
 	armor = list(melee = 20, bullet = 40, laser = 30,energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = ACID_PROOF | FIRE_PROOF
+	slowdown = 0
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp

@@ -128,11 +128,6 @@
 /turf/closed/indestructible/riveted/boss/see_through
 	opacity = FALSE
 
-/turf/closed/indestructible/riveted/boss/hot
-	icon = 'icons/turf/walls/boss_wall_hot.dmi'
-	canSmoothWith = list(/turf/closed/indestructible/riveted/boss/hot)
-	baseturf = /turf/closed/indestructible/riveted/boss/hot
-
 /turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "basalt"

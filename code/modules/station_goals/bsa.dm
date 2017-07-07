@@ -232,7 +232,7 @@
 	build_path = /obj/machinery/computer/bsa_control
 
 /obj/machinery/computer/bsa_control
-	name = "Bluespace Artillery Control"
+	name = "bluespace artillery control"
 	var/obj/machinery/bsa/full/cannon
 	var/notice
 	var/target

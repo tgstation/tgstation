@@ -143,7 +143,7 @@
 	glass_cost = 0
 	cooldownTime = 300 //30 seconds
 	maximum_idle = 0 // Swarmers have no restraint
-	dispense_type = /obj/item/device/unactivated_swarmer
+	dispense_type = /obj/effect/mob_spawn/swarmer
 	begin_create_message = "hums softly as an interface appears above it, \
 		scrolling by at unreadable speed."
 	end_create_message = "materializes a strange shell, which drops to the \
