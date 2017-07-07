@@ -487,7 +487,7 @@
 	icon_state = "plasmawindow"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
-	obj_integrity = 60
+	obj_integrity = 100
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
