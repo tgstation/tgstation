@@ -81,19 +81,19 @@
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
 	if(falling_atoms[AM])
-		return
+		return FALSE
 	if(!isliving(AM) && !isobj(AM))
-		return
+		return FALSE
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile) || AM.throwing)
-		return
+		return FALSE
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
-		return
+		return FALSE
 	//Flies right over the chasm
 	if(isliving(AM))
 		var/mob/M = AM
 		if(M.is_flying())
-			return
+			return FALSE
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
@@ -101,7 +101,7 @@
 			//To freak out any bystanders
 			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
-			return
+			return FALSE
 	return TRUE
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
@@ -118,7 +118,7 @@
 			var/mob/living/L = AM
 			L.Knockdown(100)
 			L.adjustBruteLoss(30)
-	falling_atoms[AM] = FALSE
+	falling_atoms -= AM
 
 
 /turf/open/chasm/straight_down/Initialize()
@@ -168,7 +168,7 @@
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
 
-	falling_atoms[AM] = FALSE
+	falling_atoms -= AM
 
 	qdel(AM)
 
