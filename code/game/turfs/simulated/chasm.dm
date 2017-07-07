@@ -10,7 +10,7 @@
 	icon_state = "smooth"
 	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
-	var/list/falling_atoms //Atoms currently falling into the chasm
+	var/static/list/falling_atoms = list() //Atoms currently falling into the chasm
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
@@ -80,21 +80,20 @@
 			INVOKE_ASYNC(src, .proc/drop, thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
-	for(var/V in falling_atoms)
-		if(AM == V)
-			return 0
+	if(falling_atoms[AM])
+		return
 	if(!isliving(AM) && !isobj(AM))
-		return 0
+		return
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile) || AM.throwing)
-		return 0
+		return
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
-		return 0
+		return
 	//Flies right over the chasm
 	if(isliving(AM))
 		var/mob/M = AM
 		if(M.is_flying())
-			return 0
+			return
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
@@ -102,14 +101,14 @@
 			//To freak out any bystanders
 			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
-			return 0
-	return 1
+			return
+	return TRUE
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
 	if(!AM || QDELETED(AM))
 		return
-	LAZYADD(falling_atoms, AM)
+	falling_atoms[AM] = TRUE
 	var/turf/T = locate(drop_x, drop_y, drop_z)
 	if(T)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
@@ -119,7 +118,7 @@
 			var/mob/living/L = AM
 			L.Knockdown(100)
 			L.adjustBruteLoss(30)
-	LAZYREMOVE(falling_atoms, AM)
+	falling_atoms[AM] = FALSE
 
 
 /turf/open/chasm/straight_down/Initialize()
@@ -142,7 +141,7 @@
 	//Make sure the item is still there after our sleep
 	if(!AM || QDELETED(AM))
 		return
-	LAZYADD(falling_atoms, AM)
+	falling_atoms[AM] = TRUE
 	AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
 	into the enveloping dark.</span>")
 	if(isliving(AM))
@@ -169,7 +168,7 @@
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
 
-	LAZYREMOVE(falling_atoms, AM)
+	falling_atoms[AM] = FALSE
 
 	qdel(AM)
 
