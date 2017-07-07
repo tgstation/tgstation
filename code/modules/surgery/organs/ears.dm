@@ -49,6 +49,9 @@
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
 	deaf = max(deaf, value)
 
+/obj/item/organ/ears/invincible/adjustEarDamage(ddmg, ddeaf)
+	return
+
 
 /mob/proc/restoreEars()
 
@@ -70,3 +73,24 @@
 	var/obj/item/organ/ears/ears = getorgan(/obj/item/organ/ears)
 	if(ears)
 		ears.minimumDeafTicks(value)
+
+
+/obj/item/organ/ears/cat
+	name = "cat ears"
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "kitty"
+
+/obj/item/organ/ears/cat/adjustEarDamage(ddmg, ddeaf)
+	..(ddmg*2,ddeaf*2)
+
+/obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+	..()
+	color = H.hair_color
+	H.dna.features["ears"] = "Cat"
+	H.update_body()
+
+/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
+	..()
+	color = H.hair_color
+	H.dna.features["ears"] = "None"
+	H.update_body()

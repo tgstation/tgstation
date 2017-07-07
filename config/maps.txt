@@ -13,7 +13,7 @@ Format:
 	disabled (disables the map)
 endmap
 
-map tgstation2
+map boxstation
 	default
 	#voteweight 1.5
 endmap

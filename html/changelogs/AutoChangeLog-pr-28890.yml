@@ -1,0 +1,5 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - rscdel: "The majority of the tiny fans on Deltastation have been removed."
+  - tweak: "Airlocks going to space, and secure areas like the bridge and sec on Delta have been given the cycling system."

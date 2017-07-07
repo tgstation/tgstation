@@ -53,6 +53,7 @@
 	var/extended_inventory = 0	//can we access the hidden inventory?
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
+	var/obj/item/stack/spacecash/bill
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -118,10 +119,9 @@
 	..()
 
 /obj/machinery/vending/Destroy()
-	qdel(wires)
-	wires = null
-	qdel(coin)
-	coin = null
+	QDEL_NULL(wires)
+	QDEL_NULL(coin)
+	QDEL_NULL(bill)
 	return ..()
 
 /obj/machinery/vending/snack/Destroy()
@@ -311,6 +311,12 @@
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin))
+		if(coin)
+			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
+			return
+		if(bill)
+			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
+			return
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
@@ -318,6 +324,21 @@
 			return
 		W.loc = src
 		coin = W
+		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		return
+	else if(istype(W, /obj/item/stack/spacecash))
+		if(coin)
+			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
+			return
+		if(bill)
+			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
+			return
+		var/obj/item/stack/S = W
+		if(!premium.len)
+			to_chat(user, "<span class='warning'>[src] doesn't have a bill slot.</span>")
+			return
+		S.use(1)
+		bill = new S.type(src,1)
 		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
@@ -386,9 +407,9 @@
 			var/list/display_records = product_records
 			if(extended_inventory)
 				display_records = product_records + hidden_records
-			if(coin)
+			if(coin || bill)
 				display_records = product_records + coin_records
-			if(coin && extended_inventory)
+			if((coin || bill) && extended_inventory)
 				display_records = product_records + hidden_records + coin_records
 			dat += "<ul>"
 			for (var/datum/data/vending_product/R in display_records)
@@ -403,11 +424,11 @@
 			dat += "</ul>"
 		dat += "</div>"
 		if(premium.len > 0)
-			dat += "<b>Coin slot:</b> "
-			if (coin)
-				dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
+			dat += "<b>Change Return:</b> "
+			if (coin || bill)
+				dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 			else
-				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+				dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 		if(istype(src, /obj/machinery/vending/snack))
 			dat += "<h3>Chef's Food Selection</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -443,15 +464,23 @@
 			return
 
 	if(href_list["remove_coin"])
-		if(!coin)
-			to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
+		if(!(coin || bill))
+			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
 			return
-
-		coin.loc = loc
-		if(!usr.get_active_held_item())
-			usr.put_in_hands(coin)
-		to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
-		coin = null
+		if(coin)
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(coin)
+			else
+				coin.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
+			coin = null
+		if(bill)
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(bill)
+			else
+				bill.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
+			bill = null
 
 
 	usr.set_machine(src)
@@ -494,26 +523,25 @@
 				vend_ready = 1
 				return
 		else if(R in coin_records)
-			if(!coin)
-				to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
+			if(!(coin || bill))
+				to_chat(usr, "<span class='warning'>You need to insert money to get this item!</span>")
 				vend_ready = 1
 				return
-			if(coin.string_attached)
+			if(coin && coin.string_attached)
 				if(prob(50))
 					if(usr.put_in_hands(coin))
 						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
 					else
 						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
-						qdel(coin)
-						coin = null
+						QDEL_NULL(coin)
 				else
 					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
-					qdel(coin)
-					coin = null
+					QDEL_NULL(coin)
 			else
-				qdel(coin)
-				coin = null
+				QDEL_NULL(coin)
+				QDEL_NULL(bill)
+
 		else if (!(R in product_records))
 			vend_ready = 1
 			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
@@ -960,7 +988,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/seeds/cabbage = 3,/obj/item/seeds/carrot = 3,/obj/item/seeds/cherry = 3,/obj/item/seeds/chanter = 3,
 						/obj/item/seeds/chili = 3,/obj/item/seeds/cocoapod = 3,/obj/item/seeds/coffee = 3,/obj/item/seeds/corn = 3,
 						/obj/item/seeds/eggplant = 3,/obj/item/seeds/grape = 3,/obj/item/seeds/grass = 3,/obj/item/seeds/lemon = 3,
-						/obj/item/seeds/lime = 3,/obj/item/seeds/orange = 3,/obj/item/seeds/potato = 3,/obj/item/seeds/poppy = 3,
+						/obj/item/seeds/lime = 3,/obj/item/seeds/onion = 3,/obj/item/seeds/orange = 3,/obj/item/seeds/potato = 3,/obj/item/seeds/poppy = 3,
 						/obj/item/seeds/pumpkin = 3,/obj/item/seeds/replicapod = 3,/obj/item/seeds/wheat/rice = 3,/obj/item/seeds/soya = 3,/obj/item/seeds/sunflower = 3,
 						/obj/item/seeds/tea = 3,/obj/item/seeds/tobacco = 3,/obj/item/seeds/tomato = 3,
 						/obj/item/seeds/tower = 3,/obj/item/seeds/watermelon = 3,/obj/item/seeds/wheat = 3,/obj/item/seeds/whitebeet = 3)
@@ -995,7 +1023,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/helmet/gladiator = 1,/obj/item/clothing/under/gimmick/rank/captain/suit = 1,/obj/item/clothing/head/flatcap = 1,
 					/obj/item/clothing/suit/toggle/labcoat/mad = 1,/obj/item/clothing/shoes/jackboots = 1,
 					/obj/item/clothing/under/schoolgirl = 1,/obj/item/clothing/under/schoolgirl/red = 1,/obj/item/clothing/under/schoolgirl/green = 1,/obj/item/clothing/under/schoolgirl/orange = 1,/obj/item/clothing/head/kitty = 1,/obj/item/clothing/under/skirt/black = 1,/obj/item/clothing/head/beret = 1,
-					/obj/item/clothing/tie/waistcoat = 1,/obj/item/clothing/under/suit_jacket = 1,/obj/item/clothing/head/that =1,/obj/item/clothing/under/kilt = 1,/obj/item/clothing/head/beret = 1,/obj/item/clothing/tie/waistcoat = 1,
+					/obj/item/clothing/accessory/waistcoat = 1,/obj/item/clothing/under/suit_jacket = 1,/obj/item/clothing/head/that =1,/obj/item/clothing/under/kilt = 1,/obj/item/clothing/head/beret = 1,/obj/item/clothing/accessory/waistcoat = 1,
 					/obj/item/clothing/glasses/monocle =1,/obj/item/clothing/head/bowler = 1,/obj/item/weapon/cane = 1,/obj/item/clothing/under/sl_suit = 1,
 					/obj/item/clothing/mask/fakemoustache = 1,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,/obj/item/clothing/head/plaguedoctorhat = 1,/obj/item/clothing/mask/gas/plaguedoctor = 1,
 					/obj/item/clothing/suit/toggle/owlwings = 1, /obj/item/clothing/under/owl = 1,/obj/item/clothing/mask/gas/owl_mask = 1,
@@ -1136,7 +1164,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/neck/scarf/purple=1,/obj/item/clothing/neck/scarf/yellow=1,/obj/item/clothing/neck/scarf/orange=1,
 	/obj/item/clothing/neck/scarf/cyan=1,/obj/item/clothing/neck/scarf=1,/obj/item/clothing/neck/scarf/black=1,
 	/obj/item/clothing/neck/scarf/zebra=1,/obj/item/clothing/neck/scarf/christmas=1,/obj/item/clothing/neck/stripedredscarf=1,
-	/obj/item/clothing/neck/stripedbluescarf=1,/obj/item/clothing/neck/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
+	/obj/item/clothing/neck/stripedbluescarf=1,/obj/item/clothing/neck/stripedgreenscarf=1,/obj/item/clothing/accessory/waistcoat=1,
 	/obj/item/clothing/under/skirt/black=1,/obj/item/clothing/under/skirt/blue=1,/obj/item/clothing/under/skirt/red=1,/obj/item/clothing/under/skirt/purple=1,
 	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
 	/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,

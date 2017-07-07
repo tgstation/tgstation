@@ -14,7 +14,7 @@
 	icon_state = "photocopier"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
@@ -171,7 +171,7 @@
 					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
 					var/icon/ic = icon('icons/obj/items.dmi',"photo")
 					small_img.Scale(8, 8)
-					ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 					p.icon = ic
 					toner -= 5
 					busy = 1

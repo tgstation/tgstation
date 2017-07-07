@@ -12,7 +12,7 @@
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = 1
-	use_power = 1				//this turret uses and requires power
+	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(GLOB.access_security)
@@ -550,14 +550,14 @@
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
 	req_access = list(GLOB.access_syndicate)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "syndicate"
@@ -567,7 +567,7 @@
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/Taser.ogg'
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -618,7 +618,7 @@
 	obj_integrity = 260
 	max_integrity = 260
 	always_up = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
 	stun_projectile = /obj/item/projectile/beam/laser

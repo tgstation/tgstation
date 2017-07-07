@@ -22,7 +22,7 @@
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -175,7 +175,6 @@
 		if("Private Security Officer")
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
-			icon = 'icons/mob/mob.dmi'
 			icon_state = "cutout_ntsec"
 	return 1
 

@@ -91,9 +91,7 @@
 "ao" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/decal/sandeffect,
 /obj/structure/mirror{
@@ -168,8 +166,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "aC" = (
@@ -226,8 +223,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "aK" = (
@@ -297,8 +293,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "aX" = (
@@ -317,8 +312,7 @@
 /area/ruin/powered/beach)
 "ba" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/pod/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
@@ -348,7 +342,6 @@
 /area/ruin/powered/beach)
 "bf" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/pod/dark{
@@ -371,7 +364,6 @@
 /area/ruin/powered)
 "bj" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/asteroid{
@@ -387,7 +379,6 @@
 /area/ruin/powered/beach)
 "bl" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/asteroid{
@@ -495,8 +486,7 @@
 /area/ruin/powered/beach)
 "bB" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -539,8 +529,7 @@
 /area/ruin/powered/beach)
 "bH" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/mob_spawn/human/beach/alive{
 	flavour_text = "You're a spunky lifeguard! It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.";
@@ -562,7 +551,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bK" = (
-/obj/item/weapon/storage/backpack/dufflebag,
+/obj/item/weapon/storage/backpack/duffelbag,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bL" = (
@@ -694,8 +683,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "ck" = (
@@ -706,8 +694,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "cl" = (

@@ -276,7 +276,6 @@
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
-	flags = NODROP
 
 	var/revivecost = 1000
 	var/cooldown = 0
@@ -401,7 +400,7 @@
 	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
-	M.Weaken(5)
+	M.Knockdown(100)
 	M.updatehealth() //forces health update before next life tick
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
@@ -447,7 +446,7 @@
 				return
 			user.visible_message("<span class='boldannounce'><i>[user] shocks [H] with \the [src]!</span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 100, 1, -1)
 			H.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
@@ -456,7 +455,7 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, "chest")
 			add_logs(user, H, "overloaded the heart of", defib)
-			H.Weaken(5)
+			H.Knockdown(100)
 			H.Jitter(100)
 			if(req_defib)
 				defib.deductcharge(revivecost)

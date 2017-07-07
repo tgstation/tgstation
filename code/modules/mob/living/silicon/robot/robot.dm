@@ -563,7 +563,7 @@
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(istype(george.get_active_held_item(), /obj/item))
+		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
 	return 0
 
@@ -575,7 +575,7 @@
 	if(!L.len) //no requirements
 		return 1
 
-	if(!istype(I, /obj/item/weapon/card/id) && istype(I, /obj/item))
+	if(!istype(I, /obj/item/weapon/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
@@ -591,7 +591,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -848,6 +848,8 @@
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
 		if(AI_SHELL) //New Shell
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg shell detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>")
+		if(DISCONNECT) //Tampering with the wires
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || low_power_mode)
@@ -917,7 +919,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(paralysis || stunned || weakened || getOxyLoss() > maxHealth*0.5)
+		if(IsUnconscious() || IsStun() || IsKnockdown() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -1085,7 +1087,8 @@
 		camera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
 	mainframe.diag_hud_set_deployed()
-	mainframe.show_laws() //Always remind the AI when switching
+	if(mainframe.laws)
+		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -1116,7 +1119,7 @@
 		return
 	if(incapacitated())
 		return
-	if(M.restrained())
+	if(M.incapacitated())
 		return
 	if(module)
 		if(!module.allow_riding)

@@ -170,6 +170,7 @@ Difficulty: Hard
 			charge(bonus_charges)
 		else
 			Goto(target, move_to_delay, minimum_distance)
+			SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)

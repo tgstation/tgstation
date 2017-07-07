@@ -319,7 +319,6 @@
 "aZ" = (
 /obj/structure/table,
 /obj/machinery/processor{
-	pixel_x = 0;
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/green{
@@ -413,22 +412,19 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "bo" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bp" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bq" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -496,7 +492,6 @@
 "bC" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -621,8 +616,7 @@
 "bY" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = -2;
@@ -688,7 +682,6 @@
 "ch" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 0;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/hydrofloor,
@@ -852,7 +845,6 @@
 /area/awaymission/centcomAway/hangar)
 "cN" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -1108,7 +1100,6 @@
 "dF" = (
 /obj/structure/table,
 /obj/machinery/processor{
-	pixel_x = 0;
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/red,
@@ -1432,7 +1423,6 @@
 /area/awaymission/centcomAway/general)
 "eH" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -2380,7 +2370,6 @@
 /area/awaymission/centcomAway/general)
 "hA" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -2522,7 +2511,6 @@
 /area/awaymission/centcomAway/general)
 "hX" = (
 /obj/machinery/button/crematorium{
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /turf/open/floor/engine,
@@ -3502,7 +3490,7 @@
 /area/awaymission/centcomAway/general)
 "kN" = (
 /obj/structure/table/wood,
-/obj/item/clothing/tie/medal,
+/obj/item/clothing/accessory/medal,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kO" = (
@@ -3516,7 +3504,7 @@
 /area/awaymission/centcomAway/general)
 "kQ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/tie/medal/gold,
+/obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kR" = (
@@ -3527,22 +3515,19 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/thunderdome)
 "kT" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/space,
 /area/space)
 "kU" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/space,
 /area/space)
 "kV" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
@@ -3766,7 +3751,6 @@
 /area/awaymission/centcomAway/thunderdome)
 "lD" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -3840,9 +3824,7 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)

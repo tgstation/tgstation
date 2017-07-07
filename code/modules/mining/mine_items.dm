@@ -19,7 +19,7 @@
 	icon_door = "mixed"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
-	new /obj/item/weapon/storage/backpack/dufflebag(src)
+	new /obj/item/weapon/storage/backpack/duffelbag(src)
 	new /obj/item/weapon/storage/backpack/explorer(src)
 	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
@@ -57,7 +57,7 @@
 /**********************Shuttle Computer**************************/
 
 /obj/machinery/computer/shuttle/mining
-	name = "Mining Shuttle Console"
+	name = "mining shuttle console"
 	desc = "Used to call and send the mining shuttle."
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"

@@ -66,7 +66,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 60 && stat != DEAD)
+	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
 		if(prob(3))
 			if(prob(25))
 				emote("drool")
@@ -278,9 +278,9 @@
 	//Puke if toxloss is too high
 	if(!stat)
 		if(getToxLoss() >= 45 && nutrition > 20)
-			lastpuke ++
-			if(lastpuke >= 25) // about 25 second delay I guess
-				vomit(20, 0, 1, 0, 1, 1)
+			lastpuke += prob(50)
+			if(lastpuke >= 50) // about 25 second delay I guess
+				vomit(20, toxic = TRUE)
 				lastpuke = 0
 
 
@@ -356,7 +356,7 @@
 
 	if(we_breath)
 		adjustOxyLoss(8)
-		Paralyse(4)
+		Unconscious(80)
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
@@ -382,10 +382,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/human/handle_status_effects()
 	..()
 	if(drunkenness)
-		if(sleeping)
-			drunkenness = max(drunkenness - (drunkenness / 10), 0)
-		else
-			drunkenness = max(drunkenness - (drunkenness / 25), 0)
+		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))
@@ -425,7 +422,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else
 					to_chat(src, "<span class='warning'>Just a quick nap...</span>")
-					Sleeping(45)
+					Sleeping(900)
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now

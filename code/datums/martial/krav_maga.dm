@@ -52,16 +52,15 @@
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
-/datum/martial_art/krav_maga/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
-	..()
-	to_chat(H, "<span class = 'userdanger'>You know the arts of Krav Maga!</span>")
-	to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
-	neckchop.Grant(H)
-	legsweep.Grant(H)
-	lungpunch.Grant(H)
+/datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
+	if(..())
+		to_chat(H, "<span class = 'userdanger'>You know the arts of Krav Maga!</span>")
+		to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+		neckchop.Grant(H)
+		legsweep.Grant(H)
+		lungpunch.Grant(H)
 
-/datum/martial_art/krav_maga/remove(var/mob/living/carbon/human/H)
-	..()
+/datum/martial_art/krav_maga/on_remove(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You suddenly forget the arts of Krav Maga...</span>")
 	neckchop.Remove(H)
 	legsweep.Remove(H)
@@ -84,13 +83,13 @@
 	return 0
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(D.stat || D.weakened)
+	if(D.stat || D.IsKnockdown())
 		return 0
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.Weaken(2)
+	D.Knockdown(40)
 	add_logs(A, D, "leg sweeped")
 	return 1
 
@@ -126,7 +125,7 @@
 	add_logs(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
 	var/bonus_damage = 10
-	if(D.weakened || D.resting || D.lying)
+	if(D.IsKnockdown() || D.resting || D.lying)
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
 	D.apply_damage(bonus_damage, BRUTE)

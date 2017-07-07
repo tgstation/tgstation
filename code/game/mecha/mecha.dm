@@ -56,7 +56,7 @@
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
-	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/mech/radio
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
@@ -117,6 +117,7 @@
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
+/obj/item/device/radio/mech //this has to go somewhere
 
 /obj/mecha/Initialize()
 	. = ..()
@@ -154,11 +155,9 @@
 			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
-
-	if(prob(30))
-		explosion(get_turf(loc), 0, 0, 1, 3)
-
 	if(wreckage)
+		if(prob(30))
+			explosion(get_turf(src), 0, 0, 1, 3)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
@@ -264,7 +263,7 @@
 	if(equipment && equipment.len)
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			to_chat(user, "\icon[ME] [ME]")
+			to_chat(user, "[bicon(ME)] [ME]")
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -639,7 +638,7 @@
 		var/can_control_mech = 0
 		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
 			can_control_mech = 1
-			to_chat(user, "<span class='notice'>\icon[src] Status of [name]:</span>\n[A.get_mecha_info()]")
+			to_chat(user, "<span class='notice'>[bicon(src)] Status of [name]:</span>\n[A.get_mecha_info()]")
 			break
 		if(!can_control_mech)
 			to_chat(user, "<span class='warning'>You cannot control exosuits without AI control beacons installed.</span>")
@@ -905,7 +904,7 @@
 	if(!user.transferItemToLoc(mmi_as_oc, src))
 		to_chat(user, "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>")
 		return FALSE
-	var/mob/brainmob = mmi_as_oc.brainmob
+	var/mob/living/brainmob = mmi_as_oc.brainmob
 	mmi_as_oc.mecha = src
 	occupant = brainmob
 	brainmob.forceMove(src) //should allow relaymove
@@ -938,7 +937,7 @@
 	if(ishuman(occupant))
 		mob_container = occupant
 		RemoveActions(occupant, human_occupant=1)
-	else if(istype(occupant, /mob/living/brain))
+	else if(isbrain(occupant))
 		var/mob/living/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
@@ -1007,7 +1006,7 @@
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
 		if(occupant && occupant.client)
-			to_chat(occupant, "\icon[src] [message]")
+			to_chat(occupant, "[bicon(src)] [message]")
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)

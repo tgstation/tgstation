@@ -1,7 +1,0 @@
-author: "Expletive"
-delete-after: True
-changes: 
-  - rscadd: "Many stacks now update their sprite based on their amount."
-  - rscadd: "Stacks will now weigh less if they're less than full."
-  - imageadd: "Added new icon states for glass, reinforced glass, metal, plasteel, plastic, plasma, plastitanium, titanium, gold, silver, adamantine, brass, bruise packs, ointment, gauze, cloth, leather, wet leather, hairless hide, human hide, ash drake hide, goliath hide, bones, sandstone blocks, and snow blocks."
-  - tweak: "Some lavaland stacks' max amounts have been reduced."

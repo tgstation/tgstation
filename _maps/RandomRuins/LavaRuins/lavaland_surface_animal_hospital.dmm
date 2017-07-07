@@ -77,7 +77,6 @@
 /area/ruin/powered/animal_hospital)
 "an" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -172,7 +171,6 @@
 /area/lavaland/surface/outdoors)
 "ay" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -377,7 +375,7 @@
 "ba" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/storage/backpack/dufflebag/med,
+/obj/item/weapon/storage/backpack/duffelbag/med,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},

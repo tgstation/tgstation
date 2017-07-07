@@ -78,7 +78,7 @@
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 				user.visible_message("[user.name] deconstructs [src].", \
 					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
 				qdel(src)
 				return
 
@@ -158,7 +158,7 @@
 	layer = WALL_OBJ_LAYER
 	obj_integrity = 100
 	max_integrity = 100
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
@@ -256,10 +256,10 @@
 				if(trigger)
 					burn_out()
 			else
-				use_power = 2
+				use_power = ACTIVE_POWER_USE
 				set_light(brightness)
 	else
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		set_light(0)
 
 	active_power_usage = (brightness * 10)
@@ -407,9 +407,9 @@
 				if(LIGHT_BROKEN)
 					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
 				else
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+					playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 // returns whether this light has power
@@ -519,7 +519,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(on)
 			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
@@ -647,7 +647,7 @@
 		src.visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 		update()
 
 

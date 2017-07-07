@@ -171,7 +171,7 @@
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
 
-		if (istype(O,/obj/item))
+		if (isitem(O))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 
@@ -202,7 +202,7 @@
 		return 0
 	return 1
 
-/obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
+/obj/item/stack/proc/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
 	if(zero_amount())
 		return 0
 	if (is_cyborg)
@@ -242,7 +242,7 @@
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)
-	use(transfer)
+	use(transfer, TRUE)
 	S.add(transfer)
 
 /obj/item/stack/Crossed(obj/o)
@@ -269,13 +269,15 @@
 		return
 	if(!in_range(src, user))
 		return
+	if(is_cyborg)
+		return
 	else
 		if(zero_amount())
 			return
 		//get amount from user
 		var/min = 0
 		var/max = src.get_amount()
-		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max]") as num)
+		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as num)
 		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= src.get_amount())
 			return
 		else
@@ -289,7 +291,7 @@
 	user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
-	use(amount)
+	use(amount, TRUE)
 
 
 

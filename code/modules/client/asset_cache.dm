@@ -205,6 +205,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"sig_low.gif" 				= 'icons/program_icons/sig_low.gif',
 		"sig_lan.gif" 				= 'icons/program_icons/sig_lan.gif',
 		"sig_none.gif" 				= 'icons/program_icons/sig_none.gif',
+		"smmon_0.gif" 				= 'icons/program_icons/smmon_0.gif',
+		"smmon_1.gif" 				= 'icons/program_icons/smmon_1.gif',
+		"smmon_2.gif" 				= 'icons/program_icons/smmon_2.gif',
+		"smmon_3.gif" 				= 'icons/program_icons/smmon_3.gif',
+		"smmon_4.gif" 				= 'icons/program_icons/smmon_4.gif',
+		"smmon_5.gif" 				= 'icons/program_icons/smmon_5.gif',
+		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif'
 	)
 
 /datum/asset/simple/pda
@@ -277,6 +284,21 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"chevron-expand.png" = 'html/chevron-expand.png',
 		"scales.png" = 'html/scales.png',
 		"changelog.css" = 'html/changelog.css'
+	)
+
+/datum/asset/simple/goonchat
+	verify = FALSE
+	assets = list(
+		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
+		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
+		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
+		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
 
 //Registers HTML Interface assets.

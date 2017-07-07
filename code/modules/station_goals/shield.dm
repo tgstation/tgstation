@@ -42,7 +42,7 @@
 	origin_tech = "engineering=3"
 
 /obj/machinery/computer/sat_control
-	name = "Satellite control"
+	name = "satellite control"
 	desc = "Used to control the satellite network."
 	circuit = /obj/item/weapon/circuitboard/machine/computer/sat_control
 	var/notice
