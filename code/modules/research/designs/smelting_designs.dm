@@ -22,7 +22,7 @@
 	id = "plasmaglass"
 	build_type = SMELTER
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
-	build_path = /obj/item/stack/sheet/glass/plasma
+	build_path = /obj/item/stack/sheet/plasmaglass
 	category = list("initial")
 
 /datum/design/alienalloy
