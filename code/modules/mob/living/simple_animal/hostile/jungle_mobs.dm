@@ -505,7 +505,7 @@
 		ranged_cooldown = world.time + ranged_cooldown_time
 		update_icons()
 		if(target && !stat)
-			icon_state = "mook"
+			update_icons()
 			Goto(target, move_to_delay, minimum_distance)
 
 /mob/living/simple_animal/hostile/jungle/mook/throw_impact(atom/hit_atom, throwingdatum)
@@ -529,6 +529,7 @@
 				struck_target_leap = TRUE
 				ML.attack_animal(src)
 				density = TRUE
+				struck_target_leap = TRUE
 				update_icons()
 				continue
 			if(istype(ML, /mob/living/simple_animal/hostile/jungle/mook) && !mook_under_us)//If we land on the same tile as another mook, spread out so we don't stack our sprite on the same tile
@@ -563,7 +564,10 @@
 				if(density == FALSE)
 					icon_state = "mook_leap"
 					return
-				icon_state = "mook_strike"
+				if(struck_target_leap)
+					icon_state = "mook_strike"
+					return
+				icon_state = "mook_slash_combo"
 			if(MOOK_ATTACK_RECOVERY)
 				icon_state = "mook"
 
