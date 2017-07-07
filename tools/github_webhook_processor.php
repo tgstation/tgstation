@@ -212,7 +212,7 @@ function handle_pr($payload) {
 			return;
 	} 
 	
-	if (strtolower(substr($payload['pull_request']['title'], 0, 3)) == '[s]') {
+	if (strpos(strtolower($payload['pull_request']['title']), '[s]') !== false) {
 		echo "PR Announcement Halted; Secret tag detected.\n";
 		return;
 	}
