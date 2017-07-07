@@ -73,9 +73,9 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
 
 GLOBAL_LIST_INIT(exp_specialmap, list(
 	EXP_TYPE_LIVING = list(), // all living mobs
-	EXP_TYPE_SPECIAL = list(), // antags, ERT, etc Todo: find a way to calculate the totals of special roles
-	EXP_TYPE_GHOST = list(), // dead people, observers
-	EXP_TYPE_EXEMPT = list() // special grandfather setting
+	EXP_TYPE_ANTAG = list(),
+	EXP_TYPE_SPECIAL = list("Lifebringer","Ash Walker","Exile","Servant Golem","Free Golem","Hermit","Translocated Vet","Escaped Prisoner","Hotel Staff","SuperFriend","Space Syndicate","Ancient Crew","Space Doctor","Space Bartender","Beach Bum","Skeleton","Zombie","Space Bar Patron","Lavaland Syndicate","Ghost Role"), // Ghost roles
+	EXP_TYPE_GHOST = list() // dead people, observers
 ))
 
 /proc/guest_jobbans(job)

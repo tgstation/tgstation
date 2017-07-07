@@ -19,13 +19,12 @@ SUBSYSTEM_DEF(blackbox)
 
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
+	var/sealed = FALSE	//time to stop tracking stats?
+
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
 	. = ..()
-
-
-	var/sealed = FALSE	//time to stop tracking stats?
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()

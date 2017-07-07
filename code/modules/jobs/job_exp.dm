@@ -184,62 +184,6 @@ GLOBAL_PROTECT(exp_to_update)
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
-//Manual incrementing/updating
-/*
-/client/proc/update_exp_client(minutes, announce_changes = FALSE)
-	if(!src ||!ckey || !config.use_exp_tracking)
-		return
-	if(!SSdbcore.Connect())
-		return -1
-	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
-	if(!exp_read.Execute())
-		var/err = exp_read.ErrorMsg()
-		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		return -1
-	var/list/play_records = list()
-	while(exp_read.NextRow())
-		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
-
-	for(var/rtype in SSjob.name_occupations)
-		if(!play_records[rtype])
-			play_records[rtype] = 0
-	for(var/rtype in GLOB.exp_specialmap)
-		if(!play_records[rtype])
-			play_records[rtype] = 0
-	var/list/old_records = play_records.Copy()
-	if(mob.stat != DEAD && mob.mind.assigned_role)
-		play_records[EXP_TYPE_LIVING] += minutes
-		if(announce_changes)
-			to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
-		for(var/job in SSjob.name_occupations)
-			if(mob.mind.assigned_role == job)
-				play_records[job] += minutes
-				if(announce_changes)
-					to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
-		if(mob.mind.special_role && !mob.mind.var_edited)
-			play_records[EXP_TYPE_SPECIAL] += minutes
-			if(announce_changes)
-				to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!")
-	else if(isobserver(mob))
-		play_records[EXP_TYPE_GHOST] += minutes
-		if(announce_changes)
-			to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
-	else if(minutes)	//Let "refresh" checks go through
-		return
-	prefs.exp = play_records
-
-	for(var/jtype in play_records)
-		if(play_records[jtype] != old_records[jtype])
-			var jobname = jtype
-			var time = play_records[jtype]
-			var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = VALUES(minutes)")
-			if(!update_query.Execute())
-				var/err = update_query.ErrorMsg()
-				log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
-				message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
-				return
-*/
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
 	if(!src ||!ckey || !config.use_exp_tracking)
@@ -325,19 +269,30 @@ GLOBAL_PROTECT(exp_to_update)
 	var/list/old_records = play_records.Copy()
 	if(isliving(mob))
 		if(mob.stat != DEAD)
+			var/rolefound = FALSE
 			play_records[EXP_TYPE_LIVING] += minutes
 			if(announce_changes)
 				to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
 			if(mob.mind.assigned_role)
 				for(var/job in SSjob.name_occupations)
 					if(mob.mind.assigned_role == job)
+						rolefound = TRUE
 						play_records[job] += minutes
 						if(announce_changes)
 							to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
+				if(!rolefound)
+					for(var/role in GLOB.exp_jobsmap[EXP_TYPE_SPECIAL])
+						if(mob.mind.assigned_role == role)
+							rolefound = TRUE
+							play_records[role] += minutes
+							if(announce_changes)
+								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!")
 				if(mob.mind.special_role && !mob.mind.var_edited)
 					play_records[mob.mind.special_role] += minutes
 					if(announce_changes)
 						to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!")
+			if(!rolefound)
+				play_records["Unknown"] += minutes
 		else
 			play_records[EXP_TYPE_GHOST] += minutes
 			if(announce_changes)
