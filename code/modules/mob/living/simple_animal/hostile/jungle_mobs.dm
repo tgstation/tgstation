@@ -561,7 +561,7 @@
 			if(MOOK_ATTACK_WARMUP)
 				icon_state = "mook_warmup"
 			if(MOOK_ATTACK_ACTIVE)
-				if(density == FALSE)
+				if(!density)
 					icon_state = "mook_leap"
 					return
 				if(struck_target_leap)
