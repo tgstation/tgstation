@@ -482,16 +482,14 @@
 		murder = S.friendly
 	else
 		murder = S.attacktext
-	S.visible_message("<span class='danger'>[S] unwisely [murder] [src], and [S.p_their()] body glows brilliantly before crumbling to ash!</span>", \
-		"<span class='userdanger'>You dumbly touch [src], and your vision burns brightly as your body disintegrates into dust. Oops.</span>", \
-		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
-	investigate_log("has been attacked (simple animal) by [S]", INVESTIGATE_SUPERMATTER)
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
-	Consume(S)
+	dust_mob(S, \
+	"<span class='danger'>[S] unwisely [murder] [src], and [S.p_their()] body burns brilliantly before flashing into ash!</span>", \
+	"<span class='userdanger'>You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.</span>", \
+	"simple animal attack")
 
 /obj/machinery/power/supermatter_shard/attack_robot(mob/user)
 	if(Adjacent(user))
-		return attack_hand(user)
+		dust_mob(user, cause = "cyborg touch")
 	else
 		to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
@@ -499,15 +497,21 @@
 	to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
-	if(!istype(user))
-		return
-	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... [user.p_their()] body starts to glow and bursts into flames before flashing into ash.</span>",\
-		"<span class='userdanger'>You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
-		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
-	investigate_log("has been attacked (hand) by [user]", INVESTIGATE_SUPERMATTER)
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+	dust_mob(user, cause = "hand")
 
-	Consume(user)
+/obj/machinery/power/supermatter_shard/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
+	if(!nom || QDELETED(nom) || !istype(nom))
+		return
+	if(!vis_msg)
+		vis_msg = "<span class='danger'>[nom] reaches out and touches [src], inducing a resonance... [nom.p_their()] body starts to glow and bursts into flames before flashing into ash"
+	if(!mob_msg)
+		mob_msg = "<span class='userdanger'>You reach out and touch [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>"
+	if(!cause)
+		cause = "contact"
+	nom.visible_message(vis_msg, mob_msg, "<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
+	investigate_log("has been attacked ([cause]) by [nom]", INVESTIGATE_SUPERMATTER)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+	Consume(nom)
 
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
