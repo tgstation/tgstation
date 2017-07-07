@@ -19783,7 +19783,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUb" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/brown{
 	dir = 10
 	},
