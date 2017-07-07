@@ -30,13 +30,15 @@
 	multiple_receivers = FALSE
 
 /obj/machinery/boss_sender/sci/Initialize()
+	..()
 	for(var/obj/machinery/boss_receiver/B in GLOB.boss_receivers)
 		if(B.is_mining_receiver)
 			linked = B
 			return
 
 /obj/machinery/boss_sender/attack_hand(mob/user)
-	switch(alert(user,,"[src.name] panel","Send all items","Remove an item"))
+	..()
+	switch(alert(user,"Select an option.","[src.name] panel","Send all items","Manage [src.name] inventory"))
 		if("Send all items")
 
 			if(multiple_receivers)
@@ -55,7 +57,7 @@
 			if(input)
 				var/obj/item/I = input
 				if(istype(I))
-					I.forceMove(get_turf(src))
+					user.put_in_active_hand(I)
 
 /obj/machinery/boss_sender/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
@@ -81,8 +83,25 @@
 	icon_state = "autolathe"
 	var/is_mining_receiver = FALSE
 
+	density = TRUE
+	anchored = TRUE
+
+	obj_integrity = 250
+	max_integrity = 250
+
 /obj/machinery/boss_receiver/sci
 	is_mining_receiver = TRUE
 
 /obj/machinery/boss_receiver/sci/Initialize()
 	GLOB.boss_receivers += src
+
+/obj/machinery/boss_receiver/attack_hand(mob/user)
+	switch(alert(user, "Select an option", "[src.name] panel", "Manage inventory", "Cancel"))
+		if("Cancel")
+			return
+		if("Manage inventory")
+			var/input = input("Select an item to remove.", "[src.name] panel", null, null) as null|anything in src.contents
+			if(input)
+				var/obj/item/I = input
+				if(istype(I))
+					user.put_in_active_hand(I)
