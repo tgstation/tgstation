@@ -476,15 +476,12 @@
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)
 
-
 /obj/machinery/power/supermatter_shard/attack_robot(mob/user)
 	if(Adjacent(user))
 		return attack_hand(user)
-	else
-		to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user)
-	to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
+	return
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))
