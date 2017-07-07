@@ -4564,7 +4564,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/structure/mirror/magic/badmin{
+/obj/structure/mirror{
 	pixel_x = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5214,7 +5214,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/mirror/magic/badmin{
+/obj/structure/mirror{
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/vault{
@@ -11096,7 +11096,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
@@ -11131,7 +11130,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
@@ -11163,7 +11161,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/white,
@@ -11257,7 +11254,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/white,
@@ -11300,7 +11296,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
@@ -11345,7 +11340,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/corner,
@@ -11367,7 +11361,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -11448,7 +11441,6 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/side{
