@@ -128,7 +128,7 @@ LINEN BINS
 /obj/item/weapon/bedsheet/rd/royal_cape
 	name = "Royal Cape of the Liberator"
 	desc = "Majestic."
-	dream_messages = list("mining", "stone", "a golem", "freedom")
+	dream_messages = list("mining", "stone", "a golem", "freedom", "doing whatever")
 
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"
