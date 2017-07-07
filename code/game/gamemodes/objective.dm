@@ -240,7 +240,7 @@
 		return 0
 	if(issilicon(owner.current))
 		return 0
-	if(get_area(owner.current) in SSshuttle.emergency.shuttle_areas)
+	if(SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
 		return 0
 
 	return SSshuttle.emergency.is_hijacked()
@@ -683,7 +683,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
-	
+
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
 

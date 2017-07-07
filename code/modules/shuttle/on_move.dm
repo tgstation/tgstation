@@ -16,6 +16,9 @@ All ShuttleMove procs go here
 
 // Called on the old turf to move the turf data
 /turf/proc/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force)
+	if(newT == src) // In case of in place shuttle rotation shenanigans.
+		return
+
 	//Destination turf changes
 	SSair.remove_from_active(newT)
 	copyTurf(newT)
@@ -43,9 +46,13 @@ All ShuttleMove procs go here
 
 // Called on atoms to move the atom to the new location
 /atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force)
-	if(locs && locs.len > 1)
+	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
+		return
+
+	if(locs && locs.len > 1) // This is for multi tile objects
 		if(loc != oldT)
-			return FALSE
+			return
+
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = newT
@@ -67,6 +74,9 @@ All ShuttleMove procs go here
 
 // Called on areas to move their turf between areas
 /area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
+	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
+		return
+
 	contents -= oldT
 	underlying_old_area.contents += oldT
 	oldT.change_area(src, underlying_old_area)

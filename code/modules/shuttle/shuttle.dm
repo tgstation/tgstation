@@ -255,11 +255,11 @@
 
 	shuttle_areas = list()
 	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
-	for(var/T in all_turfs)
-		var/turf/curT = T
+	for(var/i in 1 to all_turfs.len)
+		var/turf/curT = all_turfs[i]
 		var/area/cur_area = curT.loc
 		if(istype(cur_area, area_type))
-			shuttle_areas |= cur_area
+			shuttle_areas[cur_area] = TRUE
 
 	initial_engines = count_engines()
 	current_engines = initial_engines
@@ -499,19 +499,18 @@
 	var/list/areas_to_move = list() //list containing all unique areas so we don't call (before|after)ShuttleMove multiple times on the same area
 
 	/****************************************All beforeShuttleMove procs*****************************************/
-
 	var/index = 1
-	for(var/T in old_turfs)
-		var/turf/oldT = T
+	while(index < old_turfs.len)
+		var/turf/oldT = old_turfs[index]
+		var/turf/newT = new_turfs[index]
 		var/area/old_area = oldT.loc
 		var/move_turf = TRUE //Should this turf be moved, if false remove from the turf list
-		if(!(old_area in shuttle_areas))
+		if(!(shuttle_areas[old_area]))
 			move_turf = FALSE
-		var/turf/newT = new_turfs[index]
 		if(!(oldT.fromShuttleMove(newT, turf_type, baseturf_type) && newT.toShuttleMove(oldT)))				//turfs
 			move_turf = FALSE
-		for(var/thing in oldT)
-			var/atom/movable/moving_atom = thing
+		for(var/ii in 1 to oldT.contents.len)
+			var/atom/movable/moving_atom = oldT.contents[ii]
 			if(moving_atom.beforeShuttleMove(newT, rotation)) 												//atoms
 				old_contents += oldT
 				new_contents += newT
@@ -519,7 +518,7 @@
 			old_turfs.Cut(index,index+1)
 			new_turfs.Cut(index,index+1)
 			continue
-		areas_to_move |= old_area
+		areas_to_move[old_area] = TRUE
 		index++
 
 	for(var/thing in areas_to_move)
@@ -540,10 +539,10 @@
 		var/turf/newT = new_turfs[i]
 		if(!oldT || !newT) //This really shouldn't happen
 			continue
-		for(var/thing in oldT)
+		for(var/thing in oldT) //Needs to be this kind of loop in case, because of shuttle rotation shenanigans, the destination turf is the same as the source turf
 			var/atom/movable/moving_atom = thing
-			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force) 								//atoms
-			moved_atoms += thing
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force)									//atoms
+			moved_atoms += moving_atom
 		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force) 						//turfs
 		var/area/shuttle_area = oldT.loc
 		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) 										//areas
@@ -556,7 +555,7 @@
 		for(var/thing in oldT)
 			var/atom/movable/moving_atom = thing
 			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force)									//atoms
-			moved_atoms += thing
+			moved_atoms += moving_atom
 		var/area/shuttle_area = oldT.loc
 		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)											//area
 	
@@ -567,8 +566,8 @@
 		var/turf/newT = new_turfs[i]
 		newT.afterShuttleMove(oldT)																			//turfs
 
-	for(var/thing in moved_atoms)
-		var/atom/movable/moved_object = thing
+	for(var/i in 1 to moved_atoms.len)
+		var/atom/movable/moved_object = moved_atoms[i]
 		moved_object.afterShuttleMove(movement_force)														//atoms
 
 	underlying_old_area.afterShuttleMove()

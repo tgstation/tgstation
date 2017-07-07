@@ -479,7 +479,7 @@ SUBSYSTEM_DEF(ticker)
 					else
 						num_escapees++
 						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
-						if(get_area(Player) in shuttle_areas)
+						if(shuttle_areas[get_area(Player)])
 							num_shuttle_escapees++
 				else
 					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")

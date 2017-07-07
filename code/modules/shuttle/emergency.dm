@@ -259,7 +259,7 @@
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
-				if(get_area(player) in shuttle_areas)
+				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
 					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
