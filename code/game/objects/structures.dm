@@ -1,7 +1,6 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
-	obj_integrity = 300
 	max_integrity = 300
 	var/climb_time = 20
 	var/climb_stun = 20
