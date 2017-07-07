@@ -7532,6 +7532,16 @@
 	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel,
 /area/security/warden)
 "aox" = (
@@ -9563,6 +9573,10 @@
 /obj/item/weapon/pen,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
+	},
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -117219,7 +117233,7 @@ akD
 akD
 alU
 ano
-aov
+apH
 apN
 are
 asu
@@ -117733,7 +117747,7 @@ ajw
 akF
 alZ
 anq
-aov
+aoA
 aoy
 arg
 asw
