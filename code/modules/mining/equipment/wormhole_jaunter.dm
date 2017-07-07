@@ -19,7 +19,7 @@
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf||device_turf.z==2||device_turf.z>=7)
+	if(!device_turf || device_turf.z == ZLEVEL_CENTCOM || device_turf.z == ZLEVEL_TRANSIT)
 		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
@@ -89,20 +89,18 @@
 	mech_sized = TRUE //save your ripley
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
-	if(istype(M, /obj/effect))
+	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
+		return
+		
+	if(M.anchored && (!ismob(M) || (istype(M, /obj/mecha) && !mech_sized)))
 		return
 
-	if(M.anchored)
-		if(!(istype(M, /obj/mecha) && mech_sized))
-			return
-
-	if(ismovableatom(M))
-		if(do_teleport(M, hard_target, 6))
-			// KERPLUNK
-			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
-			if(iscarbon(M))
-				var/mob/living/carbon/L = M
-				L.Knockdown(60)
-				if(ishuman(L))
-					shake_camera(L, 20, 1)
-					addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
+	if(do_teleport(M, hard_target, 6))
+		// KERPLUNK
+		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
+		if(iscarbon(M))
+			var/mob/living/carbon/L = M
+			L.Knockdown(60)
+			if(ishuman(L))
+				shake_camera(L, 20, 1)
+				addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
