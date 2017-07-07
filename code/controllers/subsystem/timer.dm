@@ -53,12 +53,12 @@ SUBSYSTEM_DEF(timer)
 			log_world("Active timers at index [i]:")
 			
 			var/datum/timedevent/bucket_node = bucket_head
-			var/anti-loop-check = 1000
+			var/anti_loop_check = 1000
 			do
 				log_world(get_timer_debug_string(bucket_node))
 				bucket_node = bucket_node.next
-				anti-loop-check--
-			while(bucket_node && bucket_node != bucket_head && anti-loop-check)
+				anti_loop_check--
+			while(bucket_node && bucket_node != bucket_head && anti_loop_check)
 		log_world("Active timers in the processing queue:")
 		for(var/I in processing)
 			log_world(get_timer_debug_string(I))
@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(timer)
 
 //formated this way to be runtime resistant
 /datum/controller/subsystem/timer/proc/get_timer_debug_string(datum/timedevent/TE)
-	. = "Timer: [TE]
+	. = "Timer: [TE]"
 	. += "Prev:[TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
 	if(TE.spent)
 		. += ", SPENT"
