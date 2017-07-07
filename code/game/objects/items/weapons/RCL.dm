@@ -13,6 +13,8 @@
 	origin_tech = "engineering=4;materials=2"
 	var/max_amount = 90
 	var/active = FALSE
+	var/obj/structure/cable/last
+	var/obj/item/stack/cable_coil/loaded
 
 /obj/item/weapon/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
