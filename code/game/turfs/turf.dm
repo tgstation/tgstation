@@ -94,6 +94,16 @@
 		coil.place_turf(src, user)
 		return TRUE
 
+	else if(istype(C, /obj/item/weapon/twohanded/rcl))
+		var/obj/item/weapon/twohanded/rcl/R = C
+		if(R.loaded)
+			for(var/obj/structure/cable/LC in src)
+				if(LC.d1 == 0 || LC.d2==0)
+					LC.attackby(R, user)
+					return
+			R.loaded.place_turf(src, user)
+			R.is_empty(user)
+
 	return FALSE
 
 /turf/CanPass(atom/movable/mover, turf/target, height=1.5)

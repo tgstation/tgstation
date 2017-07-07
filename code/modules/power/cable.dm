@@ -76,7 +76,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	d2 = text2num( copytext( icon_state, dash+1 ) )
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = get_turf(src)			// hide if turf is not intact
 
 	if(level==1) hide(T.intact)
 	GLOB.cable_list += src //add it to the global cable list
@@ -122,7 +122,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Multitool : get the power currently passing through the cable
 //
 /obj/structure/cable/attackby(obj/item/W, mob/user, params)
-	var/turf/T = src.loc
+	var/turf/T = get_turf(src)
 	if(T.intact)
 		return
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -140,6 +140,12 @@ By design, d1 is the smallest direction and d2 is the highest
 			to_chat(user, "<span class='warning'>Not enough cable!</span>")
 			return
 		coil.cable_join(src, user)
+
+	else if(istype(W, /obj/item/weapon/twohanded/rcl))
+		var/obj/item/weapon/twohanded/rcl/R = W
+		if(R.loaded)
+			R.loaded.cable_join(src, user)
+			R.is_empty(user)
 
 	else if(istype(W, /obj/item/device/multitool))
 		if(powernet && (powernet.avail > 0))		// is it powered?
