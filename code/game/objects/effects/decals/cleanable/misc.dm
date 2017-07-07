@@ -81,10 +81,9 @@
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
-	var/virus_chance = 20 //chance for the vomit to contain viruses
 
-/obj/effect/decal/cleanable/vomit/New(loc, list/virus_list)
-	..()
+/obj/effect/decal/cleanable/vomit/Initialize(mapload, list/virus_list, virus_chance = 20)
+	. = ..()
 	if(virus_list && virus_list.len)
 		for(var/datum/disease/D in virus_list)
 			if(prob(virus_chance))
