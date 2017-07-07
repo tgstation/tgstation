@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(timer)
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	var/lit = last_invoke_tick
 	var/last_check = world.time - TIMER_NO_INVOKE_WARNING
-
+	var/list/bucket_list = src.bucket_list
 	if(!bucket_count)
 		last_invoke_tick = world.time
 
@@ -80,16 +80,15 @@ SUBSYSTEM_DEF(timer)
 	var/static/datum/timedevent/timer
 	var/static/datum/timedevent/head
 
-	if (practical_offset > BUCKET_LEN || (!resumed  && length(src.bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution))
+	if (practical_offset > BUCKET_LEN || (!resumed  && length(bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution))
 		shift_buckets()
+		bucket_list = src.bucket_list
 		resumed = FALSE
 
 
 	if (!resumed)
 		timer = null
 		head = null
-
-	var/list/bucket_list = src.bucket_list
 
 	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time && !MC_TICK_CHECK)
 		if (!timer || !head || timer == head)
