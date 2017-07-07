@@ -420,7 +420,6 @@
 	heat_resistance = 1600
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	max_integrity = 50
-	obj_integrity = 50
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
 
@@ -435,7 +434,6 @@
 	heat_resistance = 25000
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 00, "acid" = 100)
 	max_integrity = 95
-	obj_integrity = 95
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/glass/plasma
 
@@ -450,7 +448,6 @@
 	heat_resistance = 50000
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 200
-	obj_integrity = 200
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/rglass/plasma
 
@@ -472,7 +469,6 @@
 	icon_state = "window"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
-	obj_integrity = 50
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
@@ -487,7 +483,6 @@
 	icon_state = "plasmawindow"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
-	obj_integrity = 100
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
@@ -502,7 +497,6 @@
 	icon_state = "rplasmawindow"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 500
-	obj_integrity = 500
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
@@ -516,7 +510,6 @@
 	icon_state = "r_window"
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
-	obj_integrity = 100
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
