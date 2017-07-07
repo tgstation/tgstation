@@ -67,6 +67,11 @@ GLOBAL_PROTECT(admin_ranks)
 
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(word, previous_rights=0)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin_private("[key_name(usr)][msg]")
+		return
 	var/flag = admin_keyword_to_flag(word, previous_rights)
 	if(flag)
 		switch(text2ascii(word,1))
