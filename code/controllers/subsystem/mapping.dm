@@ -288,7 +288,7 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/area_reservation/R = new
 	if(!R.Reserve(width, height, unused_turfs, TRUE))
 		qdel(R)
-		return null
+		return
 	return R
 
 /datum/area_reservation
