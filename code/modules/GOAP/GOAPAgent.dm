@@ -48,6 +48,8 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	var/actions_halted = FALSE
 	var/already_acting = FALSE
 
+	var/fuck_you_astar = FALSE
+
 /datum/goap_agent/proc/has_action(var/ACT)
 	for(var/datum/goap_action/A in our_actions)
 		if(istype(A, ACT) && !A.OnCooldown())
@@ -138,6 +140,8 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 				brain_state = STATE_MOVINGTO
 
 /datum/goap_agent/proc/moving_state()
+	if(fuck_you_astar)
+		return
 	var/datum/goap_action/curr_action = action_queue[action_queue.len]
 
 	if(curr_action.RequiresInRange(agent) && !curr_action.target)
@@ -159,6 +163,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		switch(movement_type)
 			if(1, 4) // AStar, Full
 				if(!path || !path.len)
+					fuck_you_astar = TRUE
 					if(!isturf(curr_action.target))
 						path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
 					else
@@ -166,7 +171,9 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 					if(!path || !path.len) // still can't path
 						goap_debug("Can't path to plan, giving up")
 						brain_state = STATE_IDLE
+						fuck_you_astar = FALSE
 						return 0
+				fuck_you_astar = FALSE
 				last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
 				current_loc = get_turf(agent)
 				curr_action.PerformWhileMoving(agent)
