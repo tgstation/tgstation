@@ -106,7 +106,7 @@
 	
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
-	desc = "HOTDOG!!"
+	desc = "NOT HOTDOG? HOTDOG!!"
 	icon_state = "hotdog"
 	filling_color = "#CD5C5C"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
