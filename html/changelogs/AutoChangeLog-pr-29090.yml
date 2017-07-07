@@ -1,0 +1,4 @@
+author: "shizcalev"
+delete-after: True
+changes: 
+  - soundadd: "The supermatter base now has a speaker and will provide audio cues as to it's current status!"
