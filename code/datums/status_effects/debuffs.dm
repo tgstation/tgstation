@@ -35,12 +35,14 @@
 	needs_update_stat = TRUE
 
 //SLEEPING
+
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
 	alert_type = /obj/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
+	tick_interval = 2
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
@@ -56,15 +58,28 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.staminaloss)
-		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+	var/comfort = 1
+	if(istype(owner.buckled, /obj/structure/bed/))
+		var/obj/structure/bed/bed = owner.buckled
+		comfort+= bed.comfort
+	for(var/obj/item/weapon/bedsheet/bedsheet in range(owner.loc,0))
+		if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
+			continue
+		comfort+= bedsheet.comfort
+		break //Only count the first bedsheet
 	if(human_owner && human_owner.drunkenness)
-		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
+		comfort += 1 //Aren't naps SO much better when drunk?
+		human_owner.drunkenness *= 1-0.0015*comfort //reduce drunkenness ~6% per two seconds, when on floor.
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.7*comfort) //reduce stamina loss by 7 per 2 seconds
+	if(prob(3))
 		if(carbon_owner)
 			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
-			owner.emote("snore")
+			if(comfort>1)//You don't heal if you're just sleeping on the floor without a blanket.
+				carbon_owner.adjustBruteLoss(-1*comfort)
+				carbon_owner.adjustFireLoss(-1*comfort)
+	if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
+		owner.emote("snore")
 
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"

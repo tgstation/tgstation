@@ -18,8 +18,15 @@ LINEN BINS
 	w_class = WEIGHT_CLASS_TINY
 	item_color = "white"
 	resistance_flags = FLAMMABLE
+	var/comfort = 0.5
+	var/dreamSound
+	var/dreamMessage
 
 	dog_fashion = /datum/dog_fashion/head/ghost
+
+/obj/item/weapon/bedsheet/Initialize()
+	. = ..()
+	dreamMessage = list()
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
@@ -53,7 +60,7 @@ LINEN BINS
 /obj/item/weapon/bedsheet/green
 	icon_state = "sheetgreen"
 	item_color = "green"
-	
+
 /obj/item/weapon/bedsheet/grey
 	icon_state = "sheetgrey"
 	item_color = "grey"
@@ -71,6 +78,10 @@ LINEN BINS
 	desc = "You've never felt more free than when sleeping on this."
 	icon_state = "sheetUSA"
 	item_color = "sheetUSA"
+
+/obj/item/weapon/bedsheet/patriot/Initialize()
+	.=..()
+	dreamMessage = list("America", "Freedom", "Fireworks", "Bald Eagles")
 
 /obj/item/weapon/bedsheet/rainbow
 	name = "rainbow bedsheet"
@@ -92,17 +103,31 @@ LINEN BINS
 	icon_state = "sheetmime"
 	item_color = "mime"
 
+/obj/item/weapon/bedsheet/mime/Initialize()
+	.=..()
+	dreamMessage = list("Silence", "Nothingness", "Emptiness", "...")
+
 /obj/item/weapon/bedsheet/clown
 	name = "clown's blanket"
 	desc = "A rainbow blanket with a clown mask woven in. It smells faintly of bananas."
 	icon_state = "sheetclown"
 	item_color = "clown"
 
+/obj/item/weapon/bedsheet/clown/Initialize()
+	.=..()
+	dreamMessage = list("Honk", "Laughter", "Pranking someone", "Slipping", "Pie", "HOOOOOOOOOONK", "Funny", "Jokes", "Bananna")
+	dreamSound = 'sound/items/bikehorn.ogg'
+
 /obj/item/weapon/bedsheet/captain
 	name = "captain's bedsheet"
 	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
 	icon_state = "sheetcaptain"
 	item_color = "captain"
+	comfort = 1.5
+
+/obj/item/weapon/bedsheet/captain/Initialize()
+	.=..()
+	dreamMessage = list("Authority", "Subjugate", "Leadership", "Comdom")
 
 /obj/item/weapon/bedsheet/rd
 	name = "research director's bedsheet"
@@ -110,10 +135,18 @@ LINEN BINS
 	icon_state = "sheetrd"
 	item_color = "director"
 
+/obj/item/weapon/bedsheet/rd/Initialize()
+	.=..()
+	dreamMessage = list("Explosions", "Experimentation", "SCIENCE!", "Xenobiology")
+
 // for Free Golems.
 /obj/item/weapon/bedsheet/rd/royal_cape
 	name = "Royal Cape of the Liberator"
 	desc = "Majestic."
+
+/obj/item/weapon/bedsheet/rd/royal_cape/Initialize()
+	.=..()
+	dreamMessage = list("Yeah, sure, go do whatever.")
 
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"
@@ -127,11 +160,19 @@ LINEN BINS
 	icon_state = "sheetcmo"
 	item_color = "cmo"
 
+/obj/item/weapon/bedsheet/cmo/Initialize()
+	.=..()
+	dreamMessage = list("Disease", "Medicine", "Injury", "Vaccines", "Cyro tubes", "Sleepers", "Runtime")
+
 /obj/item/weapon/bedsheet/hos
 	name = "head of security's bedsheet"
 	desc = "It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
 	item_color = "hosred"
+
+/obj/item/weapon/bedsheet/hos/Initialize()
+	.=..()
+	dreamMessage = list("Space law", "Harmbaton", "Imprisonment", "Grey tide", "Gulag", "Handcuffs", "Tazer")
 
 /obj/item/weapon/bedsheet/hop
 	name = "head of personnel's bedsheet"
@@ -139,17 +180,29 @@ LINEN BINS
 	icon_state = "sheethop"
 	item_color = "hop"
 
+/obj/item/weapon/bedsheet/hop/Initialize()
+	.=..()
+	dreamMessage = list("Ian", "Promotions", "All Access", "ID cards")
+
 /obj/item/weapon/bedsheet/ce
 	name = "chief engineer's bedsheet"
 	desc = "It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
 	item_color = "chief"
 
+/obj/item/weapon/bedsheet/ce/Initialize()
+	.=..()
+	dreamMessage = list("Poly", "Singularity", "Hull breach", "SuperMatter", "Electricity", "Tesla", "Insulated Gloves")
+
 /obj/item/weapon/bedsheet/qm
 	name = "quartermaster's bedsheet"
 	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
 	icon_state = "sheetqm"
 	item_color = "qm"
+
+/obj/item/weapon/bedsheet/qm/Initialize()
+	.=..()
+	dreamMessage = list("Paperwork", "Crate", "Shipping", "Shuttle", "Boxes", "Cargotechs")
 
 /obj/item/weapon/bedsheet/brown
 	icon_state = "sheetbrown"
@@ -171,17 +224,30 @@ LINEN BINS
 	icon_state = "sheetsyndie"
 	item_color = "syndie"
 
+/obj/item/weapon/bedsheet/syndie/Initialize()
+	.=..()
+	dreamMessage = list("Get dat fukkin disk", "Telecrystals", "Die Gloriously", "Powersink", "Emag", "E-sword")
+
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
 	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence."
 	icon_state = "sheetcult"
 	item_color = "cult"
 
+/obj/item/weapon/bedsheet/cult/Initialize()
+	.=..()
+	dreamMessage = list("Nar-sie", "Runes", "Arcane Tome", "</i><span class='narsie'>NAR-SIE HAS RISEN</span><i>")
+	dreamSound = 'sound/hallucinations/im_here1.ogg'
+
 /obj/item/weapon/bedsheet/wiz
 	name = "wizard's bedsheet"
 	desc = "A special fabric enchanted with magic so you can have an enchanted night. It even glows!"
 	icon_state = "sheetwiz"
 	item_color = "wiz"
+
+/obj/item/weapon/bedsheet/wiz/Initialize()
+	.=..()
+	dreamMessage = list("EI NATH!", "Hocus Pocus", "Casting magic missile at the darkness", "Beards", "Staff", "Robe and wizard hat", "Sandals", "UNLIMITED POWER!")
 
 /obj/item/weapon/bedsheet/nanotrasen
 	name = "nanotrasen bedsheet"
@@ -195,18 +261,14 @@ LINEN BINS
 
 
 /obj/item/weapon/bedsheet/random
-	icon_state = "sheetrainbow"
-	item_color = "rainbow"
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
-/obj/item/weapon/bedsheet/random/New()
-	var/obj/item/weapon/bedsheet/B = pick(subtypesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
-	name = initial(B.name)
-	desc = initial(B.desc)
-	icon_state = initial(B.icon_state)
-	item_state = initial(B.item_state)
-	item_color = initial(B.item_color)
+/obj/item/weapon/bedsheet/random/Initialize()
+	..()
+	var/type = pick(subtypesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
+	new type(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/structure/bedsheetbin
 	name = "linen bin"

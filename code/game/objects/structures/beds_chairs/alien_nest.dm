@@ -13,6 +13,7 @@
 	buildstacktype = null
 	flags = NODECONSTRUCT
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
+	comfort = 0
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	if(has_buckled_mobs())

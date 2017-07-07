@@ -21,6 +21,7 @@
 	integrity_failure = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
+	var/comfort = 2
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -48,6 +49,7 @@
 	anchored = 0
 	resistance_flags = 0
 	var/foldabletype = /obj/item/roller
+	comfort = 1
 
 /obj/structure/bed/roller/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/roller/robo))
@@ -162,6 +164,7 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
 	var/mob/living/owner = null
+	comfort = 0.5
 
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
 	owner = M
