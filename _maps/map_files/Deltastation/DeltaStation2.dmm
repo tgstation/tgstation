@@ -38774,7 +38774,7 @@
 	},
 /area/bridge)
 "bxN" = (
-/obj/machinery/computer/aifixer,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkpurple/side{
 	icon_state = "darkpurple";
 	dir = 1
