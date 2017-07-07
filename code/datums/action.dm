@@ -207,6 +207,10 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/rcl
+	name = "Change Cable Color"
+	button_icon_state = "rcl_rainbow"
+
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
 	desc = "Toggles if the club's blasts cause friendly fire."

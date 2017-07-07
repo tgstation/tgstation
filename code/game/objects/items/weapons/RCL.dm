@@ -15,6 +15,9 @@
 	var/active = FALSE
 	var/obj/structure/cable/last
 	var/obj/item/stack/cable_coil/loaded
+	actions_types = list(/datum/action/item_action/rcl)
+	var/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
+	var/current_color = 1
 
 /obj/item/weapon/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -141,6 +144,7 @@
 				return //If we've run out, display message and exit
 		else
 			last = null
+	loaded.item_color	 = colors[current_color]
 	last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 	is_empty(user) //If we've run out, display message
 
@@ -150,3 +154,12 @@
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
 	update_icon()
+
+/obj/item/weapon/twohanded/rcl/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/rcl))
+		current_color++;
+		if (current_color > 8)
+			current_color = 1
+		var/cwname = colors[current_color]
+		to_chat(user, "Color changed to [cwname]!")
+		qdel(cwname)
