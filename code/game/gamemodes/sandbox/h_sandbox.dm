@@ -19,9 +19,9 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/owner = null
 	var/admin = 0
 
-	var/clothinfo = null
-	var/reaginfo = null
-	var/objinfo = null
+	var/static/clothinfo = null
+	var/static/reaginfo = null
+	var/static/objinfo = null
 	var/canisterinfo = null
 	var/hsbinfo = null
 	//items that shouldn't spawn on the floor because they would bug or act weird
