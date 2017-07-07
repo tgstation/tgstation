@@ -170,3 +170,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pigblanket
 	subcategory = CAT_MEAT
+	
+/datum/crafting_recipe/food/pigblanket
+	name = "Hotdog"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/sausage = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/hotdog
+	subcategory = CAT_MEAT
