@@ -20,5 +20,3 @@
 	if(stat != UNCONSCIOUS || InCritical())
 		return
 	to_chat(src, "<span class='notice'><i>... [dream_image] ...</i></span>")
-
-/mob/living/carbon/var/dreaming = 0
