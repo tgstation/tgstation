@@ -231,7 +231,7 @@ SUBSYSTEM_DEF(timer)
 	src.flags = flags
 	src.hash = hash
 	
-	name = "Timer: [id]: TTR: [timeToRun], Flags: [bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT"))], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(",") : ""])"
+	name = "Timer: [id]: TTR: [timeToRun], Flags: [bitfield2list(flags, jointext(list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
 	
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
