@@ -476,6 +476,18 @@
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/power/supermatter_shard/attack_animal(mob/living/simple_animal/S)
+	var/murder
+	if(!S.melee_damage_upper && !S.melee_damage_lower)
+		murder = S.friendly
+	else
+		murder = S.attacktext
+	S.visible_message("<span class='danger'>[S] unwisely [murder] [src], and [S.p_their()] body glows brilliantly before crumbling to ash!</span>", \
+		"<span class='userdanger'>You dumbly touch [src], and your vision burns brightly as your body disintegrates into dust. Oops.</span>", \
+		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
+	investigate_log("has been attacked (simple animal) by [S]", INVESTIGATE_SUPERMATTER)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+	Consume(S)
 
 /obj/machinery/power/supermatter_shard/attack_robot(mob/user)
 	if(Adjacent(user))
