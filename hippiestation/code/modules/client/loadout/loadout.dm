@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/gear
 	var/name = "gear name"
 	var/category = "none"
-	var/description = "why do i exist"
+	var/description
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
 	var/list/restricted_roles
