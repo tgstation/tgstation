@@ -6115,6 +6115,13 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"nh" = (
+/obj/machinery/boss_receiver/sci,
+/turf/open/floor/plasteel/purple/corner{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 1
+	},
+/area/mine/production)
 
 (1,1,1) = {"
 aa
@@ -20986,7 +20993,7 @@ bq
 br
 bO
 ck
-cD
+nh
 br
 bq
 bq
@@ -37991,8 +37998,8 @@ aa
 mS
 mV
 mq
-na
-nd
+mV
+nc
 aa
 aa
 fV
@@ -38500,9 +38507,9 @@ aj
 "}
 (127,1,1) = {"
 mQ
-mR
+mQ
 fW
-mT
+mQ
 mW
 hg
 ac
@@ -39016,7 +39023,7 @@ aj
 aa
 aa
 aa
-mU
+mS
 mY
 ms
 hJ

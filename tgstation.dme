@@ -517,6 +517,7 @@
 #include "code\game\machinery\autolathe.dm"
 #include "code\game\machinery\bank_machine.dm"
 #include "code\game\machinery\Beacon.dm"
+#include "code\game\machinery\boss.dm"
 #include "code\game\machinery\buttons.dm"
 #include "code\game\machinery\cell_charger.dm"
 #include "code\game\machinery\cloning.dm"
