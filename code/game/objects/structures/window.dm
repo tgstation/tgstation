@@ -447,7 +447,7 @@
 	reinf = TRUE
 	heat_resistance = 50000
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
-	max_integrity = 1000
+	max_integrity = 500
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/rglass/plasma
 
@@ -496,7 +496,7 @@
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasmawindow"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 500
+	max_integrity = 1000
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
