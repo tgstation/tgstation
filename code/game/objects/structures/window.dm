@@ -433,7 +433,7 @@
 	reinf = FALSE
 	heat_resistance = 25000
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 00, "acid" = 100)
-	max_integrity = 95
+	max_integrity = 150
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/glass/plasma
 
@@ -447,7 +447,7 @@
 	reinf = TRUE
 	heat_resistance = 50000
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
-	max_integrity = 200
+	max_integrity = 1000
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/rglass/plasma
 
