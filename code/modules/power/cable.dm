@@ -662,7 +662,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
-/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
+/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user, var/showerror = TRUE)
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return
@@ -686,7 +686,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
 		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
-			to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
+			if (showerror == TRUE)
+				to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
 			return
 		if(U.intact)						//can't place a cable if it's a plating with a tile on it
 			to_chat(user, "<span class='warning'>You can't lay cable there unless the floor tiles are removed!</span>")
@@ -699,12 +700,13 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
-					to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
+					if (showerror == TRUE)
+						to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
 					return
 
 			var/obj/structure/cable/NC = get_new_cable (U)
 
-			NC.d1 = 0
+			NC.d1 = FALSE
 			NC.d2 = fdirn
 			NC.add_fingerprint()
 			NC.update_icon()

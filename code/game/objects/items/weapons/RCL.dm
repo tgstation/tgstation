@@ -1,10 +1,10 @@
 /obj/item/weapon/twohanded/rcl
-	name = "rapid cable layer (RCL)"
+	name = "rapid cable layer	"
 	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
 	item_state = "rcl-0"
-	opacity = 0
+	opacity = FALSE
 	force = 5 //Plastic is soft
 	throwforce = 5
 	throw_speed = 1
@@ -12,7 +12,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "engineering=4;materials=2"
 	var/max_amount = 90
-	var/active = 0
+	var/active = FALSE
 	var/obj/structure/cable/last = null
 	var/obj/item/stack/cable_coil/loaded = null
 
@@ -44,13 +44,14 @@
 			var/diff = loaded.amount % 30
 			if(diff)
 				loaded.use(diff)
-				new /obj/item/stack/cable_coil(user.loc, diff)
+				new /obj/item/stack/cable_coil(get_turf(user), diff)
 			else
 				loaded.use(30)
 				new /obj/item/stack/cable_coil(user.loc, 30)
 		loaded.max_amount = initial(loaded.max_amount)
-		loaded.forceMove(user.loc)
-		user.put_in_hands(loaded)
+		if(!user.put_in_hands(loaded))
+			loaded.forceMove(get_turf(user))
+
 		loaded = null
 		update_icon()
 	else
@@ -64,7 +65,7 @@
 /obj/item/weapon/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	active = 0
+	active = FALSE
 	return ..()
 
 /obj/item/weapon/twohanded/rcl/update_icon()
@@ -92,7 +93,7 @@
 		if(loud)
 			to_chat(user, "<span class='notice'>The last of the cables unreel from [src].</span>")
 		if(loaded)
-			qdel(loaded)
+			QDEL_NULL(loaded)
 			loaded = null
 		unwield(user)
 		active = wielded
@@ -101,7 +102,7 @@
 
 /obj/item/weapon/twohanded/rcl/dropped(mob/wearer)
 	..()
-	active = 0
+	active = FALSE
 	last = null
 
 /obj/item/weapon/twohanded/rcl/attack_self(mob/user)
@@ -111,7 +112,7 @@
 		last = null
 	else if(!last)
 		for(var/obj/structure/cable/C in get_turf(user))
-			if(C.d1 == 0 || C.d2 == 0)
+			if(C.d1 == FALSE || C.d2 == FALSE)
 				last = C
 				break
 
@@ -127,25 +128,25 @@
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 	if(last && I.can_have_cabling())
-		if(get_dist(last, user) == 1) //hacky, but it works
-			var/turf/T = get_turf(user)
-			if(!isturf(T) || T.intact || !T.can_have_cabling())
-				last = null
-				return
-			if(get_dir(last, user) == last.d2)
-				//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
-				last = null
-				return
-			loaded.cable_join(last, user)
-			if(is_empty(user))
-				return //If we've run out, display message and exit
+		//hacky, but it works
+		var/turf/T = get_turf(user)
+		if(!isturf(T) || !T.can_have_cabling())
+			last = null
+			return
+		if(get_dir(last, user) == last.d2)
+			//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
+			last = null
+			return
+		loaded.cable_join(last, user, FALSE)
+		if(is_empty(user))
+			return //If we've run out, display message and exit
 		else
 			last = null
-	last = loaded.place_turf(get_turf(loc), user, turn(user.dir, 180))
+	last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 	is_empty(user) //If we've run out, display message
 
-/obj/item/weapon/twohanded/rcl/pre_loaded/New() //Comes preloaded with cable, for testing stuff
-	..()
+/obj/item/weapon/twohanded/rcl/pre_loaded/Initialize () //Comes preloaded with cable, for testing stuff
+	. = ..()
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount

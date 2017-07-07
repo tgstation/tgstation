@@ -156,9 +156,6 @@
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
-	/*if(istype(mob.get_active_held_item(), /obj/item))
-		var/obj/item/I = mob.get_active_held_item()
-		I.moved(mob, n, direct)*/
 
 	if(!mob.Process_Spacemove(direct))
 		return 0
@@ -183,7 +180,7 @@
 	else
 		. = ..()
 
-	moving = 0
+	moving = FALSE
 	if(mob && .)
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
@@ -288,7 +285,7 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/Process_Spacemove(movement_dir = 0)
+/mob/Process_Spacemove(movement_dir = FALSE)
 	if(..())
 		return 1
 	var/atom/movable/backup = get_spacemove_backup()

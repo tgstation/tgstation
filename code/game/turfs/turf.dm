@@ -6,10 +6,10 @@
 	var/turf/baseturf = /turf/open/space
 
 	var/temperature = T20C
-	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
-	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
+	var/to_be_destroyed = FALSE //Used for fire, if a melting temperature was reached, it will be destroyed
+	var/max_fire_temperature_sustained = FALSE //The max temperature of the fire which it was subjected to
 
-	var/blocks_air = 0
+	var/blocks_air = FALSE
 
 	flags = CAN_BE_DIRTY
 
@@ -17,8 +17,8 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = 0	//for preventing explosion dodging
-	var/explosion_id = 0
+	var/explosion_level = FALSE	//for preventing explosion dodging
+	var/explosion_id = FALSE
 
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
@@ -84,25 +84,28 @@
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
+/turf/proc/handleRCL(obj/item/C, mob/user)
+	var/obj/item/weapon/twohanded/rcl/R = C
+	if(R.loaded)
+		for(var/obj/structure/cable/LC in src)
+			if(LC.d1 == FALSE || LC.d2==0)
+				LC.attackby(R, user)
+				return
+		R.loaded.place_turf(src, user)
+		R.is_empty(user)
+
 /turf/attackby(obj/item/C, mob/user, params)
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
 		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
+			if(!LC.d1 || !LC.d2)
 				LC.attackby(C,user)
 				return
 		coil.place_turf(src, user)
 		return TRUE
 
 	else if(istype(C, /obj/item/weapon/twohanded/rcl))
-		var/obj/item/weapon/twohanded/rcl/R = C
-		if(R.loaded)
-			for(var/obj/structure/cable/LC in src)
-				if(LC.d1 == 0 || LC.d2==0)
-					LC.attackby(R, user)
-					return
-			R.loaded.place_turf(src, user)
-			R.is_empty(user)
+		handleRCL(C, user)
 
 	return FALSE
 
@@ -153,7 +156,7 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	var/atom/movable/tompost_bump
-	var/top_layer = 0
+	var/top_layer = FALSE
 	for(var/atom/movable/obstacle in large_dense)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
 			if(obstacle.layer > top_layer)
@@ -179,7 +182,7 @@
 		switch(wet)
 			if(TURF_WET_WATER)
 				if(!M.slip(60, null, NO_SLIP_WHEN_WALKING))
-					M.inertia_dir = 0
+					M.inertia_dir = FALSE
 			if(TURF_WET_LUBE)
 				if(M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP)))
 					M.confused = max(M.confused, 8)
@@ -456,7 +459,7 @@
 	var/acid_type = /obj/effect/acid
 	if(acidpwr >= 200) //alien acid power
 		acid_type = /obj/effect/acid/alien
-	var/has_acid_effect = 0
+	var/has_acid_effect = FALSE
 	for(var/obj/O in src)
 		if(intact && O.level == 1) //hidden under the floor
 			continue
