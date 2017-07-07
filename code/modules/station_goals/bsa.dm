@@ -236,11 +236,11 @@
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 
 /obj/machinery/computer/bsa_control
-	name = "Bluespace Artillery Control"
+	name = "bluespace artillery control"
 	var/obj/machinery/bsa/full/cannon
 	var/notice
 	var/target
-	use_power = 0
+	use_power = NO_POWER_USE
 	circuit = /obj/item/weapon/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
@@ -258,6 +258,7 @@
 	data["ready"] = cannon ? cannon.ready : FALSE
 	data["connected"] = cannon
 	data["notice"] = notice
+	data["unlocked"] = GLOB.bsa_unlock
 	if(target)
 		data["target"] = get_target_name()
 	return data

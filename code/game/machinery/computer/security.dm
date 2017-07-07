@@ -23,6 +23,9 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/secure_data/syndie
+	icon_keyboard = "syndie_key"
+
 /obj/machinery/computer/secure_data/laptop
 	name = "security laptop"
 	desc = "A cheap Nanotrasen security laptop, it functions as a security records console. It's bolted to the table."
@@ -628,7 +631,7 @@ What a mess.*/
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)
+							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -642,7 +645,7 @@ What a mess.*/
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)
+							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())

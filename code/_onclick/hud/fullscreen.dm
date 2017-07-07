@@ -100,6 +100,11 @@
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 
+/obj/screen/fullscreen/curse
+	icon_state = "curse"
+	layer = CURSE_LAYER
+	plane = FULLSCREEN_PLANE
+
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
 

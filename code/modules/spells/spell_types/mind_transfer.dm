@@ -10,8 +10,8 @@
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
-	var/paralysis_amount_caster = 20 //how much the caster is paralysed for after the spell
-	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
+	var/unconscious_amount_caster = 400 //how much the caster is stunned for after the spell
+	var/unconscious_amount_victim = 400 //how much the victim is stunned for after the spell
 
 	action_icon_state = "mindswap"
 
@@ -20,7 +20,7 @@ Urist: I don't feel like figuring out how you store object spells so I'm leaving
 Make sure spells that are removed from spell_list are actually removed and deleted when mind transfering.
 Also, you never added distance checking after target is selected. I've went ahead and did that.
 */
-/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/user = usr, distanceoverride)
+/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/living/user = usr, distanceoverride)
 	if(!targets.len)
 		to_chat(user, "<span class='warning'>No mind found!</span>")
 		return
@@ -59,7 +59,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
-	var/mob/caster = user//The wizard/whomever doing the body transferring.
+	var/mob/living/caster = user//The wizard/whomever doing the body transferring.
 
 	//MIND TRANSFER BEGIN
 	var/mob/dead/observer/ghost = victim.ghostize(0)
@@ -72,8 +72,8 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	//MIND TRANSFER END
 
-	//Here we paralyze both mobs and knock them out for a time.
-	caster.Paralyse(paralysis_amount_caster)
-	victim.Paralyse(paralysis_amount_victim)
-	caster << sound('sound/magic/MandSwap.ogg')
-	victim << sound('sound/magic/MandSwap.ogg')// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
+	//Here we knock both mobs out for a time.
+	caster.Unconscious(unconscious_amount_caster)
+	victim.Unconscious(unconscious_amount_victim)
+	caster << sound('sound/magic/mandswap.ogg')
+	victim << sound('sound/magic/mandswap.ogg')// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened

@@ -50,6 +50,9 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 
+/obj/item/weapon/grown/log/Initialize()
+	. = ..()
+	accepted = typecacheof(accepted)
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.sharpness)
@@ -66,7 +69,7 @@
 			to_chat(user, "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>")
 		qdel(src)
 
-	if(is_type_in_list(W,accepted))
+	if(is_type_in_typecache(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
@@ -103,12 +106,23 @@
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
+	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
 	var/grill = FALSE
 	var/fire_stack_strength = 5
+
+/obj/structure/bonfire/dense
+	density = TRUE
+
+/obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+	if(mover.throwing)
+		return TRUE
+	return ..()
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -127,8 +141,7 @@
 				R.use(1)
 				grill = TRUE
 				to_chat(user, "<span class='italics'>You add a grill to \the [src].")
-				var/mutable_appearance/grill_overlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_grill")
-				overlays += grill_overlay
+				add_overlay("bonfire_grill")
 			else
 				return ..()
 	if(W.is_hot())
@@ -157,6 +170,8 @@
 			var/obj/item/weapon/grown/log/L = new /obj/item/weapon/grown/log(src.loc)
 			L.pixel_x += rand(1,4)
 			L.pixel_y += rand(1,4)
+		if(can_buckle || grill)
+			new /obj/item/stack/rods(loc, 1)
 		qdel(src)
 		return
 	..()
@@ -167,7 +182,7 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/G = O.air.gases
-			if(G["o2"][MOLES] > 16)
+			if(G["o2"][MOLES] > 13)
 				return 1
 	return 0
 

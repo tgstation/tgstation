@@ -120,7 +120,7 @@
 	icon_state = "sleeper"
 
 /obj/item/ammo_casing/haemorrhage
-	desc = "A .50 bullet casing, specialised in causing massive bloodloss"
+	desc = "A .50 bullet casing, specialised in causing massive bloodloss."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/sniper/haemorrhage
 	icon_state = ".50"
@@ -149,7 +149,7 @@
 	projectile_type = /obj/item/projectile/bullet/saw
 
 /obj/item/ammo_casing/mm195x129/bleeding
-	desc = "A 1.95x129mm bullet casing with specialized inner-casing, that when it makes contact with a target, release tiny shrapnel to induce internal bleeding."
+	desc = "A 1.95x129mm bullet casing with specialized inner-casing, that when it makes contact with a target, releases tiny shrapnel to induce internal bleeding."
 	icon_state = "762-casing"
 	projectile_type = /obj/item/projectile/bullet/saw/bleeding
 
@@ -277,7 +277,7 @@
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
 	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
-	The unique properties of the crystal splot the pulse into a spread of individually weaker bolts."
+	The unique properties of the crystal split the pulse into a spread of individually weaker bolts."
 	icon_state = "ionshell"
 	projectile_type = /obj/item/projectile/ion/weak
 	pellets = 4

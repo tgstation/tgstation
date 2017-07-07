@@ -4,7 +4,7 @@
 /datum/action/innate/cult
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))
@@ -46,7 +46,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	log_say("[user.real_name]/[user.key] : [message]")
+	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"
@@ -81,17 +81,12 @@
 	popup.open()
 	return 1
 
-/mob/living/proc/cult_master()
-	set category = "Cultist"
-	set name = "Assert Leadership"
-	pollCultists(src)  // This proc handles the distribution of cult master actions
-
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
 
 /datum/action/innate/cult/mastervote/IsAvailable()
-	if(GLOB.cult_vote_called)
+	if(GLOB.cult_vote_called || !ishuman(owner))
 		return FALSE
 	return ..()
 
@@ -236,7 +231,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
-			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>"
+			to_chat(owner, "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>")
 		return FALSE
 	return ..()
 

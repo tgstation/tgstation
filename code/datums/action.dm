@@ -1,5 +1,5 @@
 #define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUNNED 2
+#define AB_CHECK_STUN 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_CONSCIOUS 8
 
@@ -72,8 +72,8 @@
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
 			return 0
-	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned || owner.weakened)
+	if(check_flags & AB_CHECK_STUN)
+		if(owner.IsKnockdown() || owner.IsStun())
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)
@@ -117,7 +117,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	button_icon_state = null
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
@@ -263,7 +263,7 @@
 
 /datum/action/item_action/clock/hierophant
 	name = "Hierophant Network"
-	desc = "Allows you to communicate with other Servants."
+	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
 	button_icon_state = "hierophant_slab"
 
 /datum/action/item_action/clock/quickbind

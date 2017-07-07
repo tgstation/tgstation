@@ -45,10 +45,10 @@ Captain
 
 	backpack = /obj/item/weapon/storage/backpack/captain
 	satchel = /obj/item/weapon/storage/backpack/satchel/cap
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/captain
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/captain
 
 	implants = list(/obj/item/weapon/implant/mindshield)
-
+	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 /*
 Head of Personnel

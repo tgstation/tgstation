@@ -17,7 +17,7 @@
 		if(!do_after(user, 50, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-		playsound(user, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
 		new/obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)
 		return
@@ -65,6 +65,7 @@
 	pixel_x = -16
 	density = TRUE
 	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."

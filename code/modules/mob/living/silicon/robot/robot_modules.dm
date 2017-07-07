@@ -216,7 +216,7 @@
 	R.anchored = TRUE
 	sleep(2)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg', 'sound/items/Ratchet.ogg'), 80, 1, -1)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 		sleep(12)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
@@ -384,6 +384,9 @@
 	name = "Janitor"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/screwdriver/cyborg,
+		/obj/item/weapon/crowbar/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/weapon/storage/bag/trash/cyborg,
 		/obj/item/weapon/mop/cyborg,

@@ -5,7 +5,7 @@
 	icon_state = "control"
 	anchored = 0
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 1000
 
@@ -142,10 +142,10 @@
 		if(active)
 			toggle_power(1)
 		else
-			use_power = 0
+			use_power = NO_POWER_USE
 
 	else if(!stat && anchored)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 
 	return
 
@@ -201,7 +201,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
 	if(damage >= 20)
@@ -243,7 +243,7 @@
 /obj/machinery/power/am_control_unit/proc/toggle_power(powerfail = 0)
 	active = !active
 	if(active)
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		visible_message("The [src.name] starts up.")
 	else
 		use_power = !powerfail

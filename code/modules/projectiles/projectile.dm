@@ -25,12 +25,14 @@
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
+	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
+	var/ignore_source_check = FALSE
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
@@ -40,8 +42,8 @@
 	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
 		//Effects
 	var/stun = 0
-	var/weaken = 0
-	var/paralyze = 0
+	var/knockdown = 0
+	var/unconscious = 0
 	var/irradiate = 0
 	var/stutter = 0
 	var/slur = 0
@@ -87,6 +89,8 @@
 			new impact_effect_type(target_loca, target, src)
 		return 0
 	var/mob/living/L = target
+	if(L.buckled && ismob(L.buckled))
+		L = L.buckled
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
@@ -124,7 +128,7 @@
 			reagent_note += num2text(R.volume) + ") "
 
 	add_logs(firer, L, "shot", src, reagent_note)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -138,8 +142,9 @@
 	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
+			ignore_source_check = TRUE
 			return FALSE
-	if(firer && !ricochets)
+	if(firer && !ignore_source_check)
 		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
 			loc = A.loc
 			return FALSE
@@ -156,6 +161,8 @@
 	var/turf/target_turf = get_turf(A)
 
 	if(!prehit(A))
+		if(forcedodge)
+			loc = target_turf
 		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
@@ -218,7 +225,8 @@
 			if(spread)
 				Angle += (rand() - 0.5) * spread
 			var/matrix/M = new
-			M.Turn(Angle)
+			if(!nondirectional_sprite)
+				M.Turn(Angle)
 			transform = M
 
 			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
@@ -258,7 +266,7 @@
 			old_pixel_x = pixel_x_offset
 			old_pixel_y = pixel_y_offset
 
-			if(original && (original.layer>=2.75) || ismob(original))
+			if(original && (original.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original, 1)
@@ -273,7 +281,7 @@
 				if((!( current ) || loc == current))
 					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
+				if(original && (original.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
 					if(loc == get_turf(original))
 						if(!(original in permutated))
 							Bump(original, 1)

@@ -710,6 +710,15 @@
 					/obj/item/weapon/am_containment)
 	crate_name = "antimatter jar crate"
 
+/datum/supply_pack/engineering/shuttle_engine
+	name = "Shuttle Engine Crate"
+	cost = 5000
+	access = GLOB.access_ce
+	contains = list(/obj/structure/shuttle/engine/propulsion/burst/cargo)
+	crate_name = "shuttle engine crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	special = TRUE
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -998,7 +1007,7 @@
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	cost = 6000
-	contains = list(/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie)
+	contains = list(/obj/item/weapon/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
 	contraband = TRUE
 	access = GLOB.access_theatre
@@ -1423,6 +1432,7 @@
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen,
+					/obj/item/weapon/pen/fountain,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/folder/blue,
@@ -1433,6 +1443,12 @@
 					/obj/item/weapon/stamp,
 					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
+
+/datum/supply_pack/misc/fountainpens
+	name = "Calligraphy Crate"
+	cost = 700
+	contains = list(/obj/item/weapon/storage/box/fountainpens)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"

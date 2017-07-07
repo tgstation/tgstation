@@ -99,6 +99,7 @@
 	cost = 5
 	unit_name = "radio"
 	export_types = list(/obj/item/device/radio)
+	exclude_types = list(/obj/item/device/radio/mech)
 
 
 // High-tech tools.
@@ -108,9 +109,9 @@
 	export_types = list(/obj/item/weapon/construction/rcd)
 
 /datum/export/rcd_ammo
-	cost = 15 // 1.5 metal, 1 glass -> 12.5 credits, +2.5 credits
+	cost = 60 // 6 metal, 4 glass -> 50 credits, +10 credits
 	unit_name = "compressed matter cardridge"
-	export_types = list(/datum/design/rcd_ammo)
+	export_types = list(/obj/item/weapon/rcd_ammo)
 
 /datum/export/rpd
 	cost = 350 // 37.5 metal, 18.75 glass -> 281.25 credits, + some

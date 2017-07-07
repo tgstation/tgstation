@@ -1,0 +1,5 @@
+author: "Supermichael777"
+delete-after: True
+changes: 
+  - balance: "The AI swap menu is now given to the person with the multi-tool rather than the Borg. Old behavior remains for all non multi-tool sources"
+  - bugfix: "Borgs and shells now notify when un-linked due to the wire being cut."

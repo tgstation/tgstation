@@ -59,7 +59,7 @@
 				blocked = 1
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "[name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
+				if(H.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = 1
 			if(!blocked)
 				L.drop_all_held_items()

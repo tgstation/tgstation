@@ -347,12 +347,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			target.adjustToxLoss(amount)
 		if("oxyloss")
 			target.adjustOxyLoss(amount)
-		if("stunned")
-			target.AdjustStunned(amount)
-		if("weakened")
-			target.AdjustWeakened(amount)
-		if("paralysis")
-			target.AdjustParalysis(amount)
+		if("stun")
+			target.AdjustStun(amount)
+		if("knockdown")
+			target.AdjustKnockdown(amount)
+		if("unconscious")
+			target.AdjustUnconscious(amount)
 		else
 			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
 
@@ -449,6 +449,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	perform(targets,user=user)
 
+/obj/effect/proc_holder/spell/proc/updateButtonIcon()
+	action.UpdateButtonIcon()
+
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
 		return 0
@@ -507,7 +510,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	invocation = "Victus sano!"
 	invocation_type = "whisper"
 	school = "restoration"
-	sound = 'sound/magic/Staff_Healing.ogg'
+	sound = 'sound/magic/staff_healing.ogg'
 
 /obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
 	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.

@@ -23,7 +23,7 @@
 
 			new_mob.key = key
 
-		The Login proc will handle making a new mob for that mobtype (including setting up stuff like mind.name). Simple!
+		The Login proc will handle making a new mind for that mobtype (including setting up stuff like mind.name). Simple!
 		However if you want that mind to have any special properties like being a traitor etc you will have to do that
 		yourself.
 
@@ -117,7 +117,7 @@
 		C.last_mind = src
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
-
+	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
 
@@ -1149,7 +1149,7 @@
 				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
 
 			if("initialdna")
-				if( !changeling || !changeling.stored_profiles.len || !istype(current, /mob/living/carbon))
+				if( !changeling || !changeling.stored_profiles.len || !iscarbon(current))
 					to_chat(usr, "<span class='danger'>Resetting DNA failed!</span>")
 				else
 					var/mob/living/carbon/C = current
@@ -1443,7 +1443,7 @@
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
 		return traitordatum
-		
+
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))
@@ -1623,6 +1623,15 @@
 			spell_list -= S
 			qdel(S)
 
+/datum/mind/proc/transfer_martial_arts(mob/living/new_character)
+	if(!ishuman(new_character))
+		return
+	if(martial_art)
+		if(martial_art.base) //Is the martial art temporary?
+			martial_art.remove(new_character)
+		else
+			martial_art.teach(new_character)
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
@@ -1641,6 +1650,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
+		S.updateButtonIcon()
 		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
