@@ -60693,7 +60693,7 @@
 	},
 /area/science/lab)
 "clB" = (
-/obj/structure/chair/stool,
+/obj/machinery/boss_sender/sci,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "clC" = (

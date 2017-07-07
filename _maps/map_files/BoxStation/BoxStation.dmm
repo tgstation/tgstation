@@ -64469,6 +64469,12 @@
 "cTC" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
+"cTD" = (
+/obj/machinery/boss_sender/sci,
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 1
+	},
+/area/science/lab)
 
 (1,1,1) = {"
 aaa
@@ -111375,7 +111381,7 @@ aXq
 aYV
 bfX
 bhC
-biU
+cTD
 bks
 blI
 bnn
