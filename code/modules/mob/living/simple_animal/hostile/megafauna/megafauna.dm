@@ -83,6 +83,18 @@
 	var/turf/newloc = loc
 	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
 
+/mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	if(recovery_time >= world.time)
+		return
+	. = ..()
+	if(. && isliving(target))
+		var/mob/living/L = target
+		if(L.stat != DEAD)
+			if(!client && ranged && ranged_cooldown <= world.time)
+				OpenFire()
+		else
+			devour(L)
+
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return

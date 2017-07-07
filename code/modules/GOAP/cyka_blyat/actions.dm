@@ -222,7 +222,7 @@
 		var/obj/item/russian_reload/RE = new /obj/item/russian_reload(get_turf(agent))
 		RE.throw_at(target, 10, 1)
 		RU.reloads_left += 3
-		RU.say(pick(list("Spasibo!","Spasibo za boyepripasy!","Ti khahroshiy spetsiahlist!")))
+		RU.say(pick(list("Spasiba!","Spasiba za boyepripasy!","Ti khahroshiy spetsiahlist!")))
 		qdel(RE)
 		action_done = TRUE
 		cooldown_time = world.time + cooldown
