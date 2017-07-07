@@ -5201,7 +5201,7 @@
 "bWa" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating/airless,/area/engine/atmos)
 "bWb" = (/obj/machinery/air_sensor{frequency = 1441; id_tag = "mix_sensor"},/turf/open/floor/engine/vacuum,/area/engine/atmos)
 "bWc" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/engine/vacuum,/area/engine/atmos)
-"bWd" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets{pixel_x = 3; pixel_y = 3},/obj/machinery/newscaster{pixel_x = -30},/obj/item/stack/sheet/mineral/plasma{layer = 2.9},/turf/open/floor/plasteel/white,/area/medical/virology)
+"bWd" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets{pixel_x = 3; pixel_y = 3},/obj/machinery/newscaster{pixel_x = -30},/obj/item/stack/sheet/mineral/plasma{layer = 2.9},/obj/item/stack/sheet/mineral/plasma{layer = 2.9},/turf/open/floor/plasteel/white,/area/medical/virology)
 "bWe" = (/obj/structure/chair/stool,/turf/open/floor/plasteel/white,/area/medical/virology)
 "bWf" = (/obj/structure/closet/wardrobe/virology_white,/turf/open/floor/plasteel/white,/area/medical/virology)
 "bWg" = (/obj/structure/sink{dir = 8; pixel_x = -12; pixel_y = 2},/obj/machinery/doorButtons/access_button{idDoor = "virology_airlock_interior"; idSelf = "virology_airlock_control"; name = "Virology Access Button"; pixel_x = 8; pixel_y = -28; req_access_txt = "39"},/obj/effect/turf_decal/stripes/line{dir = 10},/turf/open/floor/plasteel/white,/area/medical/virology)
