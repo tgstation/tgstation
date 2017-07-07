@@ -9,7 +9,7 @@
 	if(!msg)
 		return
 
-	log_adminsay("[key_name(src)] : [msg]")
+	log_talk(mob,"[key_name(src)] : [msg]",LOGASAY)
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))
 		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>): <span class='message'>[msg]</span></span>"

@@ -1329,7 +1329,7 @@
 	name = "[initial(name)] - [doll_name]"
 
 /obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
-	log_say("[key_name(M)] : through dummy : [message]")
+	log_talk(M,"[key_name(M)] : through dummy : [message]",LOGSAY)
 	say(message, language)
 	return NOPASS
 
