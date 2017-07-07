@@ -1,5 +1,5 @@
 /obj/item/weapon/twohanded/rcl
-	name = "rapid cable layer	"
+	name = "rapid cable layer"
 	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
@@ -13,8 +13,6 @@
 	origin_tech = "engineering=4;materials=2"
 	var/max_amount = 90
 	var/active = FALSE
-	var/obj/structure/cable/last = null
-	var/obj/item/stack/cable_coil/loaded = null
 
 /obj/item/weapon/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
