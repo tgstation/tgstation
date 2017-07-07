@@ -41535,6 +41535,12 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
+/obj/item/stack/sheet/mineral/plasma{
+	layer = 2.9
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	layer = 2.9
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bQF" = (
