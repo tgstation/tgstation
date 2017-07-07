@@ -132,11 +132,11 @@ SUBSYSTEM_DEF(timer)
 //formated this way to be runtime resistant
 /datum/controller/subsystem/timer/proc/get_timer_debug_string(datum/timedevent/TE)
 	. = "Timer: [TE]"
-	. += "Prev:[TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
+	. += "Prev: [TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
 	if(TE.spent)
 		. += ", SPENT"
 	if(QDELETED(TE))
-		. += "QDELETED"
+		. += ", QDELETED"
 
 /datum/controller/subsystem/timer/proc/shift_buckets()
 	var/list/bucket_list = src.bucket_list
