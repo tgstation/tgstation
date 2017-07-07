@@ -345,3 +345,31 @@
 	icon_state = "bleed10"
 	duration = 12
 	shrink = FALSE
+
+/obj/effect/temp_visual/warp_cube
+	duration = 5
+	var/outgoing = TRUE
+
+/obj/effect/temp_visual/warp_cube/Initialize(mapload, atom/teleporting_atom, warp_color, new_outgoing)
+	. = ..()
+	if(teleporting_atom)
+		outgoing = new_outgoing
+		appearance = teleporting_atom.appearance
+		setDir(teleporting_atom.dir)
+		if(warp_color)
+			color = list(warp_color, warp_color, warp_color, list(0,0,0))
+			set_light(1.4, 1, warp_color)
+		mouse_opacity = 0
+		var/matrix/skew = transform
+		skew = skew.Turn(180)
+		skew = skew.Interpolate(transform, 0.5)
+		if(!outgoing)
+			transform = skew * 2
+			skew = teleporting_atom.transform
+			alpha = 0
+			animate(src, alpha = teleporting_atom.alpha, transform = skew, time = duration)
+		else
+			skew *= 2
+			animate(src, alpha = 0, transform = skew, time = duration)
+	else
+		return INITIALIZE_HINT_QDEL
