@@ -4,7 +4,8 @@
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "portgen0"
+	icon_state = "portgen0_0"
+	var/base_icon = "portgen0"
 	density = 1
 	anchored = 0
 	use_power = 0
@@ -27,6 +28,9 @@
 /obj/machinery/power/port_gen/proc/handleInactive()
 	return
 
+/obj/machinery/power/port_gen/update_icon()
+	icon_state = "[base_icon]_[active]"
+
 /obj/machinery/power/port_gen/process()
 	if(active && HasFuel() && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
@@ -35,8 +39,8 @@
 
 	else
 		active = 0
-		icon_state = initial(icon_state)
 		handleInactive()
+		update_icon()
 
 /obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())
@@ -262,13 +266,13 @@
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
 				active = 1
-				icon_state = "portgen1"
 				src.updateUsrDialog()
+				update_icon()
 		if(href_list["action"] == "disable")
 			if (active)
 				active = 0
-				icon_state = "portgen0"
 				src.updateUsrDialog()
+				update_icon()
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
@@ -287,7 +291,8 @@
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
-	icon_state = "portgen1"
+	icon_state = "portgen1_0"
+	base_icon = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 85
@@ -298,7 +303,8 @@
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
-	icon_state = "portgen2"
+	base_icon = "portgen2"
+	icon_state = "portgen2_0"
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80
