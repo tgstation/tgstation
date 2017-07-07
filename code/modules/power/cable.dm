@@ -1,4 +1,4 @@
-///////////////////////////////
+	///////////////////////////////
 //CABLE STRUCTURE
 ///////////////////////////////
 
@@ -548,6 +548,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
+
 
 //you can use wires to heal robotics
 /obj/item/stack/cable_coil/attack(mob/living/carbon/human/H, mob/user)
