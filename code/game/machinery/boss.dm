@@ -23,13 +23,15 @@
 	checkTech = TRUE
 
 /obj/machinery/boss_sender/attack_hand(mob/user)
-	switch(alert(user,"","[src.name] panel","Send items","Remove an item"))
+	switch(alert(user,,"[src.name] panel","Send items","Remove an item"))
 		if("Send items")
 			return //todo
 		if("Remove an item")
 			var/input = input("Select an item to remove.", "[src.name] panel", null, null) as null|anything in src.contents
 			if(input)
-				input.forceMove(get_turf(src))
+				var/obj/item/I = input
+				if(istype(I))
+					I.forceMove(get_turf(src))
 
 /obj/machinery/boss_sender/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
