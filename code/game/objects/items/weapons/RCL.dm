@@ -121,25 +121,24 @@
 		trigger(user)
 
 /obj/item/weapon/twohanded/rcl/proc/trigger(mob/user)
-	var/turf/I = get_turf(user)
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
-	if(last && I.can_have_cabling())
-		//hacky, but it works
-		var/turf/T = get_turf(user)
-		if(!isturf(T) || !T.can_have_cabling())
-			last = null
-			return
-		if(get_dir(last, user) == last.d2)
-			//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
-			last = null
-			return
-		loaded.cable_join(last, user, FALSE)
-		if(is_empty(user))
-			return //If we've run out, display message and exit
+	if(last)
+		if(get_dist(last, user) == 1) //hacky, but it works
+			var/turf/T = get_turf(user)
+			if(!isturf(T) || T.intact || !T.can_have_cabling())
+				last = null
+				return
+			if(get_dir(last, user) == last.d2)
+				//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
+				last = null
+				return
+			loaded.cable_join(last, user, FALSE)
+			if(is_empty(user))
+				return //If we've run out, display message and exit
 		else
 			last = null
 	last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
