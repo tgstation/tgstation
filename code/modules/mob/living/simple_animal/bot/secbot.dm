@@ -156,7 +156,7 @@ Auto Patrol: []"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
-    var/final = FALSE 
+    var/final = FALSE
     if(idcheck)
         final = final|JUDGE_IDCHECK
     if(check_records)
