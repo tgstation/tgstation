@@ -1155,6 +1155,7 @@
 #include "code\modules\client\verbs\who.dm"
 #include "code\modules\clothing\chameleon.dm"
 #include "code\modules\clothing\clothing.dm"
+#include "code\modules\clothing\ears\ears.dm"
 #include "code\modules\clothing\glasses\engine_goggles.dm"
 #include "code\modules\clothing\glasses\glasses.dm"
 #include "code\modules\clothing\glasses\hud.dm"
