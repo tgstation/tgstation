@@ -109,7 +109,7 @@
 
 /obj/machinery/boss_receiver/examine(mob/user)
 	..()
-	if(contents)
+	if(contents.len > 0)
 		to_chat(user,"<span class='notice'>A light indicates the [src.name] is storing items.</span>")
 
 /obj/machinery/boss_receiver/attack_hand(mob/user)
