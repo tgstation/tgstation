@@ -339,7 +339,7 @@ SUBSYSTEM_DEF(timer)
 	if (callBack.object == GLOBAL_PROC)
 		. = "GLOBAL_PROC"
 	else
-		. = "callBack.object.type"
+		. = "[callBack.object.type]"
 
 /proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
