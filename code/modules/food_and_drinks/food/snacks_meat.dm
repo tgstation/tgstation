@@ -103,6 +103,15 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	tastes = list("meat" = 1)
+	
+/obj/item/weapon/reagent_containers/food/snacks/hotdog
+	name = "hotdog"
+	desc = "HOTDOG!!"
+	icon_state = "hotdog"
+	filling_color = "#CD5C5C"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 7, "vitamin" = 1)
+	tastes = list("meat" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/New()
 	..()
