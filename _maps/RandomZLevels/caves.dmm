@@ -2473,7 +2473,6 @@
 "fD" = (
 /obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,

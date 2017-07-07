@@ -3207,6 +3207,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "afw" = (
@@ -6834,6 +6839,10 @@
 	name = "Security Office APC";
 	pixel_x = -26
 	},
+/obj/structure/cable/white{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -6842,6 +6851,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/brig)
@@ -6853,6 +6867,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
@@ -22637,7 +22656,6 @@
 /area/shuttle/escape)
 "aLA" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/machinery/vending/wallmed{
@@ -22653,7 +22671,6 @@
 /area/shuttle/escape)
 "aLC" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -23364,10 +23381,10 @@
 /area/engine/supermatter)
 "aMS" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMT" = (
@@ -23387,10 +23404,10 @@
 /area/engine/supermatter)
 "aMW" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMX" = (
@@ -24359,18 +24376,18 @@
 /area/engine/supermatter)
 "aOC" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aOD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aOE" = (
@@ -29390,7 +29407,6 @@
 /area/medical/medbay/zone3)
 "aXS" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30815,7 +30831,6 @@
 /area/medical/medbay/zone3)
 "bax" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/machinery/newscaster{
@@ -37215,17 +37230,13 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bmX" = (
-/obj/machinery/computer/med_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
 "bmY" = (
-/obj/machinery/computer/crew{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/crew/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -37250,9 +37261,7 @@
 	},
 /area/shuttle/syndicate)
 "bnc" = (
-/obj/machinery/computer/camera_advanced{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -39213,9 +39222,7 @@
 	name = "Arrivals"
 	})
 "bto" = (
-/obj/machinery/computer/secure_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -39807,7 +39814,7 @@
 /area/engine/supermatter)
 "bvd" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "bve" = (

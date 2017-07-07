@@ -4,6 +4,7 @@
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
+	flags = ON_BORDER
 	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
@@ -24,6 +25,7 @@
 
 /obj/structure/necropolis_gate/Initialize()
 	. = ..()
+	setDir(SOUTH)
 	var/turf/sight_blocker_turf = get_turf(src)
 	if(sight_blocker_distance)
 		for(var/i in 1 to sight_blocker_distance)
@@ -32,6 +34,7 @@
 			sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
 	if(sight_blocker_turf)
 		sight_blocker = new (sight_blocker_turf) //we need to block sight in a different spot than most things do
+		sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 	icon_state = "gate_bottom"
 	top_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_top")
 	top_overlay.layer = EDGED_TURF_LAYER
@@ -53,9 +56,22 @@
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
+/obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target, height=0)
+	if(get_dir(loc, target) == dir)
+		return !density
+	return 1
+
+/obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
+	if(get_dir(O.loc, target) == dir)
+		return !density
+	return 1
+
 /obj/structure/opacity_blocker
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "gate_blocker"
+	layer = EDGED_TURF_LAYER
+	pixel_x = -32
+	pixel_y = -32
 	mouse_opacity = 0
 	opacity = TRUE
 
@@ -94,6 +110,7 @@
 					break
 				sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
 		if(sight_blocker_turf)
+			sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 			sight_blocker.forceMove(sight_blocker_turf)
 		sleep(2.5)
 		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
@@ -156,8 +173,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
-			message_admins("[user ? "key_name_admin(user)":"Unknown"] has released Legion!")
-			log_game("[user ? "key_name(user)":"Unknown"] released Legion.")
+			message_admins("[user ? key_name_admin(user):"Unknown"] has released Legion!")
+			log_game("[user ? key_name(user):"Unknown"] released Legion.")
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
@@ -323,60 +340,3 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "burnt stone surrounding tile"
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
-
-//hot stone tiles, cosmetic only
-/obj/structure/stone_tile/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-//hot cracked stone tiles, cosmetic only
-/obj/structure/stone_tile/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-//hot burnt stone tiles, cosmetic only
-/obj/structure/stone_tile/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'

@@ -14,7 +14,7 @@
 	icon_state = "photocopier"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP

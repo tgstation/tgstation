@@ -11,7 +11,13 @@
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
 
-/turf/open/floor/plating/lava/ex_act()
+/turf/open/floor/plating/lava/ex_act(severity, target)
+	contents_explosion(severity, target)
+
+/turf/open/floor/plating/lava/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	return
+
+/turf/open/floor/plating/lava/MakeDry(wet_setting = TURF_WET_WATER)
 	return
 
 /turf/open/floor/plating/lava/airless

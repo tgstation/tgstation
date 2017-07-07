@@ -14,10 +14,12 @@
 /area/ruin/ancientstation/hivebot)
 "ae" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/glass{
-	anchored = 20
-	},
 /obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "af" = (
@@ -42,6 +44,9 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 15
 	},
+/obj/item/weapon/ore/bluespace_crystal,
+/obj/item/weapon/ore/bluespace_crystal,
+/obj/item/weapon/ore/bluespace_crystal,
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "ak" = (
@@ -466,6 +471,7 @@
 "bu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/weapon/tank/internals/emergency_oxygen,
 /turf/open/floor/plasteel/blue/side,
 /area/ruin/ancientstation/comm)
 "bv" = (
@@ -535,7 +541,7 @@
 /turf/closed/wall,
 /area/ruin/ancientstation/deltacorridor)
 "bF" = (
-/turf/closed/mineral,
+/turf/closed/wall/rust,
 /area/ruin/ancientstation/hivebot)
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -636,7 +642,9 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "bU" = (
-/obj/machinery/door/firedoor/closed,
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "bV" = (
@@ -646,7 +654,8 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "bX" = (
 /obj/structure/sign/science,
@@ -1039,13 +1048,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "cV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "cW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1232,7 +1243,8 @@
 /area/ruin/ancientstation/hydroponics)
 "dt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "du" = (
 /obj/machinery/light/small{
@@ -1245,7 +1257,8 @@
 	req_access = "0";
 	req_one_access = "0"
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "dv" = (
 /turf/closed/wall/rust,
@@ -1368,7 +1381,10 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
 /area/template_noop)
 "dM" = (
 /obj/structure/table,
@@ -1734,15 +1750,19 @@
 	d2 = 4
 	},
 /obj/machinery/power/solar,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
 /area/template_noop)
 "eJ" = (
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged1"
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
 	},
 /area/template_noop)
 "eK" = (
@@ -1988,7 +2008,8 @@
 "fn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "fo" = (
 /obj/machinery/door/firedoor,
@@ -2152,7 +2173,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "fK" = (
 /obj/machinery/door/airlock/security,
@@ -2666,7 +2688,8 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "gz" = (
 /obj/structure/cable{
@@ -2677,7 +2700,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "gA" = (
 /obj/structure/grille,
@@ -3246,7 +3270,11 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (NORTHWEST)";
+	icon_state = "orange";
+	dir = 9
+	},
 /area/ruin/ancientstation/rnd)
 "hG" = (
 /obj/structure/table,
@@ -3257,7 +3285,11 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (NORTH)";
+	icon_state = "orange";
+	dir = 1
+	},
 /area/ruin/ancientstation/rnd)
 "hH" = (
 /obj/structure/table,
@@ -3268,7 +3300,11 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (NORTHEAST)";
+	icon_state = "orange";
+	dir = 5
+	},
 /area/ruin/ancientstation/rnd)
 "hI" = (
 /obj/machinery/door/firedoor,
@@ -3301,7 +3337,10 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
 /area/template_noop)
 "hN" = (
 /obj/structure/lattice/catwalk,
@@ -3429,7 +3468,11 @@
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (EAST)";
+	icon_state = "orange";
+	dir = 4
+	},
 /area/ruin/ancientstation/rnd)
 "ia" = (
 /turf/open/floor/plasteel/airless{
@@ -3533,6 +3576,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -3544,6 +3588,7 @@
 	dir = 8
 	},
 /obj/item/weapon/broken_bottle,
+/obj/item/weapon/soap/nanotrasen,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/rnd)
 "io" = (
@@ -3578,7 +3623,11 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (EAST)";
+	icon_state = "orange";
+	dir = 4
+	},
 /area/ruin/ancientstation/rnd)
 "is" = (
 /obj/machinery/door/airlock/glass_medical{
@@ -3629,12 +3678,18 @@
 	req_access = "0";
 	req_one_access = "0"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (EAST)";
+	icon_state = "orange";
+	dir = 4
+	},
 /area/ruin/ancientstation/rnd)
 "iv" = (
 /obj/structure/table,
-/obj/item/device/multitool,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/color/fyellow/old,
+/obj/item/clothing/gloves/color/fyellow/old,
+/obj/item/device/multitool,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -3694,7 +3749,6 @@
 "iB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/old,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -3746,7 +3800,11 @@
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (EAST)";
+	icon_state = "orange";
+	dir = 4
+	},
 /area/ruin/ancientstation/rnd)
 "iH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3816,7 +3874,8 @@
 	req_access = "0";
 	req_one_access = "0"
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "iP" = (
 /obj/structure/chair{
@@ -3834,7 +3893,11 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (SOUTHWEST)";
+	icon_state = "orange";
+	dir = 10
+	},
 /area/ruin/ancientstation/rnd)
 "iR" = (
 /obj/structure/table,
@@ -3856,7 +3919,11 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (SOUTHEAST)";
+	icon_state = "orange";
+	dir = 6
+	},
 /area/ruin/ancientstation/rnd)
 "iT" = (
 /obj/structure/closet/crate,
@@ -3930,7 +3997,8 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "jc" = (
 /obj/machinery/door/airlock/research{
@@ -4005,23 +4073,26 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "jn" = (
-/obj/machinery/door/firedoor/closed,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "jo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "jp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
 "jq" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4238,9 +4309,7 @@
 /area/template_noop)
 "jR" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "jS" = (
 /obj/structure/grille,
@@ -4849,6 +4918,250 @@
 "lp" = (
 /turf/closed/mineral/gold,
 /area/ruin/unpowered)
+"lq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/ancientstation/deltacorridor)
+"lr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/ore/bluespace_crystal,
+/turf/open/floor/plasteel/white,
+/area/ruin/ancientstation/rnd)
+"ls" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/ore/bluespace_crystal/refined,
+/turf/open/floor/plasteel/white,
+/area/ruin/ancientstation/rnd)
+"lt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mirror{
+	name = "dusty mirror";
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/ancientstation)
+"lu" = (
+/obj/item/weapon/stock_parts/manipulator,
+/turf/open/floor/plasteel/airless/floorgrime,
+/area/template_noop)
+"lv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/stock_parts/console_screen,
+/turf/open/floor/plasteel/white/side{
+	tag = "icon-whitehall (EAST)";
+	icon_state = "whitehall";
+	dir = 4
+	},
+/area/template_noop)
+"lw" = (
+/obj/item/weapon/stock_parts/matter_bin,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"lx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/science{
+	name = "Artificial Program Core Room"
+	},
+/turf/open/floor/plating,
+/area/ruin/ancientstation/hivebot)
+"ly" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/science,
+/turf/open/floor/plating,
+/area/ruin/ancientstation/hivebot)
+"lz" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lA" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lB" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lC" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lD" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lE" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lF" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lG" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lH" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lI" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lJ" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lK" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/orange/corner,
+/area/ruin/ancientstation/rnd)
+"lM" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (WEST)";
+	icon_state = "orange";
+	dir = 8
+	},
+/area/ruin/ancientstation/rnd)
+"lN" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lO" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lP" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lQ" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lR" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lS" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/orange/corner{
+	tag = "icon-orangecorner (EAST)";
+	icon_state = "orangecorner";
+	dir = 4
+	},
+/area/ruin/ancientstation/rnd)
+"lU" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (WEST)";
+	icon_state = "orange";
+	dir = 8
+	},
+/area/ruin/ancientstation/rnd)
+"lV" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lW" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lX" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lY" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lZ" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"ma" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"mb" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"mc" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"md" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
 
 (1,1,1) = {"
 aa
@@ -4975,7 +5288,7 @@ br
 di
 dD
 bq
-eH
+lv
 eH
 aa
 aa
@@ -5545,20 +5858,20 @@ aa
 bd
 aa
 aa
-dG
-dG
-dG
+lz
+lz
+lz
 aa
 aa
 gb
 aa
 aa
 hM
-eh
-dG
+lz
+lz
 aA
-dG
-eh
+lz
+lz
 eI
 aa
 aa
@@ -5649,21 +5962,21 @@ aa
 bd
 aa
 aa
-dI
-eh
+lz
+lz
 eI
 aa
 aa
 gd
 aa
 aa
-eh
+lz
 hM
-dJ
+lz
 aA
-eh
-dG
-dJ
+lz
+lz
+lz
 aa
 aa
 aa
@@ -5753,21 +6066,21 @@ aa
 bd
 aa
 aa
-dJ
-dG
+lz
+lz
 eJ
 aa
 aa
 gd
 aa
 aa
-dG
-ia
-dG
+lz
+lz
+lz
 aA
-dG
-ia
-ia
+lz
+lz
+lz
 aa
 aa
 aa
@@ -5858,20 +6171,20 @@ bd
 aa
 aa
 dL
-dG
-dG
+lz
+lz
 aa
 aa
 gd
 aa
 aa
-dG
-ic
-ia
-aA
-dG
+lz
 eJ
-ic
+lz
+aA
+lz
+eJ
+eJ
 aa
 aa
 aa
@@ -6572,8 +6885,8 @@ aa
 aa
 aa
 aa
-ak
-as
+by
+aH
 at
 aQ
 aI
@@ -6884,8 +7197,8 @@ aa
 aa
 aa
 aa
-ak
-ay
+by
+aM
 ax
 aQ
 aI
@@ -6913,7 +7226,7 @@ ja
 cn
 jH
 aG
-bN
+lt
 bN
 bN
 bN
@@ -6945,8 +7258,8 @@ aR
 bn
 ak
 ak
-bU
-bU
+bR
+bR
 cQ
 ds
 dR
@@ -6997,12 +7310,12 @@ ak
 ak
 ak
 aG
-bV
-bV
+bN
+bN
 cQ
 cQ
 dP
-es
+eo
 dP
 cQ
 cQ
@@ -7010,12 +7323,12 @@ gx
 gY
 gY
 hR
-ij
+ii
 hR
 gY
 gY
 jo
-bV
+bN
 aG
 aG
 aG
@@ -7049,8 +7362,8 @@ aY
 aY
 aY
 bC
-bV
-bV
+bN
+bN
 cU
 dt
 dt
@@ -7067,7 +7380,7 @@ dt
 dt
 jb
 jp
-bV
+bN
 bC
 kb
 aY
@@ -7102,23 +7415,23 @@ aY
 aY
 aG
 bW
-bV
+bN
 cV
 du
-bV
-bV
-bV
-fo
-bV
+bN
+bN
+bN
+bR
+bN
 gz
-bV
-fo
-bV
-bV
-bV
+bN
+bR
+bN
+bN
+bN
 iO
 cV
-bV
+bN
 bW
 aG
 kc
@@ -7779,7 +8092,7 @@ aa
 bD
 bZ
 cw
-ca
+lq
 bD
 aa
 aa
@@ -8192,7 +8505,7 @@ ad
 ad
 ad
 ad
-bF
+bG
 bF
 cC
 dd
@@ -8245,7 +8558,7 @@ be
 aB
 aN
 bG
-bG
+lx
 cE
 dc
 dy
@@ -8297,7 +8610,7 @@ aC
 af
 aN
 bG
-bG
+lx
 cF
 db
 dz
@@ -8348,7 +8661,7 @@ ad
 ad
 ad
 ad
-bF
+bG
 bF
 ca
 dc
@@ -8361,9 +8674,9 @@ eb
 gP
 hi
 hi
-hi
+lL
 ir
-hi
+lT
 hi
 jd
 jw
@@ -8465,9 +8778,9 @@ dZ
 gQ
 dy
 hF
+lM
 eb
-eb
-eb
+lM
 iQ
 dy
 jx

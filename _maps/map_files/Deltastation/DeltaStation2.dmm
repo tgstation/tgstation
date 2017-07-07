@@ -388,6 +388,7 @@
 /area/hallway/secondary/entry)
 "aaU" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -439,7 +440,6 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "aaY" = (
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -486,6 +486,7 @@
 /area/hallway/secondary/entry)
 "abe" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -530,6 +531,7 @@
 /area/construction/mining/aux_base)
 "abk" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -696,6 +698,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Solar Access";
 	req_access_txt = "10; 13"
 	},
@@ -714,7 +717,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/solars/starboard/fore)
@@ -1089,6 +1091,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
 "acf" = (
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -1707,17 +1710,13 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "adA" = (
-/obj/machinery/computer/med_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
 "adB" = (
-/obj/machinery/computer/crew{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/crew/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1742,17 +1741,13 @@
 	},
 /area/shuttle/syndicate)
 "adF" = (
-/obj/machinery/computer/camera_advanced{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
 "adG" = (
-/obj/machinery/computer/secure_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -6662,7 +6657,7 @@
 /area/engine/atmospherics_engine)
 "aoK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
 "aoL" = (
@@ -9177,7 +9172,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
 "ats" = (
@@ -9728,7 +9723,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "auE" = (
@@ -9748,7 +9743,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "auH" = (
@@ -10298,7 +10293,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "avQ" = (
@@ -10310,7 +10305,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "avS" = (
@@ -11302,7 +11297,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
 "axZ" = (
@@ -12322,6 +12317,7 @@
 "azU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
 	},
@@ -12348,6 +12344,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
 	},
@@ -13316,6 +13313,7 @@
 /area/quartermaster/storage)
 "aBS" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
 	},
@@ -14963,6 +14961,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Solar Access";
 	req_access_txt = "10";
 	req_one_access = null;
@@ -14983,7 +14982,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -15262,7 +15260,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
 "aFi" = (
@@ -15298,7 +15296,7 @@
 	icon_state = "0-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
 "aFk" = (
@@ -22303,7 +22301,6 @@
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fans/tiny,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -27497,6 +27494,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "Mining Dock Airlock";
 	req_access = null;
 	req_access_txt = "48"
@@ -27527,6 +27525,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
 	name = "Mining Dock Airlock";
 	req_access = null;
 	req_access_txt = "48"
@@ -34719,7 +34718,6 @@
 /turf/open/floor/plasteel,
 /area/security/transfer)
 "bqD" = (
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/transfer)
@@ -36388,6 +36386,7 @@
 "btE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -36756,6 +36755,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/vault{
+	cyclelinkeddir = 4;
 	locked = 1;
 	name = "Vault Door";
 	req_access_txt = "53"
@@ -36782,6 +36782,7 @@
 /area/security/nuke_storage)
 "buu" = (
 /obj/machinery/door/airlock/vault{
+	cyclelinkeddir = 8;
 	locked = 1;
 	name = "Vault Door";
 	req_access_txt = "53"
@@ -37174,7 +37175,6 @@
 /area/engine/gravity_generator)
 "bve" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -37870,7 +37870,6 @@
 /area/security/transfer)
 "bwe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/transfer)
@@ -38277,6 +38276,7 @@
 "bwP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -38776,7 +38776,7 @@
 	},
 /area/bridge)
 "bxN" = (
-/obj/machinery/computer/aifixer,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkpurple/side{
 	icon_state = "darkpurple";
 	dir = 1
@@ -39750,7 +39750,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 0;
+	cyclelinkeddir = 4;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -39819,7 +39819,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 0;
+	cyclelinkeddir = 8;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -40069,7 +40069,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 0;
+	cyclelinkeddir = 4;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -40110,7 +40110,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 0;
+	cyclelinkeddir = 8;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -40953,7 +40953,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 0;
+	cyclelinkeddir = 4;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -40998,7 +40998,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 0;
+	cyclelinkeddir = 8;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -45568,6 +45568,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/hatch{
+	cyclelinkeddir = 4;
 	name = "MiniSat Exterior Access";
 	req_one_access_txt = "32;19"
 	},
@@ -50861,6 +50862,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 4;
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -52954,6 +52956,7 @@
 "bWY" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 4;
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -54136,6 +54139,7 @@
 /area/engine/engineering)
 "bZk" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Containment Access";
 	req_access_txt = "10; 13"
 	},
@@ -68625,6 +68629,7 @@
 /area/engine/engineering)
 "cAZ" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Containment Access";
 	req_access_txt = "10; 13"
 	},
@@ -70566,6 +70571,7 @@
 /area/crew_quarters/fitness/recreation)
 "cEM" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -78191,6 +78197,7 @@
 "cTR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 2;
 	name = "Research Division Access";
 	req_access_txt = "47"
 	},
@@ -78211,6 +78218,7 @@
 "cTT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 2;
 	name = "Research Division Access";
 	req_access_txt = "47"
 	},
@@ -80358,7 +80366,6 @@
 	pixel_x = -23
 	},
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -80947,7 +80954,6 @@
 /area/security/checkpoint/medical)
 "cZq" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -80970,7 +80976,6 @@
 /area/medical/medbay/central)
 "cZt" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -98428,6 +98433,7 @@
 /area/science/test_area)
 "dHX" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -98446,6 +98452,7 @@
 /area/maintenance/port/aft)
 "dHZ" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -102769,6 +102776,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dRe" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -102803,7 +102811,6 @@
 /area/shuttle/escape)
 "dRi" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cmo,
@@ -102813,7 +102820,6 @@
 /area/shuttle/escape)
 "dRk" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo,
@@ -105050,6 +105056,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Solar Access";
 	req_access_txt = "10; 13"
 	},
@@ -105068,7 +105075,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/solars/port/aft)
@@ -106362,6 +106368,7 @@
 /area/security/checkpoint/checkpoint2)
 "dXR" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Docking Port";
 	req_access_txt = "63"
 	},
@@ -106374,7 +106381,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/checkpoint2)
 "dXS" = (
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/checkpoint2)
@@ -106598,6 +106604,7 @@
 "dYr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -107034,7 +107041,6 @@
 /turf/open/floor/carpet,
 /area/chapel/office)
 "dZg" = (
-/obj/structure/fans/tiny,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -107365,6 +107371,7 @@
 /area/chapel/office)
 "dZQ" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
@@ -110154,7 +110161,7 @@
 /area/engine/supermatter)
 "ehB" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "ehC" = (
@@ -110392,6 +110399,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "External Solar Access";
 	req_access_txt = "10; 13"
 	},
@@ -110410,7 +110418,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/solars/starboard/aft)
@@ -110972,17 +110979,13 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/space)
 "ejM" = (
-/obj/machinery/computer/med_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/space)
 "ejN" = (
-/obj/machinery/computer/crew{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/crew/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -111007,17 +111010,13 @@
 	},
 /area/space)
 "ejR" = (
-/obj/machinery/computer/camera_advanced{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/space)
 "ejS" = (
-/obj/machinery/computer/secure_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -112563,6 +112562,7 @@
 /area/hallway/secondary/entry)
 "epc" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -112724,7 +112724,7 @@
 /area/science/xenobiology)
 "epo" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -112732,7 +112732,7 @@
 /area/engine/atmospherics_engine)
 "epp" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -112740,7 +112740,7 @@
 /area/engine/atmospherics_engine)
 "epq" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -112748,7 +112748,7 @@
 /area/engine/atmospherics_engine)
 "epr" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -112756,7 +112756,7 @@
 /area/engine/atmospherics_engine)
 "eps" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -112815,6 +112815,325 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"epB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Solar Access";
+	req_access_txt = "10; 13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/solars/starboard/fore)
+"epC" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"epD" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Solar Access";
+	req_access_txt = "10";
+	req_one_access = null;
+	req_one_access_txt = "13; 24"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/solars/port/fore)
+"epE" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/glass_command{
+	cyclelinkeddir = 8;
+	name = "Bridge Access";
+	req_access_txt = "19"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/bridge)
+"epF" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/hatch{
+	cyclelinkeddir = 8;
+	name = "MiniSat Exterior Access";
+	req_one_access_txt = "32;19"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/engine/transit_tube)
+"epG" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 8;
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"epH" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 8;
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"epI" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Containment Access";
+	req_access_txt = "10; 13"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"epJ" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Containment Access";
+	req_access_txt = "10; 13"
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"epK" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Airlock";
+	req_access_txt = "13"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port)
+"epL" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	cyclelinkeddir = 1;
+	name = "Research Division Access";
+	req_access_txt = "47"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/research)
+"epM" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	cyclelinkeddir = 1;
+	name = "Research Division Access";
+	req_access_txt = "47"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/research)
+"epN" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Solar Access";
+	req_access_txt = "10; 13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/solars/starboard/aft)
+"epO" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
+"epP" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
+"epQ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Solar Access";
+	req_access_txt = "10; 13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/solars/port/aft)
+"epR" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
+"epS" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port";
+	req_access_txt = "63"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint/checkpoint2)
+"epT" = (
+/obj/structure/closet/toolcloset,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 4
+	},
+/area/construction/mining/aux_base)
 
 (1,1,1) = {"
 aaa
@@ -132499,7 +132818,7 @@ aaf
 bVT
 bVT
 bVT
-cEM
+epK
 bWg
 bWg
 chF
@@ -132949,7 +133268,7 @@ aaf
 aaf
 aBX
 aBX
-aEN
+epD
 aBX
 aBZ
 aBZ
@@ -133755,7 +134074,7 @@ bBV
 bDJ
 btD
 bHx
-bJy
+epF
 bLz
 bHv
 bPy
@@ -136590,7 +136909,7 @@ bRV
 bDM
 bVT
 bXw
-bZk
+epI
 bVT
 ccU
 ceE
@@ -136608,7 +136927,7 @@ cuM
 cht
 ccU
 bVT
-cAZ
+epJ
 bXw
 bVT
 cEV
@@ -140521,7 +140840,7 @@ aaa
 aaf
 dUl
 dUl
-dVx
+epQ
 dUl
 dUl
 aaf
@@ -144475,14 +144794,14 @@ aaf
 aaf
 aaf
 aax
-epb
+egV
 aax
 aaf
 aaa
 aaa
 aaf
 aax
-epb
+egV
 aax
 aaf
 aaf
@@ -144732,14 +145051,14 @@ aaa
 aaf
 aaa
 aax
-aci
+ack
 aax
 aax
 aax
 aax
 aax
 aax
-aci
+ack
 aax
 aaa
 aaf
@@ -144989,14 +145308,14 @@ aax
 aaD
 abT
 aax
-epc
+egU
 aax
 acC
 acT
 ack
 adq
 aax
-epb
+egW
 aax
 abR
 aaD
@@ -147315,8 +147634,8 @@ edp
 edp
 een
 epc
-aci
-epc
+ack
+epC
 agl
 agN
 ahu
@@ -148189,7 +148508,7 @@ cTR
 cVw
 cXn
 cYN
-cTR
+epL
 dbv
 dcR
 deC
@@ -148330,14 +148649,14 @@ aaf
 aaf
 aaf
 aax
-epb
+egV
 aax
 aaf
 aaf
 aaf
 aaf
 aax
-epc
+egT
 aax
 aaf
 aaf
@@ -148587,14 +148906,14 @@ aaa
 aaf
 aaa
 aax
-aci
+ack
 aax
 aax
 aax
 aax
 aax
 aax
-aci
+ack
 aax
 aaa
 aaf
@@ -148703,7 +149022,7 @@ cTT
 cVy
 cXp
 cYP
-cTT
+epM
 dbx
 dcS
 deE
@@ -148844,14 +149163,14 @@ aax
 aaD
 abR
 aax
-epc
+egU
 aax
 acE
 acV
 adg
 adr
 aax
-epb
+egW
 aax
 abT
 aaD
@@ -150129,14 +150448,14 @@ aaa
 aaf
 aaa
 aax
-aci
+ack
 aax
 aax
 aax
 aax
 aax
 aax
-aci
+ack
 aax
 aaa
 aaf
@@ -153109,15 +153428,15 @@ aaf
 aaa
 aaa
 dMY
-dRf
+dPA
 dMY
-dRf
+dPA
 dMY
 aaf
 aaf
 aaf
 dMY
-dRf
+dPA
 dXk
 dXS
 dXk
@@ -153213,14 +153532,14 @@ aaa
 aaf
 aaa
 aax
-aci
+ack
 aax
 aax
 aax
 aax
 aax
 aax
-aci
+ack
 aax
 aaa
 aaf
@@ -153366,17 +153685,17 @@ aaa
 aaa
 aaa
 dMY
-dRe
+epO
 dMY
-dRe
+epO
 dMY
 aaa
 aaa
 aaa
 dMY
-dRe
+epO
 dXk
-dXR
+epS
 dXk
 aaa
 aaa
@@ -155267,7 +155586,7 @@ aaG
 abk
 abt
 abK
-abK
+epT
 acf
 aaG
 acy
@@ -155852,7 +156171,7 @@ brK
 bsV
 bxw
 bzN
-bBc
+epE
 bCL
 bEL
 bEL
@@ -156131,16 +156450,16 @@ cim
 brN
 brN
 bqq
-coe
+bkT
 cpL
-cqZ
+brH
 csr
-cub
+bmI
 cvE
 cwY
-cqZ
-cqZ
-cqZ
+brH
+brH
+brH
 brH
 bkT
 cFG
@@ -156166,10 +156485,10 @@ djZ
 dlM
 dnc
 doh
-dpQ
+dnc
 drt
 dsT
-dpQ
+dnc
 ego
 dwO
 dyc
@@ -157064,7 +157383,7 @@ aaa
 aaa
 aaa
 abg
-aby
+epB
 abg
 aaf
 aaf
@@ -163571,9 +163890,9 @@ bDq
 bNb
 bOP
 bIZ
-bTh
+epG
 bVq
-bWY
+epH
 bIZ
 beF
 cct
@@ -167221,7 +167540,7 @@ agg
 agg
 aaf
 eik
-eis
+epN
 eik
 aaf
 aaf

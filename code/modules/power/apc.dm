@@ -44,7 +44,7 @@
 
 	icon_state = "apc0"
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	req_access = null
 	obj_integrity = 200
 	max_integrity = 200

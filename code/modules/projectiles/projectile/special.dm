@@ -199,23 +199,20 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
-	damage = 5
+	damage = 20
 	range = 4
 	dismemberment = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	var/mine_range = 3 //mines this many additional tiles
+	var/pressure_decrease_active = FALSE
+	var/pressure_decrease = 0.25
+	var/mine_range = 3 //mines this many additional tiles of rock
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
-	var/turf/proj_turf = get_turf(src)
-	if(!isturf(proj_turf))
-		return
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	if(environment)
-		var/pressure = environment.return_pressure()
-		if(pressure < 60)
-			name = "full strength [name]"
-			damage *= 4
+	if(!lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
@@ -229,19 +226,19 @@
 			return -1
 
 /obj/item/projectile/plasma/adv
-	damage = 7
+	damage = 28
 	range = 5
 	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 10
+	damage = 40
 	range = 9
 	mine_range = 3
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
-	damage = 6
+	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
@@ -337,3 +334,57 @@
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/temp_visual/gravpush(Z)
 
+/obj/effect/ebeam/curse_arm
+	name = "curse arm"
+	layer = LARGE_MOB_LAYER
+
+/obj/item/projectile/curse_hand
+	name = "curse hand"
+	icon_state = "cursehand"
+	hitsound = 'sound/effects/curse4.ogg'
+	layer = LARGE_MOB_LAYER
+	damage_type = BURN
+	damage = 10
+	knockdown = 20
+	speed = 2
+	range = 16
+	forcedodge = TRUE
+	var/datum/beam/arm
+	var/handedness = 0
+
+/obj/item/projectile/curse_hand/Initialize(mapload)
+	. = ..()
+	handedness = prob(50)
+	update_icon()
+
+/obj/item/projectile/curse_hand/update_icon()
+	icon_state = "[icon_state][handedness]"
+
+/obj/item/projectile/curse_hand/fire(setAngle)
+	if(starting)
+		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
+	..()
+
+/obj/item/projectile/curse_hand/prehit(atom/target)
+	if(target == original)
+		forcedodge = FALSE
+	else if(!isturf(target))
+		return FALSE
+	return ..()
+
+/obj/item/projectile/curse_hand/Destroy()
+	if(arm)
+		arm.End()
+		arm = null
+	if(forcedodge)
+		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
+	var/turf/T = get_step(src, dir)
+	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
+	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
+		qdel(G)
+	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
+	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm, beam_sleep_time = 1)
+	for(var/b in D.elements)
+		var/obj/effect/ebeam/B = b
+		animate(B, alpha = 0, time = 32)
+	return ..()
