@@ -45,6 +45,6 @@
 			DS.strain_data["SE"] = H.dna.struc_enzymes
 		else
 			D = new virus_type()
-		D.carrier = 1
+		D.carrier = TRUE
 		H.AddDisease(D)
 		break

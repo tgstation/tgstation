@@ -51,8 +51,8 @@
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	var/infectivity = 65
 	var/cure_chance = 8
-	var/carrier = 0 //If our host is only a carrier
-	var/bypasses_immunity = 0 //Does it skip species virus immunity check? Some things may diseases and not viruses
+	var/carrier = FALSE //If our host is only a carrier
+	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/permeability_mod = 1
 	var/severity =	NONTHREAT
 	var/list/required_organs = list()

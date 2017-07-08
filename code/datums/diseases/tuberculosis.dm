@@ -1,4 +1,5 @@
 /datum/disease/tuberculosis
+	form = "Disease"
 	name = "Fungal tuberculosis"
 	max_stages = 5
 	spread_text = "Airborne"
