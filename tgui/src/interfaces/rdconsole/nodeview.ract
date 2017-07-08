@@ -3,8 +3,7 @@
 		<ui-section title='Description'>{{data.snode_desc}}</ui-section>
 		<ui-section title='Point Cost'>{{data.snode_cost}}</ui-section>
 		<ui-section title='Export Price'>{{data.snode_export}}</ui-section>
-		<ui-section title='Status'>{{data.snode_researched? "Researched" : "Not Researched"}}</ui-section>
-		<ui-button action='research_node' params='{"id"="{{id}}"}'>Research Node</ui-button>
+		<ui-button action='research_node' params='{"id"="{{id}}"}' state='{{data.snode_researched? "disabled" : null}}'>{{data.snode_researched? "Researched" : "Research Node"}}</ui-button>
 	</ui-display>
 	<ui-display title='Prerequisites'>
 		{{#each data.node_prereqs}}

@@ -403,45 +403,12 @@ doesn't have toxins access.
 				screen = SCICONSOLE_MENU
 			updateUsrDialog()
 
-	//Protolathe Materials
-	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
-		linked_lathe.reagents.del_reagent(href_list["disposeP"])
-
-	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
-		linked_lathe.reagents.clear_reagents()
-
-	else if(href_list["ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
-		linked_lathe.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["ejectsheet"])
-
-	//Circuit Imprinter Materials
-	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
-		linked_imprinter.reagents.del_reagent(href_list["disposeI"])
-
-	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
-		linked_imprinter.reagents.clear_reagents()
-
-	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the imprinter to eject a sheet of material
-		linked_imprinter.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["imprinter_ejectsheet"])
-
-
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
 		screen = SCICONSOLE_UPDATE_DATABASE
 		spawn(20)
 			SyncRDevices()
 			screen = SCICONSOLE_LINKING
 			updateUsrDialog()
-
-	else if(href_list["disconnect"]) //The R&D console disconnects with a specific device.
-		switch(href_list["disconnect"])
-			if("destroy")
-				linked_destroy.linked_console = null
-				linked_destroy = null
-			if("lathe")
-				linked_lathe.linked_console = null
-				linked_lathe = null
-			if("imprinter")
-				linked_imprinter.linked_console = null
-				linked_imprinter = null
 
 ////////////////////////////////////////////////////////////	switch(screen)
 		//////////////////////R&D CONSOLE SCREENS//////////////////
@@ -509,9 +476,6 @@ doesn't have toxins access.
 			dat += "</div>"
 
 		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
-		if(SCICONSOLE_DA_NONE)
-			dat += SCICONSOLE_HEADER
-			dat += "<div class='statusDisplay'>NO DESTRUCTIVE ANALYZER LINKED TO CONSOLE</div>"
 
 		if(SCICONSOLE_DA_UNLOADED)
 			dat += SCICONSOLE_HEADER
@@ -531,10 +495,6 @@ doesn't have toxins access.
 				else
 					dat += "<span class='linkOff>[N.display_name]: [input[N]] points</span>"
 		/////////////////////PROTOLATHE SCREENS/////////////////////////
-		if(SCICONSOLE_PROTOLATHE_NONE)
-			dat += SCICONSOLE_HEADER
-			dat += "<div class='statusDisplay'>NO PROTOLATHE LINKED TO CONSOLE</div>"
-
 		//Grouping designs by categories, to improve readability
 		if(SCICONSOLE_PROTOLATHE_CATVIEW)
 			dat += SCICONSOLE_HEADER
@@ -574,35 +534,7 @@ doesn't have toxins access.
 				dat += ""
 			dat += "</div>"
 
-		if(SCICONSOLE_PROTOLATHE_MATS) //Protolathe Material Storage Sub-menu
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_PROTOLATHE_CAT]'>Protolathe Menu</A><div class='statusDisplay'>"
-			dat += "<h3>Material Storage:</h3><HR>"
-			if(!linked_lathe)
-				dat += "ERROR: Protolathe connection failed."
-			else
-				for(var/mat_id in linked_lathe.materials.materials)
-					var/datum/material/M = linked_lathe.materials.materials[mat_id]
-					dat += "* [M.amount] of [M.name]: "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=50'>All</A>"
-					dat += ""
-			dat += "</div>"
-
-		if(SCICONSOLE_PROTOLATHE_CHEMS)
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_PROTOLATHE_CAT]'>Protolathe Menu</A>"
-			dat += "<A href='?src=\ref[src];disposeallP=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
-			dat += "<h3>Chemical Storage:</h3><HR>"
-			for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
-				dat += "[R.name]: [R.volume]"
-				dat += "<A href='?src=\ref[src];disposeP=[R.id]'>Purge</A>"
-
 		///////////////////CIRCUIT IMPRINTER SCREENS////////////////////
-		if(SCICONSOLE_CIRCUIT_NONE)
-			dat += SCICONSOLE_HEADER
-			dat += "<div class='statusDisplay'>NO CIRCUIT IMPRINTER LINKED TO CONSOLE</div>"
 
 		if(SCICONSOLE_CIRCUIT_CATVIEW)
 			dat += SCICONSOLE_HEADER
@@ -635,29 +567,6 @@ doesn't have toxins access.
 			dat += "</div>"
 
 
-		if(SCICONSOLE_CIRCUIT_CHEMS) //Circuit Imprinter Material Storage Sub-menu
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_CIRCUIT_CAT]'>Circuit Imprinter Menu</A>"
-			dat += "<A href='?src=\ref[src];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
-			dat += "<h3>Chemical Storage:</h3><HR>"
-			for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
-				dat += "[R.name]: [R.volume]"
-				dat += "<A href='?src=\ref[src];disposeI=[R.id]'>Purge</A>"
-
-		if(SCICONSOLE_CIRCUIT_MATS)
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_CIRCUIT_CAT]'>Circuit Imprinter Menu</A><div class='statusDisplay'>"
-			dat += "<h3>Material Storage:</h3><HR>"
-			if(!linked_imprinter)
-				dat += "ERROR: Protolathe connection failed."
-			else
-				for(var/mat_id in linked_imprinter.materials.materials)
-					var/datum/material/M = linked_imprinter.materials.materials[mat_id]
-					dat += "* [M.amount] of [M.name]: "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>"
-			dat += "</div>"
 		else
 			CRASH("R&D console screen var corrupted!")
 */
@@ -725,31 +634,47 @@ doesn't have toxins access.
 	//Both Lathes
 	data["lathe_tabs"] = list("Category List", "Selected Category", "Search Results", "Materials", "Chemicals")
 	//Protolathe
-	data["protocats"] = list()
-	for(var/v in linked_lathe.categories)
-		data["protocats"] += list(list("name" = v))
-	data["protomats"] = "[linked_lathe.materials.total_amount]"
-	data["protomaxmats"] = "[linked_lathe.materials.max_amount]"
-	data["protochems"] = "[linked_lathe.reagents.total_volume]"
-	data["protomaxchems"] = "[linked_lathe.reagents.maximum_volume]"
-	data["protomatch"] = list()
-	for(var/v in matching_designs_protolathe)
-		var/datum/design/D = matching_designs_protolathe[v]
-		data["protomatch"] += list(list("name" = D.name, "id" = D.id, "canprint" = check_canprint(D, PROTOLATHE), "matstring" = get_actual_mat_string(D, PROTOLATHE)))
+	if(linked_lathe)
+		data["protocats"] = list()
+		for(var/v in linked_lathe.categories)
+			data["protocats"] += list(list("name" = v))
+		data["protomats"] = "[linked_lathe.materials.total_amount]"
+		data["protomaxmats"] = "[linked_lathe.materials.max_amount]"
+		data["protochems"] = "[linked_lathe.reagents.total_volume]"
+		data["protomaxchems"] = "[linked_lathe.reagents.maximum_volume]"
+		data["protomatch"] = list()
+		for(var/v in matching_designs_protolathe)
+			var/datum/design/D = matching_designs_protolathe[v]
+			data["protomatch"] += list(list("name" = D.name, "id" = D.id, "canprint" = check_canprint(D, PROTOLATHE), "matstring" = get_actual_mat_string(D, PROTOLATHE)))
+		data["protomat_list"] = list()
+		for(var/m in linked_lathe.materials.materials)
+			var/datum/material/M = linked_lathe.materials.materials[m]
+			var/sheets = floor(M/MINERAL_MATERIAL_AMOUNT)
+			data["protomat_list"] += list(list("name" = M.name, "amount" = M.amount, "sheets" = sheets, "mat_id" = m))
+		data["protochem_list"] = list()
+		for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
+			data["protochem_list"] += list(list("name" = R.name, "amount" = R.volume, "reagentid" = R.id))
 	//Circuit Imprinter
-	data["circuitcats"] = list()
-	for(var/v in linked_lathe.categories)
-		data["circuitcats"] += list(list("name" = v))
-	data["circuitmats"] = "[linked_imprinter.materials.total_amount]"
-	data["circuitmaxmats"] = "[linked_imprinter.materials.max_amount]"
-	data["circuitchems"] = "[linked_imprinter.reagents.total_volume]"
-	data["circuitmaxchems"] = "[linked_imprinter.reagents.maximum_volume]"
-	data["imprintmatch"] = list()
-	for(var/v in matching_designs_imprinter)
-		var/datum/design/D = matching_designs_protolathe[v]
-		data["imprintmatch"] += list(list("name" = D.name, "id" = D.id, "canprint" = check_canprint(D, IMPRINTER), "matstring" = get_actual_mat_string(D, IMPRINTER)))
-
-
+	if(linked_imprinter)
+		data["circuitcats"] = list()
+		for(var/v in linked_lathe.categories)
+			data["circuitcats"] += list(list("name" = v))
+		data["circuitmats"] = "[linked_imprinter.materials.total_amount]"
+		data["circuitmaxmats"] = "[linked_imprinter.materials.max_amount]"
+		data["circuitchems"] = "[linked_imprinter.reagents.total_volume]"
+		data["circuitmaxchems"] = "[linked_imprinter.reagents.maximum_volume]"
+		data["imprintmatch"] = list()
+		for(var/v in matching_designs_imprinter)
+			var/datum/design/D = matching_designs_protolathe[v]
+			data["imprintmatch"] += list(list("name" = D.name, "id" = D.id, "canprint" = check_canprint(D, IMPRINTER), "matstring" = get_actual_mat_string(D, IMPRINTER)))
+		data["circuitmat_list"] = list()
+		for(var/m in linked_imprinter.materials.materials)
+			var/datum/material/M = linked_imprinter.materials.materials[m]
+			var/sheets = floor(M/MINERAL_MATERIAL_AMOUNT)
+			data["circuitmat_list"] += list(list("name" = M.name, "amount" = M.amount, "sheets" = sheets, "mat_id" = m))
+		data["circuitchem_list"] = list()
+		for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
+			data["circuitchem_list"] += list(list("name" = R.name, "amount" = R.volume, "reagentid" = R.id))
 
 	/*
 	//Disk Operations
@@ -808,6 +733,31 @@ doesn't have toxins access.
 				category_imprinter = params["cat"]
 			else
 				return
+		if("releasemats")
+			if(type == "proto")
+				linked_lathe.materials.retrieve_sheets(text2num(params["sheets"]), params["mat_id"])
+			else if(type == "imprinter")
+				linked_imprinter.materials.retrieve_sheets(text2num(params["sheets"]), params["mat_id"])
+			else
+				return
+		if("purgechem")
+			if(type == "proto")
+				linked_lathe.reagents.del_reagent(params["id"])
+			else if(type == "imprinter")
+				linked_lathe.reagents.del_reagent(params["id"])
+			else
+				return
+		if("disconnect")
+			switch(params["type"])
+				if("destroy")
+					linked_destroy.linked_console = null
+					linked_destroy = null
+				if("lathe")
+					linked_lathe.linked_console = null
+					linked_lathe = null
+				if("imprinter")
+					linked_imprinter.linked_console = null
+					linked_imprinter = null
 
 /obj/machinery/computer/rdconsole/proc/get_actual_mat_string(datum/design/D, buildtype)
 	. = ""

@@ -1,0 +1,6 @@
+{{#if data.circuit_linked}}
+
+{{else}}
+	<ui-display title='No Linked Circuit Imprinter'></ui-display>
+{{/if}}
+

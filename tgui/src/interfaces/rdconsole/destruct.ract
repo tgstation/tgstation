@@ -1,0 +1,7 @@
+
+{{#if data.destroy_linked}}
+
+{{else}}
+	<ui-display title='No Linked Destructive Analyzer'></ui-display>
+{{/if}}
+
