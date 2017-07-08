@@ -1218,6 +1218,7 @@
 #include "code\modules\detectivework\scanner.dm"
 #include "code\modules\detectivework\tools\dustkit.dm"
 #include "code\modules\detectivework\tools\samplekit.dm"
+#include "code\modules\detectivework\tools\slide.dm"
 #include "code\modules\detectivework\tools\swabkit.dm"
 #include "code\modules\emoji\emoji_parse.dm"
 #include "code\modules\error_handler\error_handler.dm"

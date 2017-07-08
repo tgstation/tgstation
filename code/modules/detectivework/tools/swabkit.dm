@@ -7,9 +7,9 @@
 	var/stype = BLOOD_SWAB
 	var/scontents = "nothing"
 
-/obj/item/forensics/swabkit/New(var/location, var/typ, var/content)
-	..()
-	if (type && contents) //We're creating a used swab
+/obj/item/forensics/swabkit/Initialize(mapload, typ, content)
+	. = ..()
+	if (typ && content) //We're creating a used swab
 		src.icon_state = "swab_used"
 		src.stype = typ
 		src.scontents = content
@@ -23,7 +23,7 @@
 	if(user.zone_selected == "mouth" && ishuman(A)) //we're getting saliva from the mouth
 		var/mob/living/carbon/human/H = A
 		to_chat(user, "<span class='notice'>We swab [A]'s mouth for saliva, and seal the swab in the vial.</span>")
-		new /obj/item/forensics/swabkit(get_turf(user), DNA_SWAB, md5(H.dna.uni_identity))
+		new /obj/item/forensics/swabkit(get_turf(src), DNA_SWAB, md5(H.dna.uni_identity))
 		qdel(src)
 		return
 	else if(!ishuman(A))
@@ -38,15 +38,14 @@
 						var/blood_type = R.data["blood_type"]
 						blood[blood_DNA] = blood_type
 		else
-			to_chat(user, "<span class='notice'>Hmm, we couldn't find anything on the [A].</span>")
+			to_chat(user, "<span class='notice'>We couldn't find anything on the [A].</span>")
 
-		if (blood.len > 0)
+		if (blood.len)
 			to_chat(user, "<span class='notice'>We seal the blood we found on the [A]/</span>")
 			new /obj/item/forensics/swabkit(get_turf(user), BLOOD_SWAB, blood)
 			qdel(src)
 		else
-			to_chat(user, "<span class='notice'>We found no blood on the [A]./</span>")
+			to_chat(user, "<span class='notice'>We found no blood on the \[A]./</span>")
 
-		qdel(blood)
 		return
 

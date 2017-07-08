@@ -15,22 +15,16 @@
 				to_chat(user, "<span class='notice'>We get a copy of [H]'s fingerprints.</span>")
 			else
 				to_chat(user, "<span class='warning'>You were interrupted!</span>")
-			qdel(prints)
-			qdel(uprints)
 			return FALSE
 		else
 			to_chat(user, "<span class='notice'>We were unable to get a copy of [H]'s fingerprints..</span>")
-			qdel(prints)
-			qdel(uprints)
 			return FALSE
 
 	else if(!ismob(A))
-		if(A.fingerprints && A.fingerprints.len)
+		if(LAZYLEN(A.fingerprints))
 			prints = A.fingerprints.Copy()
 		else
 			to_chat(user, "<span class='notice'>We were unable to find any fingerprints on the [A].</span>")
-			qdel(prints)
-			qdel(uprints)
 			return FALSE
 
 		if(do_after(user, 5*prints.len, A))
@@ -40,8 +34,6 @@
 					new /obj/item/forensics/printcard(get_turf(user), print)
 
 			to_chat(user, "<span class='notice'>We put all the fingerprints we find onto cards.</span>")
-			qdel(prints)
-			qdel(uprints)
 		else
 			to_chat(user, "<span class='warning'>You were interrupted!</span>")
 		return FALSE
@@ -50,12 +42,12 @@
 
 /obj/item/forensics/printcard
 	name = "fingerprint card"
+	desc = "Used to hold a set of fingerprints."
 	icon = 'icons/obj/card.dmi'
 	icon_state = "fingerprint0"
-	desc = "Used to hold a set of fingerprints."
 	var/phold = "none"
 
-/obj/item/forensics/printcard/New(var/location, var/print)
+/obj/item/forensics/printcard/New(location, print)
 	..()
 	if (print)
 		src.phold = print
