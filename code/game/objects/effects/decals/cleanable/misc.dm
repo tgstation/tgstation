@@ -84,8 +84,9 @@
 
 /obj/effect/decal/cleanable/vomit/Initialize(mapload, list/virus_list, virus_chance = 20)
 	. = ..()
-	if(virus_list && virus_list.len)
-		for(var/datum/disease/D in virus_list)
+	if(length(virus_list))
+		for(var/thing in virus_list)
+			var/datum/disease/D = thing
 			if(prob(virus_chance))
 				var/datum/disease/viruus = D.Copy(1)
 				viruses += viruus
@@ -105,13 +106,16 @@
 							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
 							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
 			reagents.trans_to(H, reagents.total_volume)
-			for(var/datum/disease/D in viruses)
+			for(var/thing in viruses)
+				var/datum/disease/D = thing
 				H.ForceContractDisease(D)
 			qdel(src)
 
 /obj/effect/decal/cleanable/vomit/Destroy()
-	for(var/datum/disease/D in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
 		D.cure(0)
+	viruses.Cut()
 	viruses = null
 	return ..()
 
