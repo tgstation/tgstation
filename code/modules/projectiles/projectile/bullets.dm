@@ -325,6 +325,18 @@
 		C.bleed(100)
 	return ..()
 
+/obj/item/projectile/bullet/bleedening
+	damage = 10
+
+/obj/item/projectile/bullet/bleedening/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(100)
+	return ..()
+
+/obj/item/projectile/bullet/russian
+	damage = 10
+
 
 /obj/item/projectile/bullet/sniper/penetrator
 	icon_state = "gauss"
@@ -335,6 +347,11 @@
 	knockdown = 0
 	breakthings = FALSE
 
+
+/obj/item/projectile/bullet/sniper/russian
+	damage = 50
+	dismemberment = 15
+	armour_penetration = 25
 
 
 //// SAW BULLETS

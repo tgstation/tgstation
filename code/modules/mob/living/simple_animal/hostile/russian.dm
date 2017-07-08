@@ -29,13 +29,13 @@
 	var/max_ammo = 7
 	var/reloads_left = 3
 
-	casingtype = /obj/item/ammo_casing/n762
+	casingtype = /obj/item/ammo_casing/a762/russian
 	harm_intent_damage = 5
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 
 	var/grenades_left = 3
-	var/grenade_to_throw = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
+	var/grenade_to_throw = /obj/item/weapon/grenade/iedcasing
 
 	ai_type = /datum/goap_agent/russian
 	make_ai = TRUE
@@ -49,7 +49,7 @@
 	name = "Russian Nechaev"
 	icon_state = "russian_medic"
 	icon_living = "russian_medic"
-	casingtype = /obj/item/ammo_casing/n762
+	casingtype = /obj/item/ammo_casing/a762/medic
 	grenade_to_throw = null
 	ai_type = /datum/goap_agent/russian/medic
 
@@ -59,7 +59,7 @@
 	icon_living = "russian_engineer"
 	ammo_left = 5
 	max_ammo = 5
-	casingtype = /obj/item/ammo_casing/shotgun
+	casingtype = /obj/item/ammo_casing/shotgun/russian
 	grenade_to_throw = /obj/item/weapon/grenade/flashbang
 	ai_type = /datum/goap_agent/russian/engineer
 
@@ -69,7 +69,7 @@
 	icon_living = "russian_sniper"
 	ammo_left = 3
 	max_ammo = 3
-	casingtype = /obj/item/ammo_casing/point50
+	casingtype = /obj/item/ammo_casing/point50/russian
 	grenade_to_throw = /obj/item/weapon/grenade/smokebomb
 	ai_type = /datum/goap_agent/russian_sniper
 
