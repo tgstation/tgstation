@@ -168,6 +168,9 @@ GLOBAL_PROTECT(admin_ranks)
 
 
 /proc/load_admins(target = null)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/do_load_admins, target)
+
+/proc/do_load_admins(target = null)
 	//clear the datums references
 	if(!target)
 		GLOB.admin_datums.Cut()
@@ -346,7 +349,7 @@ GLOBAL_PROTECT(admin_ranks)
 				D = new(R,adm_ckey)	//new admin
 
 			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
-			D.associate(C)						//link up with the client and add verbs
+			INVOKE_ASYNC(D, .proc/associate, C)						//link up with the client and add verbs
 
 			updateranktodb(adm_ckey, new_rank)
 			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
@@ -375,7 +378,7 @@ GLOBAL_PROTECT(admin_ranks)
 			D.rank.process_keyword(keyword)
 
 			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
-			D.associate(C)						//link up with the client and add verbs
+			INVOKE_ASYNC(D, associate, C)						//link up with the client and add verbs
 
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
