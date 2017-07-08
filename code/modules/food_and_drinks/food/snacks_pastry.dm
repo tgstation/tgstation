@@ -230,15 +230,6 @@
 	filling_color = "#F0E68C"
 	tastes = list("cracker" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/hotdog
-	name = "hotdog"
-	desc = "Fresh footlong ready to go down on."
-	icon_state = "hotdog"
-	bitesize = 3
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
-	list_reagents = list("nutriment" = 6, "ketchup" = 3, "vitamin" = 3)
-	filling_color = "#8B0000"
-	tastes = list("bun" = 3, "meat" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
