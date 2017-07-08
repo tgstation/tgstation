@@ -67,8 +67,8 @@
 
 /obj/item/weapon/pen/fountain
 	name = "fountain pen"
-	desc = "It's a common fountain pen."
-	icon_state = "pen"
+	desc = "It's a common fountain pen, with a faux wood body."
+	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 
 /obj/item/weapon/pen/fountain/captain
