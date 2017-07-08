@@ -14,11 +14,6 @@
 		src.stype = typ
 		src.scontents = content
 
-	qdel(location)
-	qdel(typ)
-	qdel(content)
-	return
-
 /obj/item/forensics/swabkit/afterattack(atom/A, mob/user, params)
 	if(user.zone_selected == "mouth" && ishuman(A)) //we're getting saliva from the mouth
 		var/mob/living/carbon/human/H = A
@@ -42,7 +37,7 @@
 
 		if (blood.len)
 			to_chat(user, "<span class='notice'>We seal the blood we found on the [A]/</span>")
-			new /obj/item/forensics/swabkit(get_turf(user), BLOOD_SWAB, blood)
+			new /obj/item/forensics/swabkit(get_turf(src), BLOOD_SWAB, blood)
 			qdel(src)
 		else
 			to_chat(user, "<span class='notice'>We found no blood on the \[A]./</span>")

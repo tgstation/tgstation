@@ -57,7 +57,7 @@
 	if(A.suit_fibers && A.suit_fibers.len)
 		fibers = A.suit_fibers.Copy()
 		to_chat(user, "<span class='notice'>We pick up the fibers and lay them in bags on the ground, visibly.</span>")
-		if(fibers && fibers.len)
+		if(LAZYLEN(fibers))
 			for(var/fiber in fibers)
 				if (!fibersa.Find(handlefiber(fiber))) //avoid 500 black/insulated glove fiber
 					fibersa |= handlefiber(fiber)
