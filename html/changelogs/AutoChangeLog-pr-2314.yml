@@ -1,4 +1,0 @@
-author: "Lexorion"
-delete-after: True
-changes: 
-  - imageadd: "The portable PACMAN generators now have new icons, including on and off states."
