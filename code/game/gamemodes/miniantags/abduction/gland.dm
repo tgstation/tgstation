@@ -136,7 +136,6 @@
 	D.carrier = 1
 	owner.viruses += D
 	D.affected_mob = owner
-	D.holder = owner
 	owner.med_hud_set_status()
 
 

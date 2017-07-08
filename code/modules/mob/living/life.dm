@@ -19,14 +19,19 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing(times_fired)
+		//Chemicals in the body
+		handle_chemicals_in_body()
+
 	if(stat != DEAD)
 		//Mutations and radiation
 		handle_mutations_and_radiation()
+
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
+		//Breathing, if applicable
+		handle_breathing(times_fired)
+
+	handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
 	if(stat != DEAD)
 		//Random events (vomiting etc)
 		handle_random_events()
@@ -61,6 +66,9 @@
 	return
 
 /mob/living/proc/handle_chemicals_in_body()
+	return
+
+/mob/living/proc/handle_diseases()
 	return
 
 /mob/living/proc/handle_diginvis()

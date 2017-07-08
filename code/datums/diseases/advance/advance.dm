@@ -395,7 +395,7 @@
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.processing)
+		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
@@ -409,13 +409,6 @@
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
-
-/*
-/mob/verb/test()
-
-	for(var/datum/disease/D in SSdisease.processing)
-		to_chat(src, "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>")
-*/
 
 
 /datum/disease/advance/proc/totalStageSpeed()

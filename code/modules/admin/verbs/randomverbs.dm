@@ -615,7 +615,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
 	if(isobserver(M))
-		new /obj/effect/gibspawner/generic(M.loc, M.viruses)
+		new /obj/effect/gibspawner/generic(M.loc)
 		return
 	if(confirm == "Yes")
 		M.gib()

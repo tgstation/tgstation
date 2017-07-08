@@ -10,7 +10,6 @@
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will probably drive others to insanity."
 	severity = MEDIUM
-	longevity = 400
 
 /datum/disease/pierrot_throat/stage_act()
 	..()

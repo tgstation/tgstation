@@ -13,7 +13,8 @@
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
-		for(var/datum/disease/D in data["viruses"])
+		for(var/thing in data["viruses"])
+			var/datum/disease/D = thing
 
 			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 				continue
@@ -73,11 +74,6 @@
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
-	for(var/datum/disease/D in data["viruses"])
-		var/datum/disease/newVirus = D.Copy(1)
-		B.viruses += newVirus
-		newVirus.holder = B
-
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
@@ -96,7 +92,8 @@
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/datum/disease/D in M.viruses)
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
 		M.resistances |= data

@@ -221,6 +221,15 @@
 /mob/living/carbon/proc/handle_blood()
 	return
 
+/mob/living/carbon/handle_diseases()
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(prob(D.infectivity))
+			D.spread()
+
+		if(stat != DEAD)
+			D.stage_act()
+
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
 		if(mind.changeling)

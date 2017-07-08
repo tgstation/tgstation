@@ -6,7 +6,7 @@
 	var/list/gibamounts = list() //amount to spawn for each gib decal type we'll spawn.
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
 
-/obj/effect/gibspawner/Initialize(mapload, list/viruses, datum/dna/MobDNA)
+/obj/effect/gibspawner/Initialize(mapload, datum/dna/MobDNA)
 	..()
 
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
@@ -28,13 +28,6 @@
 				if(iscarbon(loc))
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
-
-				if(viruses && viruses.len > 0)
-					for(var/datum/disease/D in viruses)
-						if(prob(virusProb))
-							var/datum/disease/viruus = D.Copy(1)
-							gib.viruses += viruus
-							viruus.holder = gib
 
 				if(MobDNA)
 					gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.blood_type
