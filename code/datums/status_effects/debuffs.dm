@@ -341,3 +341,96 @@
 		owner.adjustBruteLoss(bleed_damage)
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
+
+/mob/living/proc/apply_necropolis_curse(set_curse)
+	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
+	if(!set_curse)
+		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
+	if(QDELETED(C))
+		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+	else
+		C.apply_curse(set_curse)
+		C.duration += 3000 //additional curses add 5 minutes
+
+/datum/status_effect/necropolis_curse
+	id = "necrocurse"
+	duration = 6000 //you're cursed for 10 minutes have fun
+	tick_interval = 50
+	alert_type = null
+	var/curse_flags = NONE
+	var/effect_last_activation = 0
+	var/effect_cooldown = 100
+	var/obj/effect/temp_visual/curse/wasting_effect = new
+
+/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
+	. = ..()
+	if(.)
+		apply_curse(set_curse)
+
+/datum/status_effect/necropolis_curse/Destroy()
+	if(!QDELETED(wasting_effect))
+		qdel(wasting_effect)
+		wasting_effect = null
+	return ..()
+
+/datum/status_effect/necropolis_curse/on_remove()
+	remove_curse(curse_flags)
+
+/datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
+	curse_flags |= set_curse
+	if(curse_flags & CURSE_BLINDING)
+		owner.overlay_fullscreen("curse", /obj/screen/fullscreen/curse, 1)
+
+/datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
+	if(remove_curse & CURSE_BLINDING)
+		owner.clear_fullscreen("curse", 50)
+	curse_flags &= ~remove_curse
+
+/datum/status_effect/necropolis_curse/tick()
+	if(owner.stat == DEAD)
+		return
+	if(curse_flags & CURSE_WASTING)
+		wasting_effect.forceMove(owner.loc)
+		wasting_effect.setDir(owner.dir)
+		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
+		wasting_effect.alpha = 255
+		animate(wasting_effect, alpha = 0, time = 32)
+		playsound(owner, 'sound/effects/curse5.ogg', 20, 1, -1)
+		owner.adjustFireLoss(0.75)
+	if(effect_last_activation <= world.time)
+		effect_last_activation = world.time + effect_cooldown
+		if(curse_flags & CURSE_SPAWNING)
+			var/turf/spawn_turf
+			var/sanity = 10
+			while(!spawn_turf && sanity)
+				spawn_turf = locate(owner.x + pick(rand(10, 15), rand(-10, -15)), owner.y + pick(rand(10, 15), rand(-10, -15)), owner.z)
+				sanity--
+			if(spawn_turf)
+				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
+				C.set_target = owner
+				C.GiveTarget()
+		if(curse_flags & CURSE_GRASPING)
+			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
+			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
+			if(spawn_turf)
+				grasp(spawn_turf)
+
+/datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
+	set waitfor = FALSE
+	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
+	var/turf/ownerloc = get_turf(owner)
+	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
+	C.current = spawn_turf
+	C.starting = spawn_turf
+	C.yo = ownerloc.y - spawn_turf.y
+	C.xo = ownerloc.x - spawn_turf.x
+	C.original = owner
+	C.fire()
+
+/obj/effect/temp_visual/curse
+	icon_state = "curse"
+
+/obj/effect/temp_visual/curse/Initialize()
+	. = ..()
+	deltimer(timerid)

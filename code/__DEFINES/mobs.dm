@@ -51,6 +51,12 @@
 #define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
+//Health hud screws for carbon mobs
+#define SCREWYHUD_NONE 0
+#define SCREWYHUD_CRIT 1
+#define SCREWYHUD_DEAD 2
+#define SCREWYHUD_HEALTHY 3
+
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
