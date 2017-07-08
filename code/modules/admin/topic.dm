@@ -349,13 +349,13 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		if(SSticker.delay_end)
+		if(!SSticker.delay_end)
 			SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
 			if(!SSticker.admin_delay_notice)
 				return
 		SSticker.delay_end = !SSticker.delay_end
-		var/reason = SSticker.admin_delay_notice //laziness
-		var/msg = "delayed the round end.[reason ? " Reason: [reason]" : ""]"
+		var/reason = SSticker.delay_end ? "for reason: [SSticker.admin_delay_notice]" : "."//laziness
+		var/msg = "[SSticker.delay_end ? "delayed" : "undelayed"] the round end [reason]"
 		log_admin("[key_name(usr)] [msg]")
 		message_admins("[key_name_admin(usr)] [msg]")
 		href_list["secrets"] = "check_antagonist"

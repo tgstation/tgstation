@@ -425,7 +425,14 @@
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
 	if(world.RunningService())
 		options += "Service Restart (Force restart DD)";
-	if(alert(usr, "This will end the round, are you SURE you want to do this? [SSticker.admin_delay_notice ? "An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]" : ""]", "Confirmation", "Yes", "No") == "Yes")
+
+	var/rebootconfirm
+	if(SSticker.admin_delay_notice)
+		if(alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") == "Yes")
+			rebootconfirm = TRUE
+	else
+		rebootconfirm = TRUE
+	if(rebootconfirm)
 		var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 		if(result)
 			SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
