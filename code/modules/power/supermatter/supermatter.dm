@@ -474,7 +474,7 @@
 		rip_u.dismember(BURN) //nice try jedi
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
-	return attack_hand(user)
+	dust_mob(S, cause = "monkey attack")
 
 /obj/machinery/power/supermatter_shard/attack_animal(mob/living/simple_animal/S)
 	var/murder
@@ -500,8 +500,6 @@
 	dust_mob(user, cause = "hand")
 
 /obj/machinery/power/supermatter_shard/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
-	if(!nom || QDELETED(nom) || !istype(nom))
-		return
 	if(!vis_msg)
 		vis_msg = "<span class='danger'>[nom] reaches out and touches [src], inducing a resonance... [nom.p_their()] body starts to glow and bursts into flames before flashing into ash"
 	if(!mob_msg)
