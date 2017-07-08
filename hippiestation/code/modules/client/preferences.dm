@@ -41,10 +41,7 @@
 				if(i == href_list["select_category"])
 					gear_tab = i
 		if(href_list["toggle_gear_path"])
-			var/datum/gear/G
-			for(var/j in GLOB.loadout_items[gear_tab])
-				if(j == href_list["toggle_gear_path"])
-					G = GLOB.loadout_items[gear_tab][j]
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][href_list["toggle_gear_path"]]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
