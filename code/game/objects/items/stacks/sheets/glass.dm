@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
 ))
 
-/obj/item/stack/sheet/glass/plasma
+/obj/item/stack/sheet/plasmaglass
 	name = "plasma glass"
 	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
@@ -78,22 +78,22 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
 	resistance_flags = ACID_PROOF
-	merge_type = /obj/item/stack/sheet/glass/plasma
+	merge_type = /obj/item/stack/sheet/plasmaglass
 
-/obj/item/stack/sheet/glass/plasma/fifty
+/obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/glass/plasma/Initialize(mapload, new_amount, merge = TRUE)
+/obj/item/stack/sheet/plasmaglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.pglass_recipes
 	return ..()
 
-/obj/item/stack/sheet/glass/plasma/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/plasmaglass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/rglass/plasma/RG = new (get_turf(user))
+			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
 			RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/plasma/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
 ))
 
-/obj/item/stack/sheet/rglass/plasma
+/obj/item/stack/sheet/plasmarglass
 	name = "reinforced plasma glass"
 	desc = "A glass sheet made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough and nearly fire-proof!"
 	singular_name = "reinforced plasma glass sheet"
@@ -167,9 +167,9 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
-	merge_type = /obj/item/stack/sheet/rglass/plasma
+	merge_type = /obj/item/stack/sheet/plasmarglass
 
-/obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
+/obj/item/stack/sheet/plasmarglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.prglass_recipes
 	return ..()
 
