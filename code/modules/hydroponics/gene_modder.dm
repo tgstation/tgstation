@@ -368,6 +368,7 @@
 						seed.genes += disk.gene.Copy()
 						if(istype(disk.gene, /datum/plant_gene/reagent))
 							seed.reagents_from_genes()
+						disk.gene.apply_vars(seed)
 						repaint_seed()
 
 

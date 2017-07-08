@@ -36,9 +36,9 @@
 	verb_exclaim = "loudly blorbles"
 	verb_yell = "loudly blorbles"
 
-	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
+	// canstun and canknockdown don't affect slimes because they ignore stun and knockdown variables
 	// for the sake of cleanliness, though, here they are.
-	status_flags = CANPARALYSE|CANPUSH
+	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
@@ -347,7 +347,7 @@
 
 /mob/living/simple_animal/slime/examine(mob/user)
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
@@ -394,11 +394,7 @@
 	if(buckled)
 		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
 
-	spawn(0)
-		SStun = 1
-		sleep(rand(20,60))
-		SStun = 0
-
+	SStun = world.time + rand(20,60)
 	spawn(0)
 		canmove = 0
 		if(user)

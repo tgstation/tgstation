@@ -22,6 +22,7 @@
 	var/internals_slot = null //ID of slot containing a gas tank
 	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
 	var/list/implants = null
+	var/accessory = null
 
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
 
@@ -63,6 +64,13 @@
 		H.equip_to_slot_or_del(new id(H),slot_wear_id)
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),slot_s_store)
+
+	if(accessory)
+		var/obj/item/clothing/under/U = H.w_uniform
+		if(U)
+			U.attach_accessory(new accessory(H))
+		else
+			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))

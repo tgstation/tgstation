@@ -68,7 +68,7 @@
 	var/datum/language_holder/other
 	if(istype(thing, /datum/language_holder))
 		other = thing
-	else if(istype(thing, /atom/movable))
+	else if(ismovableatom(thing))
 		var/atom/movable/AM = thing
 		other = AM.get_language_holder()
 	else if(istype(thing, /datum/mind))
@@ -88,7 +88,7 @@
 	language_menu.ui_interact(user)
 
 /datum/language_holder/proc/get_atom()
-	if(istype(owner, /atom/movable))
+	if(ismovableatom(owner))
 		. = owner
 	else if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner

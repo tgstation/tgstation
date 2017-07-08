@@ -29,6 +29,9 @@ Bonus
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
+		var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+		if (!eyes)
+			return	
 		switch(A.stage)
 			if(1, 2)
 				to_chat(M, "<span class='warning'>Your eyes itch.</span>")
@@ -40,9 +43,9 @@ Bonus
 				to_chat(M, "<span class='userdanger'>Your eyes burn horrificly!</span>")
 				M.blur_eyes(20)
 				M.adjust_eye_damage(5)
-				if(M.eye_damage >= 10)
+				if(eyes.eye_damage >= 10)
 					M.become_nearsighted()
-					if(prob(M.eye_damage - 10 + 1))
+					if(prob(eyes.eye_damage - 10 + 1))
 						if(M.become_blind())
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
 
@@ -76,6 +79,9 @@ Bonus
 /datum/symptom/visionaid/Activate(datum/disease/advance/A)
 	..()
 	var/mob/living/M = A.affected_mob
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	if (!eyes)
+		return
 	switch(A.stage)
 		if(4, 5) //basically oculine
 			if(M.disabilities & BLIND)
@@ -93,7 +99,7 @@ Bonus
 				else if(M.eye_blind || M.eye_blurry)
 					M.set_blindness(0)
 					M.set_blurriness(0)
-				else if(M.eye_damage > 0)
+				else if(eyes.eye_damage > 0)
 					M.adjust_eye_damage(-1)
 		else
 			if(prob(SYMPTOM_ACTIVATION_PROB * 3))

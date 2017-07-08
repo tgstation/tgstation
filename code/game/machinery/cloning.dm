@@ -205,7 +205,7 @@
 	//Get the clone body ready
 	maim_clone(H)
 	check_brine() // put in chemicals NOW to stop death via cardiac arrest
-	H.Paralyse(4)
+	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
 
@@ -243,7 +243,7 @@
 			go_out()
 
 		else if(mob_occupant.cloneloss > (100 - heal_level))
-			mob_occupant.Paralyse(4)
+			mob_occupant.Unconscious(80)
 
 			 //Slowly get that clone healed and finished.
 			mob_occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
@@ -331,8 +331,8 @@
 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 			return
 		else
-			connected_message("Authorized Ejection")
-			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
+			connected_message("Emergency Ejection")
+			SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else

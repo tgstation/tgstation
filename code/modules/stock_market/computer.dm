@@ -235,7 +235,7 @@ a.updated {
 	if (!amt)
 		return
 	if (!S.buyShares(logged_in, amt))
-		to_chat(user, "<<span class='danger'>Could not complete transaction.</span>")
+		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
 
 	var/total = amt * S.current_value

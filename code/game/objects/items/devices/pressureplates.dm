@@ -27,7 +27,7 @@
 		sigdev = new
 		sigdev.code = roundstart_signaller_code
 		sigdev.frequency = roundstart_signaller_freq
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 			hide(TRUE)
 
 /obj/item/device/pressure_plate/Crossed(atom/movable/AM)

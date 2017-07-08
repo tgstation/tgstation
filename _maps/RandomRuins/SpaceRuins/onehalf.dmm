@@ -172,7 +172,6 @@
 /area/ruin/onehalf/dorms_med)
 "aB" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/structure/table,
@@ -254,8 +253,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Crew Quarters APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/onehalf/dorms_med)
@@ -457,7 +455,6 @@
 /area/ruin/onehalf/hallway)
 "bg" = (
 /obj/structure/disposalpipe/broken{
-	tag = "icon-pipe-b (EAST)";
 	icon_state = "pipe-b";
 	dir = 4
 	},
@@ -632,7 +629,6 @@
 /area/ruin/onehalf/drone_bay)
 "bv" = (
 /obj/structure/disposalpipe/broken{
-	tag = "icon-pipe-b (EAST)";
 	icon_state = "pipe-b";
 	dir = 4
 	},
@@ -734,8 +730,6 @@
 /area/ruin/onehalf/drone_bay)
 "bJ" = (
 /obj/structure/chair/office{
-	tag = "icon-chair (EAST)";
-	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -879,7 +873,6 @@
 /area/ruin/onehalf/bridge)
 "ch" = (
 /obj/structure/disposalpipe/junction{
-	tag = "icon-pipe-j1 (NORTH)";
 	icon_state = "pipe-j1";
 	dir = 1
 	},
@@ -892,12 +885,10 @@
 "ci" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/broken{
-	tag = "icon-pipe-b (EAST)";
 	icon_state = "pipe-b";
 	dir = 4
 	},
 /obj/structure/disposalpipe/broken{
-	tag = "icon-pipe-b (WEST)";
 	icon_state = "pipe-b";
 	dir = 8
 	},
@@ -948,8 +939,6 @@
 /area/ruin/onehalf/bridge)
 "co" = (
 /obj/structure/chair/office{
-	tag = "icon-chair (NORTH)";
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -1069,12 +1058,10 @@
 "cD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/broken{
-	tag = "icon-pipe-b (WEST)";
 	icon_state = "pipe-b";
 	dir = 8
 	},
 /obj/structure/disposalpipe/broken{
-	tag = "icon-pipe-b (NORTH)";
 	icon_state = "pipe-b";
 	dir = 1
 	},

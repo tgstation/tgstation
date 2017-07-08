@@ -243,7 +243,7 @@
 			if(!is_gangster(user))
 				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
 				SSticker.mode.gangs += G
-				G.bosses += user.mind
+				G.bosses[user.mind] = 0
 				G.add_gang_hud(user.mind)
 				user.mind.gang_datum = G
 				to_chat(user, "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>")
@@ -467,11 +467,11 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Weaken(2)
+			target.Knockdown(40)
 			GiveHint(target)
 		else if(istype(I,/obj/item/weapon/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
-			target << 'sound/items/AirHorn.ogg'
+			target << 'sound/items/airhorn.ogg'
 			target.adjustEarDamage(0,3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
@@ -583,7 +583,7 @@
 	on_cooldown = TRUE
 	last_user = user
 	var/turf/T = get_turf(user)
-	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
+	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
 	user.canmove = 0
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)

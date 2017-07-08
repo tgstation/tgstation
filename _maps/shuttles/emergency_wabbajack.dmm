@@ -167,8 +167,7 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/syringes{
@@ -199,7 +198,6 @@
 /area/shuttle/escape)
 "aK" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -345,7 +343,6 @@
 "bk" = (
 /obj/structure/chair/wood,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cult,

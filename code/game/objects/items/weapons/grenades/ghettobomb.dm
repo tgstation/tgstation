@@ -15,10 +15,10 @@
 	det_time = 50
 	display_timer = 0
 	var/range = 3
-	var/times = list()
+	var/list/times
 
-/obj/item/weapon/grenade/iedcasing/New(loc)
-	..()
+/obj/item/weapon/grenade/iedcasing/Initialize()
+	. = ..()
 	add_overlay("improvised_grenade_filled")
 	add_overlay("improvised_grenade_wired")
 	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
@@ -33,6 +33,8 @@
 	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
+		can.pixel_x = 0 //Reset the sprite's position to make it consistent with the rest of the IED
+		can.pixel_y = 0
 		var/mutable_appearance/can_underlay = new(can)
 		can_underlay.layer = FLOAT_LAYER
 		can_underlay.plane = FLOAT_PLANE
@@ -43,7 +45,7 @@
 	if(!active)
 		if(clown_check(user))
 			to_chat(user, "<span class='warning'>You light the [name]!</span>")
-			active = 1
+			active = TRUE
 			cut_overlay("improvised_grenade_filled")
 			icon_state = initial(icon_state) + "_active"
 			add_fingerprint(user)

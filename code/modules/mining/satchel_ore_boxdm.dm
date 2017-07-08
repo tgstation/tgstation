@@ -28,6 +28,11 @@
 	else
 		return ..()
 
+/obj/structure/ore_box/examine(mob/living/user)
+	if(Adjacent(user) && istype(user))
+		show_contents(user)
+	. = ..()
+
 /obj/structure/ore_box/attack_hand(mob/user)
 	if(Adjacent(user))
 		show_contents(user)

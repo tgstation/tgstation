@@ -231,7 +231,7 @@
 		if(anchored)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start welding the [nicetype] in place...</span>")
 				if(do_after(user, 8*I.toolspeed, target = src))
 					if(!loc || !W.isOn())

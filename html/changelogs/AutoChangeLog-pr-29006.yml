@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "The kinetic crusher and other forced two-handed objects can now correctly be stored in a bag of holding."

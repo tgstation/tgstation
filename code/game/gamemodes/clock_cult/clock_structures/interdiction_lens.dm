@@ -9,7 +9,7 @@
 	inactive_icon = "interdiction_lens"
 	unanchored_icon = "interdiction_lens_unwrenched"
 	break_message = "<span class='warning'>The lens flares a blinding violet before the totem beneath it shatters!</span>"
-	break_sound = 'sound/effects/Glassbr3.ogg'
+	break_sound = 'sound/effects/glassbr3.ogg'
 	debris = list(/obj/item/clockwork/alloy_shards/small = 2, \
 	/obj/item/clockwork/alloy_shards/large = 2, \
 	/obj/item/clockwork/component/belligerent_eye/lens_gem = 1)
@@ -137,7 +137,7 @@
 
 		if(power_drained && power_drained >= MIN_CLOCKCULT_POWER && return_power(power_drained))
 			successfulprocess = TRUE
-			playsound(src, 'sound/items/PSHOOM.ogg', 50 * efficiency, 1, interdiction_range-7, 1)
+			playsound(src, 'sound/items/pshoom.ogg', 50 * efficiency, 1, interdiction_range-7, 1)
 
 		if(!successfulprocess)
 			forced_disable()

@@ -73,40 +73,43 @@
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
-	spawn(0)
-		var/range_left = range
-		for(var/i=0, i<range, i++)
-			range_left--
-			step_towards(D,A)
-			sleep(wait_step)
+	do_spray(A, wait_step, D, range, puff_reagent_left)
 
-			for(var/atom/T in get_turf(D))
-				if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
-					continue
-				if(puff_reagent_left <= 0)
-					break
+/obj/item/weapon/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left)
+	set waitfor = FALSE
+	var/range_left = range
+	for(var/i=0, i<range, i++)
+		range_left--
+		step_towards(D,A)
+		sleep(wait_step)
 
-				if(stream_mode)
-					if(ismob(T))
-						var/mob/M = T
-						if(!M.lying || !range_left)
-							D.reagents.reaction(M, VAPOR)
-							puff_reagent_left -= 1
-					else if(!range_left)
-						D.reagents.reaction(T, VAPOR)
-				else
-					D.reagents.reaction(T, VAPOR)
-					if(ismob(T))
+		for(var/atom/T in get_turf(D))
+			if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
+				continue
+			if(puff_reagent_left <= 0)
+				break
+
+			if(stream_mode)
+				if(ismob(T))
+					var/mob/M = T
+					if(!M.lying || !range_left)
+						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
+				else if(!range_left)
+					D.reagents.reaction(T, VAPOR)
+			else
+				D.reagents.reaction(T, VAPOR)
+				if(ismob(T))
+					puff_reagent_left -= 1
 
-			if(puff_reagent_left > 0 && (!stream_mode || !range_left))
-				D.reagents.reaction(get_turf(D), VAPOR)
-				puff_reagent_left -= 1
+		if(puff_reagent_left > 0 && (!stream_mode || !range_left))
+			D.reagents.reaction(get_turf(D), VAPOR)
+			puff_reagent_left -= 1
 
-			if(puff_reagent_left <= 0) // we used all the puff so we delete it.
-				qdel(D)
-				return
-		qdel(D)
+		if(puff_reagent_left <= 0) // we used all the puff so we delete it.
+			qdel(D)
+			return
+	qdel(D)
 
 /obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
 	stream_mode = !stream_mode

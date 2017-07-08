@@ -7,7 +7,7 @@
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/dufflebag(src)
+		new /obj/item/weapon/storage/backpack/duffelbag(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack(src)
 	else

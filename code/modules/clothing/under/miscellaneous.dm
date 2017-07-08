@@ -503,6 +503,12 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
+/obj/item/clothing/under/maid/Initialize()
+	. = ..()
+	var/obj/item/clothing/accessory/maidapron/A = new (src)
+	A.attach(src,null)
+
+
 /obj/item/clothing/under/janimaid
 	name = "maid uniform"
 	desc = "A simple maid uniform for housekeeping."

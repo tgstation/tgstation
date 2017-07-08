@@ -186,14 +186,6 @@
 	max_ammo = 30
 	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/carbine
-	name = "carbine magazine (4.6x30mm)"
-	icon_state = "oldrifle"
-	origin_tech = "combat=5"
-	ammo_type = /obj/item/ammo_casing/c46carbine
-	caliber = "4.6x30mm"
-	max_ammo = 32
-
 /obj/item/ammo_box/magazine/m12g
 	name = "shotgun magazine (12g taser slugs)"
 	desc = "A drum magazine."

@@ -25,7 +25,7 @@
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags &= STOPSPRESSUREDMAGE
+		flags &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
@@ -37,7 +37,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(20, 1, 1, 0, 1)
+				C.vomit(20)
 		else
 			to_chat(user, "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>")
 			to_chat(user, "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>")
@@ -81,7 +81,7 @@
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags &= STOPSPRESSUREDMAGE
+		flags &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
@@ -98,7 +98,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(20, 1, 1, 0, 1)
+				C.vomit(20)
 		else
 			to_chat(user, "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>")
 			to_chat(user, "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>")
@@ -116,7 +116,7 @@
 	item_state = "clockwork_gauntlets"
 	item_color = null //So they don't wash.
 	strip_delay = 50
-	put_on_delay = 30
+	equip_delay_other = 30
 	body_parts_covered = ARMS
 	cold_protection = ARMS
 	heat_protection = ARMS
@@ -142,7 +142,7 @@
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags &= STOPSPRESSUREDMAGE
+		flags &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
@@ -159,7 +159,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(10, 1, 1, 0, 1)
+				C.vomit()
 		else
 			to_chat(user, "<span class='heavy_brass'>\"Did you like having arms?\"</span>")
 			to_chat(user, "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>")
@@ -175,7 +175,7 @@
 	icon_state = "clockwork_treads"
 	w_class = WEIGHT_CLASS_NORMAL
 	strip_delay = 50
-	put_on_delay = 30
+	equip_delay_other = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/clockwork/Initialize()
@@ -194,7 +194,7 @@
 	if(GLOB.ratvar_awakens)
 		flags |= NOSLIP
 	else
-		flags &= NOSLIP
+		flags &= ~NOSLIP
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -209,7 +209,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(10, 1, 1, 0, 1)
+				C.vomit()
 		else
 			to_chat(user, "<span class='heavy_brass'>\"Let's see if you can dance with these.\"</span>")
 			to_chat(user, "<span class='userdanger'>The treads turn searing hot as you scramble to get them off!</span>")

@@ -39,22 +39,24 @@
 
 	// Optional hardware (improves functionality, but is not critical for computer to work)
 
-	var/list/all_components							// List of "connection ports" in this computer and the components with which they are plugged
+	var/list/all_components = list()						// List of "connection ports" in this computer and the components with which they are plugged
 
 	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
+	var/has_light = FALSE						//If the computer has a flashlight/LED light/what-have-you installed
+	var/light_on = FALSE						//If that light is enabled
+	var/comp_light_luminosity = 3				//The brightness of that light
+	var/comp_light_color			//The color of that light
 
 
-
-/obj/item/device/modular_computer/New()
+/obj/item/device/modular_computer/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	update_icon()
 	if(!physical)
 		physical = src
-	..()
-
-	all_components = list()
+	comp_light_color = "#FFFFFF"
 	idle_threads = list()
+	update_icon()
 
 /obj/item/device/modular_computer/Destroy()
 	kill_program(forced = TRUE)

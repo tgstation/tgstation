@@ -33,3 +33,9 @@
 				<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
 				circuitry. As a result neurotoxins can cause massive damage."}
 	return dat
+
+
+/obj/item/weapon/implantcase/track
+	name = "implant case - 'Tracking'"
+	desc = "A glass case containing a tracking implant."
+	imp_type = /obj/item/weapon/implant/tracking

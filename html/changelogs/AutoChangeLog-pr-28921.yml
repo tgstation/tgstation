@@ -1,0 +1,4 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new mob to the game, the \"leaper\""

@@ -18,6 +18,9 @@
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
+	var/burn_damage = 0
+	var/mob_color //Change the mob's color
+	var/assignedrole
 	density = 1
 	anchored = 1
 	var/banType = "lavaland"
@@ -68,6 +71,8 @@
 
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
+	M.adjustFireLoss(burn_damage)
+	M.color = mob_color
 	equip(M)
 
 	if(ckey)
@@ -78,6 +83,8 @@
 		if(objectives)
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
+		if(assignedrole)
+			M.mind.assigned_role = assignedrole
 		special(M, name)
 		MM.name = M.real_name
 	if(uses > 0)
@@ -96,6 +103,7 @@
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
 	var/id_access_list = null	//Allows you to manually add access to an ID card.
+	assignedrole = "Ghost Role"
 
 	var/husk = null
 	//these vars are for lazy mappers to override parts of the outfit
@@ -115,6 +123,9 @@
 	var/l_pocket = -1
 	var/back = -1
 	var/id = -1
+	var/neck = -1
+	var/backpack_contents = -1
+	var/suit_store = -1
 
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
@@ -128,9 +139,13 @@
 		H.set_species(mob_species)
 	if(husk)
 		H.Drain()
-
+	else //Because for some reason I can't track down, things are getting turned into husks even if husk = false. It's in some damage proc somewhere.
+		H.cure_husk()
+	H.underwear = "Nude"
+	H.undershirt = "Nude"
+	H.socks = "Nude"
 	if(outfit)
-		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id")
+		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)
 			var/T = vars[slot]
 			if(!isnum(T))
@@ -240,6 +255,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space doctor!"
+	assignedrole = "Space Doctor"
 
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
 	..()
@@ -294,6 +310,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
+	assignedrole = "Space Bartender"
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -317,6 +334,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a beach bum!"
+	assignedrole = "Beach Bum"
 
 /datum/outfit/beachbum
 	name = "Beach Bum"
@@ -420,11 +438,13 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+	assignedrole = "Skeleton"
 
 /obj/effect/mob_spawn/human/zombie
 	name = "rotting corpse"
 	mob_name = "zombie"
 	mob_species = /datum/species/zombie
+	assignedrole = "Zombie"
 
 /obj/effect/mob_spawn/human/zombie/alive
 	death = FALSE
@@ -454,6 +474,7 @@
 	permanent = TRUE
 	uses = -1
 	outfit = /datum/outfit/spacebartender
+	assignedrole = "Space Bar Patron"
 
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")

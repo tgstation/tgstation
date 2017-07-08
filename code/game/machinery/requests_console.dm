@@ -305,7 +305,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			return
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
-		log_say("[key_name(usr)] has made a station announcement: [message]")
+		log_talk(usr,"[key_name(usr)] has made a station announcement: [message]",LOGSAY)
 		message_admins("[key_name_admin(usr)] has made a station announcement.")
 		announceAuth = 0
 		message = ""

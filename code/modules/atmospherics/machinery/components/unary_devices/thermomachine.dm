@@ -1,7 +1,8 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	name = "thermomachine"
 	desc = "Heats or cools gas in connected pipes."
-	icon_state = "cold_map"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "freezer"
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
 	density = TRUE
@@ -9,7 +10,8 @@
 	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
-
+	layer = OBJ_LAYER
+	
 	var/on = FALSE
 	var/min_temperature = 0
 	var/max_temperature = 0
@@ -33,8 +35,8 @@
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
-/obj/item/weapon/circuitboard/machine/thermomachine/New()
-	..()
+/obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
+	. = ..()
 	if(prob(50))
 		name = "Freezer (Machine Board)"
 		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
@@ -172,7 +174,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			use_power = 1 + on
+			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")

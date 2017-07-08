@@ -97,11 +97,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(30, 0)
+	M.AdjustSleeping(600, FALSE)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(3, 0)
+	M.AdjustSleeping(40, FALSE)
 	..()
 	. = 1
 
@@ -255,7 +255,7 @@
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
-			victim.Weaken(3)
+			victim.Knockdown(60)
 			victim.drop_item()
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
@@ -269,7 +269,7 @@
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Weaken(5)
+			victim.Knockdown(100)
 			victim.drop_item()
 		victim.update_damage_hud()
 
@@ -532,6 +532,44 @@
 	color = "#DFDFDF"
 	taste_description = "mayonnaise"
 
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	id = "tearjuice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+
+/datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	var/unprotected = FALSE
+	switch(method)
+		if(INGEST)
+			unprotected = TRUE
+		if(INJECT)
+			unprotected = FALSE
+		else	//Touch or vapor
+			if(!M.is_mouth_covered() && !M.is_eyes_covered())
+				unprotected = TRUE
+	if(unprotected)
+		if(!M.getorganslot("eye_sight"))	//can't blind somebody with no eyes
+			to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
+		else
+			if(!M.eye_blurry)
+				to_chat(M, "<span class = 'warning'>Tears well up in your eyes!</span>")
+			M.blind_eyes(2)
+			M.blur_eyes(5)
+	..()
+
+/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/M)
+	..()
+	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
+		M.blur_eyes(4)
+		if(prob(10))
+			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
+			M.blind_eyes(2)
+
+
 ////Lavaland Flora Reagents////
 
 
@@ -544,7 +582,7 @@
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.Paralyse(2, 0)
+		M.Unconscious(40, 0)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4

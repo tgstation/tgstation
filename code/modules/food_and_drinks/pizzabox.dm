@@ -80,7 +80,7 @@
 		return
 	open = !open
 	if(open && !bomb_defused)
-		audible_message("<span class='warning'>\icon[src] *beep*</span>")
+		audible_message("<span class='warning'>[bicon(src)] *beep*</span>")
 		bomb_active = TRUE
 		START_PROCESSING(SSobj, src)
 	update_icon()
