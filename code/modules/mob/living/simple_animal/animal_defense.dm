@@ -80,6 +80,11 @@
 			damage = rand(20, 35)
 		return attack_threshold_check(damage)
 
+/mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
+	if(M.a_intent == INTENT_HARM) //No kicking dogs even as a rogue drone. Use a weapon.
+		return
+	..()
+
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
