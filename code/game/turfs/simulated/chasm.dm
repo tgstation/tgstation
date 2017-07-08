@@ -91,7 +91,7 @@
 		return FALSE
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
-		return 0
+		return FALSE
 	if(istype(AM, /obj/structure/stone_tile))
 		return FALSE
 	//Flies right over the chasm
