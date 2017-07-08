@@ -1,0 +1,4 @@
+author: "ohnopigeons"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen Electronics have fixed a bug where issued factory-fresh PDAs did not link to their cartridges, requiring manual reinsertion."

@@ -70,7 +70,7 @@ This file contains the arcane tome files.
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
 	text += "<center><font color='red' size=3><b><i>Archives of the Dark One</i></b></font></center><br><br><br>"
-	text += "A rune's name and effects can be revealed by examining the rune.<<br><br>"
+	text += "A rune's name and effects can be revealed by examining the rune.<br><br>"
 
 	text += "<font color='red'><b>Create Talisman</b></font><br>This rune is one of the most important runes the cult has, being the only way to create new talismans. A blank sheet of paper must be on top of the rune. After \
 	invoking it and choosing which talisman you desire, the paper will be converted, after some delay into a talisman.<br><br>"
@@ -206,8 +206,8 @@ This file contains the arcane tome files.
 		if(!SSticker.mode.eldergod)
 			to_chat(user, "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>")
 			return
-		if((loc.z && loc.z != ZLEVEL_STATION) || !A.blob_allowed)
-			to_chat(user, "<span class='warning'>The Geometer is not interested in lesser locations; the station is the prize!</span>")
+		if(!(A in GLOB.summon_spots))
+			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(GLOB.summon_spots)]!</span>")
 			return
 		var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 		if(confirm_final == "No")
@@ -215,9 +215,10 @@ This file contains the arcane tome files.
 			return
 		Turf = get_turf(user)
 		A = get_area(src)
-		if(!check_rune_turf(Turf, user) || (loc.z && loc.z != ZLEVEL_STATION)|| !A.blob_allowed)
+		if(!(A in GLOB.summon_spots))  // Check again to make sure they didn't move
+			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(GLOB.summon_spots)]!</span>")
 			return
-		priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/AI/spanomalies.ogg')
+		priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/ai/spanomalies.ogg')
 		for(var/B in spiral_range_turfs(1, user, 1))
 			var/obj/structure/emergency_shield/sanguine/N = new(B)
 			shields += N
@@ -225,7 +226,10 @@ This file contains the arcane tome files.
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
-	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
+	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
+	if(istype(get_turf(user), /turf/open/floor/engine/cult))
+		scribe_mod *= 0.5
+	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)
 			var/obj/structure/emergency_shield/sanguine/S = V
 			if(S && !QDELETED(S))
@@ -245,8 +249,6 @@ This file contains the arcane tome files.
 	SSblackbox.add_details("cult_runes_scribed", R.cultist_name)
 
 /obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
-	var/area/A = get_area(T)
-
 	if(isspaceturf(T))
 		to_chat(user, "<span class='warning'>You cannot scribe runes in space!</span>")
 		return FALSE
@@ -257,10 +259,6 @@ This file contains the arcane tome files.
 
 	if(T.z != ZLEVEL_STATION && T.z != ZLEVEL_MINING)
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.")
-		return FALSE
-
-	if(istype(A, /area/shuttle))
-		to_chat(user, "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>")
 		return FALSE
 
 	return TRUE

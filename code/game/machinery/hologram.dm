@@ -29,13 +29,13 @@ Possible to do for anyone motivated enough:
 #define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
-	name = "Holopad"
+	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
 	flags = HEAR
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	obj_integrity = 300
@@ -105,25 +105,10 @@ Possible to do for anyone motivated enough:
 		return
 	return ..()
 
-/obj/machinery/holopad/proc/CheckCallClose()
-	for(var/I in holo_calls)
-		var/datum/holocall/HC = I
-		if(usr == HC.eye)
-			HC.Disconnect(HC.calling_holopad)	//disconnect via clicking the called holopad
-			return TRUE
-	return FALSE
-
-/obj/machinery/holopad/Click(location,control,params)
-	if(!CheckCallClose())
-		return ..()
-
 /obj/machinery/holopad/AltClick(mob/living/carbon/human/user)
 	if(isAI(user))
 		hangup_all_calls()
 		return
-
-	if(!CheckCallClose())
-		interact(user)
 
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
@@ -316,11 +301,11 @@ Possible to do for anyone motivated enough:
 		Hologram.set_light(2)	//hologram lighting
 
 		set_holo(user, Hologram)
-		visible_message("A holographic image of [user] flicks to life right before your eyes!")
+		visible_message("<span class='notice'>A holographic image of [user] flickers to life before your eyes!</span>")
 
 		return Hologram
 	else
-		to_chat(user, "<span class='danger'>ERROR:</span> \black Unable to project hologram.")
+		to_chat(user, "<span class='danger'>ERROR:</span> Unable to project hologram.")
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
@@ -340,7 +325,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = masters.len + LAZYLEN(holo_calls)
-	use_power = HOLOPAD_PASSIVE_POWER_USAGE + HOLOGRAM_POWER_USAGE * total_users
+	use_power = total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE
+	active_power_usage = HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users)
 	if(total_users)
 		set_light(2)
 		icon_state = "holopad1"

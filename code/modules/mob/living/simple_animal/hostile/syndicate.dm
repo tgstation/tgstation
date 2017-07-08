@@ -84,9 +84,7 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 340
 	health = 340
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/melee/energy/sword/saber/red,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 ///////////////Guns////////////
 
@@ -98,7 +96,7 @@
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/c45nostamina
-	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
@@ -119,11 +117,9 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 200
 	health = 200
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 ///////////////Misc////////////
 

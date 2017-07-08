@@ -30,9 +30,9 @@
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 		if(BURN)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 
 /obj/structure/holosign/wetsign
 	name = "wet floor sign"
@@ -64,6 +64,26 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
+
+/obj/structure/holosign/barrier/atmos
+	name = "holo firelock"
+	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
+	icon_state = "holo_firelock"
+	density = FALSE
+	layer = ABOVE_MOB_LAYER
+	anchored = TRUE
+	CanAtmosPass = ATMOS_PASS_NO
+	layer = ABOVE_MOB_LAYER
+	alpha = 150
+
+/obj/structure/holosign/barrier/atmos/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
+/obj/structure/holosign/barrier/atmos/Destroy()
+	var/turf/T = get_turf(src)
+	. = ..()
+	T.air_update_turf(TRUE)
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"

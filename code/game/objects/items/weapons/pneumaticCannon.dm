@@ -32,14 +32,16 @@
 
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
 	..()
+	var/list/out = list()
 	if(!in_range(user, src))
-		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
+		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		to_chat(user, "<span class='info'>\icon [I] It has \the [I] loaded.</span>")
+		out += "<span class='info'>[bicon(I)] It has \the [I] loaded.</span>"
+		CHECK_TICK
 	if(tank)
-		to_chat(user, "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
-
+		out += "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>"
+	to_chat(user, out.Join("<br>"))
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -67,7 +69,7 @@
 			updateTank(tank, 1, user)
 	else if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, "<span class='warning'>\The [src] can't hold any more items!</span>")
-	else if(istype(W, /obj/item))
+	else if(isitem(W))
 		var/obj/item/IW = W
 		load_item(IW, user)
 
@@ -139,7 +141,7 @@
 	fire_items(T, user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
-		user.Weaken(3)
+		user.Knockdown(60)
 
 /obj/item/weapon/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
 	if(fire_mode == PCANNON_FIREALL)
@@ -184,17 +186,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	maxWeightClass = 7
 	gasPerThrow = 5
-
-/datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
-	name = "Pneumatic Cannon"
-	result = /obj/item/weapon/pneumatic_cannon/ghetto
-	tools = list(/obj/item/weapon/weldingtool,
-				 /obj/item/weapon/wrench)
-	reqs = list(/obj/item/stack/sheet/metal = 4,
-				/obj/item/stack/packageWrap = 8,
-				/obj/item/pipe = 2)
-	time = 300
-	category = CAT_WEAPON
 
 /obj/item/weapon/pneumatic_cannon/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)

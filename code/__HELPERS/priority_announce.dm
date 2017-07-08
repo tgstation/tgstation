@@ -1,4 +1,4 @@
-/proc/priority_announce(text, title = "", sound = 'sound/AI/attention.ogg', type)
+/proc/priority_announce(text, title = "", sound = 'sound/ai/attention.ogg', type)
 	if(!text)
 		return
 
@@ -35,7 +35,7 @@
 		title = "Classified [command_name()] Update"
 
 	if(announce)
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg')
 
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)

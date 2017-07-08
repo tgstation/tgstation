@@ -134,7 +134,7 @@
 	lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton)
 	to_chat(lich, "<span class='warning'>Your bones clatter and shutter as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
-	lich.Weaken(10+10*resurrections)
+	lich.Knockdown(200 + 200*resurrections)
 	resurrections++
 	if(old_body && old_body.loc)
 		if(iscarbon(old_body))

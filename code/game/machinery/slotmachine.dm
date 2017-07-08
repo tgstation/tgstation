@@ -19,7 +19,7 @@
 	icon_state = "slots1"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/weapon/circuitboard/computer/slot_machine
 	var/money = 3000 //How much money it has CONSUMED

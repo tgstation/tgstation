@@ -8,9 +8,9 @@ Class Variables:
    use_power (num)
       current state of auto power use.
       Possible Values:
-         0 -- no auto power use
-         1 -- machine is using power at its idle power level
-         2 -- machine is using power at its active power level
+         NO_POWER_USE -- no auto power use
+         IDLE_POWER_USE -- machine is using power at its idle power level
+         ACTIVE_POWER_USE -- machine is using power at its active power level
 
    active_power_usage (num)
       Value for the amount of power to use when in active power mode
@@ -104,7 +104,7 @@ Class Procs:
 
 	var/stat = 0
 	var/emagged = 0
-	var/use_power = 1
+	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
 		//2 = run auto, use active
@@ -389,7 +389,7 @@ Class Procs:
 		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			anchored = !anchored
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
 	return CANT_UNFASTEN
@@ -440,7 +440,7 @@ Class Procs:
 /obj/machinery/proc/display_parts(mob/user)
 	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>\icon[C] [C.name]</span>")
+		to_chat(user, "<span class='notice'>[bicon(C)] [C.name]</span>")
 
 /obj/machinery/examine(mob/user)
 	..()
@@ -495,3 +495,8 @@ Class Procs:
 		emp_act(2)
 	else
 		ex_act(2)
+
+/obj/machinery/Exited(atom/movable/AM, atom/newloc)
+	. = ..()
+	if (AM == occupant)
+		occupant = null

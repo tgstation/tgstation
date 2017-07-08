@@ -40,5 +40,5 @@ Bonus
 				M.adjustStaminaLoss(30)
 				if(M.getStaminaLoss() > 60 && !M.stat)
 					M.visible_message("<span class='warning'>[M] faints!</span>", "<span class='userdanger'>You swoon and faint...</span>")
-					M.AdjustSleeping(5)
+					M.AdjustSleeping(100)
 	return

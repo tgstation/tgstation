@@ -34,7 +34,7 @@
 			if(!message || !channel)
 				return
 			channel.add_message(message, username)
-			log_chat("[user]/([user.ckey]) as [username] sent to [channel.title]: [message]")
+			log_talk(user,"[key_name(user)] as [username] sent to [channel.title]: [message]",LOGCHAT)
 
 		if("PRG_joinchannel")
 			. = 1

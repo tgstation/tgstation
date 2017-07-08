@@ -99,7 +99,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 
 		var/datum/gang/multiverse/G = new(src, "[H.real_name]")
 		SSticker.mode.gangs += G
-		G.bosses += H.mind
+		G.bosses[H.mind] = 0	//No they don't use influence but this prevents runtimes.
 		G.add_gang_hud(H.mind)
 		H.mind.gang_datum = G
 

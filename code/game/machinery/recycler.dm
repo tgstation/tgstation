@@ -16,7 +16,7 @@
 	var/datum/material_container/materials
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
-	var/item_recycle_sound = 'sound/items/Welder.ogg'
+	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/New()
 	..()
@@ -167,7 +167,7 @@
 	L.loc = src.loc
 
 	if(issilicon(L))
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 	else
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
@@ -190,7 +190,7 @@
 				eat(I, sound=FALSE)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
-	L.Paralyse(5)
+	L.Unconscious(100)
 
 	// For admin fun, var edit emagged to 2.
 	if(gib || emagged == 2)

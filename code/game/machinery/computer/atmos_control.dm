@@ -61,7 +61,7 @@
 /////////////////////////////////////////////////////////////
 
 /obj/machinery/computer/atmos_control
-	name = "Atmospherics Monitoring"
+	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"

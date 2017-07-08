@@ -87,7 +87,7 @@
 		target.take_bodypart_damage(drill_damage)
 
 	if(target)
-		target.Paralyse(10)
+		target.Unconscious(200)
 		target.updatehealth()
 
 

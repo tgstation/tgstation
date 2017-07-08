@@ -168,7 +168,7 @@
 			blocked = TRUE
 			var/attackamt = rand(2,6)
 			temp = "You attack for [attackamt] damage!"
-			playsound(loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
 				turtle--
@@ -182,7 +182,7 @@
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
 			temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			playsound(loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/heal.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			turtle++
 
@@ -197,7 +197,7 @@
 			blocked = 1
 			var/chargeamt = rand(4,7)
 			temp = "You regain [chargeamt] points"
-			playsound(loc, 'sound/arcade/Mana.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
 			if(turtle > 0)
 				turtle--
@@ -232,7 +232,7 @@
 		if(!gameover)
 			gameover = TRUE
 			temp = "[enemy_name] has fallen! Rejoice!"
-			playsound(loc, 'sound/arcade/Win.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
 			if(emagged)
 				SSblackbox.inc("arcade_win_emagged")
@@ -249,13 +249,13 @@
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
 		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
-		playsound(loc, 'sound/arcade/Boom.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/boom.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_hp -= boomamt
 
 	else if ((enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
 		temp = "[enemy_name] steals [stealamt] of your power!"
-		playsound(loc, 'sound/arcade/Steal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/steal.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_mp -= stealamt
 		updateUsrDialog()
 
@@ -263,7 +263,7 @@
 			gameover = TRUE
 			sleep(10)
 			temp = "You have been drained! GAME OVER"
-			playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(emagged)
 				SSblackbox.inc("arcade_loss_mana_emagged")
 				usr.gib()
@@ -272,20 +272,20 @@
 
 	else if ((enemy_hp <= 10) && (enemy_mp > 4))
 		temp = "[enemy_name] heals for 4 health!"
-		playsound(loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/heal.ogg', 50, 1, extrarange = -3, falloff = 10)
 		enemy_hp += 4
 		enemy_mp -= 4
 
 	else
 		var/attackamt = rand(3,6)
 		temp = "[enemy_name] attacks for [attackamt] damage!"
-		playsound(loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_hp -= attackamt
 
 	if ((player_mp <= 0) || (player_hp <= 0))
 		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
-		playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
 			SSblackbox.inc("arcade_loss_hp_emagged")
 			usr.gib()
@@ -518,18 +518,18 @@
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" )
 						if(severity == 2)
 							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>")
-							M.Stun(3)
+							M.Stun(60)
 						if(severity >= 3) //you didn't pray hard enough
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
-							M.Stun(5)
+							M.Stun(100)
 							sleep(30)
-							M.vomit(50)
+							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
-							M.Weaken(3)
+							M.Knockdown(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
-							playsound(loc, 'sound/weapons/Genhit.ogg', 100, 1)
+							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
@@ -542,7 +542,7 @@
 							if(hull)
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
-								playsound(loc, 'sound/weapons/Genhit.ogg', 100, 1)
+								playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
 								var/turf/open/space/T
 								for(T in orange(1, src))
 									T.ChangeTurf(/turf/open/floor/plating/)
@@ -550,7 +550,7 @@
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
 							playsound(loc, 'sound/effects/bang.ogg', 50, 1)
 					if(ORION_TRAIL_MALFUNCTION)
-						playsound(loc, 'sound/effects/EMPulse.ogg', 50, 1)
+						playsound(loc, 'sound/effects/empulse.ogg', 50, 1)
 						visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
 						var/oldfood = food
 						var/oldfuel = fuel
@@ -618,7 +618,9 @@
 				if(emagged) //has to be here because otherwise it doesn't work
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
-					usr.Stun(10) //you can't run :^)
+					if(isliving(usr))
+						var/mob/living/L = usr
+						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 					sleep(50)
@@ -638,7 +640,7 @@
 	else if(href_list["killcrew"]) //shoot a crewmember
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/Gunshot.ogg', 100, 1)
+			playsound(loc,'sound/weapons/gunshot.ogg', 100, 1)
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
@@ -1050,27 +1052,8 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
-
-/obj/effect/mob_spawn/human/corpse/orionsecurity
-	name = "Spaceport Security"
-	id_job = "Officer"
-	id_access_list = list(GLOB.access_syndicate)
-	outfit = /datum/outfit/orionsecurity
-
-/datum/outfit/orionsecurity
-	name = "Orion Spaceport Security"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas
-	head = /obj/item/clothing/head/helmet/swat
-	back = /obj/item/weapon/storage/backpack
-	id = /obj/item/weapon/card/id
+	loot = list()
+	del_on_death = TRUE
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"

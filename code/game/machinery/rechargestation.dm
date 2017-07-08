@@ -4,7 +4,7 @@
 	icon_state = "borgcharger0"
 	density = 0
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 1000
 	req_access = list(GLOB.access_robotics)
@@ -95,14 +95,14 @@
 
 /obj/machinery/recharge_station/open_machine()
 	..()
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
 			R.forceMove(src)
 			occupant = R
-			use_power = 2
+			use_power = ACTIVE_POWER_USE
 			add_fingerprint(R)
 			break
 		state_open = 0

@@ -40,7 +40,7 @@ Chief Medical Officer
 
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel/med
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
 
 /*
 Medical Doctor
@@ -75,7 +75,7 @@ Medical Doctor
 
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel/med
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
 
 /*
 Chemist
@@ -106,10 +106,10 @@ Chemist
 	uniform = /obj/item/clothing/under/rank/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
-
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack = /obj/item/weapon/storage/backpack/chemistry
 	satchel = /obj/item/weapon/storage/backpack/satchel/chem
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
 
 /*
 Geneticist
@@ -143,7 +143,7 @@ Geneticist
 
 	backpack = /obj/item/weapon/storage/backpack/genetics
 	satchel = /obj/item/weapon/storage/backpack/satchel/gen
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
 
 /*
 Virologist
@@ -178,4 +178,4 @@ Virologist
 
 	backpack = /obj/item/weapon/storage/backpack/virology
 	satchel = /obj/item/weapon/storage/backpack/satchel/vir
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med

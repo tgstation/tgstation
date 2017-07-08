@@ -509,7 +509,7 @@
 		yieldmod = 1.3
 		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
-	
+
 	// Ambrosia Gaia produces earthsblood.
 	if(S.has_reagent("earthsblood"))
 		self_sufficiency_progress += S.get_reagent_amount("earthsblood")
@@ -601,9 +601,10 @@
 
 	// why, just why
 	if(S.has_reagent("napalm", 1))
-		adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
-		adjustToxic(round(S.get_reagent_amount("napalm") * 7))
-		adjustWeeds(-rand(5,9))
+		if(!(myseed.resistance_flags & FIRE_PROOF))
+			adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
+			adjustToxic(round(S.get_reagent_amount("napalm") * 7))
+			adjustWeeds(-rand(5,9))
 
 	//Weed Spray
 	if(S.has_reagent("weedkiller", 1))
@@ -836,7 +837,7 @@
 		for(var/obj/machinery/hydroponics/h in range(1,src))
 			h.update_icon()
 
-	else if(istype(O, /obj/item/weapon/shovel/spade) && unwrenchable)
+	else if(istype(O, /obj/item/weapon/shovel/spade))
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
@@ -928,7 +929,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	density = 0
-	use_power = 0
+	use_power = NO_POWER_USE
 	unwrenchable = 0
 
 /obj/machinery/hydroponics/soil/update_icon_hoses()

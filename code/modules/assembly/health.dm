@@ -59,7 +59,7 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+			audible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
 			toggle_scan()
 		return
 	return

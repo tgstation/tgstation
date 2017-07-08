@@ -14,7 +14,7 @@
 
 	var/operating = 0
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	var/disabled = 0
 	idle_power_usage = 10
 	active_power_usage = 100

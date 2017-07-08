@@ -13,7 +13,7 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "geisbinding_full"
 	break_message = null
-	break_sound = 'sound/magic/Repulse.ogg'
+	break_sound = 'sound/magic/repulse.ogg'
 	debris = list()
 	can_buckle = TRUE
 	buckle_lying = 0
@@ -72,7 +72,7 @@
 		L.resist()
 
 /obj/structure/destructible/clockwork/geis_binding/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/effects/EMPulse.ogg', 50, 1)
+	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
 
 /obj/structure/destructible/clockwork/geis_binding/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -88,7 +88,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/L = m
 		if(L)
-			L.Stun(1, 1, 1)
+			L.Stun(20, 1, 1)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.silent += 4

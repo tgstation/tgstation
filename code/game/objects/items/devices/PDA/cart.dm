@@ -1,3 +1,20 @@
+#define CART_SECURITY	(1<<0)
+#define CART_ENGINE	(1<<1)
+#define CART_ATMOS	(1<<2)
+#define CART_MEDICAL	(1<<3)
+#define CART_MANIFEST	(1<<4)
+#define CART_CLOWN	(1<<5)
+#define CART_MIME	(1<<6)
+#define CART_JANITOR	(1<<7)
+#define CART_REAGENT_SCANNER	(1<<8)
+#define CART_NEWSCASTER	(1<<9)
+#define CART_REMOTE_DOOR	(1<<10)
+#define CART_STATUS_DISPLAY	(1<<11)
+#define CART_QUARTERMASTER	(1<<12)
+#define CART_HYDROPONICS	(1<<13)
+#define CART_DRONEPHONE	(1<<14)
+
+
 /obj/item/weapon/cartridge
 	name = "generic cartridge"
 	desc = "A data cartridge for portable microcomputers."
@@ -7,27 +24,16 @@
 	w_class = WEIGHT_CLASS_TINY
 
 	var/obj/item/radio/integrated/radio = null
-	var/access_security = 0
-	var/access_engine = 0
-	var/access_atmos = 0
-	var/access_medical = 0
-	var/access_manifest = 0
-	var/access_clown = 0
-	var/access_mime = 0
-	var/access_janitor = 0
+
+	var/access = 0 //Bit flags for cartridge access
+
 //	var/access_flora = 0
-	var/access_reagent_scanner = 0
-	var/access_newscaster = 0
-	var/access_remote_door = 0 //Control some blast doors remotely!!
 	var/remote_door_id = ""
-	var/access_status_display = 0
-	var/access_quartermaster = 0
-	var/access_hydroponics = 0
-	var/access_dronephone = 0
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
-	var/mode = null
+	var/obj/item/device/pda/host_pda = null
 	var/menu
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
@@ -42,76 +48,65 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
+/obj/item/weapon/cartridge/Initialize()
+	. = ..()
+	var/obj/item/device/pda/pda = loc
+	if(istype(pda))
+		host_pda = pda
+
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
-	access_engine = 1
-	access_dronephone = 1
+	access = CART_ENGINE | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
-	access_atmos = 1
-	access_dronephone = 1
+	access = CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/medical
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
-	access_medical = 1
+	access = CART_MEDICAL
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
-	access_reagent_scanner = 1
+	access = CART_REAGENT_SCANNER
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
-	access_security = 1
+	access = CART_SECURITY
 	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
 	icon_state = "cart-s"
-	access_security = 1
-	access_medical = 1
-	access_manifest = 1
+	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
-	access_janitor = 1
-	access_dronephone = 1
+	access = CART_JANITOR | CART_DRONEPHONE
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/weapon/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
-	access_security = 1
+	access = CART_SECURITY
 	spam_enabled = 1
-
-/obj/item/weapon/cartridge/clown
-	name = "\improper Honkworks 5.0 cartridge"
-	icon_state = "cart-clown"
-	access_clown = 1
-	var/honk_charges = 5
-
-/obj/item/weapon/cartridge/mime
-	name = "\improper Gestur-O 1000 cartridge"
-	icon_state = "cart-mi"
-	access_mime = 1
-	var/mime_charges = 5
 
 /obj/item/weapon/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
-	access_newscaster = 1
+	access = CART_NEWSCASTER
 
 /*
 /obj/item/weapon/cartridge/botanist
@@ -123,8 +118,8 @@
 /obj/item/weapon/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
-	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
-	access_dronephone = 1
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
+	access = CART_DRONEPHONE
 
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
@@ -134,10 +129,9 @@
 	name = "\improper Signal Ace 2 cartridge"
 	desc = "Complete with integrated radio signaler!"
 	icon_state = "cart-tox"
-	access_reagent_scanner = 1
-	access_atmos = 1
+	access = CART_REAGENT_SCANNER | CART_ATMOS
 
-/obj/item/weapon/cartridge/signal/New()
+/obj/item/weapon/cartridge/signal/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
@@ -147,66 +141,46 @@
 	name = "space parts & space vendors cartridge"
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
-	access_quartermaster = 1
+	access = CART_QUARTERMASTER
 	bot_access_flags = MULE_BOT
 
 /obj/item/weapon/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
 	icon_state = "cart-h"
-	access_manifest = 1
-	access_status_display = 1
+	access = CART_MANIFEST | CART_STATUS_DISPLAY
 
 /obj/item/weapon/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	access_manifest = 1
-	access_status_display = 1
-	bot_access_flags = MULE_BOT|CLEAN_BOT
-	access_janitor = 1
-	access_security = 1
-	access_newscaster = 1
-	access_quartermaster = 1
-	access_dronephone = 1
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER | CART_DRONEPHONE
+	bot_access_flags = MULE_BOT | CLEAN_BOT
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
-	access_manifest = 1
-	access_status_display = 1
-	access_security = 1
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_SECURITY
 	bot_access_flags = SEC_BOT
 
 
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
-	access_manifest = 1
-	access_status_display = 1
-	access_engine = 1
-	access_atmos = 1
-	access_dronephone = 1
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
-	access_manifest = 1
-	access_status_display = 1
-	access_reagent_scanner = 1
-	access_medical = 1
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_MEDICAL
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
-	access_manifest = 1
-	access_status_display = 1
-	access_reagent_scanner = 1
-	access_atmos = 1
-	access_dronephone = 1
-	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 
-/obj/item/weapon/cartridge/rd/New()
+/obj/item/weapon/cartridge/rd/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
@@ -214,50 +188,13 @@
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
-	access_manifest = 1
-	access_engine = 1
-	access_security = 1
-	access_medical = 1
-	access_reagent_scanner = 1
-	access_status_display = 1
-	access_atmos = 1
-	access_newscaster = 1
-	access_quartermaster = 1
-	access_janitor = 1
-	access_dronephone = 1
-	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	access = ~(CART_CLOWN | CART_MIME)
+	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	spam_enabled = 1
 
 /obj/item/weapon/cartridge/captain/New()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
-
-/obj/item/weapon/cartridge/syndicate
-	name = "\improper Detomatix cartridge"
-	icon_state = "cart"
-	access_remote_door = 1
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
-	var/shock_charges = 4
-
-/obj/item/weapon/cartridge/proc/unlock()
-	if (!istype(loc, /obj/item/device/pda))
-		return
-
-	generate_menu()
-	print_to_host(menu)
-	return
-
-/obj/item/weapon/cartridge/proc/print_to_host(text)
-	if (!istype(loc, /obj/item/device/pda))
-		return
-	var/obj/item/device/pda/P = loc
-	P.cart = text
-
-	for (var/mob/M in viewers(1, loc.loc))
-		if (M.client && M.machine == loc)
-			P.attack_self(M)
-
-	return
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
@@ -281,7 +218,9 @@
 
 
 /obj/item/weapon/cartridge/proc/generate_menu(mob/user)
-	switch(mode)
+	if(!host_pda)
+		return
+	switch(host_pda.mode)
 		if(40) //signaller
 			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
@@ -333,7 +272,7 @@ Code:
 
 
 			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
-				if(!(pMon.stat & (NOPOWER|BROKEN)) )
+				if(!(pMon.stat & (NOPOWER | BROKEN)) )
 					powercount++
 					powermonitors += pMon
 
@@ -606,6 +545,10 @@ Code:
 		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
 			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
 			bot_control()
+		if (99) //Newscaster message permission error
+			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
+
+	return menu
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
@@ -615,15 +558,12 @@ Code:
 		usr << browse(null, "window=pda")
 		return
 
-	var/obj/item/device/pda/pda = loc
-
 	switch(href_list["choice"])
 		if("Medical Records")
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], GLOB.data_core.medical)
-			pda.mode = 441
-			mode = 441
+			host_pda.mode = 441
 			if(!active2)
 				active1 = null
 
@@ -631,8 +571,7 @@ Code:
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], GLOB.data_core.security)
-			pda.mode = 451
-			mode = 451
+			host_pda.mode = 451
 			if(!active3)
 				active1 = null
 
@@ -671,34 +610,32 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			pda.mode = 433
-			mode = 433
+			host_pda.mode = 433
 
 		if("Supply Orders")
-			pda.mode =47
-			mode = 47
+			host_pda.mode =47
 
 		if("Newscaster Access")
-			mode = 53
+			host_pda.mode = 53
 
 		if("Newscaster Message")
-			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
-			var/message = pda.msg_input()
+			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
+			var/message = host_pda.msg_input()
 			var/datum/newscaster/feed_channel/current
 			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
-			if(current.locked && current.author != pda_owner_name)
-				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
-				pda.Topic(null,list("choice"="Refresh"))
+			if(current.locked && current.author != host_pda_owner_name)
+				host_pda.mode = 99
+				host_pda.Topic(null,list("choice"="Refresh"))
 				return
-			GLOB.news_network.SubmitArticle(message,pda.owner,current_channel)
-			pda.Topic(null,list("choice"=num2text(mode)))
+			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
+			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
 
 		if("Newscaster Switch Channel")
-			current_channel = pda.msg_input()
-			pda.Topic(null,list("choice"=num2text(mode)))
+			current_channel = host_pda.msg_input()
+			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
@@ -711,7 +648,7 @@ Code:
 			if("botlist")
 				active_bot = null
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= pda.GetAccess())
+				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
 			else //Forward all other bot commands to the bot itself!
 				active_bot.bot_control(command= href_list["op"], user= usr)
 
@@ -719,9 +656,9 @@ Code:
 
 		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
 
-	generate_menu(usr)
-	print_to_host(menu)
-
+	if(!host_pda)
+		return
+	host_pda.attack_self(usr)
 
 
 /obj/item/weapon/cartridge/proc/bot_control()
@@ -785,3 +722,14 @@ Code:
 			return
 
 	return menu
+
+//If the cartridge adds a special line to the top of the messaging app
+/obj/item/weapon/cartridge/proc/message_header()
+	return ""
+
+//If the cartridge adds something to each potetial messaging target
+/obj/item/weapon/cartridge/proc/message_special(obj/item/device/pda/target)
+	return ""
+
+//This is called for special abilities of cartridges
+/obj/item/weapon/cartridge/proc/special(mov/living/user, list/params)

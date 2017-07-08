@@ -1,11 +1,11 @@
 /obj/machinery/biogenerator
-	name = "Biogenerator"
+	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
 	icon = 'icons/obj/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	var/processing = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null

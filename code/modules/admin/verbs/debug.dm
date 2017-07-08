@@ -52,7 +52,20 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!procname)
 		return
 
-	if(targetselected && !hascall(target,procname))
+	//hascall() doesn't support proc paths (eg: /proc/gib(), it only supports "gib")
+	var/testname = procname
+	if(targetselected)
+		//Find one of the 3 possible ways they could have written /proc/PROCNAME
+		if(findtext(procname, "/proc/"))
+			testname = replacetext(procname, "/proc/", "")
+		else if(findtext(procname, "/proc"))
+			testname = replacetext(procname, "/proc", "")
+		else if(findtext(procname, "proc/"))
+			testname = replacetext(procname, "proc/", "")
+		//Clear out any parenthesis if they're a dummy
+		testname = replacetext(testname, "()", "")
+
+	if(targetselected && !hascall(target,testname))
 		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no proc named [procname].</font>")
 		return
 	else

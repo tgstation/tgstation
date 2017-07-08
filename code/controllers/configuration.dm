@@ -263,6 +263,10 @@
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
 
+	var/irc_announce_new_game = FALSE
+
+	var/list/policies = list()
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -286,6 +290,7 @@
 /datum/configuration/proc/Reload()
 	load("config/config.txt")
 	load("config/game_options.txt","game_options")
+	load("config/policies.txt", "policies")
 	loadsql("config/dbconfig.txt")
 	if (maprotation)
 		loadmaplist("config/maps.txt")
@@ -427,7 +432,7 @@
 					popup_admin_pm = 1
 				if("allow_holidays")
 					allow_holidays = 1
-				if("useircbot")
+				if("useircbot")	//tgs2 support
 					useircbot = 1
 				if("ticklag")
 					var/ticklag = text2num(value)
@@ -540,6 +545,8 @@
 					error_silence_time = text2num(value)
 				if("error_msg_delay")
 					error_msg_delay = text2num(value)
+				if("irc_announce_new_game")
+					irc_announce_new_game = TRUE
 				else
 					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
 
@@ -775,6 +782,8 @@
 					mice_roundstart = text2num(value)
 				else
 					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
+		else if(type == "policies")
+			policies[name] = value
 
 	fps = round(fps)
 	if(fps <= 0)

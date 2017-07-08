@@ -68,6 +68,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	singular_name = "sandbag"
 	layer = LOW_ITEM_LAYER
 	origin_tech = "materials=2"
+	novariants = TRUE
 
 GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	new/datum/stack_recipe("sandbags", /obj/structure/barricade/sandbags, 1, time = 25, one_per_turf = 1, on_floor = 1), \
@@ -104,6 +105,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	origin_tech = "materials=6"
 	sheettype = "diamond"
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
+	novariants = TRUE
 
 GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
@@ -127,6 +129,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	origin_tech = "materials=5"
 	sheettype = "uranium"
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
+	novariants = TRUE
 
 GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
@@ -237,6 +240,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	origin_tech = "materials=4"
 	sheettype = "clown"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
+	novariants = TRUE
 
 GLOBAL_LIST_INIT(clown_recipes, list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \
@@ -355,6 +359,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	icon_state = "sheet-mythril"
 	singular_name = "mythril sheet"
 	origin_tech = "materials=4"
+	novariants = TRUE
 
 /*
  * Alien Alloy
@@ -370,7 +375,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 GLOBAL_LIST_INIT(abductor_recipes, list ( \
 /*	new/datum/stack_recipe("alien chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \ */
 	new/datum/stack_recipe("alien bed", /obj/structure/bed/abductor, 2, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("alien locker", /obj/structure/closet/abductor, 1, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("alien locker", /obj/structure/closet/abductor, 2, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("alien table frame", /obj/structure/table_frame/abductor, 1, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("alien airlock assembly", /obj/structure/door_assembly/door_assembly_abductor, 4, time = 20, one_per_turf = 1, on_floor = 1), \
 	null, \

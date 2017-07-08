@@ -32,7 +32,7 @@
 					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
 					old_cell.corrupt()
-					old_cell.updateicon()
+					old_cell.update_icon()
 					cell = CELL
 					to_chat(U, "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>")
 				else

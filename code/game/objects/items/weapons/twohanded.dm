@@ -84,21 +84,17 @@
 	return
 
 /obj/item/weapon/twohanded/dropped(mob/user)
-	..()
+	. = ..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(!wielded)
 		return
-	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
-		if(istype(O))
-			O.unwield(user, FALSE)
 	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	..()
+	. = ..()
 	if(wielded) //Trying to unwield it
 		unwield(user)
 	else //Trying to wield it
@@ -181,16 +177,21 @@
 	else
 		unwield(user)
 
+/obj/item/weapon/twohanded/required/dropped(mob/living/user, show_message = TRUE)
+	unwield(user, show_message)
+	..()
+
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
 		user.dropItemToGround(src)
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+	if(!wielded)
+		return
 	if(show_message)
 		to_chat(user, "<span class='notice'>You drop [src].</span>")
 	..(user, FALSE)
-	user.dropItemToGround(src)
 
 /*
  * Fireaxe
@@ -317,7 +318,7 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		return ..()
 	return 0
@@ -522,7 +523,7 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
@@ -622,10 +623,10 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !wielded)
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		var/turf/closed/wall/W = target
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
-		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
 		return 1
 	..()
@@ -648,7 +649,7 @@
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(wielded || attack_type != PROJECTILE_ATTACK)

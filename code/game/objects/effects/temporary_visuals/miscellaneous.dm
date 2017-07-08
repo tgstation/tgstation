@@ -109,6 +109,41 @@
 	icon_state = "tailsweep"
 	duration = 4
 
+/obj/effect/temp_visual/dir_setting/curse
+	icon_state = "curse"
+	duration = 32
+	var/fades = TRUE
+
+/obj/effect/temp_visual/dir_setting/curse/Initialize(mapload, set_dir)
+	. = ..()
+	if(fades)
+		animate(src, alpha = 0, time = 32)
+
+/obj/effect/temp_visual/dir_setting/curse/blob
+	icon_state = "curseblob"
+
+/obj/effect/temp_visual/dir_setting/curse/grasp_portal
+	icon = 'icons/effects/64x64.dmi'
+	layer = LARGE_MOB_LAYER
+	pixel_y = -16
+	pixel_x = -16
+	duration = 32
+	fades = FALSE
+
+/obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading
+	duration = 32
+	fades = TRUE
+
+/obj/effect/temp_visual/dir_setting/curse/hand
+	icon_state = "cursehand"
+
+/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
+	. = ..()
+	update_icon()
+
+/obj/item/projectile/curse_hand/update_icon()
+	icon_state = "[icon_state][handedness]"
+
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/mob.dmi'
@@ -162,9 +197,15 @@
 /obj/effect/temp_visual/decoy/fading/fivesecond
 	duration = 50
 
+/obj/effect/temp_visual/decoy/fading/halfsecond
+	duration = 5
+
 /obj/effect/temp_visual/small_smoke
 	icon_state = "smoke"
 	duration = 50
+
+/obj/effect/temp_visual/small_smoke/halfsecond
+	duration = 5
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
@@ -312,3 +353,58 @@
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
+
+/obj/effect/temp_visual/bleed
+	name = "bleed"
+	icon = 'icons/effects/bleed.dmi'
+	icon_state = "bleed0"
+	duration = 10
+	var/shrink = TRUE
+
+/obj/effect/temp_visual/bleed/Initialize(mapload, atom/size_calc_target)
+	. = ..()
+	var/size_matrix = matrix()
+	if(size_calc_target)
+		layer = size_calc_target.layer + 0.01
+		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
+		size_matrix = matrix() * (I.Height()/world.icon_size)
+		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
+	var/matrix/M = transform
+	if(shrink)
+		M = size_matrix*0.1
+	else
+		M = size_matrix*2
+	animate(src, alpha = 20, transform = M, time = duration, flags = ANIMATION_PARALLEL)
+
+/obj/effect/temp_visual/bleed/explode
+	icon_state = "bleed10"
+	duration = 12
+	shrink = FALSE
+
+/obj/effect/temp_visual/warp_cube
+	duration = 5
+	var/outgoing = TRUE
+
+/obj/effect/temp_visual/warp_cube/Initialize(mapload, atom/teleporting_atom, warp_color, new_outgoing)
+	. = ..()
+	if(teleporting_atom)
+		outgoing = new_outgoing
+		appearance = teleporting_atom.appearance
+		setDir(teleporting_atom.dir)
+		if(warp_color)
+			color = list(warp_color, warp_color, warp_color, list(0,0,0))
+			set_light(1.4, 1, warp_color)
+		mouse_opacity = 0
+		var/matrix/skew = transform
+		skew = skew.Turn(180)
+		skew = skew.Interpolate(transform, 0.5)
+		if(!outgoing)
+			transform = skew * 2
+			skew = teleporting_atom.transform
+			alpha = 0
+			animate(src, alpha = teleporting_atom.alpha, transform = skew, time = duration)
+		else
+			skew *= 2
+			animate(src, alpha = 0, transform = skew, time = duration)
+	else
+		return INITIALIZE_HINT_QDEL

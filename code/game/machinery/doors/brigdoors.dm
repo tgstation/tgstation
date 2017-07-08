@@ -5,8 +5,8 @@
 #define MAX_TIMER 9000
 
 #define PRESET_SHORT 1200
-#define PRESET_MEDIUM 3000
-#define PRESET_LONG 6000
+#define PRESET_MEDIUM 1800
+#define PRESET_LONG 3000
 
 
 
@@ -212,7 +212,7 @@
 	if(..())
 		return
 	. = TRUE
-	
+
 	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE

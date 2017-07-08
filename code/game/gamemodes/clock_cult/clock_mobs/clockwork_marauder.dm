@@ -272,8 +272,8 @@
 			target.changeNext_move(CLICK_CD_MELEE)
 		blockchance = initial(blockchance)
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 30, 1, 0, 1) //clang
-		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
-		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
+		visible_message("<span class='boldannounce'>[src] blocks [target && isitem(textobject) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
+		"<span class='userdanger'>You block [target && isitem(textobject) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
 		if(target && Adjacent(target))
 			if(prob(counterchance))
 				counterchance = initial(counterchance)

@@ -1,0 +1,5 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Headphones have been provided to the station in Autodrobes, mixed wardrobes, and fitness wardrobes. Please use them responsibly, and remember to focus on your job above all else!"
+  - experiment: "Headphones fit in head, ears, OR neck slots!"

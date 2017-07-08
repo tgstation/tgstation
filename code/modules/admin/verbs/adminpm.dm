@@ -59,11 +59,11 @@
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
-	cmd_admin_pm(whom, msg, AH)
+	cmd_admin_pm(whom, msg)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
-/client/proc/cmd_admin_pm(whom, msg, datum/admin_help/AH)
+/client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
@@ -144,9 +144,9 @@
 
 	if(irc)
 		to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: [rawmsg]</font>")
-		admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)] to <i>IRC</i>: [keywordparsedmsg]</font>")
+		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)] to <i>IRC</i>: [keywordparsedmsg]</font>")
 		ircreplyamount--
-		send2irc("Reply: [ckey]",rawmsg)
+		send2irc("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		if(recipient.holder)
 			if(holder)	//both are admins
@@ -204,59 +204,90 @@
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
 		for(var/client/X in GLOB.admins)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" )
+			to_chat(X, "<font color='blue'><B>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]</font>")
 	else
 		window_flash(recipient, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in GLOB.admins)
 			if(X.key!=key && X.key!=recipient.key)	//check client/X is an admin and isn't the sender or recipient
-				to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> \blue [keywordparsedmsg]</font>" )
+				to_chat(X, "<font color='blue'><B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]</font>" )
 
 
 
-
+#define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 /proc/IrcPm(target,msg,sender)
+	target = ckey(target)
 	var/client/C = GLOB.directory[target]
 
 	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
 	var/compliant_msg = trim(lowertext(msg))
-	var/unhandled = FALSE
 	var/irc_tagged = "[sender](IRC)"
-	switch(compliant_msg)
-		if("ticket close")
-			if(ticket)
-				ticket.Close(irc_tagged)
-				return "Ticket #[ticket.id] successfully closed"
-		if("ticket resolve")
-			if(ticket)
-				ticket.Resolve(irc_tagged)
-				return "Ticket #[ticket.id] successfully resolved"
-		if("ticket ic")
-			if(ticket)
-				ticket.ICIssue(irc_tagged)
-				return "Ticket #[ticket.id] successfully marked as IC issue"
-		if("ticket reject")
-			if(ticket)
-				ticket.Reject(irc_tagged)
-				return "Ticket #[ticket.id] successfully rejected"
-		else
-			unhandled = TRUE
-	if(!unhandled)
-		return "Ticket could not be found"
+	var/list/splits = splittext(compliant_msg, " ")
+	if(splits.len && splits[1] == "ticket")
+		if(splits.len < 2)
+			return IRC_AHELP_USAGE
+		switch(splits[2])
+			if("close")
+				if(ticket)
+					ticket.Close(irc_tagged)
+					return "Ticket #[ticket.id] successfully closed"
+			if("resolve")
+				if(ticket)
+					ticket.Resolve(irc_tagged)
+					return "Ticket #[ticket.id] successfully resolved"
+			if("icissue")
+				if(ticket)
+					ticket.ICIssue(irc_tagged)
+					return "Ticket #[ticket.id] successfully marked as IC issue"
+			if("reject")
+				if(ticket)
+					ticket.Reject(irc_tagged)
+					return "Ticket #[ticket.id] successfully rejected"
+			if("reopen")
+				if(ticket)
+					return "Error: [target] already has ticket #[ticket.id] open"
+				var/fail = splits.len < 3 ? null : -1
+				if(!isnull(fail))
+					fail = text2num(splits[3])
+				if(isnull(fail))
+					return "Error: No/Invalid ticket id specified. [IRC_AHELP_USAGE]"
+				var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(fail)
+				if(!AH)
+					return "Error: Ticket #[fail] not found"
+				if(AH.initiator_ckey != target)
+					return "Error: Ticket #[fail] belongs to [AH.initiator_ckey]"
+				AH.Reopen()
+				return "Ticket #[ticket.id] successfully reopened"
+			if("list")
+				var/list/tickets = GLOB.ahelp_tickets.TicketsByCKey(target)
+				if(!tickets.len)
+					return "None"
+				. = ""
+				for(var/I in tickets)
+					var/datum/admin_help/AH = I
+					if(.)
+						. += ", "
+					if(AH == ticket)
+						. += "Active: "
+					. += "#[AH.id]"
+				return
+			else
+				return IRC_AHELP_USAGE
+		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
 	var/adminname = config.showircname ? irc_tagged : "Administrator"
 
 	if(!C)
-		return "No client"
+		return "Error: No client"
 
 	if(!stealthkey)
 		stealthkey = GenIrcStealthKey()
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)
-		return "No message"
+		return "Error: No message"
 
 	message_admins("IRC message from [sender] to [key_name_admin(C)] : [msg]")
 	log_admin_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
@@ -275,8 +306,6 @@
 	C.ircreplyamount = IRCREPLYCOUNT
 
 	return "Message Successful"
-
-
 
 /proc/GenIrcStealthKey()
 	var/num = (rand(0,1000))

@@ -229,10 +229,9 @@
 		return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
-		M.updatehealth()
-	M.AdjustStunned(-4)
-	M.AdjustWeakened(-4)
-	M.AdjustStunned(-4)
+	M.AdjustStun(-80)
+	M.AdjustKnockdown(-80)
+	M.AdjustUnconscious(-80)
 	if(M.reagents.get_reagent_amount("epinephrine") < 5)
 		M.reagents.add_reagent("epinephrine", 5)
 	chassis.use_power(energy_drain)
@@ -483,7 +482,7 @@
 	if(get_dist(src,A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
-	if(!A.reagents || istype(A,/mob))
+	if(!A.reagents || ismob(A))
 		occupant_message("<span class=\"alert\">No reagent info gained from [A].</span>")
 		return 0
 	occupant_message("Analyzing reagents...")

@@ -74,6 +74,14 @@
 	creation_time = 30
 	max_signs = 6
 
+/obj/item/weapon/holosign_creator/atmos
+	name = "ATMOS holofan projector"
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
+	icon_state = "signmaker_engi"
+	holosign_type = /obj/structure/holosign/barrier/atmos
+	creation_time = 0
+	max_signs = 3
+
 /obj/item/weapon/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields"

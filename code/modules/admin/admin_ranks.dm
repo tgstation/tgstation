@@ -27,6 +27,9 @@ GLOBAL_PROTECT(admin_ranks)
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
 
+#if DM_VERSION > 512
+#error remove the rejuv keyword from this proc
+#endif
 /proc/admin_keyword_to_flag(word, previous_rights=0)
 	var/flag = 0
 	switch(ckey(word))
@@ -48,8 +51,8 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_POSSESS
 		if("stealth")
 			flag = R_STEALTH
-		if("rejuv","rejuvinate")
-			flag = R_REJUVINATE
+		if("poll")
+			flag = R_POLL
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
@@ -60,6 +63,9 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_SPAWN
 		if("@","prev")
 			flag = previous_rights
+		if("rejuv","rejuvinate")
+			stack_trace("Legacy keyword rejuvinate used defaulting to R_ADMIN")
+			flag = R_ADMIN
 	return flag
 
 /proc/admin_keyword_to_path(word) //use this with verb keywords eg +/client/proc/blah
@@ -67,6 +73,11 @@ GLOBAL_PROTECT(admin_ranks)
 
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(word, previous_rights=0)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin_private("[key_name(usr)][msg]")
+		return
 	var/flag = admin_keyword_to_flag(word, previous_rights)
 	if(flag)
 		switch(text2ascii(word,1))

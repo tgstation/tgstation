@@ -32,7 +32,6 @@ GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
 
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(newplayer_start)
-GLOBAL_LIST_EMPTY(latejoin)
 GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here
 GLOBAL_LIST_EMPTY(xeno_spawn)//Aliens spawn at these.
@@ -53,5 +52,4 @@ GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can 
 	//used by jump-to-area etc. Updated by area/updateName()
 GLOBAL_LIST_EMPTY(sortedAreas)
 
-GLOBAL_LIST_EMPTY(transit_markers)
 GLOBAL_LIST_EMPTY(all_abstract_markers)

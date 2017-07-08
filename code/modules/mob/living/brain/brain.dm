@@ -63,3 +63,11 @@
 	..()
 	if(stored_dna)
 		stored_dna.real_name = real_name
+
+/mob/living/brain/ClickOn(atom/A, params)
+	..()
+	if(istype(loc,/obj/item/device/mmi))
+		var/obj/item/device/mmi/MMI = loc
+		var/obj/mecha/M = MMI.mecha
+		if((src == MMI.brainmob) && istype(M))
+			return M.click_action(A,src,params)

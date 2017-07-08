@@ -476,3 +476,12 @@
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#FFD700"
 	tastes = list("butter" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/onionrings
+	name = "onion rings"
+	desc = "Onion slices coated in batter."
+	icon_state = "onionrings"
+	list_reagents = list("nutriment" = 3)
+	filling_color = "#C0C9A0"
+	gender = PLURAL
+	tastes = list("batter" = 3, "onion" = 1)

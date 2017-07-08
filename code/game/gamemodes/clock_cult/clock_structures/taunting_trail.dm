@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/taunting_trail
 	name = "strange smoke"
 	desc = "A cloud of purple smoke."
-	clockwork_desc = "A cloud of purple smoke that confuses and weakens non-Servants that enter it."
+	clockwork_desc = "A cloud of purple smoke that confuses and knocks down non-Servants that enter it."
 	gender = PLURAL
 	max_integrity = 5
 	obj_integrity = 5
@@ -11,7 +11,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 	break_message = null
-	break_sound = 'sound/magic/Teleport_app.ogg'
+	break_sound = 'sound/magic/teleport_app.ogg'
 	debris = list()
 	var/timerid
 
@@ -35,7 +35,7 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/items/Welder.ogg', 50, 1)
+	playsound(src, 'sound/items/welder.ogg', 50, 1)
 
 /obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target, height=0)
 	return TRUE
@@ -58,5 +58,5 @@
 			L.confused = min(L.confused + 15, 50)
 			L.dizziness = min(L.dizziness + 15, 50)
 			if(L.confused >= 25)
-				L.Weaken(Floor(L.confused * 0.04))
+				L.Knockdown(Floor(L.confused * 0.8))
 		take_damage(max_integrity)

@@ -14,7 +14,7 @@ The console is located at computer/gulag_teleporter.dm
 	state_open = 0
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/locked = FALSE

@@ -87,7 +87,7 @@
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/sbeacondrop/powersink(src)
-			new /obj/item/weapon/cartridge/syndicate(src)
+			new /obj/item/weapon/cartridge/virus/syndicate(src)
 			new /obj/item/weapon/storage/toolbox/syndicate(src) //To actually get to those places
 			new /obj/item/pizzabox/bomb
 
@@ -237,6 +237,15 @@
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
+
+/obj/item/weapon/storage/box/syndie_kit/supermatter
+	name = "box"
+
+/obj/item/weapon/storage/box/syndie_kit/supermatter/PopulateContents()
+	new /obj/item/weapon/scalpel/supermatter(src)
+	new /obj/item/weapon/hemostat/supermatter(src)
+	new /obj/item/nuke_core_container/supermatter(src)
+	new /obj/item/weapon/paper/supermatter_sliver_instructions(src)
 
 /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
 	name = "boxed virus grenade kit"
