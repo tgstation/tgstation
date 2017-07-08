@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer catch objects that require two hands at all times with only one hand."

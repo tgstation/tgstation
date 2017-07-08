@@ -65,6 +65,18 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
+/obj/item/weapon/melee/sabre/on_exit_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+
+/obj/item/weapon/melee/sabre/on_enter_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
