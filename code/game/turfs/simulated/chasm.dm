@@ -64,6 +64,9 @@
 	//if anything matching this typecache is found in the chasm, we don't drop things
 	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile))
 	var/list/found_safeties = typecache_filter_list(contents, chasm_safeties_typecache)
+	for(var/obj/structure/stone_tile/S in found_safeties)
+		if(S.fallen)
+			LAZYREMOVE(found_safeties, S)
 	return LAZYLEN(found_safeties)
 
 /turf/open/chasm/proc/drop_stuff(AM)
@@ -86,6 +89,8 @@
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
 		return 0
+	if(istype(AM, /obj/structure/stone_tile))
+		return FALSE
 	//Flies right over the chasm
 	if(isliving(AM))
 		var/mob/MM = AM
