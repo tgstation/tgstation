@@ -182,29 +182,6 @@
 		damaged_clothes = 0
 		cut_overlay(damaged_clothes_icons[index], TRUE)
 
-
-//Ears: currently only used for headsets and earmuffs
-/obj/item/clothing/ears
-	name = "ears"
-	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
-	slot_flags = SLOT_EARS
-	resistance_flags = 0
-
-/obj/item/clothing/ears/earmuffs
-	name = "earmuffs"
-	desc = "Protects your hearing from loud noises, and quiet ones as well."
-	icon_state = "earmuffs"
-	item_state = "earmuffs"
-	strip_delay = 15
-	equip_delay_other = 25
-	resistance_flags = FLAMMABLE
-
-/obj/item/clothing/ears/earmuffs/Initialize(mapload)
-	..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
-	SET_SECONDARY_FLAG(src, HEALS_EARS)
-
 //Glasses
 /obj/item/clothing/glasses
 	name = "glasses"
