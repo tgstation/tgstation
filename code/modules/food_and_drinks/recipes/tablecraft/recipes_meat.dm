@@ -171,7 +171,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pigblanket
 	subcategory = CAT_MEAT
 	
-/datum/crafting_recipe/food/pigblanket
+/datum/crafting_recipe/food/hotdog
 	name = "Hotdog"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
