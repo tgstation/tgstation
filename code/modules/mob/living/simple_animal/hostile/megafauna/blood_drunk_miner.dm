@@ -36,6 +36,7 @@ Difficulty: Medium
 	projectiletype = /obj/item/projectile/kinetic/miner
 	projectilesound = 'sound/weapons/kenetic_accel.ogg'
 	ranged = 1
+	ranged_cooldown_time = 16
 	pixel_x = -16
 	crusher_loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
 	loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator)
@@ -64,11 +65,9 @@ Difficulty: Medium
 	force_on = 10
 
 /obj/item/weapon/melee/transforming/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
-	var/target_knockdown_amount = target.AmountKnockdown()
+	target.add_stun_absorption("miner", 10, INFINITY)
 	..()
-	var/new_knockdown = target.AmountKnockdown()
-	if(new_knockdown != target_knockdown_amount)
-		target.SetKnockdown(max(target_knockdown_amount, 6), ignore_canknockdown = TRUE) //doesn't knock targets down for long if it does so
+	target.stun_absorption -= "miner"
 
 /obj/item/projectile/kinetic/miner
 	damage = 20
@@ -131,7 +130,7 @@ Difficulty: Medium
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
-	if(!used_item)
+	if(!used_item && !isturf(A))
 		used_item = miner_saw
 	..()
 
@@ -145,15 +144,20 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) >= MINER_DASH_RANGE && world.time >= dash_cooldown)
+	if(get_dist(src, target) > MINER_DASH_RANGE && dash_cooldown <= world.time)
 		INVOKE_ASYNC(src, .proc/dash, target)
-	else if(next_move <= world.time)
+	else
+		shoot_ka()
+	transform_weapon()
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/shoot_ka()
+	if(next_move <= world.time && ranged_cooldown <= world.time && get_dist(src, target) <= MINER_DASH_RANGE && !Adjacent(target))
+		ranged_cooldown = world.time + ranged_cooldown_time
 		visible_message("<span class='danger'>[src] fires the proto-kinetic accelerator!</span>")
-		new /obj/effect/temp_visual/dir_setting/firing_effect(loc, dir)
 		face_atom(target)
+		new /obj/effect/temp_visual/dir_setting/firing_effect(loc, dir)
 		Shoot(target)
 		changeNext_move(CLICK_CD_RANGE)
-	transform_weapon()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
 	if(next_move <= world.time)
@@ -173,18 +177,16 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/dash(atom/dash_target)
 	if(world.time < dash_cooldown)
 		return
-	dash_cooldown = world.time + initial(dash_cooldown)
 	var/list/accessable_turfs = list()
 	var/self_dist_to_target = 0
 	var/turf/own_turf = get_turf(src)
-	if(!QDELETED(target))
+	if(!QDELETED(dash_target))
 		self_dist_to_target += get_dist(dash_target, own_turf)
 	for(var/turf/open/O in RANGE_TURFS(MINER_DASH_RANGE, own_turf))
 		var/turf_dist_to_target = 0
 		if(!QDELETED(dash_target))
 			turf_dist_to_target += get_dist(dash_target, O)
-		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm) && \
-		(QDELETED(dash_target) || !O.Adjacent(dash_target)))
+		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
 				if(is_blocked_turf(T, TRUE))
@@ -192,19 +194,19 @@ Difficulty: Medium
 					continue
 			if(valid)
 				accessable_turfs[O] = turf_dist_to_target
-	if(!LAZYLEN(accessable_turfs))
-		return
 	var/turf/target_turf
-	if(!QDELETED(target))
+	if(!QDELETED(dash_target))
 		var/closest_dist = MINER_DASH_RANGE
 		for(var/t in accessable_turfs)
 			if(accessable_turfs[t] < closest_dist)
 				closest_dist = accessable_turfs[t]
 		for(var/t in accessable_turfs)
-			accessable_turfs[t] = (accessable_turfs[t] - closest_dist) * 10
-		target_turf = pickweight(accessable_turfs)
-	else
-		target_turf = pick(accessable_turfs)
+			if(accessable_turfs[t] != closest_dist)
+				accessable_turfs -= t
+	if(!LAZYLEN(accessable_turfs))
+		return
+	dash_cooldown = world.time + initial(dash_cooldown)
+	target_turf = pick(accessable_turfs)
 	var/turf/step_back_turf = get_step(target_turf, get_cardinal_dir(target_turf, own_turf))
 	var/turf/step_forward_turf = get_step(own_turf, get_cardinal_dir(own_turf, target_turf))
 	new /obj/effect/temp_visual/small_smoke/halfsecond(step_back_turf)
@@ -221,6 +223,7 @@ Difficulty: Medium
 	playsound(target_turf, 'sound/weapons/punchmiss.ogg', 40, 1, -1)
 	sleep(1)
 	dashing = FALSE
+	shoot_ka()
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/transform_weapon()
