@@ -4,6 +4,7 @@
 	icon_state = "gygax"
 	step_in = 3
 	dir_in = 1 //Facing North.
+	max_integrity = 250
 	deflect_chance = 5
 	armor = list(melee = 25, bullet = 20, laser = 30, energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_temperature = 25000
