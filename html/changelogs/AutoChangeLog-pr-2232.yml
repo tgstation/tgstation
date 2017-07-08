@@ -1,0 +1,4 @@
+author: "Tortellini Tony"
+delete-after: True
+changes: 
+  - tweak: "Cryo will now reduce the occupant's vision and it takes a few seconds to emerge when trying to get out alone."

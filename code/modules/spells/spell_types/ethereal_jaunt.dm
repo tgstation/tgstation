@@ -72,8 +72,9 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	var/canmove = 1
 	var/reappearing = 0
+	var/movedelay = 0
+	var/movespeed = 2
 	density = 0
 	anchored = 1
 	invisibility = 60
@@ -86,15 +87,14 @@
 	return ..()
 
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
-	if (!src.canmove || reappearing || !direction) return
+	if ((movedelay > world.time) || reappearing || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	setDir(direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
-	src.canmove = 0
-	spawn(2) src.canmove = 1
+	movedelay = world.time + movespeed
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return

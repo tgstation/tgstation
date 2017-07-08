@@ -12,7 +12,7 @@
 	icon_state = "icecream_vat"
 	density = 1
 	anchored = 0
-	use_power = 0
+	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA

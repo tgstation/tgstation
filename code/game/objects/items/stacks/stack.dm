@@ -202,7 +202,7 @@
 		return 0
 	return 1
 
-/obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
+/obj/item/stack/proc/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
 	if(zero_amount())
 		return 0
 	if (is_cyborg)
@@ -242,7 +242,7 @@
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)
-	use(transfer)
+	use(transfer, TRUE)
 	S.add(transfer)
 
 /obj/item/stack/Crossed(obj/o)
@@ -291,7 +291,7 @@
 	user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
-	use(amount)
+	use(amount, TRUE)
 
 
 

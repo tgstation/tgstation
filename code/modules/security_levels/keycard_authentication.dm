@@ -6,7 +6,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON

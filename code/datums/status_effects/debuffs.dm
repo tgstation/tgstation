@@ -215,7 +215,8 @@
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
-				add_servant_of_ratvar(owner)
+				if(add_servant_of_ratvar(owner))
+					owner.log_message("<font color=#BE8700>Conversion was done with a Mania Motor.</font>", INDIVIDUAL_ATTACK_LOG)
 			owner.Unconscious(100)
 		else
 			if(prob(severity * 0.15))
@@ -300,7 +301,7 @@
 	bleed_overlay.pixel_y = Floor(icon_height * 0.25)
 	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
 	bleed_underlay.pixel_x = -owner.pixel_x
-	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 4
+	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
 	bleed_underlay.alpha = 40
 	owner.add_overlay(bleed_overlay)
 	owner.underlays += bleed_underlay

@@ -174,7 +174,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			use_power = 1 + on
+			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")

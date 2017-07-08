@@ -33,7 +33,7 @@
 	var/yes_code = FALSE
 	var/safety = TRUE
 	var/obj/item/weapon/disk/nuclear/auth = null
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/previous_level = ""
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT

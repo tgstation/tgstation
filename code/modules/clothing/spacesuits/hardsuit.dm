@@ -550,7 +550,6 @@
 	icon_state = "hardsuit0-ancient"
 	item_state = "anc_helm"
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
-	tint = 2
 	item_color = "ancient"
 	resistance_flags = FIRE_PROOF
 
@@ -570,7 +569,7 @@
 	if(!istype(H) || H.wear_suit != src)
 		return
 	if(footstep > 1)
-		playsound(src, "suitstep", 50, 1)
+		playsound(src, "servostep", 100, 1)
 		footstep = 0
 	else
 		footstep++

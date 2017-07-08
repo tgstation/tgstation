@@ -44,4 +44,5 @@
 	if(!input || !IsAvailable())
 		return
 
+	log_talk(owner,"CLOCK:[key_name(owner)] : [input]",LOGSAY)
 	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)

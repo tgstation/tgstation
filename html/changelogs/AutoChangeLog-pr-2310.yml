@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Dreams while sleeping are now slightly longer on average and will contain more possibilities."
+  - rscadd: "Bedsheets may affect what you can dream."

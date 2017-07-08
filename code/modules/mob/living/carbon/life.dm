@@ -16,6 +16,8 @@
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			O.on_life()
+	if(stat == DEAD)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()

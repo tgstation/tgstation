@@ -1,0 +1,5 @@
+author: "Tortellini Tony"
+delete-after: True
+changes: 
+  - rscadd: "Added chemical tanks and honk coolers to the map."
+  - tweak: "The clown's emergency horn is now in an actual display case."

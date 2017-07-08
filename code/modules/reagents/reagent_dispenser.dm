@@ -26,7 +26,9 @@
 
 /obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume)
-	reagents.add_reagent(reagent_id, tank_volume)
+	if(reagent_id)
+		reagents.add_reagent(reagent_id, tank_volume)
+	generate_reagent_icon()
 	. = ..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)

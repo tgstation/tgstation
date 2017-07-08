@@ -534,6 +534,7 @@
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 	Serve [user], and assist [user.p_them()] in completing their goals at any cost.")
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
+	G.mind.assigned_role = "Servant Golem"
 
 	G.mind.enslave_mind_to_creator(user)
 

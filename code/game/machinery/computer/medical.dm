@@ -22,6 +22,9 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/machinery/computer/med_data/syndie
+	icon_keyboard = "syndie_key"
+
 /obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		if(!user.drop_item())

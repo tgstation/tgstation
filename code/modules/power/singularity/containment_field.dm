@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	use_power = 0
+	use_power = NO_POWER_USE
 	luminosity = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null

@@ -555,9 +555,7 @@
 /obj/structure/disposalpipe/trunk/Initialize()
 	. = ..()
 	dpdir = dir
-	spawn(1)
-		getlinked()
-
+	getlinked()
 	update()
 
 /obj/structure/disposalpipe/trunk/Destroy()
@@ -658,12 +656,11 @@
 	else
 		stored = new (src, DISP_END_OUTLET,dir)
 
-	spawn(1)
-		target = get_ranged_target_turf(src, dir, 10)
+	target = get_ranged_target_turf(src, dir, 10)
 
-		trunk = locate() in src.loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)

@@ -17,6 +17,14 @@
 	build_path = /obj/item/stack/sheet/mineral/plastitanium
 	category = list("initial")
 
+/datum/design/plaglass_alloy
+	name = "Plasma + Glass alloy"
+	id = "plasmaglass"
+	build_type = SMELTER
+	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/sheet/glass/plasma
+	category = list("initial")
+
 /datum/design/alienalloy
 	name = "Alien Alloy"
 	desc = "A sheet of reverse-engineered alien alloy."

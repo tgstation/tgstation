@@ -8,7 +8,7 @@
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id_tag
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	obj_integrity = 150

@@ -158,7 +158,7 @@
 	layer = WALL_OBJ_LAYER
 	obj_integrity = 100
 	max_integrity = 100
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
@@ -256,10 +256,10 @@
 				if(trigger)
 					burn_out()
 			else
-				use_power = 2
+				use_power = ACTIVE_POWER_USE
 				set_light(brightness)
 	else
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		set_light(0)
 
 	active_power_usage = (brightness * 10)
