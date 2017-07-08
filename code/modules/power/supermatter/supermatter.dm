@@ -202,7 +202,7 @@
 
 /obj/machinery/power/supermatter_shard/proc/get_integrity()
 	var/integrity = damage / explosion_point
-	integrity = round(100 - integrity * 100)
+	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
