@@ -60,7 +60,7 @@
 	ammo_left = 5
 	max_ammo = 5
 	casingtype = /obj/item/ammo_casing/shotgun/russian
-	grenade_to_throw = /obj/item/weapon/grenade/flashbang
+	grenade_to_throw = /obj/item/weapon/grenade/flashbang/russian
 	ai_type = /datum/goap_agent/russian/engineer
 
 /mob/living/simple_animal/hostile/russian/sniper
