@@ -5,7 +5,6 @@
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0_0"
-	var/base_icon = "portgen0"
 	density = 1
 	anchored = 0
 	use_power = 0
@@ -15,6 +14,7 @@
 	var/recent_fault = 0
 	var/power_output = 1
 	var/consumption = 0
+	var/base_icon = "portgen0"
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
