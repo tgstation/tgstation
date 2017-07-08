@@ -11,7 +11,6 @@
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
-	obj_integrity = 300
 	max_integrity = 300
 	resistance_flags = FIRE_PROOF
 	heat_proof = 1
@@ -241,7 +240,6 @@
 	glass = 0
 	explosion_block = 2
 	assemblytype = /obj/structure/firelock_frame/heavy
-	obj_integrity = 550
 	max_integrity = 550
 
 

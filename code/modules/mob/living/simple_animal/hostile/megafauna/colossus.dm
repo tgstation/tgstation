@@ -730,7 +730,7 @@ Difficulty: Very Hard
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
 	density = 1
 	anchored = 1
-	obj_integrity = 999
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()
@@ -740,8 +740,8 @@ Difficulty: Very Hard
 			holder_animal.gib()
 			return
 
-/obj/structure/closet/stasis/New()
-	..()
+/obj/structure/closet/stasis/Initialize(mapload)
+	. = ..()
 	if(isanimal(loc))
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)

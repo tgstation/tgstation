@@ -11,7 +11,6 @@
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
 	var/base_state = "mflash"
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 100
 	anchored = 1

@@ -316,7 +316,6 @@
 	layer = SPACEVINE_LAYER
 	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
-	obj_integrity = 50
 	max_integrity = 50
 	var/energy = 0
 	var/datum/spacevine_controller/master = null

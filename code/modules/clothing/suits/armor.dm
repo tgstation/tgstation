@@ -7,7 +7,6 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
 	equip_delay_other = 40
-	obj_integrity = 250
 	max_integrity = 250
 	resistance_flags = 0
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)

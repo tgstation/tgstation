@@ -17,7 +17,6 @@
 	density = 0
 	anchored = 0
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	obj_integrity = 100
 	max_integrity = 100
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2

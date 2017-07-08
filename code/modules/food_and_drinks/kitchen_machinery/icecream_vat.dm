@@ -18,7 +18,6 @@
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
 	container_type = OPENCONTAINER
-	obj_integrity = 300
 	max_integrity = 300
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)

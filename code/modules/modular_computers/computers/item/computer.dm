@@ -30,7 +30,6 @@
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	obj_integrity = 100
 	integrity_failure = 50
 	max_integrity = 100
 	armor = list(melee = 0, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 0, acid = 0)

@@ -12,7 +12,6 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera1"
-	obj_integrity = 150
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
 	var/static/list/possible_upgrades = typecacheof(list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer))

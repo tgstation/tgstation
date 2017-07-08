@@ -5,7 +5,6 @@
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	anchored = 0
 	density = 1
-	obj_integrity = 200
 	max_integrity = 200
 	var/state = 0
 	var/mineral = null
