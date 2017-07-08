@@ -1,2 +1,4 @@
+<ui-display>
 <span class='memoedit'>NanoTrasen R&D Console</span><br/>
 <ui-section title='Research Points'>{{data.research_points_stored}}</ui-section>
+</ui-display>

@@ -31,9 +31,11 @@ doesn't have toxins access.
 
 	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
 
-	var/selected_category
+	var/category_lathe
+	var/category_imprinter
 	var/current_tab = "settings"
-	var/list/datum/design/matching_designs = list() //for the search function
+	var/list/datum/design/matching_designs_protolathe //for the search function
+	var/list/datum/design/matching_designs_imprinter
 	var/disk_slot_selected = 0
 	var/datum/techweb_node/selected_node
 	var/datum/design/selected_design
@@ -69,7 +71,8 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
 	stored_research = SSresearch.science_tech
-	matching_designs = list()
+	matching_designs_imprinter = list()
+	matching_designs_protolathe = list()
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
@@ -118,16 +121,9 @@ doesn't have toxins access.
 		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /*
-/obj/machinery/computer/rdconsole/Topic(href, href_list)
-	if(..())
-		return
-	add_fingerprint(usr)
 
 	if(href_list["disk_slot"])
 		disk_slot_selected = text2num(href_list["disk_slot"])
-
-	if(href_list["category"])
-		selected_category = href_list["category"]
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
 		screen = SCICONSOLE_UPDATE_DATABASE
@@ -259,11 +255,6 @@ doesn't have toxins access.
 			use_power(250)
 			updateUsrDialog()
 
-	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
-		if(src.allowed(usr))
-			screen = text2num(href_list["lock"])
-		else
-			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
 		var/datum/design/being_built = stored_research.researched_designs[href_list["build"]]
@@ -452,24 +443,6 @@ doesn't have toxins access.
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
 
-	else if(href_list["search"]) //Search for designs with name matching pattern
-		var/compare
-
-		matching_designs.Cut()
-
-		if(href_list["type"] == "proto")
-			compare = PROTOLATHE
-			screen = SCICONSOLE_PROTOLATHE_SEARCH
-		else
-			compare = IMPRINTER
-			screen = SCICONSOLE_CIRCUIT_SEARCH
-
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
-			if(!(D.build_type & compare))
-				continue
-			if(findtext(D.name,href_list["to_search"]))
-				matching_designs.Add(D)
 ////////////////////////////////////////////////////////////	switch(screen)
 		//////////////////////R&D CONSOLE SCREENS//////////////////
 		if(SCICONSOLE_UPDATE_DATABASE)
@@ -562,24 +535,6 @@ doesn't have toxins access.
 			dat += SCICONSOLE_HEADER
 			dat += "<div class='statusDisplay'>NO PROTOLATHE LINKED TO CONSOLE</div>"
 
-		if(SCICONSOLE_PROTOLATHE_CAT)
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_PROTOLATHE_MATS]'>Material Storage</A>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_PROTOLATHE_CHEMS]'>Chemical Storage</A><div class='statusDisplay'>"
-			dat += "<h3>Protolathe Menu:</h3>"
-			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]"
-			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]"
-
-			dat += "<form name='search' action='?src=\ref[src]'>\
-			<input type='hidden' name='src' value='\ref[src]'>\
-			<input type='hidden' name='search' value='to_search'>\
-			<input type='hidden' name='type' value='proto'>\
-			<input type='text' name='to_search'>\
-			<input type='submit' value='Search'>\
-			</form><HR>"
-
-			dat += list_categories(linked_lathe.categories, SCICONSOLE_PROTOLATHE_CATVIEW)
-
 		//Grouping designs by categories, to improve readability
 		if(SCICONSOLE_PROTOLATHE_CATVIEW)
 			dat += SCICONSOLE_HEADER
@@ -597,40 +552,6 @@ doesn't have toxins access.
 				var/c = 50
 				var/t
 
-				var/all_materials = D.materials + D.reagents_list
-				for(var/M in all_materials)
-					t = linked_lathe.check_mat(D, M)
-					temp_material += " | "
-					if (t < 1)
-						temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
-					else
-						temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
-					c = min(c,t)
-
-				if (c >= 1)
-					dat += "<A href='?src=\ref[src];build=[D.id];amount=1'>[D.name]</A>"
-					if(c >= 5)
-						dat += "<A href='?src=\ref[src];build=[D.id];amount=5'>x5</A>"
-					if(c >= 10)
-						dat += "<A href='?src=\ref[src];build=[D.id];amount=10'>x10</A>"
-					dat += "[temp_material]"
-				else
-					dat += "<span class='linkOff'>[D.name]</span>[temp_material]"
-				dat += ""
-			dat += "</div>"
-
-		if(SCICONSOLE_PROTOLATHE_SEARCH) //Display search result
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_PROTOLATHE_CAT]'>Protolathe Menu</A>"
-			dat += "<div class='statusDisplay'><h3>Search results:</h3>"
-			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]"
-			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
-
-			var/coeff = linked_lathe.efficiency_coeff
-			for(var/datum/design/D in matching_designs)
-				var/temp_material
-				var/c = 50
-				var/t
 				var/all_materials = D.materials + D.reagents_list
 				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
@@ -683,24 +604,6 @@ doesn't have toxins access.
 			dat += SCICONSOLE_HEADER
 			dat += "<div class='statusDisplay'>NO CIRCUIT IMPRINTER LINKED TO CONSOLE</div>"
 
-		if(SCICONSOLE_CIRCUIT_CAT)
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_CIRCUIT_MATS]'>Material Storage</A>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_CIRCUIT_CHEMS]'>Chemical Storage</A><div class='statusDisplay'>"
-			dat += "<h3>Circuit Imprinter Menu:</h3>"
-			dat += "Material Amount: [linked_imprinter.materials.total_amount]"
-			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
-
-			dat += "<form name='search' action='?src=\ref[src]'>\
-			<input type='hidden' name='src' value='\ref[src]'>\
-			<input type='hidden' name='search' value='to_search'>\
-			<input type='hidden' name='type' value='imprint'>\
-			<input type='text' name='to_search'>\
-			<input type='submit' value='Search'>\
-			</form><HR>"
-
-			dat += list_categories(linked_imprinter.categories, SCICONSOLE_CIRCUIT_CATVIEW)
-
 		if(SCICONSOLE_CIRCUIT_CATVIEW)
 			dat += SCICONSOLE_HEADER
 			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_CIRCUIT_CAT]'>Circuit Imprinter Menu</A>"
@@ -731,30 +634,6 @@ doesn't have toxins access.
 					dat += "<span class='linkOff'>[D.name]</span>[temp_materials]"
 			dat += "</div>"
 
-		if(SCICONSOLE_CIRCUIT_SEARCH)
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_CIRCUIT_CAT]'>Circuit Imprinter Menu</A>"
-			dat += "<div class='statusDisplay'><h3>Search results:</h3>"
-			dat += "Material Amount: [linked_imprinter.materials.total_amount]"
-			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
-
-			var/coeff = linked_imprinter.efficiency_coeff
-			for(var/datum/design/D in matching_designs)
-				var/temp_materials
-				var/check_materials = 1
-				var/all_materials = D.materials + D.reagents_list
-				for(var/M in all_materials)
-					temp_materials += " | "
-					if (!linked_imprinter.check_mat(D, M))
-						check_materials = 0
-						temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
-					else
-						temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
-				if (check_materials)
-					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]"
-				else
-					dat += "<span class='linkOff'>[D.name]</span>[temp_materials]"
-			dat += "</div>"
 
 		if(SCICONSOLE_CIRCUIT_CHEMS) //Circuit Imprinter Material Storage Sub-menu
 			dat += SCICONSOLE_HEADER
@@ -786,8 +665,6 @@ doesn't have toxins access.
 	var/list/data = list()
 	//Tabs
 	data["tabs"] = list("Technology", "View Node", "View Design", "Disk Operations", "Deconstructive Analyzer", "Protolathe", "Circuit Imprinter", "Settings")
-	//Selected tab
-	data["tab"] = current_tab
 	//Locking
 	data["locked"] = locked
 	//General Access
@@ -795,28 +672,30 @@ doesn't have toxins access.
 	data["protolathe_linked"] = linked_lathe? TRUE : FALSE
 	data["circuit_linked"] = linked_imprinter? TRUE : FALSE
 	data["destroy_linked"] = linked_destroy? TRUE : FALSE
-	//Techweb Screen
+	data["node_selected"] = selected_node? TRUE : FALSE
+	data["design_selected"] = selected_design? TRUE : FALSE
+	//Techweb
 	var/list/techweb_avail = list()
 	var/list/techweb_locked = list()
 	var/list/techweb_researched = list()
 	for(var/id in stored_research.available_nodes)
 		var/datum/techweb_node/N = stored_research.available_nodes[id]
-		techweb_avail += list("id" = N.id, "display_name" = N.display_name)
+		techweb_avail += list(list("id" = N.id, "display_name" = N.display_name))
 	for(var/id in stored_research.visible_nodes)
 		var/datum/techweb_node/N = stored_research.visible_nodes[id]
-		techweb_locked += list("id" = N.id, "display_name" = N.display_name)
+		techweb_locked += list(list("id" = N.id, "display_name" = N.display_name))
 	for(var/id in stored_research.researched_nodes)
 		var/datum/techweb_node/N = stored_research.researched_nodes[id]
-		techweb_researched += list("id" = N.id, "display_name" = N.display_name)
+		techweb_researched += list(list("id" = N.id, "display_name" = N.display_name))
 	data["techweb_avail"] = techweb_avail
 	data["techweb_locked"] = techweb_locked
 	data["techweb_researched"] = techweb_researched
 	//Node View
-	data["node_selected"] = selected_node? TRUE : FALSE
 	if(selected_node)
+		data["snode_name"] = selected_node.display_name
 		data["snode_id"] = selected_node.id
 		data["snode_researched"] = stored_research.researched_nodes[selected_node.id]? TRUE : FALSE
-		data["snode_cost"] = selected_node.get_price()
+		data["snode_cost"] = selected_node.get_price(stored_research)
 		data["snode_export"] = selected_node.export_price
 		data["snode_desc"] = selected_node.description
 		var/list/prereqs = list()
@@ -824,18 +703,17 @@ doesn't have toxins access.
 		var/list/designs = list()
 		for(var/id in selected_node.prerequisites)
 			var/datum/techweb_node/N = selected_node.prerequisites[id]
-			prereqs += list("id" = N.id, "display_name" = N.display_name)
+			prereqs += list(list("id" = N.id, "display_name" = N.display_name))
 		for(var/id in selected_node.unlocks)
 			var/datum/techweb_node/N = selected_node.unlocks[id]
-			unlocks += list("id" = N.id, "display_name" = N.display_name)
+			unlocks += list(list("id" = N.id, "display_name" = N.display_name))
 		for(var/id in selected_node.designs)
 			var/datum/design/D = selected_node.designs[id]
-			designs += list("id" = D.id, "name" = D.name)
+			designs += list(list("id" = D.id, "name" = D.name))
 		data["node_prereqs"] = prereqs
 		data["node_unlocks"] = unlocks
 		data["node_designs"] = designs
 	//Design View
-	data["design_selected"] = selected_design? TRUE : FALSE
 	if(selected_design)
 		data["sdesign_id"] = selected_design.id
 		data["sdesign_name"] = selected_design.name
@@ -844,6 +722,34 @@ doesn't have toxins access.
 		data["sdesign_mats"] = list()
 		for(var/M in selected_design.materials)
 			data["sdesign_mats"]["[CallMaterialName(M)]"] = selected_design.materials[M]
+	//Both Lathes
+	data["lathe_tabs"] = list("Category List", "Selected Category", "Search Results", "Materials", "Chemicals")
+	//Protolathe
+	data["protocats"] = list()
+	for(var/v in linked_lathe.categories)
+		data["protocats"] += list(list("name" = v))
+	data["protomats"] = "[linked_lathe.materials.total_amount]"
+	data["protomaxmats"] = "[linked_lathe.materials.max_amount]"
+	data["protochems"] = "[linked_lathe.reagents.total_volume]"
+	data["protomaxchems"] = "[linked_lathe.reagents.maximum_volume]"
+	data["protomatch"] = list()
+	for(var/v in matching_designs_protolathe)
+		var/datum/design/D = matching_designs_protolathe[v]
+		data["protomatch"] += list(list("name" = D.name, "id" = D.id, "canprint" = check_canprint(D, PROTOLATHE), "matstring" = get_actual_mat_string(D, PROTOLATHE)))
+	//Circuit Imprinter
+	data["circuitcats"] = list()
+	for(var/v in linked_lathe.categories)
+		data["circuitcats"] += list(list("name" = v))
+	data["circuitmats"] = "[linked_imprinter.materials.total_amount]"
+	data["circuitmaxmats"] = "[linked_imprinter.materials.max_amount]"
+	data["circuitchems"] = "[linked_imprinter.reagents.total_volume]"
+	data["circuitmaxchems"] = "[linked_imprinter.reagents.maximum_volume]"
+	data["imprintmatch"] = list()
+	for(var/v in matching_designs_imprinter)
+		var/datum/design/D = matching_designs_protolathe[v]
+		data["imprintmatch"] += list(list("name" = D.name, "id" = D.id, "canprint" = check_canprint(D, IMPRINTER), "matstring" = get_actual_mat_string(D, IMPRINTER)))
+
+
 
 	/*
 	//Disk Operations
@@ -852,13 +758,13 @@ doesn't have toxins access.
 	*/
 
 
-
-
 	return data
 
 /obj/machinery/computer/rdconsole/ui_act(action, params)
 	if(..())
 		return
+	var/list/l = params
+	to_chat(usr, "<span class='boldnotice'>DEBUG: Interact with action [action] and params: \"[l.Join("")]\"</span>")
 	switch(action)
 		if("select_node")
 			selected_node = SSresearch.techweb_nodes[params["id"]]
@@ -877,23 +783,67 @@ doesn't have toxins access.
 			else
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 		if("Resync")
-			to_chat(usr, "<span class='boldnotice'>[bicon(src)]: Resyncing with nearby machinery.</span>")
-		if("switchTechnology")
-			current_tab = "tech"
-		if("switchNode")
-			current_tab = "node"
-		if("switchDesign")
-			current_tab = "design"
-		if("switchDisk")
-			current_tab = "disk"
-		if("switchDecon")
-			current_tab = "decon"
-		if("switchProto")
-			current_tab = "proto"
-		if("switchCirc")
-			current_tab = "circ"
-		if("switchSettings")
-			current_tab = "settings"
+			to_chat(usr, "<span class='boldnotice'>[bicon(src)]: Resynced with nearby machinery.</span>")
+		if("textSearch")
+			var/text = params["latheType"]
+			var/compare
+			if(text == "proto")
+				compare = PROTOLATHE
+			else if(text == "imprinter")
+				compare = IMPRINTER
+			else
+				return
+			var/list/operating = compare == PROTOLATHE? matching_designs_protolathe : matching_designs_imprinter
+			operating.Cut()
+			for(var/v in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[v]
+				if(!(D.build_type & compare))
+					continue
+				if(findtext(D.name, text))
+					operating[D.id] = D
+		if("switchcat")
+			if(type == "proto")
+				category_lathe = params["cat"]
+			else if(type == "imprinter")
+				category_imprinter = params["cat"]
+			else
+				return
+
+/obj/machinery/computer/rdconsole/proc/get_actual_mat_string(datum/design/D, buildtype)
+	. = ""
+	var/all_materials = D.materials + D.reagents_list
+	if(buildtype == IMPRINTER)
+		if(!linked_imprinter)
+			return FALSE
+		for(var/M in all_materials)
+			. += " | "
+			. += " <span class='[linked_imprinter.check_mat(D, M)? "" : "bad"]'>[all_materials[M]/linked_lathe.efficiency_coeff] [CallMaterialName(M)]</span>"
+	else if(buildtype == PROTOLATHE)
+		if(!linked_lathe)
+			return FALSE
+		for(var/M in all_materials)
+			. += " | "
+			. += " <span class='[linked_lathe.check_mat(D, M)? "" : "bad"]'>[all_materials[M]/linked_lathe.efficiency_coeff] [CallMaterialName(M)]</span>"
+
+/obj/machinery/computer/rdconsole/proc/check_canprint(datum/design/D, buildtype)
+	var/amount = 50
+	if(buildtype == IMPRINTER)
+		if(!linked_imprinter)
+			return FALSE
+		for(var/M in D.materials + D.reagents_list)
+			amount = min(amount, linked_imprinter.check_mat(D, M))
+			if(amount < 1)
+				return FALSE
+	else if(buildtype == PROTOLATHE)
+		if(!linked_lathe)
+			return FALSE
+		for(var/M in D.materials + D.reagents_list)
+			amount = min(amount, linked_lathe.check_mat(D, M))
+			if(amount < 1)
+				return FALSE
+	else
+		return FALSE
+	return amount
 
 /obj/machinery/computer/rdconsole/proc/lock_console(mob/user)
 	locked = TRUE

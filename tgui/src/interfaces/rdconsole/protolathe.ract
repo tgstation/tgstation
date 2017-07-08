@@ -1,0 +1,36 @@
+
+<ui-display>
+	<ui-section>Search Available Designs:
+	<input value={{textsearch}} placeholder="Type Here" class="text"/>
+	 <ui-button action='textSearch' params='{"latheType" : "proto", "inputText" : {{textsearch}}}'>Search</ui-button>
+	</ui-section>
+	<ui-section>Materials: {{data.protomats}} / {{data.protomaxmats}}</ui-section>
+	<ui-section>Reagents: {{data.protochems}} / {{data.protomaxchems}}</ui-section>
+<ui-display>
+
+<ui-tabs tabs='{{data.lathe_tabs}}'>
+	<tab name='Category List'>
+		{{#each data.protocats}}
+			<ui-button action='switchcat' params='{"type" : "proto", "cat" : {{name}}}'>{{name}}</ui-button>
+		{{/each}}
+	</tab>
+	<tab name='Selected Category'>
+	
+	</tab>
+	<tab name='Search Results'>
+		{{#each data.protomatch}}
+			<ui-section>{{name}}{{matstring}}
+				{{#if canprint > 1}}
+					<input value={{number}} placeholder='1-{{canprint}}' class="number"/>
+				{{/if}}
+				<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : {{id}}, "amount" : {{number}}}'>Print</ui-button>
+			</ui-section>
+		{{/each}}
+	</tab>
+	<tab name='Materials'>
+	
+	</tab>
+	<tab name='Chemicals'>
+	
+	</tab>
+</ui-tabs>

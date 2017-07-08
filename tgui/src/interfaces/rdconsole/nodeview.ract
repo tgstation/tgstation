@@ -1,5 +1,5 @@
 {{#if data.node_selected}}
-	<ui-display title='{{display_name}}'>
+	<ui-display title='{{data.snode_name}}'>
 		<ui-section title='Description'>{{data.snode_desc}}</ui-section>
 		<ui-section title='Point Cost'>{{data.snode_cost}}</ui-section>
 		<ui-section title='Export Price'>{{data.snode_export}}</ui-section>
