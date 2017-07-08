@@ -27,9 +27,9 @@
 			continue
 		if(T.z != ZLEVEL_STATION)
 			continue
-		var/foundAlready = 0	// don't infect someone that already has the virus
+		var/foundAlready = FALSE	// don't infect someone that already has the virus
 		for(var/thing in H.viruses)
-			foundAlready = 1
+			foundAlready = TRUE
 			break
 		if(H.stat == DEAD || foundAlready)
 			continue

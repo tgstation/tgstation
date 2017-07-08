@@ -8,9 +8,9 @@
 
 /datum/round_event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
-		var/foundAlready = 0	//don't infect someone that already has the virus
+		var/foundAlready = FALSE	//don't infect someone that already has the virus
 		for(var/thing in H.viruses)
-			foundAlready = 1
+			foundAlready = TRUE
 			break
 		if(H.stat == DEAD || foundAlready)
 			continue

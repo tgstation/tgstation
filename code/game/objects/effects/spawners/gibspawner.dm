@@ -7,7 +7,7 @@
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
 
 /obj/effect/gibspawner/Initialize(mapload, datum/dna/MobDNA)
-	..()
+	. = ..()
 
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 		to_chat(world, "<span class='danger'>Gib list length mismatch!</span>")
@@ -49,7 +49,7 @@
 /obj/effect/gibspawner/generic/Initialize()
 	playsound(src, 'sound/effects/blobattack.ogg', 40, 1)
 	gibdirections = list(list(WEST, NORTHWEST, SOUTHWEST, NORTH),list(EAST, NORTHEAST, SOUTHEAST, SOUTH), list())
-	..()
+	. = ..()
 
 /obj/effect/gibspawner/human
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/up,/obj/effect/decal/cleanable/blood/gibs/down,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/blood/gibs/body,/obj/effect/decal/cleanable/blood/gibs/limb,/obj/effect/decal/cleanable/blood/gibs/core)
@@ -58,7 +58,7 @@
 /obj/effect/gibspawner/human/Initialize()
 	playsound(src, 'sound/effects/blobattack.ogg', 50, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs, list())
-	..()
+	. = ..()
 
 
 /obj/effect/gibspawner/humanbodypartless //only the gibs that don't look like actual full bodyparts (except torso).
@@ -68,7 +68,7 @@
 /obj/effect/gibspawner/humanbodypartless/Initialize()
 	playsound(src, 'sound/effects/blobattack.ogg', 50, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, list())
-	..()
+	. = ..()
 
 
 /obj/effect/gibspawner/xeno
@@ -78,7 +78,7 @@
 /obj/effect/gibspawner/xeno/Initialize()
 	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs, list())
-	..()
+	. = ..()
 
 
 /obj/effect/gibspawner/xenobodypartless //only the gibs that don't look like actual full bodyparts (except torso).
@@ -89,7 +89,7 @@
 /obj/effect/gibspawner/xenobodypartless/Initialize()
 	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, list())
-	..()
+	. = ..()
 
 /obj/effect/gibspawner/larva
 	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body)
@@ -98,7 +98,7 @@
 /obj/effect/gibspawner/larva/Initialize()
 	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST), list(), GLOB.alldirs)
-	..()
+	. = ..()
 
 /obj/effect/gibspawner/larvabodypartless
 	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva)
@@ -107,7 +107,7 @@
 /obj/effect/gibspawner/larvabodypartless/Initialize()
 	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST), list())
-	..()
+	. = ..()
 
 /obj/effect/gibspawner/robot
 	sparks = 1
@@ -117,4 +117,4 @@
 /obj/effect/gibspawner/robot/Initialize()
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs)
 	gibamounts[6] = pick(0,1,2)
-	..()
+	. = ..()

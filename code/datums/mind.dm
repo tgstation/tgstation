@@ -629,10 +629,10 @@
 		text = "<i><b>[text]</b></i>: "
 		if (ishuman(current))
 			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-		else if (ismonkey(current))
-			var/found = 0
+		else if(ismonkey(current))
+			var/found = FALSE
 			for(var/datum/disease/transformation/jungle_fever/JF in current.viruses)
-				found = 1
+				found = TRUE
 				break
 
 			if(found)
