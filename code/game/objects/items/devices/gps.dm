@@ -210,3 +210,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	tagged = null
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
+
+/obj/item/device/gps/internal/russian
+	gpstag = "Slavic Signal"
+	desc = "Report to a coder immediately."
