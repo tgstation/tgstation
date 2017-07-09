@@ -570,14 +570,14 @@
 	data["components"] = stored_components.Copy()
 	var/list/temp_data = list("<font color=#B18B25>")
 	for(var/i in data["components"]) //display the slab's components
-		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i]]</b></font>"
+		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i]]</b></font>"
 		if(i != HIEROPHANT_ANSIBLE)
 			temp_data += " "
 		else
-			temp_data += " ("
+			temp_data += " <br>("
 	if(GLOB.clockwork_caches) //if we have caches, display what's in the global cache
 		for(var/i in GLOB.clockwork_component_cache)
-			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
+			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
 			if(i != HIEROPHANT_ANSIBLE)
 				temp_data += " "
 	else
@@ -609,7 +609,7 @@
 
 	data["target_comp"] = "<font color=#B18B25>NONE</font>"
 	if(target_component_id) //if we have a component to make, display that, too
-		data["target_comp"] = "<font color=[get_component_color_bright(target_component_id)]>[get_component_acronym(target_component_id)]</font>"
+		data["target_comp"] = "<font color=[get_component_color_bright(target_component_id)]>[get_component_icon(target_component_id)]</font>"
 
 	generate_all_scripture()
 
@@ -638,7 +638,7 @@
 				var/list/really_temp_data = list(": ")
 				for(var/i in temp_info["required"])
 					if(temp_info["required"][i])
-						really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
+						really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[temp_info["required"][i]]</b></font> "
 				really_temp_data = really_temp_data.Join()
 				temp_info["required"] = really_temp_data
 			else //and if we don't, we won't.
