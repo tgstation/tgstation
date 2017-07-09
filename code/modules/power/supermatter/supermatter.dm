@@ -486,7 +486,7 @@
 		rip_u.dismember(BURN) //nice try jedi
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
-	dust_mob(S, cause = "monkey attack")
+	dust_mob(user, cause = "monkey attack")
 
 /obj/machinery/power/supermatter_shard/attack_animal(mob/living/simple_animal/S)
 	var/murder
