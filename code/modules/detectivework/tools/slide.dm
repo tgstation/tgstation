@@ -10,7 +10,7 @@
 	var/thingy = user.get_active_held_item()
 
 	if(istype(thingy, /obj/item/forensics/swabkit)) //are we putting a swab in?
-		/obj/item/forensics/swabkit/H = thingy
+		var/obj/item/forensics/swabkit/H = thingy
 		src.icon_state = "slideswab"
 		src.name = "slide (swab)"
 		src.desc = "A slide with a swab on it."
@@ -20,18 +20,18 @@
 		qdel(thingy)
 	else if(istype(thingy, /obj/item/forensics/fiber) || istype(thingy, /obj/item/forensics/fiberbag)) //Are we putting a fiber on it?
 		if (istype(thingy, /obj/item/forensics/fiberbag))
-			/obj/item/forensics/fiberbag/H = thingy
+			var/obj/item/forensics/fiberbag/H = thingy
 			H._fiber = null
 			H.name = "fiber bag"
 			H.icon_state = "bag"
 			H.desc = "A bag containing a fiber from some gloves or clothes."
 			src.icon_state = "slidefiber"
 			src.A = "fiber"
-			src.B = thingy._fiber
+			src.B = H._fiber
 			src.name = "slide (fiber)"
 			src.desc = "A slide with a fiber on it."
 		else
-			/obj/item/forensics/fiber/H = thingy
+			var/obj/item/forensics/fiber/H = thingy
 			src.icon_state = "slidefiber"
 			src.A = "fiber"
 			src.B = H._fiber

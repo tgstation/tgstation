@@ -40,7 +40,8 @@
 	var/thingy = user.get_active_held_item()
 
 	if(istype(thingy, /obj/item/forensics/fiber))
-		src._fiber = thingy._fiber
+		var/obj/item/forensics/fiber/H = thingy
+		src._fiber = H._fiber
 		src.icon_state = "fiberbag"
 		qdel(thingy)
 

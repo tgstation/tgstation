@@ -29,9 +29,9 @@
 
 		if(do_after(user, 5*prints.len, A))
 			for(var/print in prints)
-				if(!uprint[print])
-    				uprints[print] = TRUE
+				if( !uprints[print] )
 					new /obj/item/forensics/printcard(get_turf(src), print)
+					uprints[print] = TRUE
 
 			to_chat(user, "<span class='notice'>We put all the fingerprints we find onto cards.</span>")
 		else
