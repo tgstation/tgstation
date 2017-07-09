@@ -20,6 +20,11 @@
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
+/obj/structure/blob/attack_hand(mob/M)
+	. = ..()
+	M.visible_message("<span class='notice'>[target] [pick('gently strokes', 'nuzzles', 'affectionatly pets')] the blob!</span>", "<span class='notice'>You pet the blob!</span>")
+	
+
 
 /obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)
