@@ -7,6 +7,7 @@
 	var/list/datum/design/researched_designs = list()			//Designs that are available for use. Assoc list, id = datum
 	var/list/datum/techweb_node/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node datum = path of boost object.
 	var/research_points = 0										//Available research points.
+	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 
 /datum/techweb/New()
 	for(var/i in SSresearch.techweb_nodes_starting)
@@ -117,7 +118,7 @@
 		boosted_nodes[N] = boost
 	return TRUE
 
-/datum/techweb/proc/update_node_status(datum/techweb_node/node)
+/datum/techweb/proc/update_node_status(datum/techweb_node/node, autoupdate_consoles = TRUE)
 	var/researched = FALSE
 	var/available = FALSE
 	var/visible = FALSE
@@ -143,6 +144,10 @@
 		else
 			if(visible)
 				visible_nodes[node.id] = node
+	if(autoupdate_consoles)
+		for(var/v in consoles_accessing)
+			var/obj/machinery/computer/rdconsole/V = consoles_accessing[v]
+			V.rescan_category_views()
 
 //Laggy procs to do specific checks, just in case. Don't use them if you can just use the vars that already store all this!
 /datum/techweb/proc/designHasReqs(datum/design/D)

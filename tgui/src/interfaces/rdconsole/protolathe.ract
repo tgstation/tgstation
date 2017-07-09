@@ -15,7 +15,14 @@
 			{{/each}}
 		</tab>
 		<tab name='Selected Category'>
-		
+			{{#each data.protodes}}
+				<ui-section>{{name}}{{matstring}}
+					{{#if canprint > 1}}
+						<input value={{number}} placeholder='1-{{canprint > 10? 10 : canprint}}' class="number"/>
+					{{/if}}
+					<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : {{id}}, "amount" : {{number}}}'>Print</ui-button>
+				</ui-section>
+			{{/each}}
 		</tab>
 		<tab name='Search Results'>
 			{{#each data.protomatch}}
