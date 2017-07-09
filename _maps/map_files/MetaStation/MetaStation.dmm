@@ -70805,6 +70805,10 @@
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},

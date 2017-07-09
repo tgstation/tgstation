@@ -27950,6 +27950,10 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
