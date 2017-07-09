@@ -27,11 +27,17 @@
 			continue
 		if(T.z != ZLEVEL_STATION)
 			continue
-		var/foundAlready = FALSE	// don't infect someone that already has the virus
+		if(!H.client)
+			continue
+		if(H.stat == DEAD)
+			continue
+		if(VIRUSIMMUNE in H.dna.species.species_traits) //Don't pick someone who's virus immune, only for it to not do anything.
+			continue
+		var/foundAlready = FALSE	// don't infect someone that already has a disease
 		for(var/thing in H.viruses)
 			foundAlready = TRUE
 			break
-		if(H.stat == DEAD || foundAlready)
+		if(foundAlready)
 			continue
 
 		var/datum/disease/D

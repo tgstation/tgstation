@@ -12,6 +12,7 @@
 	spread_flags = NON_CONTAGIOUS
 	visibility_flags = HIDDEN_PANDEMIC
 	required_organs = list(/obj/item/organ/appendix)
+	bypasses_immunity = TRUE // Immunity is based on not having an appendix; this isn't a virus
 
 /datum/disease/appendicitis/stage_act()
 	..()
