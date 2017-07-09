@@ -1352,6 +1352,7 @@
 #include "code\modules\GOAP\miner\actions.dm"
 #include "code\modules\GOAP\miner\agent.dm"
 #include "code\modules\GOAP\miner\info_provider.dm"
+#include "code\modules\GOAP\station_bots\patrol_pathing.dm"
 #include "code\modules\GOAP\test\test_actions.dm"
 #include "code\modules\GOAP\test\test_agent.dm"
 #include "code\modules\GOAP\test\test_objects.dm"
