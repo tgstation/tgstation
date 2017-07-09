@@ -327,7 +327,7 @@
 	for(var/i in GLOB.cardinal)
 		T = get_ranged_target_turf(src, i, 1)
 		if(istype(T))
-			setDir(turn(i, 180)
+			setDir(turn(i, 180))
 			break
 
 //Return a working camera that can see a given mob
