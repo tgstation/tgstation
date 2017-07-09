@@ -503,12 +503,7 @@ doesn't have toxins access.
 					dat += "<A href='?src=\ref[src];deconstruct=[N.id]'>[N.display_name]: [input[N]] points</A>"
 				else
 					dat += "<span class='linkOff>[N.display_name]: [input[N]] points</span>"
-		/////////////////////PROTOLATHE SCREENS/////////////////////////
-		//Grouping designs by categories, to improve readability
-		///////////////////CIRCUIT IMPRINTER SCREENS////////////////////
 
-		else
-			CRASH("R&D console screen var corrupted!")
 */
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
@@ -711,12 +706,12 @@ doesn't have toxins access.
 					return
 
 /obj/machinery/computer/rdconsole/proc/rescan_category_views()
-	cat_designs_lathe = list()
+	cat_designs_protolathe = list()
 	cat_designs_imprinter = list()
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
 		if((D.build_type & PROTOLATHE) && (category_lathe in D.category))
-			cat_designs_lathe[D.id] = D
+			cat_designs_protolathe[D.id] = D
 		if((D.build_type & IMPRINTER) && (category_imprinter in D.category))
 			cat_designs_imprinter[D.id] = D
 
