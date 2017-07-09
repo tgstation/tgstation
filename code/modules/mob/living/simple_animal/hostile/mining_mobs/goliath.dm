@@ -68,12 +68,6 @@
 	handle_preattack()
 	. = ..()
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Aggro()
-	vision_range = aggro_vision_range
-	handle_preattack()
-	if(icon_state != icon_aggro)
-		icon_state = icon_aggro
-
 //Lavaland Goliath
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"

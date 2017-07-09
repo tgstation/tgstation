@@ -26,6 +26,7 @@
 	del_on_death = 1
 	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
+	make_ai = FALSE
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril

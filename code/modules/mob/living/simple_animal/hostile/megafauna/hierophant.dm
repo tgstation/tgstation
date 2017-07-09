@@ -74,6 +74,7 @@ Difficulty: Hard
 	score_type = BIRD_SCORE
 	del_on_death = TRUE
 	death_sound = 'sound/magic/repulse.ogg'
+	make_ai = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()

@@ -49,6 +49,7 @@
 	var/idle = 0
 	var/isqueen = FALSE
 	var/icon_base = "bee"
+	make_ai = FALSE
 
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)

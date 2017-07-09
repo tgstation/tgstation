@@ -56,23 +56,26 @@
 		return
 
 	if (istype(P, /obj/item/weapon/pickaxe))
-		var/turf/T = user.loc
-		if (!isturf(T))
-			return
-
-		if(last_act+P.digspeed > world.time)//prevents message spam
-			return
-		last_act = world.time
-		to_chat(user, "<span class='notice'>You start picking...</span>")
-		P.playDigSound()
-
-		if(do_after(user,P.digspeed, target = src))
-			if(ismineralturf(src))
-				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
-				gets_drilled(user)
-				SSblackbox.add_details("pick_used_mining","[P.type]")
+		use_pickaxe(P, user)
 	else
 		return attack_hand(user)
+
+/turf/closed/mineral/proc/use_pickaxe(obj/item/weapon/pickaxe/P, mob/user)
+	var/turf/T = user.loc
+	if(!isturf(T))
+		return
+
+	if(last_act+P.digspeed > world.time)//prevents message spam
+		return
+	last_act = world.time
+	to_chat(user, "<span class='notice'>You start picking...</span>")
+	P.playDigSound()
+
+	if(do_after(user,P.digspeed, target = src))
+		if(ismineralturf(src))
+			to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
+			gets_drilled(user)
+			SSblackbox.add_details("pick_used_mining","[P.type]")
 
 /turf/closed/mineral/proc/gets_drilled()
 	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))

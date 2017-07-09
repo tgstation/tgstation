@@ -9,6 +9,12 @@
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a762/medic
+	projectile_type = /obj/item/projectile/bullet/bleedening
+
+/obj/item/ammo_casing/a762/russian
+	projectile_type = /obj/item/projectile/bullet/russian
+
 /obj/item/ammo_casing/a762/enchanted
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
@@ -140,6 +146,12 @@
 	projectile_type = /obj/item/projectile/bullet/sniper/gang/sleeper
 	icon_state = "sleeper"
 
+/obj/item/ammo_casing/point50/russian
+	desc = "A russian sniper rifle casing."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper/russian
+	icon_state = ".50"
+
 /// SAW ROUNDS
 
 /obj/item/ammo_casing/mm195x129
@@ -177,6 +189,9 @@
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
 	materials = list(MAT_METAL=4000)
+
+/obj/item/ammo_casing/shotgun/russian
+	projectile_type = /obj/item/projectile/bullet/armourpiercing
 
 
 /obj/item/ammo_casing/shotgun/buckshot

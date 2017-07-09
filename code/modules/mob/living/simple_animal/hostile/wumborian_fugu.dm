@@ -34,7 +34,7 @@
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
 		inflate_cooldown = max((inflate_cooldown - 1), 0)
-	if(target && AIStatus == AI_ON)
+	if(target && goap_ai.brain_state == STATE_ACTING)
 		Inflate()
 	..()
 

@@ -163,19 +163,47 @@ Actual Adjacent procs :
 			L.Add(T)
 	return L
 
+//Returns turfs that are passable including ones we can smash
+/turf/proc/reachableSmashAdjacentTurfs(caller, ID, simulated_only)
+	var/list/L = new()
+	var/turf/T
+
+	for(var/dir in GLOB.cardinal)
+		T = get_step(src,dir)
+		if(simulated_only && !istype(T))
+			continue
+		if(!T.density && !LinkBlockedSmashable(T,caller))
+			L.Add(T)
+	return L
+
 //Returns adjacent turfs in cardinal directions that are reachable via atmos
 /turf/proc/reachableAdjacentAtmosTurfs()
 	return atmos_adjacent_turfs
 
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
+	if(is_type_in_typecache(T, GLOB.dangerous_turfs))
+		return TRUE
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
-			return 1
+			return TRUE
 	for(var/obj/O in T)
 		if(!O.CanAStarPass(ID, rdir, caller))
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
+
+/turf/proc/LinkBlockedSmashable(turf/T, caller)
+	if(is_type_in_typecache(T, GLOB.dangerous_turfs))
+		return TRUE
+	for(var/obj/W in src)
+		if(W.density)
+			if(!is_type_in_typecache(W, GLOB.goap_smashable_objs))
+				return TRUE
+	for(var/obj/O in T)
+		if(O.density)
+			if(!is_type_in_typecache(O, GLOB.goap_smashable_objs))
+				return TRUE
+	return FALSE

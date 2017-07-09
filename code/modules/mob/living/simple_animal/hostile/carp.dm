@@ -77,3 +77,4 @@
 	gold_core_spawnable = 0
 	faction = list("syndicate")
 	AIStatus = AI_OFF
+	make_ai = FALSE

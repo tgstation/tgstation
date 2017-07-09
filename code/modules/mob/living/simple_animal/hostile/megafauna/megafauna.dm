@@ -23,17 +23,6 @@
 	maxbodytemp = INFINITY
 	aggro_vision_range = 18
 	idle_vision_range = 5
-	environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade,
-	/obj/machinery/field,
-	/obj/machinery/power/emitter)
 	var/list/crusher_loot
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
@@ -45,6 +34,9 @@
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
+	var/performing_action = FALSE
+	ai_type = /datum/goap_agent/lavaland/megafauna
+	var/infest_targets = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -83,6 +75,14 @@
 	else
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
+	var/turf/oldloc = loc
+	. = ..()
+	if(!.)
+		return
+	var/turf/newloc = loc
+	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
+
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
 	if(recovery_time >= world.time)
 		return
@@ -94,14 +94,6 @@
 				OpenFire()
 		else
 			devour(L)
-
-/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
-	var/turf/oldloc = loc
-	. = ..()
-	if(!.)
-		return
-	var/turf/newloc = loc
-	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
