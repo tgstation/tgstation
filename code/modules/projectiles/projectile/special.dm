@@ -329,7 +329,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/temp_visual/gravpush(Z)

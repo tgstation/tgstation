@@ -107,7 +107,7 @@
 		spawn(100)
 			shock_cooldown = 0
 		var/mob/living/L = loc
-		step(L, pick(GLOB.cardinal))
+		step(L, pick(GLOB.cardinals))
 
 		to_chat(L, "<span class='danger'>You feel a sharp shock!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

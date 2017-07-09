@@ -534,7 +534,7 @@ obj/item/weapon/construction
 						var/list/candidates = list()
 						var/turf/open/winner = null
 						var/winning_dist = null
-						for(var/direction in GLOB.cardinal)
+						for(var/direction in GLOB.cardinals)
 							var/turf/C = get_step(W, direction)
 							var/list/dupes = checkdupes(C)
 							if(start.CanAtmosPass(C) && !dupes.len)

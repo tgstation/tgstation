@@ -102,7 +102,7 @@
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
 			else
-				setDir(pick(GLOB.cardinal))//Random rotation
+				setDir(pick(GLOB.cardinals))//Random rotation
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()

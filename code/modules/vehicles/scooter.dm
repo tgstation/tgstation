@@ -52,7 +52,7 @@
 	..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
-		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinal))
+		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(100)

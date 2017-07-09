@@ -328,7 +328,7 @@
 				stored.anchored = 1
 				stored.update_icon()
 		else
-			for(var/D in GLOB.cardinal)
+			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(src.loc)
 					P.setDir(D)
@@ -343,7 +343,7 @@
 /obj/structure/disposalpipe/shuttleRotate(rotation)
 	..()
 	var/new_dpdir = 0
-	for(var/D in GLOB.cardinal)
+	for(var/D in GLOB.cardinals)
 		if(dpdir & D)
 			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
 	dpdir = new_dpdir

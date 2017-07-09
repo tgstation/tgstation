@@ -302,7 +302,7 @@
 
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		if(AM.Move(get_step(T, direction)))
 			break
 

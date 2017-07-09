@@ -536,7 +536,7 @@
 				var/mob/living/simple_animal/hostile/jungle/mook/M = ML
 				if(!M.stat)
 					mook_under_us = TRUE
-					var/anydir = pick(GLOB.cardinal)
+					var/anydir = pick(GLOB.cardinals)
 					Move(get_step(src, anydir), anydir)
 					continue
 

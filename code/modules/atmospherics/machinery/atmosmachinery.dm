@@ -68,7 +68,7 @@ Pipelines + Other Objects -> Pipe network
 	node_connects.len = device_type
 
 	for(DEVICE_TYPE_LOOP)
-		for(var/D in GLOB.cardinal)
+		for(var/D in GLOB.cardinals)
 			if(D & GetInitDirections())
 				if(D in node_connects)
 					continue
@@ -178,7 +178,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
 	if(!fuck_you_dir)
-		fuck_you_dir = pick(GLOB.cardinal)
+		fuck_you_dir = pick(GLOB.cardinals)
 	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
 	var/range = pressures/250
 	var/speed = range/5
@@ -309,7 +309,7 @@ Pipelines + Other Objects -> Pipe network
 		if(src.nodes[I])
 			var/obj/machinery/atmospherics/node = src.nodes[I]
 			var/connected = FALSE
-			for(var/D in GLOB.cardinal)
+			for(var/D in GLOB.cardinals)
 				if(node in get_step(src, D))
 					connected = TRUE
 					break

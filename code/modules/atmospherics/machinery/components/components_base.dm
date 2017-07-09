@@ -31,7 +31,7 @@ Iconnery
 
 /obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = 0)
 	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		if(unconnected & direction)
 			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
 

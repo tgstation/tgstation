@@ -50,7 +50,7 @@
 
 	spawn(5)
 		dir_loop:
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
 					if(term && term.dir == turn(d, 180))

@@ -26,7 +26,7 @@
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		GLOB.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
-	setDir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinals))
 	update_icon()
 	.= ..()
 	ConsumeTile()

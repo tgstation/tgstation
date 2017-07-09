@@ -135,7 +135,7 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
-	for(dir in GLOB.cardinal)
+	for(dir in GLOB.cardinals)
 		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, dir))
 		if(teleporterf && teleporterf.is_operational())
 			return teleporterf

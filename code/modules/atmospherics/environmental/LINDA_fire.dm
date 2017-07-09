@@ -61,7 +61,7 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
-	setDir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinals))
 	air_update_turf()
 
 /obj/effect/hotspot/make_frozen_visual()
