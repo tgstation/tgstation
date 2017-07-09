@@ -22,7 +22,7 @@
 
 /obj/structure/blob/attack_hand(mob/M)
 	. = ..()
-	M.visible_message("<span class='notice'>[target] [pick('gently strokes', 'nuzzles', 'affectionatly pets')] the blob!</span>", "<span class='notice'>You pet the blob!</span>")
+	M.visible_message("<span class='notice'>[M] [pick('gently strokes', 'nuzzles', 'affectionatly pets')] the blob!</span>", "<span class='notice'>You pet the blob!</span>")
 	
 
 
