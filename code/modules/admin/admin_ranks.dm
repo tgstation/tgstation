@@ -97,6 +97,7 @@ GLOBAL_PROTECT(admin_ranks)
 					if(!adds.Remove(path))
 						subs += path	//-
 
+
 // Checks for (keyword-formatted) rights on this admin
 /datum/admins/proc/check_keyword(word)
 	var/flag = admin_keyword_to_flag(word)
@@ -168,9 +169,9 @@ GLOBAL_PROTECT(admin_ranks)
 
 
 /proc/load_admins(target = null)
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/do_load_admins, target)
-
-/proc/do_load_admins(target = null)
+	if(isAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
+		return
 	//clear the datums references
 	if(!target)
 		GLOB.admin_datums.Cut()
@@ -349,7 +350,7 @@ GLOBAL_PROTECT(admin_ranks)
 				D = new(R,adm_ckey)	//new admin
 
 			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
-			INVOKE_ASYNC(D, /datum/admins.proc/associate, C)						//link up with the client and add verbs
+			D.associate(C)						//link up with the client and add verbs
 
 			updateranktodb(adm_ckey, new_rank)
 			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
@@ -374,11 +375,10 @@ GLOBAL_PROTECT(admin_ranks)
 			if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
 				D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
-
-			INVOKE_ASYNC(D.rank, /datum/admin_rank.proc/process_keyword, keyword)
+			D.rank.process_keyword(keyword)
 
 			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
-			INVOKE_ASYNC(D, /datum/admins.proc/associate, C)						//link up with the client and add verbs
+			D.associate(C)						//link up with the client and add verbs
 
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
