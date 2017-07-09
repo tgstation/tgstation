@@ -98,9 +98,8 @@
 	var/dat
 	dat += "<h3> Experiment </h3>"
 	if(occupant)
-		var/obj/item/weapon/photo/P = new
-		P.photocreate(null, icon(dissection_icon(occupant), dir = SOUTH))
-		user << browse_rsc(P.img, "dissection_img")
+		var/icon/I = icon(dissection_icon(occupant), dir = SOUTH)
+		user << browse_rsc(I, "dissection_img")
 		dat += "<table><tr><td>"
 		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
 		dat += "</td><td>"

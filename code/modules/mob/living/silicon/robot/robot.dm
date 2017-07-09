@@ -148,8 +148,8 @@
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
 		mmi.brainmob = new(mmi)
-		mmi.brainmob.name = src.real_name
-		mmi.brainmob.real_name = src.real_name
+		mmi.brainmob.name = real_name
+		mmi.brainmob.real_name = real_name
 		mmi.brainmob.container = mmi
 
 	updatename()
@@ -287,7 +287,7 @@
 		return
 
 	cell.charge -= 50 // 500 steps on a default cell.
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
 	if(!ionpulse)
@@ -328,7 +328,7 @@
 	if(alarmsource.z != z)
 		return
 	if(stat == DEAD)
-		return 1
+		return TRUE
 	var/list/L = alarms[class]
 	for (var/I in L)
 		if (I == A.name)
@@ -336,7 +336,7 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
-			return 1
+			return TRUE
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
 	if (O && istype(O, /list))
@@ -347,7 +347,7 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
@@ -509,7 +509,7 @@
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(user, "<span class='warning'>You must access the borg's internals!</span>")
-		else if(!src.module && U.require_module)
+		else if(!module && U.require_module)
 			to_chat(user, "<span class='warning'>The borg must choose a module before it can be upgraded!</span>")
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
@@ -554,36 +554,36 @@
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(check_access(null))
-		return 1
+		return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
-	return 0
+	return FALSE
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
 	if(!istype(req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = req_access
 	if(!L.len) //no requirements
-		return 1
+		return TRUE
 
 	if(!istype(I, /obj/item/weapon/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
@@ -617,15 +617,15 @@
 #define BORG_CAMERA_BUFFER 30
 
 /mob/living/silicon/robot/proc/do_camera_update(oldLoc)
-	if(oldLoc != src.loc)
-		GLOB.cameranet.updatePortableCamera(src.camera)
+	if(oldLoc != loc)
+		GLOB.cameranet.updatePortableCamera(camera)
 	updating = 0
 
 /mob/living/silicon/robot/Move(a, b, flag)
-	var/oldLoc = src.loc
+	var/oldLoc = loc
 	. = ..()
 	if(.)
-		if(src.camera)
+		if(camera)
 			if(!updating)
 				updating = 1
 				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
@@ -641,23 +641,23 @@
 	if(emagged)
 		if(mmi)
 			qdel(mmi)
-		explosion(src.loc,1,2,4,flame_range = 2)
+		explosion(loc,1,2,4,flame_range = 2)
 	else
-		explosion(src.loc,-1,0,2)
+		explosion(loc,-1,0,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if(src.connected_ai)
+	if(connected_ai)
 		connected_ai.connected_robots -= src
-		src.connected_ai = null
+		connected_ai = null
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
-	if(src.camera)
-		qdel(src.camera)
-		src.camera = null
+	if(camera)
+		qdel(camera)
+		camera = null
 		// I'm trying to get the Cyborg to not be listed in the camera list
 		// Instead of being listed as "deactivated". The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
@@ -673,7 +673,7 @@
 	if(R)
 		R.UnlinkSelf()
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
-		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
+		verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 /mob/living/silicon/robot/mode()
 	set name = "Activate Held Object"
@@ -856,7 +856,7 @@
 		return
 	if(be_close && !in_range(M, src))
 		return
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/updatehealth()
 	..()
@@ -972,7 +972,7 @@
 	ionpulse = FALSE
 	revert_shell()
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/has_module()
 	if(!module || module.type == /obj/item/weapon/robot_module)
@@ -1098,6 +1098,12 @@
 
 /mob/living/silicon/robot/shell
 	shell = TRUE
+
+/mob/living/silicon/robot/proc/picturesync()
+	if(connected_ai && connected_ai.aicamera && aicamera)
+		for(var/i in aicamera.stored)
+			var/datum/picture/p = i
+			connected_ai.aicamera.stored[p] = TRUE
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()

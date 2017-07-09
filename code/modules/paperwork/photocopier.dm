@@ -102,36 +102,20 @@
 			updateUsrDialog()
 		else if(photocopy)
 			for(var/i = 0, i < copies, i++)
-				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
-					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
-					var/icon/img = icon(photocopy.img)
-					if(greytoggle == "Greyscale")
-						if(toner > 10) //plenty of toner, go straight greyscale
-							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
-							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-						else //not much toner left, lighten the photo
-							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
-							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
-						toner -= 5	//photos use a lot of ink!
-					else if(greytoggle == "Color")
-						if(toner >= 10)
-							toner -= 10 //Color photos use even more ink!
-						else
-							continue
-					p.icon = I
-					p.img = img
-					p.name = photocopy.name
-					p.desc = photocopy.desc
-					p.scribble = photocopy.scribble
+				if(!busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
+					var/greyscale = greytoggle == "Greyscale" ? TRUE : FALSE
+					var/tonercost = greyscale? 5 : 10
+					if(toner >= tonercost)
+						toner -= tonercost
+					else
+						break
+					var/obj/item/weapon/photo/p = photocopy.photocopy(greyscale, 0, 0)
+					p.forceMove(loc)
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
-					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
 					busy = 1
 					sleep(15)
 					busy = 0
-				else
-					break
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
@@ -163,16 +147,19 @@
 						temp_img = icon('icons/ass/assdrone.png')
 					else
 						break
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
-					p.desc = "You see [ass]'s ass on the photo."
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
-					p.img = temp_img
-					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
+					var/datum/picture/P = new
+					P.picture_name = "ass"
+					P.picture_desc = "You see someone or something's ass on it."
+					P.picture_image = temp_img
+					var/icon/small_img = icon(temp_img)
 					var/icon/ic = icon('icons/obj/items.dmi',"photo")
 					small_img.Scale(8, 8)
 					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
-					p.icon = ic
+					P.picture_icon = ic
+					var/obj/item/weapon/photo/p = new (loc, P)
+					p.desc = "You see [ass]'s ass on the photo."
+					p.pixel_x = rand(-10, 10)
+					p.pixel_y = rand(-10, 10)
 					toner -= 5
 					busy = 1
 					sleep(15)
@@ -205,27 +192,12 @@
 		if(!isAI(usr))
 			return
 		if(toner >= 5 && !busy)
-			var/list/nametemp = list()
-			var/find
-			var/datum/picture/selection
 			var/mob/living/silicon/ai/tempAI = usr
-			if(tempAI.aicamera.aipictures.len == 0)
-				to_chat(usr, "<span class='boldannounce'>No images saved</span>")
+			var/datum/picture/selection = tempAI.aicamera.selectpicture()
+			if(!istype(selection))
+				to_chat(tempAI, "<span class='warning'>Invalid Picture.</span>")
 				return
-			for(var/datum/picture/t in tempAI.aicamera.aipictures)
-				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
-			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
-			for(var/datum/picture/q in tempAI.aicamera.aipictures)
-				if(q.fields["name"] == find)
-					selection = q
-					break
-			var/icon/I = selection.fields["icon"]
-			var/icon/img = selection.fields["img"]
-			p.icon = I
-			p.img = img
-			p.desc = selection.fields["desc"]
-			p.blueprints = selection.fields["blueprints"]
+			var/obj/item/weapon/photo/p = new(loc, selection)
 			p.pixel_x = rand(-10, 10)
 			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
@@ -355,36 +327,36 @@
 
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
 	if(!ass)
-		return 0
+		return FALSE
 	if(ass.loc != src.loc)
 		ass = null
 		updateUsrDialog()
-		return 0
+		return FALSE
 	else if(ishuman(ass))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/photocopier/proc/copier_blocked()
 	if(QDELETED(src))
 		return
 	if(loc.density)
-		return 1
+		return TRUE
 	for(var/atom/movable/AM in loc)
 		if(AM == src)
 			continue
 		if(AM.density)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/machinery/photocopier/proc/copier_empty()
 	if(copy || photocopy || check_ass())
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /*
  * Toner cartridge

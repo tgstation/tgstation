@@ -11,7 +11,6 @@
 				subject.attack_ai(M)
 	return is_in_use
 
-
 /mob/living/silicon/ai
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
@@ -120,7 +119,7 @@
 	job = "AI"
 
 	eyeobj.ai = src
-	eyeobj.loc = src.loc
+	eyeobj.loc = loc
 	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
@@ -345,7 +344,7 @@
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
-	return 0
+	return FALSE
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
@@ -414,14 +413,14 @@
 			to_chat(src, "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>")
 			return
 		Bot = locate(href_list["callbot"]) in GLOB.living_mob_list
-		if(!Bot || Bot.remote_disabled || src.control_disabled)
+		if(!Bot || Bot.remote_disabled || control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
 		to_chat(src, "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
 		return
 	if(href_list["interface"]) //Remotely connect to a bot!
 		Bot = locate(href_list["interface"]) in GLOB.living_mob_list
-		if(!Bot || Bot.remote_disabled || src.control_disabled)
+		if(!Bot || Bot.remote_disabled || control_disabled)
 			return
 		Bot.attack_ai(src)
 	if(href_list["botrefresh"]) //Refreshes the bot control panel.
@@ -452,16 +451,16 @@
 		cameraFollow = null
 
 	if (!C || stat == DEAD) //C.can_use())
-		return 0
+		return FALSE
 
-	if(!src.eyeobj)
+	if(!eyeobj)
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
 	//machine = src
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
 	set category = "AI Commands"
@@ -525,7 +524,7 @@
 	if(alarmsource.z != z)
 		return
 	if (stat == 2)
-		return 1
+		return TRUE
 	var/list/L = alarms[class]
 	for (var/I in L)
 		if (I == A.name)
@@ -533,7 +532,7 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
-			return 1
+			return TRUE
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
 	if (O && istype(O, /list))
@@ -558,7 +557,7 @@
 	else
 		queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
 	if (viewalerts) ai_alerts()
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
@@ -724,7 +723,7 @@
 	set category = "Malfunction"
 	set name = "Return to Main Core"
 
-	var/obj/machinery/power/apc/apc = src.loc
+	var/obj/machinery/power/apc/apc = loc
 	if(!istype(apc))
 		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
 		return
@@ -818,7 +817,7 @@
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/can_buckle()
-	return 0
+	return FALSE
 
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat)
@@ -830,7 +829,7 @@
 	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 	if(M && GLOB.cameranet && !GLOB.cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)

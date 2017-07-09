@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						hidden_uplink.interact(U)
 						to_chat(U, "The PDA softly beeps.")
 						U << browse(null, "window=pda")
-						src.mode = 0
+						mode = 0
 					else
 						t = copytext(sanitize(t), 1, 20)
 						ttone = t
@@ -428,10 +428,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 					return
 			if("Message")
 				var/obj/item/device/pda/P = locate(href_list["target"])
-				src.create_message(U, P)
+				create_message(U, P)
 
 			if("MessageAll")
-				src.send_to_all(U)
+				send_to_all(U)
 
 			if("cart")
 				if(cartridge)
@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if("1")		// Configure pAI device
 						pai.attack_self(U)
 					if("2")		// Eject pAI device
-						var/turf/T = get_turf(src.loc)
+						var/turf/T = get_turf(loc)
 						if(T)
 							pai.loc = T
 
@@ -596,7 +596,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				useMS = MS
 				break
 
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 
 	if(!P || QDELETED(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
 		return null
@@ -676,7 +676,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!I)
 		if(id)
 			remove_id()
-			return 1
+			return TRUE
 		else
 			var/obj/item/weapon/card/id/C = user.get_active_held_item()
 			if(istype(C))
@@ -684,13 +684,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if(I && I.registered_name)
 		if(!user.transferItemToLoc(I, src))
-			return 0
+			return FALSE
 		var/obj/old_id = id
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()
-	return 1
+	return TRUE
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
@@ -721,7 +721,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
-	else if(istype(C, /obj/item/device/paicard) && !src.pai)
+	else if(istype(C, /obj/item/device/paicard) && !pai)
 		if(!user.transferItemToLoc(C, src))
 			return
 		pai = C
@@ -739,7 +739,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			update_icon()
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
-		photo = P.img
+		photo = P.picture.picture_image
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	else if(hidden_uplink && hidden_uplink.active)
 		hidden_uplink.attackby(C, user, params)
@@ -857,14 +857,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(user.stat == 2)
 		return //won't work if dead
 
-	if(src.aiPDA.toff)
+	if(aiPDA.toff)
 		to_chat(user, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in get_viewable_pdas())
 		if (P == src)
 			continue
-		else if (P == src.aiPDA)
+		else if (P == aiPDA)
 			continue
 
 		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
@@ -876,12 +876,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/selected = plist[c]
 
-	if(aicamera.aipictures.len>0)
+	if(aicamera.stored.len)
 		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
 		if(add_photo=="Yes")
-			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
-			src.aiPDA.photo = Pic.fields["img"]
-	src.aiPDA.create_message(src, selected)
+			var/datum/picture/Pic = aicamera.selectpicture()
+			if(Pic)
+				aiPDA.photo = Pic.picture_image
+	aiPDA.create_message(src, selected)
 
 
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()

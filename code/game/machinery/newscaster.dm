@@ -124,8 +124,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newMsg.is_admin_message = adminMessage
 	newMsg.locked = !allow_comments
 	if(photo)
-		newMsg.img = photo.img
-		newMsg.caption = photo.scribble
+		newMsg.img = photo.picture.picture_image
+		newMsg.caption = photo.picture.picture_name
 	for(var/datum/newscaster/feed_channel/FC in network_channels)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg
@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	wanted_issue.scannedUser = scanned_user
 	wanted_issue.isAdminMsg = adminMsg
 	if(photo)
-		wanted_issue.img = photo.img
+		wanted_issue.img = photo.picture.picture_image
 	if(newMessage)
 		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
 			N.newsAlert()
@@ -756,7 +756,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			else
 				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
@@ -794,33 +794,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 			return
 		photo.loc = src
 	if(issilicon(user))
-		var/list/nametemp = list()
-		var/find
-		var/datum/picture/selection
-		var/obj/item/device/camera/siliconcam/targetcam = null
-		if(isAI(user))
-			var/mob/living/silicon/ai/R = user
-			targetcam = R.aicamera
-		else if(iscyborg(user))
-			var/mob/living/silicon/robot/R = user
-			if(R.connected_ai)
-				targetcam = R.connected_ai.aicamera
-			else
-				targetcam = R.aicamera
-		else
-			to_chat(user, "<span class='warning'>You cannot interface with silicon photo uploading!</span>")
-		if(targetcam.aipictures.len == 0)
-			to_chat(usr, "<span class='boldannounce'>No images saved</span>")
+		var/mob/living/silicon/S = user
+		if(!istype(S) || !istype(S.aicamera))
 			return
-		for(var/datum/picture/t in targetcam.aipictures)
-			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
-		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-		for(var/datum/picture/q in targetcam.aipictures)
-			if(q.fields["name"] == find)
-				selection = q
-				break
-		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		var/datum/picture/selection = S.aicamera.selectpicture()
+		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(src, selection)
 		P.sillynewscastervar = 1
 		photo = P
 		qdel(P)
@@ -991,17 +969,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/item/weapon/newspaper/proc/notContent(list/L)
 	if(!L.len)
-		return 0
+		return FALSE
 	for(var/i=L.len;i>0;i--)
 		var/num = abs(L[i])
 		if(creationTime <= num)
 			continue
 		else
 			if(L[i] > 0)
-				return 1
+				return TRUE
 			else
-				return 0
-	return 0
+				return FALSE
+	return FALSE
 
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
