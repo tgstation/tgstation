@@ -27,7 +27,7 @@
 
 //Flash
 	if(M.flash_act(affect_silicon = 1))
-		M.Knockdown(max(100/max(1,distance), 3))
+		M.Knockdown(max(200/max(1,distance), 60))
 //Bang
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Knockdown(200)
