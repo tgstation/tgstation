@@ -574,7 +574,7 @@
 		if(i != HIEROPHANT_ANSIBLE)
 			temp_data += " "
 		else
-			temp_data += " <br>("
+			temp_data += " ("
 	if(GLOB.clockwork_caches) //if we have caches, display what's in the global cache
 		for(var/i in GLOB.clockwork_component_cache)
 			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
