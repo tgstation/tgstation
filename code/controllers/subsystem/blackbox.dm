@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
-	flags = SS_NO_TICK_CHECK | SS_NO_INIT
+	flags = SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_BLACKBOX
 
@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	if(config.use_exp_tracking)
 		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
-			update_exp(10,FALSE)
+			SSblackbox.update_exp(10,FALSE)
 
 
 /datum/controller/subsystem/blackbox/Recover()

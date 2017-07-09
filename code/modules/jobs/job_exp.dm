@@ -7,12 +7,16 @@ GLOBAL_PROTECT(exp_to_update)
 	set name = "Check Player Playtime"
 	if(!check_rights(R_ADMIN))
 		return
+
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
-	src << browse(msg.Join(), "window=Player_playtime_check")
+
+	var/datum/browser/popup = new(mob, "Player_playtime_check", "Player Playtime List")
+	popup.set_content(msg.Join())
+	popup.open()
 
 /datum/admins/proc/cmd_show_exp_panel(client/C)
 	if(!C)
@@ -25,7 +29,10 @@ GLOBAL_PROTECT(exp_to_update)
 	body += C.get_exp_report()
 	body += "<A href='?_src_=holder;toggleexempt=\ref[C]'>Toggle Exempt status</a>"
 	body += "</BODY></HTML>"
-	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
+
+	var/datum/browser/popup = new(usr, "playerplaytime[C.ckey]", "Player Playtime",550,615)
+	popup.set_content(body.Join())
+	popup.open()
 
 
 /datum/admins/proc/toggle_exempt_status(client/C)
@@ -35,7 +42,7 @@ GLOBAL_PROTECT(exp_to_update)
 	if(!check_rights(R_ADMIN))
 		return
 
-	set_db_player_flags(C)
+	C.set_db_player_flags()
 	var/dbflags = C.prefs.db_flags
 	var/newstate = FALSE
 	if(dbflags & DB_FLAG_EXEMPT)
@@ -44,6 +51,7 @@ GLOBAL_PROTECT(exp_to_update)
 		newstate = TRUE
 
 	message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
+	log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
 	update_flag_db(C,DB_FLAG_EXEMPT, newstate)
 
 // Procs
@@ -58,12 +66,12 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	if(!job_is_xp_locked(src.title))
 		return 0
-	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, 0, C.mob))
+	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, FALSE, C.mob))
 		return 0
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
 		return 0
-	var/my_exp = calc_exp_type(C,get_exp_req_type())
+	var/my_exp = C.calc_exp_type(get_exp_req_type())
 	var/job_requirement = get_exp_req_amount()
 	if(my_exp >= job_requirement)
 		return 0
@@ -89,8 +97,8 @@ GLOBAL_PROTECT(exp_to_update)
 		return FALSE
 	return TRUE
 
-/proc/calc_exp_type(client/C,exptype)
-	var/list/explist = C.prefs.exp.Copy()
+/client/proc/calc_exp_type(exptype)
+	var/list/explist = prefs.exp.Copy()
 	var/amount = 0
 	var/list/typelist = GLOB.exp_jobsmap[exptype]
 	if(!typelist)
@@ -145,7 +153,7 @@ GLOBAL_PROTECT(exp_to_update)
 				jobs_unlocked += job.title
 			else
 				var/xp_req = job.get_exp_req_amount()
-				jobs_locked += "[job.title] [get_exp_format(text2num(calc_exp_type(src,job.get_exp_req_type())))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
+				jobs_locked += "[job.title] [get_exp_format(text2num(calc_exp_type(job.get_exp_req_type())))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
 	if(jobs_unlocked.len)
 		return_text += "<BR><BR>Jobs Unlocked:<UL><LI>"
 		return_text += jobs_unlocked.Join("</LI><LI>")
@@ -171,7 +179,7 @@ GLOBAL_PROTECT(exp_to_update)
 	else
 		return "0h"
 
-/proc/update_exp(mins, ann = FALSE)
+/datum/controller/subsystem/blackbox/proc/update_exp(mins, ann = FALSE)
 	if(!SSdbcore.Connect())
 		return -1
 	for(var/client/L in GLOB.clients)
@@ -180,13 +188,13 @@ GLOBAL_PROTECT(exp_to_update)
 		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
 		CHECK_TICK
 
-/proc/update_exp_db()
+/datum/controller/subsystem/blackbox/proc/update_exp_db()
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
-	if(!src ||!ckey || !config.use_exp_tracking)
+	if(!config.use_exp_tracking)
 		return
 	if(!SSdbcore.Connect())
 		return -1
@@ -216,7 +224,7 @@ GLOBAL_PROTECT(exp_to_update)
 	if(!SSdbcore.Connect())
 		return -1
 
-	if(!set_db_player_flags(C))
+	if(!C.set_db_player_flags())
 		return -1
 
 	var/datum/DBQuery/flag_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[sanitizeSQL(C.ckey)]'")
@@ -246,7 +254,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return
 
 /client/proc/update_exp_list(minutes, announce_changes = FALSE)
-	if(!src ||!ckey || !config.use_exp_tracking)
+	if(!config.use_exp_tracking)
 		return
 	if(!SSdbcore.Connect())
 		return -1
@@ -272,35 +280,35 @@ GLOBAL_PROTECT(exp_to_update)
 			var/rolefound = FALSE
 			play_records[EXP_TYPE_LIVING] += minutes
 			if(announce_changes)
-				to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
+				to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!</span>")
 			if(mob.mind.assigned_role)
 				for(var/job in SSjob.name_occupations)
 					if(mob.mind.assigned_role == job)
 						rolefound = TRUE
 						play_records[job] += minutes
 						if(announce_changes)
-							to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
+							to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!</span>")
 				if(!rolefound)
-					for(var/role in GLOB.exp_jobsmap[EXP_TYPE_SPECIAL])
+					for(var/role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])
 						if(mob.mind.assigned_role == role)
 							rolefound = TRUE
 							play_records[role] += minutes
 							if(announce_changes)
-								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!")
+								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!</span>")
 				if(mob.mind.special_role && !mob.mind.var_edited)
 					play_records[mob.mind.special_role] += minutes
 					if(announce_changes)
-						to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!")
+						to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!</span>")
 			if(!rolefound)
 				play_records["Unknown"] += minutes
 		else
 			play_records[EXP_TYPE_GHOST] += minutes
 			if(announce_changes)
-				to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
+				to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
 	else if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
-			to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
+			to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
 	else if(minutes)	//Let "refresh" checks go through
 		return
 	prefs.exp = play_records
@@ -312,15 +320,15 @@ GLOBAL_PROTECT(exp_to_update)
 				"job" = "'[sanitizeSQL(jtype)]'",
 				"ckey" = "'[sanitizeSQL(ckey)]'",
 				"minutes" = play_records[jtype])))
-	addtimer(CALLBACK(GLOBAL_PROC,.proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox.proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
 
 
 //ALWAYS call this at beginning to any proc touching player flags, or your database admin will probably be mad
-/proc/set_db_player_flags(client/C)
+/client/proc/set_db_player_flags()
 	if(!SSdbcore.Connect())
 		return FALSE
 
-	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[C.ckey]'")
+	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[ckey]'")
 
 	if(!flags_read.Execute())
 		var/err = flags_read.ErrorMsg()
@@ -329,5 +337,5 @@ GLOBAL_PROTECT(exp_to_update)
 		return FALSE
 
 	while(flags_read.NextRow())
-		C.prefs.db_flags = text2num(flags_read.item[1])
+		prefs.db_flags = text2num(flags_read.item[1])
 	return TRUE

@@ -27,7 +27,7 @@
 			return
 		var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
 		if(!M)
-			to_chat(usr, "ERROR: Mob not found.")
+			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
 			return
 		cmd_show_exp_panel(M.client)
 
@@ -36,7 +36,7 @@
 			return
 		var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
 		if(!C)
-			to_chat(usr, "ERROR: Client not found.")
+			to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
 			return
 		toggle_exempt_status(C)
 
