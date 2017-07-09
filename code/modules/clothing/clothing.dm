@@ -247,6 +247,7 @@ BLIND     // can't see anything
 	var/transfer_prints = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
+	var/gsr = list()
 
 
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)

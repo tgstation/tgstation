@@ -1,4 +1,4 @@
-//CONTAINS: Suit fibers and Detective's Scanning Computer
+//CONTAINS: Suit fibers, GSR, and Detective's Scanning Computer
 
 /atom/var/list/suit_fibers
 
@@ -121,3 +121,9 @@
 	if(fingerprintshidden)
 		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
 	A.fingerprintslast = fingerprintslast
+
+/atom/proc/add_gsr(mob/living/carbon/human/M, gsrtype)
+	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
+		var/obj/item/clothing/gloves/G = M.gloves
+		G.gsr |= gsrtype
+
