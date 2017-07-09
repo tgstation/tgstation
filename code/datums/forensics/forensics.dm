@@ -1,8 +1,8 @@
 //////////////////////FORENSICS DATUM
 /datum/forensics
-	var/gsr = list()
-	var/prints = list()
-	var/blood = list()
+	var/list/gsr
+	var/list/prints
+	var/list/blood
 	var/maxSize = 5
 
 /datum/forensics/proc/enforceSize(list/templist, newthing)
@@ -13,23 +13,20 @@
 
 
 /datum/forensics/proc/addResidue(residueref)
-	var/tgsr = src.gsr.Copy()
-	if(!tgsr.Find(residueref))
-		src.gsr = enforceSize(tgsr, residueref)
+	if(!gsr.Find(residueref))
+		src.gsr = enforceSize(gsr, residueref)
 		return TRUE
 	return FALSE
 
 /datum/forensics/proc/addPrint(printref)
-	var/tprint = src.prints.Copy()
-	if(!tprint.Find(printref))
-		src.prints = enforceSize(tprint, printref)
+	if(!prints.Find(printref))
+		src.prints = enforceSize(prints, printref)
 		return TRUE
 	return FALSE
 
 /datum/forensics/proc/addBlood(bloodref)
-	var/tblood = src.blood.Copy()
-	if(!tblood.Find(bloodref))
-		src.blood = enforceSize(tblood, bloodref)
+	if(!blood.Find(bloodref))
+		src.blood = enforceSize(blood, bloodref)
 		return TRUE
 	return FALSE
 
