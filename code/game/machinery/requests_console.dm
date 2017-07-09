@@ -304,8 +304,9 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		if(!announcementConsole)
 			return
 		minor_announce(message, "[department] Announcement:")
-		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
+		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null) //RD'S DESK ANNOUNCEMENT: WHO THE FUCK STOLE THE ORM, I'M GONNA TURN YOU INTO A MONKEY, DEBRAIN YOU, PUT YOU IN ANOTHER MONKEY, AND FEED YOU TO SLIMES, THEN REVIVE YOU AND DO IT ALL OVER!!!
 		log_talk(usr,"[key_name(usr)] has made a station announcement: [message]",LOGSAY)
+		world << 'sound/misc/headannounce.ogg'
 		message_admins("[key_name_admin(usr)] has made a station announcement.")
 		announceAuth = 0
 		message = ""
