@@ -112,6 +112,9 @@ GLOBAL_PROTECT(admin_ranks)
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
+		return
 	GLOB.admin_ranks.Cut()
 
 	if(config.admin_legacy_system)
@@ -169,7 +172,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 
 /proc/load_admins(target = null)
-	if(isAdminAdvancedProcCall())
+	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
 		return
 	//clear the datums references
@@ -273,6 +276,9 @@ GLOBAL_PROTECT(admin_ranks)
 	if(!check_rights(R_PERMISSIONS))
 		message_admins("[key_name_admin(usr)] attempted to edit the admin permissions without sufficient rights.")
 		log_admin("[key_name(usr)] attempted to edit the admin permissions without sufficient rights.")
+		return
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>")
 		return
 
 	var/adm_ckey
