@@ -36,9 +36,6 @@
 	//initialise organs
 	create_internal_organs()
 
-	if(mind)
-		mind.martial_art = mind.default_martial_art
-
 	handcrafting = new()
 
 	..()

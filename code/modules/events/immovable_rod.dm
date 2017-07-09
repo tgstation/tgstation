@@ -82,13 +82,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(clong.density)
 			clong.ex_act(2)
 
-	else if(ismob(clong))
-		if(ishuman(clong))
-			var/mob/living/carbon/human/H = clong
-			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
-			H.adjustBruteLoss(160)
-		if(clong.density || prob(10))
-			clong.ex_act(2)
+	else if(isliving(clong))
+		penetrate(clong)
 	else if(istype(clong, type))
 		var/obj/effect/immovablerod/other = clong
 		visible_message("<span class='danger'>[src] collides with [other]!\
@@ -98,3 +93,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		smoke.start()
 		qdel(src)
 		qdel(other)
+
+/obj/effect/immovablerod/proc/penetrate(mob/living/L)
+	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.adjustBruteLoss(160)
+	if(L && (L.density || prob(10)))
+		L.ex_act(2)

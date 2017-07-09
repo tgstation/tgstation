@@ -39,7 +39,7 @@
 /obj/item/weapon/gun/energy/decloner/update_icon()
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(power_supply.charge > shot.e_cost)
+	if(cell.charge > shot.e_cost)
 		add_overlay("decloner_spin")
 
 /obj/item/weapon/gun/energy/floragun
@@ -137,19 +137,19 @@
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
-	if(power_supply)
-		to_chat(user, "<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>")
+	if(cell)
+		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
 /obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
-		power_supply.give(1000)
+		cell.give(1000)
 		recharge_newshot(1)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
-		power_supply.give(500)
+		cell.give(500)
 		recharge_newshot(1)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else

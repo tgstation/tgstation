@@ -15,6 +15,7 @@
 
 	var/mob/camera/aiEye/remote/holo/eye	//user's eye, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram	//user's hologram, once connected
+	var/datum/action/innate/end_holocall/hangup	//hangup action
 
 	var/call_start_time
 
@@ -42,14 +43,21 @@
 
 //cleans up ALL references :)
 /datum/holocall/Destroy()
-	if(!QDELETED(user))
+	QDEL_NULL(hangup)
+
+	var/user_good = !QDELETED(user)
+	if(user_good)
 		user.reset_perspective()
-		if(user.client)
+		user.remote_control = null
+	
+	if(!QDELETED(eye))
+		if(user_good && user.client)
 			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
 				chunk.remove(eye)
-		user.remote_control = null
-		user = null
-	QDEL_NULL(eye)
+		qdel(eye)
+	eye = null
+	
+	user = null
 	
 	if(hologram)
 		hologram.HC = null
@@ -139,6 +147,8 @@
 	user.reset_perspective(eye)
 	eye.setLoc(H.loc)
 
+	hangup = new(eye, src)
+
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
 	for(var/I in dialed_holopads)
@@ -161,3 +171,15 @@
 	if(!.)
 		testing("Holocall Check fail")
 		qdel(src)
+
+/datum/action/innate/end_holocall
+	name = "End Holocall"
+	button_icon_state = "camera_off"
+	var/datum/holocall/hcall
+
+/datum/action/innate/end_holocall/New(Target, datum/holocall/HC)
+	..()
+	hcall = HC
+
+/datum/action/innate/end_holocall/Activate()
+	hcall.Disconnect(hcall.calling_holopad)

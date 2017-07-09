@@ -127,8 +127,8 @@
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
-		new /obj/effect/hallucination/delusion(victim.loc,victim,force_kind="demon",duration=duration,skip_nearby=0)
-
+		new /obj/effect/hallucination/delusion(victim.loc,victim,"demon",duration,0)
+		
 	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP
 	victim.drop_all_held_items()

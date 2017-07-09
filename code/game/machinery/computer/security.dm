@@ -23,6 +23,14 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/secure_data/laptop
+	name = "security laptop"
+	desc = "A cheap Nanotrasen security laptop, it functions as a security records console. It's bolted to the table."
+	icon_state = "laptop"
+	icon_screen = "seclaptop"
+	icon_keyboard = "laptop_key"
+	clockwork = TRUE //it'd look weird
+
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id))
 		if(!scan)

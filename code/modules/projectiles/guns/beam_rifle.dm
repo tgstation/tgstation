@@ -17,8 +17,8 @@
 	ammo_y_offset = 3
 	modifystate = FALSE
 	zoomable = TRUE
-	zoom_amt = 20
-	zoom_out_amt = 23
+	zoom_amt = 17
+	zoom_out_amt = 20
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
@@ -30,32 +30,35 @@
 	var/noscope = FALSE	//Can you fire this without a scope?
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	pin = null
 	var/aiming = FALSE
-	var/aiming_time = 10
+	var/aiming_time = 7
 	var/aiming_time_fire_threshold = 2
-	var/aiming_time_left = 10
+	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
-	var/aiming_time_increase_angle_multiplier = 1
+	var/scoped_slow = 1
+	var/aiming_time_increase_angle_multiplier = 0.6
 
 	var/lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/temp_visual/current_tracers = list()
 
-	var/structure_piercing = 2
+	var/structure_piercing = 2				//This doesn't always work!
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
 	var/aoe_structure_damage = 50
 	var/aoe_fire_range = 2
-	var/aoe_fire_chance = 50
+	var/aoe_fire_chance = 40
 	var/aoe_mob_range = 1
 	var/aoe_mob_damage = 30
-	var/impact_structure_damage = 80
-	var/projectile_damage = 35
+	var/impact_structure_damage = 60
+	var/projectile_damage = 30
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
-	var/delay = 40
+	var/delay = 65
+	var/lastfire = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
@@ -74,7 +77,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
-	if(power_supply.charge > primary_ammo.e_cost)
+	if(cell.charge > primary_ammo.e_cost)
 		add_overlay(charged_overlay)
 	else
 		add_overlay(drained_overlay)
@@ -83,8 +86,14 @@
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 
-/obj/item/weapon/gun/energy/beam_rifle/New()
-	..()
+/obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
+	if(scoped)
+		slowdown = scoped_slow
+	else
+		slowdown = initial(slowdown)
+
+/obj/item/weapon/gun/energy/beam_rifle/Initialize()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
@@ -114,6 +123,7 @@
 		recoil = hipfire_recoil
 		scoped = FALSE
 		user << "<span class='boldnotice'>You lower your [src].</span>"
+	update_slowdown()
 
 /obj/item/weapon/gun/energy/beam_rifle/can_trigger_gun(var/mob/living/user)
 	if(!scoped && !noscope)
@@ -152,14 +162,23 @@
 		var/obj/effect/temp_visual/projectile_beam/PB = I
 		qdel(PB)
 
+/obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
+	stop_aiming()
+	clear_tracers()
+
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
+		return
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
+		terminate_aiming()
 		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
 	aiming_beam()
 	if(current_user.client.mouseParams)
 		var/list/mouse_control = params2list(current_user.client.mouseParams)
+		if(isturf(current_user.client.mouseLocation))
+			current_user.face_atom(current_user.client.mouseLocation)
 		if(mouse_control["screen-loc"])
 			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
 			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
@@ -202,6 +221,9 @@
 /obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
 		return
+	if(lastfire > world.time + delay)
+		return
+	lastfire = world.time
 	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
@@ -228,11 +250,13 @@
 	var/structure_piercing = 2
 	var/structure_bleed_coeff = 0.7
 	var/do_pierce = TRUE
+	var/obj/item/weapon/gun/energy/beam_rifle/host
 
 /obj/item/ammo_casing/energy/beam_rifle/proc/sync_stats()
 	var/obj/item/weapon/gun/energy/beam_rifle/BR = loc
-	if(!BR)
+	if(!istype(BR))
 		stack_trace("Beam rifle syncing error")
+	host = BR
 	do_pierce = BR.projectile_setting_pierce
 	wall_pierce_amount = BR.wall_pierce_amount
 	wall_devastate = BR.wall_devastate
@@ -268,6 +292,7 @@
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	HS_BB.do_pierce = do_pierce
+	HS_BB.gun = host	
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
@@ -317,7 +342,7 @@
 		if(!istype(O, /obj/item))
 			if(O.level == 1)	//Please don't break underfloor items!
 				continue
-			O.take_damage(aoe_structure_damage, BURN, "laser", FALSE)
+			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, "laser", FALSE)
 
 /obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
 	if(!do_pierce)
@@ -334,15 +359,22 @@
 			if(structure_pierce++ < structure_pierce_amount)
 				if(isobj(AM))
 					var/obj/O = AM
-					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff, BURN, "energy", FALSE)
+					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				loc = get_turf(AM)
 				return TRUE
 	return FALSE
 
+/obj/item/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)
+	if(istype(target, /obj/machinery/door))
+		return 0.4
+	if(istype(target, /obj/structure/window))
+		return 0.5
+	return 1
+
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
 	if(isobj(target))
 		var/obj/O = target
-		O.take_damage(impact_structure_damage, BURN, "laser", FALSE)
+		O.take_damage(impact_structure_damage * get_damage_coeff(target), BURN, "laser", FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
 		L.adjustFireLoss(impact_direct_damage)
@@ -445,7 +477,7 @@
 		cached = get_turf(src)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
-	new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
+	QDEL_IN((new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)), 5)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/temp_visual/projectile_beam/tracer/aiming

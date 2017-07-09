@@ -4,6 +4,7 @@
 
 /mob/living/proc/robot_talk(message)
 	log_say("[key_name(src)] : [message]")
+	log_message(message, INDIVIDUAL_SAY_LOG)
 	var/desig = "Default Cyborg" //ezmode for taters
 	if(issilicon(src))
 		var/mob/living/silicon/S = src

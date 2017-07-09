@@ -111,7 +111,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				S.cell.charge += charge
 			charge = 0
 			corrupt()
-			updateicon()
+			update_icon()
 
 
 //RDCONSOLE//

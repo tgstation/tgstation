@@ -149,8 +149,8 @@
 			F.update_icon()
 		else if(istype(I, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = I
-			if(B.bcell)
-				B.bcell.charge = B.bcell.maxcharge
+			if(B.cell)
+				B.cell.charge = B.cell.maxcharge
 		else if(istype(I, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/EG = I
 			if(!EG.chambered)
@@ -250,7 +250,7 @@
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
 		/obj/item/clockwork/ratvarian_spear/cyborg,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
 	hat_offset = -3
@@ -314,7 +314,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	feedback_key = "cyborg_engineering"
@@ -347,9 +347,9 @@
 	..()
 	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules
 	if(T)
-		if(T.power_supply.charge < T.power_supply.maxcharge)
+		if(T.cell.charge < T.cell.maxcharge)
 			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.power_supply.give(S.e_cost * coeff)
+			T.cell.give(S.e_cost * coeff)
 			T.update_icon()
 		else
 			T.charge_tick = 0
@@ -393,7 +393,7 @@
 	emag_modules = list(/obj/item/weapon/reagent_containers/spray/cyborg_lube)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/janitor,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"

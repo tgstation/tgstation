@@ -238,7 +238,7 @@
 	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
 	cost = 40
-	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
+	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
 
 /datum/gang_item/weapon/ammo/sniper_ammo
 	name = "Smuggled .50cal Sniper Rounds"

@@ -425,3 +425,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_ACTIVE 1
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
+
+//for obj explosion block calculation
+#define EXPLOSION_BLOCK_PROC -1

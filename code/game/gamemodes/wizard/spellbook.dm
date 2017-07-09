@@ -109,7 +109,6 @@
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
-	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -479,7 +478,7 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_guns)
+	return (!config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
@@ -496,7 +495,7 @@
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_magic)
+	return (!config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
@@ -514,7 +513,7 @@
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_events)
+	return (!config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)

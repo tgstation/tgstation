@@ -33,7 +33,7 @@
 /datum/clockwork_scripture/create_object/cogscarab
 	descname = "Constructor Soul Vessel Shell"
 	name = "Cogscarab"
-	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
+	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt fabricator."
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 60
 	consumed_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
@@ -221,24 +221,24 @@
 	quickbind_desc = "Creates a Soul Vessel, which can be placed in construct shells and cyborg bodies once filled."
 
 
-//Clockwork Proselytizer: Creates a clockwork proselytizer, used to convert objects and repair clockwork structures.
-/datum/clockwork_scripture/create_object/clockwork_proselytizer
-	descname = "Converts Objects to Ratvarian"
-	name = "Clockwork Proselytizer"
-	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
+//Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.
+/datum/clockwork_scripture/create_object/replica_fabricator
+	descname = "Replaces Objects with Ratvarian Versions"
+	name = "Replica Fabricator"
+	desc = "Forms a device that, when used on certain objects, replaces them with their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
 	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
 	whispered = TRUE
-	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
-	creator_message = "<span class='brass'>You form a clockwork proselytizer.</span>"
-	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
+	object_path = /obj/item/clockwork/replica_fabricator/preloaded
+	creator_message = "<span class='brass'>You form a replica fabricator.</span>"
+	usage_tip = "Clockwork Walls cause nearby Tinkerer's Caches to generate components passively, making this a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Creates a Clockwork Proselytizer, which can convert various objects to Ratvarian variants."
+	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
 
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.

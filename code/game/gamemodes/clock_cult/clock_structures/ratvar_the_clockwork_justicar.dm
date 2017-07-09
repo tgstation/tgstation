@@ -14,7 +14,7 @@
 	light_color = "#BE8700"
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
-	var/proselytize_range = 10
+	var/convert_range = 10
 	dangerous_possession = TRUE
 
 /obj/structure/destructible/clockwork/massive/ratvar/Initialize()
@@ -58,10 +58,10 @@
 /obj/structure/destructible/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
 		return
-	for(var/I in circlerangeturfs(src, proselytize_range))
+	for(var/I in circlerangeturfs(src, convert_range))
 		var/turf/T = I
 		T.ratvar_act()
-	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
+	for(var/I in circleviewturfs(src, round(convert_range * 0.5)))
 		var/turf/T = I
 		T.ratvar_act(TRUE)
 	var/dir_to_step_in = pick(GLOB.cardinal)

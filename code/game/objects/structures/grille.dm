@@ -248,6 +248,7 @@
 
 /obj/structure/grille/ratvar
 	icon_state = "ratvargrille"
+	name = "cog grille"
 	desc = "A strangely-shaped grille."
 	broken_type = /obj/structure/grille/ratvar/broken
 

@@ -32,6 +32,7 @@
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
+	var/real_explosion_block	//ignore this, just use explosion_block
 
 /obj/machinery/door/New()
 	..()
@@ -45,7 +46,9 @@
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 
-
+	//doors only block while dense though so we have to use the proc
+	real_explosion_block = explosion_block
+	explosion_block = EXPLOSION_BLOCK_PROC
 
 /obj/machinery/door/Destroy()
 	density = 0
@@ -346,3 +349,5 @@
 	//if it blows up a wall it should blow up a door
 	..(severity ? max(1, severity - 1) : 0, target)
 
+/obj/machinery/door/GetExplosionBlock()
+	return density ? real_explosion_block : 0

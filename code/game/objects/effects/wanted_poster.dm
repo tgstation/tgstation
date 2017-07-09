@@ -1,19 +1,18 @@
 /obj/item/weapon/poster/wanted
 	icon_state = "rolled_poster"
 
-/obj/item/weapon/poster/wanted/New(turf/loc, icon/person_icon, wanted_name, description)
-	var/obj/structure/sign/poster/wanted/wanted_poster = new(person_icon, wanted_name, description)
-	..(loc, wanted_poster)
+/obj/item/weapon/poster/wanted/Initialize(mapload, icon/person_icon, wanted_name, description)
+	. = ..(mapload, new /obj/structure/sign/poster/wanted(src, person_icon, wanted_name, description))
 	name = "wanted poster ([wanted_name])"
 	desc = "A wanted poster for [wanted_name]."
 
 /obj/structure/sign/poster/wanted
 	var/wanted_name
 
-/obj/structure/sign/poster/wanted/New(var/icon/person_icon, var/person_name, var/description)
+/obj/structure/sign/poster/wanted/Initialize(mapload, icon/person_icon, person_name, description)
+	. = ..()
 	if(!person_icon)
-		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
 	name = "wanted poster ([person_name])"
 	wanted_name = person_name
 	desc = description

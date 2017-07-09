@@ -20,10 +20,6 @@
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
 
-/obj/item/projectile/bullet/carbinebullet
-	damage = 20
-	range = 5
-
 /obj/item/projectile/bullet/toxinbullet
 	damage = 15
 	damage_type = TOX

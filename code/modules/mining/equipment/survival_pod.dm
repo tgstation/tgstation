@@ -67,6 +67,12 @@
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
+/obj/item/weapon/survivalcapsule/luxury
+	name = "luxury bluespace shelter capsule"
+	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
+	origin_tech = "engineering=3;bluespace=4"
+	template_id = "shelter_beta"
+
 //Pod objects
 
 //Window
@@ -76,6 +82,11 @@
 	icon_state = "smooth"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+
+/obj/structure/window/reinforced/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "pwindow"
 
 //Door
 /obj/machinery/door/airlock/survival_pod
@@ -121,6 +132,12 @@
 /obj/structure/door_assembly/door_assembly_pod/vertical
 	dir = EAST
 	expected_dir = EAST
+
+//Windoor
+/obj/machinery/door/window/survival_pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "windoor"
+	base_state = "windoor"
 
 //Table
 /obj/structure/table/survival_pod
@@ -280,3 +297,37 @@
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	density = FALSE
+
+/obj/item/fakeartefact
+	name = "expensive forgery"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "x2"
+	var/possible = list(/obj/item/ship_in_a_bottle,
+						/obj/item/weapon/gun/energy/pulse,
+						/obj/item/weapon/sleeping_carp_scroll,
+						/obj/item/weapon/melee/supermatter_sword,
+						/obj/item/weapon/shield/changeling,
+						/obj/item/weapon/lava_staff,
+						/obj/item/weapon/katana/energy,
+						/obj/item/weapon/hierophant_club,
+						/obj/item/weapon/his_grace,
+						/obj/item/weapon/gun/ballistic/minigun,
+						/obj/item/weapon/gun/ballistic/automatic/l6_saw,
+						/obj/item/weapon/gun/magic/staff/chaos,
+						/obj/item/weapon/gun/magic/staff/spellblade,
+						/obj/item/weapon/gun/magic/wand/death,
+						/obj/item/weapon/gun/magic/wand/fireball,
+						/obj/item/stack/telecrystal/twenty,
+						/obj/item/nuke_core,
+						/obj/item/phylactery,
+						/obj/item/riding_offhand,
+						/obj/item/weapon/banhammer)
+
+/obj/item/fakeartefact/Initialize()
+	. = ..()
+	var/obj/item/I = pick(possible)
+	name = initial(I.name)
+	icon = initial(I.icon)
+	desc = initial(I.desc)
+	icon_state = initial(I.icon_state)
+	item_state = initial(I.item_state)

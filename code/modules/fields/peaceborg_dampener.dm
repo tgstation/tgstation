@@ -54,6 +54,7 @@
 	var/obj/effect/abstract/proximity_checker/advanced/F = edge_turfs[T]
 	F.appearance = I.appearance
 	F.invisibility = 0
+	F.mouse_opacity = 0
 	F.layer = 5
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/T)
