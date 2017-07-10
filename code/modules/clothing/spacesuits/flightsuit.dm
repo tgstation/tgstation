@@ -109,7 +109,7 @@
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
-		LAZYADD(wearer.user_movement_hooks, src)
+		LAZYREMOVE(wearer.user_movement_hooks, src)
 	wearer = null
 	if(istype(changeto))
 		wearer = changeto
@@ -187,6 +187,7 @@
 /obj/item/device/flightpack/Destroy()
 	if(suit)
 		delink_suit()
+	changeWearer()
 	disable_flight(TRUE)
 	QDEL_NULL(part_manip)
 	QDEL_NULL(part_scan)
@@ -706,6 +707,7 @@
 		override_safe = FALSE
 
 /obj/item/device/flightpack/dropped(mob/wearer)
+	changeWearer()
 	..()
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
