@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
-	var/suittoggled = 0
+	var/suittoggled = FALSE
 	var/hooded = 0
 
 	var/mob/thrownby = null

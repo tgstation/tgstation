@@ -95,9 +95,9 @@
 	var/obj/effect/clockwork/spatial_gateway/SG = locate(/obj/effect/clockwork/spatial_gateway) in loc
 	if(SG && SG.timerid) //it's a valid gateway, we're active
 		icon_state = active_icon
-		density = 0
+		density = FALSE
 		active = TRUE
 	else
 		icon_state = inactive_icon
-		density = 1
+		density = TRUE
 		active = FALSE

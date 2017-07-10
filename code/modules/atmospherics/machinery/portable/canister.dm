@@ -4,7 +4,7 @@
 	name = "canister"
 	desc = "A canister for the storage of gas."
 	icon_state = "yellow"
-	density = 1
+	density = TRUE
 
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
@@ -281,7 +281,7 @@
 	air_update_turf()
 
 	stat |= BROKEN
-	density = 0
+	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	update_icon()
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
@@ -312,7 +312,7 @@
 		air_update_turf() // Update the environment if needed.
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

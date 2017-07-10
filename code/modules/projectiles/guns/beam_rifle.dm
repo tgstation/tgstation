@@ -403,7 +403,7 @@
 		cached = get_turf(target)
 	. = ..()
 
-/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
 	if(!QDELETED(target))
 		cached = get_turf(target)
 	handle_hit(target)
@@ -507,7 +507,7 @@
 /obj/effect/temp_visual/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'
 	layer = ABOVE_MOB_LAYER
-	anchored = 1
+	anchored = TRUE
 	duration = 5
 	randomdir = FALSE
 	light_power = 1

@@ -2,7 +2,7 @@
 	name = "frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
-	density = 1
+	density = TRUE
 	max_integrity = 250
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1

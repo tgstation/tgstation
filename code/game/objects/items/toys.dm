@@ -215,7 +215,7 @@
 	var/active = 0
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
-	var/hacked = 0
+	var/hacked = FALSE
 
 /obj/item/toy/sword/attack_self(mob/user)
 	active = !( active )
@@ -247,13 +247,13 @@
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
-				newSaber.hacked = 1
+				newSaber.hacked = TRUE
 				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
 	else if(istype(W, /obj/item/device/multitool))
-		if(hacked == 0)
-			hacked = 1
+		if(!hacked)
+			hacked = TRUE
 			item_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 

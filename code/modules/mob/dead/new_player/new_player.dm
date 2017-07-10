@@ -8,11 +8,11 @@
 
 	invisibility = INVISIBILITY_ABSTRACT
 
-	density = 0
+	density = FALSE
 	stat = DEAD
 	canmove = 0
 
-	anchored = 1	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/dead/new_player/Initialize()

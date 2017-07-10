@@ -13,7 +13,7 @@ Pipelines + Other Objects -> Pipe network
 #define PIPE_HIDDEN_LEVEL 1
 
 /obj/machinery/atmospherics
-	anchored = 1
+	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON

@@ -52,7 +52,7 @@
 /obj/structure/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/closet/thunderdome/tdred
 	name = "red-team Thunderdome closet"

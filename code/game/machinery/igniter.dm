@@ -4,8 +4,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
 	var/id = null
-	var/on = 1
-	anchored = 1
+	var/on = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
@@ -58,7 +58,7 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/sparker/New()

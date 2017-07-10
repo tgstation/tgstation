@@ -16,12 +16,12 @@
 /obj/structure/bodycontainer
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	max_integrity = 400
 
 	var/obj/structure/tray/connected = null
-	var/locked = 0
+	var/locked = FALSE
 	var/opendir = SOUTH
 
 /obj/structure/bodycontainer/Destroy()
@@ -196,7 +196,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	else
 		audible_message("<span class='italics'>You hear a roar as the crematorium activates.</span>")
 
-		locked = 1
+		locked = TRUE
 		update_icon()
 
 		for(var/mob/living/M in conts)
@@ -219,7 +219,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
 		if(!QDELETED(src))
-			locked = 0
+			locked = FALSE
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
@@ -245,10 +245,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
  */
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
-	density = 1
+	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/obj/structure/bodycontainer/connected = null
-	anchored = 1
+	anchored = TRUE
 	pass_flags = LETPASSTHROW
 	max_integrity = 350
 

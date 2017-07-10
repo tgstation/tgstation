@@ -13,7 +13,7 @@
 	icon_state = "pizzabox1"
 	item_state = "pizzabox"
 
-	var/open = 0
+	var/open = FALSE
 	var/boxtag = ""
 	var/list/boxes = list()
 

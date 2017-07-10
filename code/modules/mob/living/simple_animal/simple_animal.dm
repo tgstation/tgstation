@@ -302,7 +302,7 @@
 	else
 		health = 0
 		icon_state = icon_dead
-		density = 0
+		density = FALSE
 		lying = 1
 		..()
 

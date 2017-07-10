@@ -133,8 +133,8 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
@@ -323,8 +323,8 @@
 				stored.loc = T
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
-				stored.density = 0
-				stored.anchored = 1
+				stored.density = FALSE
+				stored.anchored = TRUE
 				stored.update_icon()
 		else
 			for(var/D in GLOB.cardinal)
@@ -636,8 +636,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
@@ -711,8 +711,8 @@
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()
-				stored.anchored = 0
-				stored.density = 1
+				stored.anchored = FALSE
+				stored.density = TRUE
 				qdel(src)
 	else
 		return ..()
