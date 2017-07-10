@@ -23,7 +23,7 @@
 /obj/structure/blob/attack_hand(mob/M)
 	. = ..()
 	var/a = pick("gently stroke", "nuzzle", "affectionatly pet", "cuddle")
-	M.visible_message("<span class='notice'>[M] [a]s the \[src]!</span>", "<span class='notice'>You [a] the \[src]!</span>")
+	M.visible_message("<span class='notice'>[M] [a]s \[src]!</span>", "<span class='notice'>You [a] \[src]!</span>")
 	playsound(src, 'sound/effects/blobattack.ogg', 50, 1) //SQUISH SQUISH
 	
 
