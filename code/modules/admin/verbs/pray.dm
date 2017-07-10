@@ -32,7 +32,7 @@
 		font_color = "red"
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar-Sie"
-	else if(text.findtext(text, "antag"))
+	else if(text.findtext("antag") && !is_special_character(usr))
 		to_chat(usr, "<span class='userdanger'>NO YOU CAN'T HAVE ANTAG!</span>")
 		usr.gib()
 		return
