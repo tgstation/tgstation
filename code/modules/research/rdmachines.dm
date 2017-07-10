@@ -6,15 +6,18 @@
 /obj/machinery/rnd
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
-	var/busy = 0
-	var/hacked = 0
-	var/disabled = 0
-	var/shocked = 0
+	var/busy = FALSE
+	var/hacked = FALSE
+	var/disabled = FALSE
+	var/shocked = FALSE
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
+
+/obj/machinery/rnd/proc/reset_busy()
+	busy = FALSE
 
 /obj/machinery/rnd/Initialize()
 	. = ..()

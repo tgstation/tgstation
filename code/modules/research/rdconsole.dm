@@ -243,50 +243,6 @@ doesn't have toxins access.
 				linked_destroy.icon_state = "d_analyzer"
 				screen = SCICONSOLE_MENU
 
-	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
-		if(!linked_destroy || linked_destroy.busy || !linked_destroy.loaded_item)
-			updateUsrDialog()
-			return
-		var/choice = input("Are you sure you want to destroy [linked_destroy.loaded_item.name]?") in list("Proceed", "Cancel")
-		if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item)
-			return
-		linked_destroy.busy = 1
-		screen = SCICONSOLE_UPDATE_DATABASE
-		updateUsrDialog()
-		flick("d_analyzer_process", linked_destroy)
-		spawn(24)
-			stored_research.boost_with_path(SSresearch.techweb_nodes[href_list["destroy"]], linked_destroy.loaded_item.type)
-			if(linked_destroy)
-				linked_destroy.busy = 0
-				if(!linked_destroy.loaded_item)
-					screen = SCICONSOLE_MENU
-					return
-				//TODO: Add boost checking.
-				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-					for(var/material in linked_destroy.loaded_item.materials)
-						linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
-					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
-				linked_destroy.loaded_item = null
-				for(var/obj/I in linked_destroy.contents)
-					for(var/mob/M in I.contents)
-						M.death()
-					if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
-						var/obj/item/stack/sheet/S = I
-						if(S.amount > 1)
-							S.amount--
-							linked_destroy.loaded_item = S
-						else
-							qdel(S)
-							linked_destroy.icon_state = "d_analyzer"
-					else
-						if(!(I in linked_destroy.component_parts))
-							qdel(I)
-							linked_destroy.icon_state = "d_analyzer"
-			screen = SCICONSOLE_MENU
-			use_power(250)
-			updateUsrDialog()
-
-
 	else if(href_list["build"]) //Causes the Protolathe to build something.
 		var/datum/design/being_built = stored_research.researched_designs[href_list["build"]]
 		var/amount = text2num(href_list["amount"])
@@ -563,6 +519,7 @@ doesn't have toxins access.
 	data["lathe_tabs"] = list("Category List", "Selected Category", "Search Results", "Materials", "Chemicals")
 	//Protolathe
 	if(linked_lathe)
+		data["protobusy"] = linked_lathe.busy? TRUE : FALSE
 		data["protocats"] = list()
 		for(var/v in linked_lathe.categories)
 			data["protocats"] += list(list("name" = v))
@@ -588,6 +545,7 @@ doesn't have toxins access.
 			data["protochem_list"] += list(list("name" = R.name, "amount" = R.volume, "reagentid" = R.id))
 	//Circuit Imprinter
 	if(linked_imprinter)
+		data["circuitbusy"] = linked_imprinter.busy? TRUE : FALSE
 		data["circuitcats"] = list()
 		for(var/v in linked_lathe.categories)
 			data["circuitcats"] += list(list("name" = v))
@@ -611,11 +569,20 @@ doesn't have toxins access.
 		data["circuitchem_list"] = list()
 		for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
 			data["circuitchem_list"] += list(list("name" = R.name, "amount" = R.volume, "reagentid" = R.id))
-
+	if(linked_destroy)
+		data["destroybusy"] = linked_destroy.busy? TRUE : FALSE
+		data["destroy_loaded"] = linked_destroy.loaded_item? TRUE : FALSE
+		if(linked_destroy.loaded_item)
+			data["destroy_name"] = linked_destroy.loaded_item.name
+			data["boost_paths"] = list()
+			var/list/input = techweb_item_boost_check(linked_destroy.loaded_item)	//Node datum = value
+			for(var/v in input)
+				var/datum/techweb_node/TN = v
+				var/boost = input[v]
+				var/can_boost = stored_research.boosted_nodes[TN]? FALSE : TRUE
+				data["boost_paths"] += list(list("name" = TN.display_name, "value" = boost, "allow" = can_boost, "id" = TN.id))
 	/*
 	//Disk Operations
-
-
 	*/
 
 
@@ -697,6 +664,17 @@ doesn't have toxins access.
 					linked_imprinter = null
 				else
 					return
+		if("eject_da")
+			linked_destroy.unload_item()
+		if("deconstruct")
+			linked_destroy.user_try_decon_id(params["id"])
+		if("print")
+			if(params["latheType"] == "proto")
+				linked_lathe.user_try_print_id(params["id"], params["amount"])
+			if(params["latheType"] == "circuit")
+				linked_imprinter.user_try_print_id(params["id"])
+			else
+				return
 
 /obj/machinery/computer/rdconsole/proc/rescan_category_views()
 	cat_designs_protolathe = list()
