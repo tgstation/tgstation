@@ -1,4 +1,4 @@
-/obj/machinery/computer
+/obj/machinery/computer 
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
