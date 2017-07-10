@@ -36511,6 +36511,9 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -36533,6 +36536,9 @@
 "bqz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -36544,6 +36550,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -37463,6 +37473,7 @@
 "bsb" = (
 /obj/structure/grille,
 /obj/structure/window/plasma/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37472,6 +37483,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -38313,6 +38325,7 @@
 	dir = 8
 	},
 /obj/machinery/meter,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -39181,6 +39194,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Filtered to Gas"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -39915,6 +39929,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -40638,6 +40653,7 @@
 	req_access_txt = "10"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -41177,6 +41193,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -42433,6 +42450,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
@@ -43063,6 +43081,10 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -94688,6 +94710,13 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -94695,6 +94724,70 @@
 "dzf" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dzg" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
+/area/engine/engineering)
+"dzh" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
+/area/engine/engineering)
+"dzi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
+/area/engine/supermatter)
+"dzj" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
+/area/engine/supermatter)
+"dzk" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
 /area/engine/supermatter)
 
 (1,1,1) = {"
@@ -128747,7 +128840,7 @@ bnS
 bpg
 dze
 bsb
-btx
+dzi
 buX
 btx
 bxz
@@ -129004,8 +129097,8 @@ bnS
 bph
 bqx
 cKr
-bty
-bty
+dzj
+dzk
 bty
 bxA
 byD
@@ -129259,7 +129352,7 @@ cKs
 bmD
 bjC
 cKt
-bqv
+dzg
 cKr
 btz
 buY
@@ -129516,7 +129609,7 @@ blr
 bjC
 cFo
 bpd
-bqu
+dzh
 cKr
 btA
 buZ

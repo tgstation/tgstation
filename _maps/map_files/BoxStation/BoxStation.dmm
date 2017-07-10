@@ -54321,6 +54321,10 @@
 /area/space/nearstation)
 "csC" = (
 /obj/effect/turf_decal/delivery,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "csD" = (
@@ -54440,6 +54444,9 @@
 "csR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -60042,6 +60049,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFJ" = (
@@ -60049,6 +60060,10 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFK" = (
@@ -60101,6 +60116,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cFP" = (
@@ -62605,6 +62621,7 @@
 "cMN" = (
 /obj/structure/grille,
 /obj/structure/window/plasma/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cMO" = (
@@ -64148,6 +64165,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 5
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cSI" = (
@@ -64155,6 +64173,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cSJ" = (
@@ -64475,6 +64494,78 @@
 "cTC" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
+"cTD" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cTE" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cTF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cTG" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cTH" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cTI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cTJ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cTK" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -91911,7 +92002,7 @@ cEs
 cqb
 cqb
 cAp
-cqb
+cTG
 cAo
 cGt
 cgx
@@ -92170,7 +92261,7 @@ cFc
 cAq
 cFJ
 cSH
-cGu
+cTH
 cGH
 cGR
 cHa
@@ -92427,7 +92518,7 @@ csA
 cEg
 cFK
 cGe
-cGv
+cTI
 cGI
 cGS
 cHb
@@ -92684,7 +92775,7 @@ cMI
 cMD
 cFL
 cGf
-cGu
+cTJ
 cMm
 ciZ
 cHc
@@ -92941,7 +93032,7 @@ cFe
 cMD
 cFM
 czE
-cGu
+cTK
 ccw
 cGT
 cEj
@@ -93193,8 +93284,8 @@ cqF
 cra
 crI
 cEw
-cEw
-cEw
+cTD
+cTE
 cFw
 cFN
 csH
@@ -93451,7 +93542,7 @@ cqZ
 crt
 cMH
 cAm
-cMH
+cTF
 cMN
 cFO
 cSI
