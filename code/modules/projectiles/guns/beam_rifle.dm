@@ -489,16 +489,21 @@
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
 			if(prob(wall_devastate))
-				target.ex_act(2)
+				if(istype(target, /turf/closed/wall))
+					var/turf/closed/wall/W = target
+					W.dismantle_wall(TRUE, TRUE)
+				else
+					target.ex_act(2)
 			return TRUE
 	if(ismovableatom(target))
 		var/atom/movable/AM = target
 		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
-			if(structure_pierce++ < structure_pierce_amount)
+			if(structure_pierce < structure_pierce_amount)
 				if(isobj(AM))
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				loc = get_turf(AM)
+				structure_pierce++
 				return TRUE
 	return FALSE
 
