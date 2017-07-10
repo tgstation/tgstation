@@ -308,6 +308,7 @@
 	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
+	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = 1
