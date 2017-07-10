@@ -28,26 +28,25 @@
 
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
-			if(C.reagents)
-				if(filterToxins)
-					//handle liver toxin filtration
-					var/toxamount
-					var/static/list/listOfToxinsInThisBitch = typesof(/datum/reagent/toxin)
+			if(filterToxins)
+				//handle liver toxin filtration
+				var/toxamount
+				var/static/list/listOfToxinsInThisBitch = typesof(/datum/reagent/toxin)
+				for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
+					toxamount += C.reagents.get_reagent_amount(initial(toxin.id))
+
+				if(toxamount <= toxTolerance && toxamount > 0)
 					for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
-						toxamount += C.reagents.get_reagent_amount(initial(toxin.id))
-
-					if(toxamount <= toxTolerance && toxamount > 0)
-						for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
-							C.reagents.remove_reagent(initial(toxin.id), 1)
-					else if(toxamount > toxTolerance)
-						damage += toxamount*toxLethality
+						C.reagents.remove_reagent(initial(toxin.id), 1)
+				else if(toxamount > toxTolerance)
+					damage += toxamount*toxLethality
 
 
-				//metabolize reagents
-				C.reagents.metabolize(C, can_overdose=TRUE)
+			//metabolize reagents
+			C.reagents.metabolize(C, can_overdose=TRUE)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span = 'notice'>[pick("You feel nauseous.", "You feel a dull pain in your lower body.", "You feel confused.")]</span>")
+				to_chat(C, "<span class='notice'>You feel [pick("nauseous", "dull pain in your lower body", "confused")].</span>")
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
