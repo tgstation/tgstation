@@ -115,13 +115,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "[d1]-[d2]"
 
-
-// Items usable on a cable :
-//   - Wirecutters : cut it duh !
-//   - Cable coil : merge cables
-//   - Multitool : get the power currently passing through the cable
-//
-/obj/structure/cable/attackby(obj/item/W, mob/user, params)
+/obj/structure/cable/proc/fuckcodestandards(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
 	if(T.intact)
 		return
@@ -155,6 +149,15 @@ By design, d1 is the smallest direction and d2 is the highest
 		shock(user, 5, 0.2)
 
 	src.add_fingerprint(user)
+
+// Items usable on a cable :
+//   - Wirecutters : cut it duh !
+//   - Cable coil : merge cables
+//   - Multitool : get the power currently passing through the cable
+//
+/obj/structure/cable/attackby(obj/item/W, mob/user, params)
+	fuckcodestandards(W, user, params)
+
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
@@ -623,7 +626,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
 		return
 
-	var/dirn = null
+	var/dirn
 	if(!dirnew) //If we weren't given a direction, come up with one! (Called as null from catwalk.dm and floor.dm)
 		if(user.loc == T)
 			dirn = user.dir //If laying on the tile we're on, lay in the direction we're facing
@@ -690,7 +693,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
 		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
-			if (showerror == TRUE)
+			if (showerror)
 				to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
 			return
 		if(U.intact)						//can't place a cable if it's a plating with a tile on it
@@ -704,13 +707,13 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
-					if (showerror == TRUE)
+					if (showerror)
 						to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
 					return
 
 			var/obj/structure/cable/NC = get_new_cable (U)
 
-			NC.d1 = FALSE
+			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
 			NC.update_icon()

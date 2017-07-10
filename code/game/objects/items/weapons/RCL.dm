@@ -4,6 +4,8 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
 	item_state = "rcl-0"
+	var/obj/structure/cable/last
+	var/obj/item/stack/cable_coil/loaded
 	opacity = FALSE
 	force = 5 //Plastic is soft
 	throwforce = 5
@@ -13,30 +15,26 @@
 	origin_tech = "engineering=4;materials=2"
 	var/max_amount = 90
 	var/active = FALSE
-	var/obj/structure/cable/last
-	var/obj/item/stack/cable_coil/loaded
 	actions_types = list(/datum/action/item_action/rcl)
-	var/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
-	var/current_color = 1
+	var/list/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
+	var/current_color_index = 1
 
 /obj/item/weapon/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
-		if(!loaded)
-			if(user.drop_item())
-				loaded = W
-				loaded.forceMove(src)
-				loaded.max_amount = max_amount //We store a lot.
-			else
-				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
-				return
+		if(user.transferItemToLoc(src))
+			loaded = W
+			loaded.max_amount = max_amount //We store a lot.
 		else
-			if(loaded.amount < max_amount)
-				var/amount = min(loaded.amount + C.amount, max_amount)
-				C.use(amount - loaded.amount)
-				loaded.amount = amount
-			else
-				return
+			to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
+			return
+
+		if(loaded.amount < max_amount)
+			var/amount = min(loaded.amount + C.amount, max_amount)
+			C.use(amount - loaded.amount)
+			loaded.amount = amount
+		else
+			return
 		update_icon()
 		to_chat(user, "<span class='notice'>You add the cables to the [src]. It now contains [loaded.amount].</span>")
 	else if(istype(W, /obj/item/weapon/screwdriver))
@@ -50,7 +48,7 @@
 				new /obj/item/stack/cable_coil(get_turf(user), diff)
 			else
 				loaded.use(30)
-				new /obj/item/stack/cable_coil(user.loc, 30)
+				new /obj/item/stack/cable_coil(get_turf(user), 30)
 		loaded.max_amount = initial(loaded.max_amount)
 		if(!user.put_in_hands(loaded))
 			loaded.forceMove(get_turf(user))
@@ -100,8 +98,8 @@
 			loaded = null
 		unwield(user)
 		active = wielded
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/twohanded/rcl/dropped(mob/wearer)
 	..()
@@ -132,7 +130,7 @@
 	if(last)
 		if(get_dist(last, user) == 1) //hacky, but it works
 			var/turf/T = get_turf(user)
-			if(!isturf(T) || T.intact || !T.can_have_cabling())
+			if(T.intact || !T.can_have_cabling())
 				last = null
 				return
 			if(get_dir(last, user) == last.d2)
@@ -144,7 +142,7 @@
 				return //If we've run out, display message and exit
 		else
 			last = null
-	loaded.item_color	 = colors[current_color]
+	loaded.item_color	 = colors[current_color_index]
 	last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 	is_empty(user) //If we've run out, display message
 
@@ -157,9 +155,8 @@
 
 /obj/item/weapon/twohanded/rcl/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/rcl))
-		current_color++;
-		if (current_color > 8)
-			current_color = 1
-		var/cwname = colors[current_color]
+		current_color_index++;
+		if (current_color_index > colors.len)
+			current_color_index = 1
+		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
-		qdel(cwname)

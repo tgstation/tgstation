@@ -180,7 +180,7 @@
 	else
 		. = ..()
 
-	moving = FALSE
+	moving = 0
 	if(mob && .)
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
@@ -285,7 +285,7 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/Process_Spacemove(movement_dir = FALSE)
+/mob/Process_Spacemove(movement_dir = 0)
 	if(..())
 		return 1
 	var/atom/movable/backup = get_spacemove_backup()

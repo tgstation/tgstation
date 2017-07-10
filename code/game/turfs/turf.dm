@@ -17,8 +17,8 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = FALSE	//for preventing explosion dodging
-	var/explosion_id = FALSE
+	var/explosion_level = 0	//for preventing explosion dodging
+	var/explosion_id = 0
 
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
@@ -84,15 +84,14 @@
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
-/turf/proc/handleRCL(obj/item/C, mob/user)
-	var/obj/item/weapon/twohanded/rcl/R = C
-	if(R.loaded)
+/turf/proc/handleRCL(obj/item/weapon/twohanded/rcl/C, mob/user)
+	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
-			if(LC.d1 == FALSE || LC.d2==0)
-				LC.attackby(R, user)
+			if(!LC.d1 || !LC.d2)
+				LC.fuckcodestandards(C, user)
 				return
-		R.loaded.place_turf(src, user)
-		R.is_empty(user)
+		C.loaded.place_turf(src, user)
+		C.is_empty(user)
 
 /turf/attackby(obj/item/C, mob/user, params)
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
@@ -182,7 +181,7 @@
 		switch(wet)
 			if(TURF_WET_WATER)
 				if(!M.slip(60, null, NO_SLIP_WHEN_WALKING))
-					M.inertia_dir = FALSE
+					M.inertia_dir = 0
 			if(TURF_WET_LUBE)
 				if(M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP)))
 					M.confused = max(M.confused, 8)
