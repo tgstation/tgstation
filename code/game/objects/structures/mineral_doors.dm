@@ -3,8 +3,8 @@
 
 /obj/structure/mineral_door
 	name = "metal door"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	opacity = TRUE
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
@@ -28,7 +28,7 @@
 	air_update_turf(1)
 
 /obj/structure/mineral_door/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -89,7 +89,7 @@
 	set_opacity(FALSE)
 	flick("[initial_state]opening",src)
 	sleep(10)
-	density = 0
+	density = FALSE
 	state = 1
 	air_update_turf(1)
 	update_icon()
@@ -108,7 +108,7 @@
 	playsound(loc, closeSound, 100, 1)
 	flick("[initial_state]closing",src)
 	sleep(10)
-	density = 1
+	density = TRUE
 	set_opacity(TRUE)
 	state = 0
 	air_update_turf(1)

@@ -264,7 +264,7 @@
 		qdel(DL)
 
 
-/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
+/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
@@ -311,14 +311,14 @@
 	switch(action)
 		if("make")
 			var/datum/crafting_recipe/TR = locate(params["recipe"])
-			busy = 1
+			busy = TRUE
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
 				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
 			else
 				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
-			busy = 0
+			busy = FALSE
 			ui_interact(usr)
 		if("forwardCat") //Meow
 			viewing_category = next_cat(FALSE)

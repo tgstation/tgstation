@@ -42,7 +42,7 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(!emagged)
 		if(!isnull(src.linkedServer))
-			emagged = 1
+			emagged = TRUE
 			screen = 2
 			spark_system.set_up(5, 0, src)
 			src.spark_system.start()
@@ -235,7 +235,7 @@
 	src.screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	src.emagged = 0
+	emagged = FALSE
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"

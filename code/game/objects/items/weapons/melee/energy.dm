@@ -80,7 +80,7 @@
 	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
 	possible_colors = list("red", "blue", "green", "purple")
-	var/hacked = 0
+	var/hacked = FALSE
 
 /obj/item/weapon/melee/energy/sword/Destroy()
 	STOP_PROCESSING(SSobj, src)

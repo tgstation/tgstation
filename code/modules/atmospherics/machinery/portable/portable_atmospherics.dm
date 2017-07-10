@@ -57,7 +57,7 @@
 	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
 	connected_port_parent.reconcile_air()
 
-	anchored = 1 //Prevent movement
+	anchored = TRUE //Prevent movement
 	return 1
 
 /obj/machinery/portable_atmospherics/Move()
@@ -68,7 +68,7 @@
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return 0
-	anchored = 0
+	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
 	return 1

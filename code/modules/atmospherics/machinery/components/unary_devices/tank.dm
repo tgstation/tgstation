@@ -6,7 +6,7 @@
 	desc = "A large vessel containing pressurized gas."
 	max_integrity = 800
 	var/volume = 10000 //in liters, 1 meters by 1 meters by 2 meters
-	density = 1
+	density = TRUE
 	var/gas_type = 0
 	layer = ABOVE_WINDOW_LAYER
 

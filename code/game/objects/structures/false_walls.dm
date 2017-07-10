@@ -4,7 +4,7 @@
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	var/mineral = /obj/item/stack/sheet/metal
@@ -12,7 +12,7 @@
 	var/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = 0
-	density = 1
+	density = TRUE
 	opacity = 1
 	max_integrity = 100
 
@@ -26,7 +26,7 @@
 	/turf/closed/wall/r_wall/rust,
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
-	can_be_unanchored = 0
+	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/falsewall/New(loc)
@@ -34,7 +34,7 @@
 	air_update_turf(1)
 
 /obj/structure/falsewall/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -51,7 +51,7 @@
 		do_the_flick()
 		sleep(5)
 		if(!QDELETED(src))
-			density = 0
+			density = FALSE
 			set_opacity(0)
 			update_icon()
 	else
@@ -60,7 +60,7 @@
 			opening = 0
 			return
 		do_the_flick()
-		density = 1
+		density = TRUE
 		sleep(5)
 		if(!QDELETED(src))
 			set_opacity(1)

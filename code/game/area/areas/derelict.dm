@@ -3,7 +3,7 @@
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
-	blob_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
+	blob_allowed = FALSE //Nope, no winning on the derelict as a blob. Gotta eat the station.
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"
@@ -106,13 +106,13 @@
 /area/djstation
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
-	has_gravity = 1
-	blob_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
+	has_gravity = TRUE
+	blob_allowed = FALSE //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/djstation/solars
 	name = "DJ Station Solars"
 	icon_state = "DJ"
-	has_gravity = 1
+	has_gravity = TRUE
 
 
 //ABANDONED TELEPORTER

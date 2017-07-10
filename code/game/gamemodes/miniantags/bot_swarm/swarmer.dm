@@ -550,7 +550,7 @@
 	desc = "A quickly assembled trap that electrifies living beings and overwhelms machine sensors. Will not retain its form if damaged enough."
 	icon_state = "trap"
 	max_integrity = 10
-	density = 0
+	density = FALSE
 
 /obj/structure/swarmer/trap/Crossed(atom/movable/AM)
 	if(isliving(AM))

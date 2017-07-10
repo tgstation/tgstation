@@ -9,8 +9,8 @@
 	name = "foam"
 	icon_state = "foam"
 	opacity = 0
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = WALL_OBJ_LAYER
 	mouse_opacity = 0
 	var/amount = 3
@@ -194,9 +194,9 @@
 /obj/structure/foamedmetal
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
-	density = 1
+	density = TRUE
 	opacity = 1 	// changed in New()
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
@@ -210,7 +210,7 @@
 
 
 /obj/structure/foamedmetal/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 

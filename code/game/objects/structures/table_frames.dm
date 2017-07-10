@@ -14,8 +14,8 @@
 	desc = "Four metal legs with four framing rods for a table. You could easily pass through this."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "table_frame"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	max_integrity = 100
 	var/framestack = /obj/item/stack/rods

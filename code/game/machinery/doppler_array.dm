@@ -5,8 +5,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/integrated = 0
 	var/max_dist = 100
 	verb_say = "states coldly"
@@ -25,11 +25,11 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
 		if(!anchored && !isinspace())
-			anchored = 1
+			anchored = TRUE
 			power_change()
 			to_chat(user, "<span class='notice'>You fasten [src].</span>")
 		else if(anchored)
-			anchored = 0
+			anchored = FALSE
 			power_change()
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		playsound(loc, O.usesound, 50, 1)

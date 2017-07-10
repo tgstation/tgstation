@@ -12,8 +12,8 @@
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
@@ -28,7 +28,7 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 	var/greytoggle = "Greyscale"
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
-	var/busy = 0
+	var/busy = FALSE
 
 /obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
@@ -93,9 +93,9 @@
 								c.stamped = copy.stamped.Copy()
 							c.copy_overlays(copy, TRUE)
 							toner--
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 			updateUsrDialog()
@@ -126,9 +126,9 @@
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
 					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 		else if(doccopy)
@@ -136,9 +136,9 @@
 				if(toner > 5 && !busy && doccopy)
 					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 			updateUsrDialog()
@@ -173,9 +173,9 @@
 					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 					p.icon = ic
 					toner -= 5
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 		updateUsrDialog()
@@ -228,9 +228,9 @@
 			p.pixel_x = rand(-10, 10)
 			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
-			busy = 1
+			busy = TRUE
 			sleep(15)
-			busy = 0
+			busy = FALSE
 		updateUsrDialog()
 	else if(href_list["colortoggle"])
 		if(greytoggle == "Greyscale")

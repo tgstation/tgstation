@@ -4,8 +4,8 @@
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "bhole3"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
@@ -81,7 +81,7 @@
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "shield2"
-	density = 0
+	density = FALSE
 	var/boing = 0
 
 /obj/effect/anomaly/grav/New()
@@ -125,7 +125,7 @@
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
-	density = 1
+	density = TRUE
 	var/canshock = 0
 	var/shockdamage = 20
 	var/explosive = TRUE
@@ -177,7 +177,7 @@
 	name = "bluespace anomaly"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
-	density = 1
+	density = TRUE
 
 /obj/effect/anomaly/bluespace/New()
 	..()

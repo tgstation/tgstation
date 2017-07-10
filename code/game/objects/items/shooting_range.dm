@@ -3,7 +3,7 @@
 	desc = "A shooting target."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_h"
-	density = 0
+	density = FALSE
 	var/hp = 1800
 	var/obj/structure/target_stake/pinnedLoc
 
@@ -15,7 +15,7 @@
 
 /obj/item/target/proc/nullPinnedLoc()
 	pinnedLoc = null
-	density = 0
+	density = FALSE
 
 /obj/item/target/proc/removeOverlays()
 	cut_overlays()

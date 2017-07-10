@@ -8,7 +8,7 @@
 	desc = "Only for the finest of art!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
-	density = 1
+	density = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 60
 	var/obj/item/weapon/canvas/painting = null

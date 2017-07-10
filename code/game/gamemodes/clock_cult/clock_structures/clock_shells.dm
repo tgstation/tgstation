@@ -1,8 +1,8 @@
 //Useless on their own, these shells can create powerful constructs.
 /obj/structure/destructible/clockwork/shell
 	construction_value = 0
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mobtype = /mob/living/simple_animal/hostile/clockwork
 	var/spawn_message = " is an error and you should yell at whoever spawned this shell."

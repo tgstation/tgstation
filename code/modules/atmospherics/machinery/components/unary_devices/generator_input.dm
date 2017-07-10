@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/unary/generator_input
 
 	icon_state = "he_intact"
-	density = 1
+	density = TRUE
 
 	name = "generator input"
 	desc = "An input for a generator."

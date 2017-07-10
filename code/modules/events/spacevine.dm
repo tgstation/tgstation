@@ -280,7 +280,7 @@
 
 /datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
-		holder.density = 1
+		holder.density = TRUE
 	holder.max_integrity = 100
 	holder.obj_integrity = holder.max_integrity
 
@@ -311,8 +311,8 @@
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "Light1"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = SPACEVINE_LAYER
 	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
