@@ -434,13 +434,6 @@ doesn't have toxins access.
 				screen = SCICONSOLE_MENU
 			updateUsrDialog()
 
-	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
-		screen = SCICONSOLE_UPDATE_DATABASE
-		spawn(20)
-			SyncRDevices()
-			screen = SCICONSOLE_LINKING
-			updateUsrDialog()
-
 ////////////////////////////////////////////////////////////	switch(screen)
 		//////////////////////R&D CONSOLE SCREENS//////////////////
 		if(SCICONSOLE_UPDATE_DATABASE)
@@ -632,7 +625,7 @@ doesn't have toxins access.
 	if(..())
 		return
 	var/list/l = params
-	to_chat(usr, "<span class='boldnotice'>DEBUG: Interact with action [action] and params: \"[l.Join("")]\"</span>")
+	to_chat(usr, "<span class='boldnotice'>DEBUG: Interact with action [action] and params: \"[list2params(params)]\"</span>")
 	switch(action)
 		if("select_node")
 			selected_node = SSresearch.techweb_nodes[params["id"]]
