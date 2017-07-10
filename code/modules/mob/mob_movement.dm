@@ -169,7 +169,7 @@
 
 	if(mob.confused)
 		if(mob.confused > 40)
-			step(mob, pick(GLOB.cardinal))
+			step(mob, pick(GLOB.cardinals))
 		else if(prob(mob.confused * 1.5))
 			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
 		else if(prob(mob.confused * 3))

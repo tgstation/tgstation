@@ -234,7 +234,7 @@
 	req_access = list(GLOB.access_xenobiology)
 
 /obj/machinery/shieldwallgen/Destroy()
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		cleanup_field(d)
 	return ..()
 
@@ -271,7 +271,7 @@
 		icon_state = "Shield_Gen +a"
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				if(setup_field(d))
 					fields++
 			if(fields)
@@ -281,11 +281,11 @@
 				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "Shield_Gen"
 			active = FALSE
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
 		icon_state = "Shield_Gen"
-		for(var/d in GLOB.cardinal)
+		for(var/d in GLOB.cardinals)
 			cleanup_field(d)
 
 /obj/machinery/shieldwallgen/proc/setup_field(direction)
