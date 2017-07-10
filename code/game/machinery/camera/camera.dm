@@ -323,7 +323,7 @@
 /atom/proc/auto_turn()
 	//Automatically turns based on nearby walls.
 	var/turf/closed/wall/T = null
-	for(var/i in GLOB.cardinal)
+	for(var/i in GLOB.cardinals)
 		T = get_ranged_target_turf(src, i, 1)
 		if(istype(T))
 			setDir(turn(i, 180))
