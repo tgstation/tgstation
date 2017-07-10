@@ -5,7 +5,6 @@
 	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
-	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
 	layer = WALL_OBJ_LAYER

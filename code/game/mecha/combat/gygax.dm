@@ -4,7 +4,7 @@
 	icon_state = "gygax"
 	step_in = 3
 	dir_in = 1 //Facing North.
-	obj_integrity = 250
+	max_integrity = 250
 	deflect_chance = 5
 	armor = list(melee = 25, bullet = 20, laser = 30, energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_temperature = 25000
@@ -18,7 +18,7 @@
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
 	name = "\improper Dark Gygax"
 	icon_state = "darkgygax"
-	obj_integrity = 300
+	max_integrity = 300
 	deflect_chance = 15
 	armor = list(melee = 40, bullet = 40, laser = 50, energy = 35, bomb = 20, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_temperature = 35000

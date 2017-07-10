@@ -35,7 +35,7 @@
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
 
-	density = 0
+	density = FALSE
 
 /obj/vehicle/scooter/skateboard/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
@@ -43,9 +43,9 @@
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	if(has_buckled_mobs())
-		density = 1
+		density = TRUE
 	else
-		density = 0
+		density = FALSE
 	..()
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)

@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/icon/img = null
 	var/time_stamp = ""
 	var/list/datum/newscaster/feed_comment/comments = list()
-	var/locked = 0
+	var/locked = FALSE
 	var/caption = ""
 	var/creationTime
 	var/authorCensor
@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /datum/newscaster/feed_channel
 	var/channel_name = ""
 	var/list/datum/newscaster/feed_message/messages = list()
-	var/locked = 0
+	var/locked = FALSE
 	var/author = ""
 	var/censored = 0
 	var/list/authorCensorTime = list()
@@ -176,7 +176,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	var/screen = 0
@@ -184,7 +183,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/securityCaster = 0
 	var/unit_no = 0
 	var/alert_delay = 500
-	var/alert = 0
+	var/alert = FALSE
 	var/scanned_user = "Unknown"
 	var/msg = ""
 	var/obj/item/weapon/photo/photo = null
@@ -192,7 +191,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/c_locked=0
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"

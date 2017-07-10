@@ -15,7 +15,7 @@
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
-	var/holocreator_busy = 0 //to prevent placing multiple holo barriers at once
+	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
 	if(flag)
@@ -34,11 +34,11 @@
 				if(signs.len < max_signs)
 					playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
 					if(creation_time)
-						holocreator_busy = 1
+						holocreator_busy = TRUE
 						if(!do_after(user, creation_time, target = target))
-							holocreator_busy = 0
+							holocreator_busy = FALSE
 							return
-						holocreator_busy = 0
+						holocreator_busy = FALSE
 						if(signs.len >= max_signs)
 							return
 						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.

@@ -14,11 +14,10 @@
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookempty"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	opacity = 0
 	resistance_flags = FLAMMABLE
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	var/state = 0
@@ -31,7 +30,7 @@
 		return
 	state = 2
 	icon_state = "book-0"
-	anchored = 1
+	anchored = TRUE
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/weapon/book))
 			I.loc = src
@@ -45,7 +44,7 @@
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user, 20*I.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					anchored = 1
+					anchored = TRUE
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, I.usesound, 100, 1)
@@ -64,7 +63,7 @@
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
-				anchored = 0
+				anchored = FALSE
 				state = 0
 
 		if(2)

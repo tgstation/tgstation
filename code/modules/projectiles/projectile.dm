@@ -2,8 +2,8 @@
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
@@ -40,6 +40,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
+	var/is_reflectable = FALSE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
 	var/knockdown = 0
@@ -82,7 +83,7 @@
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
 		if(impact_effect_type)

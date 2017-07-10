@@ -2,7 +2,7 @@
 	var/thermite = 0
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

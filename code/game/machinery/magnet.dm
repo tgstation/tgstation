@@ -12,7 +12,7 @@
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
@@ -21,7 +21,7 @@
 	var/magnetic_field = 1 // the range of magnetic attraction
 	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
 	var/turf/center // the center of magnetic attraction
-	var/on = 0
+	var/on = FALSE
 	var/pulling = 0
 
 	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
@@ -140,7 +140,7 @@
 
 /obj/machinery/magnetic_module/process()
 	if(stat & NOPOWER)
-		on = 0
+		on = FALSE
 
 	// Sanity checks:
 	if(electricity_level <= 0)
@@ -165,17 +165,6 @@
 		active_power_usage = electricity_level*15
 	else
 		use_power = NO_POWER_USE
-
-
-		// Overload conditions:
-		/* // Eeeehhh kinda stupid
-		if(on)
-			if(electricity_level > 11)
-				if(prob(electricity_level))
-					explosion(loc, 0, 1, 2, 3) // ooo dat shit EXPLODES son
-					spawn(2)
-						qdel(src)
-		*/
 
 	updateicon()
 
@@ -208,8 +197,8 @@
 	name = "magnetic control console"
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	var/frequency = 1449
@@ -249,9 +238,9 @@
 /obj/machinery/magnetic_controller/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src, frequency)
-	. = ..()
 	magnets = null
 	rpath = null
+	. = ..()
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)

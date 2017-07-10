@@ -89,7 +89,7 @@
 /obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
-	density = 0
+	density = FALSE
 	var/can_move = 0
 	var/obj/item/device/chameleon/master = null
 

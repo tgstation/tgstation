@@ -5,6 +5,7 @@
 	icon_state = "curseblob"
 	icon_living = "curseblob"
 	icon_aggro = "curseblob"
+	movement_type = FLYING
 	move_to_delay = 5
 	vision_range = 20
 	aggro_vision_range = 20

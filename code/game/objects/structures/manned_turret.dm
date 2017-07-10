@@ -8,7 +8,6 @@
 	can_buckle = TRUE
 	density = TRUE
 	max_integrity = 100
-	obj_integrity = 100
 	buckle_lying = FALSE
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10

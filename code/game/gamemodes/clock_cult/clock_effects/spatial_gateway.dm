@@ -4,7 +4,7 @@
 	desc = "A gently thrumming tear in reality."
 	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
-	density = 1
+	density = TRUE
 	light_range = 2
 	light_power = 3
 	light_color = "#6A4D2F"

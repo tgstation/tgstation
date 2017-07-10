@@ -6,8 +6,8 @@
 	name = "production machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
 	speed_process = 1
@@ -63,8 +63,8 @@
 	name = "furnace"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "furnace"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/datum/material_container/materials
 	var/on = FALSE
@@ -153,7 +153,7 @@
 					ore_diamond -= 1
 					generate_mineral(/obj/item/stack/sheet/mineral/adamantine)
 				else
-					on = 0
+					on = FALSE
 				continue
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 				if (ore_silver >= 1 && ore_plasma >= 3)
@@ -161,7 +161,7 @@
 					ore_plasma -= 3
 					generate_mineral(/obj/item/stack/sheet/mineral/mythril)
 				else
-					on = 0
+					on = FALSE
 				continue*/
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore()

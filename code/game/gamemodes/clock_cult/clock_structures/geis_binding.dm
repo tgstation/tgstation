@@ -4,7 +4,6 @@
 	desc = "A flickering, glowing purple ring around a target."
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
 	max_integrity = 25
-	obj_integrity = 25
 	light_range = 2
 	light_power = 0.5
 	light_color = "#AF0AAF"

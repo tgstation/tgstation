@@ -171,7 +171,7 @@ effective or pretty fucking useless.
 	var/mob/living/carbon/human/user = null
 	var/charge = 300
 	var/max_charge = 300
-	var/on = 0
+	var/on = FALSE
 	var/old_alpha = 0
 	actions_types = list(/datum/action/item_action/toggle)
 
@@ -194,14 +194,14 @@ effective or pretty fucking useless.
 	src.user = user
 	START_PROCESSING(SSobj, src)
 	old_alpha = user.alpha
-	on = 1
+	on = TRUE
 
 /obj/item/device/shadowcloak/proc/Deactivate()
 	to_chat(user, "<span class='notice'>You deactivate [src].</span>")
 	STOP_PROCESSING(SSobj, src)
 	if(user)
 		user.alpha = old_alpha
-	on = 0
+	on = FALSE
 	user = null
 
 /obj/item/device/shadowcloak/dropped(mob/user)
