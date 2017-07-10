@@ -323,19 +323,10 @@
 /atom/proc/auto_turn()
 	//Automatically turns based on nearby walls.
 	var/turf/closed/wall/T = null
-	for(var/i = 1, i <= 8; i += i)
+	for(var/i in GLOB.cardinal)
 		T = get_ranged_target_turf(src, i, 1)
 		if(istype(T))
-			//If someone knows a better way to do this, let me know. -Giacom
-			switch(i)
-				if(NORTH)
-					src.setDir(SOUTH)
-				if(SOUTH)
-					src.setDir(NORTH)
-				if(WEST)
-					src.setDir(EAST)
-				if(EAST)
-					src.setDir(WEST)
+			setDir(turn(i, 180))
 			break
 
 //Return a working camera that can see a given mob
