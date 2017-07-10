@@ -32,7 +32,11 @@
 		font_color = "red"
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar-Sie"
-
+	else if(text.findtext(text, "antag"))
+		to_chat(usr, "<span class='userdanger'>NO YOU CAN'T HAVE ANTAG!</span>")
+		usr.gib()
+		return
+		
 	msg = "<span class='adminnotice'>[bicon(cross)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [msg]</span>"
 
 	for(var/client/C in GLOB.admins)
