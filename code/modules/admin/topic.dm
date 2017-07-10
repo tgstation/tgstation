@@ -139,7 +139,7 @@
 		if(E)
 			var/datum/round_event/event = E.runEvent()
 			if(event.announceWhen>0)
-				event.processing = 0
+				event.processing = FALSE
 				var/prompt = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel")
 				switch(prompt)
 					if("Cancel")
@@ -147,7 +147,7 @@
 						return
 					if("No")
 						event.announceWhen = -1
-				event.processing = 1
+				event.processing = TRUE
 			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 		return

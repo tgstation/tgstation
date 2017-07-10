@@ -4,8 +4,8 @@
 	desc = "A basic vehicle, vroom"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "fuckyou"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	can_buckle = 1
 	buckle_lying = 0
 	max_integrity = 300

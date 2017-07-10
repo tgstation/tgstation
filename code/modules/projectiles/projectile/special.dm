@@ -8,7 +8,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 
 
-/obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 1, 1)
 	return 1
@@ -16,7 +16,7 @@
 
 /obj/item/projectile/ion/weak
 
-/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 0, 0)
 	return 1
@@ -27,7 +27,7 @@
 	icon_state= "bolter"
 	damage = 50
 
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2)
 	return 1
@@ -38,7 +38,7 @@
 	icon_state= "bolter"
 	damage = 60
 
-/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
@@ -52,7 +52,7 @@
 	armour_penetration = 100
 	dismemberment = 100
 
-/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
 
@@ -88,7 +88,7 @@
 	var/temperature = 100
 
 
-/obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+/obj/item/projectile/temp/on_hit(atom/target, blocked = FALSE)//These two could likely check temp protection on the mob
 	..()
 	if(isliving(target))
 		var/mob/M = target
@@ -129,7 +129,7 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -150,7 +150,7 @@
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
 
-/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
@@ -190,7 +190,7 @@
 	damage = 25
 	knockdown = 50
 
-/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
 	return 1

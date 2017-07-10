@@ -2,8 +2,8 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	pixel_y = 8
 	unique_rename = 1
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
@@ -815,7 +815,7 @@
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
-				anchored = 1
+				anchored = TRUE
 				user.visible_message("[user] wrenches [src] into place.", \
 									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
@@ -825,7 +825,7 @@
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
-				anchored = 0
+				anchored = FALSE
 				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
@@ -928,7 +928,7 @@
 	name = "soil"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
-	density = 0
+	density = FALSE
 	use_power = NO_POWER_USE
 	unwrenchable = 0
 

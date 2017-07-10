@@ -128,10 +128,10 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!admin) return
 				if(config.sandbox_autoclose)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
-					config.sandbox_autoclose = 0
+					config.sandbox_autoclose = FALSE
 				else
 					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
-					config.sandbox_autoclose = 1
+					config.sandbox_autoclose = TRUE
 				return
 			//
 			// Spacesuit with full air jetpack set as internals

@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(machines)
 		else
 			processing -= thing
 			if (!QDELETED(thing))
-				thing.isprocessing = 0
+				thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return
 

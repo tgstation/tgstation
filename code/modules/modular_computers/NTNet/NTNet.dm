@@ -55,13 +55,13 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 	if(!relays || !relays.len) // No relays found. NTNet is down
 		return FALSE
 
-	var/operating = 0
+	var/operating = FALSE
 
 	// Check all relays. If we have at least one working relay, network is up.
 	for(var/M in relays)
 		var/obj/machinery/ntnet_relay/R = M
 		if(R.is_operational())
-			operating = 1
+			operating = TRUE
 			break
 
 	if(setting_disabled)

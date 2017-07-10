@@ -12,7 +12,7 @@
 	name = "turret frame"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
-	density = 1
+	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
 	var/obj/item/weapon/gun/installed_gun = null
@@ -24,7 +24,7 @@
 			if(istype(I, /obj/item/weapon/wrench) && !anchored)
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
-				anchored = 1
+				anchored = TRUE
 				build_step = PTURRET_BOLTED
 				return
 
@@ -49,7 +49,7 @@
 			else if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, I.usesound, 75, 1)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
-				anchored = 0
+				anchored = FALSE
 				build_step = PTURRET_UNSECURED
 				return
 

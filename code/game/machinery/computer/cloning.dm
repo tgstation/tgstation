@@ -311,10 +311,10 @@
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
 		if ((!scanner.locked) && (scanner.occupant))
-			scanner.locked = 1
+			scanner.locked = TRUE
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		else
-			scanner.locked = 0
+			scanner.locked = FALSE
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 	else if(href_list["view_rec"])

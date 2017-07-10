@@ -9,10 +9,10 @@ It is possible to destroy the net by the occupant or someone else.
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "energynet"
 
-	density = 1//Can't pass through.
+	density = TRUE//Can't pass through.
 	opacity = 0//Can see through.
 	mouse_opacity = 1//So you can hit it with stuff.
-	anchored = 1//Can't drag/grab the trapped mob.
+	anchored = TRUE//Can't drag/grab the trapped mob.
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 25 //How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
@@ -30,7 +30,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/structure/energy_net/Destroy()
 	if(affecting)
 		var/mob/living/carbon/M = affecting
-		M.anchored = 0
+		M.anchored = FALSE
 		for(var/mob/O in viewers(src, 3))
 			O.show_message("[M.name] was recovered from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
 		if(master)//As long as they still exist.
@@ -58,7 +58,7 @@ It is possible to destroy the net by the occupant or someone else.
 	if(!isnull(src))//As long as both net and person exist.
 		//No need to check for countdown here since while() broke, it's implicit that it finished.
 
-		density = 0//Make the net pass-through.
+		density = FALSE//Make the net pass-through.
 		invisibility = INVISIBILITY_ABSTRACT//Make the net invisible so all the animations can play out.
 		resistance_flags |= INDESTRUCTIBLE //Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 		for(var/obj/item/W in M)

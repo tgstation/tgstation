@@ -17,8 +17,8 @@
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/weapon/circuitboard/computer/slot_machine
@@ -102,7 +102,7 @@
 
 /obj/machinery/computer/slot_machine/emag_act()
 	if(!emagged)
-		emagged = 1
+		emagged = TRUE
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(4, 0, src.loc)
 		spark_system.start()
@@ -163,7 +163,7 @@
 	if(prob(15 * severity))
 		return
 	if(prob(1)) // :^)
-		emagged = 1
+		emagged = TRUE
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
 	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)

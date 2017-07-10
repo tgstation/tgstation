@@ -5,7 +5,7 @@
 	clockwork_desc = "A cloud of purple smoke that confuses and knocks down non-Servants that enter it."
 	gender = PLURAL
 	max_integrity = 5
-	density = 1
+	density = TRUE
 	color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"

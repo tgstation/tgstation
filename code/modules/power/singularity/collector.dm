@@ -6,8 +6,8 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(GLOB.access_engine_equip)
 //	use_power = NO_POWER_USE
 	max_integrity = 350
@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	var/obj/item/weapon/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
 	var/active = 0
-	var/locked = 0
+	var/locked = FALSE
 	var/drainratio = 1
 
 /obj/machinery/power/rad_collector/New()
@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		stat |= BROKEN
 
 /obj/machinery/power/rad_collector/proc/eject()
-	locked = 0
+	locked = FALSE
 	var/obj/item/weapon/tank/internals/plasma/Z = src.loaded_tank
 	if (!Z)
 		return

@@ -3,11 +3,11 @@
 
 /area/shuttle
 	name = "Shuttle"
-	requires_power = 0
+	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	has_gravity = 1
-	always_unpowered = 0
-	valid_territory = 0
+	has_gravity = TRUE
+	always_unpowered = FALSE
+	valid_territory = FALSE
 	icon_state = "shuttle"
 
 /area/shuttle/transit

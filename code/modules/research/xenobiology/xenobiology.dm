@@ -475,7 +475,7 @@
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "a strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -546,7 +546,7 @@
 
 
 /obj/effect/timestop
-	anchored = 1
+	anchored = TRUE
 	name = "chronofield"
 	desc = "ZA WARUDO"
 	icon = 'icons/effects/160x160.dmi'
@@ -580,7 +580,7 @@
 				if(M in immune)
 					continue
 				M.Stun(200, 1, 1)
-				M.anchored = 1
+				M.anchored = TRUE
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
@@ -610,7 +610,7 @@
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
 	M.AdjustStun(-200, 1, 1)
-	M.anchored = 0
+	M.anchored = FALSE
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)

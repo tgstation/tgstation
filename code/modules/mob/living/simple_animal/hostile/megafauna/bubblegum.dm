@@ -393,7 +393,7 @@ Difficulty: Hard
 	icon_aggro = "bloodbrood"
 	attacktext = "pierces"
 	color = "#C80000"
-	density = 0
+	density = FALSE
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 
