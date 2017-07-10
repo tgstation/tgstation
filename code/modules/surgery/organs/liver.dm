@@ -17,11 +17,6 @@
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
-	var/list/toxinList
-
-/obj/item/organ/liver/Initialize()
-	. = ..()
-	toxinList = typesof(/datum/reagent/toxin)
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
@@ -37,7 +32,8 @@
 				if(filterToxins)
 					//handle liver toxin filtration
 					var/toxamount
-					for(var/toxin in toxinList)
+					var/static/list/toxins = typesof(/datum/reagent/toxin)
+					for(var/toxin in toxins)
 						toxamount += C.reagents.get_reagent_amount(toxin.type)
 
 					if(toxamount <= toxTolerance && toxamount > 0)
