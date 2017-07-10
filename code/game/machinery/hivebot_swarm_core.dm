@@ -59,9 +59,8 @@
 		if(L.stat)
 			potential_targets -= L
 		else
-			for(var/faction in L.faction)
-				if(faction == "hivebot")
-					potential_targets -= L
+			if("hivebot" in L.faction)
+				potential_targets -= L
 	if(!potential_targets.len) //Run another sanity check, just in case
 		return
 	threat_to_swarm = pick(potential_targets)
