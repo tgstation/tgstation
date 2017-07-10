@@ -34,11 +34,11 @@
 					var/toxamount
 					var/static/list/toxins = typesof(/datum/reagent/toxin)
 					for(var/datum/reagent/toxin/toxin in toxins)
-						toxamount += C.reagents.get_reagent_amount(toxin.type)
+						toxamount += C.reagents.get_reagent_amount(toxin.id)
 
 					if(toxamount <= toxTolerance && toxamount > 0)
 						for(var/datum/reagent/toxin/toxin in toxins)
-							C.reagents.remove_reagent(toxin.type, 1)
+							C.reagents.remove_reagent(toxin.id, 1)
 					else if(toxamount > toxTolerance)
 						damage += toxamount*toxLethality
 
