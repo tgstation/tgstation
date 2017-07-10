@@ -250,7 +250,7 @@
 /obj/item/device/flightpack/proc/update_cached_pull()
 	if(!wearer)
 		return
-	if(wearer.pulling && !QDELETED(wearer.pulling))
+	if(!QDELETED(wearer.pulling))
 		cached_pull = wearer.pulling
 	if(istype(cached_pull))
 		old_pull_turf = get_turf(cached_pull)
