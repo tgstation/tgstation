@@ -1,4 +1,0 @@
-author: "Tacolizard"
-delete-after: True
-changes: 
-  - rscadd: "Admins can now set a message/warning when they delay the round end, to be shown to anyone who tries to reboot the world."

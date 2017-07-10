@@ -1,4 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "Plasma and Reinforced plasma glass no longer merge with Normal and Reinforced Glass"
