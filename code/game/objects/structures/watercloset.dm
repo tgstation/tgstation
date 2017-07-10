@@ -288,7 +288,7 @@
 
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
 	O.clean_blood()
-
+	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
 		var/obj/item/I = O
 		I.acid_level = 0
@@ -298,7 +298,8 @@
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
 		var/turf/tile = loc
-		loc.clean_blood()
+		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		tile.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
