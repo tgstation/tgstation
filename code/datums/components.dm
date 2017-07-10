@@ -16,8 +16,8 @@
 				if(COMPONENT_DUPE_UNIQUE)
 					qdel(src)
 					return
+	P.SendSignal(COMSIG_COMPONENT_ADDED, list(src), FALSE)
 	LAZYADD(P.datum_components, src)
-	SendSignal(COMSIG_COMPONENT_ADDED, list(src), FALSE)
 	parent = P
 
 /datum/component/Destroy()
