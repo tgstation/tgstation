@@ -13,7 +13,6 @@
 	anchored = 1
 	density = 1
 
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 80
 

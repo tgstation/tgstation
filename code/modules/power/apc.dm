@@ -46,7 +46,6 @@
 	anchored = 1
 	use_power = NO_POWER_USE
 	req_access = null
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF

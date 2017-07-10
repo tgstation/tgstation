@@ -8,7 +8,6 @@
 	explosion_block = 3
 	heat_proof = 1
 	safe = 0
-	obj_integrity = 600
 	max_integrity = 600
 	armor = list(melee = 50, bullet = 100, laser = 100, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF

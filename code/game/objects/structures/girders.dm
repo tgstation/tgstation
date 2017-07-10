@@ -7,7 +7,6 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
-	obj_integrity = 200
 	max_integrity = 200
 
 /obj/structure/girder/examine(mob/user)
@@ -306,7 +305,6 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
-	obj_integrity = 120
 	max_integrity = 120
 
 /obj/structure/girder/reinforced
@@ -314,7 +312,6 @@
 	icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
-	obj_integrity = 350
 	max_integrity = 350
 
 

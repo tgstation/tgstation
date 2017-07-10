@@ -7,7 +7,6 @@
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = 0
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -119,7 +118,6 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
@@ -141,7 +139,6 @@
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	buildstackamount = 2
 	var/mutable_appearance/armrest
@@ -314,7 +311,6 @@
 	icon_state = "wooden_chair_toppled"
 	item_state = "woodenchair"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood

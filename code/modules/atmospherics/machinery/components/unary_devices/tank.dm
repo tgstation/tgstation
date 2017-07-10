@@ -4,7 +4,6 @@
 	icon_state = "generic"
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
-	obj_integrity = 800
 	max_integrity = 800
 	var/volume = 10000 //in liters, 1 meters by 1 meters by 2 meters
 	density = 1

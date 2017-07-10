@@ -29,7 +29,6 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	obj_integrity = 100
 	max_integrity = 100
 	integrity_failure = 30
 	smooth = SMOOTH_TRUE
@@ -162,7 +161,6 @@
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
 	canSmoothWith = null
-	obj_integrity = 70
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
@@ -244,7 +242,6 @@
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	canSmoothWith = list(/obj/structure/table/wood,
 		/obj/structure/table/wood/poker,
@@ -296,7 +293,6 @@
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
@@ -409,7 +405,6 @@
 	density = 1
 	anchored = 1
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
-	obj_integrity = 20
 	max_integrity = 20
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)

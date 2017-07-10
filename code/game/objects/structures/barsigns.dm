@@ -4,7 +4,6 @@
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(GLOB.access_bar)
-	obj_integrity = 500
 	max_integrity = 500
 	integrity_failure = 250
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -16,12 +15,8 @@
 	var/prev_sign = ""
 	var/panel_open = 0
 
-
-
-
-/obj/structure/sign/barsign/New()
-	..()
-
+/obj/structure/sign/barsign/Initialize()
+	. = ..()
 
 //filling the barsigns list
 	for(var/bartype in subtypesof(/datum/barsign))
@@ -29,11 +24,8 @@
 		if(!signinfo.hidden)
 			barsigns += signinfo
 
-
 //randomly assigning a sign
 	set_sign(pick(barsigns))
-
-
 
 /obj/structure/sign/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -44,8 +36,6 @@
 		desc = sign.desc
 	else
 		desc = "It displays \"[name]\"."
-
-
 
 /obj/structure/sign/barsign/obj_break(damage_flag)
 	if(!broken && !(flags & NODECONSTRUCT))

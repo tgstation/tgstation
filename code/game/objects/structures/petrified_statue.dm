@@ -4,7 +4,6 @@
 	icon_state = "human_male"
 	density = 1
 	anchored = 1
-	obj_integrity = 200
 	max_integrity = 200
 	var/timer = 240 //eventually the person will be freed
 	var/mob/living/petrified_mob

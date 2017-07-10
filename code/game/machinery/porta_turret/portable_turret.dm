@@ -28,8 +28,7 @@
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
 
-	obj_integrity = 160			//the turret's health
-	max_integrity = 160
+	max_integrity = 160		//the turret's health
 	integrity_failure = 80
 	armor = list(melee = 50, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 90)
 
@@ -578,9 +577,8 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
-	max_integrity = 40
 	integrity_failure = 20
-	obj_integrity = 40
+	max_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/weakbullet3
 	lethal_projectile = /obj/item/projectile/bullet/weakbullet3
 
@@ -615,7 +613,6 @@
 
 /obj/machinery/porta_turret/centcomm_shuttle
 	installation = null
-	obj_integrity = 260
 	max_integrity = 260
 	always_up = 1
 	use_power = NO_POWER_USE
