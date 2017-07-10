@@ -14,7 +14,7 @@
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
-	for(var/dir in GLOB.cardinal)
+	for(var/dir in GLOB.cardinals)
 		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)
 			table.computer = src
