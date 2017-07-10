@@ -19,6 +19,10 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	GLOB.doppler_arrays -= src
 	return ..()
 
+/obj/machinery/doppler_array/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
+
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
 
@@ -45,7 +49,9 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return
 	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
-	src.setDir(turn(src.dir, 90))
+	setDir(turn(src.dir, 90))
+	to_chat(usr, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	return
 
 /obj/machinery/doppler_array/AltClick(mob/living/user)
