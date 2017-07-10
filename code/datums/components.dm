@@ -21,7 +21,7 @@
 	parent = P
 
 /datum/component/Destroy()
-	Remove()
+	RemoveNoSignal()
 	return ..()
 
 /datum/component/proc/RemoveNoSignal()
