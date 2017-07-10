@@ -77257,7 +77257,7 @@
 "cQD" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
-	amount = 20;
+	amount = 40;
 	pixel_x = 3;
 	pixel_y = -4
 	},
