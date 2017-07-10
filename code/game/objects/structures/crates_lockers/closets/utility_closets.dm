@@ -19,6 +19,8 @@
 
 /obj/structure/closet/emcloset/anchored
 	anchored = TRUE
+	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place."
+	name = "anchored emergency closet"
 
 /obj/structure/closet/emcloset/PopulateContents()
 	..()
