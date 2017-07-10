@@ -1700,7 +1700,7 @@
 /mob/living/carbon/human/mind_initialize()
 	..()
 	if(!mind.assigned_role)
-		mind.assigned_role = "Unassigned" //defualt
+		mind.assigned_role = "Unassigned" //default
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()

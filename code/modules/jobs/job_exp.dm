@@ -13,10 +13,7 @@ GLOBAL_PROTECT(exp_to_update)
 	for(var/client/C in GLOB.clients)
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
-
-	var/datum/browser/popup = new(mob, "Player_playtime_check", "Player Playtime List")
-	popup.set_content(msg.Join())
-	popup.open()
+	src << browse(msg.Join(), "window=Player_playtime_check")
 
 /datum/admins/proc/cmd_show_exp_panel(client/C)
 	if(!C)
@@ -29,11 +26,7 @@ GLOBAL_PROTECT(exp_to_update)
 	body += C.get_exp_report()
 	body += "<A href='?_src_=holder;toggleexempt=\ref[C]'>Toggle Exempt status</a>"
 	body += "</BODY></HTML>"
-
-	var/datum/browser/popup = new(usr, "playerplaytime[C.ckey]", "Player Playtime",550,615)
-	popup.set_content(body.Join())
-	popup.open()
-
+	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
 
 /datum/admins/proc/toggle_exempt_status(client/C)
 	if(!C)
@@ -52,7 +45,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 	message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 	log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
-	update_flag_db(C,DB_FLAG_EXEMPT, newstate)
+	C.update_flag_db(DB_FLAG_EXEMPT, newstate)
 
 // Procs
 
@@ -201,7 +194,7 @@ GLOBAL_PROTECT(exp_to_update)
 	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 	if(!exp_read.Execute())
 		var/err = exp_read.ErrorMsg()
-		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
+		log_sql("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
 		return
 	var/list/play_records = list()
@@ -219,19 +212,19 @@ GLOBAL_PROTECT(exp_to_update)
 
 
 //updates player db flags
-/proc/update_flag_db(client/C, newflag, state = FALSE)
+/client/proc/update_flag_db(newflag, state = FALSE)
 
 	if(!SSdbcore.Connect())
 		return -1
 
-	if(!C.set_db_player_flags())
+	if(!set_db_player_flags())
 		return -1
 
-	var/datum/DBQuery/flag_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[sanitizeSQL(C.ckey)]'")
+	var/datum/DBQuery/flag_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[sanitizeSQL(ckey)]'")
 
 	if(!flag_read.Execute())
 		var/err = flag_read.ErrorMsg()
-		log_game("SQL ERROR during player flags read. Error : \[[err]\]\n")
+		log_sql("SQL ERROR during player flags read. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during player flags read. Error : \[[err]\]\n")
 		return
 
@@ -240,16 +233,16 @@ GLOBAL_PROTECT(exp_to_update)
 		playerflags = text2num(flag_read.item[1])
 
 	if((playerflags & newflag) && !state)
-		C.prefs.db_flags &= ~newflag
+		prefs.db_flags &= ~newflag
 	else
-		C.prefs.db_flags |= newflag
+		prefs.db_flags |= newflag
 
-	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[C.prefs.db_flags]' WHERE ckey='[sanitizeSQL(C.ckey)]'")
+	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[prefs.db_flags]' WHERE ckey='[sanitizeSQL(ckey)]'")
 
 
 	if(!flag_update.Execute())
 		var/err = flag_update.ErrorMsg()
-		log_game("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
+		log_sql("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
 		return
 
@@ -261,7 +254,7 @@ GLOBAL_PROTECT(exp_to_update)
 	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 	if(!exp_read.Execute())
 		var/err = exp_read.ErrorMsg()
-		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
+		log_sql("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
 		return -1
 	var/list/play_records = list()
@@ -280,14 +273,14 @@ GLOBAL_PROTECT(exp_to_update)
 			var/rolefound = FALSE
 			play_records[EXP_TYPE_LIVING] += minutes
 			if(announce_changes)
-				to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!</span>")
+				to_chat(src,"<span class='notice'>You got: [minutes] Living EXP!</span>")
 			if(mob.mind.assigned_role)
 				for(var/job in SSjob.name_occupations)
 					if(mob.mind.assigned_role == job)
 						rolefound = TRUE
 						play_records[job] += minutes
 						if(announce_changes)
-							to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!</span>")
+							to_chat(src,"<span class='notice'>You got: [minutes] [job] EXP!</span>")
 				if(!rolefound)
 					for(var/role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])
 						if(mob.mind.assigned_role == role)
@@ -298,7 +291,7 @@ GLOBAL_PROTECT(exp_to_update)
 				if(mob.mind.special_role && !mob.mind.var_edited)
 					play_records[mob.mind.special_role] += minutes
 					if(announce_changes)
-						to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!</span>")
+						to_chat(src,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!</span>")
 			if(!rolefound)
 				play_records["Unknown"] += minutes
 		else
@@ -320,7 +313,7 @@ GLOBAL_PROTECT(exp_to_update)
 				"job" = "'[sanitizeSQL(jtype)]'",
 				"ckey" = "'[sanitizeSQL(ckey)]'",
 				"minutes" = play_records[jtype])))
-	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox.proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox/proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
 
 
 //ALWAYS call this at beginning to any proc touching player flags, or your database admin will probably be mad
@@ -332,7 +325,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 	if(!flags_read.Execute())
 		var/err = flags_read.ErrorMsg()
-		log_game("SQL ERROR during player flags read. Error : \[[err]\]\n")
+		log_sql("SQL ERROR during player flags read. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during player flags read. Error : \[[err]\]\n")
 		return FALSE
 
