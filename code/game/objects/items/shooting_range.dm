@@ -49,6 +49,9 @@
 	desc = "A shooting target that looks like a xenomorphic alien."
 	hp = 2350
 
+/obj/item/target/alien/anchored
+	anchored = TRUE
+
 /obj/item/target/clown
 	icon_state = "target_c"
 	desc = "A shooting target that looks like a useless clown."

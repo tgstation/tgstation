@@ -148,6 +148,9 @@
 	buildstacktype = /obj/item/stack/sheet/glass
 	buildstackamount = 5
 
+/obj/structure/reflector/single/anchored
+	anchored = TRUE
+
 /obj/structure/reflector/single/get_reflection(srcdir,pdir)
 	var/new_dir = rotations["[srcdir]"]["[pdir]"]
 	return new_dir
@@ -171,6 +174,9 @@
 	buildstacktype = /obj/item/stack/sheet/rglass
 	buildstackamount = 10
 
+/obj/structure/reflector/double/anchored
+	anchored = TRUE
+
 /obj/structure/reflector/double/get_reflection(srcdir,pdir)
 	var/new_dir = double_rotations["[srcdir]"]["[pdir]"]
 	return new_dir
@@ -193,6 +199,9 @@
 "[WEST]" = list("[SOUTH]" = WEST, "[EAST]" = WEST, "[WEST]" = WEST, "[NORTH]" = WEST) )
 	buildstacktype = /obj/item/stack/sheet/mineral/diamond
 	buildstackamount = 1
+
+/obj/structure/reflector/box/anchored
+	anchored = TRUE
 
 /obj/structure/reflector/box/get_reflection(srcdir,pdir)
 	var/new_dir = box_rotations["[srcdir]"]["[pdir]"]
