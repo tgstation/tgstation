@@ -13,10 +13,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 	screen_on = 0 		// Starts closed
-	var/start_open = 1	// unless this var is set to 1
+	var/start_open = TRUE	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
 	var/w_class_open = WEIGHT_CLASS_BULKY
-	var/slowdown_open = 1
+	var/slowdown_open = TRUE
 
 /obj/item/device/modular_computer/laptop/Initialize()
 	. = ..()
@@ -100,4 +100,4 @@
 
 // Laptop frame, starts empty and closed.
 /obj/item/device/modular_computer/laptop/buildable
-	start_open = 0
+	start_open = FALSE

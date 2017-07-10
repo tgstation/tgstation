@@ -27,8 +27,7 @@
 	desc = "Made by Abjuration Inc"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
-	anchored = 1
-	obj_integrity = 200
+	anchored = TRUE
 	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0

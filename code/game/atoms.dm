@@ -192,6 +192,19 @@
 /atom/proc/is_transparent()
 	return container_type & TRANSPARENT
 
+/atom/proc/is_injectable(allowmobs = TRUE)
+	if(isliving(src) && allowmobs)
+		var/mob/living/L = src
+		return L.can_inject()
+	if(container_type & OPENCONTAINER)
+		return TRUE
+	return container_type & INJECTABLE
+
+/atom/proc/is_drawable(allowmobs = TRUE)
+	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
+		return TRUE
+	return container_type & DRAWABLE
+
 /atom/proc/allow_drop()
 	return 1
 

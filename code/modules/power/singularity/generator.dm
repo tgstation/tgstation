@@ -4,9 +4,9 @@
 	desc = "An odd device which produces a Gravitational Singularity when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
-	anchored = 0
-	density = 1
-	use_power = 0
+	anchored = FALSE
+	density = TRUE
+	use_power = NO_POWER_USE
 	resistance_flags = FIRE_PROOF
 
 	// You can buckle someone to the singularity generator, then start the engine. Fun!

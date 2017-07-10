@@ -13,13 +13,13 @@
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	resistance_flags = FIRE_PROOF
-	var/status = 0
-	var/lit = 0	//on or off
-	var/operating = 0//cooldown
+	var/status = FALSE
+	var/lit = FALSE	//on or off
+	var/operating = FALSE//cooldown
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/internals/plasma/ptank = null
-	var/warned_admins = 0 //for the message_admins() when lit
+	var/warned_admins = FALSE //for the message_admins() when lit
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
@@ -161,7 +161,7 @@
 		START_PROCESSING(SSobj, src)
 		if(!warned_admins)
 			message_admins("[ADMIN_LOOKUPFLW(user)] has lit a flamethrower.")
-			warned_admins = 1
+			warned_admins = TRUE
 	else
 		STOP_PROCESSING(SSobj,src)
 	update_icon()
@@ -170,16 +170,16 @@
 	..()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
-	weldtool.status = 0
-	igniter.secured = 0
-	status = 1
+	weldtool.status = FALSE
+	igniter.secured = FALSE
+	status = TRUE
 	update_icon()
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
 	if(!lit || operating)
 		return
-	operating = 1
+	operating = TRUE
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/T in turflist)
 		if(T == previousturf)
@@ -193,7 +193,7 @@
 			default_ignite(T)
 		sleep(1)
 		previousturf = T
-	operating = 0
+	operating = FALSE
 	for(var/mob/M in viewers(1, loc))
 		if((M.client && M.machine == src))
 			attack_self(M)
@@ -217,11 +217,11 @@
 	if(create_full)
 		if(!weldtool)
 			weldtool = new /obj/item/weapon/weldingtool(src)
-		weldtool.status = 0
+		weldtool.status = FALSE
 		if(!igniter)
 			igniter = new igniter_type(src)
-		igniter.secured = 0
-		status = 1
+		igniter.secured = FALSE
+		status = TRUE
 		if(create_with_tank)
 			ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 		update_icon()

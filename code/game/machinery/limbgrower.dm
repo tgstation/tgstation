@@ -9,16 +9,16 @@
 	desc = "It grows new limbs using Synthflesh."
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
-	density = 1
+	density = TRUE
 	container_type = OPENCONTAINER
 
-	var/operating = 0
-	anchored = 1
-	use_power = 1
+	var/operating = FALSE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	var/disabled = 0
 	idle_power_usage = 10
 	active_power_usage = 100
-	var/busy = 0
+	var/busy = FALSE
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
@@ -117,7 +117,7 @@
 			var/power = max(2000, synth_cost/5)
 
 			if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))
-				busy = 1
+				busy = TRUE
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
@@ -140,7 +140,7 @@
 			new buildpath(loc)
 	else
 		src.visible_message("<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>")
-	busy = 0
+	busy = FALSE
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"
 	updateUsrDialog()

@@ -285,7 +285,7 @@
 	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	var/cover_open = 0
+	var/cover_open = FALSE
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1

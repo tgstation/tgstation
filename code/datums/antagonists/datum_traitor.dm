@@ -38,7 +38,7 @@
 
 
 /datum/antagonist/traitor/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	if(isAI(new_body)==isAI(old_body))
+	if(issilicon(new_body) && issilicon(old_body))
 		..()
 	else
 		silent = TRUE

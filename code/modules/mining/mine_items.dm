@@ -3,7 +3,7 @@
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light emitter"
-	anchored = 1
+	anchored = TRUE
 	invisibility = 101
 	var/set_luminosity = 8
 	var/set_cap = 0
@@ -57,7 +57,7 @@
 /**********************Shuttle Computer**************************/
 
 /obj/machinery/computer/shuttle/mining
-	name = "Mining Shuttle Console"
+	name = "mining shuttle console"
 	desc = "Used to call and send the mining shuttle."
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"

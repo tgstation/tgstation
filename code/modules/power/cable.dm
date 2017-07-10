@@ -511,9 +511,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/stack/cable_coil/one
-	amount = 1
-
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
 	materials = list()

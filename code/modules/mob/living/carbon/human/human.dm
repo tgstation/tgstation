@@ -51,6 +51,18 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 
+	if(!(NOLIVER in dna.species.species_traits))
+		if(dna.species.mutantliver)
+			internal_organs += new dna.species.mutantliver()
+		else
+			internal_organs += new /obj/item/organ/liver()
+
+	if(!(NOSTOMACH in dna.species.species_traits))
+		if(dna.species.mutantstomach)
+			internal_organs += new dna.species.mutantstomach()
+		else
+			internal_organs += new /obj/item/organ/stomach()
+
 	internal_organs += new dna.species.mutanteyes
 	internal_organs += new dna.species.mutantears
 	internal_organs += new dna.species.mutanttongue
@@ -83,10 +95,6 @@
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
-
-		var/mob/living/simple_animal/borer/B = has_brain_worms()
-		if(B && B.controlling)
-			stat("Chemicals", B.chemicals)
 
 		if(mind)
 			if(mind.changeling)

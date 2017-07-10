@@ -40,6 +40,7 @@
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
+	var/recovery_time = 0
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
@@ -83,6 +84,8 @@
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	if(recovery_time >= world.time)
+		return
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
@@ -121,7 +124,8 @@
 		if(3)
 			adjustBruteLoss(50)
 
-
+/mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
+	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set

@@ -7,15 +7,20 @@
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	origin_tech = "materials=3;magnets=3;engineering=3;plasmatech=3"
 
-	mesons_on = TRUE //if set to FALSE, these goggles work as t-ray scanners.
+	var/mesons_on = TRUE //if set to FALSE, these goggles work as t-ray scanners.
 	var/range = 1
 
-/obj/item/clothing/glasses/meson/engine/toggle_mode(mob/user, voluntary)
-	var/turf/T = get_turf(src)
-	if(T && T.z == ZLEVEL_MINING && !mesons_on)
-		if(picked_excuse)
-			to_chat(user, "<span class='warning'>Due to [picked_excuse], the [name] cannot currently be swapped to \[Meson] mode.</span>")
-		return
+
+
+/obj/item/clothing/glasses/meson/engine/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/meson/engine/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/glasses/meson/engine/proc/toggle_mode(mob/user, voluntary)
 	mesons_on = !mesons_on
 
 	if(!mesons_on)
@@ -103,9 +108,6 @@
 	invis_view = SEE_INVISIBLE_LIVING
 	range = 2
 
-/obj/item/clothing/glasses/meson/engine/tray/Initialize()
-	. = ..()
-	picked_excuse = null
 
 /obj/item/clothing/glasses/meson/engine/tray/process()
 	if(!on)

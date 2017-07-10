@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
+	container_type = INJECTABLE
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -474,7 +475,7 @@
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "a strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -533,6 +534,7 @@
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 	Serve [user], and assist [user.p_them()] in completing their goals at any cost.")
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
+	G.mind.assigned_role = "Servant Golem"
 
 	G.mind.enslave_mind_to_creator(user)
 
@@ -544,7 +546,7 @@
 
 
 /obj/effect/timestop
-	anchored = 1
+	anchored = TRUE
 	name = "chronofield"
 	desc = "ZA WARUDO"
 	icon = 'icons/effects/160x160.dmi'
@@ -578,7 +580,7 @@
 				if(M in immune)
 					continue
 				M.Stun(200, 1, 1)
-				M.anchored = 1
+				M.anchored = TRUE
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
@@ -608,7 +610,7 @@
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
 	M.AdjustStun(-200, 1, 1)
-	M.anchored = 0
+	M.anchored = FALSE
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)

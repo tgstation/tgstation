@@ -3695,14 +3695,10 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "ahX" = (
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahY" = (
@@ -10280,8 +10276,7 @@
 /area/maintenance/arrivals/north)
 "axe" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -19784,7 +19779,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUb" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/brown{
 	dir = 10
 	},
@@ -27951,6 +27946,10 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -32343,7 +32342,6 @@
 /area/medical/sleeper)
 "bwD" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -33644,7 +33642,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4;
 	external_pressure_bound = 140;
-	pressure_checks = 0
+	pressure_checks = 0;
 	name = "server vent"
 	},
 /turf/open/floor/circuit{
@@ -34083,7 +34081,6 @@
 /area/medical/sleeper)
 "bAq" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -36691,11 +36688,11 @@
 "bGg" = (
 /obj/structure/table,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bGh" = (
 /obj/machinery/computer/shuttle/mining,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bGi" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -37338,7 +37335,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bHy" = (
 /obj/structure/closet/crate,
 /obj/machinery/light/small{
@@ -38172,7 +38169,7 @@
 	width = 7
 	},
 /turf/open/floor/plating,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bJd" = (
 /obj/machinery/door/airlock/glass_mining{
 	cyclelinkeddir = 8;
@@ -39339,11 +39336,11 @@
 "bLs" = (
 /obj/structure/ore_box,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bLt" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bLu" = (
 /obj/structure/rack{
 	dir = 8;
@@ -39867,7 +39864,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bMG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -41537,6 +41534,12 @@
 	},
 /obj/machinery/newscaster{
 	pixel_x = -30
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	layer = 2.9
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -46430,9 +46433,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	dir = 1
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -47812,7 +47813,6 @@
 /area/engine/engineering)
 "ceo" = (
 /obj/machinery/keycard_auth{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel,
@@ -48833,13 +48833,13 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
@@ -48847,7 +48847,7 @@
 	dir = 9
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgL" = (
@@ -49321,7 +49321,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chG" = (
@@ -49724,7 +49724,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -50360,8 +50360,7 @@
 	dir = 4;
 	name = "Research Monitor";
 	network = list("RD");
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/heads/chief)
@@ -52657,7 +52656,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "coL" = (
@@ -53274,7 +53273,7 @@
 /area/engine/engineering)
 "cqa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -54122,7 +54121,7 @@
 /area/space)
 "csa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -56753,7 +56752,6 @@
 /area/shuttle/escape)
 "cxS" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -57378,7 +57376,6 @@
 /area/shuttle/abandoned)
 "czC" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
@@ -58989,7 +58986,7 @@
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -59518,7 +59515,7 @@
 /area/engine/supermatter)
 "cEv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -59538,7 +59535,7 @@
 /area/engine/supermatter)
 "cEy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
@@ -59843,7 +59840,7 @@
 /area/engine/engineering)
 "cFe" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
@@ -59863,7 +59860,7 @@
 /area/engine/engineering)
 "cFh" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
@@ -60375,7 +60372,7 @@
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -60384,7 +60381,7 @@
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
 	},
@@ -60401,7 +60398,7 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -60435,7 +60432,7 @@
 /area/engine/engineering)
 "cGK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -60443,7 +60440,7 @@
 /area/engine/engineering)
 "cGL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -61104,17 +61101,13 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "cIl" = (
-/obj/machinery/computer/med_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
 "cIm" = (
-/obj/machinery/computer/crew{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/crew/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -61139,17 +61132,13 @@
 	},
 /area/shuttle/syndicate)
 "cIq" = (
-/obj/machinery/computer/camera_advanced{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
 "cIr" = (
-/obj/machinery/computer/secure_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -62472,80 +62461,80 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "cMm" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMn" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMo" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMp" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMq" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMr" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMs" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMt" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMu" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMw" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMx" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMz" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMA" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMB" = (
@@ -62615,7 +62604,7 @@
 /area/engine/supermatter)
 "cMN" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cMO" = (
@@ -64406,6 +64395,86 @@
 	dir = 1
 	},
 /area/engine/engineering)
+"cTg" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTh" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTi" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTj" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTk" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTl" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTm" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTn" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTo" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTp" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTq" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTr" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTs" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTt" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTu" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTv" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTw" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTx" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTy" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTz" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTA" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTB" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTC" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
 
 (1,1,1) = {"
 aaa
@@ -83830,13 +83899,13 @@ aaa
 aaa
 aaa
 aaa
-akD
-akD
-ajX
-akD
-ajX
-akD
-akD
+cTg
+cTg
+cTi
+cTg
+cTi
+cTg
+cTg
 aaa
 bCq
 bPS
@@ -84087,13 +84156,13 @@ aaa
 aaa
 aaa
 aaa
-akD
+cTg
 bGg
-amI
+cTo
 cMl
 bHx
-anM
-akD
+cTx
+cTg
 aaa
 bLv
 bPR
@@ -84344,10 +84413,10 @@ bxx
 bxu
 bxu
 bDi
-ajX
+cTi
 bGh
 bHx
-amI
+cTo
 bHx
 bLt
 bMF
@@ -84601,13 +84670,13 @@ bzP
 bAS
 bxu
 aaa
-akD
+cTg
 bGg
-amI
-amI
+cTo
+cTo
 bHx
 bLs
-akD
+cTg
 aaa
 bLv
 bPT
@@ -84858,13 +84927,13 @@ bzR
 byd
 bxx
 aaa
-akD
-akD
-ajX
+cTg
+cTg
+cTi
 bJc
-ajX
-akD
-akD
+cTi
+cTg
+cTg
 aaa
 bCq
 bPV

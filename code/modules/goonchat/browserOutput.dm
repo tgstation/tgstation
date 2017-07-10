@@ -90,8 +90,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
-	winset(owner, "output", "is-disabled=true;is-visible=false")
-	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+	showChat()
 
 
 	for(var/message in messageQueue)
@@ -100,7 +99,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	messageQueue = null
 	sendClientData()
 
+	//do not convert to to_chat()
+	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
+
 	pingLoop()
+
+/datum/chatOutput/proc/showChat()
+	winset(owner, "output", "is-visible=false")
+	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
 /datum/chatOutput/proc/pingLoop()
 	set waitfor = FALSE
@@ -146,7 +152,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			if (found.len > 0)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				log_admin("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				log_admin_private("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = TRUE
 
@@ -245,16 +251,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if (!C)
 			continue
 
+		//Send it to the old style output window.
+		C << original_message
+
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			C << original_message
-			return TRUE
+			continue
 
 		if(!C.chatOutput.loaded)
-			//Client sucks at loading things, put their messages in a queue
+			//Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message
-			//But also send it to their output window since that shows until goonchat loads
-			C << original_message
-			return
+			continue
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")

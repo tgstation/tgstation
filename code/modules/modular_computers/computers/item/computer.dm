@@ -13,7 +13,7 @@
 	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
-	var/emagged = 0											// Whether the computer is emagged.
+	var/emagged = FALSE											// Whether the computer is emagged.
 
 	var/base_active_power_usage = 50						// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 5							// Power usage when the computer is idle and screen is off (currently only applies to laptops)
@@ -30,7 +30,6 @@
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	obj_integrity = 100
 	integrity_failure = 50
 	max_integrity = 100
 	armor = list(melee = 0, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 0, acid = 0)
@@ -39,7 +38,7 @@
 
 	// Optional hardware (improves functionality, but is not critical for computer to work)
 
-	var/list/all_components							// List of "connection ports" in this computer and the components with which they are plugged
+	var/list/all_components = list()						// List of "connection ports" in this computer and the components with which they are plugged
 
 	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
@@ -49,14 +48,12 @@
 	var/comp_light_color			//The color of that light
 
 
-
 /obj/item/device/modular_computer/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
 	comp_light_color = "#FFFFFF"
-	all_components = list()
 	idle_threads = list()
 	update_icon()
 
@@ -183,7 +180,7 @@
 		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
 		return 0
 	else
-		emagged = 1
+		emagged = TRUE
 		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
 		return 1
 

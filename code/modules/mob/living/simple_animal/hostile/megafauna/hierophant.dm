@@ -349,7 +349,7 @@ Difficulty: Hard
 		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
 		if(t && get_dist(t, T) == 11)
-			new /obj/effect/temp_visual/hierophant/wall(t)
+			new /obj/effect/temp_visual/hierophant/wall(t, src)
 			new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
 	if(get_dist(src, T) >= 11) //hey you're out of range I need to get closer to you!
 		INVOKE_ASYNC(src, .proc/blink, T)
@@ -468,6 +468,8 @@ Difficulty: Hard
 	return ..()
 
 /obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target, height = 0)
+	if(QDELETED(caster))
+		return FALSE
 	if(mover == caster.pulledby)
 		return TRUE
 	if(istype(mover, /obj/item/projectile))

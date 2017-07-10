@@ -65,6 +65,7 @@
 	pixel_x = -16
 	density = TRUE
 	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
@@ -86,7 +87,7 @@
 /obj/structure/fluff/bus/passable
 	name = "bus"
 	icon_state = "frontwalltop"
-	density = 0
+	density = FALSE
 	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
 
 
@@ -125,8 +126,8 @@
 /obj/structure/fluff/divine
 	name = "Miracle"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/fluff/divine/nexus
 	name = "nexus"
@@ -142,7 +143,7 @@
 	name = "conversion altar"
 	desc = "An altar dedicated to a deity."
 	icon_state = "convertaltar"
-	density = 0
+	density = FALSE
 	can_buckle = 1
 
 /obj/structure/fluff/divine/powerpylon

@@ -11,7 +11,7 @@
 	icon_state = "pinonfar"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	anchored = 1
+	anchored = TRUE
 // 
 	var/id
 	// this should point -away- from the dockingport door, ie towards the ship
@@ -828,5 +828,28 @@
 		else
 			return ..()
 
+
+//Called when emergency shuttle leaves the station
+/obj/docking_port/mobile/proc/on_emergency_launch()
+	if(launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
+		launch_status = ENDGAME_LAUNCHED
+		enterTransit()
+
+/obj/docking_port/mobile/emergency/on_emergency_launch()
+	return
+
+//Called when emergency shuttle docks at centcom
+/obj/docking_port/mobile/proc/on_emergency_dock()
+	//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+	if(launch_status == ENDGAME_LAUNCHED)
+		launch_status = ENDGAME_TRANSIT
+
+/obj/docking_port/mobile/pod/on_emergency_dock()
+	if(launch_status == ENDGAME_LAUNCHED)
+		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcomm
+		mode = SHUTTLE_ENDGAME
+		
+/obj/docking_port/mobile/emergency/on_emergency_dock()
+	return
 
 #undef DOCKING_PORT_HIGHLIGHT

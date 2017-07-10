@@ -12,9 +12,9 @@
 	name = "acid"
 	desc = "Burbling corrossive stuff."
 	icon_state = "acid"
-	density = 0
+	density = FALSE
 	opacity = 0
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = ABOVE_NORMAL_TURF_LAYER
 	var/turf/target

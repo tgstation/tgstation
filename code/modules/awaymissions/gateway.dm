@@ -5,8 +5,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
 	var/checkparts = TRUE
@@ -21,7 +21,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
 		switch(dir)
 			if(SOUTH,SOUTHEAST,SOUTHWEST)
-				density = 0
+				density = FALSE
 	..()
 
 /obj/machinery/gateway/proc/toggleoff()
@@ -89,7 +89,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centerstation
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 
 	//warping vars
 	var/wait = 0				//this just grabs world.time at world start
@@ -176,7 +176,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centeraway
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	var/obj/machinery/gateway/centeraway/stationgate = null
 	can_link = TRUE
 

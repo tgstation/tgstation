@@ -690,7 +690,6 @@
 /area/awaymission/cabin)
 "cu" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,

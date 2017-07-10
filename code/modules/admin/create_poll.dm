@@ -1,7 +1,7 @@
 /client/proc/create_poll()
 	set name = "Create Poll"
 	set category = "Special Verbs"
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
@@ -69,6 +69,15 @@
 			if(!option)
 				return
 			option = sanitizeSQL(option)
+			var/default_percentage_calc
+			if(polltype != POLLTYPE_IRV)
+				switch(alert("Should this option be included by default when poll result percentages are generated?",,"Yes","No","Cancel"))
+					if("Yes")
+						default_percentage_calc = 1
+					if("No")
+						default_percentage_calc = 0
+					else
+						return
 			var/minval = 0
 			var/maxval = 0
 			var/descmin = ""
@@ -103,7 +112,7 @@
 					descmax = sanitizeSQL(descmax)
 				else if(descmax == null)
 					return
-			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'"))
+			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'", "default_display_in_results" = "'[default_percentage_calc]'"))
 			switch(alert(" ",,"Add option","Finish", "Cancel"))
 				if("Add option")
 					add_option = 1

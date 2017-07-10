@@ -3,8 +3,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/charging = null
@@ -60,7 +60,7 @@
 				return 1
 			G.loc = src
 			charging = G
-			use_power = 2
+			use_power = ACTIVE_POWER_USE
 			update_icon(scan = TRUE)
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
@@ -88,7 +88,7 @@
 		charging.loc = loc
 		user.put_in_hands(charging)
 		charging = null
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		update_icon()
 
 /obj/machinery/recharger/attack_paw(mob/user)
@@ -99,7 +99,7 @@
 		charging.update_icon()
 		charging.loc = loc
 		charging = null
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		update_icon()
 
 /obj/machinery/recharger/process()

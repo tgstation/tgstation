@@ -25,6 +25,12 @@
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
+/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	return
+
+/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
+	return
+
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
 	contents_explosion(severity, target)
 	switch(severity)
