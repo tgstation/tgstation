@@ -18,7 +18,6 @@
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -138,7 +137,6 @@
 	icon_state = "proto"
 	icon_state = "proto"
 	volume = 5000
-	obj_integrity = 300
 	max_integrity = 300
 	temperature_resistance = 2000 + T0C
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)

@@ -6,7 +6,6 @@
 	icon_state = "close"
 	anchored = 1
 	density = 1
-	obj_integrity = 250
 	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null

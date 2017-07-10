@@ -170,7 +170,6 @@
 	desc = "A floating bubble containing leaper venom, the contents are under a surprising amount of pressure."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "leaper"
-	obj_integrity = 10
 	max_integrity = 10
 	density = FALSE
 

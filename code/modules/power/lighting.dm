@@ -42,7 +42,6 @@
 	icon_state = "tube-construct-stage1"
 	anchored = 1
 	layer = WALL_OBJ_LAYER
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
 
@@ -156,7 +155,6 @@
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = WALL_OBJ_LAYER
-	obj_integrity = 100
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2

@@ -18,7 +18,6 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	obj_integrity = 300
 	max_integrity = 300
 	integrity_failure = 100
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!

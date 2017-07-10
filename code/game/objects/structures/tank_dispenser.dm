@@ -7,7 +7,6 @@
 	icon_state = "dispenser"
 	density = 1
 	anchored = 1
-	obj_integrity = 300
 	max_integrity = 300
 	var/oxygentanks = TANK_DISPENSER_CAPACITY
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
@@ -25,7 +24,7 @@
 	for(var/i in 1 to plasmatanks)
 		new /obj/item/weapon/tank/internals/plasma(src)
 	update_icon()
-	
+
 /obj/structure/tank_dispenser/update_icon()
 	cut_overlays()
 	switch(oxygentanks)

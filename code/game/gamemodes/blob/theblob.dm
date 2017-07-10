@@ -9,7 +9,6 @@
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	obj_integrity = 30
 	max_integrity = 30
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
@@ -326,7 +325,7 @@
 	name = "normal blob"
 	icon_state = "blob"
 	light_range = 0
-	obj_integrity = 21
+	obj_integrity = 21 //doesn't start at full health
 	max_integrity = 25
 	health_regen = 1
 	brute_resist = 0.25

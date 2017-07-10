@@ -8,7 +8,6 @@
 	icon_state = ""
 	density = 1
 	anchored = 0
-	obj_integrity = 100
 	max_integrity = 100
 	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
@@ -96,7 +95,7 @@
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
-	obj_integrity = 300
+	max_integrity = 300
 	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
@@ -141,7 +140,7 @@
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
-	obj_integrity = 200
+	max_integrity = 200
 	material_drop_type = /obj/item/stack/sheet/mineral/plasma
 	desc = "This statue is suitably made from plasma."
 
@@ -192,7 +191,7 @@
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
-	obj_integrity = 300
+	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/gold
 	desc = "This is a highly valuable statue made from gold."
 
@@ -219,7 +218,7 @@
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
-	obj_integrity = 300
+	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/silver
 	desc = "This is a valuable statue made from silver."
 
@@ -246,7 +245,7 @@
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
-	obj_integrity = 1000
+	max_integrity = 1000
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
 	desc = "This is a very expensive diamond statue"
 
@@ -265,7 +264,7 @@
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
-	obj_integrity = 300
+	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
@@ -300,7 +299,7 @@
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
-	obj_integrity = 50
+	max_integrity = 50
 	material_drop_type = /obj/item/stack/sheet/mineral/sandstone
 
 /obj/structure/statue/sandstone/assistant
@@ -318,7 +317,7 @@
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
-	obj_integrity = 50
+	max_integrity = 50
 	material_drop_type = /obj/item/stack/sheet/mineral/snow
 
 /obj/structure/statue/snow/snowman
