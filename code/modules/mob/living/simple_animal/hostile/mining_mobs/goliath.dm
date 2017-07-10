@@ -49,7 +49,7 @@
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	anchored = 0
+	anchored = FALSE
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()

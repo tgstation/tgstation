@@ -13,15 +13,15 @@
 
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	dir = NORTH
 	use_power = NO_POWER_USE//Living things generally dont use power
 	idle_power_usage = 0
 	active_power_usage = 0
 
 	var/obj/machinery/power/am_control_unit/control_unit = null
-	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
+	var/processing = FALSE//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
 	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
 	var/coredirs = 0
@@ -186,7 +186,7 @@
 
 
 /obj/machinery/am_shielding/proc/setup_core()
-	processing = 1
+	processing = TRUE
 	GLOB.machines |= src
 	START_PROCESSING(SSmachines, src)
 	if(!control_unit)
@@ -197,7 +197,7 @@
 
 
 /obj/machinery/am_shielding/proc/shutdown_core()
-	processing = 0
+	processing = FALSE
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Remove(src)

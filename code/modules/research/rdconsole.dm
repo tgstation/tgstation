@@ -148,7 +148,7 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
+		emagged = TRUE
 		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /*
@@ -275,7 +275,7 @@ doesn't have toxins access.
 
 		var/g2g = 1
 		var/enough_materials = 1
-		linked_lathe.busy = 1
+		linked_lathe.busy = TRUE
 		flick("protolathe_n",linked_lathe)
 		use_power(power)
 
@@ -318,7 +318,7 @@ doesn't have toxins access.
 							SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
 							already_logged = 1
 				screen = old_screen
-				linked_lathe.busy = 0
+				linked_lathe.busy = FALSE
 			else
 				say("Protolathe connection failed. Production halted.")
 				screen = SCICONSOLE_MENU
@@ -351,7 +351,7 @@ doesn't have toxins access.
 
 		var/g2g = 1
 		var/enough_materials = 1
-		linked_imprinter.busy = 1
+		linked_imprinter.busy = TRUE
 		flick("circuit_imprinter_ani", linked_imprinter)
 		use_power(power)
 
@@ -384,7 +384,7 @@ doesn't have toxins access.
 					new_item.materials = efficient_mats.Copy()
 					SSblackbox.add_details("circuit_printed","[new_item.type]")
 				screen = old_screen
-				linked_imprinter.busy = 0
+				linked_imprinter.busy = FALSE
 			else
 				say("Circuit Imprinter connection failed. Production halted.")
 				screen = SCICONSOLE_MENU

@@ -52,7 +52,7 @@
 
 	var/max_uses = 20
 	var/uses = 0
-	var/emagged = 0
+	var/emagged = FALSE
 	var/failmsg = ""
 	// How much to increase per each glass?
 	var/increment = 5

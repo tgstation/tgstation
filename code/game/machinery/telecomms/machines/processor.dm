@@ -11,8 +11,8 @@
 	name = "processor unit"
 	icon_state = "processor"
 	desc = "This machine is used to process large quantities of information."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	machinetype = 3

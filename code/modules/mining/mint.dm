@@ -5,11 +5,11 @@
 	name = "coin press"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/datum/material_container/materials
 	var/newCoins = 0   //how many coins the machine made in it's last load
-	var/processing = 0
+	var/processing = FALSE
 	var/chosen = MAT_METAL //which material will be used to make coins
 	var/coinsToProduce = 10
 	speed_process = 1
@@ -77,7 +77,7 @@
 		coinsToProduce = Clamp(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce
-		processing = 1
+		processing = TRUE
 		icon_state = "coinpress1"
 		var/coin_mat = MINERAL_MATERIAL_AMOUNT * 0.2
 		var/datum/material/M = materials.materials[chosen]
@@ -93,7 +93,7 @@
 			sleep(5)
 
 		icon_state = "coinpress0"
-		processing = 0
+		processing = FALSE
 		coinsToProduce = temp_coins
 	src.updateUsrDialog()
 	return

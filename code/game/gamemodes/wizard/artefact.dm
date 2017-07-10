@@ -33,8 +33,8 @@
 	desc = "You should run now."
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
@@ -454,7 +454,6 @@
 	var/obj/item/link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
-	obj_integrity = 10
 	max_integrity = 10
 	resistance_flags = FLAMMABLE
 

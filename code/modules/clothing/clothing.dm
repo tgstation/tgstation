@@ -1,7 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 80
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
@@ -194,7 +193,7 @@
 	var/invis_view = SEE_INVISIBLE_LIVING
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/lighting_alpha
-	var/emagged = 0
+	var/emagged = FALSE
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20

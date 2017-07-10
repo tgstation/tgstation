@@ -14,8 +14,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = NO_POWER_USE
 
 	var/chargesa = 1
@@ -85,8 +85,8 @@
 /obj/effect/meatgrinder
 	name = "Meat Grinder"
 	desc = "What is that thing?"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	var/triggered = 0

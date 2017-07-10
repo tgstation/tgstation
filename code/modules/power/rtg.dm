@@ -6,8 +6,8 @@
 	desc = "A simple nuclear power generator, used in small outposts to reliably provide power for decades."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "rtg"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 
 	// You can buckle someone to RTG, then open its panel. Fun stuff.

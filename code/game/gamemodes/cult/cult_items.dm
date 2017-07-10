@@ -380,7 +380,7 @@
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
-	on = 1
+	on = TRUE
 	var/charges = 5
 
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)

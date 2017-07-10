@@ -9,10 +9,10 @@
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
 
 /obj/machinery/clonepod
-	anchored = 1
+	anchored = TRUE
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
-	density = 1
+	density = TRUE
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(GLOB.access_cloning) //For premature unlocking.

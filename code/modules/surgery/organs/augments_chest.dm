@@ -121,7 +121,7 @@
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
-	var/on = 0
+	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
@@ -144,7 +144,7 @@
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
 			return 0
-		on = 1
+		on = TRUE
 		if(allow_thrust(0.01))
 			ion_trail.start()
 			if(!silent)
@@ -153,7 +153,7 @@
 		ion_trail.stop()
 		if(!silent)
 			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
-		on = 0
+		on = FALSE
 	update_icon()
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon()

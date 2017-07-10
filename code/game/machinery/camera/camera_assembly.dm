@@ -12,7 +12,6 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera1"
-	obj_integrity = 150
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
 	var/static/list/possible_upgrades = typecacheof(list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer))
@@ -43,7 +42,7 @@
 			if(istype(W, /obj/item/weapon/weldingtool))
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You weld the assembly securely into place.</span>")
-					anchored = 1
+					anchored = TRUE
 					state = 2
 				return
 
@@ -71,7 +70,7 @@
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You unweld the assembly from its place.</span>")
 					state = 1
-					anchored = 1
+					anchored = TRUE
 				return
 
 

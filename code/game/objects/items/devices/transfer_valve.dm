@@ -8,7 +8,7 @@
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
 	var/mob/attacher = null
-	var/valve_open = 0
+	var/valve_open = FALSE
 	var/toggle = 1
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
@@ -78,7 +78,7 @@
 	if (src.loc == usr)
 		if(tank_one && href_list["tankone"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_one.loc = get_turf(src)
 			tank_one = null
 			update_icon()
@@ -86,7 +86,7 @@
 				w_class = WEIGHT_CLASS_NORMAL
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_two.loc = get_turf(src)
 			tank_two = null
 			update_icon()
@@ -155,7 +155,7 @@
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
 	if(!valve_open && tank_one && tank_two)
-		valve_open = 1
+		valve_open = TRUE
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
@@ -201,7 +201,7 @@
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
-		valve_open = 0
+		valve_open = FALSE
 		src.update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here

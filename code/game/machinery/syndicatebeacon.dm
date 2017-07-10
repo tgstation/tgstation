@@ -7,8 +7,8 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "beacon"
 
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 	verb_say = "states"
@@ -60,7 +60,7 @@
 			return
 
 		if(anchored)
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			disconnect_from_network()
 			return
@@ -68,7 +68,7 @@
 			if(!connect_to_network())
 				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 				return
-			anchored = 1
+			anchored = TRUE
 			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	else

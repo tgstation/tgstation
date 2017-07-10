@@ -188,7 +188,6 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 100, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
-	obj_integrity = 40
 	max_integrity = 40
 	var/cooldown = 0
 	sharpness = IS_SHARP

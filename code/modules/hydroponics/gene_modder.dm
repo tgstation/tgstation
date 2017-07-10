@@ -3,8 +3,8 @@
 	desc = "An advanced device designed to manipulate plant genetic makeup."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 	var/obj/item/seeds/seed
 	var/obj/item/weapon/disk/plantgene/disk

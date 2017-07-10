@@ -104,7 +104,7 @@
 	item_state = "moistnugget"
 	slot_flags = 0 //no SLOT_BACK sprite, alas
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
-	var/bolt_open = 0
+	var/bolt_open = FALSE
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
@@ -148,7 +148,7 @@
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
 	. = ..()
-	bolt_open = 1
+	bolt_open = TRUE
 	pump()
 	gun_type = type
 
@@ -206,7 +206,7 @@
 	icon_state = "cycler"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
-	var/toggled = 0
+	var/toggled = FALSE
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 
 /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/Initialize()

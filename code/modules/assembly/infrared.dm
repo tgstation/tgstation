@@ -4,8 +4,8 @@
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
 
-	var/on = 0
-	var/visible = 0
+	var/on = FALSE
+	var/visible = FALSE
 	var/obj/effect/beam/i_beam/first = null
 	var/obj/effect/beam/i_beam/last = null
 
@@ -34,7 +34,7 @@
 	if(secured)
 		START_PROCESSING(SSobj, src)
 	else
-		on = 0
+		on = FALSE
 		if(first)
 			qdel(first)
 		STOP_PROCESSING(SSobj, src)
@@ -66,12 +66,12 @@
 	if(T)
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 		I.master = src
-		I.density = 1
+		I.density = TRUE
 		I.setDir(dir)
 		first = I
 		step(I, I.dir)
 		if(first)
-			I.density = 0
+			I.density = FALSE
 			I.vis_spread(visible)
 			I.limit = 8
 			I.process()
@@ -163,9 +163,9 @@
 	var/obj/effect/beam/i_beam/previous = null
 	var/obj/item/device/assembly/infra/master = null
 	var/limit = null
-	var/visible = 0
+	var/visible = FALSE
 	var/left = null
-	anchored = 1
+	anchored = TRUE
 
 
 /obj/effect/beam/i_beam/proc/hit()
@@ -197,13 +197,13 @@
 	if(!next && (limit > 0))
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)
 		I.master = master
-		I.density = 1
+		I.density = TRUE
 		I.setDir(dir)
 		I.previous = src
 		next = I
 		step(I, I.dir)
 		if(next)
-			I.density = 0
+			I.density = FALSE
 			I.vis_spread(visible)
 			I.limit = limit - 1
 			master.last = I

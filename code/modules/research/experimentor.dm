@@ -22,8 +22,8 @@
 	desc = "A \"replacement\" for the deconstructive analyzer with a slight tendency to catastrophically fail."
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	var/recentlyExperimented = 0
 	var/mob/trackedIan

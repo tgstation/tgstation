@@ -49,7 +49,7 @@
 				temp.overload_lighting()
 			else if(istype(O,/obj/structure/closet/secure_closet))
 				var/obj/structure/closet/secure_closet/temp = O
-				temp.locked = 0
+				temp.locked = FALSE
 				temp.update_icon()
 			else if(istype(O,/obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/temp = O

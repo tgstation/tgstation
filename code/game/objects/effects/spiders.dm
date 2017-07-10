@@ -3,9 +3,9 @@
 	name = "web"
 	icon = 'icons/effects/effects.dmi'
 	desc = "it's stringy and sticky"
-	anchored = 1
-	density = 0
-	obj_integrity = 15
+	anchored = TRUE
+	density = FALSE
+	max_integrity = 15
 
 
 
@@ -80,9 +80,9 @@
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
-	anchored = 0
+	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	obj_integrity = 3
+	max_integrity = 3
 	var/amount_grown = 0
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
@@ -188,7 +188,7 @@
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web"
 	icon_state = "cocoon1"
-	obj_integrity = 60
+	max_integrity = 60
 
 /obj/structure/spider/cocoon/Initialize()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")

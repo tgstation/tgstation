@@ -150,7 +150,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
 	network = list("thunder")
-	density = 0
+	density = FALSE
 	circuit = null
 	clockwork = TRUE //it'd look very weird
 
@@ -168,7 +168,7 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
 	network = list("thunder")
-	density = 0
+	density = FALSE
 	circuit = null
 
 /obj/machinery/computer/security/wooden_tv

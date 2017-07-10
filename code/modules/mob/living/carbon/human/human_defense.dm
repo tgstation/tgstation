@@ -109,7 +109,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
 	var/spec_return = dna.species.spec_hitby(AM, src)
 	if(spec_return)
 		return spec_return
@@ -121,9 +121,9 @@
 		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
 	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
-		hitpush = 0
-		skipcatch = 1
-		blocked = 1
+		hitpush = FALSE
+		skipcatch = TRUE
+		blocked = TRUE
 	else if(I)
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
@@ -135,8 +135,8 @@
 					I.loc = src
 					L.receive_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-					hitpush = 0
-					skipcatch = 1 //can't catch the now embedded item
+					hitpush = FALSE
+					skipcatch = TRUE //can't catch the now embedded item
 
 	return ..()
 
@@ -457,12 +457,12 @@
 
 
 /mob/living/carbon/human/emp_act(severity)
-	var/informed = 0
+	var/informed = FALSE
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
 			if(!informed)
 				to_chat(src, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
-				informed = 1
+				informed = TRUE
 			switch(severity)
 				if(1)
 					L.receive_damage(0,10)

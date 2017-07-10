@@ -1,7 +1,7 @@
 //temporary visual effects
 /obj/effect/temp_visual
 	icon_state = "nothing"
-	anchored = 1
+	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds

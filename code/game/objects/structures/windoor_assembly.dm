@@ -14,8 +14,8 @@
 
 	name = "windoor Assembly"
 	icon_state = "l_windoor_assembly01"
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	dir = NORTH
 
 	var/ini_dir
@@ -24,7 +24,7 @@
 
 	//Vars to help with the icon's name
 	var/facing = "l"	//Does the windoor open to the left or right?
-	var/secure = 0		//Whether or not this creates a secure windoor
+	var/secure = FALSE		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
 	CanAtmosPass = ATMOS_PASS_PROC
 
@@ -40,7 +40,7 @@
 	air_update_turf(1)
 
 /obj/structure/windoor_assembly/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -125,7 +125,7 @@
 							to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 							return
 					to_chat(user, "<span class='notice'>You secure the windoor assembly.</span>")
-					anchored = 1
+					anchored = TRUE
 					if(secure)
 						name = "secure anchored windoor assembly"
 					else
@@ -140,7 +140,7 @@
 					if(!src || !anchored)
 						return
 					to_chat(user, "<span class='notice'>You unsecure the windoor assembly.</span>")
-					anchored = 0
+					anchored = FALSE
 					if(secure)
 						name = "secure windoor assembly"
 					else
@@ -160,7 +160,7 @@
 
 					P.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the windoor.</span>")
-					secure = 1
+					secure = TRUE
 					if(anchored)
 						name = "secure anchored windoor assembly"
 					else
@@ -265,7 +265,7 @@
 
 					if(loc && electronics)
 
-						density = 1 //Shouldn't matter but just incase
+						density = TRUE //Shouldn't matter but just incase
 						to_chat(user, "<span class='notice'>You finish the windoor.</span>")
 
 						if(secure)
@@ -277,7 +277,7 @@
 								windoor.icon_state = "rightsecureopen"
 								windoor.base_state = "rightsecure"
 							windoor.setDir(dir)
-							windoor.density = 0
+							windoor.density = FALSE
 
 							if(electronics.one_access)
 								windoor.req_one_access = electronics.accesses
@@ -300,7 +300,7 @@
 								windoor.icon_state = "rightopen"
 								windoor.base_state = "right"
 							windoor.setDir(dir)
-							windoor.density = 0
+							windoor.density = FALSE
 
 							windoor.req_access = electronics.accesses
 							windoor.electronics = electronics

@@ -13,14 +13,13 @@ Pipelines + Other Objects -> Pipe network
 #define PIPE_HIDDEN_LEVEL 1
 
 /obj/machinery/atmospherics
-	anchored = 1
+	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
-	obj_integrity = 200
 	max_integrity = 200
 	var/nodealert = 0
 	var/can_unwrench = 0

@@ -3,7 +3,7 @@
 	desc = "A large delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	density = 1
+	density = TRUE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/giftwrapped = FALSE
 	var/sortTag = 0

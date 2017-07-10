@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Mobs spawned by Necropolis curses are now immune to chasms."

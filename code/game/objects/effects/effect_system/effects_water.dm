@@ -43,7 +43,7 @@ steam.start() -- spawns the effect
 /obj/effect/particle_effect/steam
 	name = "steam"
 	icon_state = "extinguish"
-	density = 0
+	density = FALSE
 
 /obj/effect/particle_effect/steam/New()
 	..()

@@ -3,7 +3,7 @@
 	desc = "stepping on me is a guaranteed bad day"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap"
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
 	var/last_trigger = 0
@@ -130,7 +130,7 @@
 	name = "divine ward"
 	desc = "A divine barrier, It looks like you could destroy it with enough effort, or wait for it to dissipate..."
 	icon_state = "ward"
-	density = 1
+	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
 
