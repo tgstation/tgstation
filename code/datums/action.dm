@@ -166,6 +166,10 @@
 
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
+	
+/datum/action/item_action/rcl
+	name = "Change Cable Color"
+	button_icon_state = "rcl_rainbow"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -206,10 +210,6 @@
 
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
-
-/datum/action/item_action/rcl
-	name = "Change Cable Color"
-	button_icon_state = "rcl_rainbow"
 
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
