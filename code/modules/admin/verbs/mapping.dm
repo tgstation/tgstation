@@ -123,10 +123,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	set name = "Intercom Range Display"
 
 	var/static/intercom_range_display_status = FALSE
-	if(intercom_range_display_status)
-		intercom_range_display_status = !intercom_range_display_status
-	else
-		intercom_range_display_status = TRUE
+	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something
 
 	for(var/obj/effect/debugging/marker/M in world)
 		qdel(M)
