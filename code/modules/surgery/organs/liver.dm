@@ -38,7 +38,7 @@
 
 					if(toxamount <= toxTolerance && toxamount > 0)
 						for(var/datum/reagent/toxin/toxin in toxins)
-							C.reagents.reagents.remove_reagent(toxin.type, 1)
+							C.reagents.remove_reagent(toxin.type, 1)
 					else if(toxamount > toxTolerance)
 						damage += toxamount*toxLethality
 
