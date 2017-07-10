@@ -37,7 +37,7 @@ Actual Adjacent procs :
 	var/cost					//g A* movement cost variable
 	var/heuristic				//h A* heuristic variable = h
 	var/depth					//ht count the number of Nodes traversed
-	var/PathNode/next			//next node in the linked list stack.
+	var/PathNode/next			//next node in the linked stack.
 
 /datum/PathNode/New(s, id, p, pg, ph, pnt)
 	source = s
@@ -48,14 +48,13 @@ Actual Adjacent procs :
 	weight = pg + ph
 	depth = pnt
 
+/datum/PathNode/proc/calc_weight()
+	weight = cost + heuristic
+
 
 //////////////////////
 //A* procs
 //////////////////////
-
-//the weighting function, used in the A* algorithm
-///proc/PathWeightCompare(datum/PathNode/a, datum/PathNode/b)
-//	return a.weight - b.weight
 
 //reversed so that the Heap is a MinHeap rather than a MaxHeap
 /proc/HeapPathWeightCompare(datum/PathNode/a, datum/PathNode/b)
@@ -63,18 +62,13 @@ Actual Adjacent procs :
 
 //wrapper that returns an empty list if A* failed to find a path
 /proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, list/exclude=null, simulated_only = 1)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-	if(!path)
-		path = list()
-	return path
+	return AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only) || list()
 
-/*/proc/AStar(...)
+/proc/AStar(...)
 	var/static/const/num = 3
 	var/static/cur = rand(0, num-1)
 	if (prob(33))
 		cur = ((cur + 1) % num)
-
-
 	switch(cur)
 		if(0)
 			return AStar_new(arglist(args))
@@ -84,9 +78,9 @@ Actual Adjacent procs :
 			return AStar_goof(arglist(args))
 		else
 			throw EXCEPTION("invalid chain state")
-*/
+
 //the actual algorithm
-/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, list/exclude=null, simulated_only = 1)
+/proc/AStar_new(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, list/exclude=null, simulated_only = 1)
 	var/static/next_astar_id = 1
 	var/astar_id = next_astar_id++
 
@@ -102,9 +96,6 @@ Actual Adjacent procs :
 		else
 			exclude = list()
 
-	//make it assoicated
-	for (var/T in exclude)
-		exclude[T] = 1
 
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
@@ -122,118 +113,86 @@ Actual Adjacent procs :
 
 	//then run the main loop
 	while(length(open.L) && !path)
-		path = AStar_whileloop(open, turfs, maxnodes, dist, end, mintargetdist, maxnodedepth, closed, adjacent, id, astar_id, simulated_only, caller)
+		//get the lower f node on the open list
+		var/datum/PathNode/cur = open.Pop() //current processed turf
+		closed += cur.source //and tell we've processed it
 
-		CHECK_TICK
+		//if we only want to get near the target, check if we're close enough
+		var/closeenough
+		if(mintargetdist)
+			closeenough = call(cur.source, dist)(end) <= mintargetdist
 
-	AStar_cleanup(turfs, astar_id)
+		//if too many steps, abandon that path
+		if(maxnodedepth && (cur.depth > maxnodedepth))
+			break
+
+		//found the target turf (or close enough), let's create the path to it
+		if(cur.source == end || closeenough)
+			path = list(cur.source)
+			while(cur.parent)
+				cur = cur.parent
+				path.Add(cur.source)
+
+			break
+
+		//get adjacent turfs using the adjacent proc, checking for access with id
+		var/list/L = call(cur.source, adjacent)(caller, id, simulated_only)
+		for(var/turf/T in L-closed)
+			var/datum/PathNode/P
+			var/newcost = cur.cost + call(cur.source, dist)(T)
+
+			for(P = T.pathnodes; P && P.astar_id != astar_id; P = P.next); //byond magic
+
+			if(!P) //new shit yall
+				var/datum/PathNode/newnode = new /datum/PathNode(T, astar_id, cur, newcost, call(T, dist)(end), cur.depth+1)
+				open.Insert(newnode)
+				//add ourselves to the top of the pathnodes linked stack (it was either this or make it a doublely linked list
+				//that would have added extra overhead to maintaining the linked list.)
+				newnode.next = T.pathnodes
+				T.pathnodes = newnode
+				turfs += T
+
+			else //old shit, check if its still relevant
+				if(newcost < P.cost)
+					P.parent = cur
+					P.cost = (newcost * length(L) / 9)
+					P.calc_weight()
+					P.depth = cur.depth + 1
+					open.ReSort(P)//reorder the changed element in the list
 
 
 
-	//reverse the path to get it from start to finish
-	if (path)
-		AStar_reverse(path)
-
-	return path
-
-/proc/AStar_reverse(list/path)
-	for(var/i in 1 to  path.len/2)
-		path.Swap(i,path.len-i+1)
-
-
-/proc/AStar_cleanup(list/turfs, astar_id)
-	//cleaning up after us
+	//cleaning up after ourselves
 	for(var/thing in turfs)
 		var/turf/T = thing
 		var/datum/PathNode/head = T.pathnodes
-		if (head.astar_id == astar_id)
+		if (head && head.astar_id == astar_id)
 			T.pathnodes = head.next
+			head.next = null
+			head.parent = null
+			head.source = null
 			continue
 		var/datum/PathNode/P = head
 		while (P)
 			var/datum/PathNode/next = P.next
 			if (next && next.astar_id == astar_id)
 				P.next = next.next
+				next.next = null
+				next.parent = null
+				next.source = null
 				break
 			P = next
 
 
 
+	//reverse the path to get it from start to finish
+	if (path)
+		for(var/i in 1 to  path.len/2)
+			path.Swap(i,path.len-i+1)
 
-/proc/AStar_whileloop(Heap/open, list/turfs, maxnodes, dist, turf/end, mintargetdist, maxnodedepth, list/exclude, adjacent, id, astar_id, simulated_only, caller)
-	//get the lower f node on the open list
-	var/datum/PathNode/cur = open.Pop() //current processed turf
-	exclude += cur.source //and tell we've processed it
 
-	//if we only want to get near the target, check if we're close enough
-	var/closeenough
-	if(mintargetdist)
-		closeenough = call(cur.source, dist)(end) <= mintargetdist
+	return path
 
-	//if too many steps, abandon that path
-	if(maxnodedepth && (cur.depth > maxnodedepth))
-		return
-
-	//found the target turf (or close enough), let's create the path to it
-	if(cur.source == end || closeenough)
-		var/list/path = list(cur.source)
-
-		while(cur.parent)
-			cur = cur.parent
-			path.Add(cur.source)
-
-		return path
-
-	//get adjacent turfs using the adjacent proc, checking for access with id
-	var/list/L = call(cur.source, adjacent)(caller, id, simulated_only)
-	AStar_filter_turfs(L, cur, open, turfs, astar_id, dist, end, exclude)
-
-/proc/AStar_filter_turfs(list/L, datum/PathNode/cur, Heap/open, list/turfs, astar_id, dist, end, list/exclude)
-	for(var/turf/T in L-exclude)
-
-		var/datum/PathNode/P = AStar_find_pathnode(T, astar_id)
-		if(!P)
-			AStar_make_new_pathnode(cur, dist, T, turfs, astar_id, end, open)
-
-		else //is already in open list, check if it's a better way from the current turf
-			AStar_check_existing_pathnode(cur, P, dist, L, T, open)
-
-/proc/AStar_check_existing_pathnode(datum/PathNode/cur, datum/PathNode/P, dist, list/L, turf/T, Heap/open)
-	var/newcost = cur.cost + call(cur.source, dist)(T)
-	if(newcost < P.cost)
-		AStar_recalc_existing_pathnode(cur, newcost, P, L, open)
-
-/proc/AStar_recalc_existing_pathnode(datum/PathNode/cur, newcost, datum/PathNode/P, list/L, Heap/open)
-	P.parent = cur
-	P.cost = (newcost * length(L) / 9)
-	P.weight = P.cost + P.heuristic
-	P.depth = cur.depth + 1
-	open.ReSort(P)//reorder the changed element in the list
-
-/proc/AStar_make_new_pathnode(datum/PathNode/cur, dist, turf/T, turfs, astar_id, end, Heap/open)
-	var/newcost = cur.cost + call(cur.source, dist)(T)
-	var/datum/PathNode/newnode = new /datum/PathNode(T, astar_id, cur, newcost, call(T, dist)(end), cur.depth+1)
-	open.Insert(newnode)
-	newnode.next = T.pathnodes
-	T.pathnodes = newnode
-	turfs += T
-
-/proc/AStar_find_pathnode(turf/T, astar_id)
-	//99% of the time, the first node will be ours, so we can skip a for overhead by lazy accessing.
-	var/datum/PathNode/P = AStar_find_pathnode_quick_try(T)
-
-	if (!P || P.astar_id != astar_id)
-		return AStar_find_pathnode_full_try(P, astar_id)
-
-	return P
-
-/proc/AStar_find_pathnode_full_try(datum/PathNode/P, astar_id)
-	var/datum/PathNode/PN
-	for(PN = P; PN && PN.astar_id != astar_id; PN = PN.next); //byond magic
-	return PN
-
-/proc/AStar_find_pathnode_quick_try(turf/T)
-	return T.pathnodes
 
 
 /turf/var/list/pathnodes
