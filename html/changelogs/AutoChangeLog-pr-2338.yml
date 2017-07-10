@@ -1,0 +1,4 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug where applying an igniter to a wired rod gave back the wrong type of prod that didn't fit in your backpack."
