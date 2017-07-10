@@ -62,6 +62,10 @@
 		else
 			return null
 
+//returns a component icon from a component id
+/proc/get_component_icon(id)
+	return "<img style='width:14px; height:14px' src='data:image/png;base64,[icon2base64(icon('icons/obj/tgui_components.dmi', id))]'/>"
+
 //returns a component id from a component name
 /proc/get_component_id(name)
 	switch(name)
