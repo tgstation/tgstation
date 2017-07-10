@@ -14,7 +14,6 @@
 	var/opening = 0
 	density = 1
 	opacity = 1
-	obj_integrity = 100
 	max_integrity = 100
 
 	canSmoothWith = list(
@@ -220,7 +219,6 @@
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/closed/wall/mineral/diamond)
-	obj_integrity = 800
 	max_integrity = 800
 
 /obj/structure/falsewall/plasma

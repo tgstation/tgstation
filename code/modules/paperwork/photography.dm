@@ -30,7 +30,6 @@
 	item_state = "paper"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	obj_integrity = 50
 	max_integrity = 50
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.

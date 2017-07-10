@@ -114,7 +114,6 @@
 	layer = HIGH_OBJ_LAYER
 	density = FALSE
 	anchored = TRUE
-	obj_integrity = 30
 	max_integrity = 30
 	layer = LATTICE_LAYER
 

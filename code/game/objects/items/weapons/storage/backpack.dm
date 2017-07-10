@@ -20,7 +20,6 @@
 	max_combined_w_class = 21
 	storage_slots = 21
 	resistance_flags = 0
-	obj_integrity = 300
 	max_integrity = 300
 
 /*

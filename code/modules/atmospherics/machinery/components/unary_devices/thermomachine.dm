@@ -7,11 +7,10 @@
 	var/icon_state_open = "cold_off"
 	density = TRUE
 	anchored = TRUE
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
 	layer = OBJ_LAYER
-	
+
 	var/on = FALSE
 	var/min_temperature = 0
 	var/max_temperature = 0

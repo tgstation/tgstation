@@ -12,7 +12,6 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
-	obj_integrity = 150
 	max_integrity = 150
 	integrity_failure = 50
 	var/obscured = 0
@@ -22,8 +21,8 @@
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc)
+/obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
+	. = ..()
 	Make(S)
 	connect_to_network()
 
@@ -50,7 +49,8 @@
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.anchored = 1
-	S.loc = src
+	else
+		S.forceMove(src)
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
 		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
 		obj_integrity = max_integrity
@@ -265,7 +265,6 @@
 	density = 1
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 100
 	var/icon_screen = "solar"

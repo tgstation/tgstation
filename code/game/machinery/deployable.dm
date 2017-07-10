@@ -13,7 +13,6 @@
 	desc = "Looks like this would make good cover."
 	anchored = 1
 	density = 1
-	obj_integrity = 100
 	max_integrity = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/material = METAL
@@ -75,7 +74,6 @@
 	desc = "Bags of sand. Self explanatory."
 	icon = 'icons/obj/smooth_structures/sandbags.dmi'
 	icon_state = "sandbags"
-	obj_integrity = 280
 	max_integrity = 280
 	proj_pass_rate = 20
 	pass_flags = LETPASSTHROW
@@ -92,7 +90,6 @@
 	icon_state = "barrier0"
 	density = 0
 	anchored = 0
-	obj_integrity = 180
 	max_integrity = 180
 	proj_pass_rate = 20
 	armor = list(melee = 10, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)

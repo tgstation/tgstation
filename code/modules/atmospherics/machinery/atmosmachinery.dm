@@ -20,7 +20,6 @@ Pipelines + Other Objects -> Pipe network
 	on_blueprints = TRUE
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
-	obj_integrity = 200
 	max_integrity = 200
 	var/nodealert = 0
 	var/can_unwrench = 0

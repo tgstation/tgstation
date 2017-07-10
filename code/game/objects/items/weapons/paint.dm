@@ -11,7 +11,6 @@
 	item_state = "paintcan"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
 	max_integrity = 100
 	var/paintleft = 10
 

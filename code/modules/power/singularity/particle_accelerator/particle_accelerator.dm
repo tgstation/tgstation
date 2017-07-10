@@ -26,7 +26,6 @@
 	icon_state = "none"
 	anchored = 0
 	density = 1
-	obj_integrity = 500
 	max_integrity = 500
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 80)
 

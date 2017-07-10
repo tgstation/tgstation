@@ -8,7 +8,6 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	obj_integrity = 50
 	max_integrity = 50
 
 	var/obj/item/weapon/paper/internalPaper

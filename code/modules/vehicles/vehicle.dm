@@ -8,7 +8,6 @@
 	anchored = 0
 	can_buckle = 1
 	buckle_lying = 0
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 60, acid = 60)
 	var/auto_door_open = TRUE

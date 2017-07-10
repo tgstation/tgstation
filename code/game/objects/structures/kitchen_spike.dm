@@ -8,7 +8,6 @@
 	desc = "The frame of a meat spike."
 	density = 1
 	anchored = 0
-	obj_integrity = 200
 	max_integrity = 200
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
@@ -51,7 +50,6 @@
 	anchored = 1
 	buckle_lying = 0
 	can_buckle = 1
-	obj_integrity = 250
 	max_integrity = 250
 
 
