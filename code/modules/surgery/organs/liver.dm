@@ -33,11 +33,12 @@
 					//handle liver toxin filtration
 					var/toxamount
 					var/static/list/toxins = typesof(/datum/reagent/toxin)
-					for(var/toxin in toxins)
+					for(var/datum/reagent/toxin/toxin in toxins)
 						toxamount += C.reagents.get_reagent_amount(toxin.type)
 
 					if(toxamount <= toxTolerance && toxamount > 0)
-						C.reagents.reagents.remove_reagent(toxin, 1)
+						for(var/datum/reagent/toxin/toxin in toxins)
+							C.reagents.reagents.remove_reagent(toxin.type, 1)
 					else if(toxamount > toxTolerance)
 						damage += toxamount*toxLethality
 
