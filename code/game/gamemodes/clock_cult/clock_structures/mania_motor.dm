@@ -10,7 +10,6 @@
 	construction_value = 20
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	max_integrity = 100
-	obj_integrity = 100
 	light_color = "#AF0AAF"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
 	/obj/item/clockwork/alloy_shards/small = 2, \

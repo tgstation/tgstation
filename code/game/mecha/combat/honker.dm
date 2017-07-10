@@ -3,7 +3,6 @@
 	name = "\improper H.O.N.K"
 	icon_state = "honker"
 	step_in = 3
-	obj_integrity = 140
 	max_integrity = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60

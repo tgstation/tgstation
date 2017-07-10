@@ -11,7 +11,7 @@
 	possible_transfer_amounts = list()
 	volume = 15
 	var/mode = SYRINGE_DRAW
-	var/busy = 0		// needed for delayed drawing of blood
+	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 	container_type = TRANSPARENT
@@ -79,13 +79,13 @@
 				if(target != user)
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
-					busy = 1
+					busy = TRUE
 					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
-						busy = 0
+						busy = FALSE
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
 						return
-				busy = 0
+				busy = FALSE
 				if(L.transfer_blood_to(src, drawn_amount))
 					user.visible_message("[user] takes a blood sample from [L].")
 				else

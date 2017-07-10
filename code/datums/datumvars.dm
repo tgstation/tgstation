@@ -494,7 +494,7 @@
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["godmode"])

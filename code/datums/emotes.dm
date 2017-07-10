@@ -58,7 +58,7 @@
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
-	log_emote("[key_name(user)] : [msg]")
+	log_talk(user,"[key_name(user)] : [msg]",LOGEMOTE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))

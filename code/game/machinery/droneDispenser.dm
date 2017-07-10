@@ -10,10 +10,9 @@
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 80
 
@@ -143,7 +142,7 @@
 	glass_cost = 0
 	cooldownTime = 300 //30 seconds
 	maximum_idle = 0 // Swarmers have no restraint
-	dispense_type = /obj/item/device/unactivated_swarmer
+	dispense_type = /obj/effect/mob_spawn/swarmer
 	begin_create_message = "hums softly as an interface appears above it, \
 		scrolling by at unreadable speed."
 	end_create_message = "materializes a strange shell, which drops to the \

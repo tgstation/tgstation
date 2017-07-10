@@ -172,4 +172,5 @@
 #define ATMOS_PASS_DENSITY -2 //just check density
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
 
+#define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"

@@ -3,11 +3,10 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox0"
 	desc = "A display case for prized possessions."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list(melee = 30, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 100)
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	var/obj/item/showpiece = null
@@ -60,7 +59,7 @@
 
 /obj/structure/displaycase/obj_break(damage_flag)
 	if(!broken && !(flags & NODECONSTRUCT))
-		density = 0
+		density = FALSE
 		broken = 1
 		new /obj/item/weapon/shard( src.loc )
 		playsound(src, "shatter", 70, 1)
@@ -190,8 +189,8 @@
 
 
 /obj/structure/displaycase_chassis
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	name = "display case chassis"
 	desc = "wooden base of display case"
 	icon = 'icons/obj/stationobjs.dmi'

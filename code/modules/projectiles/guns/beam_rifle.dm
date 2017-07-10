@@ -539,7 +539,7 @@
 	paused = FALSE
 	. = ..()
 
-/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
 	paused = TRUE
 	if(!QDELETED(target))
 		cached = get_turf(target)
@@ -689,7 +689,7 @@
 /obj/effect/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'
 	layer = ABOVE_MOB_LAYER
-	anchored = 1
+	anchored = TRUE
 	light_power = 1
 	light_range = 2
 	light_color = "#00ffff"

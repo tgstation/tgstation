@@ -77,8 +77,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				M.Knockdown(320) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
 			else
-				A.anchored = 1
-				A.density = 0
+				A.anchored = TRUE
+				A.density = FALSE
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.loc = holder_obj
@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			holder_obj.add_overlay(balloon3)
 			sleep(4)
 			holder_obj.cut_overlay(balloon3)
-			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.
+			A.anchored = FALSE // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)
@@ -154,8 +154,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	desc = "A beacon for the fulton recovery system. Activate a pack in your hand to link it to a beacon."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_point"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	var/beacon_network = "station"
 
 /obj/structure/extraction_point/Initialize()

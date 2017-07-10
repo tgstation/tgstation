@@ -5,7 +5,7 @@
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
 	mouse_opacity = 2
-	density = 0
+	density = FALSE
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY

@@ -9,7 +9,6 @@
 	sharpness = IS_SHARP
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	heat = 3500
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
@@ -81,7 +80,7 @@
 	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
 	possible_colors = list("red", "blue", "green", "purple")
-	var/hacked = 0
+	var/hacked = FALSE
 
 /obj/item/weapon/melee/energy/sword/Destroy()
 	STOP_PROCESSING(SSobj, src)

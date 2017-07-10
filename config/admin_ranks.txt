@@ -19,7 +19,7 @@
 # +BAN = the ability to ban, jobban and fullban
 # +STEALTH = the ability to stealthmin (make yourself appear with a fake name to everyone but other admins
 # +POSSESS = the ability to possess objects
-# +REJUV (or +REJUVINATE) = the ability to heal, respawn, modify damage and use godmode
+# +POLL (or +POLL) = the ability to create in game server polls (requires DB)
 # +BUILD (or +BUILDMODE) = the ability to use buildmode
 # +SERVER = higher-risk admin verbs and abilities, such as those which affect the server configuration.
 # +DEBUG = debug tools used for diagnosing and fixing problems. It's useful to give this to coders so they can investigate problems on a live server.
@@ -33,11 +33,11 @@
 Admin Observer
 Moderator		= +ADMIN
 Admin Candidate	= +@
-Trial Admin		= +@ +SPAWN +REJUV +VAREDIT +BAN
-Badmin			= +@ +POSSESS +BUILDMODE +SERVER +FUN
+Trial Admin		= +@ +SPAWN +VAREDIT +BAN
+Badmin			= +@ +POSSESS +POLL +BUILDMODE +SERVER +FUN
 Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
 Game Master		= +EVERYTHING
 
 Host			= +EVERYTHING
 
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN
+Coder			= +DEBUG +VAREDIT +SERVER +SPAWN +POLL

@@ -11,9 +11,9 @@ insert ascii eagle on american flag background here
 	desc = "Deep fried <i>everything</i>."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?

@@ -12,8 +12,8 @@
 
 	var/last_pressure_delta = 0
 
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 	var/global/const/CIRC_LEFT = 1
 	var/global/const/CIRC_RIGHT = 2

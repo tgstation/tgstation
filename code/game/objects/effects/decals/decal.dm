@@ -1,6 +1,6 @@
 /obj/effect/decal
 	name = "decal"
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/decal/ex_act(severity, target)
@@ -19,7 +19,7 @@
 	var/group = TURF_DECAL_PAINT
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "warningline"
-	anchored = 1
+	anchored = TRUE
 
 //in case we need some special decals
 /obj/effect/turf_decal/proc/get_decal()

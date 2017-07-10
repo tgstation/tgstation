@@ -2,8 +2,8 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	pixel_y = 8
 	unique_rename = 1
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
@@ -815,7 +815,7 @@
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
-				anchored = 1
+				anchored = TRUE
 				user.visible_message("[user] wrenches [src] into place.", \
 									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
@@ -825,7 +825,7 @@
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
-				anchored = 0
+				anchored = FALSE
 				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
@@ -837,7 +837,7 @@
 		for(var/obj/machinery/hydroponics/h in range(1,src))
 			h.update_icon()
 
-	else if(istype(O, /obj/item/weapon/shovel/spade) && unwrenchable)
+	else if(istype(O, /obj/item/weapon/shovel/spade))
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
@@ -928,8 +928,8 @@
 	name = "soil"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
-	density = 0
-	use_power = 0
+	density = FALSE
+	use_power = NO_POWER_USE
 	unwrenchable = 0
 
 /obj/machinery/hydroponics/soil/update_icon_hoses()

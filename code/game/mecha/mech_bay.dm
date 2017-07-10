@@ -12,15 +12,15 @@
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	var/obj/mecha/recharging_mech
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/max_charge = 50
-	var/on = 0
+	var/on = FALSE
 	var/repairability = 0
 	var/turf/recharging_turf = null
 
@@ -95,7 +95,7 @@
 		return
 	interact(user)
 
-/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "mech_bay_power_console", "Mech Bay Power Control Console", 400, 170, master_ui, state)

@@ -400,7 +400,6 @@
 /area/shuttle/escape)
 "aQ" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cmo,
@@ -410,7 +409,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo,

@@ -3,11 +3,10 @@
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "water"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	container_type = DRAWABLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	obj_integrity = 300
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
 	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
@@ -126,8 +125,8 @@
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	reagent_id = "condensedcapsaicin"
 
 /obj/structure/reagent_dispensers/peppertank/Initialize()
@@ -141,7 +140,7 @@
 	desc = "A machine that dispenses liquid to drink."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
-	anchored = 1
+	anchored = TRUE
 	tank_volume = 500
 	var/paper_cups = 25 //Paper cups left from the cooler
 
@@ -175,5 +174,5 @@
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
-	anchored = 1
+	anchored = TRUE
 	reagent_id = "virusfood"

@@ -5,11 +5,11 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/broken = 0
-	var/processing = 0
-	use_power = 1
+	var/processing = FALSE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
 	var/rating_speed = 1
@@ -251,7 +251,7 @@
 	if(src.contents.len == 0)
 		to_chat(user, "<span class='warning'>The processor is empty!</span>")
 		return 1
-	src.processing = 1
+	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
 		"<span class='italics'>You hear a food processor.</span>")
@@ -274,7 +274,7 @@
 			continue
 		P.process_food(src.loc, O, src)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
-	src.processing = 0
+	processing = FALSE
 	src.visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()

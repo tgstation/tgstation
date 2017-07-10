@@ -7,8 +7,8 @@
 	icon_state = "syndicate-bomb"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
 
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -120,14 +120,14 @@
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
 				playsound(loc, I.usesound, 50, 1)
-				anchored = 1
+				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
 				playsound(loc, I.usesound, 50, 1)
-				anchored = 0
+				anchored = FALSE
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 

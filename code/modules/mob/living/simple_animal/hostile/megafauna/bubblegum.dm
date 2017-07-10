@@ -170,6 +170,7 @@ Difficulty: Hard
 			charge(bonus_charges)
 		else
 			Goto(target, move_to_delay, minimum_distance)
+			SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
@@ -392,7 +393,7 @@ Difficulty: Hard
 	icon_aggro = "bloodbrood"
 	attacktext = "pierces"
 	color = "#C80000"
-	density = 0
+	density = FALSE
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 

@@ -1,10 +1,10 @@
 /obj/machinery/chem_heater
 	name = "chemical heater"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0b"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -72,7 +72,7 @@
 /obj/machinery/chem_heater/on_deconstruction()
 	eject_beaker()
 
-/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

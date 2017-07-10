@@ -4,9 +4,9 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_taken"
 	req_access = list(GLOB.access_security) //reqaccess to access all stored items
-	density = 0
-	anchored = 1
-	use_power = 1
+	density = FALSE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500
 	var/list/stored_items = list()
@@ -27,7 +27,7 @@
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
 	if(!emagged) // emagging lets anyone reclaim all the items
 		req_access = list()
-		emagged = 1
+		emagged = TRUE
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/id/prisoner))
@@ -42,7 +42,7 @@
 			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
 	return ..()
 
-/obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

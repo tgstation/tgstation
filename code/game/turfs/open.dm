@@ -44,9 +44,8 @@
 	baseturf = /turf/open/indestructible/boss
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
-/turf/open/indestructible/boss/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-	baseturf = /turf/open/indestructible/boss/hot
+/turf/open/indestructible/boss/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'

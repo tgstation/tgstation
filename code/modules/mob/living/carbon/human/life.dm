@@ -66,7 +66,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 60 && stat != DEAD)
+	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
 		if(prob(3))
 			if(prob(25))
 				emote("drool")
@@ -266,13 +266,6 @@
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
 	return min(1,thermal_protection)
-
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
-	dna.species.handle_chemicals_in_body(src)
-
 
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high

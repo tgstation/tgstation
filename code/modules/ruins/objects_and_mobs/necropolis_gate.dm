@@ -4,6 +4,7 @@
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
+	flags = ON_BORDER
 	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
@@ -24,6 +25,7 @@
 
 /obj/structure/necropolis_gate/Initialize()
 	. = ..()
+	setDir(SOUTH)
 	var/turf/sight_blocker_turf = get_turf(src)
 	if(sight_blocker_distance)
 		for(var/i in 1 to sight_blocker_distance)
@@ -32,6 +34,7 @@
 			sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
 	if(sight_blocker_turf)
 		sight_blocker = new (sight_blocker_turf) //we need to block sight in a different spot than most things do
+		sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 	icon_state = "gate_bottom"
 	top_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_top")
 	top_overlay.layer = EDGED_TURF_LAYER
@@ -53,9 +56,22 @@
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
+/obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target, height=0)
+	if(get_dir(loc, target) == dir)
+		return !density
+	return 1
+
+/obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
+	if(get_dir(O.loc, target) == dir)
+		return !density
+	return 1
+
 /obj/structure/opacity_blocker
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "gate_blocker"
+	layer = EDGED_TURF_LAYER
+	pixel_x = -32
+	pixel_y = -32
 	mouse_opacity = 0
 	opacity = TRUE
 
@@ -94,6 +110,7 @@
 					break
 				sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
 		if(sight_blocker_turf)
+			sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 			sight_blocker.forceMove(sight_blocker_turf)
 		sleep(2.5)
 		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
@@ -156,8 +173,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
-			message_admins("[user ? "key_name_admin(user)":"Unknown"] has released Legion!")
-			log_game("[user ? "key_name(user)":"Unknown"] released Legion.")
+			message_admins("[user ? key_name_admin(user):"Unknown"] has released Legion!")
+			log_game("[user ? key_name(user):"Unknown"] released Legion.")
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
@@ -209,6 +226,10 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	else
 		return QDEL_HINT_LETMELIVE
 
+#define STABLE 0 //The tile is stable and won't collapse/sink when crossed.
+#define COLLAPSE_ON_CROSS 1 //The tile is unstable and will temporary become unusable when crossed.
+#define DESTROY_ON_CROSS 2 //The tile is nearly broken and will permanently become unusable when crossed.
+#define UNIQUE_EFFECT 3 //The tile has some sort of unique effect when crossed.
 //stone tiles for boss arenas
 /obj/structure/stone_tile
 	name = "stone tile"
@@ -219,16 +240,66 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
 	var/tile_random_sprite_max = 24
+	var/fall_on_cross = STABLE //If the tile has some sort of effect when crossed
+	var/fallen = FALSE //If the tile is unusable
+	var/falling = FALSE //If the tile is falling
 
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
 
 /obj/structure/stone_tile/Destroy(force)
-	if(force)
+	if(force || fallen)
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
+
+/obj/structure/stone_tile/Crossed(atom/movable/AM)
+	if(falling || fallen)
+		return
+	var/turf/T = get_turf(src)
+	if(!istype(T, /turf/open/floor/plating/lava) && !istype(T, /turf/open/chasm)) //nothing to sink or fall into
+		return
+	var/obj/item/I
+	if(istype(AM, /obj/item))
+		I = AM
+	var/mob/living/L
+	if(isliving(AM))
+		L = AM
+	switch(fall_on_cross)
+		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
+			if((I && I.w_class >= WEIGHT_CLASS_BULKY) || (L && !(L.movement_type & FLYING) && L.mob_size >= MOB_SIZE_HUMAN)) //too heavy! too big! aaah!
+				collapse()
+		if(UNIQUE_EFFECT)
+			crossed_effect(AM)
+
+/obj/structure/stone_tile/proc/collapse()
+	falling = TRUE
+	var/break_that_sucker = fall_on_cross == DESTROY_ON_CROSS
+	playsound(src, 'sound/effects/pressureplate.ogg', 50, TRUE)
+	Shake(-1, -1, 25)
+	sleep(5)
+	if(break_that_sucker)
+		playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
+	else
+		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
+	animate(src, alpha = 0, pixel_y = pixel_y - 3, time = 5)
+	fallen = TRUE
+	if(break_that_sucker)
+		QDEL_IN(src, 10)
+	else
+		addtimer(CALLBACK(src, .proc/rebuild), 55)
+
+/obj/structure/stone_tile/proc/rebuild()
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y) - 5
+	animate(src, alpha = initial(alpha), pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 30)
+	sleep(30)
+	falling = FALSE
+	fallen = FALSE
+
+/obj/structure/stone_tile/proc/crossed_effect(atom/movable/AM)
+	return
 
 /obj/structure/stone_tile/block
 	name = "stone block"
@@ -324,59 +395,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
 
-//hot stone tiles, cosmetic only
-/obj/structure/stone_tile/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-//hot cracked stone tiles, cosmetic only
-/obj/structure/stone_tile/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/cracked/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-//hot burnt stone tiles, cosmetic only
-/obj/structure/stone_tile/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/block/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/slab/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/center/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-
-/obj/structure/stone_tile/surrounding_tile/burnt/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
+#undef STABLE
+#undef COLLAPSE_ON_CROSS
+#undef DESTROY_ON_CROSS
+#undef UNIQUE_EFFECT

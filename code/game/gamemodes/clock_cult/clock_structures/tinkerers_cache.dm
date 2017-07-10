@@ -9,7 +9,6 @@
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	max_integrity = 80
-	obj_integrity = 80
 	light_color = "#C2852F"
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing

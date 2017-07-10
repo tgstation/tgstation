@@ -26,6 +26,8 @@
 
 #define STATUS_EFFECT_WISH_GRANTERS_GIFT /datum/status_effect/wish_granters_gift //If you're currently resurrecting with the Wish Granter
 
+#define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -51,6 +53,12 @@
 #define STATUS_EFFECT_CRUSHERMARK /datum/status_effect/crusher_mark //if struck with a proto-kinetic crusher, takes a ton of damage
 
 #define STATUS_EFFECT_SAWBLEED /datum/status_effect/saw_bleed //if the bleed builds up enough, takes a ton of damage
+
+#define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
+#define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
+#define CURSE_SPAWNING	2 //spawns creatures that attack the target only
+#define CURSE_WASTING	4 //causes gradual damage
+#define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
 /////////////
 // NEUTRAL //

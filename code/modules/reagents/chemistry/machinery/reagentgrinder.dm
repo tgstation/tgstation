@@ -4,8 +4,8 @@
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
 		layer = BELOW_OBJ_LAYER
-		anchored = 1
-		use_power = 1
+		anchored = TRUE
+		use_power = IDLE_POWER_USE
 		idle_power_usage = 5
 		active_power_usage = 100
 		pass_flags = PASSTABLE

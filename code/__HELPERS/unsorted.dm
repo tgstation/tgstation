@@ -42,7 +42,7 @@
 		.+=360
 
 //Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
 Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
 Random error in tile placement x, error in tile placement y, and block offset.
@@ -722,11 +722,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
-	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()
+	var/AMiconheight = AMicon.Height()
+	var/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
-		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
-		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
+		pixel_x_offset += ((AMiconwidth/world.icon_size)-1)*(world.icon_size*0.5)
+		pixel_y_offset += ((AMiconheight/world.icon_size)-1)*(world.icon_size*0.5)
 
 	//DY and DX
 	var/rough_x = round(round(pixel_x_offset,world.icon_size)/world.icon_size)

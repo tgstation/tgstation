@@ -251,7 +251,7 @@ Difficulty: Very Hard
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/item/projectile/colossus/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/colossus/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(2)
@@ -278,7 +278,7 @@ Difficulty: Very Hard
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
 	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
@@ -380,8 +380,8 @@ Difficulty: Very Hard
 	icon_state = "anomaly_crystal"
 	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	use_power = 0
-	density = 1
+	use_power = NO_POWER_USE
+	density = TRUE
 	flags = HEAR
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
@@ -633,7 +633,7 @@ Difficulty: Very Hard
 	health = 2
 	harm_intent_damage = 1
 	friendly = "mends"
-	density = 0
+	density = FALSE
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -728,9 +728,9 @@ Difficulty: Very Hard
 	name = "quantum entanglement stasis warp field"
 	desc = "You can hardly comprehend this thing... which is why you can't see it."
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
-	density = 1
-	anchored = 1
-	obj_integrity = 999
+	density = TRUE
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()
@@ -740,8 +740,8 @@ Difficulty: Very Hard
 			holder_animal.gib()
 			return
 
-/obj/structure/closet/stasis/New()
-	..()
+/obj/structure/closet/stasis/Initialize(mapload)
+	. = ..()
 	if(isanimal(loc))
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)

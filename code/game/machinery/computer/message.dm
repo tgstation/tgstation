@@ -42,7 +42,7 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(!emagged)
 		if(!isnull(src.linkedServer))
-			emagged = 1
+			emagged = TRUE
 			screen = 2
 			spark_system.set_up(5, 0, src)
 			src.spark_system.start()
@@ -235,7 +235,7 @@
 	src.screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	src.emagged = 0
+	emagged = FALSE
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"
@@ -417,7 +417,7 @@
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
 									to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
-								log_pda("[usr]/([usr.ckey]) (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
+								log_talk(usr,"[key_name(usr)] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
 						//Sender is faking as someone who exists
@@ -430,7 +430,7 @@
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
 									to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
-								log_pda("[usr]/([usr.ckey]) (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
+								log_talk(usr,"[key_name(usr)] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
 						//Finally..

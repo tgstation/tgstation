@@ -20,7 +20,7 @@
 /obj/structure/bookcase/random
 	var/category = null
 	var/book_count = 2
-	anchored = 1
+	anchored = TRUE
 	state = 2
 
 /obj/structure/bookcase/random/Initialize(mapload)
