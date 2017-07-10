@@ -6,7 +6,6 @@
 	pixel_x = -32
 	pixel_y = -16
 	use_power = FALSE
-	obj_integrity = 250
 	max_integrity = 250
 	anchored = TRUE
 	density = TRUE
