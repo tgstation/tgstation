@@ -21,8 +21,8 @@
 	var/burn_damage = 0
 	var/mob_color //Change the mob's color
 	var/assignedrole
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)

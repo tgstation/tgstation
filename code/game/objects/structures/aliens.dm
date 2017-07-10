@@ -54,9 +54,9 @@
 	desc = "Looks like some kind of thick resin."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	icon_state = "resin"
-	density = 1
+	density = TRUE
 	opacity = 1
-	anchored = 1
+	anchored = TRUE
 	canSmoothWith = list(/obj/structure/alien/resin)
 	max_integrity = 200
 	smooth = SMOOTH_TRUE
@@ -112,8 +112,8 @@
 	gender = PLURAL
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = TURF_LAYER
 	icon_state = "weeds"
 	max_integrity = 15

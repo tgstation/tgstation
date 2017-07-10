@@ -51,9 +51,9 @@
 					D.bolt()
 			if(WAND_EMERGENCY)
 				if(D.emergency)
-					D.emergency = 0
+					D.emergency = FALSE
 				else
-					D.emergency = 1
+					D.emergency = TRUE
 				D.update_icon()
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")

@@ -19,7 +19,7 @@
 
 	. = ..()
 
-	locked = 0 //unlock cover
+	locked = FALSE //unlock cover
 
 	update_canmove()
 	if(camera && camera.status)

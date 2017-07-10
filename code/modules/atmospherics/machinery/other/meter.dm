@@ -4,7 +4,7 @@
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/atom/target = null
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id_tag

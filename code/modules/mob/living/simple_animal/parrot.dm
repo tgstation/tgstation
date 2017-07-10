@@ -33,7 +33,7 @@
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
-	density = 0
+	density = FALSE
 	health = 80
 	maxHealth = 80
 	pass_flags = PASSTABLE | PASSMOB

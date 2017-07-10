@@ -2,15 +2,15 @@
 	name = "cyborg recharging station"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 1000
 	req_access = list(GLOB.access_robotics)
 	var/recharge_speed
 	var/repairs
-	state_open = 1
+	state_open = TRUE
 
 /obj/machinery/recharge_station/New()
 	..()
@@ -105,8 +105,8 @@
 			use_power = ACTIVE_POWER_USE
 			add_fingerprint(R)
 			break
-		state_open = 0
-		density = 1
+		state_open = FALSE
+		density = TRUE
 		update_icon()
 
 /obj/machinery/recharge_station/update_icon()

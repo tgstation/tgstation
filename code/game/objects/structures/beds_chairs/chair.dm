@@ -3,7 +3,7 @@
 	desc = "You sit in this. Either by will or force.\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
-	anchored = 1
+	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = 0
@@ -177,7 +177,7 @@
 	color = rgb(255,251,0)
 
 /obj/structure/chair/office
-	anchored = 0
+	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
 

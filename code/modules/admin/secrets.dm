@@ -578,11 +578,11 @@
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
 	if(E)
-		E.processing = 0
+		E.processing = FALSE
 		if(E.announceWhen>0)
 			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
 				E.announceWhen = -1
-		E.processing = 1
+		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)

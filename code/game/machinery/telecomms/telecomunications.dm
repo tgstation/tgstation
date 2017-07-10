@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
 	var/toggled = 1 	// Is it toggled on
-	var/on = 1
+	var/on = TRUE
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
@@ -193,11 +193,11 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 	if(toggled)
 		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
-			on = 0
+			on = FALSE
 		else
-			on = 1
+			on = TRUE
 	else
-		on = 0
+		on = FALSE
 
 /obj/machinery/telecomms/process()
 	update_power()

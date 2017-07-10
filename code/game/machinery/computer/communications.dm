@@ -301,7 +301,7 @@
 		if("RestoreBackup")
 			to_chat(usr, "<span class='notice'>Backup routing data restored!</span>")
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-			src.emagged = 0
+			emagged = FALSE
 			src.updateDialog()
 
 		if("nukerequest") //When there's no other way
@@ -399,7 +399,7 @@
 
 /obj/machinery/computer/communications/emag_act(mob/user)
 	if(!emagged)
-		src.emagged = 1
+		src.emagged = TRUE
 		if(authenticated == 1)
 			authenticated = 2
 		to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")

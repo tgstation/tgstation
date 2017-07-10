@@ -285,8 +285,8 @@
 	for(var/mob/living/simple_animal/bot/bot in T)
 		if(!bot.emagged)
 			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.locked = 0
-			bot.open = 1
+			bot.locked = FALSE
+			bot.open = TRUE
 			bot.emag_act()
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)

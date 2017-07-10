@@ -61,10 +61,10 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	set category = "Mapping"
 	set name = "Camera Range Display"
 
-	var/on = 0
+	var/on = FALSE
 	for(var/turf/T in world)
 		if(T.maptext)
-			on = 1
+			on = TRUE
 		T.maptext = null
 
 	if(!on)
@@ -122,11 +122,11 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	set category = "Mapping"
 	set name = "Intercom Range Display"
 
-	var/static/intercom_range_display_status = 0
+	var/static/intercom_range_display_status = FALSE
 	if(intercom_range_display_status)
-		intercom_range_display_status = 0
+		intercom_range_display_status = !intercom_range_display_status
 	else
-		intercom_range_display_status = 1
+		intercom_range_display_status = TRUE
 
 	for(var/obj/effect/debugging/marker/M in world)
 		qdel(M)

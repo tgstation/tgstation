@@ -10,10 +10,10 @@
 	buildable_sign = 0
 	var/list/barsigns=list()
 	var/list/hiddensigns
-	var/emagged = 0
+	var/emagged = FALSE
 	var/state = 0
 	var/prev_sign = ""
-	var/panel_open = 0
+	var/panel_open = FALSE
 
 /obj/structure/sign/barsign/Initialize()
 	. = ..()
@@ -78,7 +78,7 @@
 		if(!panel_open)
 			to_chat(user, "<span class='notice'>You open the maintenance panel.</span>")
 			set_sign(new /datum/barsign/hiddensigns/signoff)
-			panel_open = 1
+			panel_open = TRUE
 		else
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			if(!broken && !emagged)
@@ -87,7 +87,7 @@
 				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 			else
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
-			panel_open = 0
+			panel_open = FALSE
 
 	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
@@ -121,7 +121,7 @@
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
 	sleep(100) //10 seconds
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
-	emagged = 1
+	emagged = TRUE
 	req_access = list(GLOB.access_syndicate)
 
 

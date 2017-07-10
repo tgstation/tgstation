@@ -5,8 +5,8 @@
 
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	on_blueprints = TRUE
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	max_integrity = 200
@@ -240,8 +240,8 @@
 		if(stored)
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
-			stored.anchored = 0
-			stored.density = 1
+			stored.anchored = FALSE
+			stored.density = TRUE
 			stored.update_icon()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
@@ -282,7 +282,7 @@
 
 // handle machine interaction
 
-/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & BROKEN)
 		return
@@ -442,7 +442,7 @@
 /obj/machinery/disposal/deliveryChute
 	name = "delivery chute"
 	desc = "A chute for big and small packages alike!"
-	density = 1
+	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
