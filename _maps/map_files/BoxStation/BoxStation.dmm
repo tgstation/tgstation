@@ -53644,7 +53644,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqT" = (
@@ -54093,7 +54093,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crX" = (
-/obj/structure/closet/emcloset,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -54101,6 +54100,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crY" = (
@@ -91131,7 +91131,7 @@ cDo
 cgR
 cqA
 cqT
-czh
+csg
 cEm
 crU
 csb
