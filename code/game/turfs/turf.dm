@@ -6,8 +6,8 @@
 	var/turf/baseturf = /turf/open/space
 
 	var/temperature = T20C
-	var/to_be_destroyed = FALSE //Used for fire, if a melting temperature was reached, it will be destroyed
-	var/max_fire_temperature_sustained = FALSE //The max temperature of the fire which it was subjected to
+	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
+	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
 	var/blocks_air = FALSE
 
