@@ -86,7 +86,7 @@
 	var/nt = new_type
 	args[1] = src
 	var/datum/component/C = new nt(arglist(args))
-	return QDELING(C) ? null : C
+	return QDELING(C) ? GetComponent(new_type) : C
 
 /datum/proc/RemoveComponent(datum/component/C)
 	if(!C)
