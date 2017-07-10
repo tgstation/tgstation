@@ -21,11 +21,14 @@
 	parent = P
 
 /datum/component/Destroy()
+	Remove()
+	return ..()
+
+/datum/component/proc/RemoveNoSignal()
 	var/datum/P = parent
 	if(P)
 		LAZYREMOVE(P.datum_components, src)
 		parent = null
-	return ..()
 
 /datum/component/proc/RegisterSignal(sig_type, proc_on_self, override = FALSE)
 	var/list/procs = signal_procs
@@ -88,5 +91,6 @@
 /datum/proc/RemoveComponent(datum/component/C)
 	if(!C)
 		return
+	C.RemoveNoSignal()
 	SendSignal(COMSIG_COMPONENT_REMOVING, list(C), FALSE)
 	qdel(C)
