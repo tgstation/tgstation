@@ -210,7 +210,7 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
-	var/toggled = 0
+	var/toggled = FALSE
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 
 /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/Initialize()

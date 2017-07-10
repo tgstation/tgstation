@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
 	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
-	var/toggled = 1 	// Is it toggled on
+	var/toggled = TRUE 	// Is it toggled on
 	var/on = TRUE
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = 0				// Is it a hidden machine?

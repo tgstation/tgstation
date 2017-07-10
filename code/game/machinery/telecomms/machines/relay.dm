@@ -82,5 +82,5 @@
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
 	hide = 1
-	toggled = 0
+	toggled = FALSE
 	autolinkers = list("r_relay")
