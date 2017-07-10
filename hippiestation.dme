@@ -2195,6 +2195,7 @@
 #include "hippiestation\code\game\objects\items\weapons\clown_items.dm"
 #include "hippiestation\code\game\objects\items\weapons\stunbaton.dm"
 #include "hippiestation\code\game\objects\items\weapons\twohanded.dm"
+#include "hippiestation\code\game\objects\items\weapons\weaponry.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implant_mindslave.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implant_misc.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implantcase.dm"
