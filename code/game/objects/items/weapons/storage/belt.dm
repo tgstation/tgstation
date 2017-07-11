@@ -13,7 +13,7 @@
 	cut_overlays()
 	if(content_overlays)
 		for(var/obj/item/I in contents)
-			add_overlay(I.icon_state)
+			add_overlay(icon('icons/obj/clothing/belt_overlays.dmi', I.icon_state))
 	..()
 
 /obj/item/weapon/storage/belt/Initialize()
