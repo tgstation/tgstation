@@ -419,7 +419,7 @@
 	return data
 
 
-/datum/computer_file/program/card_mod/proc/build_manage(datum/job,open = 0)
+/datum/computer_file/program/card_mod/proc/build_manage(datum/job,open = FALSE)
 	var/out = "Denied"
 	var/can_change= 0
 	if(open)

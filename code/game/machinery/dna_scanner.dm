@@ -3,9 +3,9 @@
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner"
-	density = 1
-	var/locked = 0
-	anchored = 1
+	density = TRUE
+	var/locked = FALSE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -82,7 +82,7 @@
 /obj/machinery/dna_scannernew/container_resist(mob/living/user)
 	var/breakout_time = 2
 	if(state_open || !locked)	//Open and unlocked, no need to escape
-		state_open = 1
+		state_open = TRUE
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -93,7 +93,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 
-		locked = 0
+		locked = FALSE
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 

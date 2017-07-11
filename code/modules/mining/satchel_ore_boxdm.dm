@@ -6,7 +6,7 @@
 	icon_state = "orebox"
 	name = "ore box"
 	desc = "A heavy wooden box, which can be filled with a lot of ores."
-	density = 1
+	density = TRUE
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user, params)

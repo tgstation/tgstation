@@ -2,8 +2,8 @@
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
@@ -83,7 +83,7 @@
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
 		if(impact_effect_type)

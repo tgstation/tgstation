@@ -5,10 +5,10 @@
 	name = "Centcom"
 	icon_state = "centcom"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	blob_allowed = FALSE //Should go without saying, no blobs should take over centcom as a win condition.
 	flags = NONE
 
 /area/centcom/control
@@ -35,8 +35,8 @@
 	name = "Thunderdome"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
-	has_gravity = 1
+	requires_power = FALSE
+	has_gravity = TRUE
 	flags = NONE
 
 /area/tdome/arena
@@ -73,28 +73,28 @@
 	name = "Wizard's Den"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
 	flags = NONE
 
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "yellow"
-	requires_power = 0
-	noteleport = 1
-	has_gravity = 1
+	requires_power = FALSE
+	noteleport = TRUE
+	has_gravity = TRUE
 	flags = NONE
 
 //Syndicates
 /area/syndicate_mothership
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 	flags = NONE
 
 /area/syndicate_mothership/control
@@ -113,8 +113,8 @@
 /area/ctf
 	name = "Capture the Flag"
 	icon_state = "yellow"
-	requires_power = 0
-	has_gravity = 1
+	requires_power = FALSE
+	has_gravity = TRUE
 	flags = NO_DEATHRATTLE
 
 /area/ctf/control_room

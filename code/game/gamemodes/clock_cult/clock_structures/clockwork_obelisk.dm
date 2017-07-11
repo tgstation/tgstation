@@ -9,7 +9,6 @@
 	unanchored_icon = "obelisk_unwrenched"
 	construction_value = 20
 	max_integrity = 150
-	obj_integrity = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 4, \
 	/obj/item/clockwork/alloy_shards/medium = 2, \
@@ -96,9 +95,9 @@
 	var/obj/effect/clockwork/spatial_gateway/SG = locate(/obj/effect/clockwork/spatial_gateway) in loc
 	if(SG && SG.timerid) //it's a valid gateway, we're active
 		icon_state = active_icon
-		density = 0
+		density = FALSE
 		active = TRUE
 	else
 		icon_state = inactive_icon
-		density = 1
+		density = TRUE
 		active = FALSE

@@ -64,9 +64,9 @@ Difficulty: Hard
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
-			step(B, pick(GLOB.cardinal))
+			step(B, pick(GLOB.cardinals))
 		else
-			B.setDir(pick(GLOB.cardinal))
+			B.setDir(pick(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"
@@ -393,7 +393,7 @@ Difficulty: Hard
 	icon_aggro = "bloodbrood"
 	attacktext = "pierces"
 	color = "#C80000"
-	density = 0
+	density = FALSE
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 

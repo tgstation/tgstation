@@ -12,7 +12,7 @@
 				to_chat(user, "<span class='notice'>You start wrenching the frame into place...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					anchored = 1
+					anchored = TRUE
 					state = 1
 				return
 			if(istype(P, /obj/item/weapon/weldingtool))
@@ -36,7 +36,7 @@
 				to_chat(user, "<span class='notice'>You start to unfasten the frame...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
-					anchored = 0
+					anchored = FALSE
 					state = 0
 				return
 			if(istype(P, /obj/item/weapon/circuitboard/computer) && !circuit)
@@ -339,8 +339,8 @@
 	name = "Supply Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo
 	origin_tech = "programming=3"
-	var/contraband = 0
-	var/emagged = 0
+	var/contraband = FALSE
+	var/emagged = FALSE
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))

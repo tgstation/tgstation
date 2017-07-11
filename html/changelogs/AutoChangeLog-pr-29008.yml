@@ -1,6 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Positronic brains' icons will now properly change depending on status."
-  - tweak: "Positronic brains will now stop searching as soon as they're occupied."
-  - tweak: "Positronic brains now have error messages if activating them fails for whatever reason."

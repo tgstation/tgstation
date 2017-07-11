@@ -5,7 +5,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -27,7 +27,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	qdel(ev)
 	. = ..()
 
-/obj/machinery/keycard_auth/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/keycard_auth/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 					datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
 	for(var/area/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
-			D.emergency = 1
+			D.emergency = TRUE
 			D.update_icon(0)
 	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!",1)
 	GLOB.emergency_access = TRUE
@@ -120,7 +120,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/revoke_maint_all_access()
 	for(var/area/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
-			D.emergency = 0
+			D.emergency = FALSE
 			D.update_icon(0)
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	GLOB.emergency_access = FALSE

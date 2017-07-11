@@ -3,13 +3,12 @@
 /obj/structure/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 0
+	density = FALSE
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	obj_integrity = 30
 	max_integrity = 30
 	var/delay = 1200
 	var/floor = 0
@@ -109,7 +108,7 @@
 			var/placeCount = 1
 			for(var/obj/structure/glowshroom/shroom in newLoc)
 				shroomCount++
-			for(var/wallDir in GLOB.cardinal)
+			for(var/wallDir in GLOB.cardinals)
 				var/turf/isWall = get_step(newLoc,wallDir)
 				if(isWall.density)
 					placeCount++
@@ -130,7 +129,7 @@
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
 
-	for(var/wallDir in GLOB.cardinal)
+	for(var/wallDir in GLOB.cardinals)
 		var/turf/newTurf = get_step(location,wallDir)
 		if(newTurf.density)
 			direction |= wallDir

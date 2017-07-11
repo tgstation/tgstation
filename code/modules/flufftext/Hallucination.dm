@@ -143,7 +143,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/fake_flood/proc/Expand()
 	for(var/turf/FT in flood_turfs)
-		for(var/dir in GLOB.cardinal)
+		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
@@ -535,8 +535,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	icon_state = null
 	name = ""
 	desc = ""
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
@@ -552,7 +552,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/collapse
 	var/image/down
 
-	obj_integrity = 100
+	max_integrity = 100
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
 	step_away(src,my_target,2)

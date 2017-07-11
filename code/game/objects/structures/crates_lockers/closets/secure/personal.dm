@@ -24,7 +24,6 @@
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()

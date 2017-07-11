@@ -6,13 +6,12 @@
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
-	obj_integrity = 150
 	max_integrity = 150
 	integrity_failure = 50
 	var/obscured = 0
@@ -22,8 +21,8 @@
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc)
+/obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
+	. = ..()
 	Make(S)
 	connect_to_network()
 
@@ -49,8 +48,9 @@
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
-		S.anchored = 1
-	S.loc = src
+		S.anchored = TRUE
+	else
+		S.forceMove(src)
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
 		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
 		obj_integrity = max_integrity
@@ -185,7 +185,7 @@
 	icon_state = "sp_base"
 	item_state = "electropack"
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
-	anchored = 0
+	anchored = FALSE
 	var/tracker = 0
 	var/glass_type = null
 
@@ -261,11 +261,10 @@
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 100
 	var/icon_screen = "solar"
@@ -348,7 +347,7 @@
 		setDir(angle2dir(currentdir))
 		add_overlay(mutable_appearance(icon, "solcon-o", FLY_LAYER))
 
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -422,7 +421,7 @@
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
-				A.anchored = 1
+				A.anchored = TRUE
 				qdel(src)
 			else
 				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
@@ -433,7 +432,7 @@
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"
-				A.anchored = 1
+				A.anchored = TRUE
 				qdel(src)
 	else if(user.a_intent != INTENT_HARM && !(I.flags & NOBLUDGEON))
 		src.attack_hand(user)

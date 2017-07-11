@@ -2,7 +2,7 @@
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
-	anchored = 0
+	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.

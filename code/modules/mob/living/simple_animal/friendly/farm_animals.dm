@@ -177,7 +177,7 @@
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
 	emote_see = list("pecks at the ground.","flaps its tiny wings.")
-	density = 0
+	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
@@ -223,7 +223,7 @@
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks.")
 	emote_see = list("pecks at the ground.","flaps its wings viciously.")
-	density = 0
+	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)

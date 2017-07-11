@@ -133,13 +133,12 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0// dir will contain dominant direction for junction pipes
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
@@ -324,11 +323,11 @@
 				stored.loc = T
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
-				stored.density = 0
-				stored.anchored = 1
+				stored.density = FALSE
+				stored.anchored = TRUE
 				stored.update_icon()
 		else
-			for(var/D in GLOB.cardinal)
+			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(src.loc)
 					P.setDir(D)
@@ -343,7 +342,7 @@
 /obj/structure/disposalpipe/shuttleRotate(rotation)
 	..()
 	var/new_dpdir = 0
-	for(var/D in GLOB.cardinal)
+	for(var/D in GLOB.cardinals)
 		if(dpdir & D)
 			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
 	dpdir = new_dpdir
@@ -637,8 +636,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
@@ -712,8 +711,8 @@
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()
-				stored.anchored = 0
-				stored.density = 1
+				stored.anchored = FALSE
+				stored.density = TRUE
 				qdel(src)
 	else
 		return ..()

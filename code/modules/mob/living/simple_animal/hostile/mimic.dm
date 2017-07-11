@@ -36,7 +36,7 @@
 	speak_emote = list("clatters")
 	stop_automated_movement = 1
 	wander = 0
-	var/attempt_open = 0
+	var/attempt_open = FALSE
 
 // Pickup loot
 /mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
@@ -75,7 +75,7 @@
 /mob/living/simple_animal/hostile/mimic/crate/proc/trigger()
 	if(!attempt_open)
 		visible_message("<b>[src]</b> starts to move!")
-		attempt_open = 1
+		attempt_open = TRUE
 
 /mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	trigger()

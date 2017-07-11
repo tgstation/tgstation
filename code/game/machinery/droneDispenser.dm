@@ -10,10 +10,9 @@
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 80
 
