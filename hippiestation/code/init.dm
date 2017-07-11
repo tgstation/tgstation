@@ -5,3 +5,4 @@
 	load_hippie_config('config/hippiestation_config.txt')
 	LAZYCLEARLIST(mentor_datums)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list, roundstart = TRUE)
+	initialize_global_loadout_items()
