@@ -3,13 +3,14 @@
 	desc = "A machine for custom fitting augmentations, with in-built spraypainter."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
-	density = 1
-	anchored = 1
-	var/obj/item/bodypart/storedpart = null
-	var/initial_icon_state = null
-	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
-	obj_integrity = 200
+	density = TRUE
+	anchored = TRUE
+	onj_integrity = 200
 	max_integrity = 200
+	var/obj/item/bodypart/storedpart
+	var/initial_icon_state
+	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
+
 
 /obj/machinery/aug_manipulator/Initialize()
     initial_icon_state = initial(icon_state)
@@ -32,8 +33,7 @@
 
 /obj/machinery/aug_manipulator/Destroy()
 	if(storedpart)
-		qdel(storedpart)
-		storedpart = null
+		QDEL_NULL(storedpart)
 	return ..()
 
 /obj/machinery/aug_manipulator/on_deconstruction()
@@ -62,28 +62,27 @@
 		else
 			var/obj/item/bodypart/P = user.get_active_held_item()
 			if(istype(P))
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(src)
 					return
 				storedpart = P
-				P.loc = src
 				P.add_fingerprint(user)
 				update_icon()
 
 	else if(istype(O, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = O
-		if(stat & BROKEN)
+		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] is repairing [src].", \
+				user.visible_message("[user] begins repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
 								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, WT.usesound, 40, 1)
-				if(do_after(user,40*WT.toolspeed, 1, target = src))
+				playsound(src, WT.usesound, 40, 1)
+				if(do_after(user,40*WT.toolspeed, TRUE, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+					playsound(src, 'sound/items/welder2.ogg', 50, 1)
 					stat &= ~BROKEN
-					obj_integrity = max_integrity
+					max(obj_integrity, max_integrity)
 					update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
@@ -118,9 +117,8 @@
 /obj/machinery/aug_manipulator/verb/ejectpart()
 	set name = "Eject Part"
 	set category = "Object"
-	set src in oview(1)
 
-	if(usr.stat || usr.restrained() || !usr.canmove)
+	if(usr.incapacitated())
 		return
 
 	if(storedpart)
@@ -128,7 +126,7 @@
 		storedpart = null
 		update_icon()
 	else
-		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
+		to_chat(usr, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/aug_manipulator/power_change()
