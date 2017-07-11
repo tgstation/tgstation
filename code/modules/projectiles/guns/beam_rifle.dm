@@ -329,21 +329,28 @@
 	QDEL_NULL(current_tracer)
 
 /obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
-	. = ..()
 	set_user(user)
+	return ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/dropped()
-	. = ..()
 	set_user(null)
+	return ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	if(flag) //It's adjacent, is the user, or is on the user's person
+		if(target in user.contents) //can't shoot stuff inside us.
+			return
+		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
+			return
+		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
+			return
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
 		return
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
 	terminate_aiming()
-	. = ..()
+	return ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
@@ -464,6 +471,7 @@
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
 	var/turf/cached
+	var/list/pierced = list()
 
 /obj/item/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
 	set waitfor = FALSE
@@ -485,6 +493,9 @@
 /obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
 	if(!do_pierce)
 		return FALSE
+	if(pierced[target])		//we already pierced them go away
+		loc = get_turf(target)
+		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
@@ -502,6 +513,7 @@
 				if(isobj(AM))
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
+				pierced[AM] = TRUE
 				loc = get_turf(AM)
 				structure_pierce++
 				return TRUE
