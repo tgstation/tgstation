@@ -49,9 +49,9 @@
 
 /obj/machinery/computer/holodeck/LateInitialize()
 	if(ispath(holodeck_type, /area))
-		linked = locate(holodeck_type) in GLOB.sortedAreas
+		linked = pop(get_areas(holodeck_type, FALSE))
 	if(ispath(offline_program,/area))
-		offline_program = locate(offline_program) in GLOB.sortedAreas
+		offline_program = pop(get_areas(offline_program), FALSE)
 	// the following is necessary for power reasons
 	if(!linked || !offline_program)
 		log_world("No matching holodeck area found")
@@ -134,9 +134,7 @@
 
 		for(var/turf/T in linked)
 			if(prob(30))
-				var/datum/effect_system/spark_spread/s = new
-				s.set_up(2, 1, T)
-				s.start()
+				do_sparks(2, 1, T)
 			T.ex_act(3)
 			T.hotspot_expose(1000,500,1)
 
@@ -241,7 +239,7 @@
 		HE.deactivate(src)
 
 	for(var/item in spawned)
-		derez(item, force)
+		derez(item, !force)
 
 	program = A
 	// note nerfing does not yet work on guns, should

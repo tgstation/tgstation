@@ -1127,7 +1127,7 @@
 	..()
 
 /datum/reagent/medicine/corazone
-	// Heart attack code will not do as damage if corazone is present
+	// Heart attack code will not do damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
 	name = "Corazone"
 	id = "corazone"

@@ -11,7 +11,7 @@
 	emote_see = list("sniffs.", "burps.")
 	weather_immunities = list("lava","ash")
 	faction = list("mining", "ashwalker")
-	density = 0
+	density = FALSE
 	speak_chance = 1
 	turns_per_move = 8
 	obj_damage = 0

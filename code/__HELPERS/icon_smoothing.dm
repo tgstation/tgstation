@@ -51,7 +51,7 @@
 /atom/var/bottom_left_corner
 /atom/var/bottom_right_corner
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-/atom/movable/var/can_be_unanchored = 0
+/atom/movable/var/can_be_unanchored = FALSE
 /turf/var/list/fixed_underlay = null
 
 /proc/calculate_adjacencies(atom/A)
@@ -66,7 +66,7 @@
 		if(AM.can_be_unanchored && !AM.anchored)
 			return 0
 
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		AM = find_type_in_direction(A, direction)
 		if(AM == NULLTURF_BORDER)
 			if((A.smooth & SMOOTH_BORDER))

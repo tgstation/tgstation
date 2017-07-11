@@ -227,9 +227,9 @@
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
-	O.anchored = 1
+	O.anchored = TRUE
 	O.opacity = 1
-	O.density = 1
+	O.density = TRUE
 	O.layer = FLY_LAYER
 
 	playsound(src, 'sound/items/welder.ogg', 100, 1)

@@ -170,7 +170,6 @@
 	icon_state = "tiki_eyebrow"
 	item_state = "tiki_eyebrow"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null

@@ -6802,7 +6802,7 @@
 	},
 /area/bridge)
 "aoQ" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
 	},
@@ -23620,9 +23620,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
-	name = "Captain's Office APC";
+	name = "Mech Bay APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -51739,6 +51738,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cjR" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjS" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjT" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjU" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjV" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjW" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -66748,13 +66765,13 @@ aCh
 aCh
 aCh
 aCh
-aCh
+cjT
 cjC
 aJL
 aJL
 aJL
 cjE
-aCh
+cjV
 aCh
 aCh
 aCh
@@ -67001,7 +67018,7 @@ aaa
 aaa
 aCh
 aCh
-aCh
+cjR
 aEr
 aFm
 aGh
@@ -68029,7 +68046,7 @@ aaa
 aaa
 aCh
 aCh
-aCh
+cjS
 aEu
 aFn
 aGh
@@ -68290,13 +68307,13 @@ aCh
 aCh
 aCh
 aCh
-aCh
+cjU
 cjC
 aJK
 aJK
 aJK
 cjE
-aCh
+cjW
 aCh
 aCh
 aCh
@@ -82964,7 +82981,7 @@ aAs
 aDJ
 bcJ
 bcI
-beP
+bdD
 bdG
 bgX
 bia
@@ -87056,18 +87073,18 @@ aJk
 aKl
 aHQ
 aMu
-bVG
+aHQ
 bVI
 aPg
 aQm
-bVG
+aHQ
 aSj
-bVG
+aHQ
 aTS
 aUS
-bVG
+aHQ
 bVI
-bVG
+aHQ
 axi
 aDd
 bar

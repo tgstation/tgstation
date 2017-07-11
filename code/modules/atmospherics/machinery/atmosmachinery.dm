@@ -13,14 +13,13 @@ Pipelines + Other Objects -> Pipe network
 #define PIPE_HIDDEN_LEVEL 1
 
 /obj/machinery/atmospherics
-	anchored = 1
+	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
-	obj_integrity = 200
 	max_integrity = 200
 	var/nodealert = 0
 	var/can_unwrench = 0
@@ -68,7 +67,7 @@ Pipelines + Other Objects -> Pipe network
 	node_connects.len = device_type
 
 	for(DEVICE_TYPE_LOOP)
-		for(var/D in GLOB.cardinal)
+		for(var/D in GLOB.cardinals)
 			if(D & GetInitDirections())
 				if(D in node_connects)
 					continue
@@ -178,7 +177,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
 	if(!fuck_you_dir)
-		fuck_you_dir = pick(GLOB.cardinal)
+		fuck_you_dir = pick(GLOB.cardinals)
 	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
 	var/range = pressures/250
 	var/speed = range/5
@@ -309,7 +308,7 @@ Pipelines + Other Objects -> Pipe network
 		if(src.nodes[I])
 			var/obj/machinery/atmospherics/node = src.nodes[I]
 			var/connected = FALSE
-			for(var/D in GLOB.cardinal)
+			for(var/D in GLOB.cardinals)
 				if(node in get_step(src, D))
 					connected = TRUE
 					break

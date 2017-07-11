@@ -666,7 +666,7 @@
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
@@ -746,7 +746,7 @@
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()

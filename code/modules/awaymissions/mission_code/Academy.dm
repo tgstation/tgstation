@@ -27,8 +27,7 @@
 	desc = "Made by Abjuration Inc"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
-	anchored = 1
-	obj_integrity = 200
+	anchored = TRUE
 	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
@@ -181,7 +180,7 @@
 			//Throw
 			user.Stun(60)
 			user.adjustBruteLoss(50)
-			var/throw_dir = pick(GLOB.cardinal)
+			var/throw_dir = pick(GLOB.cardinals)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)

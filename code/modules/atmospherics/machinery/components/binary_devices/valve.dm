@@ -12,11 +12,11 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	var/frequency = 0
 	var/id = null
 
-	var/open = 0
+	var/open = FALSE
 	var/valve_type = "m" //lets us have a nice, clean, OOP update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/binary/valve/open
-	open = 1
+	open = TRUE
 
 /obj/machinery/atmospherics/components/binary/valve/update_icon_nopipes(animation = 0)
 	normalize_dir()
@@ -25,7 +25,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "[valve_type]valve_[open?"on":"off"]"
 
 /obj/machinery/atmospherics/components/binary/valve/proc/open()
-	open = 1
+	open = TRUE
 	update_icon_nopipes()
 	update_parents()
 	var/datum/pipeline/parent1 = PARENT1
@@ -33,7 +33,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 /obj/machinery/atmospherics/components/binary/valve/proc/close()
-	open = 0
+	open = FALSE
 	update_icon_nopipes()
 	investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 

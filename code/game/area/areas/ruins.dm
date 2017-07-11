@@ -3,19 +3,19 @@
 /area/ruin
 	name = "\improper Unexplored Location"
 	icon_state = "away"
-	has_gravity = 1
+	has_gravity = TRUE
 	hidden = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 
 /area/ruin/unpowered
-	always_unpowered = 0
+	always_unpowered = FALSE
 
 /area/ruin/unpowered/no_grav
-	has_gravity = 0
+	has_gravity = FALSE
 
 /area/ruin/powered
-	requires_power = 0
+	requires_power = FALSE
 
 
 
@@ -127,7 +127,7 @@
 /area/ruin/hotel/shuttle
 	name = "Hotel Shuttle"
 	icon_state = "shuttle"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/ruin/hotel/dock
 	name = "Hotel Shuttle Dock"
@@ -141,17 +141,17 @@
 
 /area/ruin/fakespace
 	icon_state = "space"
-	requires_power = 1
-	always_unpowered = 1
+	requires_power = TRUE
+	always_unpowered = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	has_gravity = 0
-	power_light = 0
-	power_equip = 0
-	power_environ = 0
-	valid_territory = 0
-	outdoors = 1
+	has_gravity = FALSE
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE
+	valid_territory = FALSE
+	outdoors = TRUE
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
-	blob_allowed = 0
+	blob_allowed = FALSE
 
 
 
@@ -200,7 +200,7 @@
 /area/ruin/oldteleporter
 	name = "Old teleporter"
 	icon_state = "teleporter"
-	has_gravity = 0
+	has_gravity = FALSE
 
 
 //Ruin of mech transport
@@ -266,11 +266,11 @@
 
 /area/ruin/xenonest
 	name = "The Hive"
-	always_unpowered = 1
-	power_environ = 0
-	power_equip = 0
-	power_light = 0
-	poweralm = 0
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	poweralm = FALSE
 
 //ash walker nest
 /area/ruin/unpowered/ash_walkers

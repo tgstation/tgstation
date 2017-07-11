@@ -155,7 +155,7 @@ Actual Adjacent procs :
 	var/list/L = new()
 	var/turf/T
 
-	for(var/dir in GLOB.cardinal)
+	for(var/dir in GLOB.cardinals)
 		T = get_step(src,dir)
 		if(simulated_only && !istype(T))
 			continue

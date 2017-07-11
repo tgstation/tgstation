@@ -77,6 +77,11 @@
 				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
+/mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
+	if(M.a_intent == INTENT_HARM)
+		return
+	return ..()
+
 /mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(buckled_mobs)
 		for(var/mob/living/M in buckled_mobs)

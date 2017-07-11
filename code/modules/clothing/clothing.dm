@@ -1,7 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 80
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
@@ -182,29 +181,6 @@
 		damaged_clothes = 0
 		cut_overlay(damaged_clothes_icons[index], TRUE)
 
-
-//Ears: currently only used for headsets and earmuffs
-/obj/item/clothing/ears
-	name = "ears"
-	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
-	slot_flags = SLOT_EARS
-	resistance_flags = 0
-
-/obj/item/clothing/ears/earmuffs
-	name = "earmuffs"
-	desc = "Protects your hearing from loud noises, and quiet ones as well."
-	icon_state = "earmuffs"
-	item_state = "earmuffs"
-	strip_delay = 15
-	equip_delay_other = 25
-	resistance_flags = FLAMMABLE
-
-/obj/item/clothing/ears/earmuffs/Initialize(mapload)
-	..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
-	SET_SECONDARY_FLAG(src, HEALS_EARS)
-
 //Glasses
 /obj/item/clothing/glasses
 	name = "glasses"
@@ -217,7 +193,7 @@
 	var/invis_view = SEE_INVISIBLE_LIVING
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/lighting_alpha
-	var/emagged = 0
+	var/emagged = FALSE
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20

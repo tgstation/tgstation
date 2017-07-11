@@ -666,7 +666,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			F.active = 1
 			F.state = 2
 			F.power = 250
-			F.anchored = 1
+			F.anchored = TRUE
 			F.warming_up = 3
 			F.start_fields()
 			F.update_icon()
