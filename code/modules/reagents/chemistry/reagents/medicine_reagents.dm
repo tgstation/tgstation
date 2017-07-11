@@ -686,7 +686,7 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")	
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
 	if (!eyes)
 		return
 	if(M.disabilities & BLIND)
@@ -1129,7 +1129,7 @@
 	..()
 
 /datum/reagent/medicine/corazone
-	// Heart attack code will not do as damage if corazone is present
+	// Heart attack code will not do damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
 	name = "Corazone"
 	id = "corazone"
