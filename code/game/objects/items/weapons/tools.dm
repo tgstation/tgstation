@@ -143,13 +143,13 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/random_color = TRUE //if the screwdriver uses random coloring
 	var/static/list/possible_colors = list(\
-	rgb(24, 97, 213), \
-	rgb(149, 23, 16), \
-	rgb(213, 24, 141), \
-	rgb(160, 82, 18), \
-	rgb(14, 127, 27), \
-	rgb(24, 162, 213), \
-	rgb(213, 140, 24), \
+	"blue" = rgb(24, 97, 213), \
+	"red" = rgb(149, 23, 16), \
+	"pink" = rgb(213, 24, 141), \
+	"brown" = rgb(160, 82, 18), \
+	"green" = rgb(14, 127, 27), \
+	"cyan" = rgb(24, 162, 213), \
+	"yellow" = rgb(213, 140, 24), \
 	)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
@@ -159,7 +159,9 @@
 /obj/item/weapon/screwdriver/Initialize()
 	. = ..()
 	if(random_color) //random colors!
-		add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)
+		var/our_color = pick(possible_colors)
+		add_atom_colour(possible_colors[our_color], FIXED_COLOUR_PRIORITY)
+		item_state = "screwdriver_[our_color]"
 		update_icon()
 	if(prob(75))
 		pixel_y = rand(0, 16)
