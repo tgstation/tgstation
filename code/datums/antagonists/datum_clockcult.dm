@@ -89,7 +89,7 @@
 			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
 			var/list/AI_frame = list(mutable_appearance('icons/mob/clockwork_mobs.dmi', "aiframe")) //make the AI's cool frame
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
 			A.add_overlay(AI_frame)
 			if(!A.lacks_power())
