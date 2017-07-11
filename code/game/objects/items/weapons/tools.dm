@@ -128,6 +128,7 @@
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver"
+	item_state = "screwdriver"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
@@ -142,6 +143,7 @@
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/random_color = TRUE //if the screwdriver uses random coloring
+	var/datum/mutable_appearance/handle_overlay //the inhand icon for
 	var/static/list/possible_colors = list(\
 	"blue" = rgb(24, 97, 213), \
 	"red" = rgb(149, 23, 16), \
@@ -161,7 +163,6 @@
 	if(random_color) //random colors!
 		var/our_color = pick(possible_colors)
 		add_atom_colour(possible_colors[our_color], FIXED_COLOUR_PRIORITY)
-		item_state = "screwdriver_[our_color]"
 		update_icon()
 	if(prob(75))
 		pixel_y = rand(0, 16)
@@ -173,6 +174,14 @@
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "screwdriver_screwybits")
 	base_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_overlay)
+
+/obj/item/weapon/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
+	. = list()
+	if(isinhands && random_color)
+		to_chat(world, "[icon_file]")
+		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
+		M.appearance_flags = RESET_COLOR
+		. += M
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -188,6 +197,7 @@
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "screwdriver_brass"
+	item_state = "screwdriver_brass"
 	toolspeed = 0.5
 	random_color = FALSE
 
@@ -196,6 +206,7 @@
 	desc = "An ultrasonic screwdriver."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "screwdriver"
+	item_state = "screwdriver_nuke"
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
