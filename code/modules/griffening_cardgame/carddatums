@@ -1,31 +1,101 @@
 /datum/griffeningcard
 
-  var/name = ""
-  var/desc = ""
-  var/ATK = 0
-  var/DEF = 0
-  var/LVL = 0
-  var/card_type = null
-  var/rarity = common
-  var/list/Attributes = list() //What special effects does this have? will be shown during examining a card
+	var/name = ""
+	var/desc = ""
+	var/ATK = 0
+	var/DEF = 0
+	var/LVL = 0
+	var/summonsound = null //Same thing for if you use an effect
+	var/attacksound = null //also hologram hype
+	var/deathsound = null
+	var/hologramvisual = null
+	var/card_type = null
+	var/rarity = common
+	var/list/Attributes = list() //What special effects does this have? will be shown during examining a card
  
  
 /datum/griffeningcard/creature
-  card_type = CREATURE_CARD
+	card_type = CREATURE_CARD
 
 /datum/griffeningcard/effect
-  card_type = EFFECT_CARD
+	card_type = EFFECT_CARD
 
 /datum/griffeningcard/equipment
-  card_type = EQUIPMENT_CARD
+	card_type = EQUIPMENT_CARD
 
 /datum/griffeningcard/area
-  card_type = AREA_CARD
+	card_type = AREA_CARD
 
 /datum/griffeningcard/creature/captain
-  name = "Captain"
-  desc = "Captain cannot be played if there's a nuclear operative or captain in play. Requires the bridge area to be played. If this card is summoned, get a energy gun card from your hand, discard pile or deck and attach it to this card."
-  LVL = 7
-  ATK = 60
-  DEF = 60
-  Attributes = list(DECK_SEARCH_ENERGY_GUN, HEAD, TWO_SACRIFICE, NO_OP, NO_CAPTAIN, AREA_BRIDGE)
+	name = "Captain"
+	desc = "Captain cannot be played if there's a nuclear operative or captain in play. Requires the bridge area to be played. If this card is summoned, get a energy gun card from your hand, discard pile or deck and attach it to this card."
+	LVL = 7
+	ATK = 60
+	DEF = 60
+	Attributes = list(DECK_SEARCH_ENERGY_GUN, HEAD, TWO_SACRIFICE, NO_OP, NO_CAPTAIN, AREA_BRIDGE, HUMAN, NON_ANTAG)
+
+/datum/griffeningcard/creature/HeadOfPersonnel
+	name = "Head Of Personnel"
+	desc = "If you control this card, then you may sacrifice a assistant, if you do then immediately summon any level 3 or below non antagonist human from your deck."
+	LVL = 7
+	ATK = 20
+	DEF = 65
+	Attributes = list(ASSISTANT_IMMUNITY, ASSISTANT_PROMOTION, HEAD, HUMAN, NON_ANTAG)
+
+/datum/griffeningcard/creature/Assistant
+	name = "Assistant"
+	desc = "A regular assistant, while not powerful, with the right people the combined power would had been to great for many."
+	LVL = 2
+	ATK = 10
+	DEF = 5
+	Attributes = list(ASSISTANT, HUMAN, NON_ANTAG)
+
+/datum/griffeningcard/creature/HeadOfSecurity
+
+	name = "Head Of Security"
+	desc = "Requires a security officer to be sacrificed to play this card. If you control a Head Of Personnel then you may sacrifice a assistant to instead immiediately summon a security officer. Increase all security officers ATK by 20."
+	LVL = 7
+	ATK = 50
+	DEF = 35
+	Attributes = list(HEAD, ASSISTANT_SEC_PROMOTION, SECURITY_OFFICER_20_ATK, SECURITY, HUMAN, NON_ANTAG, SECURITY_SACRIFICE)
+
+/datum/griffeningcard/creature/SecurityOfficer
+
+	name = "Security Officer"
+	desc = "Security officer cannot kill a non antagonist human unless 'head of security' is in play. Instead, if the non antagonist human has a DEF lower than this card's attack, the human will become incapacited for one turn. The duration is doubled if security officer has a 'taser' equipped. This effect is optional on antagonist humans unless you state it's not. "
+	LVL = 5
+	ATK = 30
+	DEF = 25
+	Attributes = list(HUMAN, SECURITY, NON_ANTAG, NOATK_NON_ANTAG, INCAPACITATINGATTACK)
+
+/datum/griffeningcard/creature/Warden
+
+	name = "Warden"
+	desc = "Requires a security officer to be sacrificed to play this card. Cannot be attacked if you control a Security Officer or Head Of Security. When summoned, all current and future security guards you summon will have a taser equipped to them."
+	LVL = 7
+	ATK = 15
+	DEF = 15
+	Attributes = list(HUMAN, SECURITy, NON_ANTAG, SECURITY_IMMUNITY, TASERDISTRIBUTION, SECURITY_SACRIFICE)
+
+/datum/griffeningcard/creature/Lawyer
+
+	name = "Lawyer"
+	desc = "While lawyer is in play, any antagonists on the owner's side of the field cannot be attacked or effected by a card effect. Any 'security officer' on the same field of the owner of this card cannot attack but can still incapacitate."
+	LVL = 3
+	ATK = 10
+	DEF = 10
+	Attributes = list(HUMAN, NON_ANTAG, ANTAG_IMMUNITY, SECURITY_OFFICER_NOATK)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
