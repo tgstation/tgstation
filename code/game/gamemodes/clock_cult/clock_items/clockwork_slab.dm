@@ -151,12 +151,12 @@
 		if(GLOB.clockwork_caches) //show components on examine
 			to_chat(user, "<b>Stored components (with global cache):</b>")
 			for(var/i in stored_components)
-				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
+				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
 				(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
 		else
 			to_chat(user, "<b>Stored components:</b>")
 			for(var/i in stored_components)
-				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
+				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
 
 //Component Transferal
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
@@ -725,7 +725,7 @@
 			var/list/temp_desc = list()
 			for(var/c in quickbind_slot.consumed_components) //show how much the bound scripture costs
 				if(quickbind_slot.consumed_components[c])
-					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_acronym(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
+					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_icon(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
 			if(LAZYLEN(temp_desc))
 				temp_desc += "<br>"
 			temp_desc += "[quickbind_slot.quickbind_desc]"
