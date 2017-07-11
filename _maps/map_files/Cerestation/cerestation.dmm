@@ -59265,7 +59265,7 @@
 	height = 20;
 	name = "Cere emergency shuttle";
 	port_angle = 90;
-	preferred_direction = 2;
+	preferred_direction = 1;
 	width = 42
 	},
 /obj/docking_port/stationary{
