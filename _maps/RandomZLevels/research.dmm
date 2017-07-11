@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:22 (UTC)
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -4402,16 +4403,6 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mz" = (
-/turf/open/floor/plating/asteroid/airless,
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
-/area/awaymission/research/exterior)
-"mA" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -4422,10 +4413,10 @@
 	dir = 8
 	},
 /area/awaymission/research/interior/escapepods)
-"mB" = (
+"mA" = (
 /turf/closed/wall,
 /area/awaymission/research/exterior)
-"mC" = (
+"mB" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -4433,37 +4424,37 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/escapepods)
-"mD" = (
+"mC" = (
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 9
 	},
 /area/awaymission/research/interior/escapepods)
+"mD" = (
+/turf/open/floor/plasteel/whitegreen/side{
+	dir = 1
+	},
+/area/awaymission/research/interior/escapepods)
 "mE" = (
+/obj/structure/chair{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 1
 	},
 /area/awaymission/research/interior/escapepods)
 "mF" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 1
-	},
-/area/awaymission/research/interior/escapepods)
-"mG" = (
 /obj/structure/table,
 /obj/machinery/light,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 1
 	},
 /area/awaymission/research/interior/escapepods)
-"mH" = (
+"mG" = (
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 5
 	},
 /area/awaymission/research/interior/escapepods)
-"mI" = (
+"mH" = (
 /obj/structure/sign/pods{
 	pixel_x = -32
 	},
@@ -4471,7 +4462,7 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/escapepods)
-"mJ" = (
+"mI" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 4.1
 	},
@@ -4479,7 +4470,7 @@
 	dir = 8
 	},
 /area/awaymission/research/interior/escapepods)
-"mK" = (
+"mJ" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4488,7 +4479,7 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
-"mL" = (
+"mK" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4497,7 +4488,7 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
-"mM" = (
+"mL" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4506,7 +4497,7 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
-"mN" = (
+"mM" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "applebush";
 	layer = 4.1
@@ -4515,24 +4506,24 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/escapepods)
-"mO" = (
+"mN" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
-"mP" = (
+"mO" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/whitegreen/side,
 /area/awaymission/research/interior/escapepods)
-"mQ" = (
+"mP" = (
 /obj/structure/table,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side,
 /area/awaymission/research/interior/escapepods)
-"mR" = (
+"mQ" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -4540,34 +4531,34 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/escapepods)
-"mS" = (
+"mR" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three";
 	req_access_txt = "0"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
-"mT" = (
+"mS" = (
 /turf/open/floor/plasteel/whitegreen/corner{
 	dir = 4
 	},
 /area/awaymission/research/interior/escapepods)
-"mU" = (
+"mT" = (
 /obj/structure/sign/vacuum{
 	pixel_y = -32
 	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/whitegreen/side{
+	dir = 1
+	},
+/area/awaymission/research/interior/escapepods)
+"mU" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 1
 	},
 /area/awaymission/research/interior/escapepods)
 "mV" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 1
-	},
-/area/awaymission/research/interior/escapepods)
-"mW" = (
 /obj/structure/sign/vacuum{
 	pixel_y = -32
 	},
@@ -4575,7 +4566,7 @@
 	dir = 1
 	},
 /area/awaymission/research/interior/escapepods)
-"mX" = (
+"mW" = (
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 32
@@ -4584,33 +4575,33 @@
 	dir = 1
 	},
 /area/awaymission/research/interior/escapepods)
-"mY" = (
+"mX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
-"mZ" = (
+"mY" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
-"na" = (
+"mZ" = (
 /turf/closed/wall/mineral/plasma,
 /area/space)
-"nb" = (
+"na" = (
 /obj/structure/table/wood,
 /obj/item/weapon/spellbook/oneuse/random,
 /turf/open/floor/mineral/plasma,
 /area/space)
-"nc" = (
+"nb" = (
 /mob/living/simple_animal/hostile/creature,
 /turf/open/floor/mineral/plasma,
 /area/space)
-"nd" = (
+"nc" = (
 /obj/structure/healingfountain,
 /turf/open/floor/mineral/plasma,
 /area/space)
-"ne" = (
+"nd" = (
 /turf/open/floor/mineral/plasma,
 /area/space)
 
@@ -8893,11 +8884,11 @@ ab
 ab
 ab
 ab
-na
-na
-na
-na
-na
+mZ
+mZ
+mZ
+mZ
+mZ
 ab
 ab
 ab
@@ -9150,11 +9141,11 @@ ab
 ab
 ab
 ab
+mZ
 na
-nb
-nb
-nb
 na
+na
+mZ
 ab
 ab
 ab
@@ -9407,11 +9398,11 @@ ab
 ab
 ab
 ab
-na
-nc
-ne
-nc
-na
+mZ
+nb
+nd
+nb
+mZ
 ab
 ab
 ab
@@ -9664,11 +9655,11 @@ ab
 ab
 ab
 ab
-na
+mZ
+nc
 nd
-ne
-nd
-na
+nc
+mZ
 ab
 ab
 ab
@@ -9921,11 +9912,11 @@ ab
 ab
 ab
 ab
-na
-na
-ne
-na
-na
+mZ
+mZ
+nd
+mZ
+mZ
 ab
 ab
 ab
@@ -10179,9 +10170,9 @@ ab
 ab
 ab
 ab
-na
-ne
-na
+mZ
+nd
+mZ
 ab
 ab
 ab
@@ -10435,10 +10426,10 @@ ab
 ab
 ab
 ab
-na
-na
-ne
-na
+mZ
+mZ
+nd
+mZ
 ab
 ab
 ab
@@ -10692,10 +10683,10 @@ ab
 ab
 ab
 ab
-na
-ne
-ne
-na
+mZ
+nd
+nd
+mZ
 ab
 ab
 ab
@@ -10949,10 +10940,10 @@ ab
 ab
 ab
 aa
-na
-na
-na
-na
+mZ
+mZ
+mZ
+mZ
 ab
 ab
 ab
@@ -38180,15 +38171,15 @@ aH
 ae
 ae
 ae
-mB
+mA
 ae
 ae
 ae
-mB
+mA
 ae
 ae
 ae
-mB
+mA
 ae
 ae
 aa
@@ -38439,11 +38430,11 @@ mu
 mb
 mb
 mb
-mO
+mN
 mb
 mb
 mb
-mS
+mR
 mb
 mb
 ae
@@ -38953,11 +38944,11 @@ mu
 mb
 mb
 mb
-mO
+mN
 mb
 mb
 mb
-mS
+mR
 mb
 mb
 ad
@@ -39208,13 +39199,13 @@ mb
 mh
 mw
 mw
-mC
-mI
+mB
+mH
 mw
 mw
-mR
-mI
-mT
+mQ
+mH
+mS
 mb
 aa
 aa
@@ -39471,7 +39462,7 @@ mn
 mn
 mn
 mn
-mE
+mD
 mb
 aa
 aa
@@ -39728,11 +39719,11 @@ mn
 mn
 mn
 mn
-mE
-mY
-mY
-mY
-mY
+mD
+mX
+mX
+mX
+mX
 aa
 aa
 aa
@@ -39979,17 +39970,17 @@ mb
 mj
 mn
 mn
-mD
-mJ
+mC
+mI
 mo
 mn
 mn
 mn
-mE
-mZ
+mD
+mY
 mv
 mv
-mZ
+mY
 aa
 aa
 aa
@@ -40236,17 +40227,17 @@ mb
 mk
 mn
 mn
-mE
+mD
 mb
 mi
 mn
 mn
 mn
-mE
-mY
-mY
-mY
-mY
+mD
+mX
+mX
+mX
+mX
 aa
 aa
 aa
@@ -40493,13 +40484,13 @@ mb
 ml
 mn
 mn
-mF
-mK
-mP
+mE
+mJ
+mO
 mn
 mn
 mn
-mU
+mT
 mb
 aa
 aa
@@ -40750,14 +40741,14 @@ mb
 mi
 mn
 mn
-mF
-mL
-mP
-mn
-mn
-mn
 mE
-mY
+mK
+mO
+mn
+mn
+mn
+mD
+mX
 aa
 aa
 aa
@@ -41007,14 +40998,14 @@ mb
 mi
 mn
 mn
-mG
+mF
 mb
-mQ
+mP
 mn
 mn
 mn
-mE
-mY
+mD
+mX
 aa
 aa
 aa
@@ -41264,14 +41255,14 @@ mb
 mi
 mn
 mn
-mG
+mF
 mb
-mQ
+mP
 mn
 mn
 mn
-mE
-mY
+mD
+mX
 aa
 aa
 aa
@@ -41521,14 +41512,14 @@ aP
 mi
 mn
 mn
-mF
-mM
-mP
-mn
-mn
-mn
 mE
-mY
+mL
+mO
+mn
+mn
+mn
+mD
+mX
 aa
 aa
 aa
@@ -41778,13 +41769,13 @@ mb
 ml
 mn
 mn
-mF
-mL
-mP
+mE
+mK
+mO
 mn
 mn
 mn
-mV
+mU
 mb
 aa
 aa
@@ -42035,17 +42026,17 @@ iD
 mi
 mn
 mn
-mE
+mD
 mb
 mi
 mn
 mn
 mn
-mE
-mY
-mY
-mY
-mY
+mD
+mX
+mX
+mX
+mX
 aa
 aa
 aa
@@ -42292,17 +42283,17 @@ hZ
 mm
 mn
 mn
-mH
-mN
+mG
+mM
 mm
 mn
 mn
 mn
-mE
-mZ
+mD
+mY
 mv
 mv
-mZ
+mY
 aa
 aa
 aa
@@ -42555,11 +42546,11 @@ mn
 mn
 mn
 mn
-mE
-mY
-mY
-mY
-mY
+mD
+mX
+mX
+mX
+mX
 aa
 aa
 aa
@@ -42812,7 +42803,7 @@ mn
 mn
 mn
 mn
-mW
+mV
 mb
 aa
 aa
@@ -43062,14 +43053,14 @@ aP
 iD
 mp
 mx
-mA
+mz
 mx
 mx
 mx
 mx
-mA
+mz
 mx
-mX
+mW
 mb
 aa
 aa

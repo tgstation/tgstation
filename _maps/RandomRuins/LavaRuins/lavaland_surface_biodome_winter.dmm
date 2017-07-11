@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:18 (UTC)
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -418,10 +419,6 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "bu" = (
-/obj/structure/fans/tiny,
-/turf/open/floor/pod/dark,
-/area/ruin/powered)
-"bv" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -429,7 +426,7 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
-"bw" = (
+"bv" = (
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -438,7 +435,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
-"bx" = (
+"bw" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -446,13 +443,19 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
-"by" = (
+"bx" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
+/area/ruin/powered/snow_biodome)
+"by" = (
+/obj/machinery/light,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "bz" = (
@@ -462,12 +465,6 @@
 	},
 /area/ruin/powered/snow_biodome)
 "bA" = (
-/obj/machinery/light,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/snow_biodome)
-"bB" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -476,9 +473,18 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
-"bC" = (
+"bB" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
+/area/ruin/powered/snow_biodome)
+"bC" = (
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plating/asteroid/snow{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -496,7 +502,7 @@
 /area/ruin/powered/snow_biodome)
 "bE" = (
 /obj/machinery/light{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -504,37 +510,37 @@
 	},
 /area/ruin/powered/snow_biodome)
 "bF" = (
-/obj/machinery/light{
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"bG" = (
+/obj/machinery/light/small{
 	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"bH" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"bI" = (
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
-"bG" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/pod/dark,
-/area/ruin/powered)
-"bH" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/pod/dark,
-/area/ruin/powered)
-"bI" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/pod/dark,
-/area/ruin/powered)
 "bJ" = (
 /obj/machinery/light{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -551,9 +557,7 @@
 	},
 /area/ruin/powered/snow_biodome)
 "bL" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light,
 /turf/open/floor/plating/asteroid/snow{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
@@ -561,14 +565,14 @@
 /area/ruin/powered/snow_biodome)
 "bM" = (
 /obj/machinery/light,
-/turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/floor/plating/ice{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "bN" = (
 /obj/machinery/light,
-/turf/open/floor/plating/ice{
+/turf/open/floor/plating/asteroid/snow{
+	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -580,17 +584,10 @@
 	},
 /area/ruin/powered/snow_biodome)
 "bP" = (
-/obj/machinery/light,
-/turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
-/area/ruin/powered/snow_biodome)
-"bQ" = (
 /obj/machinery/light/small,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"bR" = (
+"bQ" = (
 /obj/machinery/light/small,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
@@ -640,10 +637,10 @@ ab
 ab
 ab
 aS
-bG
+bF
 aW
 aX
-bI
+bH
 aW
 bh
 ab
@@ -668,7 +665,7 @@ ab
 ab
 ab
 ak
-by
+bx
 ak
 ab
 aS
@@ -734,7 +731,7 @@ ak
 aI
 ak
 ak
-bC
+bB
 az
 ak
 aB
@@ -742,7 +739,7 @@ ak
 ak
 ak
 aI
-bJ
+bI
 ak
 ak
 ak
@@ -759,7 +756,7 @@ aa
 aa
 aa
 ab
-bv
+bu
 ao
 ao
 ao
@@ -813,7 +810,7 @@ ak
 ak
 ak
 ak
-bO
+bN
 ab
 ab
 bm
@@ -926,7 +923,7 @@ aq
 aq
 aK
 aq
-bD
+bC
 ao
 ao
 ao
@@ -952,7 +949,7 @@ ab
 ad
 af
 ar
-bw
+bv
 at
 aD
 at
@@ -972,7 +969,7 @@ ak
 ak
 ak
 az
-bM
+bL
 ab
 aS
 aS
@@ -988,7 +985,7 @@ au
 au
 aq
 at
-bz
+by
 aq
 ak
 ak
@@ -1007,7 +1004,7 @@ ak
 aI
 ab
 bn
-bQ
+bP
 ab
 bm
 "}
@@ -1148,7 +1145,7 @@ av
 at
 aG
 at
-bA
+bz
 aq
 aR
 ak
@@ -1167,7 +1164,7 @@ ao
 ao
 ab
 aW
-bR
+bQ
 ab
 bm
 "}
@@ -1177,7 +1174,7 @@ ai
 af
 aq
 av
-bx
+bw
 aH
 at
 aN
@@ -1196,7 +1193,7 @@ ak
 ak
 ak
 ao
-bN
+bM
 ab
 bo
 bp
@@ -1214,7 +1211,7 @@ aq
 aq
 aq
 aq
-bE
+bD
 ak
 ak
 ak
@@ -1357,7 +1354,7 @@ ak
 aI
 aI
 ak
-bP
+bO
 ab
 ab
 bm
@@ -1406,7 +1403,7 @@ az
 ak
 ak
 ak
-bF
+bE
 ak
 ak
 ak
@@ -1414,7 +1411,7 @@ ak
 ak
 az
 ak
-bK
+bJ
 ak
 ak
 az
@@ -1468,7 +1465,7 @@ ab
 ab
 ab
 ak
-bB
+bA
 ak
 ab
 aU
@@ -1480,7 +1477,7 @@ bf
 bj
 ab
 ak
-bL
+bK
 ak
 ab
 ab
@@ -1504,7 +1501,7 @@ ab
 ab
 ab
 aV
-bH
+bG
 aY
 bc
 be

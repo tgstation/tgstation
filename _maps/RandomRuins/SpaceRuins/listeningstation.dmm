@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:20 (UTC)
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -248,22 +249,6 @@
 /area/ruin/unpowered/no_grav)
 "M" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
-"N" = (
-/turf/closed/wall/r_wall,
-/area/ruin/unpowered/no_grav)
-"O" = (
-/turf/open/space,
-/area/ruin/unpowered/no_grav)
-"P" = (
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/no_grav)
-"Q" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/no_grav)
-"R" = (
-/turf/closed/wall,
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

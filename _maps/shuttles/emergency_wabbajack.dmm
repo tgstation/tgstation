@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:23 (UTC)
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -328,32 +329,29 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bh" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
-"bi" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/darkgreen,
 /area/shuttle/escape)
-"bj" = (
+"bi" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"bk" = (
+"bj" = (
 /obj/structure/chair/wood,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
-"bl" = (
+"bk" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bm" = (
+"bl" = (
 /obj/structure/chair{
 	dir = 4
 	},
@@ -362,11 +360,11 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bn" = (
+"bm" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bo" = (
+"bn" = (
 /obj/structure/chair{
 	dir = 4
 	},
@@ -376,7 +374,7 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bp" = (
+"bo" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -418,13 +416,13 @@ at
 al
 as
 aE
-bm
+bl
 aI
 aI
 aE
 ab
 aE
-bo
+bn
 aW
 ba
 be
@@ -437,7 +435,7 @@ ab
 ag
 ae
 ab
-bj
+bi
 al
 al
 aB
@@ -507,17 +505,17 @@ bg
 ac
 af
 ad
-bi
+bh
 ai
 an
-bk
+bj
 ay
 ab
-bl
+bk
 aq
 aq
 aq
-bn
+bm
 aH
 ab
 ab
@@ -616,7 +614,7 @@ aR
 aT
 as
 av
-bp
+bo
 aZ
 bd
 be

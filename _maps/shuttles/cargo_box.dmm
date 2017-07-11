@@ -1,26 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:22 (UTC)
 "a" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/supply)
-"b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
-"c" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/supply)
-"d" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/shuttle/supply)
-"e" = (
+"b" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"f" = (
+"c" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "QMLoad2"
@@ -31,14 +17,14 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"g" = (
+"d" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"h" = (
+"e" = (
 /obj/machinery/button/door{
 	dir = 2;
 	id = "QMLoaddoor2";
@@ -57,7 +43,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"i" = (
+"f" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
@@ -69,7 +55,7 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"j" = (
+"g" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "QMLoad"
@@ -80,75 +66,39 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"k" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
-/area/shuttle/supply)
-"l" = (
+"h" = (
 /turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/supply)
-"m" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f6"
-	},
-/area/shuttle/supply)
-"n" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
-/area/shuttle/supply)
-"o" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/supply)
-"p" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
-/area/shuttle/supply)
-"q" = (
+"i" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"r" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/supply)
-"s" = (
+"j" = (
 /turf/open/space,
 /area/space)
-"t" = (
+"k" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"u" = (
+"l" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"v" = (
+"m" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"w" = (
+"n" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"x" = (
+"o" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -156,100 +106,100 @@
 /area/shuttle/supply)
 
 (1,1,1) = {"
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-s
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+j
 "}
 (2,1,1) = {"
+a
 b
-e
-e
-e
-e
-x
-e
-e
-e
-l
 b
-t
+b
+b
+o
+b
+b
+b
+h
+a
+k
 "}
 (3,1,1) = {"
-b
-e
-e
-e
-e
-e
-e
-e
-e
-e
-q
-u
-"}
-(4,1,1) = {"
-b
-w
-e
-e
-e
-e
-e
-e
-e
-e
-q
-u
-"}
-(5,1,1) = {"
-b
-e
-e
-e
-e
-e
-e
-e
-e
-e
-q
-u
-"}
-(6,1,1) = {"
-b
-e
-e
-e
-e
-h
-e
-e
-e
-l
-b
-v
-"}
-(7,1,1) = {"
+a
 b
 b
 b
-f
-g
+b
+b
+b
+b
+b
 b
 i
+l
+"}
+(4,1,1) = {"
+a
+n
+b
+b
+b
+b
+b
+b
+b
+b
+i
+l
+"}
+(5,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+i
+l
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+b
+e
+b
+b
+b
+h
+a
+m
+"}
+(7,1,1) = {"
+a
+a
+a
+c
+d
+a
+f
+g
+a
+a
+a
 j
-b
-b
-b
-s
 "}

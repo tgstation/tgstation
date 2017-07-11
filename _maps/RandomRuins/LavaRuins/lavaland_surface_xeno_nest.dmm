@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:19 (UTC)
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -223,20 +224,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "N" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
-"O" = (
 /obj/structure/alien/weeds/node,
 /turf/template_noop,
 /area/ruin/xenonest)
-"P" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
-"Q" = (
+"O" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/alien/drone{
@@ -244,28 +235,14 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
-"R" = (
+"P" = (
 /obj/structure/alien/weeds,
 /turf/template_noop,
 /area/ruin/xenonest)
-"S" = (
+"Q" = (
 /obj/structure/alien/weeds,
 /turf/template_noop,
 /area/ruin/xenonest)
-"T" = (
-/obj/structure/alien/weeds/node,
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
-"U" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
-"V" = (
-/obj/structure/alien/weeds,
-/turf/template_noop,
-/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -679,7 +656,7 @@ b
 h
 x
 D
-Q
+O
 q
 c
 "}
@@ -1158,8 +1135,8 @@ g
 p
 q
 b
-O
-R
+N
+P
 p
 q
 "}
@@ -1190,8 +1167,8 @@ c
 g
 l
 b
-O
-S
+N
+Q
 p
 g
 "}
