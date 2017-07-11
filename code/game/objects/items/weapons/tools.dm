@@ -178,7 +178,6 @@
 /obj/item/weapon/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 	if(isinhands && random_color)
-		to_chat(world, "[icon_file]")
 		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
 		M.appearance_flags = RESET_COLOR
 		. += M
