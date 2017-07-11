@@ -25,7 +25,7 @@
 			for(var/obj/structure/destructible/clockwork/taunting_trail/TT in loc)
 				if(TT != src)
 					qdel(TT)
-	setDir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinals))
 	transform = matrix()*1.3
 	animate(src, alpha = 100, time = 15)
 

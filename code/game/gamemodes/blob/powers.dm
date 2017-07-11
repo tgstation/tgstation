@@ -267,7 +267,7 @@
 			var/list/diagonalblobs = list()
 			for(var/I in possibleblobs)
 				var/obj/structure/blob/IB = I
-				if(get_dir(IB, T) in GLOB.cardinal)
+				if(get_dir(IB, T) in GLOB.cardinals)
 					cardinalblobs += IB
 				else
 					diagonalblobs += IB

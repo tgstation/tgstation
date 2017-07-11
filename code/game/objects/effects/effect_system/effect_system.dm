@@ -60,7 +60,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	total_effects++
 	var/direction
 	if(cardinals)
-		direction = pick(GLOB.cardinal)
+		direction = pick(GLOB.cardinals)
 	else
 		direction = pick(GLOB.alldirs)
 	var/steps_amt = pick(1,2,3)
