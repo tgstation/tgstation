@@ -109,8 +109,7 @@
 			if(islist(gear.restricted_roles))
 				if(gear.restricted_roles.len)
 					. += "<font size=2>"
-					for(var/role in gear.restricted_roles)
-						. += role + " "
+					. += gear.restricted_roles.Join(";")
 					. += "</font>"
 			. += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
 		. += "</table>"
