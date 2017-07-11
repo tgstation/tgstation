@@ -116,7 +116,7 @@
 		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			src.attackby(M.selected,M)
 			return*/
-//Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
+//Aparantly mechs are just TOO COOL to call Collide())
 	else
 		return
 

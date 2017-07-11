@@ -81,7 +81,7 @@
 		else
 			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")
 
-/obj/guardian_bomb/Bump(atom/A)
+/obj/guardian_bomb/Collide(atom/A)
 	detonate(A)
 	..()
 

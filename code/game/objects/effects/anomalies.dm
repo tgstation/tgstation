@@ -107,7 +107,7 @@
 /obj/effect/anomaly/grav/Crossed(mob/A)
 	gravShock(A)
 
-/obj/effect/anomaly/grav/Bump(mob/A)
+/obj/effect/anomaly/grav/Collide(mob/A)
 	gravShock(A)
 
 /obj/effect/anomaly/grav/Bumped(mob/A)
@@ -143,7 +143,7 @@
 /obj/effect/anomaly/flux/Crossed(mob/living/M)
 	mobShock(M)
 
-/obj/effect/anomaly/flux/Bump(mob/living/M)
+/obj/effect/anomaly/flux/Collide(mob/living/M)
 	mobShock(M)
 
 /obj/effect/anomaly/flux/Bumped(mob/living/M)
