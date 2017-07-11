@@ -162,6 +162,26 @@
 	buildstackamount = 10
 	var/mob/living/owner = null
 
+/obj/structure/bed/dogbed/ian
+	desc = "Ian's bed! Looks comfy."
+	name = "Ian's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/cayenne
+	desc = "Seems kind of... fishy."
+	name = "Cayenne's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/renault
+	desc = "Renault's bed! Looks comfy. A foxy person needs a foxy pet."
+	name = "Renault's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/runtime
+	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."
+	name = "Runtime's bed"
+	anchored = TRUE
+
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
 	owner = M
 	name = "[M]'s bed"
