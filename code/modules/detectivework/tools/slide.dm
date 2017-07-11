@@ -17,7 +17,6 @@
 		src.A = "swab"
 		src.B = H.scontents
 		src.C = H.stype
-		qdel(thingy)
 	else if(istype(thingy, /obj/item/forensics/fiber) || istype(thingy, /obj/item/forensics/fiberbag)) //Are we putting a fiber on it?
 		if (istype(thingy, /obj/item/forensics/fiberbag))
 			var/obj/item/forensics/fiberbag/H = thingy

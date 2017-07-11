@@ -6,12 +6,13 @@
 	var/flags = 0
 	var/list/secondary_flags
 
-	var/list/fingerprints
-	var/list/fingerprintshidden
-	var/list/blood_DNA
+	//var/list/fingerprints
+	//var/list/fingerprintshidden
+	//var/list/blood_DNA
 	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
-	var/datum/reagents/reagents = null
+	var/datum/reagents/reagents
+	var/datum/forensics/forensics
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -349,8 +350,8 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna)
-	if(!blood_DNA)
-		blood_DNA = list()
+	if(!forensics)
+		fore = list()
 	var/old_length = blood_DNA.len
 	blood_DNA |= blood_dna
 	if(blood_DNA.len > old_length)
