@@ -293,7 +293,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_user(mob/user)
 	if(user == current_user)
 		return
-		terminate_aiming()
+	terminate_aiming()
 	if(istype(current_user))
 		reset_zooming()
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
@@ -303,7 +303,6 @@
 		LAZYADD(current_user.mousemove_intercept_objects, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-	set_user(mob)
 	if(aiming)
 		process_aim()
 		aiming_beam()
@@ -311,12 +310,15 @@
 			zooming_angle = lastangle
 			set_autozoom_pixel_offsets_immediate(zooming_angle)
 			smooth_zooming(2)
+	return ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
+/obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
-	set_user(mob)
+	if((object in mob.contents) || (object == mob))
+		return
 	start_aiming()
+	return ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
@@ -327,13 +329,6 @@
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
 	QDEL_NULL(current_tracer)
-
-/obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
-	set_user(user)
-	return ..()
-
-/obj/item/weapon/gun/energy/beam_rifle/dropped()
-	set_user(null)
 	return ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
@@ -351,6 +346,18 @@
 	lastfire = world.time
 	terminate_aiming()
 	return ..()
+
+/obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
+	..()
+	set_user(user)
+
+/obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
+	..()
+	set_user(user)
+
+/obj/item/weapon/gun/energy/beam_rifle/dropped()
+	..()
+	set_user()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
