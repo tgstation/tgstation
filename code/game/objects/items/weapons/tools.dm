@@ -141,6 +141,16 @@
 	usesound = 'sound/items/screwdriver.ogg'
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	var/random_color = TRUE //if the screwdriver uses random coloring
+	var/static/list/possible_colors = list(\
+	rgb(24, 97, 213), \
+	rgb(149, 23, 16), \
+	rgb(213, 24, 141), \
+	rgb(160, 82, 18), \
+	rgb(14, 127, 27), \
+	rgb(24, 162, 213), \
+	rgb(213, 140, 24), \
+	)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -148,14 +158,14 @@
 
 /obj/item/weapon/screwdriver/Initialize()
 	. = ..()
-	if(icon_state == "screwdriver") //random colors!
-		add_atom_colour(trueRandomColor(), FIXED_COLOUR_PRIORITY)
+	if(random_color) //random colors!
+		add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)
 		update_icon()
 	if(prob(75))
 		pixel_y = rand(0, 16)
 
 /obj/item/weapon/screwdriver/update_icon()
-	if(icon_state != "screwdriver") //icon override
+	if(!random_color) //icon override
 		return
 	cut_overlays()
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "screwdriver_screwybits")
@@ -177,6 +187,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "screwdriver_brass"
 	toolspeed = 0.5
+	random_color = FALSE
 
 /obj/item/weapon/screwdriver/abductor
 	name = "alien screwdriver"
@@ -185,6 +196,7 @@
 	icon_state = "screwdriver"
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
+	random_color = FALSE
 
 /obj/item/weapon/screwdriver/power
 	name = "hand drill"
@@ -202,6 +214,7 @@
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.25
+	random_color = FALSE
 
 /obj/item/weapon/screwdriver/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
