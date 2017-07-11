@@ -1,0 +1,31 @@
+/datum/griffeningcard
+
+  var/name = ""
+  var/desc = ""
+  var/ATK = 0
+  var/DEF = 0
+  var/LVL = 0
+  var/card_type = null
+  var/rarity = common
+  var/list/Attributes = list() //What special effects does this have? will be shown during examining a card
+ 
+ 
+/datum/griffeningcard/creature
+  card_type = CREATURE_CARD
+
+/datum/griffeningcard/effect
+  card_type = EFFECT_CARD
+
+/datum/griffeningcard/equipment
+  card_type = EQUIPMENT_CARD
+
+/datum/griffeningcard/area
+  card_type = AREA_CARD
+
+/datum/griffeningcard/creature/captain
+  name = "Captain"
+  desc = "Captain cannot be played if there's a nuclear operative or captain in play. Requires the bridge area to be played. If this card is summoned, get a energy gun card from your hand, discard pile or deck and attach it to this card."
+  LVL = 7
+  ATK = 60
+  DEF = 60
+  Attributes = list(DECK_SEARCH_ENERGY_GUN, HEAD, TWO_SACRIFICE, NO_OP, NO_CAPTAIN, AREA_BRIDGE)
