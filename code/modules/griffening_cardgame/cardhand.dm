@@ -38,19 +38,19 @@
 		if (cardUser.is_holding(src))
 			var/choice = href_list["pick"]
 			var/C = new choice(cardUser.loc)
-			src.cards -= choice
+			src.currenthand -= choice
 			cardUser.put_in_hands(C)
 			cardUser.visible_message("<span class='notice'>[cardUser] takes a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the card from your hand.</span>")
 
 			interact(cardUser)
-			if(src.cards.len < 3)
+			if(src.currenthand.len < 3)
 				src.icon_state = "[deckstyle]_hand2"
-			else if(src.cards.len < 4)
+			else if(src.currenthand.len < 4)
 				src.icon_state = "[deckstyle]_hand3"
-			else if(src.cards.len < 5)
+			else if(src.currenthand.len < 5)
 				src.icon_state = "[deckstyle]_hand4"
-			if(src.cards.len == 1)
-				var/A = src.cards[1]
+			if(src.currenthand.len == 1)
+				var/A = src.currenthand[1]
 				cardUser.put_in_hands(A)
 				to_chat(cardUser, "<span class='notice'>You also take [A] and hold it.</span>")
 				cardUser << browse(null, "window=cardhand")
