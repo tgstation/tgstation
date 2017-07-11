@@ -9,7 +9,7 @@
 
 #define AUTOZOOM_PIXEL_STEP_FACTOR 48
 
-#define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 0.5
+#define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 0.1
 
 /obj/item/weapon/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
