@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return
 	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
-	setDir(turn(src.dir, 90))
+	setDir(turn(dir, 90))
 	to_chat(usr, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	return
