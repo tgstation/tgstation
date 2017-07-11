@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:19 (UTC)
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -309,15 +308,6 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/seedvault)
-"P" = (
-/obj/machinery/hydroponics/constructable,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/seedvault)
 "Q" = (
 /obj/machinery/light{
 	dir = 8
@@ -334,44 +324,13 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/seedvault)
-"S" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/seedvault)
 "T" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/seedvault)
-"U" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/seedvault)
-"V" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/seedvault)
 "W" = (
-/obj/machinery/hydroponics/constructable,
-/obj/machinery/light,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/seedvault)
-"X" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer{
@@ -432,7 +391,7 @@ a
 a
 c
 c
-S
+N
 h
 h
 T
@@ -480,7 +439,7 @@ t
 h
 h
 t
-U
+Q
 t
 c
 a
@@ -628,14 +587,14 @@ c
 N
 h
 c
-P
+O
 h
 h
 h
 h
 h
 h
-X
+W
 c
 a
 a
@@ -678,7 +637,7 @@ x
 h
 h
 x
-V
+R
 I
 c
 a

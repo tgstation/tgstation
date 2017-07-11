@@ -92,59 +92,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/pride)
-"n" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"o" = (
-/obj/structure/mirror{
-	pixel_x = 32
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"p" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"q" = (
-/obj/structure/mirror{
-	pixel_x = 32
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
 "r" = (
-/obj/machinery/light/small,
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"s" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/silver{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -229,10 +177,10 @@ e
 l
 e
 e
-n
+l
 e
 e
-p
+l
 e
 e
 d
@@ -300,7 +248,7 @@ g
 g
 g
 g
-s
+r
 d
 c
 a
@@ -317,10 +265,10 @@ f
 m
 f
 f
-o
+m
 f
 f
-q
+m
 f
 f
 d

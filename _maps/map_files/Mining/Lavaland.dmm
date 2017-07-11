@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:15 (UTC)
 "aa" = (
 /turf/closed/indestructible/riveted/boss,
 /area/lavaland/surface/outdoors)
@@ -3765,38 +3764,7 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"id" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
 "ie" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
-"if" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
-"ig" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
@@ -3866,18 +3834,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"im" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
 "in" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -3892,19 +3848,6 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "io" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
-"ip" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
@@ -35817,8 +35760,8 @@ aa
 ie
 ih
 hD
-im
-ip
+ih
+io
 aa
 aa
 fU
@@ -36326,9 +36269,9 @@ aj
 "}
 (127,1,1) = {"
 ic
-id
+ic
 fV
-if
+ic
 ii
 gg
 ac
@@ -36842,7 +36785,7 @@ aj
 aa
 aa
 aa
-ig
+ie
 ik
 hF
 gi

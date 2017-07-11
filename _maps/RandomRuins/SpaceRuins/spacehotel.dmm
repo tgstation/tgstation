@@ -3503,22 +3503,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/ruin/hotel)
-"iX" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/ruin/hotel)
 "iY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -7345,7 +7329,7 @@ hW
 ih
 ih
 fi
-iX
+hQ
 hf
 cQ
 cQ

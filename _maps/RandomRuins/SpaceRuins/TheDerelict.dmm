@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:21 (UTC)
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -939,14 +938,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cK" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/derelict/bridge/access)
 "cL" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1579,14 +1570,6 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"ez" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/derelict/bridge/access)
 "eA" = (
 /obj/machinery/door/window/eastleft{
 	name = "Heads of Staff";
@@ -1656,14 +1639,6 @@
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
 "eJ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/derelict/bridge)
-"eK" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2642,14 +2617,6 @@
 	icon_state = "damaged4"
 	},
 /area/derelict/singularity_engine)
-"hN" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating/airless,
-/area/derelict/hallway/primary)
 "hO" = (
 /turf/open/floor/plating,
 /area/derelict/arrival)
@@ -3147,14 +3114,6 @@
 "jo" = (
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/unpowered/no_grav)
-"jp" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/airless,
-/area/derelict/hallway/primary)
 "jq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless{
@@ -3535,14 +3494,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"ks" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating/airless,
-/area/derelict/hallway/primary)
 "kt" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3552,14 +3503,6 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
-/area/derelict/hallway/primary)
-"ku" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "kv" = (
 /obj/machinery/door/window{
@@ -3633,19 +3576,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel/airless,
-/area/derelict/hallway/primary)
-"kE" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -7056,7 +6986,7 @@ gW
 gW
 jX
 kl
-ks
+gx
 fY
 fY
 fY
@@ -7282,7 +7212,7 @@ hH
 fY
 gn
 gn
-ku
+gb
 fY
 jY
 km
@@ -7395,7 +7325,7 @@ hH
 fY
 jY
 gn
-ku
+gb
 gn
 gn
 kW
@@ -7508,7 +7438,7 @@ hH
 fY
 gn
 gn
-ku
+gb
 fY
 fY
 fY
@@ -7621,7 +7551,7 @@ jy
 fY
 jV
 gn
-ku
+gb
 fY
 kM
 kV
@@ -7734,7 +7664,7 @@ jz
 fY
 gn
 kn
-ku
+gb
 fY
 jY
 km
@@ -7847,7 +7777,7 @@ jA
 fY
 gn
 gn
-ku
+gb
 kC
 gn
 kV
@@ -8073,7 +8003,7 @@ hH
 fY
 jZ
 ko
-ku
+gb
 gn
 kN
 kX
@@ -8186,7 +8116,7 @@ hu
 fY
 gn
 gn
-ku
+gb
 gn
 kN
 kY
@@ -8297,8 +8227,8 @@ hW
 hW
 jC
 jM
-jp
-jp
+jb
+jb
 kw
 kD
 kN
@@ -8752,7 +8682,7 @@ fY
 fY
 fY
 fY
-kE
+kv
 fY
 fY
 fY
@@ -9092,7 +9022,7 @@ gn
 gn
 gn
 kF
-jp
+jb
 kZ
 fY
 lt
@@ -10548,17 +10478,17 @@ aa
 gK
 gK
 gk
-hN
+gk
 gl
 gl
 iE
 io
 jb
-jp
-jp
+jb
+jb
 jO
-jp
-jp
+jb
+jb
 ky
 gn
 gj
@@ -10673,7 +10603,7 @@ gb
 gn
 gn
 kz
-jp
+jb
 kQ
 lb
 lh
@@ -12103,7 +12033,7 @@ bj
 bj
 cr
 cx
-cK
+cJ
 cw
 cS
 cw
@@ -12112,9 +12042,9 @@ dx
 cE
 dX
 eo
-ez
+cE
 eG
-ez
+cE
 cE
 cE
 cE
@@ -12226,7 +12156,7 @@ cw
 cw
 dv
 cw
-cK
+cJ
 cw
 cr
 cr
@@ -12791,7 +12721,7 @@ dH
 ea
 eq
 dZ
-eK
+eJ
 dZ
 fe
 fo

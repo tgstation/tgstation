@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:15 (UTC)
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -601,13 +600,6 @@
 	},
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
-"bW" = (
-/obj/effect/decal/sandeffect,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plating/beach/sand,
-/area/ruin/powered/beach)
 "bX" = (
 /obj/machinery/light{
 	dir = 8
@@ -617,12 +609,6 @@
 "bY" = (
 /obj/machinery/light{
 	dir = 4
-	},
-/turf/open/floor/plating/beach/sand,
-/area/ruin/powered/beach)
-"bZ" = (
-/obj/machinery/light{
-	dir = 8
 	},
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
@@ -636,23 +622,6 @@
 /turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand
 	},
-/area/ruin/powered/beach)
-"cb" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
-/area/ruin/powered/beach)
-"cc" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cd" = (
 /obj/machinery/light/small{
@@ -690,18 +659,6 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/ruin/powered)
-"ch" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plating/beach/sand,
-/area/ruin/powered/beach)
-"ci" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating/beach/sand,
-/area/ruin/powered/beach)
 "cj" = (
 /obj/effect/overlay/palmtree_l,
 /obj/machinery/light{
@@ -710,26 +667,6 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "ck" = (
-/obj/machinery/light,
-/turf/open/floor/plating/beach/water,
-/area/ruin/powered/beach)
-"cl" = (
-/obj/machinery/light,
-/turf/open/floor/plating/beach/water,
-/area/ruin/powered/beach)
-"cm" = (
-/obj/machinery/light,
-/turf/open/floor/plating/beach/water,
-/area/ruin/powered/beach)
-"cn" = (
-/obj/machinery/light,
-/turf/open/floor/plating/beach/water,
-/area/ruin/powered/beach)
-"co" = (
-/obj/machinery/light,
-/turf/open/floor/plating/beach/water,
-/area/ruin/powered/beach)
-"cp" = (
 /obj/machinery/light,
 /turf/open/floor/plating/beach/water,
 /area/ruin/powered/beach)
@@ -874,7 +811,7 @@ aO
 ar
 bb
 ar
-bZ
+bX
 ar
 ar
 aA
@@ -882,7 +819,7 @@ aA
 aA
 ar
 ar
-ci
+bX
 bK
 bO
 bQ
@@ -953,7 +890,7 @@ bQ
 bR
 bR
 bR
-cm
+ck
 ab
 ab
 aa
@@ -1114,7 +1051,7 @@ bR
 bR
 bR
 bR
-co
+ck
 ab
 aa
 "}
@@ -1306,7 +1243,7 @@ bR
 bR
 bR
 bR
-cp
+ck
 ab
 aa
 "}
@@ -1322,14 +1259,14 @@ aj
 aj
 aj
 aj
-cb
+ca
 aK
 aA
 ar
 ar
 ar
 ar
-ch
+bY
 ar
 ar
 bO
@@ -1412,7 +1349,7 @@ ab
 bT
 bT
 bT
-bW
+bV
 aA
 aA
 aA
@@ -1497,7 +1434,7 @@ bQ
 bR
 bR
 bR
-cn
+ck
 ab
 ab
 aa
@@ -1546,7 +1483,7 @@ aq
 ar
 be
 ar
-cc
+bY
 ar
 ar
 aA
@@ -1591,7 +1528,7 @@ ap
 bO
 bQ
 bR
-cl
+ck
 ab
 ab
 aa

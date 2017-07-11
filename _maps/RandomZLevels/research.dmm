@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:22 (UTC)
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -766,14 +765,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"co" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cp" = (
@@ -2134,14 +2125,6 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
-"gi" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/black,
-/area/awaymission/research/interior/secure)
 "gj" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2461,14 +2444,6 @@
 	dir = 1
 	},
 /area/awaymission/research/interior)
-"gW" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/whitepurple,
-/area/awaymission/research/interior)
 "gX" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plasteel/whitepurple/side{
@@ -2623,14 +2598,6 @@
 	dir = 10
 	},
 /area/awaymission/research/interior/cryo)
-"hw" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "hx" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2870,12 +2837,6 @@
 "ib" = (
 /obj/structure/window/reinforced{
 	dir = 8
-	},
-/turf/open/floor/plasteel/purple,
-/area/awaymission/research/interior/genetics)
-"ic" = (
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/open/floor/plasteel/purple,
 /area/awaymission/research/interior/genetics)
@@ -3474,12 +3435,6 @@
 /obj/structure/sign/bluecross,
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior)
-"jL" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whiteblue,
-/area/awaymission/research/interior)
 "jM" = (
 /obj/machinery/light{
 	dir = 8
@@ -3773,53 +3728,6 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/dorm)
-"kG" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"kH" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 4
-	},
-/area/awaymission/research/interior)
-"kI" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen,
-/area/awaymission/research/interior)
-"kJ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 8
-	},
-/area/awaymission/research/interior)
-"kK" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "kL" = (
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
@@ -3837,17 +3745,6 @@
 /obj/structure/chair/comfy/beige,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/awaymission/research/interior/medbay)
-"kP" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "kQ" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/yellowsiding{
@@ -4522,14 +4419,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side,
-/area/awaymission/research/interior/escapepods)
-"mQ" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 4
-	},
 /area/awaymission/research/interior/escapepods)
 "mR" = (
 /obj/machinery/door/airlock/external{
@@ -29656,7 +29545,7 @@ cQ
 dc
 eU
 dc
-gi
+gh
 dc
 dc
 dc
@@ -30427,7 +30316,7 @@ cQ
 dc
 eW
 fz
-gi
+gh
 fz
 eW
 dc
@@ -30941,7 +30830,7 @@ cQ
 dc
 dc
 fA
-gi
+gh
 fA
 dc
 dc
@@ -31198,7 +31087,7 @@ cQ
 dc
 dc
 dc
-gi
+gh
 dc
 dc
 dc
@@ -36072,10 +35961,10 @@ ad
 ad
 aH
 cm
-co
+bD
 cS
-co
-co
+bD
+bD
 cw
 ea
 ev
@@ -36087,10 +35976,10 @@ fc
 fE
 ea
 ce
-co
-co
+bD
+bD
 iw
-co
+bD
 cc
 aH
 ad
@@ -36348,7 +36237,7 @@ cx
 cx
 cx
 cx
-hw
+cd
 aH
 aH
 ad
@@ -36863,24 +36752,24 @@ dh
 ix
 cx
 cx
-hw
+cd
 id
 cm
-co
-co
-co
-co
+bD
+bD
+bD
+bD
 kp
-co
-kP
-co
-co
-co
-co
-co
-co
-co
-co
+bD
+aY
+bD
+bD
+bD
+bD
+bD
+bD
+bD
+bD
 cc
 aH
 ae
@@ -37120,9 +37009,9 @@ dt
 cK
 cK
 cy
-hw
+cd
 id
-hw
+cd
 iX
 iX
 iX
@@ -37138,7 +37027,7 @@ iX
 iX
 iX
 iX
-hw
+cd
 aH
 ae
 ae
@@ -37379,7 +37268,7 @@ cJ
 cx
 hD
 id
-hw
+cd
 iX
 jj
 jC
@@ -37395,7 +37284,7 @@ lO
 jC
 jj
 iX
-hw
+cd
 aH
 ae
 ae
@@ -37634,9 +37523,9 @@ cK
 iy
 iG
 cx
-hw
+cd
 id
-hw
+cd
 iX
 jk
 jD
@@ -37652,7 +37541,7 @@ jk
 jD
 jk
 iX
-hw
+cd
 aH
 ae
 ae
@@ -37891,9 +37780,9 @@ in
 cK
 iH
 cx
-hw
+cd
 id
-hw
+cd
 iX
 jl
 jk
@@ -37909,7 +37798,7 @@ lP
 jk
 jl
 iX
-hw
+cd
 aH
 ae
 ae
@@ -38148,9 +38037,9 @@ cK
 dP
 iI
 cx
-hw
+cd
 id
-hw
+cd
 iX
 iX
 iX
@@ -38166,7 +38055,7 @@ iX
 iX
 iX
 iX
-hw
+cd
 aH
 ae
 ae
@@ -38405,9 +38294,9 @@ ib
 iz
 cx
 cx
-hw
+cd
 id
-hw
+cd
 iX
 jj
 jC
@@ -38423,7 +38312,7 @@ lQ
 jC
 jj
 iX
-hw
+cd
 ma
 mb
 mu
@@ -38657,14 +38546,14 @@ fc
 fE
 ea
 dh
-ic
+dv
 dh
 cT
 cx
 cm
 cw
 id
-hw
+cd
 iX
 jk
 jD
@@ -38680,7 +38569,7 @@ jk
 jD
 jk
 iX
-hw
+cd
 ma
 mg
 mv
@@ -38918,10 +38807,10 @@ cx
 cx
 cx
 cx
-hw
+cd
 id
 id
-hw
+cd
 iX
 jl
 jk
@@ -38937,7 +38826,7 @@ lR
 jk
 jl
 iX
-hw
+cd
 ma
 mb
 mu
@@ -39156,10 +39045,10 @@ ad
 ad
 aH
 cz
-co
-co
-co
-co
+bD
+bD
+bD
+bD
 cc
 ea
 ev
@@ -39178,7 +39067,7 @@ bD
 cw
 id
 aO
-hw
+cd
 iX
 iX
 iX
@@ -39194,7 +39083,7 @@ iX
 iX
 iX
 iX
-hw
+cd
 mb
 mh
 mw
@@ -39203,7 +39092,7 @@ mB
 mH
 mw
 mw
-mQ
+mB
 mH
 mS
 mb
@@ -39427,7 +39316,7 @@ gU
 fi
 fF
 ea
-hw
+cd
 id
 id
 id
@@ -39435,7 +39324,7 @@ id
 id
 id
 aO
-hw
+cd
 iX
 jj
 jC
@@ -39451,7 +39340,7 @@ lS
 jC
 jj
 iX
-hw
+cd
 mb
 mi
 mn
@@ -39684,7 +39573,7 @@ fK
 cp
 ea
 ea
-hw
+cd
 id
 io
 io
@@ -39692,7 +39581,7 @@ iJ
 iA
 iM
 aO
-hw
+cd
 iX
 jk
 jD
@@ -39708,7 +39597,7 @@ jk
 jD
 jk
 iX
-hw
+cd
 mb
 mj
 mn
@@ -39949,7 +39838,7 @@ iK
 iA
 iM
 aO
-hw
+cd
 iX
 jl
 jk
@@ -39965,7 +39854,7 @@ lT
 jk
 jl
 iX
-hw
+cd
 mb
 mj
 mn
@@ -40196,7 +40085,7 @@ fL
 gz
 gV
 cp
-hw
+cd
 eF
 hX
 id
@@ -40222,7 +40111,7 @@ iX
 iX
 iX
 iX
-hw
+cd
 mb
 mk
 mn
@@ -40453,7 +40342,7 @@ fM
 cp
 fM
 cp
-hw
+cd
 ee
 ee
 id
@@ -40710,7 +40599,7 @@ fL
 gA
 gV
 cp
-hw
+cd
 aO
 hY
 id
@@ -40736,7 +40625,7 @@ jF
 jF
 lz
 iX
-hw
+cd
 mb
 mi
 mn
@@ -41227,7 +41116,7 @@ cp
 eH
 cp
 cp
-hw
+cd
 id
 iC
 iM
@@ -41479,12 +41368,12 @@ eI
 fj
 fN
 gC
-gW
+fC
 fj
 hy
 hL
 cp
-hw
+cd
 id
 id
 id
@@ -41724,8 +41613,8 @@ bo
 bG
 ar
 ce
-co
-co
+bD
+bD
 cL
 cY
 dk
@@ -41755,15 +41644,15 @@ jF
 kc
 iX
 cm
-co
-co
-co
-co
-co
-co
-co
-co
-co
+bD
+bD
+bD
+bD
+bD
+bD
+bD
+bD
+bD
 cw
 mb
 ml
@@ -42011,7 +41900,7 @@ jq
 jH
 kd
 iD
-kG
+iT
 iD
 iD
 iD
@@ -42268,7 +42157,7 @@ hl
 hl
 hl
 hO
-kH
+ir
 hZ
 hZ
 hZ
@@ -42525,7 +42414,7 @@ hl
 hl
 hl
 hl
-kI
+is
 hl
 hl
 hl
@@ -42782,7 +42671,7 @@ jr
 jI
 hl
 kv
-kJ
+it
 ia
 iE
 ia
@@ -43039,7 +42928,7 @@ js
 jJ
 ke
 cp
-kG
+iT
 iD
 iD
 iD
@@ -43285,11 +43174,11 @@ hM
 cp
 ig
 iu
-co
-co
-co
-co
-co
+bD
+bD
+bD
+bD
+bD
 cc
 cp
 jt
@@ -43540,7 +43429,7 @@ eO
 eO
 hQ
 cp
-hw
+cd
 aH
 aH
 aH
@@ -43797,7 +43686,7 @@ cp
 cp
 cp
 cp
-hw
+cd
 aH
 ad
 ad
@@ -43807,7 +43696,7 @@ aH
 cd
 cp
 js
-jL
+jJ
 ke
 cp
 cd
@@ -44822,7 +44711,7 @@ fT
 gH
 hc
 cp
-hw
+cd
 aH
 ad
 ad
@@ -45079,7 +44968,7 @@ fT
 gE
 hc
 cp
-hw
+cd
 aH
 aH
 aH
@@ -45095,7 +44984,7 @@ jh
 jN
 kg
 iW
-kK
+cd
 aH
 aH
 aH
@@ -45598,7 +45487,7 @@ do
 do
 do
 do
-hw
+cd
 aH
 ad
 aH
@@ -45615,7 +45504,7 @@ iW
 iW
 iW
 iW
-kK
+cd
 aH
 ad
 ad
@@ -45855,7 +45744,7 @@ dH
 dH
 dD
 do
-hw
+cd
 aH
 ad
 aH
@@ -45872,7 +45761,7 @@ ld
 lq
 lC
 iW
-kK
+cd
 aH
 ad
 ad
@@ -46112,7 +46001,7 @@ dH
 dH
 ih
 do
-hw
+cd
 aH
 ad
 aH
@@ -46129,7 +46018,7 @@ jw
 jw
 lD
 iW
-kK
+cd
 aH
 ad
 ad
@@ -46369,7 +46258,7 @@ eo
 dT
 dF
 do
-hw
+cd
 aH
 ad
 aH
@@ -46386,7 +46275,7 @@ jw
 lr
 kg
 iW
-kK
+cd
 aH
 ad
 ad
@@ -46626,7 +46515,7 @@ do
 do
 do
 do
-hw
+cd
 aH
 ad
 aH
@@ -46643,7 +46532,7 @@ le
 ls
 lE
 iW
-kK
+cd
 aH
 ad
 ad
@@ -46883,7 +46772,7 @@ dH
 dH
 dD
 do
-hw
+cd
 aH
 ad
 aH
@@ -46900,7 +46789,7 @@ jR
 jR
 jR
 iW
-kK
+cd
 aH
 ad
 ad
@@ -47140,7 +47029,7 @@ dH
 dH
 ih
 do
-hw
+cd
 aH
 ad
 aH
@@ -47397,7 +47286,7 @@ eo
 dT
 dF
 do
-hw
+cd
 aH
 ad
 aH
@@ -47414,7 +47303,7 @@ lg
 lt
 kh
 aP
-kK
+cd
 aH
 ad
 ad
@@ -47654,7 +47543,7 @@ do
 do
 do
 do
-hw
+cd
 aH
 ad
 aH
@@ -48168,7 +48057,7 @@ fW
 fW
 hn
 do
-hw
+cd
 aH
 ad
 aH

@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:15 (UTC)
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -51024,21 +51023,6 @@
 "chX" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"chY" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"chZ" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cia" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cib" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cic" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -66048,13 +66032,13 @@ aCb
 aCb
 aCb
 aCb
-chZ
+chX
 chK
 aJA
 aJA
 aJA
 chL
-cib
+chX
 aCb
 aCb
 aCb
@@ -67329,7 +67313,7 @@ aaa
 aaa
 aCb
 aCb
-chY
+chX
 aEl
 aFd
 aFX
@@ -67590,13 +67574,13 @@ aCb
 aCb
 aCb
 aCb
-cia
+chX
 chK
 aJz
 aJz
 aJz
 chL
-cic
+chX
 aCb
 aCb
 aCb

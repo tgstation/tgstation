@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:15 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -43190,7 +43189,6 @@
 "bCK" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -43779,7 +43777,6 @@
 "bDW" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -48178,7 +48175,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -62662,7 +62658,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -66693,7 +66688,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -85350,9 +85344,8 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot{
-	pixel_y = 1;
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/orange{

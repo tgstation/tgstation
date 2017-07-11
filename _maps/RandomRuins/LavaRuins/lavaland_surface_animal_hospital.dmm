@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:18 (UTC)
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -905,13 +904,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
-"cl" = (
-/obj/machinery/light,
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/lavaland/surface/outdoors)
 "cm" = (
 /obj/machinery/light{
 	dir = 4
@@ -943,16 +935,6 @@
 	},
 /area/ruin/powered/animal_hospital)
 "cq" = (
-/obj/effect/mob_spawn/human/doctor/alive/lavaland,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1
-	},
-/area/ruin/powered/animal_hospital)
-"cr" = (
 /obj/effect/mob_spawn/human/doctor/alive/lavaland,
 /obj/machinery/light/small{
 	dir = 1
@@ -1003,24 +985,6 @@
 /turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
-	},
-/area/ruin/powered/animal_hospital)
-"cx" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4
-	},
-/area/ruin/powered/animal_hospital)
-"cy" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4
 	},
 /area/ruin/powered/animal_hospital)
 "cz" = (
@@ -1389,7 +1353,7 @@ al
 au
 as
 ae
-cr
+cq
 aH
 ci
 ao
@@ -1533,7 +1497,7 @@ aa
 aa
 ab
 ab
-cl
+ck
 ae
 ap
 ao
@@ -1606,11 +1570,11 @@ cv
 aO
 aO
 aO
-cx
+cv
 aO
 aO
 aO
-cy
+cv
 aO
 bP
 ae

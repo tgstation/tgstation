@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:15 (UTC)
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -66650,7 +66649,6 @@
 	pixel_y = -30
 	},
 /obj/item/weapon/stamp/rd{
-	pixel_x = -11;
 	pixel_x = 3;
 	pixel_y = -2
 	},

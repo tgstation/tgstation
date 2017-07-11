@@ -497,17 +497,6 @@
 "bF" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/academy/classrooms)
-"bG" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/awaymission/academy/classrooms)
-"bH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1"
-	},
-/area/awaymission/academy/classrooms)
 "bI" = (
 /obj/machinery/light{
 	dir = 8
@@ -606,12 +595,6 @@
 "bV" = (
 /turf/open/floor/plasteel/floorgrime,
 /area/awaymission/academy/classrooms)
-"bW" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/awaymission/academy/classrooms)
 "bX" = (
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/engine,
@@ -702,11 +685,6 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/academy/headmaster)
-"cn" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/awaymission/academy/headmaster)
 "co" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/plating,
@@ -730,11 +708,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"cs" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
 /area/awaymission/academy/classrooms)
 "ct" = (
 /obj/structure/chair,
@@ -884,12 +857,6 @@
 	dir = 6
 	},
 /area/awaymission/academy/classrooms)
-"cS" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/headmaster)
 "cT" = (
 /obj/machinery/light{
 	dir = 8
@@ -2128,12 +2095,6 @@
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
-"gw" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/awaymission/academy/classrooms)
 "gx" = (
 /obj/structure/closet/athletic_mixed,
 /turf/open/floor/engine/cult,
@@ -2490,14 +2451,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"hu" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/hydrofloor,
-/area/awaymission/academy/academyaft)
 "hv" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2505,14 +2458,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hw" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hx" = (
 /obj/structure/cable{
@@ -2610,14 +2555,6 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
-/area/awaymission/academy/academyaft)
-"hG" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hH" = (
 /obj/structure/cable{
@@ -3547,14 +3484,6 @@
 /area/awaymission/academy/academygate)
 "kf" = (
 /turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kg" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "kh" = (
 /obj/machinery/power/apc{
@@ -11784,7 +11713,7 @@ bE
 fM
 dc
 dc
-gw
+db
 dc
 dc
 dc
@@ -11921,7 +11850,7 @@ ds
 dc
 fD
 ho
-hG
+hv
 hS
 fD
 il
@@ -12051,7 +11980,7 @@ dc
 dc
 fD
 ho
-hG
+hv
 hT
 fD
 il
@@ -12064,9 +11993,9 @@ kG
 il
 fD
 iR
-hG
+hv
 ji
-hG
+hv
 ju
 hc
 hc
@@ -12181,7 +12110,7 @@ dc
 dc
 fD
 hp
-hG
+hv
 hU
 fD
 im
@@ -12311,7 +12240,7 @@ dc
 dc
 fD
 ho
-hG
+hv
 hV
 fD
 il
@@ -12441,7 +12370,7 @@ dc
 dc
 fD
 ho
-hG
+hv
 hW
 fD
 in
@@ -12674,7 +12603,7 @@ br
 br
 br
 br
-cS
+bI
 br
 br
 aF
@@ -13509,7 +13438,7 @@ jV
 jV
 jY
 kd
-kg
+jU
 kk
 kf
 kf
@@ -13871,7 +13800,7 @@ gU
 gj
 fD
 ho
-hG
+hv
 hY
 fD
 il
@@ -14001,7 +13930,7 @@ gV
 gj
 fD
 ho
-hG
+hv
 hZ
 fD
 il
@@ -14131,7 +14060,7 @@ gJ
 gO
 fD
 hp
-hG
+hv
 ia
 fD
 im
@@ -14261,7 +14190,7 @@ gJ
 gO
 fD
 ho
-hG
+hv
 ib
 fD
 il
@@ -14391,7 +14320,7 @@ gW
 gO
 fD
 ho
-hG
+hv
 ic
 fD
 il
@@ -15300,7 +15229,7 @@ aa
 aa
 aa
 hc
-hu
+hj
 hs
 hs
 hs
@@ -15560,7 +15489,7 @@ aa
 aa
 aa
 hc
-hw
+hh
 hf
 hf
 hf

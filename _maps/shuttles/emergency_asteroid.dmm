@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:22 (UTC)
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -436,13 +435,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bw" = (
-/obj/structure/chair,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "bx" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/brig,
@@ -453,17 +445,7 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bz" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "bA" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bB" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -538,7 +520,7 @@ aJ
 aS
 aZ
 ab
-bz
+by
 bh
 bp
 ac
@@ -712,7 +694,7 @@ aa
 af
 af
 at
-bw
+bv
 ao
 aO
 af
@@ -733,7 +715,7 @@ aO
 af
 aA
 ao
-bB
+bA
 ab
 aa
 aa

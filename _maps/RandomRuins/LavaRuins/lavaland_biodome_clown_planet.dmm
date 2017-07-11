@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:18 (UTC)
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1050,15 +1049,6 @@
 	wet = 5
 	},
 /area/ruin/powered/clownplanet)
-"co" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkredfull";
-	wet = 5
-	},
-/area/ruin/powered/clownplanet)
 "cp" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1090,27 +1080,7 @@
 	wet = 5
 	},
 /area/ruin/powered/clownplanet)
-"cs" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/indestructible/sound{
-	icon_state = "bananium";
-	name = "bananium floor";
-	sound = 'sound/effects/clownstep1.ogg';
-	wet = 5
-	},
-/area/ruin/powered/clownplanet)
 "ct" = (
-/obj/machinery/light,
-/turf/open/indestructible/sound{
-	icon_state = "bananium";
-	name = "bananium floor";
-	sound = 'sound/effects/clownstep1.ogg';
-	wet = 5
-	},
-/area/ruin/powered/clownplanet)
-"cu" = (
 /obj/machinery/light,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
@@ -1756,7 +1726,7 @@ cc
 bP
 cq
 cc
-cs
+cr
 bB
 bH
 bH
@@ -1861,7 +1831,7 @@ bH
 bH
 bB
 bW
-cu
+ct
 ah
 bX
 ak
@@ -1919,7 +1889,7 @@ bh
 cm
 bp
 cc
-co
+cn
 bA
 bB
 bB

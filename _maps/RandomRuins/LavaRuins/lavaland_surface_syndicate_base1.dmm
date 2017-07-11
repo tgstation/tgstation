@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-07-2017 21:19 (UTC)
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1285,11 +1284,6 @@
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
-"dc" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ruin/powered/syndicate_lava_base)
 "dd" = (
 /obj/effect/baseturf_helper,
 /turf/open/floor/plasteel/vault{
@@ -1594,10 +1588,6 @@
 /turf/open/floor/circuit/red,
 /area/ruin/powered/syndicate_lava_base)
 "dQ" = (
-/obj/structure/sign/securearea,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dR" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered)
@@ -2516,7 +2506,7 @@ du
 du
 du
 du
-dR
+dQ
 ab
 ab
 ab
@@ -2830,7 +2820,7 @@ aq
 cJ
 cQ
 ad
-dc
+aq
 di
 di
 du
@@ -2910,7 +2900,7 @@ ct
 cK
 cS
 ad
-dc
+aq
 dN
 di
 du
