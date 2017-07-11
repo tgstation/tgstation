@@ -64,7 +64,8 @@
 
 //returns a component icon from a component id
 /proc/get_component_icon(id)
-	var/static/list/tgui_component_icons = list(BELLIGERENT_EYE = icon2base64(icon('icons/obj/tgui_components.dmi', BELLIGERENT_EYE)),
+	var/static/list/tgui_component_icons = list(
+		BELLIGERENT_EYE = icon2base64(icon('icons/obj/tgui_components.dmi', BELLIGERENT_EYE)),
 		VANGUARD_COGWHEEL = icon2base64(icon('icons/obj/tgui_components.dmi', VANGUARD_COGWHEEL)),
 		GEIS_CAPACITOR = icon2base64(icon('icons/obj/tgui_components.dmi', GEIS_CAPACITOR)),
 		REPLICANT_ALLOY = icon2base64(icon('icons/obj/tgui_components.dmi', REPLICANT_ALLOY)),
