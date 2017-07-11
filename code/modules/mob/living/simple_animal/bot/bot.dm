@@ -116,7 +116,9 @@
 	update_icon()
 
 /mob/living/simple_animal/bot/Initialize()
+	speed += rand(-1,1)
 	..()
+	base_speed += rand(-1,1)
 	access_card = new /obj/item/weapon/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.access += GLOB.access_robotics
@@ -433,7 +435,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		path = list()
 		return 0
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
-
+	step_count += rand(0, 2)
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
 		for(var/step_number = 0, step_number < step_count,step_number++)
 			spawn(BOT_STEP_DELAY*step_number)
