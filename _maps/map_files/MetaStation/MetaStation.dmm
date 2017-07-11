@@ -84294,7 +84294,7 @@
 /area/engine/engineering)
 "deK" = (
 /obj/structure/cable/white,
-/obj/machinery/power/emitter/anchored
+/obj/machinery/power/emitter/anchored{
 	dir = 2;
 	state = 2
 	},
@@ -84524,7 +84524,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/emitter/anchored
+/obj/machinery/power/emitter/anchored{
 	dir = 1;
 	state = 2
 	},
@@ -84535,7 +84535,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/emitter/anchored
+/obj/machinery/power/emitter/anchored{
 	dir = 1;
 	state = 2
 	},

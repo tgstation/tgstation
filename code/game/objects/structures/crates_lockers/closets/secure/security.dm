@@ -203,7 +203,7 @@
 	anchored = TRUE
 	name = "Secure Evidence Closet"
 	req_access_txt = "0"
-	req_one_access_txt = "3,4"
+	req_one_access_txt = list(GLOB.access_armory, GLOB.access_forensics_lockers)
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
 	..()

@@ -33,7 +33,7 @@
 
 	var/datum/effect_system/spark_spread/sparks
 
-/obj/machinery/power/emitter
+/obj/machinery/power/emitter/anchored
 	anchored = TRUE
 
 /obj/machinery/power/emitter/ctf

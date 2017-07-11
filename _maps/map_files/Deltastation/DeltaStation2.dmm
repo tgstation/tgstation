@@ -6601,7 +6601,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/machinery/power/emitter/anchored
+/obj/machinery/power/emitter/anchored{
 	dir = 1;
 	state = 2
 	},

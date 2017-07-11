@@ -32943,7 +32943,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/power/emitter/anchored
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -32970,7 +32970,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/emitter/anchored
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -32982,7 +32982,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/emitter/anchored
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
