@@ -375,10 +375,26 @@
 	can_be_pushed = FALSE
 	hat_offset = -2
 
+
+/obj/item/weapon/robot_module/peacekeeper/be_transformed_to(obj/item/weapon/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Egg", "Murican")
+	if(!borg_icon)
+		return FALSE
+	switch(borg_icon)
+		if("Egg")
+			cyborg_base_icon = "peace"
+		if("American")
+			cyborg_base_icon = "freedomhound"
+	return ..()
+
+
 /obj/item/weapon/robot_module/peacekeeper/do_transform_animation()
 	..()
 	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
+
+
 
 /obj/item/weapon/robot_module/janitor
 	name = "Janitor"
