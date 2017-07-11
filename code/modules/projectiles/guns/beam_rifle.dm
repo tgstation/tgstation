@@ -89,15 +89,15 @@
 	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
-	..()
+	. = ..()
 	set_user(user)
 
 /obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
-	..()
+	. = ..()
 	set_user(user)
 
 /obj/item/weapon/gun/energy/beam_rifle/dropped()
-	..()
+	. = ..()
 	set_user()
 
 /obj/item/weapon/gun/energy/beam_rifle/ui_action_click(owner, action)
