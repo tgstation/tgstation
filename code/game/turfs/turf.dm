@@ -245,7 +245,7 @@
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	if(blocks_air || !air) //This is dirty tbh
+	if(blocks_air)
 		return
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs

@@ -20,16 +20,16 @@ All ShuttleMove procs go here
 		return
 
 	//Destination turf changes
-	SSair.remove_from_active(newT)
+	var/destination_turf_type = newT.type
 	copyTurf(newT)
-	newT.CalculateAdjacentTurfs()
-	SSair.add_to_active(newT, TRUE)
+	newT.baseturf = destination_turf_type
+
+	if(isopenturf(newT))
+		var/turf/open/new_open = newT
+		new_open.copy_air_with_tile(src)
 
 	//Source turf changes
-	SSair.remove_from_active(src)
-	ChangeTurf(turf_type, FALSE, FALSE, baseturf_type)
-	CalculateAdjacentTurfs()
-	SSair.add_to_active(src, TRUE)
+	ChangeTurf(turf_type, FALSE, TRUE, baseturf_type)
 
 	return TRUE
 
@@ -113,10 +113,16 @@ All ShuttleMove procs go here
 
 /************************************Turf move procs************************************/
 
-/turf/open/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force)
+/turf/open/afterShuttleMove(turf/oldT) //Recalculates SSair stuff for turfs on both sides
 	. = ..()
-	var/turf/open/newOpen = newT
-	newOpen.copy_air_with_tile(src)
+	SSair.remove_from_active(src)
+	SSair.remove_from_active(oldT)
+
+	src.CalculateAdjacentTurfs()
+	oldT.CalculateAdjacentTurfs()
+
+	SSair.add_to_active(src, TRUE)
+	SSair.add_to_active(oldT, TRUE)
 
 /************************************Machinery move procs************************************/
 
@@ -277,14 +283,14 @@ All ShuttleMove procs go here
 /mob/living/carbon/afterShuttleMove(turf/T1, turf/T0, rotation, list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0))
 	. = ..()
 	if(movement_force && !buckled)
-		if(movement_force["KNOCKDOWN"])
-			Knockdown(movement_force["KNOCKDOWN"])
 		if(movement_force["THROW"])
-			var/throw_dir = pick(GLOB.cardinal)
+			var/throw_dir = pick(GLOB.cardinals)
 			var/turf/target = get_edge_target_turf(src, throw_dir)
 			var/range = movement_force["THROW"]
 			var/speed = range/5
 			src.throw_at(target, range, speed)
+		if(movement_force["KNOCKDOWN"])
+			Knockdown(movement_force["KNOCKDOWN"])
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldT = loc
