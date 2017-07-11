@@ -23929,6 +23929,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aTN" = (
@@ -23938,6 +23942,10 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aTO" = (
@@ -84534,6 +84542,7 @@
 	dir = 4;
 	network = list("Engine")
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dft" = (
@@ -84725,6 +84734,10 @@
 	dir = 1;
 	name = "Atmos to Loop"
 	},
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dfQ" = (
@@ -84739,6 +84752,10 @@
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dfR" = (
@@ -90163,6 +90180,75 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"dBD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"dBE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"dBF" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"dBG" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"dBH" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/structure/window/plasma/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"dBI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"dBJ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/engine,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -133184,13 +133270,13 @@ des
 djt
 daY
 daZ
-dbb
-aMk
-aNv
-dfk
+dBD
+dBF
+dBG
+dBH
 dfq
-djt
-dfG
+dBI
+dBJ
 dfQ
 dfZ
 apc
@@ -133441,7 +133527,7 @@ des
 djt
 daY
 daZ
-dbb
+dBE
 dfa
 aNv
 dfk

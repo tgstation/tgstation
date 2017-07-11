@@ -8615,10 +8615,18 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/open/floor/circuit/green,
 /area/engine/atmospherics_engine)
 "asm" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plasteel/caution{
@@ -8634,6 +8642,10 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "aso" = (
@@ -8647,6 +8659,10 @@
 	dir = 4
 	},
 /obj/machinery/meter,
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "asp" = (
@@ -8657,11 +8673,19 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "asq" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/atmospherics_engine)
@@ -8670,6 +8694,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "ass" = (
@@ -8683,6 +8711,10 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "ast" = (
@@ -110174,6 +110206,7 @@
 "ehB" = (
 /obj/structure/grille,
 /obj/structure/window/plasma/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "ehC" = (
@@ -112809,6 +112842,10 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "epx" = (
@@ -113196,6 +113233,53 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"eqb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk{
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/plasteel,
+/area/engine/atmospherics_engine)
+"eqc" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"eqd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"eqe" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 
 (1,1,1) = {"
 aaa
@@ -138718,8 +138802,8 @@ apM
 arf
 ask
 ehy
-auE
-auE
+eqc
+eqe
 auE
 axQ
 aze
@@ -138975,7 +139059,7 @@ apN
 arg
 asl
 ehB
-ebG
+eqd
 avQ
 ebG
 axR
@@ -141030,7 +141114,7 @@ aiW
 apT
 arn
 ass
-atq
+eqb
 auM
 atq
 awW
