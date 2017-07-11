@@ -1,8 +1,0 @@
-author: "Tacolizard and Cyberboss"
-delete-after: True
-changes: 
-  - rscadd: "Added two new organs, the liver and stomach. Without them, you won't metabolize chemicals."
-  - rscadd: "The liver is responsible for processing all chemicals except nutrients. If your liver is removed, you will be unable to metabolize any drugs and will slowly die of toxin damage."
-  - rscadd: "Drinking too much alcohol or having too many toxins in you will damage your liver, if it becomes too damaged, it will undergo liver failure and you will slowly die of toxin damage. Your liver naturally heals a small amount of its damage. However, it doesn't heal enough to offset stronger alcohols or large amounts of toxins, at least until they are metabolized out of your body."
-  - rscadd: "to conduct a liver transplant, inject corazone into the patient. Corazone will prevent the patient from taking damage due to either not having a liver or undergoing liver failure. Corazone will metabolize out of the patient quickly, so at least 50u is recommended."
-  - rscadd: "The stomach is responsible for metabolizing nutrients. Without a stomach, you will be unable to get fat, but you will also be unable to process any nutrients, meaning you will eventually starve to death."
