@@ -59,6 +59,13 @@
 	item_state = "golden_violin"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/device/instrument/piano_synth
+	name = "synthesizer"
+	desc = "An electronic synthesizer that can play piano music."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "radio"
+	instrumentId = "piano"
+
 /obj/item/device/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."
