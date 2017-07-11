@@ -88,6 +88,18 @@
 	recoil = 0
 	pin = /obj/item/device/firing_pin
 
+/obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
+	..()
+	set_user(user)
+
+/obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
+	..()
+	set_user(user)
+
+/obj/item/weapon/gun/energy/beam_rifle/dropped()
+	..()
+	set_user()
+
 /obj/item/weapon/gun/energy/beam_rifle/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/zoom_speed_action))
 		zoom_speed++
@@ -229,10 +241,6 @@
 	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
-	stop_aiming()
-	QDEL_NULL(current_tracer)
-
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
@@ -245,7 +253,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
 		if(automatic_cleanup)
-			terminate_aiming()
+			stop_aiming()
 			set_user(null)
 		return FALSE
 	return TRUE
@@ -288,12 +296,13 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/stop_aiming()
 	aiming_time_left = aiming_time
 	aiming = FALSE
+	QDEL_NULL(current_tracer)
 	stop_zooming()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_user(mob/user)
 	if(user == current_user)
 		return
-	terminate_aiming()
+	stop_aiming()
 	if(istype(current_user))
 		reset_zooming()
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
@@ -344,20 +353,8 @@
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
-	terminate_aiming()
+	stop_aiming()
 	return ..()
-
-/obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
-	..()
-	set_user(user)
-
-/obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
-	..()
-	set_user(user)
-
-/obj/item/weapon/gun/energy/beam_rifle/dropped()
-	..()
-	set_user()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
