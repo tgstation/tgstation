@@ -32,8 +32,7 @@
 		icon_state = "[initial_icon_state]-off"
 
 /obj/machinery/aug_manipulator/Destroy()
-	if(storedpart)
-		QDEL_NULL(storedpart)
+	QDEL_NULL(storedpart)
 	return ..()
 
 /obj/machinery/aug_manipulator/on_deconstruction()
