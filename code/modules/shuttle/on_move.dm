@@ -280,7 +280,7 @@ All ShuttleMove procs go here
 		else
 			shake_camera(src, 7, 1)
 
-/mob/living/carbon/afterShuttleMove(turf/T1, turf/T0, rotation, list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0))
+/mob/living/carbon/afterShuttleMove(list/movement_force)
 	. = ..()
 	if(movement_force && !buckled)
 		if(movement_force["THROW"])
