@@ -384,7 +384,7 @@
 	switch(borg_icon)
 		if("Egg")
 			cyborg_base_icon = "peace"
-		if("American")
+		if("Murican")
 			cyborg_base_icon = "freedomhound"
 	return ..()
 
