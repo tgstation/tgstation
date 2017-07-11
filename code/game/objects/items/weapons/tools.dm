@@ -344,16 +344,14 @@
 	heat = 3800
 	toolspeed = 1
 
-/obj/item/weapon/weldingtool/New()
-	..()
+/obj/item/weapon/weldingtool/Initialize()
+	. = ..()
 	create_reagents(max_fuel)
 	reagents.add_reagent("welding_fuel", max_fuel)
 	update_icon()
-	return
 
 
 /obj/item/weapon/weldingtool/proc/update_torch()
-	cut_overlays()
 	if(welding)
 		add_overlay("[initial(icon_state)]-on")
 		item_state = "[initial(item_state)]1"
@@ -362,13 +360,11 @@
 
 
 /obj/item/weapon/weldingtool/update_icon()
+	cut_overlays()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
 		ratio = Ceiling(ratio*4) * 25
-		if(ratio == 100)
-			icon_state = initial(icon_state)
-		else
-			icon_state = "[initial(icon_state)][ratio]"
+		add_overlay("[initial(icon_state)][ratio]")
 	update_torch()
 	return
 
