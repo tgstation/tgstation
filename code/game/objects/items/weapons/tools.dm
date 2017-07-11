@@ -127,7 +127,7 @@
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = null
+	icon_state = "screwdriver"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
@@ -146,16 +146,21 @@
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New(loc, var/param_color = null)
-	..()
-	if(!icon_state)
-		if(!param_color)
-			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
-		icon_state = "screwdriver_[param_color]"
+/obj/item/weapon/screwdriver/Initialize(loc, var/param_color = null)
+	. = ..()
+	if(icon_state == "screwdriver") //random colors!
+		add_atom_colour(trueRandomColor(), FIXED_COLOUR_PRIORITY)
+		update_icon()
+	if(prob(75))
+		pixel_y = rand(0, 16)
 
-	if (prob(75))
-		src.pixel_y = rand(0, 16)
-	return
+/obj/item/weapon/screwdriver/update_icon()
+	if(icon_state != "screwdriver") //icon override
+		return
+	cut_overlays()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "screwdriver_screwybits")
+	base_overlay.appearance_flags = RESET_COLOR
+	add_overlay(base_overlay)
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))

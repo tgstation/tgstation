@@ -898,6 +898,9 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 		else
 			return "white"
 
+/proc/trueRandomColor() //returns any random color on the RGB spectrum
+	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
 /proc/params2turf(scr_loc, turf/origin)
 	if(!scr_loc)
 		return null
