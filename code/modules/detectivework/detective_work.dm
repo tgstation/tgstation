@@ -52,8 +52,8 @@
 	if(!M || !M.key)
 		return
 
-	if(!fingerprintshidden) //Add the list if it does not exist
-		fingerprintshidden = list()
+	if(forensics.hprints) //Add the list if it does not exist
+		forensics.hprints = list()
 
 	var/hasgloves = ""
 	if(ishuman(M))
@@ -62,13 +62,13 @@
 			hasgloves = "(gloves)"
 
 	var/current_time = time_stamp()
-	if(!fingerprintshidden[M.key])
-		fingerprintshidden[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
+	if(!forensics.hprints[M.key])
+		forensics.hprints[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
 	else
-		var/laststamppos = findtext(fingerprintshidden[M.key], " Last: ")
+		var/laststamppos = findtext(forensics.hprints[M.key], " Last: ")
 		if(laststamppos)
-			fingerprintshidden[M.key] = copytext(fingerprintshidden[M.key], 1, laststamppos)
-		fingerprintshidden[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
+			forensics.hprints[M.key] = copytext(forensics.hprints[M.key], 1, laststamppos)
+		forensics.hprints[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
 
 	fingerprintslast = M.ckey
 
@@ -94,10 +94,10 @@
 				H.gloves.add_fingerprint(H, 1) //ignoregloves = 1 to avoid infinite loop.
 				return
 
-		if(!fingerprints) //Add the list if it does not exist
-			fingerprints = list()
+		if(!forensics.prints) //Add the list if it does not exist
+			forensics.prints = list()
 		var/full_print = md5(H.dna.uni_identity)
-		fingerprints[full_print] = full_print
+		forensics.prints[full_print] = full_print
 
 
 
@@ -105,21 +105,21 @@
 /atom/proc/transfer_fingerprints_to(atom/A)
 
 	// Make sure everything are lists.
-	if(!islist(A.fingerprints))
-		A.fingerprints = list()
-	if(!islist(A.fingerprintshidden))
-		A.fingerprintshidden = list()
+	if(!islist(A.forensics.prints))
+		A.forensics.prints = list()
+	if(!islist(A.forensics.hprints))
+		A.forensics.hprints = list()
 
-	if(!islist(fingerprints))
-		fingerprints = list()
-	if(!islist(fingerprintshidden))
-		fingerprintshidden = list()
+	if(!islist(forensics.prints))
+		forensics.prints = list()
+	if(!islist(forensics.hprints))
+		forensics.hprints = list()
 
 	// Transfer
-	if(fingerprints)
-		A.fingerprints |= fingerprints.Copy()            //detective
-	if(fingerprintshidden)
-		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
+	if(forensics.prints)
+		A.fingerprints |= forensics.prints.Copy()            //detective
+	if(forensics.hprints)
+		A.forensics.hprints |= forensics.hprints.Copy()    //admin
 	A.fingerprintslast = fingerprintslast
 
 /atom/proc/add_gsr(mob/living/carbon/human/M, gsrtype)
