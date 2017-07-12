@@ -2,5 +2,9 @@
 {{#if !data.tdisk}}
 	<ui-display title='No Technology Disk Loaded'></ui-display>
 {{else}}
-
+	{{#if data.tdisk_update}}
+		<ui display title='Technology Disk Updating'></ui-display>
+	{{else}}
+	
+	{{/if}}
 {{/if}}

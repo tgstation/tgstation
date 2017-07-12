@@ -384,9 +384,12 @@ doesn't have toxins access.
 		data["alldesigns"] += list(list("name" = D.name, "id" = D.id))
 	if(d_disk)
 		data["ddisk_designs"] = list()
-		for(var/v in d_disk.blueprints)
 
-
+	if(t_disk)
+		data["tdisk_nodes"] = list()
+		for(var/v in t_disk.stored_research.researched_nodes)
+			var/datum/techweb_node/TN = t_disk.stored_research.researched_nodes[v]
+			data["tdisk_nodes"] += list(list("name" = TN.display_name, "id" = TN.id))
 
 	return data
 
@@ -484,14 +487,24 @@ doesn't have toxins access.
 				qdel(t_disk.stored_research)
 				t_disk.stored_research = new
 				say("Technology disk cleared.")
+				addtimer(CALLBACK(src, .proc/tdisk_update_complete), 50)
 		if("tdisk_down")
 			if(t_disk)
 				stored_research.copy_research_to(t_disk.stored_research)
 				say("Downloading research to disk.")
+				addtimer(CALLBACK(src, .proc/tdisk_update_complete), 30)
 		if("tdisk_up")
 			if(t_disk)
 				t_disk.stored_research.copy_research_to(stored_research)
 				say("Uploading research from disk.")
+				tdisk_update = TRUE
+				addtimer(CALLBACK(src, .proc/tdisk_update_complete), 50)
+
+/obj/machinery/computer/rdconsole/proc/tdisk_update_complete()
+	tdisk_update = FALSE
+
+/obj/machinery/computer/rdconsole/proc/ddisk_update_complete()
+	ddisk_update = FALSE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)
 	if(type == "design")
