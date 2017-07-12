@@ -1,0 +1,6 @@
+
+{{#if !data.ddisk}}
+	<ui-display title='No Design Disk Loaded'></ui-display>
+{{else}}
+	
+{{/if}}

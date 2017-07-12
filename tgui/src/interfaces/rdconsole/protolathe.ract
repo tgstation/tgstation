@@ -51,7 +51,7 @@
 				{{#each data.protochem_list}}
 					<ui-section>{{name}} : {{amount}} - 
 						<ui-button action='purgechem' params='{"latheType" : "proto", "name" : {{name}}, "id" : {{reagentid}}}'>Purge</ui-button>
-					</ui-esction>
+					</ui-section>
 				{{/each}}
 			
 			</tab>

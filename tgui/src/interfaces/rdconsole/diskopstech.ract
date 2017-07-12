@@ -1,0 +1,6 @@
+
+{{#if !data.tdisk}}
+	<ui-display title='No Technology Disk Loaded'></ui-display>
+{{else}}
+
+{{/if}}
