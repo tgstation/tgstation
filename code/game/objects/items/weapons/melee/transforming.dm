@@ -1,6 +1,7 @@
 /obj/item/weapon/melee/transforming //TODO: make transforming energy weapons a subtype of this
 	var/active = FALSE
 	var/force_on = 30 //force when active
+	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
@@ -8,6 +9,8 @@
 	var/list/attack_verb_off = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
+	var/bonus_active = FALSE //If the faction damage bonus is active
+	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
 
 /obj/item/weapon/melee/transforming/Initialize()
@@ -22,6 +25,19 @@
 /obj/item/weapon/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
 		clumsy_transform_effect(user)
+
+/obj/item/weapon/melee/transforming/attack(mob/living/target, mob/living/carbon/human/user)
+	var/nemesis_faction = FALSE
+	if(nemesis_factions.len)
+		for(var/F in target.faction)
+			if(F in nemesis_factions)
+				nemesis_faction = TRUE
+				force += faction_bonus_force
+				nemesis_effects(user, target)
+				break
+	. = ..()
+	if(nemesis_faction)
+		force -= faction_bonus_force
 
 /obj/item/weapon/melee/transforming/proc/transform_weapon(mob/living/user, supress_message_text)
 	active = !active
@@ -46,6 +62,9 @@
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE
+
+/obj/item/weapon/melee/transforming/proc/nemesis_effects(mob/living/user, mob/living/target)
+	return
 
 /obj/item/weapon/melee/transforming/proc/transform_messages(mob/living/user, supress_message_text)
 	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
