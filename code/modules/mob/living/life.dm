@@ -25,6 +25,9 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 	if(stat != DEAD)
+		//Chemicals in the body
+		handle_chemicals_in_body()
+	if(stat != DEAD)
 		//Random events (vomiting etc)
 		handle_random_events()
 
@@ -55,6 +58,9 @@
 
 /mob/living/proc/handle_mutations_and_radiation()
 	radiation = 0 //so radiation don't accumulate in simple animals
+	return
+
+/mob/living/proc/handle_chemicals_in_body()
 	return
 
 /mob/living/proc/handle_diginvis()
