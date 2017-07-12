@@ -991,44 +991,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	for(var/obj/machinery/shuttle_manipulator/M in GLOB.machines)
 		M.ui_interact(usr)
 
-/client/proc/mass_zombie_infection()
-	set category = "Fun"
-	set name = "Mass Zombie Infection"
-	set desc = "Infects all humans with a latent organ that will zombify \
-		them on death."
-
-	if(!holder)
-		return
-
-	var/confirm = alert(src, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", "Yes", "No")
-	if(confirm != "Yes")
-		return
-
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		new /obj/item/organ/zombie_infection(H)
-
-	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
-	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
-	SSblackbox.add_details("admin_verb","Mass Zombie Infection")
-
-/client/proc/mass_zombie_cure()
-	set category = "Fun"
-	set name = "Mass Zombie Cure"
-	set desc = "Removes the zombie infection from all humans, returning them to normal."
-	if(!holder)
-		return
-
-	var/confirm = alert(src, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", "Yes", "No")
-	if(confirm != "Yes")
-		return
-
-	for(var/obj/item/organ/zombie_infection/I in GLOB.zombie_infection_list)
-		qdel(I)
-
-	message_admins("[key_name_admin(usr)] cured all zombies.")
-	log_admin("[key_name(usr)] cured all zombies.")
-	SSblackbox.add_details("admin_verb","Mass Zombie Cure")
-
 /client/proc/polymorph_all()
 	set category = "Fun"
 	set name = "Polymorph All"
