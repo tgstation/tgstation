@@ -29,7 +29,7 @@
 				"poots, singing <b>[M]</b>'s eyebrows!",
 				"humiliates <b>[M]</b> like never before!",
 				"gets real close to <b>[M]</b>'s face and cuts the cheese!")
-		if(!message)
+	if(!message)
 		message = pick(
 			"rears up and lets loose a fart of tremendous magnitude!",
 			"farts!",
