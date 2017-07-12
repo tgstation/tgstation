@@ -1036,9 +1036,7 @@
 	name = "Primary Hallway"
 	})
 "abO" = (
-/obj/structure/closet/emcloset{
-	anchored = 1
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1
@@ -1563,7 +1561,6 @@
 	})
 "acO" = (
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -26
 	},
 /obj/structure/sink{
@@ -1899,7 +1896,6 @@
 /area/crew_quarters/heads/hop)
 "adl" = (
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 26
 	},
 /obj/structure/sink{
@@ -2036,7 +2032,6 @@
 /area/security/detectives_office)
 "adE" = (
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 26
 	},
 /obj/structure/sink{
@@ -2756,12 +2751,7 @@
 /area/crew_quarters/heads/hop)
 "aeJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	desc = "Ian's bed! Looks comfy.";
-	name = "Ian's bed";
-	pixel_y = 2
-	},
+/obj/structure/bed/dogbed/ian,
 /mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -7963,7 +7953,6 @@
 /area/security/brig)
 "amO" = (
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -26
 	},
 /obj/structure/sink{
@@ -17936,7 +17925,6 @@
 	},
 /obj/item/weapon/lipstick/random,
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/vault{
@@ -23364,9 +23352,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMR" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -23411,9 +23397,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMX" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -26886,10 +26870,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aSV" = (
-/obj/machinery/power/emitter{
-	icon_state = "emitter";
+/obj/machinery/power/emitter/anchored{
 	dir = 1;
-	anchored = 1;
 	state = 2
 	},
 /obj/structure/cable/white,
@@ -32076,7 +32058,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/vault{
@@ -32885,7 +32866,6 @@
 	pixel_y = -32
 	},
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /obj/effect/turf_decal/bot,
@@ -34249,7 +34229,6 @@
 /area/maintenance/starboard)
 "bgB" = (
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 26
 	},
 /obj/structure/sink{
@@ -39787,9 +39766,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "buZ" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -39797,9 +39774,7 @@
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "bva" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
