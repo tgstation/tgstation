@@ -3,8 +3,6 @@
 	id = "fly"
 	say_mod = "buzzes"
 	mutanttongue = /obj/item/organ/tongue/fly
-	mutantliver = /obj/item/organ/liver/fly
-	mutantstomach = /obj/item/organ/stomach/fly
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)

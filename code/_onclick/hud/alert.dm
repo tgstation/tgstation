@@ -468,10 +468,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.still_needs_components())
-				textlist += "Ark Components required: "
+				textlist += "Ark Components required:<br>"
 				for(var/i in G.required_components)
 					if(G.required_components[i])
-						textlist += "<b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
+						textlist += "[get_component_icon(i)] <b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
 				textlist += "<br>"
 			else
 				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"

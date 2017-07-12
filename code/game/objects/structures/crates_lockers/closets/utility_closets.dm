@@ -17,6 +17,9 @@
 	desc = "It's a storage unit for emergency breath masks and O2 tanks."
 	icon_state = "emergency"
 
+/obj/structure/closet/emcloset/anchored
+	anchored = TRUE
+
 /obj/structure/closet/emcloset/PopulateContents()
 	..()
 
