@@ -6,37 +6,41 @@
 	var/B = "nothing" //Info about the thingy on the slide
 	var/C = 0 //type of thing on the slide (only used for swabs)
 
-/obj/item/forensics/slide/attackby(obj/item/W, mob/user)
-	var/thingy = user.get_active_held_item()
+/obj/item/forensics/slide/update_icon(ihatethis)
+	switch(ihatethis)
+		if(0)
+			icon_state = "slideswab"
 
-	if(istype(thingy, /obj/item/forensics/swabkit)) //are we putting a swab in?
-		var/obj/item/forensics/swabkit/H = thingy
-		src.icon_state = "slideswab"
-		src.name = "slide (swab)"
-		src.desc = "A slide with a swab on it."
-		src.A = "swab"
-		src.B = H.scontents
-		src.C = H.stype
-	else if(istype(thingy, /obj/item/forensics/fiber) || istype(thingy, /obj/item/forensics/fiberbag)) //Are we putting a fiber on it?
-		if (istype(thingy, /obj/item/forensics/fiberbag))
-			var/obj/item/forensics/fiberbag/H = thingy
+/obj/item/forensics/slide/attackby(obj/item/W, mob/user)
+
+	if(istype(W, /obj/item/forensics/swabkit)) //are we putting a swab in?
+		var/obj/item/forensics/swabkit/H = W
+		update_icon(0)
+		name = "slide (swab)"
+		desc = "A slide with a swab on it."
+		A = "swab"
+		B = H.scontents
+		C = H.stype
+	else if(istype(W, /obj/item/forensics/fiber) || istype(W, /obj/item/forensics/fiberbag)) //Are we putting a fiber on it?
+		if (istype(W, /obj/item/forensics/fiberbag))
+			var/obj/item/forensics/fiberbag/H = W
 			H._fiber = null
 			H.name = "fiber bag"
-			H.icon_state = "bag"
+			H.update_icon(1)
 			H.desc = "A bag containing a fiber from some gloves or clothes."
-			src.icon_state = "slidefiber"
-			src.A = "fiber"
-			src.B = H._fiber
-			src.name = "slide (fiber)"
-			src.desc = "A slide with a fiber on it."
+			icon_state = "slidefiber"
+			A = "fiber"
+			B = H._fiber
+			name = "slide (fiber)"
+			desc = "A slide with a fiber on it."
 		else
-			var/obj/item/forensics/fiber/H = thingy
-			src.icon_state = "slidefiber"
-			src.A = "fiber"
-			src.B = H._fiber
-			src.name = "slide (fiber)"
-			src.desc = "A slide with a fiber on it."
+			var/obj/item/forensics/fiber/H = W
+			icon_state = "slidefiber"
+			A = "fiber"
+			B = H._fiber
+			name = "slide (fiber)"
+			desc = "A slide with a fiber on it."
 			qdel(H)
 
-	qdel(thingy)
+	qdel(W)
 

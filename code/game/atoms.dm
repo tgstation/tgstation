@@ -93,7 +93,7 @@
 		qdel(reagents)
 
 	if(forensics)
-		qdel(forensics)
+		QDEL_NULL(forensics)
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
@@ -261,7 +261,7 @@
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(src.forensics.blood > 0 && !istype(src, /obj/effect/decal))
+	if(forensics.blood > 0 && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else

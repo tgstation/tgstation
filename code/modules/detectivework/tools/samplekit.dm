@@ -1,10 +1,10 @@
-/obj/item/forensics/proc/handlefiber(ftext)
-	return replacetext(replacetext(replacetext(ftext, "material from a pair of ", ""), ".", ""), "Fibers from a", "")
-
-
 /obj/item/forensics
 	icon = 'icons/obj/forensics.dmi'
 	flags = NOBLUDGEON
+
+/obj/item/forensics/proc/handlefiber(ftext)
+	return replacetext(replacetext(replacetext(ftext, "material from a pair of ", ""), ".", ""), "Fibers from a", "")
+
 
 /obj/item/forensics/fiber
 	name = "fibers"
@@ -12,12 +12,14 @@
 	desc = "Fibers from some gloves..."
 	var/_fiber
 
-/obj/item/forensics/fiber/New(location, type)
+/obj/item/forensics/fiber/New(location, typ)
 	..()
-	if (type)
-		src._fiber = handlefiber(type)
-		src.name = "[src._fiber] fibers"
-		src.icon_state = "fiberbag"
+	if (typ)
+		_fiber = handlefiber(typ)
+		name = "[src._fiber] fibers"
+		icon_state = "fiberbag"
+
+update_icon()
 
 /obj/item/forensics/fiberbag
 	name = "fiber bag"
@@ -25,10 +27,17 @@
 	desc = "A bag containing a fiber from some gloves or clothes."
 	var/_fiber = "air"
 
-/obj/item/forensics/fiberbag/New(location, type)
-	..()
-	if (type)
-		src._fiber = handlefiber(type)
+/obj/item/forensice/fiberbag/update_icon(fuckeverything)
+	switch(fuckeverything)
+		if(0)
+			icon_state = "fiberbag"
+		if(1)
+			icon_State = "bag"
+
+/obj/item/forensics/fiberbag/Initalize(location, typ)
+	. = ..()
+	if (typ)
+		_fiber = handlefiber(typ)
 
 /obj/item/forensics/fiberbag/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>We dump the fiber out of the bag.</span>")
@@ -37,15 +46,11 @@
 	qdel(src)
 
 /obj/item/forensics/fiberbag/attackby(obj/item/W, mob/user)
-	var/thingy = user.get_active_held_item()
-
-	if(istype(thingy, /obj/item/forensics/fiber))
-		var/obj/item/forensics/fiber/H = thingy
-		src._fiber = H._fiber
-		src.icon_state = "fiberbag"
-		qdel(thingy)
-
-	return
+	if(istype(W, /obj/item/forensics/fiber))
+		var/obj/item/forensics/fiber/H = W
+		_fiber = H._fiber
+		update_icon(0)
+		qdel(W)
 
 /obj/item/forensics/fiberkit
 	name = "fiber kit"
@@ -55,17 +60,13 @@
 /obj/item/forensics/fiberkit/afterattack(atom/A, mob/user, params)
 	var/list/fibers = list()
 	var/list/fibersa = list()
-	if(A.forensics.fibers && A.forensics.fibers.len)
+	if(LAZYLEN(A.forensics.fibers))
 		fibers = A.forensics.fibers.Copy()
 		to_chat(user, "<span class='notice'>We pick up the fibers and lay them in bags on the ground, visibly.</span>")
-		if(LAZYLEN(fibers))
-			for(var/fiber in fibers)
-				if (!fibersa.Find(handlefiber(fiber))) //avoid 500 black/insulated glove fiber
-					fibersa |= handlefiber(fiber)
-					new /obj/item/forensics/fiberbag(get_turf(user), fiber)
-		else
-			to_chat(user, "<span class='notice'>We could not find any fibers....</span>")
-			return
+		for(var/fiber in fibers)
+			if (!fibersa.Find(handlefiber(fiber))) //avoid 500 black/insulated glove fiber
+				fibersa |= handlefiber(fiber)
+				new /obj/item/forensics/fiberbag(get_turf(user), fiber)
 	else
 		to_chat(user, "<span class='notice'>We could not find any fibers....</span>")
 		return

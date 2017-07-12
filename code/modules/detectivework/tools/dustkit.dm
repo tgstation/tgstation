@@ -3,7 +3,7 @@
 	desc = "A brush, with powder, for finding fingerprints."
 	icon_state = "dust"
 
-/obj/item/forensics/dustkit/afterattack(atom/A, mob/user, params)
+/obj/item/forensics/dustkit/attackby(atom/A, mob/user, params)
 	var/list/prints = list()
 	var/list/uprints = list()
 
@@ -44,11 +44,10 @@
 	name = "fingerprint card"
 	desc = "Used to hold a set of fingerprints."
 	icon = 'icons/obj/card.dmi'
-	icon_state = "fingerprint0"
+	icon_state = "fingerprint1"
 	var/phold = "none"
 
-/obj/item/forensics/printcard/New(location, print)
-	..()
+/obj/item/forensics/printcard/Initialize(location, print)
+	. = ..()
 	if (print)
-		src.phold = print
-		src.icon_state = "fingerprint1"
+		phold = print
