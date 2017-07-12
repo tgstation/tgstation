@@ -449,7 +449,7 @@
 	desc = "Can only be played if there's either a quartermaster or cargo area in play. If there is, any players that control a quartermaster or owns a cargo area draws cards until they have six."
 	Attributes = list(ONLY_QUARTERMASTER_OR_CARGO_AREA, DRAW_TIL_SIX)
 
-/datum/griffeningcard/effect/supplyshuttle
+/datum/griffeningcard/effect/radiouplink
 
 	name = "Radio Uplink"
 	desc = "The player of this card can search the deck for any one equipment or effect card."
