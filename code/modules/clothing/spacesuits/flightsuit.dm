@@ -1183,15 +1183,16 @@
 	else if(locked)
 		usermessage("You can not perform any service while the suit is locked!", "boldwarning")
 		return FALSE
-	else if(!maint_panel)
-		usermessage("The maintainence panel is closed!", "boldwarning")
-		return FALSE
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!maint_panel)
 			maint_panel = TRUE
 		else
 			maint_panel = FALSE
 		usermessage("You [maint_panel? "open" : "close"] the maintainence panel.")
+		return FALSE
+	else if(!maint_panel)
+		usermessage("The maintainence panel is closed!", "boldwarning")
+		return FALSE
 	else if(istype(I, /obj/item/weapon/crowbar))
 		var/list/inputlist = list()
 		if(pack)
@@ -1215,6 +1216,7 @@
 				usermessage("Disengage the shoes first!", "boldwarning")
 				return FALSE
 			detach_shoes()
+		return TRUE
 	else if(istype(I, /obj/item/device/flightpack))
 		var/obj/item/device/flightpack/F = I
 		if(pack)
@@ -1238,6 +1240,7 @@
 			return FALSE
 		if(user.temporarilyRemoveItemFromInventory(F))
 			attach_pack(F)
+		return TRUE
 	else if(istype(I, /obj/item/clothing/shoes/flightshoes))
 		var/obj/item/clothing/shoes/flightshoes/S = I
 		if(shoes)
@@ -1245,6 +1248,7 @@
 			return FALSE
 		if(user.temporarilyRemoveItemFromInventory(S))
 			attach_shoes(S)
+		return TRUE
 	. = ..()
 
 //FLIGHT HELMET----------------------------------------------------------------------------------------------------------------------------------------------------
