@@ -57,7 +57,7 @@
 	
 /mob/living/simple_animal/pet/dog/corgi/Life()
 	. = ..()
-	new /mob/living/simple_animal/pet/dog/corgi(get_turf(src)
+	new /mob/living/simple_animal/pet/dog/corgi(get_turf(src))
 
 
 /mob/living/simple_animal/pet/dog/corgi/death(gibbed)
