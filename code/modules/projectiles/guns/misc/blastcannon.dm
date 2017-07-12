@@ -112,11 +112,11 @@
 /obj/item/projectile/blastwave/Range()
 	..()
 	if(heavyr)
-		loc.ex_act(1)
+		loc.ex_act(EXPLODE_DEVASTATE)
 	else if(mediumr)
-		loc.ex_act(2)
+		loc.ex_act(EXPLODE_HEAVY)
 	else if(lightr)
-		loc.ex_act(3)
+		loc.ex_act(EXPLODE_LIGHT)
 	else
 		qdel(src)
 	heavyr--

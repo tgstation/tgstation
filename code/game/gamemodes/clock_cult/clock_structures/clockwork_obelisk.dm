@@ -35,7 +35,7 @@
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/forced_disable(bad_effects)
 	var/affected = 0
 	for(var/obj/effect/clockwork/spatial_gateway/SG in loc)
-		SG.ex_act(1)
+		SG.ex_act(EXPLODE_DEVASTATE)
 		affected++
 	if(bad_effects)
 		affected += try_use_power(MIN_CLOCKCULT_POWER*4)
