@@ -90,7 +90,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	flick("d_analyzer_process", linked_destroy)
 	if(QDELETED(linked_item) || QDELETED(src) || QDELETED(linked_console))
 		return FALSE
-	linked_consolestored_research.boost_with_path(SSresearch.techweb_nodes[href_list["destroy"]], linked_destroy.loaded_item.type)
+	linked_consolestored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], linked_destroy.loaded_item.type)
 	SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type] - [TN.id]")
 	if(linked_console && linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 		for(var/material in linked_destroy.loaded_item.materials)

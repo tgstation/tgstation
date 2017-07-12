@@ -135,3 +135,45 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return 1
 	else
 		return 0
+
+/obj/machinery/rnd/circuit_imprinter/proc/user_try_print_id(id)
+	if(!linked_console || !id)
+		return FALSE
+	var/datum/design/D = linked_console.stored_research.researched_designs[id]
+	if(!istype(D))
+		return FALSE
+
+	var/power = 1000
+	for(var/M in D.materials)
+		power += round(D.materials[M] / 5)
+	power = max(4000, power)
+	use_power(power)
+
+
+	var/list/efficient_mats = list()
+	for(var/MAT in being_built.materials)
+		efficient_mats[MAT] = D.materials[MAT]/efficiency_coeff
+
+	if(!linked_imprinter.materials.has_materials(efficient_mats))
+		linked_imprinter.say("Not enough materials to complete prototype.")
+		return FALSE
+	for(var/R in D.reagents_list)
+		if(!linked_imprinter.reagents.has_reagent(R, D.reagents_list[R]/efficiency_coeff))
+			linked_imprinter.say("Not enough reagents to complete prototype.")
+			return FALSE
+
+	busy = TRUE
+	flick("circuit_imprinter_ani", linked_imprinter)
+
+	materials.use_amount(efficient_mats)
+	for(var/R in D.reagents_list)
+		reagents.remove_reagent(R, D.reagents_list[R]/coeff)
+
+	var/P = D.build_path
+	addtimer(CALLBACK(src, .proc/reset_busy), 16)
+	addtimer(CALLBACK(src, .proc/do_print, P, efficient_mats), 16)
+
+/obj/machinery/rnd/circuit_imprinter/proc/do_print(path, matlist)
+	var/obj/item/I = new path(get_turf(src))
+	I.materials = matlist.Copy()
+	SSblackbox.add_details("circuit_printed","[new_item.type]")
