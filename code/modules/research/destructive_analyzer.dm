@@ -83,11 +83,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return FALSE
 	var/dboost = TN[dpath]
 		var/choice = input("Are you sure you want to destroy [linked_destroy.loaded_item.name] for a boost of [dboost] in node [TN.display_name]") in list("Proceed", "Cancel")
-	if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item)
-		return
+	if(choice == "Cancel")
+		return FALSE
 	busy = TRUE
 	addtimer(CALLBACK(src, .proc/reset_busy), 24)
-	flick("d_analyzer_process", linked_destroy)
+	flick("d_analyzer_process", src)
 	if(QDELETED(linked_item) || QDELETED(src) || QDELETED(linked_console))
 		return FALSE
 	linked_consolestored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], linked_destroy.loaded_item.type)

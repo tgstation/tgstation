@@ -232,108 +232,7 @@ doesn't have toxins access.
 			d_disk.blueprints[slot] = D
 		screen = SCICONSOLE_DDISK
 
-	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
-		if(linked_destroy)
-			if(linked_destroy.busy)
-				to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
 
-			else if(linked_destroy.loaded_item)
-				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
-				linked_destroy.loaded_item = null
-				linked_destroy.icon_state = "d_analyzer"
-				screen = SCICONSOLE_MENU
-
-	else if(href_list["build"]) //Causes the Protolathe to build something.
-		var/datum/design/being_built = stored_research.researched_designs[href_list["build"]]
-		var/amount = text2num(href_list["amount"])
-
-		if(being_built.make_reagents.len)
-			return FALSE
-
-		if(!linked_lathe || !being_built || !amount)
-			updateUsrDialog()
-			return
-
-		if(linked_lathe.busy)
-			to_chat(usr, "<span class='danger'>Protolathe is busy at the moment.</span>")
-			return
-
-		var/coeff = linked_lathe.efficiency_coeff
-		var/power = 1000
-		var/old_screen = screen
-
-		amount = max(1, min(10, amount))
-		for(var/M in being_built.materials)
-			power += round(being_built.materials[M] * amount / 5)
-		power = max(3000, power)
-		screen = SCICONSOLE_UPDATE_PROTOLATHE
-		var/key = usr.key	//so we don't lose the info during the spawn delay
-		if (!(being_built.build_type & PROTOLATHE))
-			message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
-			updateUsrDialog()
-			return
-
-		var/g2g = 1
-		var/enough_materials = 1
-		linked_lathe.busy = TRUE
-		flick("protolathe_n",linked_lathe)
-		use_power(power)
-
-		var/list/efficient_mats = list()
-		for(var/MAT in being_built.materials)
-			efficient_mats[MAT] = being_built.materials[MAT]*coeff
-
-		if(!linked_lathe.materials.has_materials(efficient_mats, amount))
-			linked_lathe.say("Not enough materials to complete prototype.")
-			enough_materials = 0
-			g2g = 0
-		else
-			for(var/R in being_built.reagents_list)
-				if(!linked_lathe.reagents.has_reagent(R, being_built.reagents_list[R]*coeff))
-					linked_lathe.say("Not enough reagents to complete prototype.")
-					enough_materials = 0
-					g2g = 0
-
-		if(enough_materials)
-			linked_lathe.materials.use_amount(efficient_mats, amount)
-			for(var/R in being_built.reagents_list)
-				linked_lathe.reagents.remove_reagent(R, being_built.reagents_list[R]*coeff)
-
-		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
-
-		coeff *= being_built.lathe_time_factor
-
-		spawn(32*coeff*amount**0.8)
-			if(linked_lathe)
-				if(g2g) //And if we only fail the material requirements, we still spend time and power
-					var/already_logged = 0
-					for(var/i = 0, i<amount, i++)
-						var/obj/item/new_item = new P(src)
-						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-							new_item.investigate_log("built by [key]", INVESTIGATE_SINGULO)
-						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/weapon/ore/bluespace_crystal)) // To avoid materials dupe glitches
-							new_item.materials = efficient_mats.Copy()
-						new_item.loc = linked_lathe.loc
-						if(!already_logged)
-							SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
-							already_logged = 1
-				screen = old_screen
-				linked_lathe.busy = FALSE
-			else
-				say("Protolathe connection failed. Production halted.")
-				screen = SCICONSOLE_MENU
-			updateUsrDialog()
-
-
-////////////////////////////////////////////////////////////	switch(screen)
-		//////////////////////R&D CONSOLE SCREENS//////////////////
-		if(SCICONSOLE_UPDATE_DATABASE)
-			dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
-		if(SCICONSOLE_UPDATE_PROTOLATHE)
-			dat += "<div class='statusDisplay'>Constructing Prototype. Please Wait...</div>"
-		if(SCICONSOLE_UPDATE_CIRCUIT)
-			dat += "<div class='statusDisplay'>Imprinting Circuit. Please Wait...</div>"
-			dat += "</div>"
 		if(SCICONSOLE_TDISK) //Technology Disk Menu
 			dat += SCICONSOLE_HEADER
 			dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A>"
@@ -368,27 +267,9 @@ doesn't have toxins access.
 				dat += "<A href='?src=\ref[src];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
 			dat += "</div>"
 
-		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
-
-		if(SCICONSOLE_DA_UNLOADED)
-			dat += SCICONSOLE_HEADER
-			dat += "<div class='statusDisplay'>No Item Loaded. Standing-by...</div>"
-
-		if(SCICONSOLE_DA_LOADED)
-			dat += SCICONSOLE_HEADER
-			dat += "<div class='statusDisplay'><h3>Deconstruction Menu</h3>"
-			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A>"
-			dat += "Name: [linked_destroy.loaded_item.name]"
-			dat += "Select a node to boost by deconstructing this item."
-			dat += "This item is able to boost:"
-			var/list/input = techweb_item_boost_check(linked_destroy.loaded_item)
-			for(var/datum/techweb_node/N in input)
-				if(!stored_research.researched_nodes[N] && !stored_research.boosted_nodes[N])
-					dat += "<A href='?src=\ref[src];deconstruct=[N.id]'>[N.display_name]: [input[N]] points</A>"
-				else
-					dat += "<span class='linkOff>[N.display_name]: [input[N]] points</span>"
-
 */
+
+
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
 	//Tabs

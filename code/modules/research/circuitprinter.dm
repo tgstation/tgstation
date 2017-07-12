@@ -151,20 +151,19 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 
 	var/list/efficient_mats = list()
-	for(var/MAT in being_built.materials)
+	for(var/MAT in D.materials)
 		efficient_mats[MAT] = D.materials[MAT]/efficiency_coeff
 
-	if(!linked_imprinter.materials.has_materials(efficient_mats))
-		linked_imprinter.say("Not enough materials to complete prototype.")
+	if(!materials.has_materials(efficient_mats))
+		say("Not enough materials to complete prototype.")
 		return FALSE
 	for(var/R in D.reagents_list)
-		if(!linked_imprinter.reagents.has_reagent(R, D.reagents_list[R]/efficiency_coeff))
-			linked_imprinter.say("Not enough reagents to complete prototype.")
+		if(!reagents.has_reagent(R, D.reagents_list[R]/efficiency_coeff))
+			say("Not enough reagents to complete prototype.")
 			return FALSE
 
 	busy = TRUE
-	flick("circuit_imprinter_ani", linked_imprinter)
-
+	flick("circuit_imprinter_ani", src)
 	materials.use_amount(efficient_mats)
 	for(var/R in D.reagents_list)
 		reagents.remove_reagent(R, D.reagents_list[R]/coeff)
@@ -174,6 +173,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	addtimer(CALLBACK(src, .proc/do_print, P, efficient_mats), 16)
 
 /obj/machinery/rnd/circuit_imprinter/proc/do_print(path, matlist)
+	if(QDELETED(src))
+		return FALSE
 	var/obj/item/I = new path(get_turf(src))
 	I.materials = matlist.Copy()
 	SSblackbox.add_details("circuit_printed","[new_item.type]")
