@@ -73,54 +73,38 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 /obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id)
 	var/datum/techweb_node/TN = get_techweb_node_by_id(id)
-	if(!id || !istype(TN) || !istype(loaded_item))
+	if(!id || !istype(TN) || !istype(loaded_item) || !linked_console)
 		return FALSE
 	var/list/pos1 = techweb_item_boost_check(loaded_item)
 	if(!pos1[TN])
 		return FALSE
-
-
-
-	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
-		if(!linked_destroy || linked_destroy.busy || !linked_destroy.loaded_item)
-			updateUsrDialog()
-			return
-		var/choice = input("Are you sure you want to destroy [linked_destroy.loaded_item.name]?") in list("Proceed", "Cancel")
-		if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item)
-			return
-		linked_destroy.busy = 1
-		screen = SCICONSOLE_UPDATE_DATABASE
-		updateUsrDialog()
-		flick("d_analyzer_process", linked_destroy)
-		spawn(24)
-			stored_research.boost_with_path(SSresearch.techweb_nodes[href_list["destroy"]], linked_destroy.loaded_item.type)
-			if(linked_destroy)
-				linked_destroy.busy = 0
-				if(!linked_destroy.loaded_item)
-					screen = SCICONSOLE_MENU
-					return
-				//TODO: Add boost checking.
-				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-					for(var/material in linked_destroy.loaded_item.materials)
-						linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
-					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
-				linked_destroy.loaded_item = null
-				for(var/obj/I in linked_destroy.contents)
-					for(var/mob/M in I.contents)
-						M.death()
-					if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
-						var/obj/item/stack/sheet/S = I
-						if(S.amount > 1)
-							S.amount--
-							linked_destroy.loaded_item = S
-						else
-							qdel(S)
-							linked_destroy.icon_state = "d_analyzer"
-					else
-						if(!(I in linked_destroy.component_parts))
-							qdel(I)
-							linked_destroy.icon_state = "d_analyzer"
-			screen = SCICONSOLE_MENU
-			use_power(250)
-			updateUsrDialog()
+	var/dpath = loaded_item.path
+	if(!TN[dpath])
+		return FALSE
+	var/dboost = TN[dpath]
+		var/choice = input("Are you sure you want to destroy [linked_destroy.loaded_item.name] for a boost of [dboost] in node [TN.display_name]") in list("Proceed", "Cancel")
+	if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item)
+		return
+	busy = TRUE
+	addtimer(CALLBACK(src, .proc/reset_busy), 24)
+	flick("d_analyzer_process", linked_destroy)
+	if(QDELETED(linked_item) || QDELETED(src) || QDELETED(linked_console))
+		return FALSE
+	linked_consolestored_research.boost_with_path(SSresearch.techweb_nodes[href_list["destroy"]], linked_destroy.loaded_item.type)
+	SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type] - [TN.id]")
+	if(linked_console && linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+		for(var/material in linked_destroy.loaded_item.materials)
+			linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+	for(var/mob/M in loaded_item.contents)
+		M.death()
+	if(istype(loaded_item, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = loaded_item
+		if(S.amount > 1)
+			S.amount--
+		else
+			qdel(S)
+	else
+		qdel(loaded_item)
+	use_power(250)
+	update_icon()
 
