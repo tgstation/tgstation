@@ -23,13 +23,15 @@
 	var/creationTime
 
 /obj/item/weapon/newspaper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>")
-	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>",
+	"<span class='boldwarning'>You focus intently on [src], trying to commit sodoku... Until your eyes light up in realization!</span>")
+	user.say("JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
 	var/mob/living/carbon/human/H = user
-	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)
+	var/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey/W = new(get_turf(H))
 	playsound(H, 'sound/items/drink.ogg', rand(10,50), 1)
 	W.reagents.trans_to(H, W.reagents.total_volume)
-	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>")
+	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>",
+	"<span class='boldwarning'>You down the contents of [W] in one gulp! Shoulda stuck to sodoku!</span>")
 
 	return(TOXLOSS)
 
