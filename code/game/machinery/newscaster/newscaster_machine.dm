@@ -1,5 +1,4 @@
 
-
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
@@ -557,9 +556,9 @@
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
+		playsound(src, I.usesound, 50, 1)
 		if(do_after(user, 60*I.toolspeed, target = src))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
 				new /obj/item/stack/sheet/metal(loc, 5)
@@ -576,12 +575,12 @@
 				user.visible_message("[user] is repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
 								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, WT.usesound, 40, 1)
+				playsound(src, WT.usesound, 40, 1)
 				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+					playsound(src, 'sound/items/welder2.ogg', 50, 1)
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
 					update_icon()
@@ -594,11 +593,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
+				playsound(src, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
@@ -611,7 +610,7 @@
 /obj/machinery/newscaster/obj_break()
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		stat |= BROKEN
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
+		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)
 		update_icon()
 
 
@@ -714,8 +713,8 @@
 		spawn(alert_delay)
 			alert --
 			update_icon()
-		playsound(loc, 'sound/machines/twobeep.ogg', 75, 1)
+		playsound(src, 'sound/machines/twobeep.ogg', 75, 1)
 	else
 		say("Attention! Wanted issue distributed!")
-		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, 1)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 75, 1)
 

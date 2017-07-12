@@ -1,4 +1,8 @@
 
+#define NEWSPAPER_COVER 1
+#define NEWSPAPER_MIDDLE 2
+#define NEWSPAPER_END 3
+
 /obj/item/weapon/newspaper
 	name = "newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
@@ -23,19 +27,22 @@
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)
-	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)
+	playsound(H, 'sound/items/drink.ogg', rand(10,50), 1)
 	W.reagents.trans_to(H, W.reagents.total_volume)
 	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>")
 
 	return(TOXLOSS)
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
+	view(user)
+
+/obj/item/weapon/newspaper/view(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
 		pages = 0
 		switch(screen)
-			if(0) //Cover
+			if(NEWSPAPER_COVER) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
 				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen? Space Facilities</FONT></div><HR>"
 				if(isemptylist(news_content))
@@ -57,7 +64,7 @@
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=\ref[human_user];mach_close=newspaper_main'>Done reading</A></DIV>"
-			if(1) // X channel pages inbetween.
+			if(NEWSPAPER_MIDDLE) // X channel pages inbetween.
 				for(var/datum/newscaster/feed_channel/NP in news_content)
 					pages++
 				var/datum/newscaster/feed_channel/C = news_content[curr_page]
@@ -86,7 +93,7 @@
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV>"
-			if(2) //Last page
+			if(NEWSPAPER_END) //Last page
 				for(var/datum/newscaster/feed_channel/NP in news_content)
 					pages++
 				if(wantedAuthor!=null)
@@ -112,17 +119,17 @@
 
 /obj/item/weapon/newspaper/proc/notContent(list/L)
 	if(!L.len)
-		return 0
+		return FALSE
 	for(var/i=L.len;i>0;i--)
 		var/num = abs(L[i])
 		if(creationTime <= num)
 			continue
 		else
 			if(L[i] > 0)
-				return 1
+				return TRUE
 			else
-				return 0
-	return 0
+				return FALSE
+	return FALSE
 
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
@@ -133,24 +140,24 @@
 			if(curr_page == pages+1)
 				return //Don't need that at all, but anyway.
 			if(curr_page == pages) //We're at the middle, get to the end
-				screen = 2
+				screen = NEWSPAPER_END
 			else
 				if(curr_page == 0) //We're at the start, get to the middle
-					screen=1
+					screen = NEWSPAPER_MIDDLE
 			curr_page++
-			playsound(loc, "pageturn", 50, 1)
+			playsound(src, "pageturn", 50, 1)
 		else if(href_list["prev_page"])
 			if(curr_page == 0)
 				return
 			if(curr_page == 1)
-				screen = 0
+				screen = NEWSPAPER_COVER
 			else
 				if(curr_page == pages+1) //we're at the end, let's go back to the middle.
-					screen = 1
+					screen = NEWSPAPER_MIDDLE
 			curr_page--
-			playsound(loc, "pageturn", 50, 1)
+			playsound(src, "pageturn", 50, 1)
 		if(ismob(loc))
-			attack_self(loc)
+			view(loc)
 
 /obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
@@ -164,6 +171,6 @@
 				return
 			scribble_page = curr_page
 			scribble = s
-			attack_self(user)
+			view(user)
 	else
 		return ..()
