@@ -15,7 +15,7 @@
 	var/curr_page = 0
 	var/list/datum/newscaster/feed_channel/news_content = list()
 	var/scribble=""
-	var/scribble_page = null
+	var/scribble_page
 	var/wantedAuthor
 	var/wantedCriminal
 	var/wantedBody
