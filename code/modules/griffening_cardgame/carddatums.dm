@@ -311,7 +311,7 @@
 /datum/griffeningcard/equipment/Mindslave
 
 	name = "Mindslave"
-	desc = "Can only be used if the owner of this card has a antag human, cyborg or a 'Nuclear Operative' in play. Cannot be used on a human already antags, or a 'Nuclear Operative' or a already mindslaved human. If used on a enemy creature, take control of the equipped human until the implant is destroyed."
+	desc = "Can only be used if the owner of this card has a antag human, cyborg or a 'Nuclear Operative' in play. Cannot be used on a human already antags, or a 'Nuclear Operative' or a already mindslaved human. If used on a enemy creature, take control of the equipped human until the implant is destroyed. This cannot work on security officers, wardens or Heads"
 	Attributes = list(MINDSLAVE, TARGETTED, EQUIPMENT, HUMAN_ONLY, REQUIRE_ANTAG) //Mindslave attribute cause that's snowflaky as hell
 
 /datum/griffeningcard/equipment/motivationalspeech
