@@ -66,7 +66,7 @@
 	LVL = 5
 	ATK = 30
 	DEF = 25
-	Attributes = list(HUMAN, SECURITY, NON_ANTAG, NOATK_NON_ANTAG, INCAPACITATINGATTACK)
+	Attributes = list(HUMAN, SECURITY, NON_ANTAG, NOATK_NON_ANTAG, INCAPACITATINGATTACK, SECURITY_OFFICER)
 
 /datum/griffeningcard/creature/Warden
 
@@ -86,9 +86,182 @@
 	DEF = 10
 	Attributes = list(HUMAN, NON_ANTAG, ANTAG_IMMUNITY, SECURITY_OFFICER_NOATK)
 
+/datum/griffeningcard/creature/Clown
+	name = "Clown"
+	desc = "When the opponent's creature attacks and you control this card, you may instead redirect the target the opponent is attacking to this one. If this card dies as a result of a creature attack, that creature will be incapacitated for one turn."
+	LVL = 2
+	ATK = 10
+	DEF = 25
+	Attributes = list(HUMAN, NON_ANTAG, CHANGEATTACKTARGET, COUNTER, DEATHRATTLEINCAPACITATE)
 
+/datum/griffeningcard/creature/ResearchDirector
 
+	name = "Research Director"
+	desc = "This card can only be summoned by sacrificing a scientist.. If this card is in play, increase the ATK of all scientist cards you own by 20. Once per turn at any point, all the ATK and DEF of one 'scientist' is transferred to any other card on the field. At the end of the opponents turn, this effect is reversed. "
+	LVL = 6
+	ATK = 45
+	DEF = 45
+	Attributes = list(HUMAN, NON_ANTAG, HEAD, SCIENTIST_SACRIFICE, SCIENTIST_20_ATK, SCIENTIST_STAT_DONATION)
 
+/datum/griffeningcard/creature/Scientist
+
+	name = "Scientist"
+	desc = "At the beginning of the owner of this card's turn, if there's another scientist on the field you control, increase the ATK and DEF of this card by 10 until you control no more scientists."
+	LVL = 3
+	ATK = 25
+	DEF = 25
+	Attributes = list(HUMAN, NON_ANTAG, SCIENTIST, SCIENTIST_10_STAT)
+
+/datum/griffeningcard/creature/Roboticist
+
+	name = "Roboticist"
+	desc = "If a cyborg you control is dismantled, you may summon it as soon as your turn begins."
+	LVL = 3
+	ATK = 15
+	DEF = 15
+	Attributes = list(HUMAN, NON_ANTAG, CYBORG_REVIVAL)
+
+/datum/griffeningcard/creature/ChiefEngineer
+	name = "Chief Engineer"
+	desc = "You must sacrifice a engineer to play this card. At the start of your turn, if this card is not incapacitated then you may remove the opponent's current area card. While this card is in play and the engineering area active, your area card cannot be destroyed or replaced."
+	LVL = 6
+	ATK = 40
+	DEF = 50
+	Attributes = list(HUMAN, NON_ANTAG, ENGINEER_SACRIFICE, AREA_REMOVER, AREA_REPLACER)
+
+/datum/griffeningcard/creature/Engineer
+
+	name = "Engineer"
+	desc = "At the beginning of your turn, if this card has a equipment card attached to itself, then you may search the deck for the same equipment card and put it into your hand."
+	LVL = 5
+	ATK = 25
+	DEF = 45
+	Attributes = list(HUMAN, NON_ANTAG, ONE_SACRIFICE, EQUIPMENT_GENERATOR)
+
+/datum/griffeningcard/creature/Janitor
+
+	name = "Janitor"
+	desc = "When this card is played, get a wet floor effect card from your deck and either put it on the field facedown or in your hand."
+	LVL = 2
+	ATK = 15
+	DEF = 20
+	Attributes = list(HUMAN, NON_ANTAG, SEARCH_DECK_WET_FLOOR, WET_FLOOR_REFRESHER)
+	
+/datum/griffeningcard/creature/Barman
+
+	name = "Barman"
+	desc = "As long as this card remains on the field, all non antag humans you control are immune to incapacitation."
+	LVL = 2
+	ATK = 15
+	DEF = 10
+	Attributes = list(HUMAN, NON_ANTAG, HUMAN_NONANTAG_INCAPACITATION_IMMUNITY)
+
+/datum/griffeningcard/creature/CMO
+
+	name = "Chief Medical Officer"
+	desc = "This card can only be played if you sacrifice a medical doctor. If this card is in play, increase all DEF of all humans you control by 20. This effect gives 20 more DEF per medical doctor you control."
+	LVL = 7
+	ATK = 30
+	DEF = 20
+	Attributes = list(HUMAN, NON_ANTAG, HEAD, MEDICAL_DOCTOR_SACRIFICE, HUMAN_20_DEF, MED_DOC_20_DEF)
+
+/datam/griffeningcard/creature/MedicalDoctor
+
+	name = "Medical Doctor"
+	desc = "A medical doctor that well, heals people somehow."
+	LVL = 2
+	ATK = 10
+	DEF = 20
+	Attributes = list(HUMAN, NON_ANTAG, MEDICAL_DOCTOR)
+	
+/datum/griffeningcard/creature/Geneticist
+
+	name = "Geneticist"
+	desc = "A person that deals with genetics, as it says on the tin. "
+	LVL = 3
+	ATK = 15
+	DEF = 10
+	Attributes = list(HUMAN, NON_ANTAG, GENETICIST)
+	
+/datum/griffeningcard/creature/Cyborg
+
+	name = "Cyborg"
+	desc = "Cannot attack humans unless a law card states so. The starting law is NoHarm. When this card is played, you may get a door bolts card from your deck or discard pile and place it in your hand."
+	LVL = 3
+	ATK = 30
+	DEF = 20
+	Attributes = list(CYBORG, NON_ANTAG, EFFECTED_BY_LAW, DECK_SEARCH_DOOR_BOLTS)
+
+/datum/griffeningcard/creature/AI
+	
+	name = "AI"
+	desc = "This card can only be played if you sacrifice a cyborg. This card cannot attack. If a Human that's a head is on either side when this card is played, you may search your deck for a law card."
+	LVL = 6
+	ATK = 0
+	DEF = 40
+	Attributes = list(AI, NON_ANTAG, EFFECTED_BY_LAW, DECK_SEARCH_LAW)
+
+/datum/griffeningcard/creature/AtmosphericTech
+
+	name = "Atmospheric Tech"
+	desc = "A human meant to supervise the atmos of the station... most of the time."
+	LVL = 1
+	ATK = 15
+	DEF = 10
+	Attributes = list(HUMAN, NON_ANTAG, ATMOSPHERIC)
+
+/datum/griffeningcard/creature/Wizard
+
+	name = "Wizard"
+	desc = "If this card has a magical robe and magical hat equipped, when the opponent starts their turn, you may use one of the following effects, 1. Incapacitate all enemies for one turn. This stacks in duration. 2. Kill any opponent human card. 3. For the rest of the opponent's turn, this card cannot be effected by anything. If this card also has a magical staff, you can instead do two effects per turn."
+	LVL = 7
+	ATK = 25
+	DEF = 20
+	Attributes = list(HUMAN, ANTAG, TWO_SACRIFICES, WIZARD)
+
+/datum/griffeningcard/creature/Changeling
+
+	name = "Changeling"
+	desc = "At the start of your turn, you may choose any human card in either player's discard pile, if you do, copy the ATK and DEF of said card and send the card to the 'gibbed pile'. If the opponent successfully uses the 'flamethrower', 'Incendiary Grenade' or 'Plasma Fire', immediately discard this card. This card is considered a non human."
+	LVL = 1
+	ATK = 5
+	DEF = 5
+	Attributes = list(NON_HUMAN, ANTAG, STAT_COPY, STRONGFLAMEWEAKNESS, CHANGELING)
+
+/datum/griffeningcard/creature/Abomination
+
+	desc = "Abomination cannot be destroyed by humans without a ATK boosting equipment card. At the start of the opponents turn, incapacitate one of their creatures. If the opponent successfully uses the 'flamethrower', 'Incendiary Grenade' or 'Plasma Fire', the DEF of this card becomes 50%. This is considered a non human."
+	LVL = 9
+	ATK = 90
+	DEF = 90
+	Attributes = list(NO_HUMAN, ANTAG, FLAMEWEAKNESS)
+
+/datum/griffeningcard/creature/NuclearOperative
+
+	name = "Nuclear Operative"
+	desc = "You cannot play this card if you also control a captain. If this card is destroyed as a result of a creature, that creature is incapacitated for two turns and this card is sent to the gibbed pile."
+	LVL = 7
+	ATK = 6
+	DEF = 40
+	Attributes = list(HUMAN, ANTAG, OP, STRONG_DEATHRATTLEINCAPACITATE)
+
+/datum/griffeningcard/creature/Quartermaster
+
+	name = "Quarter Master"
+	desc = "This card can only be played if you sacrifice a cargo tech."
+	LVL = 5
+	ATK = 35
+	DEF = 50
+	Attributes = list(HUMAN, NON_ANTAG, QUARTERMASTER, CARGOTECH_SACRIFICE)
+
+/datum/griffeningcard/creature/CargoTech
+
+	name = "Cargo Tech"
+	desc = "A person responsible for hauling crates."
+	LVL = 3
+	ATK = 10
+	DEF = 25
+	Attributes = list(HUMAN, NON_ANTAG, CARGOTECH)
 
 
 
