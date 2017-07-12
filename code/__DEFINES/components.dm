@@ -12,5 +12,5 @@
 // When the signal is called: (signal arguments)
 
 #define COMSIG_COMPONENT_ADDED "component_added"				//when a component is added to a datum: (datum/component)
-#define COMSIG_COMPONENT_REMOVING "component_removing			//before a component is removed from a datum because of RemoveComponent: (datum/component)
+#define COMSIG_COMPONENT_REMOVING "component_removing"			//before a component is removed from a datum because of RemoveComponent: (datum/component)
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//before a datum's Destroy() is called: ()
