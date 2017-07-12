@@ -12,7 +12,7 @@
 	if(..()) //not dead
 		handle_blood()
 
-	if(stat != DEAD) // Reagent processing needs to be handled before breathing and such, to prevent edge cases
+	if(stat != DEAD)
 		handle_organs()
 
 	if(stat == DEAD)
