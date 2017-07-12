@@ -4,12 +4,12 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
-	var/operating = 0 // Is it on?
+	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
@@ -279,12 +279,12 @@
 
 /obj/machinery/microwave/proc/start()
 	visible_message("The microwave turns on.", "<span class='italics'>You hear a microwave humming.</span>")
-	operating = 1
+	operating = TRUE
 	icon_state = "mw1"
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/abort()
-	operating = 0 // Turn it off again aferwards
+	operating = FALSE // Turn it off again aferwards
 	icon_state = "mw"
 	updateUsrDialog()
 
@@ -307,7 +307,7 @@
 	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too
-	operating = 0 // Turn it off again aferwards
+	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src)
 		if(prob(50))
@@ -322,7 +322,7 @@
 	visible_message("<span class='warning'>The microwave breaks!</span>") //Let them know they're stupid
 	broken = 2 // Make it broken so it can't be used util fixed
 	flags = null //So you can't add condiments
-	operating = 0 // Turn it off again aferwards
+	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 
 /obj/machinery/microwave/Topic(href, href_list)

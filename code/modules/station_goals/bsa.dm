@@ -27,8 +27,8 @@
 
 /obj/machinery/bsa
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/bsa/back
 	name = "Bluespace Artillery Generator"
@@ -198,8 +198,8 @@
 
 /obj/structure/filler
 	name = "big machinery part"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 	var/obj/machinery/parent
 
@@ -236,7 +236,7 @@
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 
 /obj/machinery/computer/bsa_control
-	name = "Bluespace Artillery Control"
+	name = "bluespace artillery control"
 	var/obj/machinery/bsa/full/cannon
 	var/notice
 	var/target
@@ -246,7 +246,7 @@
 	icon_state = "control_boxp"
 	var/area_aim = FALSE //should also show areas for targeting
 
-/obj/machinery/computer/bsa_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/computer/bsa_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

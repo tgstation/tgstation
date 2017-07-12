@@ -1353,13 +1353,13 @@
 		//Body temperature is too hot.
 		var/burn_damage
 		switch(H.bodytemperature)
-			if(360 to 400)
+			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
 				burn_damage = HEAT_DAMAGE_LEVEL_1
 			if(400 to 460)
 				H.throw_alert("temp", /obj/screen/alert/hot, 2)
 				burn_damage = HEAT_DAMAGE_LEVEL_2
-			if(460 to INFINITY)
+			else
 				H.throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(H.on_fire)
 					burn_damage = HEAT_DAMAGE_LEVEL_3
@@ -1371,17 +1371,15 @@
 		H.apply_damage(burn_damage, BURN)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
-			if(200 to 260)
+			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
 				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
 			if(120 to 200)
 				H.throw_alert("temp", /obj/screen/alert/cold, 2)
 				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-			if(-INFINITY to 120)
+			else
 				H.throw_alert("temp", /obj/screen/alert/cold, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-			else
-				H.clear_alert("temp")
 
 	else
 		H.clear_alert("temp")

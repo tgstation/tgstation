@@ -9,8 +9,8 @@
 	name = "foam"
 	icon_state = "foam"
 	opacity = 0
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = WALL_OBJ_LAYER
 	mouse_opacity = 0
 	var/amount = 3
@@ -194,14 +194,13 @@
 /obj/structure/foamedmetal
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
-	density = 1
+	density = TRUE
 	opacity = 1 	// changed in New()
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
-	obj_integrity = 20
 	max_integrity = 20
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
@@ -211,7 +210,7 @@
 
 
 /obj/structure/foamedmetal/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -236,7 +235,6 @@
 	return !density
 
 /obj/structure/foamedmetal/iron
-	obj_integrity = 50
 	max_integrity = 50
 	icon_state = "ironfoam"
 
@@ -247,7 +245,6 @@
 	opacity = FALSE
 	icon_state = "atmos_resin"
 	alpha = 120
-	obj_integrity = 10
 	max_integrity = 10
 	layer = EDGED_TURF_LAYER
 

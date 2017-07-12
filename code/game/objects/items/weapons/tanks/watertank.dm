@@ -9,13 +9,12 @@
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/weapon/noz
-	var/on = 0
+	var/on = FALSE
 	var/volume = 500
 
 /obj/item/weapon/watertank/New()
@@ -47,7 +46,7 @@
 
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
-			on = 0
+			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
 		noz.loc = user
@@ -338,7 +337,7 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
 
-	var/on = 0
+	var/on = FALSE
 	volume = 300
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
@@ -404,13 +403,13 @@
 		. += filling
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
-	on = 1
+	on = TRUE
 	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		to_chat(loc, "<span class='notice'>[src] turns on.</span>")
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
-	on = 0
+	on = FALSE
 	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		to_chat(loc, "<span class='notice'>[src] turns off.</span>")

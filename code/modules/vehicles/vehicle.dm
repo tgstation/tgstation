@@ -4,11 +4,10 @@
 	desc = "A basic vehicle, vroom"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "fuckyou"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	can_buckle = 1
 	buckle_lying = 0
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 60, acid = 60)
 	var/auto_door_open = TRUE

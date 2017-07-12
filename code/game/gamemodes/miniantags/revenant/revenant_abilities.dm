@@ -106,7 +106,7 @@
 		if(!msg)
 			charge_counter = charge_max
 			return
-		log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
+		log_talk(user,"RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
 		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -285,8 +285,8 @@
 	for(var/mob/living/simple_animal/bot/bot in T)
 		if(!bot.emagged)
 			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.locked = 0
-			bot.open = 1
+			bot.locked = FALSE
+			bot.open = TRUE
 			bot.emag_act()
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)

@@ -5,8 +5,8 @@
 	var/id = null			//id of this bump_teleporter.
 	var/id_target = null	//id of bump_teleporter which this moves you to.
 	invisibility = INVISIBILITY_ABSTRACT 		//nope, can't see this
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 0
 
 	var/static/list/AllTeleporters

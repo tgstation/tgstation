@@ -10,7 +10,6 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
-	obj_integrity = 40
 	max_integrity = 40
 	var/active = 0
 	var/det_time = 50

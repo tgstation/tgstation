@@ -8,7 +8,6 @@
 	inactive_icon = "tinkerers_daemon"
 	unanchored_icon = "tinkerers_daemon_unwrenched"
 	max_integrity = 100
-	obj_integrity = 100
 	construction_value = 20
 	break_message = "<span class='warning'>The daemon shatters into millions of pieces, leaving only a disc of metal!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/medium = 1, \

@@ -22,6 +22,7 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
+	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	health = 30
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
@@ -29,7 +30,7 @@
 	speed = 0
 	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
-	density = 0
+	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
@@ -65,7 +66,7 @@
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
-	var/hacked = 0 //If we have laws to destroy the station
+	var/hacked = FALSE //If we have laws to destroy the station
 	var/can_be_held = TRUE //if assholes can pick us up
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\

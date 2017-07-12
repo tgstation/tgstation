@@ -117,7 +117,7 @@
 		C.last_mind = src
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
-
+	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
 
@@ -1622,6 +1622,15 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
+
+/datum/mind/proc/transfer_martial_arts(mob/living/new_character)
+	if(!ishuman(new_character))
+		return
+	if(martial_art)
+		if(martial_art.base) //Is the martial art temporary?
+			martial_art.remove(new_character)
+		else
+			martial_art.teach(new_character)
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)

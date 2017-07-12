@@ -16,7 +16,7 @@
 	response_help  = "pets"
 	response_disarm = "pokes"
 	response_harm   = "splats"
-	density = 0
+	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("hostile")
 	attack_sound = 'sound/effects/reee.ogg'

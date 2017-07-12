@@ -152,7 +152,6 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
 	max_integrity = 100
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 

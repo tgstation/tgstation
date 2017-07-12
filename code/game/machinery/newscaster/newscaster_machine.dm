@@ -717,4 +717,3 @@
 	else
 		say("Attention! Wanted issue distributed!")
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 75, 1)
-

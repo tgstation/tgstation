@@ -15,7 +15,7 @@
 	var/max_energy = 5
 	var/effectchance = 33
 	var/recharging = 0
-	var/recharge_locked = 0
+	var/recharge_locked = FALSE
 	var/obj/item/weapon/stock_parts/micro_laser/diode //used for upgrading!
 
 
@@ -150,7 +150,7 @@
 			START_PROCESSING(SSobj, src)
 		if(energy <= 0)
 			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
-			recharge_locked = 1
+			recharge_locked = TRUE
 
 	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
@@ -161,5 +161,5 @@
 		if(energy >= max_energy)
 			energy = max_energy
 			recharging = 0
-			recharge_locked = 0
+			recharge_locked = FALSE
 			..()

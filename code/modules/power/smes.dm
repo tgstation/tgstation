@@ -18,8 +18,8 @@
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
@@ -50,7 +50,7 @@
 
 	spawn(5)
 		dir_loop:
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
 					if(term && term.dir == turn(d, 180))
@@ -333,7 +333,7 @@
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

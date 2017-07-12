@@ -167,7 +167,7 @@
 						sanitycheck = null //if a digit is repeated, reject the input
 			if (input == code)
 				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
-				locked = 0
+				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
 			else if (input == null || sanitycheck == null || length(input) != codelen)

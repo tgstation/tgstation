@@ -6,7 +6,6 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
-	obj_integrity = 300
 	max_integrity = 300
 
 /obj/item/weapon/storage/belt/update_icon()

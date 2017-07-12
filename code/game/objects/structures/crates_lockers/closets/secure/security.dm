@@ -162,7 +162,6 @@
 	req_access = list(GLOB.access_forensics_lockers)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
@@ -197,8 +196,14 @@
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
 	req_access = list(GLOB.access_brig)
-	anchored = 1
+	anchored = TRUE
 	var/id = null
+
+/obj/structure/closet/secure_closet/evidence
+	anchored = TRUE
+	name = "Secure Evidence Closet"
+	req_access_txt = "0"
+	req_one_access_txt = list(GLOB.access_armory, GLOB.access_forensics_lockers)
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
 	..()
@@ -218,6 +223,16 @@
 	new /obj/item/clothing/suit/judgerobe (src)
 	new /obj/item/clothing/head/powdered_wig (src)
 	new /obj/item/weapon/storage/briefcase(src)
+
+/obj/structure/closet/secure_closet/contraband/armory
+	anchored = TRUE
+	name = "Contraband Locker"
+	req_access = list(GLOB.access_armory)
+
+/obj/structure/closet/secure_closet/contraband/heads
+	anchored = TRUE
+	name = "Contraband Locker"
+	req_access = list(GLOB.access_heads)
 
 /obj/structure/closet/secure_closet/armory1
 	name = "armory armor locker"

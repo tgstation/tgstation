@@ -9,7 +9,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
-	var/anchored = 0
+	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
@@ -313,7 +313,7 @@
 	set waitfor = 0
 	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
+/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()

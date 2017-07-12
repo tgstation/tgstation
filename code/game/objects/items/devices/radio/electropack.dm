@@ -8,7 +8,7 @@
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
-	var/on = 1
+	var/on = TRUE
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
@@ -107,7 +107,7 @@
 		spawn(100)
 			shock_cooldown = 0
 		var/mob/living/L = loc
-		step(L, pick(GLOB.cardinal))
+		step(L, pick(GLOB.cardinals))
 
 		to_chat(L, "<span class='danger'>You feel a sharp shock!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

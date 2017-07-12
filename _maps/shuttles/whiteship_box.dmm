@@ -334,7 +334,6 @@
 /area/shuttle/abandoned)
 "bh" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,

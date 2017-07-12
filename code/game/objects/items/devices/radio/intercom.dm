@@ -2,7 +2,7 @@
 	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
-	anchored = 1
+	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
 	var/number = 0
@@ -107,7 +107,7 @@
 
 		var/area/A = get_area(src)
 		if(!A || emped)
-			on = 0
+			on = FALSE
 		else
 			on = A.powered(EQUIP) // set "on" to the power status
 

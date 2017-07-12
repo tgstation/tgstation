@@ -17,19 +17,18 @@
 	desc = "A square piece of metal standing on four metal legs. It can not move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	layer = TABLE_LAYER
 	climbable = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/metal
-	var/busy = 0
+	var/busy = FALSE
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	obj_integrity = 100
 	max_integrity = 100
 	integrity_failure = 30
 	smooth = SMOOTH_TRUE
@@ -162,7 +161,6 @@
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
 	canSmoothWith = null
-	obj_integrity = 70
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
@@ -244,7 +242,6 @@
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	canSmoothWith = list(/obj/structure/table/wood,
 		/obj/structure/table/wood/poker,
@@ -296,7 +293,6 @@
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
@@ -373,7 +369,7 @@
 
 /obj/structure/table/optable/New()
 	..()
-	for(var/dir in GLOB.cardinal)
+	for(var/dir in GLOB.cardinals)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if(computer)
 			computer.table = src
@@ -406,10 +402,9 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
-	obj_integrity = 20
 	max_integrity = 20
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
@@ -475,7 +470,7 @@
 
 /obj/structure/rack/deconstruct(disassembled = TRUE)
 	if(!(flags&NODECONSTRUCT))
-		density = 0
+		density = FALSE
 		var/obj/item/weapon/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
 	qdel(src)
