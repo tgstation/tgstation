@@ -143,8 +143,7 @@
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/random_color = TRUE //if the screwdriver uses random coloring
-	var/datum/mutable_appearance/handle_overlay //the inhand icon for
-	var/static/list/possible_colors = list(\
+	var/static/list/screwdriver_colors = list(\
 	"blue" = rgb(24, 97, 213), \
 	"red" = rgb(149, 23, 16), \
 	"pink" = rgb(213, 24, 141), \
@@ -161,8 +160,8 @@
 /obj/item/weapon/screwdriver/Initialize()
 	. = ..()
 	if(random_color) //random colors!
-		var/our_color = pick(possible_colors)
-		add_atom_colour(possible_colors[our_color], FIXED_COLOUR_PRIORITY)
+		var/our_color = pick(screwdriver_colors)
+		add_atom_colour(screwdriver_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
 	if(prob(75))
 		pixel_y = rand(0, 16)
