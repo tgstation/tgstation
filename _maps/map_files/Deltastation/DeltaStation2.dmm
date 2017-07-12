@@ -3384,7 +3384,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
 	name = "Auxiliary Storage Closet";
-	req_access_txt = ""
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
