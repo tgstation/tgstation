@@ -38,7 +38,8 @@ doesn't have toxins access.
 	var/list/datum/design/matching_designs_imprinter
 	var/list/datum/design/cat_designs_protolathe
 	var/list/datum/design/cat_designs_imprinter
-	var/disk_slot_selected = 0
+	var/tdisk_update = FALSE
+	var/ddisk_update = FALSE
 	var/datum/techweb_node/selected_node
 	var/datum/design/selected_design
 	var/locked = FALSE
@@ -107,27 +108,31 @@ doesn't have toxins access.
 	return ..()
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
-
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
-		if(t_disk || d_disk)
-			to_chat(user, "A disk is already loaded into the machine.")
-			return
-
 		if(istype(D, /obj/item/weapon/disk/tech_disk))
+			if(t_disk)
+				to_chat(user, "<span class='danger'>A technology disk is already loaded!</span>")
+				return
+			if(!user.drop_item())
+				to_chat(user, "<span class='danger'>[D] is stuck to your hand!</span>")
+				return
+			D.forceMove(src)
 			t_disk = D
 		else if (istype(D, /obj/item/weapon/disk/design_disk))
+			if(d_disk)
+				to_chat(user, "<span class='danger'>A design disk is already loaded!</span>")
+				return
+			if(!user.drop_item())
+				to_chat(user, "<span class='danger'>[D] is stuck to your hand!</span>")
+				return
 			d_disk = D
 		else
 			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
 			return
-		if(!user.drop_item())
-			return
-		D.loc = src
-		to_chat(user, "<span class='notice'>You add the disk to the machine!</span>")
+		to_chat(user, "<span class='notice'>You insert [D] into \the [src]!</span>")
 	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
 		. = ..()
-	updateUsrDialog()
 
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
 	CRASH("RESEARCH NODE NOT CODED!")
@@ -153,30 +158,6 @@ doesn't have toxins access.
 
 /*
 
-	if(href_list["disk_slot"])
-		disk_slot_selected = text2num(href_list["disk_slot"])
-
-	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
-		screen = SCICONSOLE_UPDATE_DATABASE
-		var/wait = 50
-		spawn(wait)
-			screen = SCICONSOLE_TDISK
-			if(t_disk)
-				t_disk.stored_research.copy_research_to(stored_research)
-				updateUsrDialog()
-	else if(href_list["clear_tech"]) //Erase data on the technology disk.
-		if(t_disk)
-			qdel(t_disk.stored_research)
-			t_disk.stored_research = new
-	else if(href_list["eject_tech"]) //Eject the technology disk.
-		if(t_disk)
-			t_disk.loc = src.loc
-			t_disk = null
-		screen = SCICONSOLE_MENU
-
-	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
-		stored_research.copy_research_to(t_disk.stored_research)
-		screen = SCICONSOLE_TDISK
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
 		var/n = text2num(href_list["updt_design"])
 		screen = SCICONSOLE_UPDATE_DATABASE
@@ -206,11 +187,6 @@ doesn't have toxins access.
 			else
 				d_disk.blueprints[n] = null
 
-	else if(href_list["eject_design"]) //Eject the design disk.
-		if(d_disk)
-			d_disk.loc = src.loc
-			d_disk = null
-		screen = SCICONSOLE_MENU
 
 	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
 		var/slot = text2num(href_list["copy_design"])
@@ -233,39 +209,39 @@ doesn't have toxins access.
 		screen = SCICONSOLE_DDISK
 
 
-		if(SCICONSOLE_TDISK) //Technology Disk Menu
-			dat += SCICONSOLE_HEADER
-			dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A>"
-			dat += "<A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
-			dat += "<A href='?src=\ref[src];updt_tech=0'>Upload All</A>"
-			dat += "<A href='?src=\ref[src];copy_tech=1'>Load Technology to Disk</A>"
-			dat += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
-			for(var/i in t_disk.stored_research.researched_nodes)
-				var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
-				dat += "<A href='?src=\ref[src];view_node=[i];back_screen=[screen]'>[N.display_name]</A>"
-			dat += "</div>"
+	if(SCICONSOLE_TDISK) //Technology Disk Menu
+		dat += SCICONSOLE_HEADER
+		dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A>"
+		dat += "<A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
+		dat += "<A href='?src=\ref[src];updt_tech=0'>Upload All</A>"
+		dat += "<A href='?src=\ref[src];copy_tech=1'>Load Technology to Disk</A>"
+		dat += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
+		for(var/i in t_disk.stored_research.researched_nodes)
+			var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
+			dat += "<A href='?src=\ref[src];view_node=[i];back_screen=[screen]'>[N.display_name]</A>"
+		dat += "</div>"
 
-		if(SCICONSOLE_DDISK) //Design Disk menu.
-			dat += SCICONSOLE_HEADER
-			dat += "Disk Operations: <A href='?src=\ref[src];clear_design=0'>Clear Disk</A><A href='?src=\ref[src];updt_design=0'>Upload All</A><A href='?src=\ref[src];eject_design=1'>Eject Disk</A>"
-			for(var/i in 1 to d_disk.max_blueprints)
-				dat += "<div class='statusDisplay'>"
-				if(d_disk.blueprints[i])
-					var/datum/design/D = d_disk.blueprints[i]
-					dat += "<A href='?src=\ref[src];view_design=[D.id]'>[D.name]</A>"
-					dat += "Operations: <A href='?src=\ref[src];updt_design=[i]'>Upload to Database</A> <A href='?src=\ref[src];clear_design=[i]'>Clear Slot</A>"
-				else
-					dat += "Empty SlotOperations: <A href='?src=\ref[src];menu=[SCICONSOLE_DDISKL];disk_slot=[i]'>Load Design to Slot</A>"
-				dat += "</div>"
-		if(SCICONSOLE_DDISKL) //Design disk submenu
-			dat += SCICONSOLE_HEADER
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_DDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>"
-			dat += "<h3>Load Design to Disk:</h3>"
-			for(var/v in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[v]
-				dat += "[D.name] "
-				dat += "<A href='?src=\ref[src];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
+	if(SCICONSOLE_DDISK) //Design Disk menu.
+		dat += SCICONSOLE_HEADER
+		dat += "Disk Operations: <A href='?src=\ref[src];clear_design=0'>Clear Disk</A><A href='?src=\ref[src];updt_design=0'>Upload All</A><A href='?src=\ref[src];eject_design=1'>Eject Disk</A>"
+		for(var/i in 1 to d_disk.max_blueprints)
+			dat += "<div class='statusDisplay'>"
+			if(d_disk.blueprints[i])
+				var/datum/design/D = d_disk.blueprints[i]
+				dat += "<A href='?src=\ref[src];view_design=[D.id]'>[D.name]</A>"
+				dat += "Operations: <A href='?src=\ref[src];updt_design=[i]'>Upload to Database</A> <A href='?src=\ref[src];clear_design=[i]'>Clear Slot</A>"
+			else
+				dat += "Empty SlotOperations: <A href='?src=\ref[src];menu=[SCICONSOLE_DDISKL];disk_slot=[i]'>Load Design to Slot</A>"
 			dat += "</div>"
+	if(SCICONSOLE_DDISKL) //Design disk submenu
+		dat += SCICONSOLE_HEADER
+		dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_DDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>"
+		dat += "<h3>Load Design to Disk:</h3>"
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
+			dat += "[D.name] "
+			dat += "<A href='?src=\ref[src];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
+		dat += "</div>"
 
 */
 
@@ -273,7 +249,7 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
 	//Tabs
-	data["tabs"] = list("Technology", "View Node", "View Design", "Disk Operations", "Deconstructive Analyzer", "Protolathe", "Circuit Imprinter", "Settings")
+	data["tabs"] = list("Technology", "View Node", "View Design", "Disk Operations - Design", "Disk Operations - Technology", "Deconstructive Analyzer", "Protolathe", "Circuit Imprinter", "Settings")
 	//Locking
 	data["locked"] = locked
 	//General Access
@@ -397,9 +373,19 @@ doesn't have toxins access.
 				var/boost = input[v]
 				var/can_boost = stored_research.boosted_nodes[TN]? FALSE : TRUE
 				data["boost_paths"] += list(list("name" = TN.display_name, "value" = boost, "allow" = can_boost, "id" = TN.id))
-	/*
 	//Disk Operations
-	*/
+	data["tdisk"] = t_disk? TRUE : FALSE
+	data["ddisk"] = d_disk? TRUE : FALSE
+	data["tdisk_update"] = tdisk_update
+	data["ddisk_update"] = ddisk_update
+	data["alldesigns"] = list()
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = matching_designs_protolathe[v]
+		data["alldesigns"] += list(list("name" = D.name, "id" = D.id))
+	if(d_disk)
+		data["ddisk_designs"] = list()
+		for(var/v in d_disk.blueprints)
+
 
 
 	return data
@@ -491,6 +477,29 @@ doesn't have toxins access.
 				linked_imprinter.user_try_print_id(params["id"])
 			else
 				return
+		if("eject_disk")
+			eject_disk(params["type"])
+		if("tdisk_clear")
+			if(t_disk)
+				qdel(t_disk.stored_research)
+				t_disk.stored_research = new
+				say("Technology disk cleared.")
+		if("tdisk_down")
+			if(t_disk)
+				stored_research.copy_research_to(t_disk.stored_research)
+				say("Downloading research to disk.")
+		if("tdisk_up")
+			if(t_disk)
+				t_disk.stored_research.copy_research_to(stored_research)
+				say("Uploading research from disk.")
+
+/obj/machinery/computer/rdconsole/proc/eject_disk(type)
+	if(type == "design")
+		d_disk.forceMove(get_turf(src))
+		d_disk = null
+	if(type == "tech")
+		t_disk.forceMove(get_turf(src))
+		t_disk = null
 
 /obj/machinery/computer/rdconsole/proc/rescan_category_views()
 	cat_designs_protolathe = list()

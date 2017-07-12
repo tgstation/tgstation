@@ -2,7 +2,8 @@
 <link rel='ractive' href='./rdconsole/techweb.ract'>
 <link rel='ractive' href='./rdconsole/nodeview.ract'>
 <link rel='ractive' href='./rdconsole/designview.ract'>
-<link rel='ractive' href='./rdconsole/diskops.ract'>
+<link rel='ractive' href='./rdconsole/diskops_tech.ract'>
+<link rel='ractive' href='./rdconsole/diskops_design.ract'>
 <link rel='ractive' href='./rdconsole/destruct.ract'>
 <link rel='ractive' href='./rdconsole/protolathe.ract'>
 <link rel='ractive' href='./rdconsole/circuit.ract'>
@@ -23,8 +24,11 @@
 		<tab name='View Design'>
 			<designview/>
 		</tab>
-		<tab name='Disk Operations'>
-			<diskops/>
+		<tab name='Disk Operations - Design'>
+			<diskops_design/>
+		</tab>
+		<tab name='Desk Operations - Technology'>
+			<diskops_tech/>
 		</tab>
 		<tab name='Deconstructive Analyzer'>
 			<destruct/>

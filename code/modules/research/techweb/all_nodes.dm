@@ -44,13 +44,3 @@
 	var/research_cost = 0					//Point cost to research.
 	var/boosted_path						//If science boosted this by deconning something, it puts the path here to make it one-time-only.
 */
-
-
-
-
-//basicelectronicprocessing basicmaterialprocessing basicmechanicaltechnology opticstechnology illegaltechnology biologicaltechnology basicmedicaltechnology advancedmedicaltech advancedbiotech xenobiotech basicpowertech advpower basicdata advelectronicprocessing advancedmaterialprocessing plasmaprocessing advancedmechanicaltechnology mechatech ballisticcombattech lasercombattech illegalballisticcombattech hypodermicimplanttech cyberneticimplanttech advxenobiotech xenobioimplanttech combustiontech nuclearteach advdatatheory cyborgtech bluespacematerialprocessing xenobiomaterialprocessing bluespacemechatech bluespacecombatmechatech combatmechatech advlasertech illegalcombatmechatech illegalcyberimplanttech aitech basicbluespacetech advbluespacetech
-
-
-
-
-
