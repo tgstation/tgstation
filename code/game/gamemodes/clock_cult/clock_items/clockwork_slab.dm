@@ -415,17 +415,16 @@
 			dat += "<font color=#BE8700><b>Marauder:</b></font> A clockwork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
 			dat += "<font color=#BE8700 size=3>Structures (* = requires power)</font><br>"
 			dat += "<font color=#BE8700><b>Warden:</b></font> An ocular warden, which is a ranged turret that damages non-Servants that see it.<br>"
-			dat += "<font color=#BE8700><b>Daemon*:</b></font> A tinkerer's daemon, which quickly creates components.<br>"
-			dat += "<font color=#BE8700><b>Lens*:</b></font> An interdiction lens, which sabotages machinery in a large area to create power.<br>"
-			dat += "<font color=#BE8700><b>Obelisk*:</b></font> A clockwork obelisk, which can broadcast large messages and allows limited teleportation.<br>"
-			dat += "<font color=#BE8700><b>Motor*:</b></font> A mania motor, which serves as area-denial through negative effects and eventual conversion.<br>"
 			dat += "<font color=#BE8700><b>Prism*:</b></font> A prolonging prism, which delays the shuttle for two minutes at a huge power cost.<br><br>"
+			dat += "<font color=#BE8700><b>Motor*:</b></font> A mania motor, which serves as area-denial through negative effects and eventual conversion.<br>"
+			dat += "<font color=#BE8700><b>Daemon*:</b></font> A tinkerer's daemon, which quickly creates components.<br>"
+			dat += "<font color=#BE8700><b>Obelisk*:</b></font> A clockwork obelisk, which can broadcast large messages and allows limited teleportation.<br>"
 			dat += "<font color=#BE8700 size=3>Sigils</font><br>"
 			dat += "<i>Note: Sigils can be stacked on top of one another, making certain sigils very effective when paired!</i><br>"
 			dat += "<font color=#BE8700><b>Transgression:</b></font> Stuns the first non-Servant to cross it for ten seconds and blinds others nearby. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Submission:</b></font> Converts the first non-Servant to stand on the sigil for seven seconds. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Accession:</b></font> Identical to the Sigil of Submission, but doesn't disappear on use. It can also convert a single mindshielded target, but will disappear after doing this.<br>"
-			dat += "<font color=#BE8700><b>Transmission:</b></font> Stores power for clockwork structures. Feeding it brass sheets will create power.<br><br>"
+			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
 			var/servants = 0 //Calculate the current production time for slab components
@@ -494,12 +493,11 @@
 			becomes necessary: <b>power</b>. Almost all clockwork structures require power to function in some way. There is nothing special about this power; it's mere electricity, \
 			and can be harnessed in several ways.<br><br>"
 			dat += "To begin with, if there is no other source of power nearby, structures will draw from the area's APC, assuming it has one. This is inefficient and ill-advised as \
-			anything but a last resort. Instead, it is recommended that a <b>sigil of transmission</b> is created. This sigil serves as a sort of battery for nearby clockwork \
+			anything but a last resort. Instead, it is recommended that a <b>Sigil of Transmission</b> is created. This sigil serves as both battery  and power generator for nearby clockwork \
 			structures, and those structures will happily draw power from the sigil before they resort to pathetic APCs and other sources of energy.<br><br>"
-			dat += "Generating power is less easy. The most reliable and efficient way is using brass sheets; attacking a sigil of transmission with brass sheets will convert them \
-			to power, at a rate of <b>[POWER_FLOOR]W</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> \
-			section.) There are also structures that <i>generate</i> power instead of consuming it; for instance, the interdiction lens sabotages all non-clockwork machines in a \
-			very large area and creates power from doing so. This allows Servants to simultaneously cripple an entire department as well as fueling their own machinery.<br><br>"
+			dat += "The most reliable and efficient way to generate power is by using brass sheets; attacking a sigil of transmission with brass sheets will convert them \
+			to power, at a rate of <b>[POWER_FLOOR]W</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> section.) \
+			Activating a sigil of transmission will also cause it to drain power from the nearby area, which, while effective, serves as an obvious tell that there is something wrong.<br><br>"
 			dat += "Without power, many structures will not function, making a base vulnerable to attack. For this reason, it is critical that you keep an eye on your power reserves and \
 			ensure that they remain comfortably high.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
