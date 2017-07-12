@@ -137,7 +137,6 @@
 	var/mob/living/U = usr
 	..()
 	if((src in U.contents) || (isturf(loc) && in_range(src, U)))
-		U.set_machine(src)
 		if(href_list["next_page"])
 			if(curr_page == pages+1)
 				return //Don't need that at all, but anyway.

@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
 		censor = authorCensor
-	var/txt = "[GLOB.news_network.redactedText]"
+	var/txt = GLOB.news_network.redactedText
 	if(!censor)
 		txt = author
 	return txt
@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /datum/newscaster/feed_message/proc/returnBody(censor)
 	if(censor == -1)
 		censor = bodyCensor
-	var/txt = "[GLOB.news_network.redactedText]"
+	var/txt = GLOB.news_network.redactedText
 	if(!censor)
 		txt = body
 	return txt
