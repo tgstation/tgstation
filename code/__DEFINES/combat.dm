@@ -139,6 +139,7 @@
 
 #define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
 
+#define EXPLODE_NONE 0				//Don't even ask me why we need this.
 #define EXPLODE_DEVASTATE 1
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
