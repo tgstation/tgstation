@@ -89,16 +89,16 @@
 	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
-	. = ..()
 	set_user(user)
+	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
-	. = ..()
 	set_user(user)
+	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/dropped()
-	. = ..()
 	set_user()
+	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/zoom_speed_action))
@@ -171,7 +171,7 @@
 	reset_zooming()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/reset_zooming()
-	if(!check_user())
+	if(!check_user(FALSE))
 		return
 	zoom_animating = 0
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
@@ -294,6 +294,7 @@
 	start_zooming()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/stop_aiming()
+	set waitfor = FALSE
 	aiming_time_left = aiming_time
 	aiming = FALSE
 	QDEL_NULL(current_tracer)
@@ -304,9 +305,8 @@
 		return
 	stop_aiming()
 	if(istype(current_user))
-		reset_zooming()
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
-	current_user = null
+		current_user = null
 	if(istype(user))
 		current_user = user
 		LAZYADD(current_user.mousemove_intercept_objects, src)
@@ -322,6 +322,8 @@
 	return ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
+	if(istype(mob))
+		set_user(mob)
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	if((object in mob.contents) || (object == mob))
