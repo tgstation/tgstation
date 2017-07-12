@@ -27,14 +27,15 @@
 		clumsy_transform_effect(user)
 
 /obj/item/weapon/melee/transforming/attack(mob/living/target, mob/living/carbon/human/user)
-	var/nemesis_faction
-	for(var/F in target.faction)
-		if(F in nemesis_factions)
-			nemesis_faction = TRUE
-			force += faction_bonus_force
-			nemesis_effects(user, target)
-			break
-	..()
+	var/nemesis_faction = FALSE
+	if(nemesis_factions.len)
+		for(var/F in target.faction)
+			if(F in nemesis_factions)
+				nemesis_faction = TRUE
+				force += faction_bonus_force
+				nemesis_effects(user, target)
+				break
+	. = ..()
 	if(nemesis_faction)
 		force -= faction_bonus_force
 
