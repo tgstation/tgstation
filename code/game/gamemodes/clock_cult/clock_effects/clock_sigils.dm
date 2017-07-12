@@ -224,6 +224,10 @@
 		return TRUE
 	return ..()
 
+/obj/effect/clockwork/sigil/transmission/attack_ai(mob/user)
+	if(is_servant_of_ratvar(user))
+		attack_hand(user)
+
 /obj/effect/clockwork/sigil/transmission/attack_hand(mob/user)
 	if(is_servant_of_ratvar(user))
 		visible_message("<span class='notice'>[user] [isprocessing ? "de":""]activates [src].</span>", "<span class='brass'>You [isprocessing ? "de":""]activate the [sigil_name].</span>")
