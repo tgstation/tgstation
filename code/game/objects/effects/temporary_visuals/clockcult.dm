@@ -210,6 +210,20 @@
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 65)
 
+/obj/effect/temp_visual/ratvar/sigil/transmission
+	color = "#EC8A2D"
+	layer = ABOVE_MOB_LAYER
+	duration = 20
+	light_range = 3
+	light_power = 1
+	light_color = "#EC8A2D"
+
+/obj/effect/temp_visual/ratvar/sigil/transmission/Initialize(mapload, transform_multiplier)
+	. = ..()
+	var/oldtransform = transform
+	transform = matrix()*transform_multiplier
+	animate(src, transform = oldtransform, alpha = 0, time = 20)
+
 /obj/effect/temp_visual/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
