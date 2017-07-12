@@ -21,8 +21,8 @@
 			return FALSE
 
 	else if(!ismob(A))
-		if(LAZYLEN(A.fingerprints))
-			prints = A.fingerprints.Copy()
+		if(LAZYLEN(A.forensics.prints))
+			prints = A.forensics.prints.Copy()
 		else
 			to_chat(user, "<span class='notice'>We were unable to find any fingerprints on the [A].</span>")
 			return FALSE

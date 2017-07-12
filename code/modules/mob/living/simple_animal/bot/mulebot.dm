@@ -664,9 +664,6 @@
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)
 
-	var/list/forensics.blood = H.get_forensics.blood_list()
-	if(forensics.blood)
-		transfer_forensics.blood(forensics.blood)
 	bloodiness += 4
 
 // player on mulebot attempted to move

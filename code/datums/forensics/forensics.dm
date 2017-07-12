@@ -3,6 +3,7 @@
 	var/list/gsr
 	var/list/prints
 	var/list/hprints
+	var/list/fibers
 	var/list/blood
 	var/maxSize = 5
 

@@ -4,7 +4,7 @@
 
 /obj/item/device/detective_scanner
 	name = "forensic scanner"
-	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
+	desc = "don't use this"
 	icon_state = "forensicnew"
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
@@ -15,6 +15,8 @@
 	origin_tech = "engineering=4;biotech=2;programming=5"
 	var/range = 8
 	var/view_check = TRUE
+
+/*
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -74,8 +76,8 @@
 
 		// Start gathering
 
-		if(A.blood_DNA && A.blood_DNA.len)
-			blood = A.blood_DNA.Copy()
+		if(A.forensics.blood && A.forensics.blood.len)
+			blood = A.forensics.blood.Copy()
 
 		if(A.suit_fibers && A.suit_fibers.len)
 			fibers = A.suit_fibers.Copy()
@@ -100,10 +102,10 @@
 					// Get blood data from the blood reagent.
 					if(istype(R, /datum/reagent/blood))
 
-						if(R.data["blood_DNA"] && R.data["blood_type"])
-							var/blood_DNA = R.data["blood_DNA"]
+						if(R.data["forensics.blood"] && R.data["blood_type"])
+							var/forensics.blood = R.data["forensics.blood"]
 							var/blood_type = R.data["blood_type"]
-							blood[blood_DNA] = blood_type
+							blood[forensics.blood] = blood_type
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
@@ -170,3 +172,4 @@
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
+*/

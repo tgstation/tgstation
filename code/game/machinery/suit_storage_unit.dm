@@ -244,7 +244,7 @@
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
-				I.fingerprints = list()
+				I.forensics.prints = list()
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
