@@ -450,9 +450,9 @@
 		return 1
 	if(restrained())
 		return 1
-	if(paralysis)
+	if(IsUnconscious())
 		return 1
-	if(stunned)
+	if(IsStun())
 		return 1
 	if(stat)
 		return 1
@@ -554,7 +554,7 @@
 						var/obj/machinery/door/airlock/AL = D
 						if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
 							inactivity_period = 20
-							AL.panel_open = 1
+							AL.panel_open = TRUE
 							AL.update_icon()
 							AL.shock(src,(100 - smartness)/2)
 							sleep(5)
@@ -570,7 +570,7 @@
 							sleep(5)
 							if(QDELETED(AL))
 								return
-							AL.panel_open = 0
+							AL.panel_open = FALSE
 							AL.update_icon()
 							D.open(2)	//crowbar force
 						else
@@ -632,7 +632,7 @@
 		if(!TARGET in blacklistItems)
 			insert_into_backpack() // dump random item into backpack to make space
 			//---------ITEMS
-			if(istype(TARGET, /obj/item))
+			if(isitem(TARGET))
 				if(istype(TARGET, /obj/item/weapon))
 					var/obj/item/weapon/W = TARGET
 					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
@@ -809,13 +809,13 @@
 	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
 		return /area/medical
 	if(T.title == "Research Director" || T.title == "Scientist" || T.title == "Roboticist")
-		return /area/toxins
+		return /area/science
 	if(T.title == "Head of Security" || T.title == "Warden" || T.title == "Security Officer" || T.title == "Detective")
 		return /area/security
 	if(T.title == "Botanist")
 		return /area/hydroponics
 	else
-		return pick(/area/hallway,/area/crew_quarters)
+		return pick(/area/hallway,/area/crew_quarters/locker)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
@@ -939,7 +939,7 @@
 					retal = 1
 					retal_target = traitorTarget
 				if(SNPC_STEALTH)
-					if(istype(traitorTarget,/mob)) // it's inside something, lets kick their shit in
+					if(ismob(traitorTarget)) // it's inside something, lets kick their shit in
 						var/mob/M = traitorTarget
 						if(!M.stat)
 							retal = 1
@@ -1536,11 +1536,11 @@
 										if(ispath(A,/obj/item/ammo_casing/energy/electrode))
 											stunning = 1
 									var/shouldFire = 1
-									var/mob/stunCheck = TARGET
-									if(stunning && stunCheck.stunned)
+									var/mob/living/stunCheck = TARGET
+									if(stunning && isliving(stunCheck) && stunCheck.IsStun())
 										shouldFire = 0
 									if(shouldFire)
-										if(P.power_supply.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
+										if(P.cell.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
 											P.update_icon()
 											npcDrop(P,1)
 										else

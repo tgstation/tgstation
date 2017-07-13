@@ -22,6 +22,8 @@ Contents:
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
 
+	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
+
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -29,7 +31,7 @@ Contents:
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
-	var/obj/item/weapon/katana/energy/energyKatana //For teleporting the katana back to the ninja (It's an ability)
+	var/obj/item/weapon/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
@@ -48,16 +50,18 @@ Contents:
 		//Support function variables.
 	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
 	var/s_active = 0//Stealth off.
-	var/s_busy = 0//Is the suit busy with a process? Like AI hacking. Used for safety functions.
+	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
 	var/s_bombs = 10//Number of starting ninja smoke bombs.
 	var/a_boost = 3//Number of adrenaline boosters.
 
 
+/obj/item/clothing/suit/space/space_ninja/get_cell()
+	return cell
+
 /obj/item/clothing/suit/space/space_ninja/New()
 	..()
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
 
 	//Spark Init
 	spark_system = new()
@@ -109,40 +113,38 @@ Contents:
 
 
 //This proc prevents the suit from being taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H, checkIcons = 0)
+/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H)
 	if(!istype(H))
 		return 0
-	if(checkIcons)
-		icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
-		H.gloves.icon_state = "s-ninjan"
-		H.gloves.item_state = "s-ninjan"
-	else
-		if(H.mind.special_role!="Space Ninja")
-			to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
-			H.gib()
-			return 0
-		if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-			to_chat(H, "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
-			return 0
-		if(!istype(H.shoes, /obj/item/clothing/shoes/space_ninja))
-			to_chat(H, "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
-			return 0
-		if(!istype(H.gloves, /obj/item/clothing/gloves/space_ninja))
-			to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
-			return 0
+	if(!is_ninja(H))
+		to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
+		H.gib()
+		return FALSE
+	if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
+		to_chat(H, "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
+		return FALSE
+	if(!istype(H.shoes, /obj/item/clothing/shoes/space_ninja))
+		to_chat(H, "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
+		return FALSE
+	if(!istype(H.gloves, /obj/item/clothing/gloves/space_ninja))
+		to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
+		return FALSE
+	affecting = H
+	flags |= NODROP //colons make me go all |=
+	slowdown = FALSE
+	n_hood = H.head
+	n_hood.flags |= NODROP
+	n_shoes = H.shoes
+	n_shoes.flags |= NODROP
+	n_shoes.slowdown--
+	n_gloves = H.gloves
+	n_gloves.flags |= NODROP
+	return TRUE
 
-		affecting = H
-		flags |= NODROP //colons make me go all |=
-		slowdown = 0
-		n_hood = H.head
-		n_hood.flags |= NODROP
-		n_shoes = H.shoes
-		n_shoes.flags |= NODROP
-		n_shoes.slowdown--
-		n_gloves = H.gloves
-		n_gloves.flags |= NODROP
-
-	return 1
+/obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
+	icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+	H.gloves.icon_state = "s-ninjan"
+	H.gloves.item_state = "s-ninjan"
 
 
 //This proc allows the suit to be taken off.
@@ -172,3 +174,36 @@ Contents:
 			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
 			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
+
+/obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/initialize_ninja_suit))
+		toggle_on_off()
+		return TRUE
+	if(!s_initialized)
+		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline.  Please activate suit.</span>")
+		return FALSE
+	if(istype(action, /datum/action/item_action/ninjasmoke))
+		ninjasmoke()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjaboost))
+		ninjaboost()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjapulse))
+		ninjapulse()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjastar))
+		ninjastar()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjanet))
+		ninjanet()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninja_sword_recall))
+		ninja_sword_recall()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninja_stealth))
+		stealth()
+		return TRUE
+	if(istype(action, /datum/action/item_action/toggle_glove))
+		n_gloves.toggledrain()
+		return TRUE
+	return FALSE

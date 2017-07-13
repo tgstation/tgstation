@@ -6,22 +6,22 @@
 	name = "autolathe"
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
 
-	var/operating = 0
-	anchored = 1
+	var/operating = FALSE
+	anchored = TRUE
 	var/list/L = list()
 	var/list/LL = list()
-	var/hacked = 0
+	var/hacked = FALSE
 	var/disabled = 0
-	var/shocked = 0
+	var/shocked = FALSE
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	var/busy = 0
+	var/busy = FALSE
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
@@ -125,14 +125,14 @@
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
 			"You hear the chatter of a floppy drive.")
-		busy = 1
+		busy = TRUE
 		var/obj/item/weapon/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
 					files.AddDesign2Known(B)
 
-		busy = 0
+		busy = FALSE
 		return 1
 
 	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
@@ -149,7 +149,7 @@
 		to_chat(user, "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>")
 		return 1
 
-	busy = 1
+	busy = TRUE
 	var/inserted = materials.insert_item(O)
 	if(inserted)
 		if(istype(O,/obj/item/stack))
@@ -168,7 +168,7 @@
 	else
 		user.put_in_active_hand(O)
 
-	busy = 0
+	busy = FALSE
 	updateUsrDialog()
 	return 1
 
@@ -206,7 +206,7 @@
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
-				busy = 1
+				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
@@ -223,7 +223,7 @@
 						for(var/obj/item/stack/S in T.contents - N)
 							if(istype(S, N.merge_type))
 								N.merge(S)
-						busy = 0
+						busy = FALSE
 						updateUsrDialog()
 
 				else
@@ -236,7 +236,7 @@
 							for(var/mat in materials_used)
 								new_item.materials[mat] = materials_used[mat] / multiplier
 							new_item.autolathe_crafted(src)
-						busy = 0
+						busy = FALSE
 						updateUsrDialog()
 
 		if(href_list["search"])

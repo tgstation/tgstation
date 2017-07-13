@@ -12,8 +12,8 @@
 	var/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
-/obj/item/weapon/poster/New(loc, obj/structure/sign/poster/new_poster_structure)
-	..()
+/obj/item/weapon/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
+	. = ..()
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -49,7 +49,7 @@
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
-	anchored = 1
+	anchored = TRUE
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -58,8 +58,8 @@
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
 
-/obj/structure/sign/poster/New()
-	..()
+/obj/structure/sign/poster/Initialize()
+	. = ..()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)

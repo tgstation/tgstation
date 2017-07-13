@@ -45,7 +45,6 @@
 /area/shuttle/escape)
 "aj" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swallc3";
 	icon_state = "swallc3";
 	dir = 2
 	},
@@ -88,7 +87,6 @@
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /obj/structure/chair/comfy/brown{
@@ -99,7 +97,6 @@
 "as" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/carpet,
@@ -122,7 +119,6 @@
 /area/shuttle/escape)
 "av" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall13";
 	icon_state = "swall13";
 	dir = 2
 	},
@@ -189,8 +185,7 @@
 "aF" = (
 /obj/structure/piano{
 	icon_state = "piano";
-	name = "space piano";
-	tag = "icon-piano"
+	name = "space piano"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
@@ -236,7 +231,6 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -278,8 +272,7 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -463,9 +456,7 @@
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/toilet{
-	dir = 4;
-	icon_state = "toilet00";
-	tag = "icon-toilet00 (NORTH)"
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -585,7 +576,6 @@
 /area/shuttle/escape)
 "bR" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/bar,
@@ -601,7 +591,6 @@
 /area/shuttle/escape)
 "bT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-10";
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/bar,
@@ -632,7 +621,6 @@
 /area/shuttle/escape)
 "bX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/bar,

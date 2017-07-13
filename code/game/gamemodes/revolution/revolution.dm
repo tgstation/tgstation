@@ -70,7 +70,7 @@
 
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
-		if(istype(rev_mind.current,/mob/dead/new_player))
+		if(isnewplayer(rev_mind.current))
 			head_revolutionaries -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
 			if(newcandidates.len == 0)
@@ -79,7 +79,7 @@
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
-				if(istype(lenin.current,/mob/dead/new_player)) //We don't want to make the same mistake again
+				if(isnewplayer(lenin.current)) //We don't want to make the same mistake again
 					continue
 				else
 					var/mob/Nm = lenin.current
@@ -269,7 +269,7 @@
 		var/mob/living/carbon/carbon_mob = rev_mind.current
 		carbon_mob.silent = max(carbon_mob.silent, 5)
 		carbon_mob.flash_act(1, 1)
-	rev_mind.current.Stun(5)
+	rev_mind.current.Stun(100)
 	to_chat(rev_mind.current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
 	rev_mind.current.log_message("<font color='red'>Has been converted to the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
 	rev_mind.special_role = "Revolutionary"
@@ -297,7 +297,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
-			rev_mind.current.Paralyse(5)
+			rev_mind.current.Unconscious(100)
 			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!",\
 				"<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 		update_rev_icons_removed(rev_mind)
@@ -345,13 +345,13 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
-		SSblackbox.set_details("round_end_result","win - heads killed")
+		SSticker.mode_result = "win - heads killed"
 		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
 
 		SSticker.news_report = REVS_WIN
 
 	else if(finished == 2)
-		SSblackbox.set_details("round_end_result","loss - rev heads killed")
+		SSticker.mode_result = "loss - rev heads killed"
 		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
 
 		SSticker.news_report = REVS_LOSE

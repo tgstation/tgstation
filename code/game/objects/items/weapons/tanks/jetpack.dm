@@ -207,9 +207,3 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
-
-/mob/has_gravity(turf/T)
-	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
-	if(J && J.on)
-		return FALSE
-	return ..()

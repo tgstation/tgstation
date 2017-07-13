@@ -30,7 +30,7 @@
 	var/turf/location = C.loc
 	if(istype(location))
 		C.add_splatter_floor(location)
-	var/direction = pick(GLOB.cardinal)
+	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
 	for(var/i in 1 to t_range-1)
@@ -294,10 +294,11 @@
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
 	//Transfer some head appearance vars over
 	if(brain)
-		brainmob.container = null //Reset brainmob head var.
-		brainmob.loc = brain //Throw mob into brain.
-		brain.brainmob = brainmob //Set the brain to use the brainmob
-		brainmob = null //Set head brainmob var to null
+		if(brainmob)
+			brainmob.container = null //Reset brainmob head var.
+			brainmob.loc = brain //Throw mob into brain.
+			brain.brainmob = brainmob //Set the brain to use the brainmob
+			brainmob = null //Set head brainmob var to null
 		brain.Insert(C) //Now insert the brain proper
 		brain = null //No more brain in the head
 

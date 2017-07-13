@@ -8,7 +8,7 @@
 	var/force = 0
 
 	var/list/armor
-	var/obj_integrity = 500
+	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior
 
@@ -23,7 +23,8 @@
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = FALSE // can you customize the description/name of the thing?
-
+	var/current_skin //Has the item been reskinned?
+	var/list/unique_reskin //List of options to reskin.
 	var/dangerous_possession = FALSE	//Admin possession yes/no
 
 /obj/vv_edit_var(vname, vval)
@@ -40,6 +41,8 @@
 	. = ..()
 	if (!armor)
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	if(obj_integrity == null)
+		obj_integrity = max_integrity
 	if(on_blueprints && isturf(loc))
 		var/turf/T = loc
 		if(force_blueprints)
@@ -182,7 +185,13 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
-/obj/proc/on_mob_move(dir, mob)
+/obj/proc/on_mob_move(dir, mob, oldLoc)
+	return
+
+/obj/proc/on_mob_turn(dir, mob)
+	return
+
+/obj/proc/intercept_user_move(dir, mob, newLoc, oldLoc)
 	return
 
 /obj/vv_get_dropdown()
@@ -193,3 +202,27 @@
 	..()
 	if(unique_rename)
 		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
+	if(unique_reskin && !current_skin)
+		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
+
+/obj/AltClick(mob/user)
+	. = ..()
+	if(unique_reskin && !current_skin && in_range(user,src))
+		if(user.incapacitated())
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+			return
+		reskin_obj(user)
+
+/obj/proc/reskin_obj(mob/M)
+	if(!LAZYLEN(unique_reskin))
+		return
+	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
+	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+		if(!unique_reskin[choice])
+			return
+		current_skin = choice
+		icon_state = unique_reskin[choice]
+		to_chat(M, "[src] is now skinned as '[choice].'")
+
+/obj/proc/gang_contraband_value()
+	return 0

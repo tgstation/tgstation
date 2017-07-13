@@ -98,9 +98,9 @@ GLOBAL_VAR_CONST(access_away_generic3, 207)
 GLOBAL_VAR_CONST(access_away_generic4, 208)
 
 /obj/var/list/req_access = null
-/obj/var/req_access_txt = "0"
+/obj/var/req_access_txt = "0" as text
 /obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
+/obj/var/req_one_access_txt = "0" as text
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
@@ -136,26 +136,27 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 /obj/item/proc/GetID()
 	return null
 
+/obj/proc/text2access(access_text)
+	. = list()
+	if(!access_text)
+		return
+	var/list/split = splittext(access_text,";")
+	for(var/x in split)
+		var/n = text2num(x)
+		if(n)
+			. += n
+
 //Call this before using req_access or req_one_access directly
 /obj/proc/gen_access()
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
-	if(!src.req_access)
-		src.req_access = list()
-		if(src.req_access_txt)
-			var/list/req_access_str = splittext(req_access_txt,";")
-			for(var/x in req_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_access += n
-
-	if(!src.req_one_access)
-		src.req_one_access = list()
-		if(src.req_one_access_txt)
-			var/list/req_one_access_str = splittext(req_one_access_txt,";")
-			for(var/x in req_one_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_one_access += n
+	if(!req_access)
+		req_access = list()
+		for(var/a in text2access(req_access_txt))
+			req_access += a
+	if(!req_one_access)
+		req_one_access = list()
+		for(var/b in text2access(req_one_access_txt))
+			req_one_access += b
 
 /obj/proc/check_access(obj/item/I)
 	gen_access()

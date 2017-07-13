@@ -1,8 +1,8 @@
 /mob/living/carbon/human/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-h")
+	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-h")
 
 /mob/living/carbon/human/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
+	new /obj/effect/temp_visual/dust_animation(loc, "dust-h")
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
@@ -19,6 +19,10 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
+	stop_sound_channel(CHANNEL_HEARTBEAT)
+	var/obj/item/organ/heart/H = getorganslot("heart")
+	if(H)
+		H.beat = BEAT_NONE
 
 	. = ..()
 

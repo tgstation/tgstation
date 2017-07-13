@@ -63,7 +63,7 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
-	hitsound = 'sound/items/Welder.ogg'
+	hitsound = 'sound/items/welder.ogg'
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
@@ -136,6 +136,9 @@
 /obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
 	if(istype(user))
 		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+
+/obj/item/clothing/head/kitty/genuine
+	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""
 
 
 /obj/item/clothing/head/hardhat/reindeer

@@ -25,6 +25,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
+	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
@@ -41,15 +42,20 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
-	if(!brainmob || brainmob.key)
+	if(!brainmob)
+		brainmob = new(src)
+	if(is_occupied())
+		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
 		return
 	if(next_ask > world.time)
+		to_chat(user, recharge_message)
 		return
 	//Start the process of requesting a new ghost.
 	to_chat(user, begin_activation_message)
 	ping_ghosts("requested", FALSE)
 	next_ask = world.time + askDelay
 	searching = TRUE
+	update_icon()
 	addtimer(CALLBACK(src, .proc/check_success), askDelay)
 
 /obj/item/device/mmi/posibrain/proc/check_success()
@@ -65,12 +71,22 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/device/mmi/posibrain/attack_ghost(mob/user)
 	activate(user)
 
+/obj/item/device/mmi/posibrain/proc/is_occupied()
+	if(brainmob.key)
+		return TRUE
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/R = loc
+		if(R.mmi == src)
+			return TRUE
+	return FALSE
+
 //Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
 /obj/item/device/mmi/posibrain/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
-	if(brainmob.key || jobban_isbanned(user,"posibrain"))
+	if(is_occupied() || jobban_isbanned(user,"posibrain"))
 		return
+
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || QDELETED(src))
 		return
@@ -98,8 +114,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(QDELETED(brainmob))
 		return
-	if(brainmob.key) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		to_chat(candidate, "This brain has already been taken! Please try your possession again later!")
+	if(is_occupied()) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
+		to_chat(candidate, "<span class='warning'>This [name] was taken over before you could get to it! Perhaps it might be available later?</span>")
 		return FALSE
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)
@@ -113,7 +129,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	GLOB.living_mob_list += brainmob
 
 	visible_message(new_mob_message)
-	update_icon()
+	check_success()
 	return TRUE
 
 

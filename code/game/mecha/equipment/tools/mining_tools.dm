@@ -35,7 +35,7 @@
 				else
 					drill_mob(target, chassis.occupant)
 			else
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	return
@@ -44,7 +44,7 @@
 	if(istype(drill, /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
 		if(drill.do_after_cooldown(src))//To slow down how fast mechs can drill through the station
 			drill.log_message("Drilled through [src]")
-			ex_act(3)
+			ex_act(EXPLODE_LIGHT)
 	else
 		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
 
@@ -64,12 +64,9 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
-		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-		if(ore_box)
-			for(var/obj/item/weapon/ore/ore in range(1, chassis))
-				if(get_dir(chassis,ore)&chassis.dir)
-					ore.Move(ore_box)
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment && istype(chassis, /obj/mecha/working/ripley))
+		var/obj/mecha/working/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
+		R.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M as obj)
 	if(..())
@@ -90,7 +87,7 @@
 		target.take_bodypart_damage(drill_damage)
 
 	if(target)
-		target.Paralyse(10)
+		target.Unconscious(200)
 		target.updatehealth()
 
 
@@ -109,36 +106,19 @@
 	icon_state = "mecha_analyzer"
 	selectable = 0
 	equip_cooldown = 30
-	var/scanning = 0
+	var/scanning_time = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
-	..()
-	M.occupant_sight_flags |= SEE_TURFS
-	if(M.occupant)
-		M.occupant.update_sight()
-
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
-	chassis.occupant_sight_flags &= ~SEE_TURFS
-	if(chassis.occupant)
-		chassis.occupant.update_sight()
-	return ..()
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
-	if(scanning)
-		return
-	if(istype(loc,/obj/mecha/working))
+	if(istype(loc,/obj/mecha/working) && scanning_time <= world.time)
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/list/L = list(mecha.occupant)
-		scanning = 1
-		mineral_scan_pulse(L,get_turf(loc))
-		spawn(equip_cooldown)
-			scanning = 0
+		scanning_time = world.time + equip_cooldown
+		mineral_scan_pulse(get_turf(src))

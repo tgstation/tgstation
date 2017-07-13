@@ -8,7 +8,6 @@
 "ac" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
-	tag = "icon-wood-broken2";
 	icon_state = "wood-broken2"
 	},
 /area/shuttle/escape)
@@ -36,25 +35,21 @@
 /area/shuttle/escape)
 "af" = (
 /turf/open/floor/plating{
-	tag = "icon-wood-broken3";
 	icon_state = "wood-broken3"
 	},
 /area/shuttle/escape)
 "ag" = (
 /turf/open/floor/plating{
-	tag = "icon-wood";
 	icon_state = "wood"
 	},
 /area/shuttle/escape)
 "ah" = (
 /turf/open/floor/plating{
-	tag = "icon-wood-broken";
 	icon_state = "wood-broken"
 	},
 /area/shuttle/escape)
 "ai" = (
 /turf/open/floor/plating{
-	tag = "icon-wood-broken5";
 	icon_state = "wood-broken5"
 	},
 /area/shuttle/escape)
@@ -63,7 +58,6 @@
 /area/shuttle/escape)
 "ak" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-10";
 	icon_state = "plant-10"
 	},
 /turf/open/floor/mineral/gold,
@@ -76,29 +70,24 @@
 /area/shuttle/escape)
 "am" = (
 /turf/open/floor/plating{
-	tag = "icon-wood-broken7";
 	icon_state = "wood-broken7"
 	},
 /area/shuttle/escape)
 "an" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating{
-	tag = "icon-wood-broken2";
 	icon_state = "wood-broken2"
 	},
 /area/shuttle/escape)
 "ao" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating{
-	tag = "icon-wood-broken6";
 	icon_state = "wood-broken6"
 	},
 /area/shuttle/escape)
 "ap" = (
 /obj/structure/toilet{
-	dir = 4;
-	icon_state = "toilet00";
-	tag = "icon-toilet00 (NORTH)"
+	dir = 4
 	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
@@ -130,8 +119,6 @@
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (EAST)";
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
@@ -300,8 +287,6 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (NORTH)";
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -312,8 +297,6 @@
 /area/shuttle/escape)
 "bf" = (
 /obj/machinery/sleeper{
-	tag = "icon-sleeper-open (EAST)";
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
@@ -336,7 +319,6 @@
 /area/shuttle/escape)
 "bj" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
@@ -349,11 +331,9 @@
 /area/shuttle/escape)
 "bl" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-10";
 	icon_state = "plant-10"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
@@ -366,7 +346,6 @@
 /area/shuttle/escape)
 "bn" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,

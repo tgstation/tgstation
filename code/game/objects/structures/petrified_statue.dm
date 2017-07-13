@@ -2,9 +2,8 @@
 	name = "statue"
 	desc = "An incredibly lifelike marble carving."
 	icon_state = "human_male"
-	density = 1
-	anchored = 1
-	obj_integrity = 200
+	density = TRUE
+	anchored = TRUE
 	max_integrity = 200
 	var/timer = 240 //eventually the person will be freed
 	var/mob/living/petrified_mob
@@ -30,7 +29,7 @@
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
 	timer--
-	petrified_mob.Stun(2) //So they can't do anything while petrified
+	petrified_mob.Stun(40) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
@@ -50,7 +49,7 @@
 		if(S.mind)
 			if(petrified_mob)
 				S.mind.transfer_to(petrified_mob)
-				petrified_mob.Weaken(5)
+				petrified_mob.Knockdown(100)
 				to_chat(petrified_mob, "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>")
 		qdel(S)
 

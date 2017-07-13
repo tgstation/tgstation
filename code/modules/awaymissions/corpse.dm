@@ -18,8 +18,11 @@
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
-	density = 1
-	anchored = 1
+	var/burn_damage = 0
+	var/mob_color //Change the mob's color
+	var/assignedrole
+	density = TRUE
+	anchored = TRUE
 	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -38,7 +41,7 @@
 	create(ckey = user.ckey)
 
 /obj/effect/mob_spawn/Initialize(mapload)
-	..()
+	. = ..()
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
@@ -68,6 +71,8 @@
 
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
+	M.adjustFireLoss(burn_damage)
+	M.color = mob_color
 	equip(M)
 
 	if(ckey)
@@ -78,6 +83,8 @@
 		if(objectives)
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
+		if(assignedrole)
+			M.mind.assigned_role = assignedrole
 		special(M, name)
 		MM.name = M.real_name
 	if(uses > 0)
@@ -90,78 +97,67 @@
 	mob_type = /mob/living/carbon/human
 	//Human specific stuff.
 	var/mob_species = null		//Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
-	var/outfit_type = null		//Will start with this if exists then apply specific slots. Job outfits are generated with IDs and disabled PDAs.
-	var/uniform = null			//Set this to an object path to have the slot filled with said object on the corpse.
-	var/r_hand = null
-	var/l_hand = null
-	var/suit = null
-	var/shoes = null
-	var/gloves = null
-	var/radio = null
-	var/glasses = null
-	var/mask = null
-	var/neck = null
-	var/helmet = null
-	var/belt = null
-	var/pocket1 = null
-	var/pocket2 = null
-	var/back = null
-	var/has_id = FALSE			//Set to TRUE if you want them to have an ID
+	var/datum/outfit/outfit = /datum/outfit	//If this is a path, it will be instanced in Initialize()
+	var/disable_pda = TRUE
+	//All of these only affect the ID that the outfit has placed in the ID slot
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
 	var/id_access_list = null	//Allows you to manually add access to an ID card.
-	var/id_icon = null			//For setting it to be a gold, silver, centcom etc ID
+	assignedrole = "Ghost Role"
+
 	var/husk = null
-	var/list/implants = list()
+	//these vars are for lazy mappers to override parts of the outfit
+	//these cannot be null by default, or mappers cannot set them to null if they want nothing in that slot
+	var/uniform = -1
+	var/r_hand = -1
+	var/l_hand = -1
+	var/suit = -1
+	var/shoes = -1
+	var/gloves = -1
+	var/ears = -1
+	var/glasses = -1
+	var/mask = -1
+	var/head = -1
+	var/belt = -1
+	var/r_pocket = -1
+	var/l_pocket = -1
+	var/back = -1
+	var/id = -1
+	var/neck = -1
+	var/backpack_contents = -1
+	var/suit_store = -1
+
+/obj/effect/mob_spawn/human/Initialize()
+	if(ispath(outfit))
+		outfit = new outfit()
+	if(!outfit)
+		outfit = new /datum/outfit
+	return ..()
 
 /obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
 	if(mob_species)
 		H.set_species(mob_species)
 	if(husk)
 		H.Drain()
-
-	if(outfit_type)
-		H.equipOutfit(outfit_type)
-
-		// We don't want corpse PDAs to show up in the messenger list.
-		var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
-		if(PDA)
-			PDA.toff = TRUE
-
-	if(uniform)
-		H.equip_to_slot_or_del(new uniform(H), slot_w_uniform)
-	if(suit)
-		H.equip_to_slot_or_del(new suit(H), slot_wear_suit)
-	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H), slot_shoes)
-	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H), slot_gloves)
-	if(radio)
-		H.equip_to_slot_or_del(new radio(H), slot_ears)
-	if(glasses)
-		H.equip_to_slot_or_del(new glasses(H), slot_glasses)
-	if(mask)
-		H.equip_to_slot_or_del(new mask(H), slot_wear_mask)
-	if(neck)
-		H.equip_to_slot_or_del(new neck(H), slot_neck)
-	if(helmet)
-		H.equip_to_slot_or_del(new helmet(H), slot_head)
-	if(belt)
-		H.equip_to_slot_or_del(new belt(H), slot_belt)
-	if(pocket1)
-		H.equip_to_slot_or_del(new pocket1(H), slot_r_store)
-	if(pocket2)
-		H.equip_to_slot_or_del(new pocket2(H), slot_l_store)
-	if(back)
-		H.equip_to_slot_or_del(new back(H), slot_back)
-	if(l_hand)
-		H.put_in_hands_or_del(new l_hand(H))
-	if(r_hand)
-		H.put_in_hands_or_del(new r_hand(H))
-	if(has_id)
-		var/obj/item/weapon/card/id/W = new(H)
-		if(id_icon)
-			W.icon_state = id_icon
+	else //Because for some reason I can't track down, things are getting turned into husks even if husk = false. It's in some damage proc somewhere.
+		H.cure_husk()
+	H.underwear = "Nude"
+	H.undershirt = "Nude"
+	H.socks = "Nude"
+	if(outfit)
+		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
+		for(var/slot in slots)
+			var/T = vars[slot]
+			if(!isnum(T))
+				outfit.vars[slot] = T
+		H.equipOutfit(outfit)
+		if(disable_pda)
+			// We don't want corpse PDAs to show up in the messenger list.
+			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
+			if(PDA)
+				PDA.toff = TRUE
+	var/obj/item/weapon/card/id/W = H.wear_id
+	if(W)
 		if(id_access)
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
@@ -176,15 +172,6 @@
 			W.assignment = id_job
 		W.registered_name = H.real_name
 		W.update_label()
-		H.equip_to_slot_or_del(W, slot_wear_id)
-
-	for(var/I in implants)
-		var/obj/item/weapon/implant/X = new I
-		X.implant(H)
-
-	if(!H.head && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
-		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
-		HS.ToggleHelmet()
 
 //Instant version - use when spawning corpses during runtime
 /obj/effect/mob_spawn/human/corpse
@@ -248,56 +235,27 @@
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
-/obj/effect/mob_spawn/human/syndicatesoldier
-	name = "Syndicate Operative"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet/swat
-	back = /obj/item/weapon/storage/backpack
-	has_id = 1
-	id_job = "Operative"
-	id_access_list = list(GLOB.access_syndicate)
-
-/obj/effect/mob_spawn/human/syndicatecommando
-	name = "Syndicate Commando"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/weapon/tank/jetpack/oxygen
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	has_id = 1
-	id_job = "Operative"
-	id_access_list = list(GLOB.access_syndicate)
-
 ///////////Civilians//////////////////////
 
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
-	outfit_type = /datum/outfit/job/cook
+	outfit = /datum/outfit/job/cook
 
 
 /obj/effect/mob_spawn/human/doctor
 	name = "Doctor"
-	outfit_type = /datum/outfit/job/doctor
+	outfit = /datum/outfit/job/doctor
 
 
 /obj/effect/mob_spawn/human/doctor/alive
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
-	radio = null
-	back = null
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space doctor!"
+	assignedrole = "Space Doctor"
 
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
 	..()
@@ -309,49 +267,40 @@
 
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
-	outfit_type = /datum/outfit/job/engineer
-	gloves = /obj/item/clothing/gloves/color/yellow
+	outfit = /datum/outfit/job/engineer/gloved
 
 /obj/effect/mob_spawn/human/engineer/rig
-	outfit_type = /datum/outfit/job/engineer/rig
+	outfit = /datum/outfit/job/engineer/gloved/rig
 
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
-	outfit_type = /datum/outfit/job/clown
+	outfit = /datum/outfit/job/clown
 
 /obj/effect/mob_spawn/human/scientist
 	name = "Scientist"
-	outfit_type = /datum/outfit/job/scientist
+	outfit = /datum/outfit/job/scientist
 
 /obj/effect/mob_spawn/human/miner
 	name = "Shaft Miner"
-	outfit_type = /datum/outfit/job/miner/asteroid
+	outfit = /datum/outfit/job/miner/asteroid
 
 /obj/effect/mob_spawn/human/miner/rig
-	outfit_type = /datum/outfit/job/miner/equipped/asteroid
+	outfit = /datum/outfit/job/miner/equipped/asteroid
 
 /obj/effect/mob_spawn/human/miner/explorer
-	outfit_type = /datum/outfit/job/miner/equipped
+	outfit = /datum/outfit/job/miner/equipped
 
 
 /obj/effect/mob_spawn/human/plasmaman
 	mob_species = /datum/species/plasmaman
-	helmet = /obj/item/clothing/head/helmet/space/plasmaman
-	uniform = /obj/item/clothing/under/plasmaman
-	back = /obj/item/weapon/tank/internals/plasmaman/full
-	mask = /obj/item/clothing/mask/breath
+	outfit = /datum/outfit/plasmaman
 
 
 /obj/effect/mob_spawn/human/bartender
 	name = "Space Bartender"
-	uniform = /obj/item/clothing/under/rank/bartender
-	back = /obj/item/weapon/storage/backpack
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	suit = /obj/item/clothing/suit/armor/vest
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	has_id = 1
 	id_job = "Bartender"
 	id_access_list = list(GLOB.access_bar)
+	outfit = /datum/outfit/spacebartender
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
@@ -361,11 +310,20 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
+	assignedrole = "Space Bartender"
+
+/datum/outfit/spacebartender
+	name = "Space Bartender"
+	uniform = /obj/item/clothing/under/rank/bartender
+	back = /obj/item/weapon/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+	id = /obj/item/weapon/card/id
+
 
 /obj/effect/mob_spawn/human/beach
-	glasses = /obj/item/clothing/glasses/sunglasses
-	uniform = /obj/item/clothing/under/shorts/red
-	pocket1 = /obj/item/weapon/storage/wallet/random
+	outfit = /datum/outfit/beachbum
 
 /obj/effect/mob_spawn/human/beach/alive
 	death = FALSE
@@ -376,47 +334,75 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a beach bum!"
+	assignedrole = "Beach Bum"
+
+/datum/outfit/beachbum
+	name = "Beach Bum"
+	glasses = /obj/item/clothing/glasses/sunglasses
+	uniform = /obj/item/clothing/under/shorts/red
+	r_pocket = /obj/item/weapon/storage/wallet/random
+
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	H.dna.add_mutation(STONER)
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
 /obj/effect/mob_spawn/human/bridgeofficer
 	name = "Bridge Officer"
-	radio = /obj/item/device/radio/headset/heads/hop
+	id_job = "Bridge Officer"
+	id_access_list = list(GLOB.access_cent_captain)
+	outfit = /datum/outfit/nanotrasenbridgeofficercorpse
+
+/datum/outfit/nanotrasenbridgeofficercorpse
+	name = "Bridge Officer Corpse"
+	ears = /obj/item/device/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
-	has_id = 1
-	id_job = "Bridge Officer"
-	id_access_list = list(GLOB.access_cent_captain)
+	id = /obj/item/weapon/card/id
+
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
+	id_job = "Commander"
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
+	outfit = /datum/outfit/nanotrasencommandercorpse
+
+/datum/outfit/nanotrasencommandercorpse
+	name = "Nanotrasen Private Security Commander"
 	uniform = /obj/item/clothing/under/rank/centcom_commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
-	radio = /obj/item/device/radio/headset/heads/captain
+	ears = /obj/item/device/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
-	helmet = /obj/item/clothing/head/centhat
+	head = /obj/item/clothing/head/centhat
 	gloves = /obj/item/clothing/gloves/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
-	pocket1 = /obj/item/weapon/lighter
-	has_id = 1
-	id_job = "Commander"
-	id_access_list = list(GLOB.access_cent_captain)
+	r_pocket = /obj/item/weapon/lighter
+	id = /obj/item/weapon/card/id
+
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
+	id_job = "Private Security Force"
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage, GLOB.access_security)
+	outfit = /datum/outfit/nanotrasensoldiercorpse
+
+/datum/outfit/nanotrasensoldiercorpse
+	name = "NT Private Security Officer Corpse"
 	uniform = /obj/item/clothing/under/rank/security
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	helmet = /obj/item/clothing/head/helmet/swat/nanotrasen
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/weapon/storage/backpack/security
-	has_id = 1
-	id_job = "Private Security Force"
-	id_access_list = list(GLOB.access_cent_specops)
+	id = /obj/item/weapon/card/id
+
 
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
@@ -426,6 +412,17 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/nanotrasensoldier/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "Private Security Officer"
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	faction = "nanotrasenprivate"
+	flavour_text = "You are a Nanotrasen Private Security Officer!"
+
 
 /////////////////Spooky Undead//////////////////////
 
@@ -441,11 +438,13 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+	assignedrole = "Skeleton"
 
 /obj/effect/mob_spawn/human/zombie
 	name = "rotting corpse"
 	mob_name = "zombie"
 	mob_species = /datum/species/zombie
+	assignedrole = "Zombie"
 
 /obj/effect/mob_spawn/human/zombie/alive
 	death = FALSE
@@ -459,8 +458,13 @@
 	name = "abductor"
 	mob_name = "alien"
 	mob_species = /datum/species/abductor
+	outfit = /datum/outfit/abductorcorpse
+
+/datum/outfit/abductorcorpse
+	name = "Abductor Corpse"
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
+
 
 //For ghost bar.
 /obj/effect/mob_spawn/human/alive/space_bar_patron
@@ -469,11 +473,8 @@
 	random = TRUE
 	permanent = TRUE
 	uses = -1
-	uniform = /obj/item/clothing/under/rank/bartender
-	back = /obj/item/weapon/storage/backpack
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	suit = /obj/item/clothing/suit/armor/vest
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+	outfit = /datum/outfit/spacebartender
+	assignedrole = "Space Bar Patron"
 
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
@@ -481,3 +482,11 @@
 		return
 	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
 	qdel(user)
+
+/datum/outfit/cryobartender
+	name = "Cryogenic Bartender"
+	uniform = /obj/item/clothing/under/rank/bartender
+	back = /obj/item/weapon/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent

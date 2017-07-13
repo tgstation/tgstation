@@ -142,7 +142,7 @@ Code:
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return 0
 	pulse(1)
-	audible_message("\icon[src] *beep* *beep*", null, 1)
+	audible_message("[bicon(src)] *beep* *beep*", null, 1)
 	return
 
 
@@ -160,7 +160,7 @@ Code:
 // It's necessary because the signaler doens't have an off state.
 // Generated during grenade construction.  -Sayu
 /obj/item/device/assembly/signaler/reciever
-	var/on = 0
+	var/on = FALSE
 
 /obj/item/device/assembly/signaler/reciever/proc/toggle_safety()
 	on = !on

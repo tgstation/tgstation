@@ -159,7 +159,7 @@
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
 
-	for(var/Ddir in GLOB.cardinal)
+	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
@@ -180,7 +180,7 @@
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "some <B>[initial(S.name)]</B> \icon[S]\n"
+			. += "some <B>[initial(S.name)]</B> [bicon(initial(S.icon))]\n"
 
 	to_chat(user, .)
 

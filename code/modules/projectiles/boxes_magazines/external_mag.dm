@@ -13,18 +13,37 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/m10mm/rifle
+	name = "rifle magazine (10mm)"
+	desc = "A well-worn magazine fitted for the surplus rifle."
+	icon_state = "75-8"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c10mm
+	caliber = "10mm"
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/m10mm/rifle/update_icon()
+	if(ammo_count())
+		icon_state = "75-8"
+	else
+		icon_state = "75-0"
+
+
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
+	icon_state = "9x19pI"
 	desc = "A gun magazine. Loaded with rounds which ignite the target."
 	ammo_type = /obj/item/ammo_casing/c10mm/fire
 
 /obj/item/ammo_box/magazine/m10mm/hp
 	name = "pistol magazine (10mm HP)"
+	icon_state = "9x19pH"
 	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
 	ammo_type = /obj/item/ammo_casing/c10mm/hp
 
 /obj/item/ammo_box/magazine/m10mm/ap
 	name = "pistol magazine (10mm AP)"
+	icon_state = "9x19pA"
 	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets"
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
@@ -52,15 +71,30 @@
 
 /obj/item/ammo_box/magazine/wt550m9/wtap
 	name = "wt550 magazine (Armour Piercing 4.6x30mm)"
+	icon_state = "46x30mmtA-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mmap
+
+/obj/item/ammo_box/magazine/wt550m9/wtap/update_icon()
+	..()
+	icon_state = "46x30mmtA-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wttx
 	name = "wt550 magazine (Toxin Tipped 4.6x30mm)"
+	icon_state = "46x30mmtT-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mmtox
+
+/obj/item/ammo_box/magazine/wt550m9/wttx/update_icon()
+	..()
+	icon_state = "46x30mmtT-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtic
 	name = "wt550 magazine (Incindiary 4.6x30mm)"
+	icon_state = "46x30mmtI-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mminc
+
+/obj/item/ammo_box/magazine/wt550m9/wtic/update_icon()
+	..()
+	icon_state = "46x30mmtI-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
@@ -231,6 +265,17 @@
 	origin_tech = "combat=6;syndicate=3"
 	max_ammo = 5
 
+/obj/item/ammo_box/magazine/sniper_rounds/gang
+	name = "black market sniper rounds (.50)"
+	icon_state = ".50mag"
+	origin_tech = "combat=6"
+	ammo_type = /obj/item/ammo_casing/point50/gang
+
+/obj/item/ammo_box/magazine/sniper_rounds/gang/sleeper
+	name = "illegally modified tranquilizer round"
+	icon_state = "soporific"
+	origin_tech = "combat=6"
+	ammo_type = /obj/item/ammo_casing/point50/gang/sleeper
 
 //// SAW MAGAZINES
 

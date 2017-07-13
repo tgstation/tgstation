@@ -6,7 +6,7 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
@@ -24,7 +24,7 @@
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(C.use(4))
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
@@ -41,7 +41,7 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
@@ -59,7 +59,7 @@
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if (C.use(4))
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
@@ -95,7 +95,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/ripley(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ripley0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	const_holder.cut_overlays(TRUE)
 	qdel(src)
 	return
@@ -305,7 +305,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/gygax(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "gygax0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	qdel(src)
 	return
 
@@ -590,7 +590,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/firefighter(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "fireripley0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	qdel(src)
 	return
 
@@ -812,7 +812,7 @@
 /datum/construction/mecha/honker_chassis/spawn_result()
 	var/obj/item/mecha_parts/chassis/const_holder = holder
 	const_holder.construct = new /datum/construction/mecha/honker(const_holder)
-	const_holder.density = 1
+	const_holder.density = TRUE
 	qdel(src)
 	return
 
@@ -890,7 +890,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/durand(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "durand0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	del src
 	return
 
@@ -1178,7 +1178,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/phazon(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "phazon0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	del src
 	return
 
@@ -1509,7 +1509,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/odysseus(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "odysseus0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	del src
 	return
 

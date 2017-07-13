@@ -44,6 +44,8 @@
 					oldmag.update_icon()
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
+
+				playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
 				chamber_round()
 				A.update_icon()
 				update_icon()
@@ -89,7 +91,7 @@
 	item_state = "c20r"
 	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
@@ -97,10 +99,9 @@
 /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/c20r/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/c20r/Initialize()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/c20r/afterattack()
 	..()
@@ -141,27 +142,25 @@
 	item_state = "m90"
 	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
 	var/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
-/obj/item/weapon/gun/ballistic/automatic/m90/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/m90/Initialize()
+	. = ..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher(src)
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/m90/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/Initialize()
+	. = ..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
@@ -217,7 +216,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
 	fire_delay = 1
@@ -230,12 +229,10 @@
 	slot_flags = 0
 	origin_tech = "combat=6;engineering=4"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
-
-
 
 // Bulldog shotgun //
 
@@ -245,9 +242,10 @@
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
 	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
@@ -257,13 +255,13 @@
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/update_icon()
+	cut_overlays()
 	if(magazine)
-		cut_overlays()
 		add_overlay("[magazine.icon_state]")
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 
@@ -286,8 +284,8 @@
 	origin_tech = "combat=6;engineering=3;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	var/cover_open = 0
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	var/cover_open = FALSE
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
@@ -300,6 +298,10 @@
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
+	if(cover_open)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
+	else
+		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
 	update_icon()
 
 
@@ -330,6 +332,7 @@
 		magazine = null
 		update_icon()
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
+		playsound(user, 'sound/weapons/magout.ogg', 60, 1)
 
 
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
@@ -375,7 +378,34 @@
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=7;syndicate=6"
 
+/obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
+	name = "black market sniper rifle"
+	desc = "A long ranged weapon that does significant damage. It is well worn from years of service."
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/gang
 
+// Old Semi-Auto Rifle //
+
+/obj/item/weapon/gun/ballistic/automatic/surplus
+	name = "Surplus Rifle"
+	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
+	origin_tech = "combat=3;materials=2"
+	icon_state = "surplus"
+	item_state = "moistnugget"
+	weapon_weight = WEAPON_HEAVY
+	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
+	fire_delay = 30
+	burst_size = 1
+	can_unsuppress = 1
+	can_suppress = 1
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = SLOT_BACK
+	actions_types = list()
+
+/obj/item/weapon/gun/ballistic/automatic/surplus/update_icon()
+	if(magazine)
+		icon_state = "surplus"
+	else
+		icon_state = "surplus-e"
 
 
 // Laser rifle (rechargeable magazine) //
@@ -390,7 +420,7 @@
 	can_suppress = 0
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = 0
 
 /obj/item/weapon/gun/ballistic/automatic/laser/update_icon()

@@ -102,6 +102,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
+	container_type = INJECTABLE
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	var/lit = FALSE
@@ -472,8 +473,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/lit = 0
+	var/fancy = TRUE
 	heat = 1500
 	resistance_flags = FIRE_PROOF
+	light_color = LIGHT_COLOR_FIRE
 
 /obj/item/weapon/lighter/update_icon()
 	if(lit)
@@ -482,39 +485,31 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+	if(is_hot())
+		. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
-/obj/item/weapon/lighter/greyscale
-	name = "cheap lighter"
-	desc = "A cheap-as-free lighter."
-	icon_state = "lighter"
-
-/obj/item/weapon/lighter/greyscale/Initialize()
-	. = ..()
-	add_atom_colour(color2hex(randomColor(1)), FIXED_COLOUR_PRIORITY)
-	update_icon()
-
-/obj/item/weapon/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/base_overlay = mutable_appearance(icon,"[initial(icon_state)]_base")
-	base_overlay.appearance_flags = RESET_COLOR //the edging doesn't change color
+/obj/item/weapon/lighter/proc/set_lit(new_lit)
+	lit = new_lit
 	if(lit)
-		base_overlay.icon_state = "[initial(icon_state)]_on"
-	add_overlay(base_overlay)
-
-/obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+		force = 5
+		damtype = "fire"
+		hitsound = 'sound/items/welder.ogg'
+		attack_verb = list("burnt", "singed")
+		set_light(1)
+		START_PROCESSING(SSobj, src)
+	else
+		hitsound = "swing_hit"
+		force = 0
+		attack_verb = null //human_defense.dm takes care of it
+		set_light(0)
+		STOP_PROCESSING(SSobj, src)
+	update_icon()
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.is_holding(src))
 		if(!lit)
-			lit = 1
-			update_icon()
-			force = 5
-			damtype = "fire"
-			hitsound = 'sound/items/welder.ogg'
-			attack_verb = list("burnt", "singed")
-			if(!istype(src, /obj/item/weapon/lighter/greyscale))
+			set_lit(TRUE)
+			if(fancy)
 				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
 				var/prot = FALSE
@@ -534,20 +529,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
-			set_light(1)
-			START_PROCESSING(SSobj, src)
 		else
-			lit = 0
-			update_icon()
-			hitsound = "swing_hit"
-			force = 0
-			attack_verb = null //human_defense.dm takes care of it
-			if(!istype(src, /obj/item/weapon/lighter/greyscale))
+			set_lit(FALSE)
+			if(fancy)
 				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
 				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
-			set_light(0)
-			STOP_PROCESSING(SSobj, src)
 	else
 		. = ..()
 
@@ -562,7 +549,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(M == user)
 			cig.attackby(src, user)
 		else
-			if(!istype(src, /obj/item/weapon/lighter/greyscale))
+			if(fancy)
 				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. [user.p_their(TRUE)] arm is as steady as the unflickering flame they light \the [cig] with.</span>")
 			else
 				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
@@ -574,6 +561,31 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/lighter/is_hot()
 	return lit * heat
+
+
+/obj/item/weapon/lighter/greyscale
+	name = "cheap lighter"
+	desc = "A cheap-as-free lighter."
+	icon_state = "lighter"
+	fancy = FALSE
+
+/obj/item/weapon/lighter/greyscale/Initialize()
+	. = ..()
+	add_atom_colour(color2hex(randomColor(1)), FIXED_COLOUR_PRIORITY)
+	update_icon()
+
+/obj/item/weapon/lighter/greyscale/update_icon()
+	cut_overlays()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon,"[initial(icon_state)]_base")
+	base_overlay.appearance_flags = RESET_COLOR //the edging doesn't change color
+	if(lit)
+		base_overlay.icon_state = "[initial(icon_state)]_on"
+	add_overlay(base_overlay)
+
+/obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
+	if(is_hot())
+		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+
 
 ///////////
 //ROLLING//
@@ -613,19 +625,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = null
 	item_state = null
+	w_class = WEIGHT_CLASS_TINY
 	var/chem_volume = 100
 	var/vapetime = 0 //this so it won't puff out clouds every tick
 	var/screw = 0 // kinky
 	var/super = 0 //for the fattest vapes dude.
-	var/emagged = 0 //LET THE GRIEF BEGIN
+	var/emagged = FALSE //LET THE GRIEF BEGIN
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 
-/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
-	..()
+/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 50)
@@ -680,7 +693,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(screw)
 		if(!emagged)
 			cut_overlays()
-			emagged = 1
+			emagged = TRUE
 			super = 0
 			to_chat(user, "<span class='warning'>You maximize the voltage in the [src]</span>")
 			add_overlay("vapeopen_high")
@@ -765,12 +778,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, "head")
-			M.Weaken(15, 1, 0)
-			qdel(src)
+			M.Knockdown(300, 1, 0)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 			sp.set_up(5, 1, src)
 			sp.start()
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
+			qdel(src)
+			return
 
 	if(reagents && reagents.total_volume)
 		hand_reagents()

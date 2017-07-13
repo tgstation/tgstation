@@ -10,7 +10,6 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
-	obj_integrity = 40
 	max_integrity = 40
 	var/active = 0
 	var/det_time = 50
@@ -48,23 +47,27 @@
 /obj/item/weapon/grenade/attack_self(mob/user)
 	if(!active)
 		if(clown_check(user))
-			to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
-			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
-			active = 1
-			icon_state = initial(icon_state) + "_active"
-			add_fingerprint(user)
-			var/turf/bombturf = get_turf(src)
-			var/area/A = get_area(bombturf)
-			var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
-			GLOB.bombers += message
-			message_admins(message)
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
+			preprime(user)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
-			spawn(det_time)
-				prime()
 
+/obj/item/weapon/grenade/proc/preprime(mob/user)
+	if(user)
+		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
+	playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)
+	active = TRUE
+	icon_state = initial(icon_state) + "_active"
+	add_fingerprint(user)
+	var/turf/bombturf = get_turf(src)
+	var/area/A = get_area(bombturf)
+	if(user)
+		var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
+		GLOB.bombers += message
+		message_admins(message)
+		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
+
+	addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/proc/prime()
 
@@ -100,8 +103,9 @@
 /obj/item/weapon/grenade/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/grenade/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	if(damage && attack_type == PROJECTILE_ATTACK && prob(15))
+/obj/item/weapon/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/obj/item/projectile/P = hitby
+	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
 		return 1 //It hit the grenade, not them

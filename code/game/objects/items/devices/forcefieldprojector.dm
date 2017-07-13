@@ -76,15 +76,14 @@
 	anchored = TRUE
 	density = TRUE
 	mouse_opacity = 2
-	obj_integrity = INFINITY
-	max_integrity = INFINITY
+	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	armor = list(melee = 0, bullet = 25, laser = 50, energy = 50, bomb = 25, bio = 100, rad = 100, fire = 100, acid = 100)
 	var/obj/item/device/forcefield/generator
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/device/forcefield/origin)
+	. = ..()
 	generator = origin
-	..()
 
 /obj/structure/projected_forcefield/Destroy()
 	visible_message("<span class='warning'>[src] flickers and disappears!</span>")
@@ -93,13 +92,13 @@
 	generator = null
 	return ..()
 
-/obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	return !density
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)

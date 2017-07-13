@@ -12,7 +12,7 @@
 	health = 350
 	maxHealth = 350
 	ventcrawler = VENTCRAWLER_NONE
-	density = 1
+	density = TRUE
 	pass_flags =  0
 	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
@@ -23,13 +23,9 @@
 	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
 					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
 
-
-
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
-
 	create_internal_organs()
-
 	grant_all_languages(omnitongue=TRUE)
 	..()
 
@@ -37,8 +33,8 @@
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
 	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/ears/invincible //Prevents hearing loss from poorly aimed fireballs.
 	..()
-
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
 	maxHealth = 500 // not an IMPOSSIBLE amount, but still near impossible.
@@ -57,7 +53,6 @@
 	devilinfo.greet()
 	mind.announce_objectives()
 
-
 /mob/living/carbon/true_devil/death(gibbed)
 	stat = DEAD
 	..(gibbed)
@@ -66,15 +61,15 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] <b>[src]</b>!\n"
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))
 			if(I.blood_DNA)
-				msg += "<span class='warning'>It is holding \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+				msg += "<span class='warning'>It is holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
-				msg += "It is holding \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+				msg += "It is holding [bicon(I)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
 	if(!client && stat != DEAD)
@@ -90,9 +85,14 @@
 	msg += "*---------*</span>"
 	to_chat(user, msg)
 
-
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
+
+/mob/living/carbon/true_devil/resist_buckle()
+	if(buckled)
+		buckled.user_unbuckle_mob(src,src)
+		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
+					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated())
@@ -101,7 +101,7 @@
 		return 0
 	return 1
 
-/mob/living/carbon/true_devil/assess_threat()
+/mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
 
 /mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
@@ -177,7 +177,7 @@
 			if ("disarm")
 				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
-						Paralyse(2)
+						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \

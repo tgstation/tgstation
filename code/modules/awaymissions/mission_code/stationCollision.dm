@@ -46,8 +46,8 @@
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r/Initialize()
+	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
 			magazine.stored_ammo -= ammo
@@ -55,8 +55,8 @@
 //Barman's shotgun
 /obj/item/weapon/gun/ballistic/shotgun/sc_pump
 
-/obj/item/weapon/gun/ballistic/shotgun/sc_pump/New()
-	..()
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump/Initialize()
+	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
 			magazine.stored_ammo -= ammo
@@ -156,7 +156,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 		L.gib()
 	else if(istype(A,/obj/))
 		var/obj/O = A
-		O.ex_act(1)
+		O.ex_act(EXPLODE_DEVASTATE)
 		if(O) qdel(O)
 	else if(isturf(A))
 		var/turf/T = A

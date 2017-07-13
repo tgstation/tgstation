@@ -4,8 +4,8 @@
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "bhole3"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
@@ -81,7 +81,7 @@
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "shield2"
-	density = 0
+	density = FALSE
 	var/boing = 0
 
 /obj/effect/anomaly/grav/New()
@@ -113,9 +113,9 @@
 /obj/effect/anomaly/grav/Bumped(mob/A)
 	gravShock(A)
 
-/obj/effect/anomaly/grav/proc/gravShock(mob/A)
+/obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
 	if(boing && isliving(A) && !A.stat)
-		A.Weaken(2)
+		A.Knockdown(40)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
 		boing = 0
@@ -125,7 +125,7 @@
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
-	density = 1
+	density = TRUE
 	var/canshock = 0
 	var/shockdamage = 20
 	var/explosive = TRUE
@@ -177,7 +177,7 @@
 	name = "bluespace anomaly"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
-	density = 1
+	density = TRUE
 
 /obj/effect/anomaly/bluespace/New()
 	..()
@@ -308,7 +308,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 7, 5)
 		else
-			O.ex_act(2)
+			O.ex_act(EXPLODE_HEAVY)
 
 /obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)

@@ -5,7 +5,6 @@
 	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
-	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
 	layer = WALL_OBJ_LAYER
@@ -50,9 +49,6 @@
 	if(GLOB.ratvar_awakens)
 		damage_per_tick = 10
 		sight_range = 6
-	else if(GLOB.nezbere_invoked)
-		damage_per_tick = 5
-		sight_range = 5
 	else
 		damage_per_tick = initial(damage_per_tick)
 		sight_range = initial(sight_range)
@@ -87,7 +83,7 @@
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
-			new /obj/effect/overlay/temp/ratvar/ocular_warden(get_turf(target))
+			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
@@ -105,7 +101,7 @@
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
 			else
-				setDir(pick(GLOB.cardinal))//Random rotation
+				setDir(pick(GLOB.cardinals))//Random rotation
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()

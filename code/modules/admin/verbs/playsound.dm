@@ -52,10 +52,7 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
-	if(SSticker)
-		SSticker.round_end_sound = fcopy_rsc(S)
-	else
-		return
+	SSticker.SetRoundEndSound(S)
 
 	log_admin("[key_name(src)] set the round end sound to [S]")
 	message_admins("[key_name_admin(src)] set the round end sound to [S]")

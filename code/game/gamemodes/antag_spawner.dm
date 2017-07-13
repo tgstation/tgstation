@@ -142,14 +142,14 @@
 /obj/item/weapon/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is out of power!</span>")
-		return 0
+		return FALSE
 	if(!(user.mind in SSticker.mode.syndicates))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
-		return 0
+		return FALSE
 	if(user.z != ZLEVEL_CENTCOM)
 		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /obj/item/weapon/antag_spawner/nuke_ops/attack_self(mob/user)
@@ -157,11 +157,11 @@
 		return
 
 	to_chat(user, "<span class='notice'>You activate [src] and wait for confirmation.</span>")
-	var/list/nuke_candidates = pollCandidatesForMob("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE, src)
+	var/list/nuke_candidates = pollGhostCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
 	if(nuke_candidates.len)
 		if(!(check_usability(user)))
 			return
-		used = 1
+		used = TRUE
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
 		spawn_antag(theghost.client, get_turf(src), "syndieborg")
 		do_sparks(4, TRUE, src)
@@ -237,7 +237,7 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	if(user.z != 1)
+	if(user.z != ZLEVEL_STATION)
 		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
 		return
 	if(used)
@@ -251,7 +251,7 @@
 		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
-		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 		qdel(src)
 	else
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")

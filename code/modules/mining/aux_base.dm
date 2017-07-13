@@ -2,7 +2,8 @@
 
 #define BAD_ZLEVEL	1
 #define BAD_AREA	2
-#define ZONE_SET	3
+#define BAD_COORDS	3
+#define ZONE_SET	4
 
 /area/shuttle/auxillary_base
 	name = "Auxillary Base"
@@ -102,7 +103,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	if(href_list["random"] && !possible_destinations)
 		usr.changeNext_move(CLICK_CD_RAPID) //Anti-spam
 		var/turf/LZ = safepick(Z_TURFS(ZLEVEL_MINING)) //Pick a random mining Z-level turf
-		if(!istype(LZ, /turf/closed/mineral) && !istype(LZ, /turf/open/floor/plating/asteroid))
+		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
 		//Find a suitable mining turf. Reduces chance of landing in a bad area
 			to_chat(usr, "<span class='warning'>Landing zone scan failed. Please try again.</span>")
 			updateUsrDialog()
@@ -149,6 +150,9 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(T.z != ZLEVEL_MINING)
 			return BAD_ZLEVEL
 		var/colony_radius = max(base_dock.width, base_dock.height)*0.5
+		if(T.x - colony_radius < 1 || T.x + colony_radius >= world.maxx || T.y - colony_radius < 1 || T.y + colony_radius >= world.maxx)
+			return BAD_COORDS //Avoid dropping the base too close to map boundaries, as it results in parts of it being left in space
+
 		var/list/area_counter = get_areas_in_range(colony_radius, T)
 		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
 			return BAD_AREA
@@ -195,6 +199,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	if(!do_after(user, 50, target = user)) //You get a few seconds to cancel if you do not want to drop there.
 		setting = FALSE
 		return
+	setting = FALSE
 
 	var/turf/T = get_turf(user)
 	var/obj/machinery/computer/auxillary_base/AB
@@ -212,6 +217,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			to_chat(user, "<span class='warning'>This uplink can only be used in a designed mining zone.</span>")
 		if(BAD_AREA)
 			to_chat(user, "<span class='warning'>Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one.</span>")
+		if(BAD_COORDS)
+			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
 		if(ZONE_SET)
 			qdel(src)
 
@@ -246,8 +253,8 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
 	desc = "A bluespace beacon calibrated to mark a landing spot for the mining shuttle when deployed near the auxillary mining base."
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	var/shuttle_ID = "landing_zone_dock"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "miningbeacon"
@@ -336,7 +343,7 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
 	to_chat(user, "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>")
-	anchored = 1 //Locks in place to mark the landing zone.
+	anchored = TRUE //Locks in place to mark the landing zone.
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()
@@ -347,4 +354,5 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 
 #undef BAD_ZLEVEL
 #undef BAD_AREA
+#undef BAD_COORDS
 #undef ZONE_SET

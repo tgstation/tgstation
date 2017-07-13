@@ -133,7 +133,7 @@
 	target.name = initial(picked_item.name)
 	target.desc = initial(picked_item.desc)
 	target.icon_state = initial(picked_item.icon_state)
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
 		I.item_color = initial(picked_item.item_color)
@@ -420,8 +420,8 @@
 	var/badmin_mode = FALSE
 	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
 
-/obj/item/weapon/gun/energy/laser/chameleon/New()
-	..()
+/obj/item/weapon/gun/energy/laser/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/gun
 	chameleon_action.chameleon_name = "Gun"

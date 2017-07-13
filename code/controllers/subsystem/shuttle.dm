@@ -1,4 +1,5 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
+#define MAX_TRANSIT_REQUEST_RETRIES 10
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
@@ -13,6 +14,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/turf/transit_turfs = list()
 	var/list/transit_requesters = list()
+	var/list/transit_request_failures = list()
 	var/clear_transit = FALSE
 
 		//emergency shuttle stuff
@@ -25,6 +27,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergencyLastCallLoc
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
+	var/emergencyNoRecall = FALSE
 	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
@@ -72,12 +75,9 @@ SUBSYSTEM_DEF(shuttle)
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(GLOB.transit_markers.len == 0)
-		WARNING("No /obj/effect/landmark/transit placed on the map!")
-		return
 	// transit zone
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -86,11 +86,8 @@ SUBSYSTEM_DEF(shuttle)
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	if(GLOB.transit_markers.len == 0)
-		WARNING("No /obj/effect/landmark/transit placed on the map!")
-		return
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -144,7 +141,12 @@ SUBSYSTEM_DEF(shuttle)
 		var/requester = popleft(transit_requesters)
 		var/success = generate_transit_dock(requester)
 		if(!success) // BACK OF THE QUEUE
-			transit_requesters += requester
+			transit_request_failures[requester]++
+			if(transit_request_failures[requester] < MAX_TRANSIT_REQUEST_RETRIES)
+				transit_requesters += requester
+			else
+				var/obj/docking_port/mobile/M = requester
+				M.transit_failure()
 		if(MC_TICK_CHECK)
 			return
 
@@ -215,7 +217,27 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.")
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
+	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
+		return
+	emergency.cancel()
+
+	if(!admiral_message)
+		admiral_message = pick(GLOB.admiral_messages)
+	var/intercepttext = "<font size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</font><hr>\
+						To whom it may concern:<br><br>\
+						We have taken note of the situation upon [station_name()] and have come to the \
+						conclusion that it does not warrant the abandonment of the station.<br>\
+						If you do not agree with our opinion we suggest that you open a direct \
+						line with us and explain the nature of your crisis.<br><br>\
+						<i>This message has been automatically generated based upon readings from long \
+						range diagnostic tools. To assure the quality of your request every finalized report \
+						is reviewed by an on-call rear admiral.<br>\
+						<b>Rear Admiral's Notes:</b> \
+						[admiral_message]"
+	print_command_report(intercepttext, announce = TRUE)
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -301,7 +323,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/AI/shuttledock.ogg', "Priority")
+			null, 'sound/ai/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -514,4 +536,8 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
-		
+
+/datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return M

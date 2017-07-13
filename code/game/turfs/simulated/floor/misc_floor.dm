@@ -133,8 +133,8 @@
 
 /turf/open/floor/clockwork/Initialize()
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor(src)
-	new /obj/effect/overlay/temp/ratvar/beam(src)
+	new /obj/effect/temp_visual/ratvar/floor(src)
+	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor(src)
 	realappearence.linked = src
 	change_construction_value(1)

@@ -8,7 +8,7 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (hit_percent <= 0))
 		return 0
@@ -58,7 +58,7 @@
 			return getStaminaLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -77,17 +77,17 @@
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
+/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
 		return 0
 	switch(effecttype)
 		if(STUN)
 			Stun(effect * hit_percent)
-		if(WEAKEN)
-			Weaken(effect * hit_percent)
-		if(PARALYZE)
-			Paralyse(effect * hit_percent)
+		if(KNOCKDOWN)
+			Knockdown(effect * hit_percent)
+		if(UNCONSCIOUS)
+			Unconscious(effect * hit_percent)
 		if(IRRADIATE)
 			radiation += max(effect * hit_percent, 0)
 		if(SLUR)
@@ -105,15 +105,15 @@
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0)
 	if(blocked >= 100)
 		return 0
 	if(stun)
 		apply_effect(stun, STUN, blocked)
-	if(weaken)
-		apply_effect(weaken, WEAKEN, blocked)
-	if(paralyze)
-		apply_effect(paralyze, PARALYZE, blocked)
+	if(knockdown)
+		apply_effect(knockdown, KNOCKDOWN, blocked)
+	if(unconscious)
+		apply_effect(unconscious, UNCONSCIOUS, blocked)
 	if(irradiate)
 		apply_effect(irradiate, IRRADIATE, blocked)
 	if(slur)

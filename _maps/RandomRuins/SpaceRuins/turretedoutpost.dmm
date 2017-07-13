@@ -182,8 +182,7 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/orange,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/ruin/turretedoutpost)
@@ -282,7 +281,6 @@
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,

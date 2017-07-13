@@ -8,13 +8,12 @@
 	announceWhen = 50
 	endWhen = 20
 	var/list/area/areasToOpen = list()
-	var/list/potential_areas = list(/area/atmos,
-									/area/bridge,
+	var/list/potential_areas = list(/area/bridge,
 									/area/engine,
 									/area/medical,
 									/area/security,
 									/area/quartermaster,
-									/area/toxins)
+									/area/science)
 	var/severity = 1
 
 
@@ -50,7 +49,7 @@
 				temp.overload_lighting()
 			else if(istype(O,/obj/structure/closet/secure_closet))
 				var/obj/structure/closet/secure_closet/temp = O
-				temp.locked = 0
+				temp.locked = FALSE
 				temp.update_icon()
 			else if(istype(O,/obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/temp = O

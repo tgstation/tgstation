@@ -5,10 +5,10 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 
 
-/obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 1, 1)
 	return 1
@@ -16,7 +16,7 @@
 
 /obj/item/projectile/ion/weak
 
-/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 0, 0)
 	return 1
@@ -27,7 +27,7 @@
 	icon_state= "bolter"
 	damage = 50
 
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2)
 	return 1
@@ -38,7 +38,7 @@
 	icon_state= "bolter"
 	damage = 60
 
-/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
@@ -52,14 +52,14 @@
 	armour_penetration = 100
 	dismemberment = 100
 
-/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
 
 	if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(anti_armour_damage)
-	if(istype(target, /mob/living/silicon))
+	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
@@ -88,7 +88,7 @@
 	var/temperature = 100
 
 
-/obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+/obj/item/projectile/temp/on_hit(atom/target, blocked = FALSE)//These two could likely check temp protection on the mob
 	..()
 	if(isliving(target))
 		var/mob/M = target
@@ -114,7 +114,7 @@
 	if(A == firer)
 		loc = A.loc
 		return
-	A.ex_act(2)
+	A.ex_act(EXPLODE_HEAVY)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	for(var/mob/M in urange(10, src))
 		if(!M.stat)
@@ -129,7 +129,7 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -150,7 +150,7 @@
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
 
-/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
@@ -183,14 +183,14 @@
 		return ..()
 	if(!gun)
 		qdel(src)
-	gun.create_portal(src)
+	gun.create_portal(src, get_turf(src))
 
 /obj/item/projectile/bullet/frag12
 	name ="explosive slug"
 	damage = 25
-	weaken = 5
+	knockdown = 50
 
-/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
 	return 1
@@ -199,45 +199,47 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
-	damage = 5
-	range = 3.5 //works as 4, but doubles to 7
+	damage = 20
+	range = 4
 	dismemberment = 20
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	var/pressure_decrease_active = FALSE
+	var/pressure_decrease = 0.25
+	var/mine_range = 3 //mines this many additional tiles of rock
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
-	var/turf/proj_turf = get_turf(src)
-	if(!isturf(proj_turf))
-		return
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	if(environment)
-		var/pressure = environment.return_pressure()
-		if(pressure < 60)
-			name = "full strength [name]"
-			damage *= 4
-			range *= 2
+	if(!lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
-		Range()
+		if(mine_range)
+			mine_range--
+			range++
 		if(range > 0)
 			return -1
 
 /obj/item/projectile/plasma/adv
-	damage = 7
+	damage = 28
 	range = 5
+	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 10
-	range = 6
+	damage = 40
+	range = 9
+	mine_range = 3
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
-	damage = 6
+	damage = 24
+	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 
@@ -270,7 +272,7 @@
 		A.throw_at(throwtarget,power+1,1)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravityattract
 	name = "attraction bolt"
@@ -300,7 +302,7 @@
 		A.throw_at(T, power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravitychaos
 	name = "gravitational blast"
@@ -327,8 +329,62 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(Z)
+		new /obj/effect/temp_visual/gravpush(Z)
 
+/obj/effect/ebeam/curse_arm
+	name = "curse arm"
+	layer = LARGE_MOB_LAYER
+
+/obj/item/projectile/curse_hand
+	name = "curse hand"
+	icon_state = "cursehand"
+	hitsound = 'sound/effects/curse4.ogg'
+	layer = LARGE_MOB_LAYER
+	damage_type = BURN
+	damage = 10
+	knockdown = 20
+	speed = 2
+	range = 16
+	forcedodge = TRUE
+	var/datum/beam/arm
+	var/handedness = 0
+
+/obj/item/projectile/curse_hand/Initialize(mapload)
+	. = ..()
+	handedness = prob(50)
+	update_icon()
+
+/obj/item/projectile/curse_hand/update_icon()
+	icon_state = "[icon_state][handedness]"
+
+/obj/item/projectile/curse_hand/fire(setAngle)
+	if(starting)
+		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
+	..()
+
+/obj/item/projectile/curse_hand/prehit(atom/target)
+	if(target == original)
+		forcedodge = FALSE
+	else if(!isturf(target))
+		return FALSE
+	return ..()
+
+/obj/item/projectile/curse_hand/Destroy()
+	if(arm)
+		arm.End()
+		arm = null
+	if(forcedodge)
+		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
+	var/turf/T = get_step(src, dir)
+	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
+	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
+		qdel(G)
+	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
+	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm, beam_sleep_time = 1)
+	for(var/b in D.elements)
+		var/obj/effect/ebeam/B = b
+		animate(B, alpha = 0, time = 32)
+	return ..()

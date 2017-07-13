@@ -132,11 +132,9 @@
 	back = /obj/item/weapon/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
-	var/list/implants = null
-
 	var/backpack = /obj/item/weapon/storage/backpack
 	var/satchel  = /obj/item/weapon/storage/backpack/satchel
-	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	var/duffelbag = /obj/item/weapon/storage/backpack/duffelbag
 	var/box = /obj/item/weapon/storage/box/survival
 
 	var/pda_slot = slot_belt
@@ -147,18 +145,20 @@
 			back = /obj/item/weapon/storage/backpack //Grey backpack
 		if(GSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel //Grey satchel
-		if(GDUFFLEBAG)
-			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
+		if(GDUFFELBAG)
+			back = /obj/item/weapon/storage/backpack/duffelbag //Grey Duffel bag
 		if(LSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)
 			back = satchel //Department satchel
-		if(DDUFFLEBAG)
-			back = dufflebag //Department dufflebag
+		if(DDUFFELBAG)
+			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
 
 	if(box)
+		if(!backpack_contents)
+			backpack_contents = list()
 		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
 		backpack_contents[box] = 1
 
@@ -183,8 +183,3 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
-
-	if(implants)
-		for(var/implant_type in implants)
-			var/obj/item/weapon/implant/I = new implant_type(H)
-			I.implant(H, null, silent=TRUE)

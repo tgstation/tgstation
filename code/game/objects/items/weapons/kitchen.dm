@@ -65,6 +65,7 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP_ACCURATE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	var/bayonet = FALSE	//Can this be attached to a gun?
 
 /obj/item/weapon/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
@@ -107,7 +108,7 @@
 	throwforce = 20
 	origin_tech = "materials=3;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
-
+	bayonet = TRUE
 
 /obj/item/weapon/kitchen/knife/combat/survival
 	name = "survival knife"
@@ -115,6 +116,7 @@
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
+	bayonet = TRUE
 
 /obj/item/weapon/kitchen/knife/combat/bone
 	name = "bone dagger"

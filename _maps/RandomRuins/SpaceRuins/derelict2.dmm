@@ -4,8 +4,6 @@
 /area/space)
 "b" = (
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/space,
@@ -16,21 +14,15 @@
 /area/ruin/powered/dinner_for_two)
 "d" = (
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/space,
 /area/space)
 "e" = (
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -45,8 +37,6 @@
 /area/ruin/powered/dinner_for_two)
 "h" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -56,8 +46,6 @@
 /area/ruin/powered/dinner_for_two)
 "j" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (EAST)";
-	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -69,16 +57,12 @@
 "l" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (NORTH)";
-	icon_state = "rwindow";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/dinner_for_two)
 "m" = (
 /obj/structure/chair{
-	tag = "icon-chair (EAST)";
-	icon_state = "chair";
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
@@ -99,8 +83,6 @@
 /area/ruin/powered/dinner_for_two)
 "o" = (
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
@@ -108,16 +90,12 @@
 /area/ruin/powered/dinner_for_two)
 "p" = (
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (NORTH)";
-	icon_state = "rwindow";
 	dir = 1
 	},
 /turf/open/space,
 /area/space)
 "q" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (WEST)";
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,

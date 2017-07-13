@@ -3,9 +3,9 @@
 	desc = "This controls the density of the particles."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_box"
-	anchored = 0
-	density = 1
-	use_power = 0
+	anchored = FALSE
+	density = TRUE
+	use_power = NO_POWER_USE
 	idle_power_usage = 500
 	active_power_usage = 10000
 	dir = NORTH
@@ -43,7 +43,7 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/update_state()
 	if(construction_state < PA_CONSTRUCTION_COMPLETE)
-		use_power = 0
+		use_power = NO_POWER_USE
 		assembled = 0
 		active = 0
 		for(var/CP in connected_parts)
@@ -54,7 +54,7 @@
 		connected_parts.Cut()
 		return
 	if(!part_scan())
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		active = 0
 		connected_parts.Cut()
 
@@ -119,7 +119,7 @@
 
 		message_admins("PA Control Computer increased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
 		log_game("PA Control Computer increased to [strength] by [key_name(usr)] in [COORD(src)]")
-		investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)]","singulo")
+		investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/particle_accelerator/control_box/proc/remove_strength(s)
@@ -129,22 +129,22 @@
 
 		message_admins("PA Control Computer decreased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
 		log_game("PA Control Computer decreased to [strength] by [key_name(usr)] in [COORD(src)]")
-		investigate_log("decreased to <font color='green'>[strength]</font> by [key_name(usr)]","singulo")
+		investigate_log("decreased to <font color='green'>[strength]</font> by [key_name(usr)]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/particle_accelerator/control_box/power_change()
 	..()
 	if(stat & NOPOWER)
 		active = 0
-		use_power = 0
+		use_power = NO_POWER_USE
 	else if(!stat && construction_state == PA_CONSTRUCTION_COMPLETE)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 
 /obj/machinery/particle_accelerator/control_box/process()
 	if(active)
 		//a part is missing!
 		if(connected_parts.len < 6)
-			investigate_log("lost a connected part; It <font color='red'>powered down</font>.","singulo")
+			investigate_log("lost a connected part; It <font color='red'>powered down</font>.", INVESTIGATE_SINGULO)
 			toggle_power()
 			update_icon()
 			return
@@ -204,18 +204,18 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
 	active = !active
-	investigate_log("turned [active?"<font color='green'>ON</font>":"<font color='red'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]","singulo")
+	investigate_log("turned [active?"<font color='green'>ON</font>":"<font color='red'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]", INVESTIGATE_SINGULO)
 	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
 	if(active)
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
 			part.strength = strength
 			part.powered = 1
 			part.update_icon()
 	else
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
 			part.strength = null
@@ -272,7 +272,7 @@
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
 				playsound(loc, W.usesound, 75, 1)
-				anchored = 1
+				anchored = TRUE
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
 				construction_state = PA_CONSTRUCTION_UNWIRED
@@ -280,7 +280,7 @@
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(loc, W.usesound, 75, 1)
-				anchored = 0
+				anchored = FALSE
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")
 				construction_state = PA_CONSTRUCTION_UNSECURED

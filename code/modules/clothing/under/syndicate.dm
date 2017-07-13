@@ -18,7 +18,7 @@
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"
-	desc = "A double seamed tactical turtleneck disguised as a civillian grade silk suit. Intended for the most formal operator. The collar is really sharp"
+	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp"
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
@@ -38,3 +38,10 @@
 	can_adjust = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	resistance_flags = 0
+
+/obj/item/clothing/under/syndicate/combat
+	name = "combat uniform"
+	desc = "With a suit lined with this many pockets, you are ready to operate."
+	icon_state = "syndicate_combat"
+	item_color = "syndicate_combat"
+	can_adjust = 0

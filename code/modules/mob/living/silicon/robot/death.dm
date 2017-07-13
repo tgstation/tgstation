@@ -1,6 +1,6 @@
 
 /mob/living/silicon/robot/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-r")
+	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-r")
 
 /mob/living/silicon/robot/dust()
 	if(mmi)
@@ -11,7 +11,7 @@
 	new /obj/effect/decal/remains/robot(loc)
 
 /mob/living/silicon/robot/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-r")
+	new /obj/effect/temp_visual/dust_animation(loc, "dust-r")
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)
@@ -19,7 +19,7 @@
 
 	. = ..()
 
-	locked = 0 //unlock cover
+	locked = FALSE //unlock cover
 
 	update_canmove()
 	if(camera && camera.status)

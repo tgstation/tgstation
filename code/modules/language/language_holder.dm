@@ -64,13 +64,31 @@
 				return LANGUAGE_SHADOWED
 	return FALSE
 
+/datum/language_holder/proc/copy_known_languages_from(thing, replace=FALSE)
+	var/datum/language_holder/other
+	if(istype(thing, /datum/language_holder))
+		other = thing
+	else if(ismovableatom(thing))
+		var/atom/movable/AM = thing
+		other = AM.get_language_holder()
+	else if(istype(thing, /datum/mind))
+		var/datum/mind/M = thing
+		other = M.get_language_holder()
+
+	if(replace)
+		src.remove_all_languages()
+
+	for(var/l in other.languages)
+		src.grant_language(l)
+
+
 /datum/language_holder/proc/open_language_menu(mob/user)
 	if(!language_menu)
 		language_menu = new(src)
 	language_menu.ui_interact(user)
 
 /datum/language_holder/proc/get_atom()
-	if(istype(owner, /atom/movable))
+	if(ismovableatom(owner))
 		. = owner
 	else if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner
@@ -92,7 +110,6 @@
 
 /datum/language_holder/construct
 	languages = list(/datum/language/common, /datum/language/narsie)
-	only_speaks_language = /datum/language/narsie
 
 /datum/language_holder/drone
 	languages = list(/datum/language/common, /datum/language/drone, /datum/language/machine)
@@ -110,7 +127,7 @@
 
 /datum/language_holder/synthetic
 	languages = list(/datum/language/common)
-	shadow_languages = list(/datum/language/machine, /datum/language/draconic)
+	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic)
 
 /datum/language_holder/universal/New()
 	..()

@@ -3,34 +3,35 @@
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
-	anchored = 1
+	anchored = TRUE
 	opacity = 1
-	density = 1
+	density = TRUE
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
-	obj_integrity = 350
 	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	flags = PREVENT_CLICK_UNDER
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
-	var/visible = 1
-	var/operating = 0
-	var/glass = 0
-	var/welded = 0
+	var/visible = TRUE
+	var/operating = FALSE
+	var/glass = FALSE
+	var/welded = FALSE
 	var/normalspeed = 1
-	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
-	var/emergency = 0 // Emergency access override
-	var/sub_door = 0 // 1 if it's meant to go under another door.
+	var/heat_proof = FALSE // For rglass-windowed airlocks and firedoors
+	var/emergency = FALSE // Emergency access override
+	var/sub_door = FALSE // true if it's meant to go under another door.
 	var/closingLayer = CLOSED_DOOR_LAYER
-	var/autoclose = 0 //does it automatically close after some time
-	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
-	var/locked = 0 //whether the door is bolted or not.
+	var/autoclose = FALSE //does it automatically close after some time
+	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
+	var/locked = FALSE //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
+	var/real_explosion_block	//ignore this, just use explosion_block
 
 /obj/machinery/door/New()
 	..()
@@ -44,10 +45,12 @@
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 
-
+	//doors only block while dense though so we have to use the proc
+	real_explosion_block = explosion_block
+	explosion_block = EXPLOSION_BLOCK_PROC
 
 /obj/machinery/door/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
 	GLOB.airlocks -= src
@@ -95,7 +98,7 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -180,13 +183,13 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 			else if(damage_amount)
 				playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -229,16 +232,16 @@
 		return 1
 	if(operating)
 		return
-	operating = 1
+	operating = TRUE
 	do_animate("opening")
 	set_opacity(0)
 	sleep(5)
-	density = 0
+	density = FALSE
 	sleep(5)
 	layer = OPEN_DOOR_LAYER
 	update_icon()
 	set_opacity(0)
-	operating = 0
+	operating = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
 	if(autoclose)
@@ -257,17 +260,17 @@
 				if(autoclose)
 					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
-	operating = 1
+	operating = TRUE
 
 	do_animate("closing")
 	layer = closingLayer
 	sleep(5)
-	density = 1
+	density = TRUE
 	sleep(5)
 	update_icon()
 	if(visible && !glass)
 		set_opacity(1)
-	operating = 0
+	operating = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
 	if(safe)
@@ -290,10 +293,10 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Weaken(5)
+			L.Knockdown(100)
 		else if(ismonkey(L)) //For monkeys
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.Weaken(5)
+			L.Knockdown(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
@@ -345,3 +348,5 @@
 	//if it blows up a wall it should blow up a door
 	..(severity ? max(1, severity - 1) : 0, target)
 
+/obj/machinery/door/GetExplosionBlock()
+	return density ? real_explosion_block : 0

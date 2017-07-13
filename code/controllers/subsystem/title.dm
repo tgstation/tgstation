@@ -55,6 +55,12 @@ SUBSYSTEM_DEF(title)
 		var/F = file("data/previous_title.dat")
 		F << file_path
 
+	for(var/thing in GLOB.clients)
+		if(!thing)
+			continue
+		var/obj/screen/splash/S = new(thing, FALSE)
+		S.Fade(FALSE,FALSE)
+
 /datum/controller/subsystem/title/Recover()
 	icon = SStitle.icon
 	splash_turf = SStitle.splash_turf

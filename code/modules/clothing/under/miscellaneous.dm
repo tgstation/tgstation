@@ -211,6 +211,14 @@
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
 
+/obj/item/clothing/under/suit_jacket/green
+	name = "green suit"
+	desc = "A green suit and yellow necktie. Baller."
+	icon_state = "green_suit"
+	item_state = "dg_suit"
+	item_color = "green_suit"
+	can_adjust = 0
+
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"
 	desc = "A red suit and blue tie. Somewhat formal."
@@ -494,6 +502,12 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+
+/obj/item/clothing/under/maid/Initialize()
+	. = ..()
+	var/obj/item/clothing/accessory/maidapron/A = new (src)
+	A.attach(src,null)
+
 
 /obj/item/clothing/under/janimaid
 	name = "maid uniform"

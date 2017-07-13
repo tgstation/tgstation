@@ -2,6 +2,11 @@
 
 //Misc mob defines
 
+//Ready states at roundstart for mob/dead/new_player
+#define PLAYER_NOT_READY 0
+#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_READY_TO_OBSERVE 2
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -46,6 +51,12 @@
 #define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
+//Health hud screws for carbon mobs
+#define SCREWYHUD_NONE 0
+#define SCREWYHUD_CRIT 1
+#define SCREWYHUD_DEAD 2
+#define SCREWYHUD_HEALTHY 3
+
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
@@ -80,6 +91,15 @@
 #define AI_IDLE		2
 #define AI_OFF		3
 
+#define ENVIRONMENT_SMASH_NONE 0
+
+#define ENVIRONMENT_SMASH_STRUCTURES 1
+
+#define ENVIRONMENT_SMASH_WALLS 2
+
+#define ENVIRONMENT_SMASH_RWALLS 3
+
+
 //SNPCs
 //AI defines
 #define INTERACTING 2
@@ -105,13 +125,6 @@
 #define SNPC_MARTYR 3
 #define SNPC_PSYCHO 4
 
-//Individual logging defines
-#define INDIVIDUAL_ATTACK_LOG "Attack log"
-#define INDIVIDUAL_SAY_LOG "Say log"
-#define INDIVIDUAL_EMOTE_LOG "Emote log"
-#define INDIVIDUAL_OOC_LOG "OOC log"
-#define INDIVIDUAL_SHOW_ALL_LOG "All logs"
-
 #define TK_MAXRANGE 15
 
 #define NO_SLIP_WHEN_WALKING 1
@@ -122,3 +135,18 @@
 #define MAX_CHICKENS 50
 
 #define UNHEALING_EAR_DAMAGE 100
+
+
+#define INCORPOREAL_MOVE_BASIC 1
+#define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
+#define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+
+//Secbot and ED209 judgement criteria bitflag values
+#define JUDGE_EMAGGED 1
+#define JUDGE_IDCHECK 2
+#define JUDGE_WEAPONCHECK 4
+#define JUDGE_RECORDCHECK 8
+//ED209's ignore monkeys
+#define JUDGE_IGNOREMONKEYS 16
+
+#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5

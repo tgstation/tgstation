@@ -50,7 +50,7 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		to_chat(user, "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>")
 		if(!iscyborg(user))
-			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>")
+			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>")
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
@@ -96,13 +96,13 @@
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_cooldown = world.time + initial(attack_cooldown) //can't attack until we're done impaling
 		if(target)
-			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
-			target.Stun(2) //brief stun
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
+			target.Stun(80) //brief stun
 			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
-				var/obj/effect/overlay/temp/dir_setting/bloodsplatter/B = new /obj/effect/overlay/temp/dir_setting/bloodsplatter(T, get_dir(target, user))
+				var/obj/effect/temp_visual/dir_setting/bloodsplatter/B = new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, get_dir(target, user))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
@@ -114,7 +114,7 @@
 					step(target, get_dir(user, target))
 					T = get_turf(target)
 					B.forceMove(T)
-					target.Weaken(2) //then weaken if we stayed next to them
+					target.Knockdown(40) //then knockdown if we stayed next to them
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
 				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
@@ -136,11 +136,9 @@
 		else if(!..())
 			if(!L.null_rod_check())
 				if(issilicon(L) || iscultist(L))
-					L.Stun(6)
-					L.Weaken(6)
+					L.Knockdown(100)
 				else
-					L.Stun(2)
-					L.Weaken(2)
+					L.Knockdown(40)
 			break_spear(T)
 	else
 		..()
@@ -151,5 +149,5 @@
 			T = get_turf(src)
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
-			new /obj/effect/overlay/temp/ratvar/spearbreak(T)
+			new /obj/effect/temp_visual/ratvar/spearbreak(T)
 		qdel(src)

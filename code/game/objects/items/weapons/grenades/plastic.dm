@@ -18,6 +18,10 @@
 	plastic_overlay = mutable_appearance(icon, "[item_state]2")
 	..()
 
+/obj/item/weapon/grenade/plastic/Initialize(mapload)
+	. = ..()
+	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
+
 /obj/item/weapon/grenade/plastic/Destroy()
 	qdel(nadeassembly)
 	nadeassembly = null
@@ -60,7 +64,7 @@
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		location.ex_act(2, target)
-	if(istype(target, /mob))
+	if(ismob(target))
 		var/mob/M = target
 		M.gib()
 	qdel(src)
@@ -231,7 +235,7 @@
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 
-	if(do_after(user, 50, target = AM))
+	if(do_after(user, 30, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		src.target = AM

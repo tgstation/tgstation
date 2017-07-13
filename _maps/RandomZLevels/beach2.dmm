@@ -86,7 +86,6 @@
 "as" = (
 /obj/structure/dresser{
 	density = 0;
-	pixel_x = 0;
 	pixel_y = 18
 	},
 /turf/open/floor/wood{

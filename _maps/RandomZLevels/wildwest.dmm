@@ -59,8 +59,7 @@
 /area/awaymission/wwvault)
 "an" = (
 /turf/open/floor/plasteel/cult{
-	name = "engraved floor";
-	tag = "icon-cult"
+	name = "engraved floor"
 	},
 /area/awaymission/wwvault)
 "ao" = (
@@ -176,8 +175,7 @@
 	info = "meat grinder requires sacri"
 	},
 /turf/open/floor/plasteel/cult{
-	name = "engraved floor";
-	tag = "icon-cult"
+	name = "engraved floor"
 	},
 /area/awaymission/wwvault)
 "aM" = (
@@ -187,10 +185,9 @@
 /turf/closed/mineral,
 /area/awaymission/wwmines)
 "aO" = (
-/obj/effect/mob_spawn/human/syndicatecommando,
+/obj/effect/mob_spawn/human/corpse/syndicatecommando,
 /turf/open/floor/plasteel/cult{
-	name = "engraved floor";
-	tag = "icon-cult"
+	name = "engraved floor"
 	},
 /area/awaymission/wwvault)
 "aP" = (
@@ -929,7 +926,7 @@
 	},
 /area/awaymission/wwgov)
 "dh" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/carpet,
@@ -2017,7 +2014,7 @@
 	},
 /area/awaymission/wwmines)
 "gy" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/grass,

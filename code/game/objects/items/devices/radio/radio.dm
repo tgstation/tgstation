@@ -5,7 +5,7 @@
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
 	dog_fashion = /datum/dog_fashion/back
-	var/on = 1 // 0 for off
+	var/on = TRUE // 0 for off
 	var/last_transmission
 	var/frequency = 1459 //common chat
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
@@ -104,7 +104,7 @@
 	else
 		ui_interact(user)
 
-/obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -293,7 +293,6 @@
 	// --- Cold, emotionless machines. ---
 	else if(isobj(M))
 		jobname = "Machine"
-		voice = capitalize(voice)
 
 	// --- Unidentifiable mob ---
 	else
@@ -531,12 +530,12 @@
 	listening = 0
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
-	on = 0
+	on = FALSE
 	spawn(200)
 		if(emped == curremp) //Don't fix it if it's been EMP'd again
 			emped = 0
 			if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
-				on = 1
+				on = TRUE
 	..()
 
 ///////////////////////////////

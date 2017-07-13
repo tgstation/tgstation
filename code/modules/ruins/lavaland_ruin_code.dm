@@ -126,28 +126,42 @@
 	shell_type = /obj/effect/mob_spawn/human/golem/servant
 
 ///Syndicate Listening Post
+
 /obj/effect/mob_spawn/human/lavaland_syndicate
-	r_hand = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
 	name = "Syndicate Bioweapon Scientist"
+	roundstart = FALSE
+	death = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. <font size=6><b>DON'T</b></font> abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
+	id_access_list = list(GLOB.access_syndicate)
+	outfit = /datum/outfit/lavaland_syndicate
+	assignedrole = "Lavaland Syndicate"
+
+/datum/outfit/lavaland_syndicate
+	name = "Lavaland Syndicate Agent"
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset/syndicate/alt
+	ears = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/weapon/storage/backpack
-	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
-	roundstart = FALSE
-	death = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	has_id = 1
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
-	id_access_list = list(GLOB.access_syndicate)
+	r_pocket = /obj/item/weapon/gun/ballistic/automatic/pistol
+	id = /obj/item/weapon/card/id
+	implants = list(/obj/item/weapon/implant/weapons_auth)
+
+/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H)
+	H.faction |= "syndicate"
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6><b>DON'T</b></font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	outfit = /datum/outfit/lavaland_syndicate/comms
+
+/datum/outfit/lavaland_syndicate/comms
+	name = "Lavaland Syndicate Comms Agent"
 	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
-	pocket2 = /obj/item/weapon/card/id/syndicate/anyone
+	l_pocket = /obj/item/weapon/card/id/syndicate/anyone

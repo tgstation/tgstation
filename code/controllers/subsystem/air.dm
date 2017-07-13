@@ -7,7 +7,7 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 
 SUBSYSTEM_DEF(air)
-	name = "Air"
+	name = "Atmospherics"
 	init_order = INIT_ORDER_AIR
 	priority = 20
 	wait = 5

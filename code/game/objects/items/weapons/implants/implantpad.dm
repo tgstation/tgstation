@@ -64,7 +64,7 @@
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
 
-		if(istype(loc, /mob))
+		if(ismob(loc))
 			attack_self(loc)
 		else
 			for(var/mob/M in viewers(1, src))

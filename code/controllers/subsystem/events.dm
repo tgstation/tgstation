@@ -70,7 +70,10 @@ SUBSYSTEM_DEF(events)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
 		if(E.weight < 0)						//for round-start events etc.
-			if(TriggerEvent(E))
+			var/res = TriggerEvent(E)
+			if(res == EVENT_INTERRUPTED)
+				continue	//like it never happened
+			if(res == EVENT_CANT_RUN)
 				return
 		sum_of_weights += E.weight
 
@@ -89,7 +92,7 @@ SUBSYSTEM_DEF(events)
 	. = E.preRunEvent()
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
-	else if(. != EVENT_CANCELLED)
+	else if(. == EVENT_READY)
 		E.runEvent(TRUE)
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
@@ -105,7 +108,7 @@ SUBSYSTEM_DEF(events)
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
 	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/crew_quarters/heads/chief)
 
 	//Need to locate() as it's just a list of paths.
 	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas))
@@ -172,10 +175,12 @@ SUBSYSTEM_DEF(events)
 	var/YY = text2num(time2text(world.timeofday, "YY")) 	// get the current year
 	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
 	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
+	var/DDD = text2num(time2text(world.timeofday, "DDD")) 	// get the current weekday
+	var/W = weekdayofthemonth()	// is this the first monday? second? etc.
 
 	for(var/H in subtypesof(/datum/holiday))
 		var/datum/holiday/holiday = new H()
-		if(holiday.shouldCelebrate(DD, MM, YY))
+		if(holiday.shouldCelebrate(DD, MM, YY, W, DDD))
 			holiday.celebrate()
 			if(!holidays)
 				holidays = list()

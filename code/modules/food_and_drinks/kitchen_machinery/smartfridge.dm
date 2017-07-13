@@ -7,9 +7,9 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	var/max_n_of_items = 1500
@@ -154,7 +154,7 @@
 	return FALSE
 
 /obj/machinery/smartfridge/proc/load(obj/item/O)
-	if(istype(O.loc,/mob))
+	if(ismob(O.loc))
 		var/mob/M = O.loc
 		if(!M.transferItemToLoc(O, src))
 			to_chat(usr, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
@@ -248,7 +248,7 @@
 	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 200
 	icon_on = "drying_rack_on"
@@ -326,10 +326,10 @@
 /obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
 	if(drying || forceoff)
 		drying = FALSE
-		use_power = 1
+		use_power = IDLE_POWER_USE
 	else
 		drying = TRUE
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry()
@@ -442,7 +442,8 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/flu_virion = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/plasma = 1,
-		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/formaldehyde = 1)
 
 // ----------------------------
 // Disk """fridge"""

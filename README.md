@@ -1,8 +1,8 @@
-## /tg/station server and codebase
+## /tg/station codebase
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)  
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
-<BR>[![forthebadge](http://forthebadge.com/images/badges/built-with-resentment.svg)](http://forthebadge.com)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue") ![Coverage](https://s3.amazonaws.com/assets.coveralls.io/badges/coveralls_0.svg)  
+[![forthebadge](http://forthebadge.com/images/badges/built-with-resentment.svg)](http://forthebadge.com)
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
@@ -17,13 +17,7 @@ There are a number of ways to download the source code. Some are described here,
 Option 1:
 Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 
-Option 2:
-Install GitHub::windows from http://windows.github.com/
-It handles most of the setup and configuraton of Git for you.
-Then you simply search for the tgstation repository and click the big clone
-button.
-
-Option 3: Download the source code as a zip by clicking the ZIP button in the
+Option 2: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/tgstation
 (note: this will use a lot of bandwidth if you wish to update and is a lot of
 hassle if you want to make any changes at all, so it's not recommended.)
@@ -85,15 +79,22 @@ install, overwriting when prompted except if we've specified otherwise, and
 recompile the game.  Once you start the server up again, you should be running
 the new version.
 
+## HOSTING
+
+If you'd like a more robust server hosting option for tgstation and its
+derivatives. Check out our server tools suite at 
+https://github.com/tgstation/tgstation-server
+
 ## MAPS
 
-/tg/station currently comes equipped with five maps.
+/tg/station currently comes equipped with six maps.
 
-* [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
+* [BoxStation (default)](http://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
 * [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
 * [PubbyStation](https://tgstation13.org/wiki/PubbyStation)
+* [CereStation](https://tgstation13.org/wiki/CereStation)
 
 
 All maps have their own code file that is in the base of the _maps directory. Maps are loaded dynamically when the game starts. Follow this guideline when adding your own map, to your fork, for easy compatibility.
@@ -119,7 +120,7 @@ The SQL backend requires a MySQL server. SQL is required for the library, stats 
 ## IRC BOT SETUP
 
 Included in the repository is a python3 compatible IRC bot capable of relaying adminhelps to a specified
-IRC channel/server, see the /bot folder for more
+IRC channel/server, see the /tools/minibot folder for more
 
 ## CONTRIBUTING
 

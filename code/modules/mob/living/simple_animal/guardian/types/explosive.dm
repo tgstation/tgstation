@@ -21,14 +21,14 @@
 	if(. && prob(40) && isliving(target))
 		var/mob/living/M = target
 		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
-			new /obj/effect/overlay/temp/guardian/phase/out(get_turf(M))
+			new /obj/effect/temp_visual/guardian/phase/out(get_turf(M))
 			do_teleport(M, M, 10)
 			for(var/mob/living/L in range(1, M))
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
 				if(L != src && L != summoner)
 					L.apply_damage(15, BRUTE)
-			new /obj/effect/overlay/temp/explosion(get_turf(M))
+			new /obj/effect/temp_visual/explosion(get_turf(M))
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -74,9 +74,9 @@
 			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
 			var/turf/T = get_turf(src)
 			stored_obj.forceMove(T)
-			playsound(T,'sound/effects/Explosion2.ogg', 200, 1)
-			new /obj/effect/overlay/temp/explosion(T)
-			user.ex_act(2)
+			playsound(T,'sound/effects/explosion2.ogg', 200, 1)
+			new /obj/effect/temp_visual/explosion(T)
+			user.ex_act(EXPLODE_HEAVY)
 			qdel(src)
 		else
 			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")

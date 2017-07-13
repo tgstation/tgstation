@@ -4,7 +4,7 @@
 	icon_screen = "power"
 	icon_keyboard = "power_key"
 	light_color = LIGHT_COLOR_YELLOW
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 100
 	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
@@ -24,10 +24,10 @@
 
 /obj/machinery/computer/monitor/process()
 	if(!attached)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		search()
 	else
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		record()
 
 /obj/machinery/computer/monitor/proc/search()
@@ -50,7 +50,7 @@
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
-/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

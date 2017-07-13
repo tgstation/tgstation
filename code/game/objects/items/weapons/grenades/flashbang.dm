@@ -27,13 +27,11 @@
 
 //Flash
 	if(M.flash_act(affect_silicon = 1))
-		M.Stun(max(10/max(1,distance), 3))
-		M.Weaken(max(10/max(1,distance), 3))
+		M.Knockdown(max(200/max(1,distance), 60))
 //Bang
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
-		M.Stun(10)
-		M.Weaken(10)
-		M.soundbang_act(1, 10, 10, 15)
+		M.Knockdown(200)
+		M.soundbang_act(1, 200, 10, 15)
 
 	else
-		M.soundbang_act(1, max(10/max(1,distance), 3), rand(0, 5))
+		M.soundbang_act(1, max(20/max(1,distance), 3), rand(0, 5))

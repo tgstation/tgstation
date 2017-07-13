@@ -3,6 +3,7 @@
  *		Morgue
  *		Morgue tray
  *		Crematorium
+ *		Creamatorium
  *		Crematorium tray
  *		Crematorium button
  */
@@ -15,13 +16,12 @@
 /obj/structure/bodycontainer
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
-	density = 1
-	anchored = 1
-	obj_integrity = 400
+	density = TRUE
+	anchored = TRUE
 	max_integrity = 400
 
 	var/obj/structure/tray/connected = null
-	var/locked = 0
+	var/locked = FALSE
 	var/opendir = SOUTH
 
 /obj/structure/bodycontainer/Destroy()
@@ -91,14 +91,14 @@
 	container_resist(user)
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	var/turf/T = get_step(src, opendir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			AM.forceMove(src)
@@ -189,14 +189,14 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	// Make sure we don't delete the actual morgue and its tray
 	var/list/conts = GetAllContents() - src - connected
 
-	if(conts.len <= 1)
+	if(!conts.len)
 		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
 
 	else
 		audible_message("<span class='italics'>You hear a roar as the crematorium activates.</span>")
 
-		locked = 1
+		locked = TRUE
 		update_icon()
 
 		for(var/mob/living/M in conts)
@@ -219,10 +219,24 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
 		if(!QDELETED(src))
-			locked = 0
+			locked = FALSE
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
+/obj/structure/bodycontainer/crematorium/creamatorium
+	name = "creamatorium"
+	desc = "A human incinerator. Works well during ice cream socials."
+
+/obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
+	var/list/icecreams = new()
+	for(var/mob/living/i_scream in GetAllContents())
+		var/obj/item/weapon/reagent_containers/food/snacks/icecream/IC = new()
+		IC.set_cone_type("waffle")
+		IC.add_mob_flavor(i_scream)
+		icecreams += IC
+	. = ..()
+	for(var/obj/IC in icecreams)
+		IC.forceMove(src)
 
 /*
  * Generic Tray
@@ -231,12 +245,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
  */
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
-	density = 1
+	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/obj/structure/bodycontainer/connected = null
-	anchored = 1
+	anchored = TRUE
 	pass_flags = LETPASSTHROW
-	obj_integrity = 350
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -261,7 +274,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
-	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
+	if(!ismovableatom(O) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
 		return
 	if(!ismob(O))
 		if(!istype(O, /obj/structure/closet/body_bag))
@@ -293,10 +306,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
 
-/obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height == 0)
-		return 1
-
+/obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))

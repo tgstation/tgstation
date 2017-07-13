@@ -6,8 +6,8 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
-	anchored = 1
-	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
+	anchored = TRUE
+	var/operating = FALSE	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
 	var/backwards		// hopefully self-explanatory
@@ -26,20 +26,20 @@
 
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
 	. = ..()
-	operating = 1
+	operating = TRUE
 	update_move_direction()
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
 		icon_state = "conveyor-broken"
-		operating = 0
+		operating = FALSE
 		return
 	else if(!operable)
-		operating = 0
+		operating = FALSE
 	else if(stat & NOPOWER)
-		operating = 0
+		operating = FALSE
 	else
-		operating = 1
+		operating = TRUE
 	icon_state = "conveyor[operating * verted]"
 
 // create a conveyor
@@ -88,12 +88,12 @@
 /obj/machinery/conveyor/proc/update()
 	if(stat & BROKEN)
 		icon_state = "conveyor-broken"
-		operating = 0
+		operating = FALSE
 		return
 	if(!operable)
-		operating = 0
+		operating = FALSE
 	if(stat & NOPOWER)
-		operating = 0
+		operating = FALSE
 	icon_state = "conveyor[operating * verted]"
 
 	// machine process
@@ -104,11 +104,12 @@
 	if(!operating)
 		return
 	use_power(100)
-
 	affecting = loc.contents - src		// moved items will be all in loc
-	sleep(1)
+	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+
+/obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/atom/movable/A in affecting)
-		if(A.loc == loc)
+		if((A.loc == loc) && A.has_gravity())
 			A.ConveyorMove(movedir)
 
 // attack with item, place item on conveyor
@@ -206,7 +207,7 @@
 	var/id = "" 				// must match conveyor IDs to control them
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
-	anchored = 1
+	anchored = TRUE
 	speed_process = 1
 
 
@@ -340,7 +341,7 @@
 			found = 1
 			break
 	if(!found)
-		to_chat(user, "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
+		to_chat(user, "[bicon(src)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
 	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)

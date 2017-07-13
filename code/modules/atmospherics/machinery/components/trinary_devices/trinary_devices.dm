@@ -2,8 +2,9 @@
 	icon = 'icons/obj/atmospherics/components/trinary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	device_type = TRINARY
+	layer = GAS_FILTER_LAYER
 
 	var/flipped = 0
 

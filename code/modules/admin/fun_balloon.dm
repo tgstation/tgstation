@@ -60,7 +60,7 @@
 		message_admins("[key_name_admin(ghost)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(0)
 		body.key = ghost.key
-		new /obj/effect/overlay/temp/gravpush(get_turf(body))
+		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 /obj/effect/fun_balloon/sentience/emergency_shuttle
 	name = "shuttle sentience fun balloon"
@@ -79,7 +79,7 @@
 /obj/effect/fun_balloon/scatter/effect()
 	for(var/mob/living/M in range(effect_range, get_turf(src)))
 		var/turf/T = find_safe_turf()
-		new /obj/effect/overlay/temp/gravpush(get_turf(M))
+		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
 		to_chat(M, "<span class='notice'>Pop!</span>")
 
@@ -175,5 +175,5 @@
 
 /area/shuttle_arena
 	name = "arena"
-	has_gravity = 1
-	requires_power = 0
+	has_gravity = TRUE
+	requires_power = FALSE

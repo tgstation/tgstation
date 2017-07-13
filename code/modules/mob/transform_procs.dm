@@ -31,12 +31,12 @@
 	//Make mob invisible and spawn animation
 	notransform = 1
 	canmove = 0
-	stunned = 1
+	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
-	new /obj/effect/overlay/temp/monkeyify(loc)
+	new /obj/effect/temp_visual/monkeyify(loc)
 	sleep(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
@@ -182,11 +182,11 @@
 	//Make mob invisible and spawn animation
 	notransform = 1
 	canmove = 0
-	stunned = 1
+	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	new /obj/effect/overlay/temp/monkeyify/humanify(loc)
+	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
@@ -250,7 +250,7 @@
 			mind.transfer_to(O)
 			if(O.mind.changeling)
 				for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
-					mind.changeling.purchasedpowers -= HF
+					O.mind.changeling.purchasedpowers -= HF
 
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
@@ -283,7 +283,7 @@
 		mind.transfer_to(O)
 		if(O.mind.changeling)
 			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
-				mind.changeling.purchasedpowers -= HF
+				O.mind.changeling.purchasedpowers -= HF
 
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)

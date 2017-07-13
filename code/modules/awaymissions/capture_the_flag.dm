@@ -129,7 +129,7 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
@@ -433,7 +433,7 @@
 
 /obj/item/projectile/beam/ctf/red
 	icon_state = "laser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 // BLUE TEAM GUNS
 
@@ -448,7 +448,7 @@
 
 /obj/item/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
 /datum/outfit/ctf
 	name = "CTF"
@@ -630,7 +630,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"

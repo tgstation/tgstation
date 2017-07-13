@@ -4,12 +4,11 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
 	var/id = null
-	var/on = 1
-	anchored = 1
-	use_power = 1
+	var/on = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 50, bullet = 30, laser = 70, energy = 50, bomb = 20, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
@@ -59,7 +58,7 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/sparker/New()

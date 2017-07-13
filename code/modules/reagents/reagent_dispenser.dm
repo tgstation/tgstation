@@ -3,10 +3,10 @@
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "water"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
+	container_type = DRAWABLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	obj_integrity = 300
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
 	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
@@ -55,7 +55,7 @@
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
-	desc = "A highly-pressurized water tank made to hold gargantuan amounts of water.."
+	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
 
@@ -107,7 +107,7 @@
 			reagents.trans_to(W, W.max_fuel)
 			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
-			update_icon()
+			W.update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
@@ -125,8 +125,8 @@
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	reagent_id = "condensedcapsaicin"
 
 /obj/structure/reagent_dispensers/peppertank/Initialize()
@@ -140,7 +140,7 @@
 	desc = "A machine that dispenses liquid to drink."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
-	anchored = 1
+	anchored = TRUE
 	tank_volume = 500
 	var/paper_cups = 25 //Paper cups left from the cooler
 
@@ -174,5 +174,5 @@
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
-	anchored = 1
+	anchored = TRUE
 	reagent_id = "virusfood"

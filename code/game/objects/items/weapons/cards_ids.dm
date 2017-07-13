@@ -83,9 +83,24 @@
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
+	var/access_txt // mapping aid
+
+
+
+/obj/item/weapon/card/id/Initialize(mapload)
+	. = ..()
+	if(mapload && access_txt)
+		access = text2access(access_txt)
+
+/obj/item/weapon/card/id/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if("assignment","registered_name")
+				update_label()
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
+	user.visible_message("<span class='notice'>[user] shows you: [bicon(src)] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
 	return
@@ -299,3 +314,29 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/away/hotel/securty
 	name = "Officer ID"
 	access = list(GLOB.access_away_general, GLOB.access_away_maint, GLOB.access_away_sec)
+
+/obj/item/weapon/card/id/away/old
+	name = "a perfectly generic identification card"
+	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	access = list(GLOB.access_away_general)
+
+/obj/item/weapon/card/id/away/old/sec
+	name = "Security Officer ID"
+	desc = "Security officers ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/sci
+	name = "Scientist ID"
+	desc = "Scientists ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/eng
+	name = "Engineer ID"
+	desc = "Engineers ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/apc
+	name = "APC Access ID"
+	desc = "Special ID card to allow access to APCs"
+	icon_state = "centcom"
+	access = list(GLOB.access_engine_equip)

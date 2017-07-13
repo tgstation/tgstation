@@ -1,4 +1,4 @@
-## Server name: This appears at the top of the screen in-game and in the BYOND hub. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice.
+## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 # SERVERNAME tgstation
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
@@ -7,29 +7,29 @@
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME Space Station 13
 
-## Put on byond hub: uncomment this to put your server on the byond hub.
+## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
 
-# Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
+## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
 
-# Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
+## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
 
-## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
+## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
 
-## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
+## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
 
-## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
+## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
 ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
 #USE_AGE_RESTRICTION_FOR_JOBS
 
-# Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
+## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
 #USE_ACCOUNT_AGE_FOR_JOBS
 
 ## log OOC channel
@@ -90,6 +90,9 @@ LOG_LAW
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
 
+## Job slot open/close by identification consoles delay in seconds
+ID_CONSOLE_JOBSLOT_DELAY 30
+
 ## If metadata is supported
 ALLOW_METADATA
 
@@ -127,11 +130,11 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
-## Comment to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
 CHECK_RANDOMIZER
 
-### IPINTEL:
-### This allows you to detect likely proxies by checking ips against getipintel.net
+## IPINTEL:
+## This allows you to detect likely proxies by checking ips against getipintel.net
 ## Rating to warn at: (0.90 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
 #IPINTEL_RATING_BAD 0.90
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
@@ -155,7 +158,7 @@ CHECK_RANDOMIZER
 #USEWHITELIST
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
-# Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
+## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 # SERVER ss13.example.com:2506
 
 ## forum address
@@ -164,13 +167,13 @@ CHECK_RANDOMIZER
 ## Wiki address
 # WIKIURL http://www.tgstation13.org/wiki
 
-##Rules address
+## Rules address
 # RULESURL http://www.tgstation13.org/wiki/Rules
 
-##Github address
+## Github address
 # GITHUBURL https://www.github.com/tgstation/-tg-station
 
-##Github repo id
+## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
 ##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization 
 # GITHUBREPOID 3234987
@@ -182,23 +185,20 @@ CHECK_RANDOMIZER
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
 
-##Remove the # mark infront of this to forbid admins from possessing the singularity.
+## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM.
+## Uncomment to show a popup 'reply to' window to every non-admin that recieves an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
-## Remove the # to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
+## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
 
-##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
-#USEIRCBOT
-
-##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
+## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
-##Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
+## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
 ##This is currently a testing optimized setting. A good value for production would be 98.
 TICK_LIMIT_MC_INIT 500
 
@@ -332,3 +332,6 @@ MINUTE_TOPIC_LIMIT 100
 #ERROR_SILENCE_TIME 6000
 ##How long to wait between messaging admins about occurences of an unique error
 #ERROR_MSG_DELAY 50
+
+## Send a message to IRC when starting a new game
+#IRC_ANNOUNCE_NEW_GAME

@@ -25,9 +25,6 @@
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
-	if(istype(I, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C  = I
-		value = C.value
 	if(value)
 		SSshuttle.points += value
 		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>")

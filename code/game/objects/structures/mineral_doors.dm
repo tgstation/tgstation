@@ -3,9 +3,9 @@
 
 /obj/structure/mineral_door
 	name = "metal door"
-	density = 1
-	anchored = 1
-	opacity = 1
+	density = TRUE
+	anchored = TRUE
+	opacity = TRUE
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
@@ -14,7 +14,6 @@
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 50, acid = 50)
 	var/sheetType = /obj/item/stack/sheet/metal
@@ -29,7 +28,7 @@
 	air_update_turf(1)
 
 /obj/structure/mineral_door/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -56,7 +55,7 @@
 /obj/structure/mineral_door/attack_hand(mob/user)
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -86,11 +85,11 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
-	playsound(loc, openSound, 100, 1)
+	playsound(src, openSound, 100, 1)
+	set_opacity(FALSE)
 	flick("[initial_state]opening",src)
 	sleep(10)
-	density = 0
-	opacity = 0
+	density = FALSE
 	state = 1
 	air_update_turf(1)
 	update_icon()
@@ -109,8 +108,8 @@
 	playsound(loc, closeSound, 100, 1)
 	flick("[initial_state]closing",src)
 	sleep(10)
-	density = 1
-	opacity = 1
+	density = TRUE
+	set_opacity(TRUE)
 	state = 0
 	air_update_turf(1)
 	update_icon()
@@ -144,14 +143,12 @@
 
 /obj/structure/mineral_door/iron
 	name = "iron door"
-	obj_integrity = 300
 	max_integrity = 300
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
 	icon_state = "silver"
 	sheetType = /obj/item/stack/sheet/mineral/silver
-	obj_integrity = 300
 	max_integrity = 300
 
 /obj/structure/mineral_door/gold
@@ -163,7 +160,6 @@
 	name = "uranium door"
 	icon_state = "uranium"
 	sheetType = /obj/item/stack/sheet/mineral/uranium
-	obj_integrity = 300
 	max_integrity = 300
 	light_range = 2
 
@@ -171,15 +167,14 @@
 	name = "sandstone door"
 	icon_state = "sandstone"
 	sheetType = /obj/item/stack/sheet/mineral/sandstone
-	obj_integrity = 100
 	max_integrity = 100
 
 /obj/structure/mineral_door/transparent
-	opacity = 0
+	opacity = FALSE
 
 /obj/structure/mineral_door/transparent/Close()
 	..()
-	opacity = 0
+	set_opacity(FALSE)
 
 /obj/structure/mineral_door/transparent/plasma
 	name = "plasma door"
@@ -207,7 +202,6 @@
 	name = "diamond door"
 	icon_state = "diamond"
 	sheetType = /obj/item/stack/sheet/mineral/diamond
-	obj_integrity = 1000
 	max_integrity = 1000
 
 /obj/structure/mineral_door/wood
@@ -217,5 +211,22 @@
 	closeSound = 'sound/effects/doorcreaky.ogg'
 	sheetType = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
-	obj_integrity = 200
 	max_integrity = 200
+
+/obj/structure/mineral_door/paperframe
+	name = "paper frame door"
+	icon_state = "paperframe"
+	openSound = 'sound/effects/doorcreaky.ogg'
+	closeSound = 'sound/effects/doorcreaky.ogg'
+	sheetType = /obj/item/stack/sheet/paperframes
+	sheetAmount = 3
+	resistance_flags = FLAMMABLE
+	max_integrity = 20
+
+/obj/structure/mineral_door/paperframe/Initialize()
+	. = ..()
+	queue_smooth_neighbors(src)
+
+/obj/structure/mineral_door/paperframe/Destroy()
+	queue_smooth_neighbors(src)
+	return ..()

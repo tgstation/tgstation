@@ -9,10 +9,10 @@
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
-	anchored = 1
+	anchored = TRUE
 	on_blueprints = TRUE
 	var/datum/powernet/powernet = null
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 
@@ -139,7 +139,7 @@
 	var/cdir
 	var/turf/T
 
-	for(var/card in GLOB.cardinal)
+	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
 		cdir = get_dir(T,loc)
 
@@ -159,7 +159,7 @@
 	var/cdir
 	var/turf/T
 
-	for(var/card in GLOB.cardinal)
+	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
 		cdir = get_dir(T,loc)
 

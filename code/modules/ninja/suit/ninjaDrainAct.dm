@@ -52,8 +52,8 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 		if(!emagged)
 			flick("apc-spark", G)
-			emagged = 1
-			locked = 0
+			emagged = TRUE
+			locked = FALSE
 			update_icon()
 
 
@@ -111,7 +111,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				S.cell.charge += charge
 			charge = 0
 			corrupt()
-			updateicon()
+			update_icon()
 
 
 //RDCONSOLE//

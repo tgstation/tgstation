@@ -6,7 +6,6 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
-	obj_integrity = 300
 	max_integrity = 300
 
 /obj/item/weapon/storage/belt/update_icon()
@@ -57,6 +56,15 @@
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+
+/obj/item/weapon/storage/belt/utility/full/engi/PopulateContents()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
@@ -200,10 +208,10 @@
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
-		/obj/item/organ/hivelord_core,
+		/obj/item/organ/regenerative_core,
 		/obj/item/device/wormhole_jaunter,
 		/obj/item/weapon/storage/bag/plants,
-
+		/obj/item/stack/marker_beacon
 		)
 
 
@@ -247,10 +255,10 @@
 		)
 
 /obj/item/weapon/storage/belt/military
-	name = "military belt"
-	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
-	icon_state = "militarybelt"
-	item_state = "military"
+	name = "chest rig"
+	desc = "A set of tactical webbing worn by Syndicate boarding parties."
+	icon_state = "militarywebbing"
+	item_state = "militarywebbing"
 	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/military/abductor
@@ -289,7 +297,9 @@
 	icon_state = "grenadebeltnew"
 	item_state = "security"
 	max_w_class = WEIGHT_CLASS_BULKY
+	display_contents_with_number = TRUE
 	storage_slots = 30
+	max_combined_w_class = 60 //needs to be this high
 	can_hold = list(
 		/obj/item/weapon/grenade,
 		/obj/item/weapon/screwdriver,
@@ -374,6 +384,7 @@
 	icon_state = "bandolier"
 	item_state = "bandolier"
 	storage_slots = 18
+	display_contents_with_number = TRUE
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
 		)

@@ -1,12 +1,12 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || hit_percent <= 0)
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(islimb(def_zone)) //we specified a bodypart object
+	if(isbodypart(def_zone)) //we specified a bodypart object
 		BP = def_zone
 	else
 		if(!def_zone)

@@ -43,6 +43,14 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = 2
 
+/mob/living/simple_animal/pet/dog/Initialize()
+	. = ..()
+	var/dog_area = get_area(src)
+	for(var/obj/structure/bed/dogbed/D in dog_area)
+		if(!D.owner)
+			D.update_owner(src)
+			break
+
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
 	..()
 	regenerate_icons()
@@ -99,7 +107,7 @@
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
 			user.visible_message("[user] shaves [src]'s hair using \the [O].")
-			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 			shaved = 1
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
@@ -465,7 +473,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
@@ -552,7 +560,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				new /obj/effect/overlay/temp/heart(loc)
+				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)

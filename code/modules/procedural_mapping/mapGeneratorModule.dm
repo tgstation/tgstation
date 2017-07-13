@@ -9,14 +9,14 @@
 	var/allowAtomsOnSpace = FALSE
 
 
-//Syncs the module up with it's mother
+//Syncs the module up with its mother
 /datum/mapGeneratorModule/proc/sync(datum/mapGenerator/mum)
 	mother = null
 	if(mum)
 		mother = mum
 
 
-//Generates it's spawnable atoms and turfs
+//Generates its spawnable atoms and turfs
 /datum/mapGeneratorModule/proc/generate()
 	if(!mother)
 		return

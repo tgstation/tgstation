@@ -16,9 +16,12 @@
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			O.on_life()
+	if(stat == DEAD)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+
 
 	if(stat != DEAD)
 		return 1
@@ -154,7 +157,7 @@
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if(world.time - co2overloadtime > 120)
-			Paralyse(3)
+			Unconscious(60)
 			adjustOxyLoss(3)
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
@@ -177,9 +180,9 @@
 	if(breath_gases["n2o"])
 		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
-			Paralyse(3)
+			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
-				Sleeping(max(sleeping+2, 10))
+				Sleeping(max(AmountSleeping() + 40, 200))
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
@@ -286,7 +289,7 @@
 		if(M.loc != src)
 			stomach_contents.Remove(M)
 			continue
-		if(istype(M, /mob/living/carbon) && stat != DEAD)
+		if(iscarbon(M) && stat != DEAD)
 			if(M.stat == DEAD)
 				M.death(1)
 				stomach_contents.Remove(M)
@@ -297,21 +300,11 @@
 					M.adjustBruteLoss(5)
 				nutrition += 10
 
-//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-
 	if(staminaloss)
-		if(sleeping)
-			adjustStaminaLoss(-10)
-		else
-			adjustStaminaLoss(-3)
-
-	if(sleeping)
-		handle_dreams()
-		AdjustSleeping(-1)
-		if(prob(10) && health>HEALTH_THRESHOLD_CRIT)
-			emote("snore")
+		adjustStaminaLoss(-3)
 
 	var/restingpwr = 1 + 4 * resting
 
@@ -353,10 +346,10 @@
 		drowsyness = max(drowsyness - restingpwr, 0)
 		blur_eyes(2)
 		if(prob(5))
-			AdjustSleeping(1)
-			Paralyse(5)
+			AdjustSleeping(20)
+			Unconscious(100)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)

@@ -311,10 +311,10 @@
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
 		if ((!scanner.locked) && (scanner.occupant))
-			scanner.locked = 1
+			scanner.locked = TRUE
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		else
-			scanner.locked = 0
+			scanner.locked = FALSE
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 	else if(href_list["view_rec"])
@@ -439,7 +439,7 @@
 	if(iscarbon(mob_occupant))
 		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
-	if(istype(mob_occupant, /mob/living/brain))
+	if(isbrain(mob_occupant))
 		var/mob/living/brain/B = mob_occupant
 		dna = B.stored_dna
 

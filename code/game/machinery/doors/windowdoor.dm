@@ -7,11 +7,10 @@
 	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
 	var/base_state = "left"
-	obj_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
-	max_integrity = 150
+	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
 	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
-	visible = 0
+	visible = FALSE
 	flags = ON_BORDER
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
@@ -37,7 +36,7 @@
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
 /obj/machinery/door/window/Destroy()
-	density = 0
+	density = FALSE
 	for(var/I in debris)
 		qdel(I)
 	if(obj_integrity == 0)
@@ -90,7 +89,7 @@
 		do_animate("deny")
 	return
 
-/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -136,19 +135,19 @@
 		if(emagged)
 			return 0
 	if(!src.operating) //in case of emag
-		src.operating = 1
+		operating = TRUE
 	do_animate("opening")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state ="[src.base_state]open"
 	sleep(10)
 
-	src.density = 0
+	density = FALSE
 //	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 
 	if(operating == 1) //emag again
-		src.operating = 0
+		operating = FALSE
 	return 1
 
 /obj/machinery/door/window/close(forced=0)
@@ -160,25 +159,25 @@
 	if(forced < 2)
 		if(emagged)
 			return 0
-	src.operating = 1
+	operating = TRUE
 	do_animate("closing")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = src.base_state
 
-	src.density = 1
+	density = TRUE
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(10)
 
-	src.operating = 0
+	operating = FALSE
 	return 1
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
@@ -207,13 +206,13 @@
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !emagged)
-		operating = 1
+		operating = TRUE
 		flick("[src.base_state]spark", src)
 		sleep(6)
-		operating = 0
+		operating = FALSE
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		open()
-		emagged = 1
+		emagged = TRUE
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/living/user, params)
 
@@ -246,11 +245,11 @@
 								WA.facing = "r"
 							if("leftsecure")
 								WA.facing = "l"
-								WA.secure = 1
+								WA.secure = TRUE
 							if("rightsecure")
 								WA.facing = "r"
-								WA.secure = 1
-						WA.anchored = 1
+								WA.secure = TRUE
+						WA.anchored = TRUE
 						WA.state= "02"
 						WA.setDir(src.dir)
 						WA.ini_dir = src.dir
@@ -305,8 +304,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = null
-	obj_integrity = 300 //Stronger doors for prison (regular window door health is 200)
-	max_integrity = 300
+	max_integrity = 300 //Stronger doors for prison (regular window door health is 200)
 	reinf = 1
 	explosion_block = 1
 
@@ -328,7 +326,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/door/window(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()

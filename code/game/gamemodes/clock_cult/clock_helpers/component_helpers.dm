@@ -62,6 +62,16 @@
 		else
 			return null
 
+//returns a component icon from a component id
+/proc/get_component_icon(id)
+	var/static/list/tgui_component_icons = list(
+		BELLIGERENT_EYE = icon2base64(icon('icons/obj/tgui_components.dmi', BELLIGERENT_EYE)),
+		VANGUARD_COGWHEEL = icon2base64(icon('icons/obj/tgui_components.dmi', VANGUARD_COGWHEEL)),
+		GEIS_CAPACITOR = icon2base64(icon('icons/obj/tgui_components.dmi', GEIS_CAPACITOR)),
+		REPLICANT_ALLOY = icon2base64(icon('icons/obj/tgui_components.dmi', REPLICANT_ALLOY)),
+		HIEROPHANT_ANSIBLE = icon2base64(icon('icons/obj/tgui_components.dmi', HIEROPHANT_ANSIBLE)))
+	return "<img style='width:14px; height:14px' src='data:image/png;base64,[tgui_component_icons[id]]'/>"
+
 //returns a component id from a component name
 /proc/get_component_id(name)
 	switch(name)
@@ -124,15 +134,15 @@
 /proc/get_component_animation_type(id)
 	switch(id)
 		if(BELLIGERENT_EYE)
-			return /obj/effect/overlay/temp/ratvar/component
+			return /obj/effect/temp_visual/ratvar/component
 		if(VANGUARD_COGWHEEL)
-			return /obj/effect/overlay/temp/ratvar/component/cogwheel
+			return /obj/effect/temp_visual/ratvar/component/cogwheel
 		if(GEIS_CAPACITOR)
-			return /obj/effect/overlay/temp/ratvar/component/capacitor
+			return /obj/effect/temp_visual/ratvar/component/capacitor
 		if(REPLICANT_ALLOY)
-			return /obj/effect/overlay/temp/ratvar/component/alloy
+			return /obj/effect/temp_visual/ratvar/component/alloy
 		if(HIEROPHANT_ANSIBLE)
-			return /obj/effect/overlay/temp/ratvar/component/ansible
+			return /obj/effect/temp_visual/ratvar/component/ansible
 		else
 			return null
 

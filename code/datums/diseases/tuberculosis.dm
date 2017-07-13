@@ -41,7 +41,7 @@
 			if(prob(10))
 				affected_mob.adjustStaminaLoss(100)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
-				affected_mob.AdjustSleeping(5)
+				affected_mob.AdjustSleeping(100)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>")
 				affected_mob.confused = min(100, affected_mob.confused + 8)
