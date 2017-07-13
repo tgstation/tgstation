@@ -188,7 +188,7 @@ Note: Must be placed west/left of and R&D console to function.
 	addtimer(CALLBACK(src, .proc/reset_busy), (32 * timecoeff * amount) ** 0.8)
 	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats), (32 * timecoeff * amount) ** 0.8)
 
-/obj/machinery/rnd/protolathe/proc/do_print(path, amount, matlist)
+/obj/machinery/rnd/protolathe/proc/do_print(path, amount, list/matlist)
 	if(QDELETED(src))
 		return FALSE
 	for(var/i in 1 to amount)
@@ -198,5 +198,4 @@ Note: Must be placed west/left of and R&D console to function.
 				I.investigate_log("built by [usr.key]", INVESTIGATE_SINGULO)
 		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/weapon/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
-	SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
-	already_logged = 1
+	SSblackbox.add_details("item_printed","[path]|[amount]")

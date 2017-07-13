@@ -389,7 +389,7 @@ doesn't have toxins access.
 		data["tdisk_nodes"] = list()
 		for(var/v in t_disk.stored_research.researched_nodes)
 			var/datum/techweb_node/TN = t_disk.stored_research.researched_nodes[v]
-			data["tdisk_nodes"] += list(list("name" = TN.display_name, "id" = TN.id))
+			data["tdisk_nodes"] += list(list("display_name" = TN.display_name, "id" = TN.id))
 
 	return data
 
@@ -423,8 +423,6 @@ doesn't have toxins access.
 				compare = PROTOLATHE
 			else if(text == "imprinter")
 				compare = IMPRINTER
-			else
-				return
 			var/list/operating = compare == PROTOLATHE? matching_designs_protolathe : matching_designs_imprinter
 			operating.Cut()
 			for(var/v in stored_research.researched_designs)
@@ -438,23 +436,17 @@ doesn't have toxins access.
 				category_lathe = params["cat"]
 			else if(type == "imprinter")
 				category_imprinter = params["cat"]
-			else
-				return
 			rescan_category_views()
 		if("releasemats")
 			if(type == "proto")
 				linked_lathe.materials.retrieve_sheets(text2num(params["sheets"]), params["mat_id"])
 			else if(type == "imprinter")
 				linked_imprinter.materials.retrieve_sheets(text2num(params["sheets"]), params["mat_id"])
-			else
-				return
 		if("purgechem")
 			if(type == "proto")
 				linked_lathe.reagents.del_reagent(params["id"])
 			else if(type == "imprinter")
 				linked_lathe.reagents.del_reagent(params["id"])
-			else
-				return
 		if("disconnect")
 			switch(params["type"])
 				if("destroy")
@@ -466,8 +458,6 @@ doesn't have toxins access.
 				if("imprinter")
 					linked_imprinter.linked_console = null
 					linked_imprinter = null
-				else
-					return
 		if("eject_da")
 			linked_destroy.unload_item()
 		if("deconstruct")
@@ -477,8 +467,6 @@ doesn't have toxins access.
 				linked_lathe.user_try_print_id(params["id"], params["amount"])
 			if(params["latheType"] == "circuit")
 				linked_imprinter.user_try_print_id(params["id"])
-			else
-				return
 		if("eject_disk")
 			eject_disk(params["type"])
 		if("tdisk_clear")
@@ -498,6 +486,7 @@ doesn't have toxins access.
 				say("Uploading research from disk.")
 				tdisk_update = TRUE
 				addtimer(CALLBACK(src, .proc/tdisk_update_complete), 50)
+	SStgui.try_update_ui(usr, src, "rdconsole")			//Force refresh.
 
 /obj/machinery/computer/rdconsole/proc/tdisk_update_complete()
 	tdisk_update = FALSE
@@ -565,7 +554,7 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/proc/unlock_console(mob/user)
 	locked = FALSE
 
-/obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "rdconsole", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "rdconsole_primary", "Research and Development", 880, 880, master_ui, state)

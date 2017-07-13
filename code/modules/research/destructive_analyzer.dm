@@ -78,11 +78,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/list/pos1 = techweb_item_boost_check(loaded_item)
 	if(!pos1[TN])
 		return FALSE
-	var/dpath = loaded_item.path
+	var/dpath = loaded_item.type
 	if(!TN[dpath])
 		return FALSE
 	var/dboost = TN[dpath]
-		var/choice = input("Are you sure you want to destroy [linked_destroy.loaded_item.name] for a boost of [dboost] in node [TN.display_name]") in list("Proceed", "Cancel")
+	var/choice = input("Are you sure you want to destroy [loaded_item.name] for a boost of [dboost] in node [TN.display_name]") in list("Proceed", "Cancel")
 	if(choice == "Cancel")
 		return FALSE
 	busy = TRUE
@@ -91,9 +91,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(QDELETED(loaded_item) || QDELETED(src) || QDELETED(linked_console))
 		return FALSE
 	linked_console.stored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], loaded_item.type)
-	SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type] - [TN.id]")
+	SSblackbox.add_details("item_deconstructed","[loaded_item.type] - [TN.id]")
 	if(linked_console && linked_console.linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-		for(var/material in linked_destroy.loaded_item.materials)
+		for(var/material in loaded_item.materials)
 			linked_console.linked_lathe.materials.insert_amount(min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (loaded_item.materials[material]*(decon_mod/10))), material)
 	for(var/mob/M in loaded_item.contents)
 		M.death()
@@ -108,3 +108,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 	use_power(250)
 	update_icon()
 
+/obj/machinery/rnd/destructive_analyzer/proc/unload_item()
+	if(!loaded_item)
+		return FALSE
+	loaded_item.forceMove(get_turf(src))
+	loaded_item = null
+	return TRUE
