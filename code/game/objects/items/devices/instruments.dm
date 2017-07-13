@@ -62,8 +62,8 @@
 /obj/item/device/instrument/piano_synth
 	name = "synthesizer"
 	desc = "An electronic synthesizer that can play piano music."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "radio"
+	icon_state = "synth"
+	item_state = "synth"
 	instrumentId = "piano"
 
 /obj/item/device/instrument/guitar
