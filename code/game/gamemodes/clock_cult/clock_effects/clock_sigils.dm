@@ -132,8 +132,6 @@
 				to_chat(M, "<span class='heavy_brass'>[message] you!</span>")
 			else
 				to_chat(M, "<span class='heavy_brass'>[message] [L.real_name]!</span>")
-	if(delete_on_finish)
-		qdel(src)
 	else
 		animate(src, color = oldcolor, time = 20)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
