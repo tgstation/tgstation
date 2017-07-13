@@ -547,6 +547,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
 				continue
+			if((rank == "AI") && !(config.allow_ai))
+				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[DISABLED\]</b></font></td></tr>"
+				continue
 			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
 				HTML += "<b><span class='dark'>[rank]</span></b>"
 			else
