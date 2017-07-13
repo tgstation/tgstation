@@ -160,8 +160,8 @@ Note: Must be placed west/left of and R&D console to function.
 
 	var/power = 1000
 	amount = Clamp(amount, 1, 10)
-	for(var/M in being_built.materials)
-		power += round(being_built.materials[M] * amount / 5)
+	for(var/M in D.materials)
+		power += round(D.materials[M] * amount / 5)
 	power = max(3000, power)
 	use_power(power)
 
@@ -179,7 +179,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	materials.use_amount(efficient_mats, amount)
 	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*coeff)
+		reagents.remove_reagent(R, D.reagents_list[R]*efficiency_coeff)
 
 	busy = TRUE
 	flick("protolathe_n", src)
@@ -194,7 +194,8 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
 		if(istype(I, /obj/item/weapon/storage/backpack/holding))
-			I.investigate_log("built by [key]", INVESTIGATE_SINGULO)
+			if(usr)
+				I.investigate_log("built by [usr.key]", INVESTIGATE_SINGULO)
 		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/weapon/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
 	SSblackbox.add_details("item_printed","[new_item.type]|[amount]")

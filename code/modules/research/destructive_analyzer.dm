@@ -88,13 +88,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 	busy = TRUE
 	addtimer(CALLBACK(src, .proc/reset_busy), 24)
 	flick("d_analyzer_process", src)
-	if(QDELETED(linked_item) || QDELETED(src) || QDELETED(linked_console))
+	if(QDELETED(loaded_item) || QDELETED(src) || QDELETED(linked_console))
 		return FALSE
-	linked_consolestored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], linked_destroy.loaded_item.type)
+	linked_console.stored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], loaded_item.type)
 	SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type] - [TN.id]")
-	if(linked_console && linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+	if(linked_console && linked_console.linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 		for(var/material in linked_destroy.loaded_item.materials)
-			linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+			linked_console.linked_lathe.materials.insert_amount(min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (loaded_item.materials[material]*(decon_mod/10))), material)
 	for(var/mob/M in loaded_item.contents)
 		M.death()
 	if(istype(loaded_item, /obj/item/stack/sheet))

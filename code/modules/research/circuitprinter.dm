@@ -166,15 +166,15 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	flick("circuit_imprinter_ani", src)
 	materials.use_amount(efficient_mats)
 	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]/coeff)
+		reagents.remove_reagent(R, D.reagents_list[R]/efficiency_coeff)
 
 	var/P = D.build_path
 	addtimer(CALLBACK(src, .proc/reset_busy), 16)
 	addtimer(CALLBACK(src, .proc/do_print, P, efficient_mats), 16)
 
-/obj/machinery/rnd/circuit_imprinter/proc/do_print(path, matlist)
+/obj/machinery/rnd/circuit_imprinter/proc/do_print(path, list/matlist)
 	if(QDELETED(src))
 		return FALSE
 	var/obj/item/I = new path(get_turf(src))
 	I.materials = matlist.Copy()
-	SSblackbox.add_details("circuit_printed","[new_item.type]")
+	SSblackbox.add_details("circuit_printed","[path]")

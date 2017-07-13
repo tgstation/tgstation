@@ -396,7 +396,6 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/ui_act(action, params)
 	if(..())
 		return
-	var/list/l = params
 	to_chat(usr, "<span class='boldnotice'>DEBUG: Interact with action [action] and params: \"[list2params(params)]\"</span>")
 	switch(action)
 		if("select_node")
