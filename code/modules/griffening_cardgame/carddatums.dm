@@ -165,7 +165,7 @@
 	DEF = 10
 	Attributes = list("Human", "Non antag", "Provides incapacitation immunity")
 
-/datam/griffeningcard/creature/CMO
+/datum/griffeningcard/creature/CMO
 
 	name = "Chief Medical Officer"
 	desc = "This card can only be played if you sacrifice a medical doctor. If this card is in play, increase all DEF of all humans you control by 20. This effect gives 20 more DEF per medical doctor you control."
@@ -174,7 +174,7 @@
 	DEF = 20
 	Attributes = list("human", "Non antag", "Head", "Unconvertable", "Summon condition")
 
-/datam/griffeningcard/creature/MedicalDoctor
+/datum/griffeningcard/creature/MedicalDoctor
 
 	name = "Medical Doctor"
 	desc = "A medical doctor that well, heals people somehow."
@@ -295,7 +295,7 @@
 
 	name = "Stimpack"
 	desc = "Antag only. The equipped creature gains 30 DEF and can no longer be incapacitated as long as this is equipped. The DEF bonus is lost upon denquipping."
-	BONUSDEF = 30
+	BOOSTDEF = 30
 	Attributes = list("Equipment", "Incapacitation immunity")
 
 /datum/griffeningcard/equipment/Injector
