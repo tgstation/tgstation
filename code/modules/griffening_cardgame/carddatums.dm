@@ -5,8 +5,8 @@
 	var/ATK = 0
 	var/DEF = 0
 	var/LVL = 0
-	var/BONUSATK = 0
-	var/BONUSDEF = 0
+	var/BOOSTATK = 0
+	var/BOOSTDEF = 0
 	var/REMOVEATK = 0
 	var/REMOVEDEF = 0
 	var/summonsound = null //Same thing for if you use an effect
@@ -169,7 +169,7 @@
 	DEF = 10
 	Attributes = list("Human", "Non antag", "Provides incapacitation immunity")
 
-/datum/griffeningcard/creature/CMO
+/datam/griffeningcard/creature/CMO
 
 	name = "Chief Medical Officer"
 	desc = "This card can only be played if you sacrifice a medical doctor. If this card is in play, increase all DEF of all humans you control by 20. This effect gives 20 more DEF per medical doctor you control."
