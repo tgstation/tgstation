@@ -104,8 +104,6 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
-	var/atom/movable/cached_pull
-	var/turf/old_pull_turf
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
@@ -287,7 +285,6 @@
 		return FALSE
 	momentum_decay()
 	for(var/i in 1 to momentum_speed)
-		var/turf/oldturf = get_turf(wearer)
 		if(momentum_speed_x >= i)
 			step(wearer, drift_dir_x)
 		if(momentum_speed_y >= i)
@@ -529,7 +526,6 @@
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
 	spawn()
 		door.Open()
-	var/turf/old = get_turf(wearer)
 	var/turf/T = get_turf(door)
 	wearer.forceMove(T)
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
@@ -557,7 +553,6 @@
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
 		var/turf/target = get_turf(A)
-		var/turf/old = get_turf(wearer)
 		if(istype(A, /obj/machinery/door/window) && (get_turf(wearer) == get_turf(A)))
 			target = get_step(A, A.dir)
 		wearer.forceMove(target)
@@ -567,7 +562,6 @@
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
 		return FALSE
-	var/turf/old = get_turf(wearer)
 	var/turf/T = get_turf(victim)
 	wearer.forceMove(T)
 	wearer.visible_message("<span class='notice'>[wearer] flies over [victim]!</span>")
