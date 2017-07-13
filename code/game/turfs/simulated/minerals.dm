@@ -32,7 +32,7 @@
 	icon = smooth_icon
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
-		for(var/dir in GLOB.cardinal)
+		for(var/dir in GLOB.cardinals)
 			if(prob(spreadChance))
 				var/turf/T = get_step(src, dir)
 				if(istype(T, /turf/closed/mineral/random))

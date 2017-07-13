@@ -21,7 +21,7 @@
 
 /obj/machinery/gibber/autogibber/Initialize()
 	. = ..()
-	for(var/i in GLOB.cardinal)
+	for(var/i in GLOB.cardinals)
 		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
 		if(input_obj)
 			if(isturf(input_obj.loc))

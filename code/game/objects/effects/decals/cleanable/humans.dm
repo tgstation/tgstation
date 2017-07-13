@@ -159,7 +159,7 @@
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
 
-	for(var/Ddir in GLOB.cardinal)
+	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)

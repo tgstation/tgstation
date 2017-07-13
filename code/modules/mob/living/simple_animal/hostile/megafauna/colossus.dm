@@ -131,11 +131,11 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(GLOB.diagonals)
 	sleep(10)
-	dir_shots(GLOB.cardinal)
+	dir_shots(GLOB.cardinals)
 	sleep(10)
 	dir_shots(GLOB.diagonals)
 	sleep(10)
-	dir_shots(GLOB.cardinal)
+	dir_shots(GLOB.cardinals)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")

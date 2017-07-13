@@ -392,7 +392,7 @@
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
-			M.setDir(pick(GLOB.cardinal))
+			M.setDir(pick(GLOB.cardinals))
 			M.lay_down(TRUE)
 		 time--
 

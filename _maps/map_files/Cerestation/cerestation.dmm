@@ -32943,8 +32943,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -32971,8 +32970,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -32984,8 +32982,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -34154,28 +34151,22 @@
 	},
 /area/engine/engineering)
 "bmB" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 4;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
 "bmC" = (
-/obj/structure/reflector/box{
-	anchored = 1
-	},
+/obj/structure/reflector/box/anchored,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
 "bmD" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 1;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 1
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -38211,9 +38202,7 @@
 	},
 /area/engine/supermatter)
 "btu" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -38270,9 +38259,7 @@
 	},
 /area/engine/supermatter)
 "btA" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
 	d2 = 4
@@ -39151,9 +39138,7 @@
 	},
 /area/engine/supermatter)
 "buZ" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
 	d2 = 4
@@ -39885,9 +39870,7 @@
 	},
 /area/engine/engineering)
 "bwo" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -41616,7 +41599,6 @@
 "bzz" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	name = "scrubbers pipe";
 	dir = 4
 	},
 /turf/open/floor/plasteel/black{
@@ -46802,12 +46784,8 @@
 "bIO" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 10;
@@ -51591,7 +51569,6 @@
 /area/engine/atmos)
 "bRz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	name = "scrubbers pipe";
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -51605,7 +51582,6 @@
 	name = "Waste Loop"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	name = "scrubbers pipe";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -59265,7 +59241,7 @@
 	height = 20;
 	name = "Cere emergency shuttle";
 	port_angle = 90;
-	preferred_direction = 2;
+	preferred_direction = 1;
 	width = 42
 	},
 /obj/docking_port/stationary{
@@ -88758,8 +88734,7 @@
 /area/security/processing)
 "dnR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
