@@ -101,6 +101,12 @@
 	icon_state = "bottle20"
 	list_reagents = list("synaptizine" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/formaldehyde
+	name = "formaldehyde bottle"
+	desc = "A small bottle of formaldehyde."
+	icon_state = "bottle20"
+	list_reagents = list("formaldehyde" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
 	desc = "A small bottle of ammonia."
