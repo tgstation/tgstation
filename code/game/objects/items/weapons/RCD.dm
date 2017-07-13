@@ -363,7 +363,7 @@ obj/item/weapon/construction
 	..()
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
-	canRturf = 1
+	canRturf = 0
 
 /obj/item/weapon/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
