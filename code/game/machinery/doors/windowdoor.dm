@@ -206,13 +206,13 @@
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !emagged)
+		emagged = TRUE
 		operating = TRUE
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		operating = FALSE
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		open()
-		emagged = TRUE
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/living/user, params)
 
