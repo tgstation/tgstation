@@ -58,7 +58,7 @@
 		sleep(20)
 	close()
 
-/obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
+/obj/machinery/door/window/CollidedWith(atom/movable/AM)
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))

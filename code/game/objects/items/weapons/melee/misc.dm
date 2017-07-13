@@ -256,13 +256,13 @@
 /obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.drop_item()
-	shard.Bumped(user)
+	shard.CollidedWith(user)
 
 /obj/item/weapon/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
 		shard.Consume()
 	else if(!isturf(target))
-		shard.Bumped(target)
+		shard.CollidedWith(target)
 	else
 		consume_turf(target)
 

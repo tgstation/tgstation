@@ -115,10 +115,14 @@
 			shockcd = TRUE
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
-/obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/user)
-	if(!shockcd)
-		if(ismob(user))
-			var/mob/living/M = user
-			M.electrocute_act(15,"Energy Barrier", safety=1)
-			shockcd = TRUE
-			addtimer(CALLBACK(src, .proc/cooldown), 5)
+/obj/structure/holosign/barrier/cyborg/hacked/CollidedWith(atom/movable/AM)
+	if(shockcd)
+		return
+
+	if(!ismob(AM))
+		return
+
+	var/mob/living/M = AM
+	M.electrocute_act(15,"Energy Barrier", safety=1)
+	shockcd = TRUE
+	addtimer(CALLBACK(src, .proc/cooldown), 5)
