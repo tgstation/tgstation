@@ -1,0 +1,5 @@
+author: "PopNotes"
+delete-after: True
+changes: 
+  - rscadd: "A bunch more fart messages"
+  - soundadd: "Two shiny new fartsounds"
