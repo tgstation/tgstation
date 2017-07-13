@@ -5,6 +5,7 @@
 	var/id
 	var/display_name = "Errored Node"
 	var/description = "Why are you seeing this?"
+	var/hidden = FALSE			//Whether it starts off hidden.
 	var/starting_node = FALSE	//Whether it's available without any research.
 	var/list/prereq_ids = list()
 	var/list/design_ids = list()

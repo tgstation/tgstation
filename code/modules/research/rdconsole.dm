@@ -263,14 +263,17 @@ doesn't have toxins access.
 	var/list/techweb_avail = list()
 	var/list/techweb_locked = list()
 	var/list/techweb_researched = list()
-	for(var/id in stored_research.available_nodes)
-		var/datum/techweb_node/N = stored_research.available_nodes[id]
+	var/l1 = stored_research.get_available_nodes()
+	var/l2 = stored_research.get_visible_nodes()
+	var/l3 = stored_research.get_researched_nodes()
+	for(var/id in l1)
+		var/datum/techweb_node/N = l1[id]
 		techweb_avail += list(list("id" = N.id, "display_name" = N.display_name))
-	for(var/id in stored_research.visible_nodes)
-		var/datum/techweb_node/N = stored_research.visible_nodes[id]
+	for(var/id in l2)
+		var/datum/techweb_node/N = l2[id]
 		techweb_locked += list(list("id" = N.id, "display_name" = N.display_name))
-	for(var/id in stored_research.researched_nodes)
-		var/datum/techweb_node/N = stored_research.researched_nodes[id]
+	for(var/id in l3)
+		var/datum/techweb_node/N = l3[id]
 		techweb_researched += list(list("id" = N.id, "display_name" = N.display_name))
 	data["techweb_avail"] = techweb_avail
 	data["techweb_locked"] = techweb_locked

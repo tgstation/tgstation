@@ -6,6 +6,7 @@
 	var/list/datum/techweb_node/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = datum
 	var/list/datum/design/researched_designs = list()			//Designs that are available for use. Assoc list, id = datum
 	var/list/datum/techweb_node/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node datum = path of boost object.
+	var/list/datum/techweb_node/hidden_nodes = list()			//Hidden nodes. id = datum. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/research_points = 0										//Available research points.
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 
@@ -13,6 +14,7 @@
 	for(var/i in SSresearch.techweb_nodes_starting)
 		var/datum/techweb_node/DN = SSresearch.techweb_nodes_starting[i]
 		research_node(DN)
+	hidden_nodes = SSresearch.hidden_nodes
 	return ..()
 
 /datum/techweb/admin
@@ -23,6 +25,7 @@
 	for(var/i in SSresearch.techweb_nodes)
 		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
 		research_node(TN, TRUE)
+	hidden_nodes = list()		//Admin > everyone else :D
 
 /datum/techweb/science	//Global science techweb for RND consoles.
 
@@ -47,14 +50,19 @@
 		researched_designs = list()
 	for(var/i in processing)
 		var/datum/techweb_node/TN = processing[i]
-		for(var/I in TN.designs)
-			researched_designs[I] = TN.designs[I]
+		if(researched_nodes[TN.id])
+			for(var/I in TN.designs)
+				researched_designs[I] = TN.designs[I]
 
-/datum/techweb/proc/copy_research_to(datum/techweb/reciever)				//Adds any missing research to theirs.
+/datum/techweb/proc/copy_research_to(datum/techweb/reciever, unlock_hidden = TRUE)				//Adds any missing research to theirs.
 	for(var/i in researched_nodes)
 		reciever.researched_nodes[i] = researched_nodes[i]
 	for(var/i in researched_designs)
 		reciever.researched_designs[i] = researched_designs[i]
+	if(unlock_hidden)
+		for(var/i in reciever.hidden_nodes)
+			if(!hidden_nodes[i])
+				reciever.hidden_nodes -= i		//We can see it so let them see it too.
 	reciever.recalculate_nodes()
 
 /datum/techweb/proc/copy()
@@ -63,6 +71,16 @@
 	returned.visible_nodes = visible_nodes.Copy()
 	returned.available_nodes = available_nodes.Copy()
 	returned.researched_designs = researched_designs.Copy()
+	returned.hidden_nodes = hidden_nodes.Copy()
+
+/datum/techweb/proc/get_visible_nodes()			//The way this is set up is shit but whatever.
+	return visible_nodes - hidden_nodes
+
+/datum/techweb/proc/get_available_nodes()
+	return available_nodes - hidden_nodes
+
+/datum/techweb/proc/get_researched_nodes()
+	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_design_by_id(id)
 	return add_design(get_techweb_design_by_id(id))

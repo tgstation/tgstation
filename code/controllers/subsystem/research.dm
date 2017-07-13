@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_designs = list()			//associative id = node datum
 	var/list/techweb_nodes_starting = list()	//associative id = node datum
 	var/list/techweb_boost_items = list()		//associative double-layer path = list(node = point_discount)
+	var/list/techweb_nodes_hidden = list()		//Nodes that should be hidden by default.
 	var/single_server_income = 50
 	var/multiserver_calculation = FALSE
 	//20 wait = 2 seconds per tick

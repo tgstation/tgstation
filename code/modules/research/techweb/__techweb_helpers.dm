@@ -107,6 +107,8 @@
 			node.prerequisites[i] = SSresearch.techweb_nodes[i]
 		for(var/i in node.design_ids)
 			node.designs[i] = SSresearch.techweb_designs[i]
+		if(node.hidden)
+			SSresearch.techweb_nodes_hidden[node.id] = node
 		CHECK_TICK
 	generate_techweb_unlock_linking()
 
