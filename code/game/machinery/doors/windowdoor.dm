@@ -209,6 +209,7 @@
 		emagged = TRUE
 		operating = TRUE
 		flick("[src.base_state]spark", src)
+		playsound(src, "sparks", 75, 1)
 		sleep(6)
 		operating = FALSE
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
