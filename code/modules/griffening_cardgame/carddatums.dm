@@ -61,7 +61,7 @@
 	LVL = 2
 	ATK = 10
 	DEF = 5
-	Attributes = list("Human, "Non antag", "Assistant")
+	Attributes = list("Human", "Non antag", "Assistant")
 
 /datum/griffeningcard/creature/HeadOfSecurity
 
