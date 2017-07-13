@@ -32,10 +32,6 @@
 	LVL = 0
 	ATK = 0
 	DEF = 0
-	BONUSATK = 0
-	BONUSDEF = 0
-	REMOVEATK = 0
-	REMOVEDEF = 0
 /datum/griffeningcard/area
 	card_type = AREA_CARD
 
@@ -374,8 +370,6 @@
 
 	name = "Energy Gun"
 	desc = "Gives 30 ATK and 15 DEF."
-	BONUSATK = 30
-	BONUSDEF = 15
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/effect/robotframe
@@ -413,14 +407,12 @@
 
 	name = "Toolbox"
 	desc = "Increase the equipped creature ATK by 10. If it's an assistant, the ATK is instead increased by 25."
-	BONUSATK = 10
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/fireextinguisher
 
 	name = "Fire Extinguisher"
 	desc = "Increases the equipped creature ATK by 20. If the creature is attacked or effected by plasma fire, incendiary grenade or flamethrower, you may choose to negate the effect and if you do, destroy the negated card and destroy this card as well."
-	BOOSTATK = 20
 	Attributes = list("Equipment", "Rekts fire")
 
 /datum/griffeningcard/effect/wetfloor
@@ -433,8 +425,6 @@
 
 	name = "Wrestling Belt"
 	desc = "Can only be used by an antag or a syndicate operative and only humans, increases the ATK and DEF by 20 and if the equipped human is to be attacked, negate any ATK bonuses the attacker if it has any."
-	BOOSTATK = 20
-	BOOSTDEF = 20
 	Attributes = list("Equipment", "Antag only", "Nullifies attacker equipment")
 
 /datum/griffeningcard/effect/supplyshuttle
