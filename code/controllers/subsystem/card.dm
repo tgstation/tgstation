@@ -14,8 +14,10 @@ SUBSYSTEM_DEF(card)
 
 /datum/controller/subsystem/card/Initialize()
 	. = ..()
-	for(var/ctype in subtypesof(/obj/item/griffeningcard))
-		var/obj/item/griffeningcard/card = new ctype()
+	for(var/ctype in subtypesof(/datum/griffeningcard))
+		var/datum/griffeningcard/card = new ctype()
+		if(!card.name)
+			continue
 		all_cards[ctype] = card.rarity
 		switch(card.card_type)
 			if(CREATURE_CARD)
