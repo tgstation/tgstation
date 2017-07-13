@@ -6,5 +6,4 @@
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
-	origin_tech = "engineering=5;magnets=4;programming=4"
 	w_class = WEIGHT_CLASS_SMALL
