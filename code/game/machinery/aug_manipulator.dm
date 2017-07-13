@@ -60,7 +60,7 @@
 			return
 		else
 			O = user.get_active_held_item()
-			if(!user.transferItemToLoc(src))
+			if(!user.transferItemToLoc(O, src))
 				world << "debug blah blah"
 				return
 			storedpart = O
@@ -117,7 +117,6 @@
 	..()
 	if(user.incapacitated())
 		return
-
 	if(storedpart)
 		storedpart.forceMove(get_turf(src))
 		storedpart = null
