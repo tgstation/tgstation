@@ -3,7 +3,7 @@
 	<ui-display title='No Design Disk Loaded'></ui-display>
 {{else}}
 	{{#if data.ddisk_update}}
-		<ui display title='Design Disk Updating'></ui-display>
+		<ui-display title='Design Disk Updating'></ui-display>
 	{{else}}
 		
 	{{/if}}

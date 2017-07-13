@@ -3,7 +3,7 @@
 	<ui-display title='No Technology Disk Loaded'></ui-display>
 {{else}}
 	{{#if data.tdisk_update}}
-		<ui display title='Technology Disk Updating'></ui-display>
+		<ui-display title='Technology Disk Updating'></ui-display>
 	{{else}}
 		<ui-display title='Technology Disk'>
 			<ui-section title='Disk IO'><ui-button action='tdisk_down'>Download Research to Disk</ui-button><ui-button action='tdisk_up'>Upload Research from Disk</ui-button>
