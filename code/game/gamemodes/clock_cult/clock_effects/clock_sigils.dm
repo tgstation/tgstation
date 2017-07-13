@@ -132,10 +132,9 @@
 				to_chat(M, "<span class='heavy_brass'>[message] you!</span>")
 			else
 				to_chat(M, "<span class='heavy_brass'>[message] [L.real_name]!</span>")
-	else
-		animate(src, color = oldcolor, time = 20)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
-		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
+	animate(src, color = oldcolor, time = 20)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
+	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 
 
 //Sigil of Transmission: Stores power for clockwork machinery, serving as a battery.
