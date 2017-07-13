@@ -21,7 +21,7 @@
 		remove_ranged_ability()
 		return TRUE
 
-//For the Geis scripture; binds a target to convert.
+//For the Geis scripture; mutes and binds a target.
 /obj/effect/proc_holder/slab/geis
 	ranged_mousepointer = 'icons/effects/geis_target.dmi'
 
@@ -69,12 +69,13 @@
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
 					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the scripture following this
-				slab.busy = null
-				var/datum/clockwork_scripture/geis/conversion = new
-				conversion.slab = slab
-				conversion.invoker = ranged_ability_user
-				conversion.target = target
-				conversion.run_scripture()
+				if(L.buckled)
+					L.buckled.unbuckle_mob(L, TRUE)
+				var/obj/structure/destructible/clockwork/geis_binding/binding = new(get_turf(target))
+				binding.setDir(target.dir)
+				binding.buckle_mob(L, TRUE)
+				binding.slab = slab
+				ranged_ability_user.start_pulling(binding)
 				successful = TRUE
 
 		remove_ranged_ability()

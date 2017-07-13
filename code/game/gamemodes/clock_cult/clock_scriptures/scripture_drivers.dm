@@ -97,82 +97,46 @@
 	Click your slab to cancel.</b></span>"
 
 
-//Geis: Grants a short-range binding that will immediately start chanting on binding a valid target.
+//Geis: Charges your slab; the next non-Servant to be struck with it will be stunned, muted, and shackled.
 /datum/clockwork_scripture/ranged_ability/geis_prep
-	descname = "Melee Convert Attack"
+	descname = "Melee Mute and Restrain"
 	name = "Geis"
-	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
-	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
+	desc = "Charges your slab with divine energy, allowing you to shackle a struck heretic."
+	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
 	whispered = TRUE
-	channel_time = 20
-	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
+	channel_time = 10
+	usage_tip = "You cannot use your slab while maintaining the scripture, so take care to prepare ahead for any conversion methods."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Allows you to bind and start converting an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
+	quickbind_desc = "Allows you to bind and briefly mute an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
 	slab_icon = "geis"
 	ranged_type = /obj/effect/proc_holder/slab/geis
 	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
-	<b>Left-click a target within melee range to convert!\n\
+	<b>Left-click a target within melee range to shackle!\n\
 	Click your slab to cancel.</b></span>"
 	timeout_time = 100
 
-/datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
-	var/servants = 0
-	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(can_recite_scripture(M, TRUE))
-				servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		whispered = FALSE
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*3, 50)
-	return ..()
 
-//The scripture that does the converting.
-/datum/clockwork_scripture/geis
-	name = "Geis Conversion"
-	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 49
-	tier = SCRIPTURE_PERIPHERAL
-	var/mob/living/target
-	var/obj/structure/destructible/clockwork/geis_binding/binding
-
-/datum/clockwork_scripture/geis/Destroy()
-	if(binding && !QDELETED(binding))
-		qdel(binding)
-	return ..()
-
-/datum/clockwork_scripture/geis/can_recite()
-	if(!target)
-		return FALSE
-	return ..()
-
-/datum/clockwork_scripture/geis/run_scripture()
-	var/servants = 0
-	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(can_recite_scripture(M, TRUE))
-				servants++
-	if(target.buckled)
-		target.buckled.unbuckle_mob(target, TRUE)
-	binding = new(get_turf(target))
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*7, 120)
-		binding.can_resist = TRUE
-	binding.setDir(target.dir)
-	binding.buckle_mob(target, TRUE)
-	return ..()
-
-/datum/clockwork_scripture/geis/check_special_requirements()
-	return target && binding && target.buckled == binding && !is_servant_of_ratvar(target) && target.stat != DEAD
-
-/datum/clockwork_scripture/geis/scripture_effects()
-	. = add_servant_of_ratvar(target)
-	if(.)
-		add_logs(invoker, target, "Converted", object = "Geis")
+//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
+/datum/clockwork_scripture/create_object/sigil_of_submission
+	descname = "Trap, Conversion"
+	name = "Sigil of Submission"
+	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
+	invocations = list("Divinity, enlighten...", "...those who trespass here!")
+	channel_time = 60
+	consumed_components = list(GEIS_CAPACITOR = 1)
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/submission
+	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
+	usage_tip = "This is the primary method of converting heretics into Servants. Geis is an excellent tool for restraining potential converts."
+	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 5
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
 
 
 //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.
