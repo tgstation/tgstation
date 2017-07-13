@@ -61,7 +61,6 @@
 		else
 			O = user.get_active_held_item()
 			if(!user.transferItemToLoc(O, src))
-				world << "debug blah blah"
 				return
 			storedpart = O
 			O.add_fingerprint(user)
