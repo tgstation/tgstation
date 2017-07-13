@@ -428,13 +428,6 @@
 	name = "Wet Floor"
 	desc = "Stops a enemy creature attack. If you control a janitor, this card is put into your hand instead of the discard pile."
 	Attributes = list("Effect", "Only during a creature attack", "Janitor refreshes")
-\*
-/datum/griffeningcard/effect/adminhelp
-
-	name = "Adminhelp"
-	desc = "This card can only be played if it's facedown and being used to counter an effect or a equipping a creature of a equipment card. The card is destroyed unless this card is destroyed as a result of a counter. Destroy this card after the effects are concluded."
-	Attributes = list(FACEDOWN_ONLY, STOP_EQUIPPING, STOP_EFFECT, ANY_TIME)
-*\ //Muh ooc concerns
 
 /datum/griffeningcard/equipment/wrestlingbelt
 
