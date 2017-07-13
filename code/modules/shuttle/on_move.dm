@@ -11,7 +11,32 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called from the new turf before anything has been moved
+// Only gets called if fromShuttleMove returns true first
 /turf/proc/toShuttleMove(turf/oldT)
+	for(var/atom/movable/thing in src)
+		if(ismob(thing))
+			if(isliving(thing))
+				var/mob/living/M = thing
+				if(M.buckled)
+					M.buckled.unbuckle_mob(M, 1)
+				if(M.pulledby)
+					M.pulledby.stop_pulling()
+				M.stop_pulling()
+				M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
+				if(M.key || M.get_ghost(TRUE))
+					SSblackbox.add_details("shuttle_gib", "[type]")
+				else
+					SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
+				M.gib()
+
+		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
+			if(istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+				continue
+			if(!thing.anchored)
+				step(thing, dir)
+			else
+				qdel(thing)
+
 	return TRUE
 
 // Called on the old turf to move the turf data
@@ -35,6 +60,13 @@ All ShuttleMove procs go here
 
 // Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT)
+	if(SSlighting.initialized)
+		var/atom/movable/lighting_object/old_obj = lighting_object
+		var/atom/movable/lighting_object/new_obj = oldT.lighting_object
+		if(old_obj)
+			old_obj.update()
+		if(new_obj)
+			new_obj.update()
 	return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -80,8 +112,10 @@ All ShuttleMove procs go here
 	contents -= oldT
 	underlying_old_area.contents += oldT
 	oldT.change_area(src, underlying_old_area)
+	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
+	//parallax_movedir = old_dest_area.parallax_movedir //Our area should use the parallax of the area it's moving in to for transit space
 	old_dest_area.contents -= newT
 	contents += newT
 	newT.change_area(old_dest_area, src)

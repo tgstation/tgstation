@@ -174,10 +174,11 @@
 	SSshuttle.transit += src
 
 /obj/docking_port/stationary/transit/proc/dezone()
-	for(var/i in assigned_turfs)
-		var/turf/T = i
-		T.empty(/turf/open/space, /turf/open/space)
-		T.flags |= UNUSED_TRANSIT_TURF
+	for(var/i in 1 to assigned_turfs.len)
+		var/turf/T = assigned_turfs[i]
+		if(T.type == turf_type)
+			T.empty(/turf/open/space, /turf/open/space)
+			T.flags |= UNUSED_TRANSIT_TURF
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
@@ -396,26 +397,25 @@
 			area_type = current_dock.area_type
 
 	var/list/shuttle_turfs = return_ordered_turfs(x, y, z, dir, area_type)
-	var/area/shuttle_area = locate("[area_type]")
 
 	//remove area surrounding docking port
-	if(shuttle_area.contents.len)
-		var/area/underlying_area = locate("[area_type]")
-		if(!underlying_area)
-			underlying_area = new area_type(null)
-		for(var/i in shuttle_turfs)
-			var/turf/T = i
-			var/area/old_area = T.loc
-			underlying_area.contents += T
-			T.change_area(old_area, underlying_area)
+	for(var/i in 1 to shuttle_areas.len)
+		var/area/shuttle_area = shuttle_areas[i]
+		if(shuttle_area.contents.len)
+			var/area/underlying_area = locate("[area_type]")
+			if(!underlying_area)
+				underlying_area = new area_type(null)
+			for(var/ii in shuttle_turfs)
+				var/turf/T = shuttle_turfs[ii]
+				var/area/old_area = T.loc
+				underlying_area.contents += T
+				T.change_area(old_area, underlying_area)
 
 	for(var/i in shuttle_turfs)
 		var/turf/T = i
 		if(!T)
 			continue
 		T.empty(turf_type, baseturf_type)
-
-	shuttle_area.afterShuttleMove()
 
 	qdel(src, force=TRUE)
 
@@ -507,8 +507,9 @@
 		var/move_turf = TRUE //Should this turf be moved, if false remove from the turf list
 		if(!(shuttle_areas[old_area]))
 			move_turf = FALSE
-		if(!(oldT.fromShuttleMove(newT, turf_type, baseturf_type) && newT.toShuttleMove(oldT)))				//turfs
-			move_turf = FALSE
+		move_turf = oldT.fromShuttleMove(newT, turf_type, baseturf_type)									//turf
+		if(move_turf) //Only call toShuttleMove if the source turf is willing to move
+			move_turf = newT.toShuttleMove(oldT)															//turf
 		for(var/ii in 1 to oldT.contents.len)
 			var/atom/movable/moving_atom = oldT.contents[ii]
 			if(moving_atom.beforeShuttleMove(newT, rotation)) 												//atoms
@@ -529,10 +530,6 @@
 		return DOCKING_AREA_EMPTY
 
 	/*******************************************All onShuttleMove procs******************************************/
-
-	//move or squish anything in the way ship at destination
-	//doing this just before actualy moving tiles after turfs have chosen if they want to move
-	roadkill(old_turfs, new_turfs, new_dock.dir) //This should maybe be replaced with before shuttle move procs instead
 	
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
@@ -596,37 +593,6 @@
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
-
-/obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
-	for(var/i in 1 to L0.len)
-		var/turf/T0 = L0[i]
-		var/turf/T1 = L1[i]
-		if(!T0 || !T1)
-			continue
-
-		for(var/atom/movable/AM in T1)
-			if(ismob(AM))
-				if(isliving(AM))
-					var/mob/living/M = AM
-					if(M.buckled)
-						M.buckled.unbuckle_mob(M, 1)
-					if(M.pulledby)
-						M.pulledby.stop_pulling()
-					M.stop_pulling()
-					M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
-					if(M.key || M.get_ghost(TRUE))
-						SSblackbox.add_details("shuttle_gib", "[type]")
-					else
-						SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
-					M.gib()
-
-			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
-					continue
-				if(!AM.anchored)
-					step(AM, dir)
-				else
-					qdel(AM)
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()

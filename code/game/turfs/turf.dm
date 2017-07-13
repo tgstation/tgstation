@@ -201,7 +201,7 @@
 	return ChangeTurf(path, defer_change, ignore_air)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf)
 	if(!path)
 		return
 	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
@@ -416,6 +416,8 @@
 		if(istype(A, /obj/effect/landmark))
 			continue
 		if(istype(A, /obj/docking_port))
+			continue
+		if(istype(A, /atom/movable/lighting_object))
 			continue
 		if(A == T0)
 			continue
