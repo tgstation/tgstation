@@ -29,10 +29,5 @@
 			else
 				T.emp_act(EMP_LIGHT)
 		else if(distance <= light_range)
-<<<<<<< HEAD
-			T.emp_act(2)
-	return 1
-=======
 			T.emp_act(EMP_LIGHT)
 	return 1
->>>>>>> 7a26305498... Replaces ex_act and emp_act numbers with defines (#29215)
