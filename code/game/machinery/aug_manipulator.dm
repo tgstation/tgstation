@@ -5,7 +5,7 @@
 	icon_state = "pdapainter"
 	density = TRUE
 	anchored = TRUE
-	onj_integrity = 200
+	obj_integrity = 200
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
 	var/initial_icon_state
@@ -59,13 +59,13 @@
 			to_chat(user, "<span class='warning'>There is already something inside!</span>")
 			return
 		else
-			var/obj/item/bodypart/P = user.get_active_held_item()
-			if(istype(P))
-				if(!user.transferItemToLoc(src)
-					return
-				storedpart = P
-				P.add_fingerprint(user)
-				update_icon()
+			O = user.get_active_held_item()
+			if(!user.transferItemToLoc(src))
+				world << "debug blah blah"
+				return
+			storedpart = O
+			O.add_fingerprint(user)
+			update_icon()
 
 	else if(istype(O, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = O
@@ -81,7 +81,7 @@
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
 					playsound(src, 'sound/items/welder2.ogg', 50, 1)
 					stat &= ~BROKEN
-					max(obj_integrity, max_integrity)
+					obj_integrity = max(obj_integrity, max_integrity)
 					update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
@@ -107,17 +107,15 @@
 			if(!storedpart)
 				return
 			storedpart.icon = style_list_icons[augstyle]
-			ejectpart()
+			AltClick()
 
 		else
 			to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 
 
-/obj/machinery/aug_manipulator/verb/ejectpart()
-	set name = "Eject Part"
-	set category = "Object"
-
-	if(usr.incapacitated())
+/obj/machinery/aug_manipulator/AltClick(mob/living/user)
+	..()
+	if(user.incapacitated())
 		return
 
 	if(storedpart)
@@ -125,7 +123,7 @@
 		storedpart = null
 		update_icon()
 	else
-		to_chat(usr, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/aug_manipulator/power_change()
