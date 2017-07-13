@@ -25,7 +25,7 @@
 	unsuitable_atmos_damage = 15
 	speak_emote = list("yarrs")
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate,
-			/obj/item/weapon/melee/energy/sword/pirate)
+			/obj/item/weapon/melee/transforming/energy/sword/pirate)
 	del_on_death = 1
 	faction = list("pirate")
 
