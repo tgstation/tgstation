@@ -16,7 +16,7 @@
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.blood_DNA)
-		blood_DNA |= C.blood_DNA.Copy()
+		blood_DNA |= C.forensics.blood.Copy()
 	..()
 
 /obj/effect/decal/cleanable/blood/old
@@ -27,7 +27,7 @@
 /obj/effect/decal/cleanable/blood/old/Initialize()
 	..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	blood_DNA["Non-human DNA"] = "A+"
+	forensics.blood["Non-human DNA"] = "A+"
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")

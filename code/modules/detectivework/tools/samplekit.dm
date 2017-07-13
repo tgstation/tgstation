@@ -19,7 +19,6 @@
 		name = "[src._fiber] fibers"
 		icon_state = "fiberbag"
 
-update_icon()
 
 /obj/item/forensics/fiberbag
 	name = "fiber bag"
@@ -27,14 +26,10 @@ update_icon()
 	desc = "A bag containing a fiber from some gloves or clothes."
 	var/_fiber = "air"
 
-/obj/item/forensice/fiberbag/update_icon(fuckeverything)
-	switch(fuckeverything)
-		if(0)
-			icon_state = "fiberbag"
-		if(1)
-			icon_State = "bag"
+/obj/item/forensice/fiberbag/update_icon(meh)
+	icon_state = meh
 
-/obj/item/forensics/fiberbag/Initalize(location, typ)
+/obj/item/forensics/fiberbag/Initialize(location, typ)
 	. = ..()
 	if (typ)
 		_fiber = handlefiber(typ)
@@ -49,7 +44,7 @@ update_icon()
 	if(istype(W, /obj/item/forensics/fiber))
 		var/obj/item/forensics/fiber/H = W
 		_fiber = H._fiber
-		update_icon(0)
+		update_icon("fiberbag")
 		qdel(W)
 
 /obj/item/forensics/fiberkit

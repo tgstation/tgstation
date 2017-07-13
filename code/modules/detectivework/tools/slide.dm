@@ -7,9 +7,7 @@
 	var/C = 0 //type of thing on the slide (only used for swabs)
 
 /obj/item/forensics/slide/update_icon(ihatethis)
-	switch(ihatethis)
-		if(0)
-			icon_state = "slideswab"
+	icon_state = ihatethis
 
 /obj/item/forensics/slide/attackby(obj/item/W, mob/user)
 
@@ -24,9 +22,9 @@
 	else if(istype(W, /obj/item/forensics/fiber) || istype(W, /obj/item/forensics/fiberbag)) //Are we putting a fiber on it?
 		if (istype(W, /obj/item/forensics/fiberbag))
 			var/obj/item/forensics/fiberbag/H = W
-			H._fiber = null
+			H._fiber = ""
 			H.name = "fiber bag"
-			H.update_icon(1)
+			H.update_icon("bag")
 			H.desc = "A bag containing a fiber from some gloves or clothes."
 			icon_state = "slidefiber"
 			A = "fiber"
