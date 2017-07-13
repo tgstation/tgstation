@@ -355,7 +355,7 @@
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
 			if(prob(wall_devastate))
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 			return TRUE
 	if(ismovableatom(target))
 		var/atom/movable/AM = target

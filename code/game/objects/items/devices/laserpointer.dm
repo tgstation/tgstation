@@ -119,7 +119,7 @@
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target
 		if(prob(effectchance * diode.rating))
-			C.emp_act(1)
+			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", src)
 		else

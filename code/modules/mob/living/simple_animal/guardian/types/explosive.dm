@@ -76,7 +76,7 @@
 			stored_obj.forceMove(T)
 			playsound(T,'sound/effects/explosion2.ogg', 200, 1)
 			new /obj/effect/temp_visual/explosion(T)
-			user.ex_act(2)
+			user.ex_act(EXPLODE_HEAVY)
 			qdel(src)
 		else
 			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")

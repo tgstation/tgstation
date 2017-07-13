@@ -1210,7 +1210,7 @@
 		playsound(get_turf(src), I.usesound, 50, 1)
 		if(!do_after(user, 150*I.toolspeed, target = src))
 			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
-			charge.ex_act(1)
+			charge.ex_act(EXPLODE_DEVASTATE)
 			user.Knockdown(60)
 			return
 		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
@@ -1295,7 +1295,7 @@
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
 		charge.loc = get_turf(src)
-		charge.ex_act(1)
+		charge.ex_act(EXPLODE_DEVASTATE)
 		detonated = 1
 		charge = null
 		for(var/mob/living/carbon/human/H in orange(2,src))
@@ -1361,7 +1361,7 @@
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
-		killthis.ex_act(2)//Smashin windows
+		killthis.ex_act(EXPLODE_HEAVY)//Smashin windows
 
 	if(density)
 		return TRUE
