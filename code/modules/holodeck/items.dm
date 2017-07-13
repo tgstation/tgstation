@@ -118,7 +118,7 @@
 	else
 		..()
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
