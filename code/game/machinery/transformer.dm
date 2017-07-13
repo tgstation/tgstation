@@ -62,7 +62,7 @@
 			AM.loc = src.loc
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target)
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.
 	if(!ishuman(mover))

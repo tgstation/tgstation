@@ -96,24 +96,14 @@
 
 	return FALSE
 
-/turf/CanPass(atom/movable/mover, turf/target, height=1.5)
+/turf/CanPass(atom/movable/mover, turf/target)
 	if(!target) return FALSE
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
 		return !density
 
-	else // Now, doing more detailed checks for air movement and air group formation
-		if(target.blocks_air||blocks_air)
-			return FALSE
-
-		for(var/obj/obstacle in src)
-			if(!obstacle.CanPass(mover, target, height))
-				return FALSE
-		for(var/obj/obstacle in target)
-			if(!obstacle.CanPass(mover, src, height))
-				return FALSE
-
-		return TRUE
+	stack_trace("Non movable passed to turf CanPass : [mover]")
+	return FALSE
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -127,6 +117,7 @@
 				return FALSE
 
 	var/list/large_dense = list()
+	
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)

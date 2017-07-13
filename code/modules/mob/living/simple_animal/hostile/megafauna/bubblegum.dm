@@ -397,7 +397,7 @@ Difficulty: Hard
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target, height = 0)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		return 1
 	return 0
