@@ -176,7 +176,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
-			A.ex_act(2)
+			A.ex_act(EXPLODE_HEAVY)
 		DestroySurroundings()
 	..()
 
