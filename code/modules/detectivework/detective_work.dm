@@ -6,10 +6,10 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood(G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood(G.forensics.blood)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
-		if(add_blood(M.blood_DNA))
+		if(add_blood(M.forensics.blood))
 			M.bloody_hands--
 	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
@@ -117,7 +117,7 @@
 
 	// Transfer
 	if(forensics && forensics.prints)
-		A.fingerprints |= forensics.prints.Copy()            //detective
+		A.forensics.prints |= forensics.prints.Copy()            //detective
 	if(forensics.hiddenprints)
 		A.forensics.hiddenprints |= forensics.hiddenprints.Copy()    //admin
 	A.fingerprintslast = fingerprintslast
@@ -125,5 +125,5 @@
 /atom/proc/add_gsr(mob/living/carbon/human/M, gsrtype)
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
-		G.gsr |= gsrtype
+		G.forensics.gsr |= gsrtype
 

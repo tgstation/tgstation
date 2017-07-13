@@ -360,7 +360,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
-	var/list/blood_dna = M.forensics.blood()
+	var/list/blood_dna = M.forensics.blood
 	if(!blood_dna)
 		return 0
 	return add_blood(blood_dna)
