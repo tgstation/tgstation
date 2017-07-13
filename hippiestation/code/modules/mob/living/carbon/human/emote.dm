@@ -3,7 +3,7 @@
 	key_third_person = "farts"
 
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params)
-	var/fartsound = 'hippiestation/sound/effects/fart.ogg'
+	var/fartsound = pick('hippiestation/sound/effects/fart.ogg','hippiestation/sound/effects/fart2.ogg','hippiestation/sound/effects/fart3.ogg')
 	var/bloodkind = /obj/effect/decal/cleanable/blood
 	message = null
 	if(user.stat != CONSCIOUS)
@@ -20,7 +20,15 @@
 			message = "hits <b>[M]</b> in the face with [B]!"
 			M.apply_damage(15,"brute","head")
 		else
-			message = "farts in <b>[M]</b>'s face!"
+			message = pick(
+				"farts in <b>[M]</b>'s face!",
+				"gives <b>[M]</b> the silent but deadly treatment!",
+				"rips mad ass in <b>[M]</b>'s mug!",
+				"releases the musical fruits of labor onto <b>[M]</b>!",
+				"commits an act of butthole bioterror all over <b>[M]</b>!",
+				"poots, singing <b>[M]</b>'s eyebrows!",
+				"humiliates <b>[M]</b> like never before!",
+				"gets real close to <b>[M]</b>'s face and cuts the cheese!")
 	if(!message)
 		message = pick(
 			"rears up and lets loose a fart of tremendous magnitude!",
@@ -31,7 +39,31 @@
 			"farts and waves their hand dismissively.",
 			"farts and pretends nothing happened.",
 			"is a <b>farting</b> motherfucker!",
-			"<B><font color='red'>f</font><font color='blue'>a</font><font color='red'>r</font><font color='blue'>t</font><font color='red'>s</font></B>")
+			"<B><font color='red'>f</font><font color='blue'>a</font><font color='red'>r</font><font color='blue'>t</font><font color='red'>s</font></B>",
+			"unleashes their unholy rectal vapor!",
+			"assblasts gently.",
+			"lets out a wet sounding one!",
+			"exorcises a <b>ferocious</b> colonic demon!",
+			"pledges ass-legience to the flag!",
+			"cracks open a tin of beans!",
+			"tears themselves a new one!",
+			"looses some pure assgas!",
+			"displays the most sophisticated type of humor.",
+			"strains to get the fart out. Is that <font color='red'>blood</font>?",
+			"sighs and farts simultaneously.",
+			"expunges a gnarly butt queef!",
+			"contributes to the erosion of the ozone layer!",
+			"just farts. It's natural, everyone does it.",
+			"had one too many tacos this week!",
+			"has the phantom shits.",
+			"flexes their bunghole.",
+			"'s ass sings the song that ends the earth!",
+			"had to go and ruin the mood!",
+			"unflinchingly farts. True confidence.",
+			"shows everyone what they had for breakfast!",
+			"farts so loud it startles them!",
+			"breaks wind and a nearby wine glass!",
+			"<b>finally achieves the perfect fart. All downhill from here.</b>")
 	if(istype(user,/mob/living/carbon/alien))
 		fartsound = 'hippiestation/sound/effects/alienfart.ogg'
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
