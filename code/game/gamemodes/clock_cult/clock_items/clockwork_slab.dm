@@ -50,9 +50,8 @@
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/cogscarab, \
-	/datum/clockwork_scripture/create_object/soul_vessel, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
+/obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
@@ -127,7 +126,7 @@
 	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
-	if(istype(L) && can_recite_scripture(L))
+	if(istype(L) && (no_cost || can_recite_scripture(L)))
 		var/component_to_generate = target_component_id
 		if(!component_to_generate)
 			component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
@@ -258,7 +257,7 @@
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
 		return 0
-	if(!can_recite_scripture(user))
+	if(!no_cost && !can_recite_scripture(user))
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0
 	access_display(user)
@@ -278,7 +277,7 @@
 		ui.open()
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
-	if(!scripture || !user || !user.canUseTopic(src) || !can_recite_scripture(user))
+	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
@@ -408,10 +407,6 @@
 			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon.<br>"
 			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"
-			dat += "<font color=#BE8700><b>Vessel:</b></font> A soul vessel, a clockwork brain used to activate constructs.<br>"
-			dat += "<font color=#BE8700><b>Shell:</b></font> A construct shell of some type that can accept a soul vessel to activate.<br>"
-			dat += "<font color=#BE8700><b>Scarab:</b></font> A cogscarab construct, which is a drone that maintains the cult's bases.<br>"
-			dat += "<font color=#BE8700><b>Fragment:</b></font> An anim[prob(1) ? "e" : "a"] fragment, which is a fragile but powerful offensive construct.<br>"
 			dat += "<font color=#BE8700><b>Marauder:</b></font> A clockwork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
 			dat += "<font color=#BE8700 size=3>Structures (* = requires power)</font><br>"
 			dat += "<font color=#BE8700><b>Warden:</b></font> An ocular warden, which is a ranged turret that damages non-Servants that see it.<br>"
