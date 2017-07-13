@@ -14,7 +14,7 @@
 	for(var/i in SSresearch.techweb_nodes_starting)
 		var/datum/techweb_node/DN = SSresearch.techweb_nodes_starting[i]
 		research_node(DN)
-	hidden_nodes = SSresearch.nodes_hidden
+	hidden_nodes = SSresearch.techweb_nodes_hidden
 	return ..()
 
 /datum/techweb/admin
