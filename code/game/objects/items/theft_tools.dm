@@ -160,12 +160,11 @@
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/nuke_core_container/supermatter/load(obj/item/weapon/hemostat/supermatter/T, mob/user)
-	if(!istype(T) || !T.sliver)
+/obj/item/nuke_core_container/supermatter/load(obj/item/nuke_core/supermatter_sliver/S, mob/user)
+	if(!istype(S))
 		return FALSE
-	T.sliver.forceMove(src)
-	sliver = T.sliver
-	T.sliver = null
+	S.forceMove(src)
+	sliver = S
 	icon_state = "core_container_loaded"
 	to_chat(user, "<span class='warning'>Container is sealing...</span>")
 	addtimer(CALLBACK(src, .proc/seal), 50)
@@ -181,10 +180,12 @@
 
 /obj/item/nuke_core_container/supermatter/attackby(obj/item/weapon/hemostat/supermatter/tongs, mob/user)
 	if(istype(tongs))
-		if(!user.temporarilyRemoveItemFromInventory(tongs))
-			to_chat(user, "<span class='warning'>\The [tongs] is stuck to your hand!</span>")
-		else
-			load(sliver, user)
+		if(!tongs.sliver)
+			return
+		to_chat(user, "<span class='notice'>You very carefully lower [tongs.sliver] into [src]...</span>")
+		load(tongs.sliver, user)
+		tongs.sliver = null
+		tongs.icon_state = initial(tongs.icon_state)
 	else
 		return ..()
 
@@ -210,36 +211,9 @@
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/weapon/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
-	if(!sliver)
-		return
-	if(ismovableatom(O))
-		Consume(O)
-		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
-		QDEL_NULL(sliver)
-
 /obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
 		to_chat(usr, "<span class='notice'>\The [sliver] falls out of \the [src] as you throw them.</span>")
 		sliver = null
 	..()
-
-/obj/item/weapon/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
-	if(ismob(AM))
-		var/mob/victim = AM
-		victim.dust()
-		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(victim)].", "supermatter")
-	else
-		investigate_log("has consumed [AM].", "supermatter")
-		qdel(AM)
-	user.visible_message("<span class='danger'>As [user] touches \the [AM] with \a [src], silence fills the room...</span>",\
-			"<span class='userdanger'>You touch \the [AM] with \the [src], and everything suddenly goes silent.</span>\n<span class='notice'>\The [AM] flashes into dust, and soon as you can register this, you do as well.</span>",\
-			"<span class='italics'>Everything suddenly goes silent.</span>")
-	radiation_pulse(get_turf(user), 2, 4, 50, 1)
-	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
-	user.dust()
-	icon_state = "supermatter_tongs"
-	QDEL_NULL(sliver)
-
