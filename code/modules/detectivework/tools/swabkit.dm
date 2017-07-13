@@ -7,12 +7,15 @@
 	var/stype = BLOOD_SWAB
 	var/scontents = "nothing"
 
+/obj/item/forensics/swabkit/update_icon(thing)
+	icon_state = thing
+
 /obj/item/forensics/swabkit/Initialize(mapload, typ, content)
 	. = ..()
 	if (typ && content) //We're creating a used swab
-		src.icon_state = "swab_used"
-		src.stype = typ
-		src.scontents = content
+		update_icon("swab_used")
+		stype = typ
+		scontents = content
 
 /obj/item/forensics/swabkit/afterattack(atom/A, mob/user, params)
 	if(user.zone_selected == "mouth" && ishuman(A)) //we're getting saliva from the mouth
