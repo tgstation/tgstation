@@ -1509,8 +1509,7 @@
 /area/derelict/singularity_engine)
 "en" = (
 /obj/machinery/power/emitter{
-	dir = 1;
-	icon_state = "emitter"
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
