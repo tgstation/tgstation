@@ -63,7 +63,12 @@
 		var/datum/component/C = I
 		if(!C.enabled)
 			continue
-		. |= C.ReceiveSignal(sigtype, sig_args, async)
+		if(C.ReceiveSignal(sigtype, sig_args, async))
+			ComponentActivated(C)
+			. = TRUE
+
+// Callback for when a component activates
+/datum/proc/ComponentActivated(datum/component/C)
 
 /datum/proc/GetComponent(c_type)
 	for(var/I in datum_components)
