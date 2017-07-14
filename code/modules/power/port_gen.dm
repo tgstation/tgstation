@@ -219,7 +219,7 @@
 	if(emagged)
 		return
 	emagged = TRUE
-	emp_act(1)
+	emp_act(EMP_HEAVY)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
 	..()

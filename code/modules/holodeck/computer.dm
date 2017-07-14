@@ -135,7 +135,7 @@
 		for(var/turf/T in linked)
 			if(prob(30))
 				do_sparks(2, 1, T)
-			T.ex_act(3)
+			T.ex_act(EXPLODE_LIGHT)
 			T.hotspot_expose(1000,500,1)
 
 	if(!emagged)

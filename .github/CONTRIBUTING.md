@@ -29,6 +29,7 @@ You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/co
 The Design Lead has the final say on what gameplay changes get into and out of the game. He or she has full veto power on any feature or balance additions, changes, or removals, and establishes a general, personally-preferred direction for the game.
 
 **Headcoder**
+
 The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
 
 **Art Director**

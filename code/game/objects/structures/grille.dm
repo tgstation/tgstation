@@ -89,8 +89,7 @@
 		take_damage(20, BRUTE, "melee", 1)
 
 
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/structure/grille/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else
