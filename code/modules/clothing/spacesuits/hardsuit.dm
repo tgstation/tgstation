@@ -567,7 +567,7 @@
 	if(!istype(H) || H.wear_suit != src)
 		return
 	if(footstep > 1)
-		playsound(src, "servostep", 100, 1)
+		playsound(src, 'sound/effects/servostep.ogg', 100, 1)
 		footstep = 0
 	else
 		footstep++

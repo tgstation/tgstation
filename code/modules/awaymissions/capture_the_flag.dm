@@ -585,7 +585,7 @@
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bump(atom/movable/AM)
+/obj/effect/ctf/ammo/Collide(atom/movable/AM)
 	reload(AM)
 
 /obj/effect/ctf/ammo/Bumped(atom/movable/AM)

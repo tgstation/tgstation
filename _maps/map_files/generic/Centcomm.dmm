@@ -2462,7 +2462,6 @@
 /area/ctf)
 "hf" = (
 /obj/machinery/power/emitter/energycannon{
-	icon_state = "emitter";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3521,11 +3520,7 @@
 	},
 /area/centcom/supply)
 "jZ" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "19"
-	},
+/obj/structure/closet/secure_closet/contraband/heads,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

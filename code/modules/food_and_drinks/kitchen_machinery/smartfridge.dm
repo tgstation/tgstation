@@ -442,7 +442,8 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/flu_virion = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/plasma = 1,
-		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/formaldehyde = 1)
 
 // ----------------------------
 // Disk """fridge"""

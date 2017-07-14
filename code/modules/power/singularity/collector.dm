@@ -18,6 +18,9 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	var/locked = FALSE
 	var/drainratio = 1
 
+/obj/machinery/power/rad_collector/anchored
+	anchored = TRUE
+
 /obj/machinery/power/rad_collector/New()
 	..()
 	GLOB.rad_collectors += src

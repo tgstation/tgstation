@@ -33,7 +33,7 @@
 				to_chat(user, "<span class='brass'>It is currently producing random components.</span>")
 		to_chat(user, "<span class='nezbere_small'>It will produce a component every <b>[round((production_cooldown*0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds and requires at least the following power for each component type:</span>")
 		for(var/i in GLOB.clockwork_component_cache)
-			to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[get_component_cost(i)]W</b> <i>([GLOB.clockwork_component_cache[i]] exist[GLOB.clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>")
+			to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[get_component_cost(i)]W</b> <i>([GLOB.clockwork_component_cache[i]] exist[GLOB.clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>")
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)

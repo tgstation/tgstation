@@ -355,7 +355,7 @@
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer)
-				return Bump(L, TRUE)
+				return Collide(L)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning
