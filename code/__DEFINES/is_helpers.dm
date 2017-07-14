@@ -9,11 +9,15 @@
 //Turfs
 #define isopenturf(A) (istype(A, /turf/open))
 
+#define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))
+
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
 #define isclosedturf(A) (istype(A, /turf/closed))
+
+#define isindestructiblewall(A) (istype(A, /turf/close/indestructible))
 
 #define iswallturf(A) (istype(A, /turf/closed/wall))
 
