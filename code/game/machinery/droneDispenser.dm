@@ -54,12 +54,12 @@
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
 	obj_integrity = max_integrity
-	AddComponent(/datum/component/powered/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE)
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE)
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
 
 /obj/machinery/droneDispenser/preloaded/Initialize()
 	. = ..()
-	GET_COMPONENT(materials, /datum/component/powered/material_container)
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.insert_amount(5000)
 
 /obj/machinery/droneDispenser/syndrone //Please forgive me
@@ -73,7 +73,7 @@
 
 /obj/machinery/droneDispenser/syndrone/Initialize()
 	. = ..()
-	GET_COMPONENT(materials, /datum/component/powered/material_container)
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.insert_amount(25000)
 
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
@@ -99,7 +99,7 @@
 
 /obj/machinery/droneDispenser/snowflake/preloaded/Initialize()
 	. = ..()
-	GET_COMPONENT(materials, /datum/component/powered/material_container)
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.insert_amount(10000)
 
 // An example of a custom drone dispenser.
@@ -190,7 +190,7 @@
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	GET_COMPONENT(materials, /datum/component/powered/material_container)
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(!materials.has_materials(using_materials))
 		return // We require more minerals
 
@@ -275,7 +275,7 @@
 			to_chat(user, "<span class='warning'>The [src] isn't accepting the [sheets].</span>")
 
 	else if(istype(O, /obj/item/weapon/crowbar))
-		GET_COMPONENT(materials, /datum/component/powered/material_container)
+		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
 		playsound(loc, O.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
