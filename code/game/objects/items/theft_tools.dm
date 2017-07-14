@@ -163,9 +163,8 @@
 /obj/item/nuke_core_container/supermatter/load(obj/item/weapon/hemostat/supermatter/T, mob/user)
 	if(!istype(T) || !T.sliver)
 		return FALSE
-	T.sliver.forceMove(src)
 	sliver = T.sliver
-	T.sliver = null
+	QDEL_NULL(T.sliver)
 	icon_state = "core_container_loaded"
 	to_chat(user, "<span class='warning'>Container is sealing...</span>")
 	addtimer(CALLBACK(src, .proc/seal), 50)
