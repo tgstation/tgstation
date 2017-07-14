@@ -54,7 +54,7 @@
 		return FALSE
 	. = TRUE
 	var/datum/callback/pc = precondition
-	if(!pc || !pc.Invoke())
+	if(pc && !pc.Invoke())
 		return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
