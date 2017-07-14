@@ -189,10 +189,8 @@
 
 
 
-/turf/open/chasm/CanPass(atom/movable/mover, turf/target, height=0)
+/turf/open/chasm/CanPass(atom/movable/mover, turf/target)
 	return 1
-
-
 
 //Jungle
 

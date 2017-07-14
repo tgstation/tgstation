@@ -114,7 +114,7 @@
 	if(A == firer)
 		loc = A.loc
 		return
-	A.ex_act(2)
+	A.ex_act(EXPLODE_HEAVY)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	for(var/mob/M in urange(10, src))
 		if(!M.stat)

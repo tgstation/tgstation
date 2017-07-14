@@ -151,7 +151,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 	return ..()
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
+/mob/dead/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 /*

@@ -406,7 +406,7 @@
 			return 0
 	return 1
 
-/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
+/atom/movable/CanPass(atom/movable/mover, turf/target)
 	if(mover in buckled_mobs)
 		return 1
 	return ..()
