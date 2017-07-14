@@ -167,6 +167,8 @@
 				s.start()
 				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
 				D.gib()
+				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)][ADMIN_JMP(D)]!")
+				log_game("[key_name(usr)] detonated [key_name(D)]!")
 
 	src.updateUsrDialog()
 	return
