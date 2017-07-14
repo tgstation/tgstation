@@ -68,11 +68,8 @@
 	say("SUBJECT STATUS: THREAT TO SWARM. TARGET LOCKED.")
 
 /obj/machinery/hivebot_swarm_core/proc/defend_the_swarm()
-	var/atom/movable/threat_to_swarm = src.threat_to_swarm
 	var/mob/living/L = threat_to_swarm
-	if(!istype(L) || L.stat)
-		L = null
-	if(QDELETED(threat_to_swarm) || !threat_to_swarm in view(7, src) || L)
+	if(!istype(L) || (L.stat != CONSCIOUS) || !L in view(7, src) || QDELETED(L))
 		say("TARGET LOST. RESUMING FABRICATION ROUTINE.")
 		threat_to_swarm = null
 		return
@@ -86,6 +83,7 @@
 			else
 				var/obj/threat = threat_to_swarm
 				threat.take_damage(15, "fire", "laser")
+			visble_message("<span class='userdanger'>The [src] blasts [threat_to_swarm] with a searing beam!</span>")
 			playsound(src, 'sound/weapons/plasma_cutter.ogg', 50, 1)
 			playsound(threat_to_swarm, 'sound/weapons/sear.ogg', 50, 1)
 		if("swarm")
@@ -104,6 +102,7 @@
 			playsound(src, 'sound/machines/buzzsaw_windup.ogg', 100, 0)
 			recharge_period = 2
 			addtimer(CALLBACK(src, .proc/saw_turf, target_turf), 12.5) //To match up with the sound
+	threat_to_swarm = null
 
 /obj/machinery/hivebot_swarm_core/proc/saw_turf(turf/target) //Instacrits anyone standing on the turf
 	playsound(target, 'sound/machines/buzzsaw_BRRRRR.ogg', 100, 0)
