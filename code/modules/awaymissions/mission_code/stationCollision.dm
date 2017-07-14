@@ -156,7 +156,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 		L.gib()
 	else if(istype(A,/obj/))
 		var/obj/O = A
-		O.ex_act(1)
+		O.ex_act(EXPLODE_DEVASTATE)
 		if(O) qdel(O)
 	else if(isturf(A))
 		var/turf/T = A

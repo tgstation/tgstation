@@ -25,12 +25,6 @@
 	..()
 	move_update_air(T)
 
-/obj/structure/emergency_shield/CanPass(atom/movable/mover, turf/target, height)
-	if(!height)
-		return FALSE
-	else
-		return ..()
-
 /obj/structure/emergency_shield/emp_act(severity)
 	switch(severity)
 		if(1)
@@ -440,10 +434,7 @@
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.use_stored_power(drain_amount*0.5)
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return FALSE
-
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)
 	else

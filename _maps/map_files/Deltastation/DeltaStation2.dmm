@@ -3383,8 +3383,7 @@
 "aht" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	name = "Auxiliary Storage Closet";
-	req_access_txt = "32"
+	name = "Auxiliary Storage Closet"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -9034,7 +9033,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Cargo Maintenance";
-	req_access_txt = "48;50"
+	req_access_txt = "31"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,

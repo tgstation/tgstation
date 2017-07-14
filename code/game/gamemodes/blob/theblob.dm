@@ -73,9 +73,7 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
+/obj/structure/blob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSBLOB))
 		return 1
 	return 0
@@ -179,11 +177,11 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, T, 5)) //is the target turf impassable
+	if(!T.CanPass(src, T)) //is the target turf impassable
 		make_blob = FALSE
 		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
-		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
+		if(!A.CanPass(src, T)) //is anything in the turf impassable
 			make_blob = FALSE
 		A.blob_act(src) //also hit everything in the turf
 

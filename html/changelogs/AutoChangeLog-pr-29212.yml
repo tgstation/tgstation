@@ -1,0 +1,5 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - tweak: "Deltastation's auxiliary storage in arrivals can be accessed by anyone now."
+  - bugfix: "Deltastation's cargo bay maintenance can now be accessed by cargo techs."
