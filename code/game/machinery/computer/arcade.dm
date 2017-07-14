@@ -297,22 +297,23 @@
 
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
-	if(!emagged)
-		temp = "If you die in the game, you die for real!"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = FALSE
-		blocked = FALSE
+	if(emagged)
+		return
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = FALSE
+	blocked = FALSE
 
-		emagged = TRUE
+	emagged = TRUE
 
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"
 
 
-		updateUsrDialog()
+	updateUsrDialog()
 
 
 
@@ -1041,12 +1042,13 @@
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
-		name = "The Orion Trail: Realism Edition"
-		desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
-		newgame()
-		emagged = TRUE
+	if(emagged)
+		return
+	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
+	name = "The Orion Trail: Realism Edition"
+	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
+	newgame()
+	emagged = TRUE
 
 /mob/living/simple_animal/hostile/syndicate/ranged/orion
 	name = "Spaceport Security"

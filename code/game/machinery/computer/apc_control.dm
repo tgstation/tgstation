@@ -193,11 +193,12 @@
 	interact(usr) //Refresh the UI after a filter changes
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
-	if(!emagged)
-		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
-		log_game("[key_name_admin(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
-		playsound(src, "sparks", 50, 1)
-		emagged = TRUE
+	if(emagged)
+		return
+	user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
+	log_game("[key_name_admin(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
+	playsound(src, "sparks", 50, 1)
+	emagged = TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !emagged ? operator : "\[NULL OPERATOR\]"

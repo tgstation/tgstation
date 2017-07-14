@@ -398,12 +398,13 @@
 		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		if(authenticated == 1)
-			authenticated = 2
-		to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
-		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+	if(emagged)
+		return
+	emagged = TRUE
+	if(authenticated == 1)
+		authenticated = 2
+	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 
 /obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())

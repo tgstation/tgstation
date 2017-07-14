@@ -103,11 +103,12 @@
 		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
-	if(!emagged)
-		req_access = null
-		req_one_access = null
-		playsound(src, "sparks", 100, 1)
-		emagged = TRUE
+	if(emagged)
+		return
+	req_access = null
+	req_one_access = null
+	playsound(src, "sparks", 100, 1)
+	emagged = TRUE
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!panel_open)

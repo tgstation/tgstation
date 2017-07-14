@@ -176,7 +176,8 @@
 		change_meteor_chance(0.5)
 
 /obj/machinery/satellite/meteor_shield/emag_act()
-	if(!emagged)
-		emagged = TRUE
-		if(active)
-			change_meteor_chance(2)
+	if(emagged)
+		return
+	emagged = TRUE
+	if(active)
+		change_meteor_chance(2)

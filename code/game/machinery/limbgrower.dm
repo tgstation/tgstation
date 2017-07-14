@@ -232,9 +232,10 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
-	if(!emagged)
-		for(var/datum/design/D in files.possible_designs)
-			if((D.build_type & LIMBGROWER) && ("special" in D.category))
-				files.AddDesign2Known(D)
-		to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
-		emagged = TRUE
+	if(emagged)
+		return
+	for(var/datum/design/D in files.possible_designs)
+		if((D.build_type & LIMBGROWER) && ("special" in D.category))
+			files.AddDesign2Known(D)
+	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
+	emagged = TRUE

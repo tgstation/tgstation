@@ -84,16 +84,17 @@
 	return 1
 
 /obj/machinery/mecha_part_fabricator/emag_act()
-	if(!emagged)
-		emagged = TRUE
-		req_access = null
-		say("DB error \[Code 0x00F1\]")
-		sleep(10)
-		say("Attempting auto-repair...")
-		sleep(15)
-		say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
-		sleep(30)
-		say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
+	if(emagged)
+		return
+	emagged = TRUE
+	req_access = null
+	say("DB error \[Code 0x00F1\]")
+	sleep(10)
+	say("Attempting auto-repair...")
+	sleep(15)
+	say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
+	sleep(30)
+	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
 
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)

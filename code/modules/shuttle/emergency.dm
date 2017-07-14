@@ -448,9 +448,10 @@
 	return
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
