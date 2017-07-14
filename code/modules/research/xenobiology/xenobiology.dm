@@ -567,7 +567,7 @@
 		var/mob/living/L = M
 		for(var/V in L.mind.spell_list) //People who can stop time are immune to its effects
 			var/obj/O = V
-			if(O.type == /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop)
+			if(istype(O, /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop))
 				immune += L
 				continue
 	timestop()
