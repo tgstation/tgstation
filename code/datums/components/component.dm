@@ -43,6 +43,16 @@
 	
 	procs[sig_type] = CALLBACK(src, proc_on_self)    
 
+/datum/component/proc/ReceiveSignal(sigtype, list/sig_args, async)
+	var/list/sps = signal_procs
+	var/datum/callback/CB = LAZYACCESS(sps, sigtype)
+	if(!CB)
+		return FALSE
+	if(!async)
+		return CB.Invoke(sig_args)
+	else
+		return CB.InvokeAsync(sig_args)
+
 /datum/var/list/datum_components //list of /datum/component
 
 // Send a signal to all other components in the container.
@@ -53,14 +63,7 @@
 		var/datum/component/C = I
 		if(!C.enabled)
 			continue
-		var/list/sps = C.signal_procs
-		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
-		if(!CB)
-			continue
-		if(!async)
-			. |= CB.Invoke(sig_args)
-		else
-			. |= CB.InvokeAsync(sig_args)
+		. |= C.ReceiveSignal(sigtype, sig_args, async)
 
 /datum/proc/GetComponent(c_type)
 	for(var/I in datum_components)
