@@ -100,4 +100,4 @@ Note: Must be placed west/left of and R&D console to function.
 			stack_name = initial(S.name)
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10)))
 		add_overlay("protolathe_[stack_name]")
-		addtimer(CALLBACK(src, .proc/cut_overlay, "protolathe_[stack_name]"), 10)
+		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)

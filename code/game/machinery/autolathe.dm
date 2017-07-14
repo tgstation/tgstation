@@ -137,9 +137,7 @@
 	if(istype(C, /datum/component/material_container))
 		var/datum/component/material_container/M = C
 		var/lit = M.last_inserted_type
-		var/stack_name
 		if(ispath(lit, /obj/item/weapon/ore/bluespace_crystal))
-			stack_name = "bluespace"
 			use_power(max(500,M.last_amount_inserted/10))
 		else
 			var/obj/item/stack/S = lit

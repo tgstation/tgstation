@@ -437,7 +437,7 @@
 			var/obj/item/stack/S = lit
 			stack_name = material2name(initial(S.materials)[1])
 		add_overlay("fab-load-[stack_name]")
-		addtimer(CALLBACK(src, .proc/cut_overlay, "fab-load-[stack_name]"), 10)
+		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
 		updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)

@@ -256,25 +256,7 @@
 		icon_state = icon_on
 
 /obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
-	if(istype(O, /obj/item/stack))
-		if(!O.materials[MAT_METAL] && !O.materials[MAT_GLASS])
-			return ..()
-		if(!metal_cost && !glass_cost)
-			to_chat(user, "<span class='warning'>There isn't a place to insert [O]!</span>")
-			return
-		var/obj/item/stack/sheets = O
-		if(!user.canUnEquip(sheets))
-			to_chat(user, "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>")
-			return
-
-		var/used = materials.insert_stack(sheets, sheets.amount)
-
-		if(used)
-			to_chat(user, "<span class='notice'>You insert [used] sheet[used > 1 ? "s" : ""] into [src].</span>")
-		else
-			to_chat(user, "<span class='warning'>The [src] isn't accepting the [sheets].</span>")
-
-	else if(istype(O, /obj/item/weapon/crowbar))
+	if(istype(O, /obj/item/weapon/crowbar))
 		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
 		playsound(loc, O.usesound, 50, 1)
