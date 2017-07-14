@@ -57,6 +57,12 @@
 		to_chat(resisting, "<span class='warning'>Your struggling ceases as you fall unconscious!</span>")
 		resisting = null
 		return
+	if(LAZYLEN(buckled_mobs))
+		for(var/V in buckled_mobs)
+			var/mob/living/L = V
+			if(is_servant_of_ratvar(L))
+				take_damage(obj_integrity) //be free!
+				return
 	take_damage(1, sound_effect = FALSE)
 	playsound(src, 'sound/effects/empulse.ogg', 20, TRUE) //Much quieter than normal attacks but still obvious
 
