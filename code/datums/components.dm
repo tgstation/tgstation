@@ -48,6 +48,7 @@
 // Send a signal to all other components in the container.
 /datum/proc/SendSignal(sigtype, list/sig_args, async = FALSE)
 	var/list/comps = datum_components
+	. = FALSE
 	for(var/I in comps)
 		var/datum/component/C = I
 		if(!C.enabled)
@@ -57,9 +58,9 @@
 		if(!CB)
 			continue
 		if(!async)
-			CB.Invoke(sig_args)
+			. |= CB.Invoke(sig_args)
 		else
-			CB.InvokeAsync(sig_args)
+			. |= CB.InvokeAsync(sig_args)
 
 /datum/proc/GetComponent(c_type)
 	for(var/I in datum_components)
