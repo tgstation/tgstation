@@ -17,7 +17,7 @@
 
 #define isclosedturf(A) (istype(A, /turf/closed))
 
-#define isindestructiblewall(A) (istype(A, /turf/close/indestructible))
+#define isindestructiblewall(A) (istype(A, /turf/closed/indestructible))
 
 #define iswallturf(A) (istype(A, /turf/closed/wall))
 
