@@ -247,6 +247,7 @@
 #include "code\datums\antagonists\devil.dm"
 #include "code\datums\antagonists\ninja.dm"
 #include "code\datums\components\component.dm"
+#include "code\datums\components\powered.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anxiety.dm"
