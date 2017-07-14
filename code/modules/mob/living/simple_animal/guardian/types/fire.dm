@@ -31,7 +31,7 @@
 	..()
 	collision_ignite(AM)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/Collide(AM as mob|obj)
 	..()
 	collision_ignite(AM)
 

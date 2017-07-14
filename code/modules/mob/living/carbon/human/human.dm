@@ -882,7 +882,7 @@
 		return 1
 	..()
 
-/mob/living/carbon/human/Bump(atom/A)
+/mob/living/carbon/human/Collide(atom/A)
 	..()
 	var/crashdir = get_dir(src, A)
 	var/obj/item/device/flightpack/FP = get_flightpack()
