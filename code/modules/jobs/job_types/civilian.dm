@@ -14,8 +14,8 @@ Clown
 
 	outfit = /datum/outfit/job/clown
 
-	access = list(GLOB.access_theatre)
-	minimal_access = list(GLOB.access_theatre)
+	access = list(ACCESS_THEATRE)
+	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.rename_self("clown", M.client)
@@ -74,8 +74,8 @@ Mime
 
 	outfit = /datum/outfit/job/mime
 
-	access = list(GLOB.access_theatre)
-	minimal_access = list(GLOB.access_theatre)
+	access = list(ACCESS_THEATRE)
+	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.rename_self("mime", M.client)
@@ -124,8 +124,8 @@ Curator
 
 	outfit = /datum/outfit/job/curator
 
-	access = list(GLOB.access_library)
-	minimal_access = list(GLOB.access_library, GLOB.access_construction,GLOB.access_mining_station)
+	access = list(ACCESS_LIBRARY)
+	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION)
 
 /datum/outfit/job/curator
 	name = "Curator"
@@ -169,8 +169,8 @@ Lawyer
 
 	outfit = /datum/outfit/job/lawyer
 
-	access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
-	minimal_access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
+	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"

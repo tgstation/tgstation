@@ -145,7 +145,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
-	access = list(GLOB.access_maint_tunnels, GLOB.access_syndicate)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
@@ -195,7 +195,7 @@ update_label("John Doe", "Clowny")
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
-	access = list(GLOB.access_syndicate)
+	access = list(ACCESS_SYNDICATE)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
@@ -229,7 +229,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Emergency Response Team Commander"
 
 /obj/item/weapon/card/id/ert/Initialize()
-	access = get_all_accesses()+get_ert_access("commander")-GLOB.access_change_ids
+	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/ert/Security
@@ -237,7 +237,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Security Response Officer"
 
 /obj/item/weapon/card/id/ert/Security/Initialize()
-	access = get_all_accesses()+get_ert_access("sec")-GLOB.access_change_ids
+	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/ert/Engineer
@@ -245,7 +245,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Engineer Response Officer"
 
 /obj/item/weapon/card/id/ert/Engineer/Initialize()
-	access = get_all_accesses()+get_ert_access("eng")-GLOB.access_change_ids
+	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/ert/Medical
@@ -253,7 +253,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Medical Response Officer"
 
 /obj/item/weapon/card/id/ert/Medical/Initialize()
-	access = get_all_accesses()+get_ert_access("med")-GLOB.access_change_ids
+	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/prisoner
@@ -299,26 +299,26 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/mining
 	name = "mining ID"
-	access = list(GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
+	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 
 /obj/item/weapon/card/id/away
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(GLOB.access_away_general)
+	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/weapon/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
-	access = list(GLOB.access_away_general, GLOB.access_away_maint)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
 
 /obj/item/weapon/card/id/away/hotel/securty
 	name = "Officer ID"
-	access = list(GLOB.access_away_general, GLOB.access_away_maint, GLOB.access_away_sec)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
 
 /obj/item/weapon/card/id/away/old
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(GLOB.access_away_general)
+	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/weapon/card/id/away/old/sec
 	name = "Security Officer ID"
@@ -339,4 +339,4 @@ update_label("John Doe", "Clowny")
 	name = "APC Access ID"
 	desc = "Special ID card to allow access to APCs"
 	icon_state = "centcom"
-	access = list(GLOB.access_engine_equip)
+	access = list(ACCESS_ENGINE_EQUIP)
