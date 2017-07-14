@@ -49,9 +49,9 @@
 	if(!CB)
 		return FALSE
 	if(!async)
-		return CB.Invoke(sig_args)
+		return CB.Invoke(arglist(sig_args))
 	else
-		return CB.InvokeAsync(sig_args)
+		return CB.InvokeAsync(arglist(sig_args))
 
 /datum/var/list/datum_components //list of /datum/component
 
