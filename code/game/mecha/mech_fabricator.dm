@@ -11,7 +11,6 @@
 	req_access = list(GLOB.access_robotics)
 	var/time_coeff = 1
 	var/component_coeff = 1
-	var/datum/material_container/materials
 	var/datum/research/files
 	var/sync = 0
 	var/part_set
@@ -34,10 +33,12 @@
 								"Misc"
 								)
 
-/obj/machinery/mecha_part_fabricator/New()
-	..()
+/obj/machinery/mecha_part_fabricator/Initialize()
+	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
+	AddComponent(/datum/component/material_container,
+	 list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
+		FALSE, list(/obj/item/stack, /obj/item/weapon/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
 	B.apply_default_parts(src)
 
@@ -57,6 +58,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = (200000 + (T*50000))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
@@ -125,6 +127,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
+	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
@@ -145,6 +148,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return 0
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return 1
 	return 0
@@ -154,6 +158,7 @@
 	desc = "It's building \a [initial(D.name)]."
 	var/list/res_coef = get_resources_w_coeff(D)
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.use_amount(res_coef)
 	add_overlay("fab-active")
 	use_power = ACTIVE_POWER_USE
@@ -410,14 +415,30 @@
 					break
 
 	if(href_list["remove_mat"] && href_list["material"])
+		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_sheets(text2num(href_list["remove_mat"]), href_list["material"])
 
 	updateUsrDialog()
 	return
 
 /obj/machinery/mecha_part_fabricator/on_deconstruction()
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
+
+/obj/machinery/mecha_part_fabricator/ComponentActivated(datum/component/C)
+	if(istype(C, /datum/component/material_container))
+		var/datum/component/material_container/M = C
+		var/lit = M.last_inserted_type
+		var/stack_name
+		if(ispath(lit, /obj/item/weapon/ore/bluespace_crystal))
+			stack_name = "bluespace"
+		else
+			var/obj/item/stack/S = lit
+			stack_name = material2name(initial(S.materials)[1])
+		add_overlay("fab-load-[stack_name]")
+		addtimer(CALLBACK(src, .proc/cut_overlay, "fab-load-[stack_name]"), 10)
+		updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
@@ -429,55 +450,7 @@
 	if(default_deconstruction_crowbar(W))
 		return 1
 
-	if(istype(W, /obj/item/stack/sheet))
-
-		if(!is_insertion_ready(user))
-			return 1
-
-		var/material_amount = materials.get_item_material_amount(W)
-
-		if(!try_insert(user, W, material_amount))
-			return 1
-
-		var/inserted = materials.insert_item(W)
-		if(inserted)
-			to_chat(user, "<span class='notice'>You insert [inserted] sheet\s into [src].</span>")
-			if(W && W.materials.len)
-				if(!QDELETED(W))
-					user.put_in_active_hand(W)
-				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
-				add_overlay(mat_overlay)
-				sleep(10)
-				if(!QDELETED(src))
-					cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
-
-		updateUsrDialog()
-
-	else if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
-
-		if(!is_insertion_ready(user))
-			return 1
-
-		var/material_amount = materials.get_item_material_amount(W)
-
-		if(!try_insert(user, W, material_amount))
-			return 1
-
-		var/inserted = materials.insert_item(W)
-		if(inserted)
-			to_chat(user, "<span class='notice'>You add [W] to the [src].</span>")
-			if(W && W.materials.len)
-				qdel(W)
-				var/mat_overlay = "fab-load-bluespace"
-				add_overlay(mat_overlay)
-				sleep(10)
-				if(!QDELETED(src))
-					cut_overlay(mat_overlay)
-
-		updateUsrDialog()
-
-	else
-		return ..()
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)
@@ -488,20 +461,6 @@
 		return FALSE
 	if(being_built)
 		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
-		return FALSE
-
-	return TRUE
-
-
-/obj/machinery/mecha_part_fabricator/proc/try_insert(mob/user, obj/item/I, material_amount)
-	if(!material_amount)
-		to_chat(user, "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>")
-		return FALSE
-	if(!materials.has_space(material_amount))
-		to_chat(user, "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>")
-		return FALSE
-	if(!user.temporarilyRemoveItemFromInventory(I))
-		to_chat(user, "<span class='warning'>\The [I] is stuck to you and cannot be placed into [src].</span>")
 		return FALSE
 
 	return TRUE
