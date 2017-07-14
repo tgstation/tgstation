@@ -274,7 +274,7 @@
 					// check if target has a weapon
 					var/obj/item/weapon/W
 					for(var/obj/item/weapon/I in target.held_items)
-						if(!istype(I, /obj/item/weapon/twohanded/offhand)
+						if(!(I.flags & ABSTRACT))
 							W = I
 							break
 
