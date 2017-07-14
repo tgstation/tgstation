@@ -72,9 +72,7 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target)
 	return 0
 
 

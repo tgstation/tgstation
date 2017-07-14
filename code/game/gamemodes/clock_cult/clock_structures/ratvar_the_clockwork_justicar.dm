@@ -46,7 +46,7 @@
 	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key
 
-/obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
+/obj/structure/destructible/clockwork/massive/ratvar/Collide(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(T, dir) //please don't run into a window like a bird, ratvar

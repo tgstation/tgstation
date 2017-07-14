@@ -35,8 +35,7 @@
 		icon_state = "stickyweb2"
 	. = ..()
 
-/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	else if(isliving(mover))
@@ -104,7 +103,7 @@
 /obj/structure/spider/spiderling/nurse
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
 
-/obj/structure/spider/spiderling/Bump(atom/user)
+/obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
 	else
