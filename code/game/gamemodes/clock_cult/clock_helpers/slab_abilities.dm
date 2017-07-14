@@ -64,6 +64,7 @@
 			else
 				in_progress = TRUE
 				clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
+				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
 				remove_mousepointer(ranged_ability_user.client)
 				add_logs(ranged_ability_user, L, "bound with Geis")
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
@@ -74,7 +75,7 @@
 				var/obj/structure/destructible/clockwork/geis_binding/binding = new(get_turf(target))
 				binding.setDir(target.dir)
 				binding.buckle_mob(L, TRUE)
-				binding.slab = slab
+				binding.assign_slab(slab)
 				ranged_ability_user.start_pulling(binding)
 				successful = TRUE
 

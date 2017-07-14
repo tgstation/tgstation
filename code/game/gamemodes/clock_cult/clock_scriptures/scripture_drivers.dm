@@ -131,10 +131,10 @@
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
 	usage_tip = "This is the primary method of converting heretics into Servants. Geis is an excellent tool for restraining potential converts."
-	tier = SCRIPTURE_SCRIPT
+	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 5
+	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
 
@@ -151,7 +151,7 @@
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
@@ -197,7 +197,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 7
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
 
@@ -218,7 +218,7 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 8
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 	var/static/prev_cost = 0
@@ -249,7 +249,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 9
+	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
 
@@ -269,6 +269,6 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
+	sort_priority = 11
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transgression, which will stun the next non-Servant to cross it."

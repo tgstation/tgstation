@@ -24,7 +24,6 @@
 /obj/structure/destructible/clockwork/geis_binding/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
-	addtimer(CALLBACK(src, .proc/make_slab_busy), 1) //This is needed due to how Initialize() handles
 
 /obj/structure/destructible/clockwork/geis_binding/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -32,9 +31,12 @@
 	slab.icon_state = initial(slab.icon_state)
 	return ..()
 
-/obj/structure/destructible/clockwork/geis_binding/proc/make_slab_busy()
-	if(!slab)
+/obj/structure/destructible/clockwork/geis_binding/proc/assign_slab(obj/item/clockwork/slab/the_slab) //feed me energy
+	set waitfor = FALSE
+	if(!the_slab)
 		return
+	slab = the_slab
+	sleep(1) //This is necessary for everything to happen properly with the ranged ability code
 	slab.busy = "Maintaining Geis bindings"
 	slab.icon_state = "judicial"
 
