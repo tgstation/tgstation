@@ -249,22 +249,6 @@
 "M" = (
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"N" = (
-/turf/closed/wall/r_wall,
-/area/ruin/unpowered/no_grav)
-"O" = (
-/turf/open/space,
-/area/ruin/unpowered/no_grav)
-"P" = (
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/no_grav)
-"Q" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/no_grav)
-"R" = (
-/turf/closed/wall,
-/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
 a

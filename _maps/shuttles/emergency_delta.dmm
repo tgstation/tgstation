@@ -1051,14 +1051,6 @@
 	},
 /area/shuttle/escape)
 "cz" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/shuttle/escape)
-"cA" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
@@ -1073,7 +1065,7 @@
 	heat_capacity = 1e+006
 	},
 /area/shuttle/escape)
-"cB" = (
+"cA" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -1083,41 +1075,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
+"cB" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
 "cC" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"cD" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"cE" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8;
-	heat_capacity = 1e+006
-	},
-/area/shuttle/escape)
-"cF" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"cG" = (
+"cD" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"cH" = (
+"cE" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
@@ -1159,7 +1132,7 @@ ab
 ad
 af
 ah
-cA
+cz
 av
 av
 aH
@@ -1171,7 +1144,7 @@ an
 av
 av
 av
-cA
+cz
 aE
 af
 bw
@@ -1239,7 +1212,7 @@ af
 bx
 bw
 bw
-cG
+cD
 af
 aa
 aa
@@ -1475,7 +1448,7 @@ aE
 aE
 aw
 aw
-cB
+cA
 aw
 aw
 aw
@@ -1518,7 +1491,7 @@ af
 bB
 bH
 bR
-cH
+cE
 af
 cd
 ci
@@ -1547,7 +1520,7 @@ bl
 bq
 af
 bC
-cF
+cC
 ae
 af
 af
@@ -1634,8 +1607,8 @@ aP
 aZ
 bd
 bi
-cC
-cC
+cB
+cB
 ah
 bs
 af

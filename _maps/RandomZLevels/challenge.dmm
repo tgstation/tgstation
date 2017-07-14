@@ -932,12 +932,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
-"cQ" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/circuit,
-/area/awaymission/challenge/end)
 "cR" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -961,12 +955,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/awaymission/challenge/end)
-"cU" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cV" = (
 /obj/machinery/gateway{
@@ -28817,7 +28805,7 @@ cd
 cn
 cH
 cN
-cQ
+cE
 cn
 cn
 db
@@ -29845,7 +29833,7 @@ cd
 cn
 cH
 cN
-cU
+cG
 cn
 cn
 db

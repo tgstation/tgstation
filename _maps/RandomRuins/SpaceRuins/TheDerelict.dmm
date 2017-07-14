@@ -650,37 +650,34 @@
 /turf/template_noop,
 /area/derelict/bridge/ai_upload)
 "bN" = (
-/turf/open/floor/circuit/airless,
-/area/derelict/bridge/ai_upload)
-"bO" = (
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/ai_upload)
-"bP" = (
+"bO" = (
 /obj/machinery/porta_turret_cover,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/ai_upload)
-"bQ" = (
+"bP" = (
 /obj/item/device/aicard,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/bridge/ai_upload)
-"bR" = (
+"bQ" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/derelict/bridge/ai_upload)
-"bS" = (
+"bR" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/solar_control)
-"bT" = (
+"bS" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/ai_upload)
-"bU" = (
+"bT" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/machine/autolathe,
 /obj/item/weapon/circuitboard/machine/protolathe{
@@ -689,12 +686,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/ai_upload)
-"bV" = (
+"bU" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/machine/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/ai_upload)
-"bW" = (
+"bV" = (
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
@@ -706,7 +703,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/ai_upload)
-"bX" = (
+"bW" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -714,26 +711,26 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/ai_upload)
-"bY" = (
+"bX" = (
 /obj/structure/frame/computer,
 /obj/item/weapon/circuitboard/computer/rdconsole,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/ai_upload)
-"bZ" = (
+"bY" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/ai_upload)
-"ca" = (
+"bZ" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel,
 /area/derelict/solar_control)
-"cb" = (
+"ca" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/template_noop)
-"cc" = (
+"cb" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -741,11 +738,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/ai_upload)
-"cd" = (
+"cc" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/ai_upload)
-"ce" = (
+"cd" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -753,7 +750,7 @@
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/bridge/ai_upload)
-"cf" = (
+"ce" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -761,7 +758,7 @@
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/bridge/ai_upload)
-"cg" = (
+"cf" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -769,13 +766,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/bridge/ai_upload)
-"ch" = (
+"cg" = (
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
-"ci" = (
+"ch" = (
 /turf/closed/wall/r_wall,
 /area/template_noop)
-"cj" = (
+"ci" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -783,7 +780,7 @@
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/bridge/ai_upload)
-"ck" = (
+"cj" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -791,25 +788,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/solar_control)
-"cl" = (
+"ck" = (
 /turf/closed/wall/r_wall,
 /area/derelict/gravity_generator)
-"cm" = (
+"cl" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/derelict/solar_control)
-"cn" = (
+"cm" = (
 /obj/item/weapon/ore/iron,
 /obj/item/weapon/ore/iron,
 /obj/item/weapon/ore/iron,
 /turf/template_noop,
 /area/template_noop)
-"co" = (
+"cn" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/gravity_generator)
-"cp" = (
+"co" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -817,13 +814,13 @@
 	icon_state = "damaged5"
 	},
 /area/derelict/gravity_generator)
-"cq" = (
+"cp" = (
 /obj/item/weapon/stock_parts/manipulator,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/gravity_generator)
-"cr" = (
+"cq" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -831,10 +828,10 @@
 	},
 /turf/closed/wall,
 /area/derelict/bridge/access)
-"cs" = (
+"cr" = (
 /turf/closed/wall,
 /area/derelict/bridge/access)
-"ct" = (
+"cs" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
 	d1 = 1;
@@ -843,31 +840,31 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cu" = (
+"ct" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/gravity_generator)
-"cv" = (
+"cu" = (
 /obj/item/weapon/ore/slag,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/gravity_generator)
-"cw" = (
+"cv" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/gravity_generator)
-"cx" = (
+"cw" = (
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cy" = (
+"cx" = (
 /obj/structure/rack,
 /obj/item/weapon/melee/classic_baton,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cz" = (
+"cy" = (
 /obj/structure/rack,
 /obj/machinery/light/small{
 	dir = 1
@@ -875,33 +872,33 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cA" = (
+"cz" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/swat,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cB" = (
+"cA" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cC" = (
+"cB" = (
 /obj/structure/rack,
 /obj/item/weapon/electronics/apc,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cD" = (
+"cC" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/machine/smes,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cE" = (
+"cD" = (
 /obj/structure/rack,
 /obj/item/weapon/stock_parts/capacitor,
 /obj/item/weapon/stock_parts/manipulator,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cF" = (
+"cE" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -909,23 +906,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cG" = (
+"cF" = (
 /obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/gravity_generator)
-"cH" = (
+"cG" = (
 /obj/machinery/gravity_generator/main/station{
 	on = 0
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/gravity_generator)
-"cI" = (
+"cH" = (
 /obj/item/weapon/ore/slag,
 /turf/template_noop,
 /area/template_noop)
-"cJ" = (
+"cI" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -933,7 +930,7 @@
 	},
 /turf/closed/wall,
 /area/derelict/bridge/access)
-"cK" = (
+"cJ" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -947,14 +944,14 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
 "cM" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -963,23 +960,15 @@
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
 "cN" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/derelict/bridge/access)
-"cO" = (
 /turf/open/floor/plasteel/airless,
 /area/derelict/gravity_generator)
-"cP" = (
+"cO" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/gravity_generator)
-"cQ" = (
+"cP" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 0;
@@ -988,7 +977,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cR" = (
+"cQ" = (
 /obj/structure/rack,
 /obj/item/weapon/stock_parts/cell/high,
 /obj/item/weapon/stock_parts/cell/high,
@@ -998,7 +987,7 @@
 /obj/item/weapon/stock_parts/cell/high,
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"cS" = (
+"cR" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -1007,7 +996,7 @@
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cT" = (
+"cS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1015,7 +1004,7 @@
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"cU" = (
+"cT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1026,7 +1015,7 @@
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"cV" = (
+"cU" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
 	req_access = null;
@@ -1039,14 +1028,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cW" = (
+"cV" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Secure Storage";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cX" = (
+"cW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
@@ -1055,7 +1044,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"cY" = (
+"cX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1063,7 +1052,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"cZ" = (
+"cY" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1074,21 +1063,21 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"da" = (
+"cZ" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
-"db" = (
+"da" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"dc" = (
+"db" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1098,19 +1087,27 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"dd" = (
+"dc" = (
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"de" = (
+"dd" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/ruin/unpowered/no_grav)
-"df" = (
+"de" = (
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
 /obj/item/wallframe/apc,
+/turf/open/floor/plating/airless,
+/area/derelict/gravity_generator)
+"df" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
 "dg" = (
@@ -1119,14 +1116,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plating/airless,
-/area/derelict/gravity_generator)
-"dh" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -1134,7 +1123,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"di" = (
+"dh" = (
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -1143,20 +1132,20 @@
 /obj/item/weapon/stock_parts/console_screen,
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"dj" = (
+"di" = (
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/ruin/unpowered/no_grav)
-"dk" = (
+"dj" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
 /area/template_noop)
-"dl" = (
+"dk" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dm" = (
+"dl" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -1164,7 +1153,7 @@
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"dn" = (
+"dm" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1177,7 +1166,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"do" = (
+"dn" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
@@ -1186,7 +1175,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dp" = (
+"do" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable{
 	d1 = 4;
@@ -1195,7 +1184,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dq" = (
+"dp" = (
 /obj/item/weapon/reagent_containers/food/drinks/beer,
 /obj/structure/cable{
 	d1 = 1;
@@ -1204,10 +1193,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dr" = (
+"dq" = (
 /turf/closed/wall/r_wall,
 /area/derelict/singularity_engine)
-"ds" = (
+"dr" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -1218,7 +1207,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/gravity_generator)
-"dt" = (
+"ds" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1226,7 +1215,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"du" = (
+"dt" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -1241,19 +1230,19 @@
 /obj/item/weapon/stock_parts/matter_bin,
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"dv" = (
+"du" = (
 /obj/item/weapon/stock_parts/matter_bin,
 /turf/template_noop,
 /area/template_noop)
-"dw" = (
+"dv" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dx" = (
+"dw" = (
 /obj/machinery/door/window,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dy" = (
+"dx" = (
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
@@ -1262,18 +1251,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dz" = (
+"dy" = (
 /turf/closed/wall,
 /area/derelict/bridge)
-"dA" = (
+"dz" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall/r_wall,
 /area/derelict/singularity_engine)
-"dB" = (
+"dA" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall/r_wall,
 /area/derelict/singularity_engine)
-"dC" = (
+"dB" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
 	req_access_txt = "10"
@@ -1285,27 +1274,27 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/gravity_generator)
-"dD" = (
+"dC" = (
 /obj/structure/sign/securearea{
 	name = "ENGINEERING ACCESS"
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/gravity_generator)
-"dE" = (
+"dD" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/template_noop,
 /area/template_noop)
-"dF" = (
+"dE" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"dG" = (
+"dF" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dH" = (
+"dG" = (
 /obj/structure/frame/computer,
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -1313,7 +1302,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dI" = (
+"dH" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -1321,11 +1310,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dJ" = (
+"dI" = (
 /obj/machinery/computer/security,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dK" = (
+"dJ" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
@@ -1333,14 +1322,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dL" = (
+"dK" = (
 /obj/structure/table,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dM" = (
+"dL" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	pixel_x = -3;
@@ -1348,7 +1337,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dN" = (
+"dM" = (
 /obj/item/weapon/grenade/empgrenade,
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -1356,30 +1345,30 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"dO" = (
+"dN" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"dP" = (
+"dO" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/singularity_engine)
-"dQ" = (
+"dP" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/singularity_engine)
-"dR" = (
+"dQ" = (
 /obj/item/stack/cable_coil/cut,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"dS" = (
+"dR" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1387,7 +1376,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"dT" = (
+"dS" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
 	req_access_txt = "10"
@@ -1399,7 +1388,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
-"dU" = (
+"dT" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -1407,21 +1396,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
-"dV" = (
+"dU" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
-"dW" = (
+"dV" = (
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"dX" = (
+"dW" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/singularity_engine)
-"dY" = (
+"dX" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1429,44 +1418,50 @@
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"dZ" = (
+"dY" = (
 /obj/item/weapon/reagent_containers/food/drinks/beer,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"ea" = (
+"dZ" = (
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eb" = (
+"ea" = (
 /turf/open/floor/plating,
 /area/derelict/bridge)
-"ec" = (
+"eb" = (
 /obj/structure/table,
 /obj/item/weapon/paper/crumpled,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"ed" = (
+"ec" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"ee" = (
+"ed" = (
 /obj/structure/window/reinforced,
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"ef" = (
+"ee" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/singularity_engine)
-"eg" = (
+"ef" = (
 /obj/structure/window/reinforced,
 /obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged4"
+	},
+/area/derelict/singularity_engine)
+"eg" = (
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
@@ -1474,19 +1469,13 @@
 "eh" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless{
-	icon_state = "damaged4"
-	},
-/area/derelict/singularity_engine)
-"ei" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"ej" = (
+"ei" = (
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
-"ek" = (
+"ej" = (
 /obj/structure/closet/radiation,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
@@ -1496,10 +1485,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
-"el" = (
+"ek" = (
 /turf/closed/wall,
 /area/derelict/gravity_generator)
-"em" = (
+"el" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -1507,17 +1496,17 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"en" = (
+"em" = (
 /obj/machinery/power/emitter{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"eo" = (
+"en" = (
 /obj/machinery/field/generator,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"ep" = (
+"eo" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1526,34 +1515,34 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"eq" = (
+"ep" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"er" = (
+"eq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
 /area/derelict/bridge)
-"es" = (
+"er" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"et" = (
+"es" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eu" = (
+"et" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"ev" = (
+"eu" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"ew" = (
+"ev" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1561,7 +1550,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"ex" = (
+"ew" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1572,40 +1561,32 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"ey" = (
+"ex" = (
 /obj/structure/noticeboard,
 /turf/closed/wall/r_wall,
 /area/derelict/singularity_engine)
-"ez" = (
+"ey" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
 "eA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/derelict/bridge/access)
-"eB" = (
 /obj/machinery/door/window/eastleft{
 	name = "Heads of Staff";
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"eC" = (
+"eB" = (
 /obj/structure/table,
 /obj/item/device/paicard,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eD" = (
+"eC" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eE" = (
+"eD" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
 /obj/structure/window/reinforced{
@@ -1613,19 +1594,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eF" = (
+"eE" = (
 /obj/item/weapon/storage/toolbox/syndicate,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"eG" = (
+"eF" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/singularity_engine)
-"eH" = (
+"eG" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1638,7 +1619,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"eI" = (
+"eH" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1646,7 +1627,7 @@
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"eJ" = (
+"eI" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1657,7 +1638,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"eK" = (
+"eJ" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1667,21 +1648,13 @@
 /area/derelict/bridge)
 "eL" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/derelict/bridge)
-"eM" = (
-/obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eN" = (
+"eM" = (
 /obj/item/weapon/paper{
 	info = "<b>Objective #1</b>: Destroy the station with a nuclear device.";
 	name = "Objectives of a Nuclear Operative"
@@ -1690,22 +1663,22 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"eO" = (
+"eN" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
-"eP" = (
+"eO" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eQ" = (
+"eP" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eR" = (
+"eQ" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1713,16 +1686,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eS" = (
+"eR" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eT" = (
+"eS" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eU" = (
+"eT" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/beer,
 /obj/structure/window/reinforced{
@@ -1730,11 +1703,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"eV" = (
+"eU" = (
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/template_noop)
-"eW" = (
+"eV" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1744,7 +1717,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"eX" = (
+"eW" = (
 /obj/item/weapon/shard,
 /obj/structure/grille/broken,
 /obj/effect/decal/remains/human{
@@ -1756,32 +1729,32 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"eY" = (
+"eX" = (
 /obj/item/clothing/suit/space/syndicate/black/engie,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"eZ" = (
+"eY" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fa" = (
+"eZ" = (
 /obj/item/weapon/shard,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/singularity_engine)
-"fb" = (
+"fa" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fc" = (
+"fb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fd" = (
+"fc" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1791,16 +1764,16 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fe" = (
+"fd" = (
 /obj/structure/table,
 /obj/item/weapon/rack_parts,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"ff" = (
+"fe" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"fg" = (
+"ff" = (
 /obj/structure/table,
 /obj/machinery/power/apc{
 	dir = 0;
@@ -1811,12 +1784,12 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"fh" = (
+"fg" = (
 /obj/structure/table,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"fi" = (
+"fh" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1824,7 +1797,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
-"fj" = (
+"fi" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1832,23 +1805,23 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"fk" = (
+"fj" = (
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fl" = (
+"fk" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fm" = (
+"fl" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fn" = (
+"fm" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -1857,10 +1830,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fo" = (
+"fn" = (
 /turf/closed/wall/r_wall,
 /area/derelict/bridge)
-"fp" = (
+"fo" = (
 /obj/machinery/door/window{
 	dir = 2;
 	name = "Captain's Quarters";
@@ -1869,14 +1842,14 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/derelict/bridge)
-"fq" = (
+"fp" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fr" = (
+"fq" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1887,7 +1860,7 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"fs" = (
+"fr" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1896,36 +1869,36 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"ft" = (
+"fs" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fu" = (
+"ft" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/singularity_engine)
-"fv" = (
+"fu" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fw" = (
+"fv" = (
 /obj/item/drone_shell/dusty,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fx" = (
+"fw" = (
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fy" = (
+"fx" = (
 /obj/structure/table,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fz" = (
+"fy" = (
 /obj/structure/table,
 /obj/machinery/light/small{
 	dir = 1
@@ -1933,7 +1906,7 @@
 /obj/item/weapon/electronics/airlock,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fA" = (
+"fz" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
@@ -1942,7 +1915,7 @@
 /obj/item/weapon/stock_parts/matter_bin,
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fB" = (
+"fA" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell{
 	charge = 100;
@@ -1950,39 +1923,39 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fC" = (
+"fB" = (
 /turf/template_noop,
 /area/derelict/bridge/access)
-"fD" = (
+"fC" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"fE" = (
+"fD" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fF" = (
+"fE" = (
 /obj/item/weapon/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = -1
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fG" = (
+"fF" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"fH" = (
+"fG" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"fI" = (
+"fH" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1992,7 +1965,7 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"fJ" = (
+"fI" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -2000,7 +1973,7 @@
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"fK" = (
+"fJ" = (
 /obj/machinery/door/window,
 /obj/structure/cable{
 	d1 = 1;
@@ -2009,24 +1982,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
-"fL" = (
+"fK" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"fM" = (
+"fL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fN" = (
+"fM" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fO" = (
+"fN" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
@@ -2034,13 +2007,13 @@
 	icon_state = "damaged5"
 	},
 /area/derelict/singularity_engine)
-"fP" = (
+"fO" = (
 /obj/structure/grille,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"fQ" = (
+"fP" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -2048,14 +2021,14 @@
 	icon_state = "damaged4"
 	},
 /area/derelict/singularity_engine)
-"fR" = (
+"fQ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Tech Storage";
 	req_access_txt = "23"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fS" = (
+"fR" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -2063,7 +2036,7 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/access)
-"fT" = (
+"fS" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2071,7 +2044,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"fU" = (
+"fT" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -2079,24 +2052,24 @@
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"fV" = (
+"fU" = (
 /obj/item/weapon/screwdriver,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fW" = (
+"fV" = (
 /obj/item/stack/rods,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"fX" = (
+"fW" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"fY" = (
+"fX" = (
 /obj/structure/table,
 /obj/machinery/light/small{
 	dir = 4
@@ -2106,10 +2079,10 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"fZ" = (
+"fY" = (
 /turf/closed/wall,
 /area/derelict/hallway/primary)
-"ga" = (
+"fZ" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 2;
 	dir = 2;
@@ -2117,6 +2090,16 @@
 	},
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
+	},
+/area/derelict/hallway/primary)
+"ga" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged2"
 	},
 /area/derelict/hallway/primary)
 "gb" = (
@@ -2125,9 +2108,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "gc" = (
 /obj/structure/cable{
@@ -2135,25 +2116,17 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/airless,
-/area/derelict/hallway/primary)
+/turf/open/floor/plating/airless,
+/area/derelict/bridge/access)
 "gd" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plating/airless,
-/area/derelict/bridge/access)
-"ge" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"gf" = (
+"ge" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2166,30 +2139,30 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"gg" = (
+"gf" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"gh" = (
+"gg" = (
 /obj/item/weapon/ore/slag,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gi" = (
+"gh" = (
 /obj/item/weapon/shard,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gj" = (
+"gi" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gk" = (
+"gj" = (
 /turf/closed/wall/r_wall,
 /area/derelict/hallway/primary)
-"gl" = (
+"gk" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2197,30 +2170,30 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"gm" = (
+"gl" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/hallway/primary)
-"gn" = (
+"gm" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/hallway/primary)
-"go" = (
+"gn" = (
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"gp" = (
+"go" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"gq" = (
+"gp" = (
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/access)
-"gr" = (
+"gq" = (
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"gs" = (
+"gr" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -2228,7 +2201,7 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"gt" = (
+"gs" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -2241,18 +2214,18 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gu" = (
+"gt" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gv" = (
+"gu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gw" = (
+"gv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -2265,7 +2238,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gx" = (
+"gw" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -2273,7 +2246,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"gy" = (
+"gx" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2281,16 +2254,16 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"gz" = (
+"gy" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched2"
 	},
 /area/derelict/hallway/primary)
-"gA" = (
+"gz" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"gB" = (
+"gA" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 0;
@@ -2299,17 +2272,17 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
-"gC" = (
+"gB" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched2"
 	},
 /area/ruin/unpowered/no_grav)
-"gD" = (
+"gC" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/unpowered/no_grav)
-"gE" = (
+"gD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -2319,20 +2292,20 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gF" = (
+"gE" = (
 /obj/machinery/door/window,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"gG" = (
+"gF" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"gH" = (
+"gG" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
 /area/ruin/unpowered/no_grav)
-"gI" = (
+"gH" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
@@ -2340,11 +2313,11 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"gJ" = (
+"gI" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gK" = (
+"gJ" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -2352,31 +2325,31 @@
 	icon_state = "damaged3"
 	},
 /area/derelict/singularity_engine)
-"gL" = (
+"gK" = (
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"gM" = (
+"gL" = (
 /obj/item/weapon/crowbar,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"gN" = (
+"gM" = (
 /obj/structure/grille,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"gO" = (
+"gN" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"gP" = (
+"gO" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/unpowered/no_grav)
-"gQ" = (
+"gP" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"gR" = (
+"gQ" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
@@ -2385,11 +2358,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gS" = (
+"gR" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gT" = (
+"gS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2400,7 +2373,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"gU" = (
+"gT" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 2;
 	dir = 2;
@@ -2408,19 +2381,19 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"gV" = (
+"gU" = (
 /turf/closed/wall/r_wall,
+/area/derelict/arrival)
+"gV" = (
+/turf/closed/wall,
 /area/derelict/arrival)
 "gW" = (
 /turf/closed/wall,
-/area/derelict/arrival)
+/area/derelict/medical/chapel)
 "gX" = (
 /turf/closed/wall,
-/area/derelict/medical/chapel)
-"gY" = (
-/turf/closed/wall,
 /area/derelict/singularity_engine)
-"gZ" = (
+"gY" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2428,7 +2401,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"ha" = (
+"gZ" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -2436,107 +2409,107 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"hb" = (
+"ha" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/hallway/primary)
-"hc" = (
+"hb" = (
 /obj/structure/lattice,
 /obj/structure/window/fulltile,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"hd" = (
+"hc" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"he" = (
+"hd" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"hf" = (
+"he" = (
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"hg" = (
+"hf" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"hh" = (
+"hg" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"hi" = (
+"hh" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"hj" = (
+"hi" = (
 /obj/structure/closet/coffin,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"hk" = (
+"hj" = (
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"hl" = (
+"hk" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"hm" = (
+"hl" = (
 /obj/item/weapon/shard,
 /turf/template_noop,
 /area/template_noop)
-"hn" = (
+"hm" = (
 /obj/structure/grille,
 /turf/template_noop,
 /area/derelict/singularity_engine)
-"ho" = (
+"hn" = (
 /obj/item/weapon/shard,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"hp" = (
+"ho" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched2"
 	},
 /area/derelict/arrival)
-"hq" = (
+"hp" = (
 /turf/open/floor/plating/airless,
 /area/derelict/arrival)
-"hr" = (
+"hq" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/arrival)
-"hs" = (
+"hr" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"ht" = (
+"hs" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"hu" = (
+"ht" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
 	req_access_txt = "6"
 	},
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"hv" = (
+"hu" = (
 /turf/closed/wall,
 /area/derelict/medical)
-"hw" = (
+"hv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2544,49 +2517,49 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"hx" = (
+"hw" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"hy" = (
+"hx" = (
 /obj/item/weapon/shard,
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"hz" = (
+"hy" = (
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"hA" = (
+"hz" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"hB" = (
+"hA" = (
 /obj/machinery/door/airlock/external{
 	name = "External Engineering"
 	},
 /turf/open/floor/plating/airless,
 /area/template_noop)
-"hC" = (
+"hB" = (
 /obj/structure/grille,
 /turf/template_noop,
 /area/template_noop)
-"hD" = (
+"hC" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/hallway/primary)
-"hE" = (
+"hD" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"hF" = (
+"hE" = (
 /obj/structure/table,
 /obj/machinery/computer/pod/old{
 	name = "ProComp IIe";
@@ -2595,25 +2568,25 @@
 	},
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
-"hG" = (
+"hF" = (
 /obj/machinery/door/morgue{
 	name = "coffin storage";
 	req_access_txt = "22"
 	},
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"hH" = (
+"hG" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"hI" = (
+"hH" = (
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"hJ" = (
+"hI" = (
 /obj/item/weapon/firstaid_arm_assembly,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"hK" = (
+"hJ" = (
 /obj/structure/closet,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2623,13 +2596,13 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/medical)
-"hL" = (
+"hK" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/medical)
-"hM" = (
+"hL" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2638,31 +2611,23 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"hN" = (
+"hM" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/singularity_engine)
 "hO" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating/airless,
-/area/derelict/hallway/primary)
-"hP" = (
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"hQ" = (
+"hP" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/grille,
 /turf/template_noop,
 /area/template_noop)
-"hR" = (
+"hQ" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2672,73 +2637,73 @@
 	dir = 1
 	},
 /area/derelict/medical/chapel)
-"hS" = (
+"hR" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
 /area/derelict/medical/chapel)
+"hS" = (
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/derelict/medical/chapel)
 "hT" = (
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
 /area/derelict/medical/chapel)
 "hU" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/chapel{
-	dir = 1
-	},
-/area/derelict/medical/chapel)
-"hV" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"hW" = (
+"hV" = (
 /obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"hX" = (
+"hW" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/medical)
-"hY" = (
+"hX" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/medical)
-"hZ" = (
+"hY" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"ia" = (
+"hZ" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/ruin/unpowered/no_grav)
-"ib" = (
+"ia" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"ic" = (
+"ib" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"id" = (
+"ic" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"ie" = (
+"id" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2748,55 +2713,55 @@
 	dir = 8
 	},
 /area/derelict/medical/chapel)
-"if" = (
+"ie" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
-"ig" = (
+"if" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
 /area/derelict/medical/chapel)
-"ih" = (
+"ig" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
-"ii" = (
+"ih" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
 /area/derelict/medical/chapel)
-"ij" = (
+"ii" = (
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
-"ik" = (
+"ij" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/medical)
-"il" = (
+"ik" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"im" = (
+"il" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"in" = (
+"im" = (
 /obj/item/drone_shell/dusty,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"io" = (
+"in" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
-"ip" = (
+"io" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 2;
 	dir = 2;
@@ -2806,18 +2771,18 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/hallway/primary)
-"iq" = (
+"ip" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/ruin/unpowered/no_grav)
-"ir" = (
+"iq" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"is" = (
+"ir" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -2826,11 +2791,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"it" = (
+"is" = (
 /obj/structure/window/reinforced,
 /turf/template_noop,
 /area/template_noop)
-"iu" = (
+"it" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -2838,7 +2803,7 @@
 /obj/structure/grille,
 /turf/template_noop,
 /area/template_noop)
-"iv" = (
+"iu" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2849,33 +2814,33 @@
 	dir = 1
 	},
 /area/derelict/medical/chapel)
-"iw" = (
+"iv" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
 /area/derelict/medical/chapel)
-"ix" = (
+"iw" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
 /area/derelict/medical/chapel)
-"iy" = (
+"ix" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"iz" = (
+"iy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
-"iA" = (
+"iz" = (
 /obj/machinery/sleeper{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"iB" = (
+"iA" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2884,19 +2849,19 @@
 /obj/item/weapon/reagent_containers/glass/beaker,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"iC" = (
+"iB" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"iD" = (
+"iC" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"iE" = (
+"iD" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/unpowered/no_grav)
-"iF" = (
+"iE" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2906,26 +2871,26 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/hallway/primary)
-"iG" = (
+"iF" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"iH" = (
+"iG" = (
 /obj/machinery/door/poddoor{
 	id = "derelict_gun";
 	name = "Derelict Mass Driver"
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/no_grav)
-"iI" = (
+"iH" = (
 /turf/open/floor/plating,
 /area/ruin/unpowered/no_grav)
-"iJ" = (
+"iI" = (
 /turf/open/floor/plating,
 /area/derelict/medical/chapel)
-"iK" = (
+"iJ" = (
 /obj/machinery/mass_driver{
 	dir = 8;
 	icon_state = "mass_driver";
@@ -2938,53 +2903,53 @@
 /obj/structure/closet/coffin,
 /turf/open/floor/plating,
 /area/derelict/medical/chapel)
-"iL" = (
+"iK" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"iM" = (
+"iL" = (
 /obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/medical)
-"iN" = (
+"iM" = (
 /obj/item/stack/medical/ointment,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/medical)
-"iO" = (
+"iN" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"iP" = (
+"iO" = (
 /obj/structure/closet/l3closet,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"iQ" = (
+"iP" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"iR" = (
+"iQ" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/template_noop,
 /area/template_noop)
-"iS" = (
+"iR" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/template_noop,
 /area/template_noop)
-"iT" = (
+"iS" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -2994,7 +2959,7 @@
 /obj/structure/grille,
 /turf/template_noop,
 /area/template_noop)
-"iU" = (
+"iT" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3007,7 +2972,7 @@
 	dir = 1
 	},
 /area/derelict/medical/chapel)
-"iV" = (
+"iU" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -3015,7 +2980,7 @@
 	dir = 4
 	},
 /area/derelict/medical/chapel)
-"iW" = (
+"iV" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -3023,7 +2988,7 @@
 	dir = 1
 	},
 /area/derelict/medical/chapel)
-"iX" = (
+"iW" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -3031,28 +2996,28 @@
 	dir = 4
 	},
 /area/derelict/medical/chapel)
-"iY" = (
+"iX" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"iZ" = (
+"iY" = (
 /obj/item/weapon/cigbutt,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"ja" = (
+"iZ" = (
 /obj/machinery/door/airlock/glass{
 	name = "Med-Sci";
 	req_access_txt = "9"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/medical)
-"jb" = (
+"ja" = (
 /obj/structure/table,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"jc" = (
+"jb" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3060,19 +3025,30 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"jd" = (
+"jc" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"je" = (
+"jd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
-"jf" = (
+"je" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/derelict/medical)
+"jf" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
@@ -3082,16 +3058,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
 "jh" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/item/stack/cable_coil/cut{
+	amount = 2;
+	dir = 2;
+	icon_state = "coil_red2"
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
@@ -3101,25 +3074,17 @@
 	dir = 2;
 	icon_state = "coil_red2"
 	},
-/turf/open/floor/plasteel/airless/white,
-/area/derelict/medical)
-"jj" = (
-/obj/item/stack/cable_coil/cut{
-	amount = 2;
-	dir = 2;
-	icon_state = "coil_red2"
-	},
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/medical)
-"jk" = (
+"jj" = (
 /obj/item/weapon/reagent_containers/glass/beaker,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/medical)
-"jl" = (
+"jk" = (
 /obj/structure/closet/wardrobe/genetics_white,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -3127,7 +3092,7 @@
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jm" = (
+"jl" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -3136,65 +3101,57 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"jn" = (
+"jm" = (
 /obj/item/weapon/shard,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"jo" = (
+"jn" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"jp" = (
+"jo" = (
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/unpowered/no_grav)
 "jq" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/airless,
-/area/derelict/hallway/primary)
-"jr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/hallway/primary)
-"js" = (
+"jr" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"jt" = (
+"js" = (
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"ju" = (
+"jt" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
 /area/derelict/medical/chapel)
-"jv" = (
+"ju" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/medical/chapel)
-"jw" = (
+"jv" = (
 /turf/open/floor/plasteel/airless,
 /area/derelict/medical/chapel)
-"jx" = (
+"jw" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/medical/chapel)
-"jy" = (
+"jx" = (
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
@@ -3206,7 +3163,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/medical/chapel)
-"jz" = (
+"jy" = (
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
@@ -3215,22 +3172,22 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jA" = (
+"jz" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/bed,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jB" = (
+"jA" = (
 /obj/item/stack/medical/ointment,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jC" = (
+"jB" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jD" = (
+"jC" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 2;
 	dir = 2;
@@ -3240,33 +3197,41 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/medical)
-"jE" = (
+"jD" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jF" = (
+"jE" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"jG" = (
+"jF" = (
 /obj/structure/window/fulltile,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"jH" = (
+"jG" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"jI" = (
+"jH" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+/area/derelict/arrival)
+"jI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/derelict/arrival)
 "jJ" = (
 /obj/structure/grille,
@@ -3274,23 +3239,15 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating,
-/area/derelict/arrival)
-"jK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"jL" = (
+"jK" = (
 /turf/closed/wall/r_wall,
 /area/derelict/medical/chapel)
-"jM" = (
+"jL" = (
 /obj/machinery/door/window,
 /obj/structure/cable{
 	d1 = 1;
@@ -3299,7 +3256,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/medical/chapel)
-"jN" = (
+"jM" = (
 /obj/machinery/door/window/southleft,
 /obj/structure/cable{
 	d1 = 1;
@@ -3308,11 +3265,11 @@
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jO" = (
+"jN" = (
 /obj/machinery/door/window/southright,
 /turf/open/floor/plasteel/airless/white,
 /area/derelict/medical)
-"jP" = (
+"jO" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3325,7 +3282,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"jQ" = (
+"jP" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3337,7 +3294,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"jR" = (
+"jQ" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 2;
 	dir = 2;
@@ -3345,7 +3302,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"jS" = (
+"jR" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3353,18 +3310,18 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"jT" = (
+"jS" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"jU" = (
+"jT" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrivals Docking Bay 1"
 	},
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"jV" = (
+"jU" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -3372,7 +3329,7 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/unpowered/no_grav)
-"jW" = (
+"jV" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -3380,7 +3337,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"jX" = (
+"jW" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3390,22 +3347,22 @@
 	icon_state = "floorscorched1"
 	},
 /area/derelict/hallway/primary)
-"jY" = (
+"jX" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
 /area/derelict/hallway/primary)
-"jZ" = (
+"jY" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"ka" = (
+"jZ" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kb" = (
+"ka" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -3413,7 +3370,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"kc" = (
+"kb" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3421,11 +3378,11 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"kd" = (
+"kc" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"ke" = (
+"kd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -3433,7 +3390,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"kf" = (
+"ke" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	d1 = 4;
@@ -3442,7 +3399,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"kg" = (
+"kf" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3451,7 +3408,7 @@
 /obj/structure/window/fulltile,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"kh" = (
+"kg" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3463,7 +3420,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/arrival)
-"ki" = (
+"kh" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3471,7 +3428,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"kj" = (
+"ki" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3479,7 +3436,7 @@
 	},
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"kk" = (
+"kj" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3487,13 +3444,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"kl" = (
+"kk" = (
 /obj/machinery/door/airlock/command{
 	name = "Teleporter Room"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/medical/chapel)
-"km" = (
+"kl" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 2;
 	dir = 2;
@@ -3503,28 +3460,28 @@
 	icon_state = "floorscorched1"
 	},
 /area/derelict/hallway/primary)
-"kn" = (
+"km" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"ko" = (
+"kn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kp" = (
+"ko" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kq" = (
+"kp" = (
 /obj/item/device/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kr" = (
+"kq" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 0;
@@ -3533,19 +3490,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"ks" = (
+"kr" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
 "kt" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating/airless,
-/area/derelict/hallway/primary)
-"ku" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3556,14 +3505,6 @@
 	},
 /area/derelict/hallway/primary)
 "kv" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/airless,
-/area/derelict/hallway/primary)
-"kw" = (
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -3576,7 +3517,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kx" = (
+"kw" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3589,7 +3530,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"ky" = (
+"kx" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -3597,7 +3538,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kz" = (
+"ky" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -3610,7 +3551,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kA" = (
+"kz" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3618,19 +3559,19 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kB" = (
+"kA" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plating/airless,
 /area/derelict/arrival)
-"kC" = (
+"kB" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"kD" = (
+"kC" = (
 /obj/machinery/door/window,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kE" = (
+"kD" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -3639,19 +3580,6 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "kF" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/airless,
-/area/derelict/hallway/primary)
-"kG" = (
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -3666,7 +3594,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kH" = (
+"kG" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -3674,31 +3602,31 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kI" = (
+"kH" = (
 /obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel/airless,
+/area/derelict/hallway/primary)
+"kI" = (
+/obj/structure/girder,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "kJ" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel/airless,
-/area/derelict/hallway/primary)
-"kK" = (
-/obj/structure/girder,
-/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"kL" = (
+"kK" = (
 /obj/structure/window/fulltile,
 /turf/template_noop,
 /area/template_noop)
-"kM" = (
+"kL" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"kN" = (
+"kM" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kO" = (
+"kN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3706,7 +3634,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"kP" = (
+"kO" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3717,7 +3645,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"kQ" = (
+"kP" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3728,7 +3656,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"kR" = (
+"kQ" = (
 /obj/machinery/door/airlock/security{
 	name = "Security";
 	req_access = null;
@@ -3741,43 +3669,43 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kS" = (
+"kR" = (
 /obj/machinery/door/window,
 /turf/open/floor/plasteel/airless,
 /area/hallway/primary/port)
-"kT" = (
+"kS" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/plasteel/airless,
 /area/hallway/primary/port)
-"kU" = (
+"kT" = (
 /obj/item/weapon/cigbutt,
 /turf/template_noop,
 /area/template_noop)
-"kV" = (
+"kU" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"kW" = (
+"kV" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kX" = (
+"kW" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kY" = (
+"kX" = (
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"kZ" = (
+"kY" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"la" = (
+"kZ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 0;
@@ -3786,12 +3714,12 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lb" = (
+"la" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"lc" = (
+"lb" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -3802,38 +3730,38 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"ld" = (
+"lc" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
 /area/template_noop)
-"le" = (
+"ld" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lf" = (
+"le" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lg" = (
+"lf" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lh" = (
+"lg" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
 	req_access_txt = "24"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"li" = (
+"lh" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"lj" = (
+"li" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 2;
 	dir = 2;
@@ -3841,7 +3769,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"lk" = (
+"lj" = (
 /obj/structure/closet/wardrobe/orange,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -3851,11 +3779,11 @@
 /obj/item/weapon/cultivator,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"ll" = (
+"lk" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"lm" = (
+"ll" = (
 /obj/structure/closet/wardrobe,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
@@ -3863,7 +3791,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"ln" = (
+"lm" = (
 /obj/item/weapon/stock_parts/manipulator{
 	pixel_x = -15;
 	pixel_y = 10
@@ -3871,7 +3799,7 @@
 /obj/item/weapon/stock_parts/manipulator,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"lo" = (
+"ln" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
@@ -3879,13 +3807,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"lp" = (
+"lo" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lq" = (
+"lp" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker{
 	list_reagents = list("sacid" = 50)
@@ -3898,44 +3826,44 @@
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lr" = (
+"lq" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"ls" = (
+"lr" = (
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"lt" = (
+"ls" = (
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lu" = (
+"lt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lv" = (
+"lu" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lw" = (
+"lv" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lx" = (
+"lw" = (
 /turf/closed/wall,
 /area/derelict/atmospherics)
-"ly" = (
+"lx" = (
 /turf/closed/wall/r_wall,
 /area/derelict/atmospherics)
-"lz" = (
+"ly" = (
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"lA" = (
+"lz" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"lB" = (
+"lA" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3944,11 +3872,11 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"lC" = (
+"lB" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"lD" = (
+"lC" = (
 /obj/structure/grille,
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -3959,46 +3887,46 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"lE" = (
+"lD" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"lF" = (
+"lE" = (
 /turf/open/floor/plasteel/airless/floorgrime,
 /area/derelict/hallway/primary)
-"lG" = (
+"lF" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/hallway/primary)
-"lH" = (
+"lG" = (
 /obj/item/ammo_casing/a357,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lI" = (
+"lH" = (
 /obj/structure/table,
 /obj/item/device/healthanalyzer,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"lJ" = (
+"lI" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lK" = (
+"lJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lL" = (
+"lK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lM" = (
+"lL" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -4007,25 +3935,25 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lN" = (
+"lM" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden,
 /obj/machinery/meter,
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lO" = (
+"lN" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lP" = (
+"lO" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
 	req_access_txt = "24"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lQ" = (
+"lP" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4033,7 +3961,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"lR" = (
+"lQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -4043,7 +3971,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"lS" = (
+"lR" = (
 /obj/structure/closet/wardrobe/mixed,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -4051,32 +3979,32 @@
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
-"lT" = (
+"lS" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"lU" = (
+"lT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lV" = (
+"lU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lW" = (
+"lV" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"lX" = (
+"lW" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -4087,29 +4015,29 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"lY" = (
+"lX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"lZ" = (
+"lY" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
 /turf/open/floor/plating,
 /area/derelict/arrival)
-"ma" = (
+"lZ" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"mb" = (
+"ma" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"mc" = (
+"mb" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
@@ -4118,23 +4046,23 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"md" = (
+"mc" = (
 /turf/closed/wall,
 /area/derelict/hallway/secondary)
-"me" = (
+"md" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"mf" = (
+"me" = (
 /turf/closed/wall/r_wall,
 /area/derelict/hallway/secondary)
-"mg" = (
+"mf" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"mh" = (
+"mg" = (
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -4142,7 +4070,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"mi" = (
+"mh" = (
 /obj/item/ammo_casing/a357{
 	pixel_x = -5
 	},
@@ -4153,22 +4081,22 @@
 /obj/item/ammo_casing/a357,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
-"mj" = (
+"mi" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"mk" = (
+"mj" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
 /area/derelict/atmospherics)
-"ml" = (
+"mk" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"mm" = (
+"ml" = (
 /obj/structure/grille,
 /obj/item/weapon/shard,
 /obj/item/weapon/shard{
@@ -4176,82 +4104,82 @@
 	},
 /turf/open/floor/plating/airless,
 /area/template_noop)
-"mn" = (
+"mm" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"mo" = (
+"mn" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"mp" = (
+"mo" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/atmospherics)
-"mq" = (
+"mp" = (
 /turf/open/floor/plasteel{
 	icon_state = "damaged2";
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/derelict/atmospherics)
-"mr" = (
+"mq" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/derelict/atmospherics)
-"ms" = (
+"mr" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/atmospherics)
-"mt" = (
+"ms" = (
 /obj/structure/window/fulltile,
 /turf/template_noop,
 /area/derelict/atmospherics)
-"mu" = (
+"mt" = (
 /obj/item/stack/rods,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"mv" = (
+"mu" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /turf/template_noop,
 /area/template_noop)
-"mw" = (
+"mv" = (
 /obj/structure/frame/computer,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"mx" = (
+"mw" = (
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"my" = (
+"mx" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/derelict/atmospherics)
-"mz" = (
+"my" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/derelict/atmospherics)
-"mA" = (
+"mz" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"mB" = (
+"mA" = (
 /obj/structure/door_assembly/door_assembly_mai{
 	name = "airlock assembly"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"mC" = (
+"mB" = (
 /obj/item/weapon/wirecutters,
 /obj/structure/cable{
 	d1 = 2;
@@ -4260,7 +4188,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"mD" = (
+"mC" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -4270,28 +4198,28 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"mE" = (
+"mD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"mF" = (
+"mE" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"mG" = (
+"mF" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/derelict/atmospherics)
-"mH" = (
+"mG" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/unpowered/no_grav)
-"mI" = (
+"mH" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4299,38 +4227,38 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"mJ" = (
+"mI" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"mK" = (
+"mJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"mL" = (
+"mK" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"mM" = (
+"mL" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"mN" = (
+"mM" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged1"
 	},
 /area/derelict/atmospherics)
-"mO" = (
+"mN" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"mP" = (
+"mO" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"mQ" = (
+"mP" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 8;
@@ -4338,34 +4266,34 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/atmospherics)
-"mR" = (
+"mQ" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
-"mS" = (
+"mR" = (
 /turf/template_noop,
 /area/derelict/atmospherics)
-"mT" = (
+"mS" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"mU" = (
+"mT" = (
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"mV" = (
+"mU" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"mW" = (
+"mV" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Aux Storage";
 	req_access_txt = "23"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"mX" = (
+"mW" = (
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -4378,7 +4306,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"mY" = (
+"mX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -4391,20 +4319,20 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"mZ" = (
+"mY" = (
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"na" = (
+"mZ" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"nb" = (
+"na" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"nc" = (
+"nb" = (
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Worn-out APC";
@@ -4416,7 +4344,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/atmospherics)
-"nd" = (
+"nc" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4424,7 +4352,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"ne" = (
+"nd" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4434,7 +4362,7 @@
 	icon_state = "derelict9"
 	},
 /area/derelict/hallway/secondary)
-"nf" = (
+"ne" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -4447,7 +4375,7 @@
 	icon_state = "derelict10"
 	},
 /area/derelict/hallway/secondary)
-"ng" = (
+"nf" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4457,7 +4385,7 @@
 	icon_state = "derelict11"
 	},
 /area/derelict/hallway/secondary)
-"nh" = (
+"ng" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4467,7 +4395,7 @@
 	icon_state = "derelict12"
 	},
 /area/derelict/hallway/secondary)
-"ni" = (
+"nh" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4477,7 +4405,7 @@
 	icon_state = "derelict13"
 	},
 /area/derelict/hallway/secondary)
-"nj" = (
+"ni" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4487,7 +4415,7 @@
 	icon_state = "derelict14"
 	},
 /area/derelict/hallway/secondary)
-"nk" = (
+"nj" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4497,7 +4425,7 @@
 	icon_state = "derelict15"
 	},
 /area/derelict/hallway/secondary)
-"nl" = (
+"nk" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -4510,7 +4438,7 @@
 	icon_state = "derelict16"
 	},
 /area/derelict/hallway/secondary)
-"nm" = (
+"nl" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -4523,7 +4451,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"nn" = (
+"nm" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -4531,60 +4459,60 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"no" = (
+"nn" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict1"
 	},
 /area/derelict/hallway/secondary)
-"np" = (
+"no" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict2"
 	},
 /area/derelict/hallway/secondary)
-"nq" = (
+"np" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict3"
 	},
 /area/derelict/hallway/secondary)
-"nr" = (
+"nq" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict4"
 	},
 /area/derelict/hallway/secondary)
-"ns" = (
+"nr" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict5"
 	},
 /area/derelict/hallway/secondary)
-"nt" = (
+"ns" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict6"
 	},
 /area/derelict/hallway/secondary)
-"nu" = (
+"nt" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict7"
 	},
 /area/derelict/hallway/secondary)
-"nv" = (
+"nu" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "derelict8"
 	},
 /area/derelict/hallway/secondary)
-"nw" = (
+"nv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"nx" = (
+"nw" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/derelict/hallway/secondary)
-"ny" = (
+"nx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"nz" = (
+"ny" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4592,7 +4520,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"nA" = (
+"nz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4603,10 +4531,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"nB" = (
+"nA" = (
 /turf/closed/wall/r_wall,
 /area/derelict/se_solar)
-"nC" = (
+"nB" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4618,18 +4546,18 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nD" = (
+"nC" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"nE" = (
+"nD" = (
 /obj/machinery/door/firedoor,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"nF" = (
+"nE" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4638,22 +4566,22 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nG" = (
+"nF" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
-"nH" = (
+"nG" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"nI" = (
+"nH" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
-"nJ" = (
+"nI" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -4661,7 +4589,7 @@
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/se_solar)
-"nK" = (
+"nJ" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4669,7 +4597,7 @@
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/se_solar)
-"nL" = (
+"nK" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4686,7 +4614,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nM" = (
+"nL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4694,16 +4622,16 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
-"nN" = (
+"nM" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"nO" = (
+"nN" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nP" = (
+"nO" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4711,19 +4639,19 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nQ" = (
+"nP" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/derelict/se_solar)
-"nR" = (
+"nQ" = (
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nS" = (
+"nR" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nT" = (
+"nS" = (
 /obj/docking_port/stationary{
 	dheight = 0;
 	dir = 2;
@@ -4735,7 +4663,7 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"nU" = (
+"nT" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -4746,18 +4674,18 @@
 /obj/item/drone_shell/dusty,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nV" = (
+"nU" = (
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
-"nW" = (
+"nV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nX" = (
+"nW" = (
 /obj/item/weapon/storage/toolbox/syndicate,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nY" = (
+"nX" = (
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -4770,7 +4698,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"nZ" = (
+"nY" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 8;
@@ -4783,7 +4711,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
-"oa" = (
+"nZ" = (
 /obj/item/weapon/paper{
 	desc = "";
 	info = "The Syndicate have cunningly disguised a Syndicate Uplink as your PDA. Simply enter the code \"678 Bravo\" into the ringtone select to unlock its hidden features. <br><br><b>Objective #1</b>. Kill the God damn AI in a fire blast that it rocks the station. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>";
@@ -4793,18 +4721,18 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/se_solar)
-"ob" = (
+"oa" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/item/clothing/head/helmet/space/syndicate/black/red,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"oc" = (
+"ob" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
-"od" = (
+"oc" = (
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -4812,8 +4740,21 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
-"oe" = (
+"od" = (
 /obj/machinery/light/small,
+/turf/open/floor/plasteel/airless,
+/area/derelict/se_solar)
+"oe" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "of" = (
@@ -4822,26 +4763,13 @@
 	dir = 4;
 	icon_state = "right"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "og" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
-/turf/open/floor/plasteel/airless,
-/area/derelict/se_solar)
-"oh" = (
 /obj/item/clothing/suit/space/syndicate/black/red,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"oi" = (
+"oh" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
 	icon_state = "remains";
@@ -4849,11 +4777,11 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"oj" = (
+"oi" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"ok" = (
+"oj" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4862,12 +4790,12 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
-"ol" = (
+"ok" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/solar/derelict_aft)
-"om" = (
+"ol" = (
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -4875,7 +4803,7 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/solar/derelict_aft)
-"on" = (
+"om" = (
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -4886,7 +4814,7 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/solar/derelict_aft)
-"oo" = (
+"on" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4895,7 +4823,7 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/solar/derelict_aft)
-"op" = (
+"oo" = (
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -4908,13 +4836,13 @@
 	icon_state = "platingdmg3"
 	},
 /area/solar/derelict_aft)
-"oq" = (
+"op" = (
 /turf/open/floor/plating/airless,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
 /area/solar/derelict_aft)
-"or" = (
+"oq" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
@@ -4925,6 +4853,25 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+"or" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/template_noop,
 /area/solar/derelict_aft)
@@ -4935,28 +4882,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/template_noop,
 /area/solar/derelict_aft)
 "ot" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/template_noop,
-/area/solar/derelict_aft)
-"ou" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -4975,7 +4903,7 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/solar/derelict_aft)
-"ov" = (
+"ou" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
@@ -4994,7 +4922,7 @@
 	},
 /turf/template_noop,
 /area/solar/derelict_aft)
-"ow" = (
+"ov" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
@@ -5008,7 +4936,7 @@
 	},
 /turf/template_noop,
 /area/solar/derelict_aft)
-"ox" = (
+"ow" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -5016,16 +4944,16 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/solar/derelict_aft)
-"oy" = (
+"ox" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/solar/derelict_aft)
-"oz" = (
+"oy" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/solar/derelict_aft)
-"oA" = (
+"oz" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
@@ -5039,7 +4967,7 @@
 	},
 /turf/template_noop,
 /area/solar/derelict_aft)
-"oB" = (
+"oA" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -5048,7 +4976,7 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/solar/derelict_aft)
-"oC" = (
+"oB" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
@@ -5062,7 +4990,7 @@
 	},
 /turf/template_noop,
 /area/solar/derelict_aft)
-"oD" = (
+"oC" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
@@ -5129,9 +5057,9 @@ aa
 aa
 aa
 aa
-it
-iH
-iS
+is
+iG
+iR
 aa
 aa
 aa
@@ -5239,15 +5167,15 @@ aa
 aa
 aa
 aa
-hC
-hQ
-hQ
-iu
-iI
-iT
-hQ
-hQ
-hC
+hB
+hP
+hP
+it
+iH
+iS
+hP
+hP
+hB
 aa
 aa
 aa
@@ -5349,18 +5277,18 @@ aa
 aa
 aa
 aa
-gX
-gX
-gX
-gX
-hR
-ie
-iv
-iJ
-iU
-ie
-hR
-jL
+gW
+gW
+gW
+gW
+hQ
+id
+iu
+iI
+iT
+id
+hQ
+jK
 aY
 aY
 ab
@@ -5462,20 +5390,20 @@ aa
 aa
 aa
 aa
-gX
-hj
-gX
-hF
-hS
-if
-iw
-iJ
-iV
-ij
-hS
-jL
-gP
-gH
+gW
+hi
+gW
+hE
+hR
+ie
+iv
+iI
+iU
+ii
+hR
+jK
+gO
+gG
 ay
 aa
 aa
@@ -5575,20 +5503,20 @@ aa
 aa
 aa
 aa
-gX
-hj
-gX
-gX
-hT
-ig
-ix
-iJ
-iW
-ii
-hT
-jL
+gW
+hi
+gW
+gW
+hS
+if
+iw
+iI
+iV
+ih
+hS
+jK
 ay
-dE
+dD
 aa
 aa
 aa
@@ -5688,18 +5616,18 @@ aa
 aa
 aa
 aa
-gX
-hj
-hj
-gX
-hS
-ih
-iw
-iK
-iV
-je
-ju
-jL
+gW
+hi
+hi
+gW
+hR
+ig
+iv
+iJ
+iU
+jd
+jt
+jK
 ab
 aa
 aa
@@ -5801,18 +5729,18 @@ aa
 aa
 aa
 aa
-gX
-hj
-ht
-gX
-hU
-ii
+gW
+hi
+hs
+gW
 hT
-ii
-hT
-ii
-hT
-jL
+ih
+hS
+ih
+hS
+ih
+hS
+jK
 aa
 aa
 aa
@@ -5914,18 +5842,18 @@ aa
 aa
 aa
 aa
-gX
-hk
-hk
-gX
-hS
-ij
-hS
-ij
-iX
-ij
-hS
-jL
+gW
+hj
+hj
+gW
+hR
+ii
+hR
+ii
+iW
+ii
+hR
+jK
 aa
 aa
 aa
@@ -6027,18 +5955,18 @@ aa
 aa
 aa
 aa
-gX
-hk
-hk
-gX
+gW
+hj
+hj
+gW
+hS
+ih
+hS
+ih
 hT
-ii
-hT
-ii
-hU
-ii
-hT
-jL
+ih
+hS
+jK
 aa
 aa
 aa
@@ -6140,18 +6068,18 @@ aa
 aa
 aa
 aa
-gX
-hk
-hk
-hG
-hS
-ij
-hS
-ij
-hS
-ij
-hS
-jL
+gW
+hj
+hj
+hF
+hR
+ii
+hR
+ii
+hR
+ii
+hR
+jK
 ab
 aa
 aa
@@ -6253,18 +6181,18 @@ aa
 aa
 aa
 aa
-gX
-hk
-gX
-gX
-gX
-gX
-gX
-gX
-gX
-gX
-jv
-jL
+gW
+hj
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+ju
+jK
 ab
 ab
 ay
@@ -6366,19 +6294,19 @@ aa
 aa
 aa
 aa
-gX
-hk
-gX
-hH
-hH
-hH
-hH
-hH
-hH
-gX
-jw
-jL
-dE
+gW
+hj
+gW
+hG
+hG
+hG
+hG
+hG
+hG
+gW
+jv
+jK
+dD
 ay
 ab
 aa
@@ -6479,20 +6407,20 @@ aa
 aa
 aa
 aa
-gX
-hl
-hu
+gW
 hk
-hk
-hk
-iy
-hk
-hk
-gX
-jw
-jL
-jV
-gP
+ht
+hj
+hj
+hj
+ix
+hj
+hj
+gW
+jv
+jK
+jU
+gO
 ay
 aY
 aa
@@ -6592,22 +6520,22 @@ aa
 aa
 aa
 aa
-gX
-hj
-gX
-hl
-hH
-hH
-hH
-hH
+gW
+hi
+gW
 hk
-gX
-jw
-jL
-jL
-kl
-jL
-jL
+hG
+hG
+hG
+hG
+hj
+gW
+jv
+jK
+jK
+kk
+jK
+jK
 aa
 aa
 aa
@@ -6705,23 +6633,23 @@ aa
 aa
 aa
 aa
-gX
-gX
-gX
-hk
-hk
-hk
-iz
-hk
-hk
-gX
-jx
-gX
-fZ
-go
-fZ
-fZ
-fZ
+gW
+gW
+gW
+hj
+hj
+hj
+iy
+hj
+hj
+gW
+jw
+gW
+fY
+gn
+fY
+fY
+fY
 aa
 aa
 aa
@@ -6820,21 +6748,21 @@ aa
 aa
 aa
 aa
-gX
-hk
-hH
-hH
-hH
-hH
-ht
-gX
-jw
-gX
-jW
-gL
-gU
-gn
-gL
+gW
+hj
+hG
+hG
+hG
+hG
+hs
+gW
+jv
+gW
+jV
+gK
+gT
+gm
+gK
 ab
 ab
 aa
@@ -6933,22 +6861,22 @@ aa
 aa
 aa
 aa
-gX
-hk
-hk
-hk
-hk
-hk
-hk
-gX
-jy
-jM
-jX
-gL
-gn
-gL
+gW
+hj
+hj
+hj
+hj
+hj
+hj
+gW
+jx
+jL
+jW
+gK
 gm
-gn
+gK
+gl
+gm
 ab
 ab
 ab
@@ -7046,24 +6974,24 @@ aa
 aa
 aa
 aa
-gX
-gX
-gX
-hu
-gX
-hu
-gX
-gX
-gX
-gX
-jY
-km
-kt
-fZ
-fZ
-fZ
-fZ
-gL
+gW
+gW
+gW
+ht
+gW
+ht
+gW
+gW
+gW
+gW
+jX
+kl
+gx
+fY
+fY
+fY
+fY
+gK
 ab
 aa
 aa
@@ -7159,24 +7087,24 @@ aa
 aa
 aa
 aa
-hv
-hI
-hV
-hI
-iA
-hI
-hI
-hV
-iA
-fZ
-go
-kn
-ku
-fZ
-kN
-kW
-fZ
-gL
+hu
+hH
+hU
+hH
+iz
+hH
+hH
+hU
+iz
+fY
+gn
+km
+kt
+fY
+kM
+kV
+fY
+gK
 ab
 ab
 aa
@@ -7272,25 +7200,25 @@ aa
 aa
 aa
 aa
-hw
-hI
-hI
-hI
-hI
-hI
-hI
-hI
-hI
-fZ
-go
-go
-kv
-fZ
-jZ
-kn
-fZ
-gL
-gL
+hv
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+fY
+gn
+gn
+gb
+fY
+jY
+km
+fY
+gK
+gK
 ab
 aa
 aa
@@ -7385,26 +7313,26 @@ aa
 aa
 aa
 aa
-hw
-hI
-hI
-hI
-hI
-hI
-hI
-hI
-hI
-fZ
-jZ
-go
-kv
-go
-go
-kX
-fZ
-ln
-gL
-gL
+hv
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+fY
+jY
+gn
+gb
+gn
+gn
+kW
+fY
+lm
+gK
+gK
 aa
 ab
 aa
@@ -7498,26 +7426,26 @@ aa
 aa
 aa
 aa
-hw
-hJ
+hv
 hI
-hI
-hI
-hI
-hI
-hI
-hI
-fZ
-go
-go
-kv
-fZ
-fZ
-fZ
-fZ
-ka
-jY
-gL
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+fY
+gn
+gn
+gb
+fY
+fY
+fY
+fY
+jZ
+jX
+gK
 aa
 ab
 aa
@@ -7602,36 +7530,36 @@ aa
 aa
 aa
 ab
-dr
-dr
-dr
+dq
+dq
+dq
 ab
 ab
 aa
 aa
 aa
 aa
-hv
-hI
-hI
-hI
-hI
-hI
-hI
-jf
-jz
-fZ
-jW
-go
-kv
-fZ
-kN
-kW
-fZ
-jY
-lF
-gL
-gL
+hu
+hH
+hH
+hH
+hH
+hH
+hH
+je
+jy
+fY
+jV
+gn
+gb
+fY
+kM
+kV
+fY
+jX
+lE
+gK
+gK
 ab
 aa
 aa
@@ -7713,38 +7641,38 @@ aa
 aa
 aa
 aa
-dr
-dr
-dr
-dr
-dr
-dr
-dr
+dq
+dq
+dq
+dq
+dq
+dq
+dq
 ab
 aa
 aa
 aa
-hx
-hK
-hW
-hI
-iB
-iL
-iY
-jg
-jA
-fZ
-go
-ko
-kv
-fZ
-jZ
+hw
+hJ
+hV
+hH
+iA
+iK
+iX
+jf
+jz
+fY
+gn
 kn
-fZ
-lo
-go
+gb
+fY
 jY
-gL
+km
+fY
+ln
+gn
+jX
+gK
 ab
 ab
 ab
@@ -7826,40 +7754,40 @@ aa
 ab
 ab
 ab
-dr
-dr
-fL
-em
-ez
-dr
-dr
+dq
+dq
+fK
+el
+ey
+dq
+dq
 ab
 ab
 aa
 aa
-hy
-hL
-hX
-hX
-iC
-hI
-hI
-jh
-jB
-fZ
-go
-go
-kv
-kD
-go
-kW
-fZ
-jY
-lG
-go
-gL
-gL
-fZ
+hx
+hK
+hW
+hW
+iB
+hH
+hH
+jg
+jA
+fY
+gn
+gn
+gb
+kC
+gn
+kV
+fY
+jX
+lF
+gn
+gK
+gK
+fY
 ab
 ab
 ab
@@ -7868,7 +7796,7 @@ ab
 ab
 ab
 ab
-ch
+cg
 ab
 ab
 ab
@@ -7938,41 +7866,41 @@ aa
 ab
 ab
 ab
-dr
-dr
-ez
-dO
-dX
-ez
-ez
-dr
-dr
+dq
+dq
+ey
+dN
+dW
+ey
+ey
+dq
+dq
 ab
 aa
-hm
-hz
-hz
-hY
-ik
+hl
+hy
+hy
 hX
-iM
-iZ
-ji
-jC
-fZ
-fZ
-fZ
-kw
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-mh
-fZ
+ij
+hW
+iL
+iY
+jh
+jB
+fY
+fY
+fY
+kv
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+mg
+fY
 aa
 aa
 aa
@@ -7981,9 +7909,9 @@ ab
 aa
 aa
 aa
-md
-mZ
-mZ
+mc
+mY
+mY
 ab
 aa
 aa
@@ -8045,59 +7973,59 @@ aa
 ab
 aa
 aa
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-fG
-fE
-fU
-fU
-gs
-dr
-dr
-dr
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+fF
+fD
+fT
+fT
+gr
+dq
+dq
+dq
 aa
 aa
-hA
 hz
-hz
-il
-hY
+hy
+hy
+ik
 hX
-hI
-jh
-hI
-fZ
-ka
-kp
-kv
-go
-kO
-kY
-go
-go
-kp
-go
-go
-mi
-fZ
-gL
+hW
+hH
+jg
+hH
+fY
+jZ
+ko
+gb
+gn
+kN
+kX
+gn
+gn
+ko
+gn
+gn
+mh
+fY
+gK
 aa
-gL
-gL
+gK
+gK
 ab
-gL
+gK
 aa
 aa
-me
-mU
-mZ
-nx
+md
+mT
+mY
+nw
 ay
 aa
 aa
@@ -8157,60 +8085,60 @@ ab
 ab
 ab
 ab
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-fH
-fd
-ft
-ft
-ew
-dr
-dr
-dr
-gY
-dW
-hv
-hM
-hZ
-hz
-hz
-iN
-hX
-ji
-hv
-fZ
-go
-go
-kv
-go
-kO
-kZ
-le
-lp
-lH
-go
-go
-go
-fZ
-gL
-gL
-mJ
-gL
-fZ
-gL
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+fG
+fc
+fs
+fs
+ev
+dq
+dq
+dq
+gX
+dV
+hu
+hL
+hY
+hy
+hy
+iM
+hW
+jh
+hu
+fY
+gn
+gn
+gb
+gn
+kN
+kY
+ld
+lo
+lG
+gn
+gn
+gn
+fY
+gK
+gK
+mI
+gK
+fY
+gK
 ab
-gL
-md
-mU
-mZ
-ny
+gK
+mc
+mT
+mY
+nx
 ac
 aa
 aa
@@ -8254,9 +8182,9 @@ bj
 bj
 bj
 bj
-bO
-bO
-cb
+bN
+bN
+ca
 aa
 aa
 ab
@@ -8269,61 +8197,61 @@ ab
 ab
 ab
 ab
-dr
-dr
-ee
-ev
-dW
-ez
+dq
+dq
+ed
+eu
+dV
+ey
+dN
+ey
+ey
+ey
+ey
+ey
 dO
-ez
-ez
-ez
-ez
-ez
-dP
-ez
-dO
-ez
-dO
-dX
+ey
+dN
+ey
+dN
 dW
-dW
-hB
+dV
+dV
+hA
 ab
-hz
-hz
-hz
-hY
+hy
+hy
+hy
 hX
-hX
-jD
-jN
-jq
-jq
-kx
-kE
-kO
-kZ
-lf
+hW
+hW
+jC
+jM
+jb
+jb
+kw
+kD
+kN
+kY
+le
+lp
+lH
 lq
-lI
-lr
-lg
-go
-fZ
-hD
-gm
-gL
-gL
-gL
-gL
-mE
-gL
-md
-mU
-mU
-nz
+lf
+gn
+fY
+hC
+gl
+gK
+gK
+gK
+gK
+mD
+gK
+mc
+mT
+mT
+ny
 ac
 aa
 aa
@@ -8382,61 +8310,61 @@ aa
 ab
 aY
 ab
-dr
-dr
-ef
-ev
-ez
-dP
-dX
+dq
+dq
+ee
+eu
+ey
 dO
-ez
-ez
-ez
-dP
-dP
-dX
-dP
-ez
-gI
-dP
-gY
-hn
+dW
+dN
+ey
+ey
+ey
+dO
+dO
+dW
+dO
+ey
+gH
+dO
+gX
+hm
 ab
 ab
-hz
-hz
-hz
-hz
-hY
-hY
-jE
-jO
-go
-go
-go
-gc
-kP
-go
-lg
-lr
-lr
-lr
-lg
-go
-fZ
+hy
+hy
+hy
+hy
+hX
+hX
+jD
+jN
 gn
-mE
 gn
-go
-fZ
 gn
-gL
-gL
-md
-na
-mU
-nz
+gb
+kO
+gn
+lf
+lq
+lq
+lq
+lf
+gn
+fY
+gm
+mD
+gm
+gn
+fY
+gm
+gK
+gK
+mc
+mZ
+mT
+ny
 ac
 aa
 aa
@@ -8493,68 +8421,68 @@ aa
 aa
 aa
 aY
-de
-dr
-dr
+dd
+dq
+dq
+dN
+ef
+eu
+ey
+dW
+dN
+eV
+fp
+fp
+fH
+ey
 dO
-eg
-ev
-ez
-dX
-dO
-eW
-fq
-fq
-fI
-ez
-dP
-eZ
-gt
-fq
-gJ
-gR
+eY
+gs
+fp
+gI
+gQ
 ab
 ab
-hC
+hB
 ab
 ab
 aa
 aa
-hz
-hz
-jj
-hv
-fZ
-go
-go
-go
-gc
-kD
-go
-go
-lg
-go
-go
-go
-go
-kD
-go
-go
-mK
-go
-fZ
-gm
-mR
-gm
-md
-nb
-mU
-nz
+hy
+hy
+ji
+hu
+fY
+gn
+gn
+gn
+gb
+kC
+gn
+gn
+lf
+gn
+gn
+gn
+gn
+kC
+gn
+gn
+mJ
+gn
+fY
+gl
+mQ
+gl
+mc
+na
+mT
+ny
 ac
 aa
 aa
 aa
-nT
+nS
 aa
 aa
 aa
@@ -8607,25 +8535,25 @@ aa
 aa
 aa
 ab
-dr
-dr
-dP
-eh
-ev
-ez
+dq
+dq
 dO
-eW
-fj
-fr
-fj
-fJ
-fM
-dX
-gh
-gu
+eg
+eu
+ey
+dN
+eV
+fi
+fq
+fi
+fI
+fL
 dW
-dW
-dW
+gg
+gt
+dV
+dV
+dV
 ab
 ab
 ab
@@ -8633,36 +8561,36 @@ ab
 ab
 ab
 aa
-iO
-hz
-jk
-hv
-fZ
-go
-js
-go
-gc
-kQ
-go
-go
-go
-js
-go
-go
-go
-fZ
-lG
-go
-go
-gm
-fZ
-go
+iN
+hy
+jj
+hu
+fY
 gn
-go
-mW
-mU
-mU
-md
+jr
+gn
+gb
+kP
+gn
+gn
+gn
+jr
+gn
+gn
+gn
+fY
+lF
+gn
+gn
+gl
+fY
+gn
+gm
+gn
+mV
+mT
+mT
+mc
 ac
 aa
 aa
@@ -8720,62 +8648,62 @@ aa
 aa
 aa
 ab
-dr
-dA
-dQ
-eh
-ew
-eF
-eN
-eX
-fk
+dq
+dz
 dP
-dP
-dW
-dW
-dW
-dW
-dW
-dW
+eg
+ev
+eE
+eM
+eW
+fj
 dO
-dW
-gJ
-dW
-ez
-dr
-dr
+dO
+dV
+dV
+dV
+dV
+dV
+dV
+dN
+dV
+gI
+dV
+ey
+dq
+dq
 ab
 ab
-hv
-ja
-hv
-hv
-fZ
-fZ
-fZ
-fZ
-kF
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-gO
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-md
-mU
-mU
-nz
+hu
+iZ
+hu
+hu
+fY
+fY
+fY
+fY
+kv
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+gN
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+mc
+mT
+mT
+ny
 ac
 aa
 aa
@@ -8829,66 +8757,66 @@ aa
 aa
 ab
 ab
-cl
-cl
-cl
-cl
-dr
-dr
-dR
+ck
+ck
+ck
+ck
+dq
+dq
+dQ
+dN
+dV
 dO
-dW
-dP
-dO
+dN
+eX
+fk
+dV
+dV
 eY
-fl
+dV
+dV
+dV
+dV
+dN
 dW
-dW
-eZ
-dW
-dW
-dW
-dW
-dO
-dX
-dO
-fb
-ho
-ez
-dr
-dr
-dr
+dN
+fa
+hn
+ey
+dq
+dq
+dq
 ab
-hv
-hz
-jl
-hv
-fZ
-go
-kp
-go
-gc
-kp
-go
-fZ
+hu
+hy
+jk
+hu
+fY
+gn
+ko
+gn
+gb
+ko
+gn
+fY
+lr
+lI
+lS
 ls
-lJ
-lT
-lt
-mj
-mo
-mw
-mF
-mL
-lt
+mi
+mn
+mv
+mE
+mK
 ls
-lt
-lx
-mS
-md
-mU
-mU
-nz
+lr
+ls
+lw
+mR
+mc
+mT
+mT
+ny
 ac
 aa
 aa
@@ -8939,69 +8867,69 @@ aa
 aa
 aa
 aa
-cn
-cu
-cu
-cw
-cO
-cY
-df
-ds
-dB
-dS
-ei
-ex
-dO
-dX
-eZ
-dW
-dW
-dW
-aa
-aa
-aa
-aa
-aa
-dW
-dW
-gS
-ft
-ez
-dO
-ez
+cm
+ct
+ct
+cv
+cN
+cX
+de
 dr
-dr
-dr
-hv
-ja
-hv
-hv
-fZ
-go
-kn
-go
-gc
-go
-go
-fZ
-lt
-lK
-lU
+dA
+dR
+eh
+ew
+dN
+dW
+eY
+dV
+dV
+dV
+aa
+aa
+aa
+aa
+aa
+dV
+dV
+gR
+fs
+ey
+dN
+ey
+dq
+dq
+dq
+hu
+iZ
+hu
+hu
+fY
+gn
+km
+gn
+gb
+gn
+gn
+fY
 ls
-lt
-lt
-mx
+lJ
+lT
+lr
 ls
-mM
 ls
-lt
-mP
-lx
-mS
-lx
-nc
-mU
-nz
+mw
+lr
+mL
+lr
+ls
+mO
+lw
+mR
+lw
+nb
+mT
+ny
 ac
 aa
 aa
@@ -9052,69 +8980,69 @@ aa
 ab
 aa
 ab
-co
-cv
-cG
-cO
-cO
+cn
+cu
+cF
+cN
+cN
+cY
+df
+cN
+ck
+dS
 cZ
-dg
-cO
-cl
-dT
-da
-dr
-eG
+dq
+eF
+dN
+dV
+dV
+dV
+dV
+aa
+aa
+aa
+aa
+aa
+dV
+dV
+dN
+ey
+dN
 dO
-dW
-dW
-dW
-dW
-aa
-aa
-aa
-aa
-aa
-dW
-dW
-dO
-ez
-dO
-dP
-hN
-dr
-im
-dr
-hv
-iD
-gP
-hI
-fZ
-go
-go
-go
-kG
-jq
-la
-fZ
-lu
-lt
-lV
-lt
-lt
-lt
-lt
+hM
+dq
+il
+dq
+hu
+iC
+gO
+hH
+fY
+gn
+gn
+gn
+kF
+jb
+kZ
+fY
 lt
 ls
-lt
+lU
 ls
-ma
 ls
-lx
-md
-nd
-mU
-nz
+ls
+ls
+ls
+lr
+ls
+lr
+lZ
+lr
+lw
+mc
+nc
+mT
+ny
 ac
 aa
 aa
@@ -9164,70 +9092,70 @@ aa
 ay
 ab
 aa
-cl
-cp
-cw
-cH
-cO
-cO
-da
-dh
-dt
-dC
-dU
-ej
-dr
-ez
-dW
-fa
-dW
-dW
-dW
+ck
+co
+cv
+cG
+cN
+cN
+cZ
+dg
+ds
+dB
+dT
+ei
+dq
+ey
+dV
+eZ
+dV
+dV
+dV
 aa
 aa
 aa
 aa
 aa
-dW
-dW
-dP
-ez
+dV
+dV
 dO
-dP
-dX
+ey
+dN
+dO
 dW
-in
-dr
-iP
+dV
+im
+dq
+iO
 ay
 ay
-jp
-fZ
-go
-ko
-go
-gc
-go
-go
-fZ
-lt
-lL
-lL
-ma
-lt
-lt
-lt
-lt
-lt
-lt
-lt
-lt
-mG
-mT
-md
-ne
-no
-nz
+jo
+fY
+gn
+kn
+gn
+gb
+gn
+gn
+fY
+ls
+lK
+lK
+lZ
+ls
+ls
+ls
+ls
+ls
+ls
+ls
+ls
+mF
+mS
+mc
+nd
+nn
+ny
 ac
 aa
 aa
@@ -9275,73 +9203,73 @@ ax
 ax
 aa
 ac
-ch
+cg
 aa
-cl
-co
-cu
-cu
-cP
+ck
+cn
+ct
+ct
 cO
-db
-dg
-cO
-cl
+cN
+da
+df
+cN
+ck
+dU
+ej
+ex
 dV
-ek
-ey
-dW
-dW
-dW
-dW
-dW
-dW
+dV
+dV
+dV
+dV
+dV
 aa
 aa
 aa
 aa
 aa
-dW
-dP
-dX
-ez
-fW
-dP
+dV
 dO
-dr
-io
-dr
-iQ
+dW
+ey
+fV
+dO
+dN
+dq
+in
+dq
+iP
 ay
 ay
-gP
-fZ
-go
-go
-go
-gc
-go
-go
-fZ
-lv
-lM
-lW
-ma
+gO
+fY
+gn
+gn
+gn
+gb
+gn
+gn
+fY
+lu
+lL
+lV
+lZ
+lr
 ls
-lt
-lt
-lt
 ls
-mN
-mG
-lt
-lt
-mG
-md
-nf
-np
-md
-ch
+ls
+lr
+mM
+mF
+ls
+ls
+mF
+mc
+ne
+no
+mc
+cg
 aa
 aa
 aa
@@ -9388,72 +9316,72 @@ bg
 ax
 aa
 ac
-ch
+cg
 aa
-cl
-cq
-cu
-cI
-co
-cu
-dc
-di
-du
-dD
-cl
-el
-dr
-ez
-ez
-dW
-dW
-dW
-dW
-aa
-aa
+ck
+cp
+ct
+cH
+cn
+ct
+db
+dh
+dt
+dC
+ck
+ek
+dq
+ey
+ey
+dV
+dV
+dV
+dV
 aa
 aa
 aa
-dW
-dO
-eh
-gZ
-ez
-dO
-ez
-dr
-dr
-dr
+aa
+aa
+dV
+dN
+eg
+gY
+ey
+dN
+ey
+dq
+dq
+dq
 ab
 ay
 ay
-gD
-fZ
-fZ
-fZ
-go
-gc
-go
-go
-fZ
-lw
-lN
-lt
+gC
+fY
+fY
+fY
+gn
+gb
+gn
+gn
+fY
+lv
+lM
 ls
-lt
-mp
+lr
 ls
+mo
+lr
+lr
 ls
-lt
+lr
+mM
 ls
-mN
-lt
-ls
-mG
-md
-ng
-nq
-nz
+lr
+mF
+mc
+nf
+np
+ny
 ac
 aa
 aa
@@ -9501,72 +9429,72 @@ aR
 ax
 ax
 ac
-ch
+cg
 aa
-cl
-cl
+ck
+ck
 ab
 aa
 aa
 ab
-cl
-cl
-dr
-dr
-dW
-em
-dW
-ez
-dO
-fb
-fm
-dW
-dW
-dW
-dW
-dW
-dW
-dW
-dW
-dW
-ei
-ev
-ez
-ez
-dr
-dr
-dr
+ck
+ck
+dq
+dq
+dV
+el
+dV
+ey
+dN
+fa
+fl
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+eh
+eu
+ey
+ey
+dq
+dq
+dq
 ab
 aa
 aa
-jm
-jF
-fZ
-fZ
-fZ
-go
-gc
-go
-go
-fZ
-lw
-lO
+jl
+jE
+fY
+fY
+fY
+gn
+gb
+gn
+gn
+fY
+lv
+lN
+lr
+lr
+mj
+mp
+mx
 ls
 ls
-mk
-mq
-my
-lt
-lt
-lt
-lt
-mQ
-lt
-lt
-md
-nh
-nr
-nz
+ls
+ls
+mP
+ls
+ls
+mc
+ng
+nq
+ny
 ac
 aa
 aa
@@ -9624,62 +9552,62 @@ aa
 aa
 ab
 ab
-dr
-dr
-dO
-dO
-ez
-dO
-dO
-fc
-fm
-dW
-dW
-dW
-dW
-dW
-dW
-dW
-dW
-dW
-eh
-ev
-dO
-ez
-dr
-dr
+dq
+dq
+dN
+dN
+ey
+dN
+dN
+fb
+fl
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+eg
+eu
+dN
+ey
+dq
+dq
 ab
 ab
 ab
 ab
-jn
+jm
 ay
-gD
-fZ
-fZ
-jZ
-gc
-go
-go
-fZ
-lx
-lx
-lx
-lx
-lx
+gC
+fY
+fY
+jY
+gb
+gn
+gn
+fY
+lw
+lw
+lw
+lw
+lw
+mq
+ls
+ls
+ls
+ls
 mr
-lt
-lt
-lt
-lt
-ms
-lt
-lt
-lt
-md
-ni
-ns
-nz
+ls
+ls
+ls
+mc
+nh
+nr
+ny
 ac
 aa
 aa
@@ -9724,7 +9652,7 @@ bw
 by
 aR
 aR
-bT
+bS
 ax
 ay
 aa
@@ -9737,62 +9665,62 @@ aa
 aa
 aa
 ab
-dr
-dr
-dX
-dO
-dX
-dP
-dO
-fd
-fn
-fs
-fE
-fE
-fN
-fV
+dq
+dq
 dW
-gv
+dN
 dW
-gK
-gS
-ew
-dP
 dO
-dr
-dr
+dN
+fc
+fm
+fr
+fD
+fD
+fM
+fU
+dV
+gu
+dV
+gJ
+gR
+ev
+dO
+dN
+dq
+dq
 ab
 aa
 aa
 ab
 ay
-gD
-jp
-fZ
-fZ
-go
-gc
-go
-go
-lh
-lt
-lP
+gC
+jo
+fY
+fY
+gn
+gb
+gn
+gn
+lg
 ls
-lP
-lP
-mr
-lt
-mr
-mr
-mG
-mN
-mp
-lx
-lx
-md
-nj
-nt
-nz
+lO
+lr
+lO
+lO
+mq
+ls
+mq
+mq
+mF
+mM
+mo
+lw
+lw
+mc
+ni
+ns
+ny
 ac
 aa
 aa
@@ -9849,63 +9777,63 @@ aa
 aa
 aa
 aY
-dj
-dr
-dr
+di
+dq
+dq
+dN
+dN
+ey
 dO
-dO
-ez
-dP
-dO
-ez
-fd
-ft
-ft
-ew
-fM
+dN
+ey
+fc
+fs
+fs
+ev
+fL
+dV
+gh
+gv
+gD
+gD
+gS
+dN
 dW
-gi
-gw
-gE
-gE
-gT
 dO
-dX
-dP
-dr
-dr
+dq
+dq
 ab
 aa
-iR
+iQ
 ab
 ay
 ay
-jp
-fZ
-go
-ky
-kH
-go
-go
-fZ
-lx
-lx
-lx
-lx
-lx
+jo
+fY
+gn
+kx
+kG
+gn
+gn
+fY
+lw
+lw
+lw
+lw
+lw
+mr
 ms
-mt
-mG
-mG
-mp
-mp
-mt
-lx
-mS
-md
-nk
-nu
-nz
+mF
+mF
+mo
+mo
+ms
+lw
+mR
+mc
+nj
+nt
+ny
 ac
 aa
 aa
@@ -9950,7 +9878,7 @@ bx
 bD
 aR
 ax
-bU
+bT
 ax
 aa
 aa
@@ -9964,62 +9892,62 @@ aa
 ab
 aY
 ab
-dr
-dr
-en
-ez
-ez
-dX
-dP
+dq
+dq
+em
+ey
+ey
+dW
 dO
-ez
-dW
-dW
-ez
-ez
-dW
-ez
-dP
-dX
-dP
+dN
+ey
+dV
+dV
+ey
+ey
+dV
+ey
 dO
-ez
-dr
-dr
+dW
+dO
+dN
+ey
+dq
+dq
 ab
 aa
-iD
+iC
 aa
 ab
 ay
 ay
-jp
-fZ
-go
-gc
-go
-gk
-gk
-gk
-ly
-ly
-ly
-ly
-ly
-mt
-mz
-mt
+jo
+fY
+gn
+gb
+gn
+gj
+gj
+gj
 lx
 lx
-mt
-mz
-mz
-mS
-md
-nl
-nv
-md
-eu
+lx
+lx
+lx
+ms
+my
+ms
+lw
+lw
+ms
+my
+my
+mR
+mc
+nk
+nu
+mc
+et
 aa
 aa
 aa
@@ -10077,62 +10005,62 @@ aa
 ab
 ab
 ab
-dr
-dr
-eo
+dq
+dq
+en
+dV
+ey
+dN
 dW
-ez
 dO
-dX
-dP
-fu
-ez
-ez
-fO
-fW
-ez
-ez
-dP
-ez
-dP
-ez
-ez
-dr
-dr
+ft
+ey
+ey
+fN
+fV
+ey
+ey
+dO
+ey
+dO
+ey
+ey
+dq
+dq
 aa
 aa
-iD
+iC
 aa
 aa
-jo
-gP
-gD
-fZ
-go
-gc
-go
-gk
-gr
+jn
+gO
+gC
+fY
+gn
+gb
+gn
+gj
+gq
 ay
-lz
-lz
-lz
-lz
+ly
+ly
+ly
+ly
 aY
+ly
 lz
-lA
-lA
 lz
-gP
-gP
+ly
+gO
+gO
+ly
 lz
-lA
-lz
-md
-nd
-mU
-nz
-eu
+ly
+mc
+nc
+mT
+ny
+et
 aa
 aa
 aa
@@ -10176,7 +10104,7 @@ by
 by
 bg
 ax
-bV
+bU
 ax
 aa
 aa
@@ -10191,61 +10119,61 @@ aa
 ab
 ab
 ab
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-dr
-dO
-fP
-fX
-dO
-fb
-dr
-dr
-dr
-dr
-dr
-dr
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dN
+fO
+fW
+dN
+fa
+dq
+dq
+dq
+dq
+dq
+dq
 ab
 ay
 ay
-iE
+iD
 ay
-jb
-jp
-jp
-jb
-fZ
-go
-gc
-go
-gk
-gr
+ja
+jo
+jo
+ja
+fY
+gn
+gb
+gn
+gj
+gq
 ay
+ly
 lz
-lA
-lA
-lA
+lz
+lz
 aY
-lA
-lA
-lA
 lz
 lz
-mO
 lz
-lA
+ly
+ly
+mN
+ly
 lz
-md
-nd
-mU
-nz
-eu
+ly
+mc
+nc
+mT
+ny
+et
 aa
 aa
 aa
@@ -10305,59 +10233,59 @@ ab
 ab
 ab
 ab
-ci
-ci
-ci
-ci
-ci
-ci
-ci
-dr
-ez
-fQ
-fQ
-gj
-fJ
-dr
-dr
-dr
-dr
-dr
-dr
-ab
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-go
-gc
-go
-gk
-lb
-ay
-lA
-lA
-lz
-lA
-aY
-lz
-gP
-lA
-lA
-lA
-lA
-lA
 ch
+ch
+ch
+ch
+ch
+ch
+ch
+dq
+ey
+fP
+fP
+gi
+fI
+dq
+dq
+dq
+dq
+dq
+dq
+ab
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+gn
+gb
+gn
+gj
+la
+ay
 lz
-md
-nd
-mU
-nz
+lz
+ly
+lz
+aY
+ly
+gO
+lz
+lz
+lz
+lz
+lz
+cg
+ly
+mc
+nc
+mT
+ny
 ac
 aa
 aa
@@ -10424,53 +10352,53 @@ aa
 aa
 ab
 ab
-ci
-dr
+ch
+dq
+dV
+dN
+dN
 dW
-dO
-dO
-dX
-ez
-dr
-dr
+ey
+dq
+dq
 aa
 aa
 aa
 aa
-gL
-gU
+gK
+gT
+gl
 gm
+fY
 gn
-fZ
-go
-go
-go
-go
-go
-go
-gc
-go
-gk
-gr
+gn
+gn
+gn
+gn
+gn
+gb
+gn
+gj
+gq
 ay
-eu
-lA
+et
 lz
-lA
+ly
+lz
 aY
-lA
+lz
 aY
-mH
-lA
+mG
+lz
 aY
 ay
-ch
-ch
-ch
-md
-nd
-mU
-nz
+cg
+cg
+cg
+mc
+nc
+mT
+ny
 ac
 aa
 aa
@@ -10514,7 +10442,7 @@ bt
 bz
 bz
 bI
-bP
+bO
 bj
 bj
 ax
@@ -10538,52 +10466,52 @@ aa
 aa
 ab
 ab
-dr
-dr
-ez
-fY
-ez
-dr
-dr
+dq
+dq
+ey
+fX
+ey
+dq
+dq
 ab
 aa
-gL
-gL
-gl
-hO
-gm
-gm
-iF
-ip
-jc
-jq
-jq
-jP
-jq
-jq
-kz
-go
+gK
+gK
 gk
-gr
-gr
+gk
+gl
+gl
+iE
+io
+jb
+jb
+jb
+jO
+jb
+jb
+ky
+gn
+gj
+gq
+gq
 ay
-lA
 lz
-mb
+ly
+ma
+ly
+ly
+mz
 lz
-lz
-mA
-lA
-lz
+ly
 aY
 ay
+ly
 lz
-lA
-lz
-md
-nd
-mU
-nz
+ly
+mc
+nc
+mT
+ny
 ac
 aa
 aa
@@ -10651,70 +10579,70 @@ aa
 aa
 aa
 ab
-dr
-dr
-dr
-dr
-gk
-gk
-gk
+dq
+dq
+dq
+dq
+gj
+gj
+gj
 ab
-gx
-ha
-gL
+gw
+gZ
+gK
+gl
+gl
+gm
+io
 gm
 gm
 gn
-ip
 gn
 gn
-go
-go
-go
-gc
-go
-go
-kA
-jq
-kR
+gb
+gn
+gn
+kz
+jb
+kQ
+lb
+lh
+gq
+ay
+ay
+ay
+ly
+ly
+ly
+lz
+ly
+ly
+ly
+ly
+lz
+ly
+mc
+nc
+mT
+mc
+aY
+aY
+nH
+ab
+ab
 lc
-li
-gr
-ay
-ay
-ay
-lz
-lz
-lz
-lA
-lz
-lz
-lz
-lz
-lA
-lz
-md
-nd
-mU
-md
-aY
-aY
-nI
-ab
-ab
-ld
 ay
 ay
 aY
 aa
 aa
-on
-or
-ox
+om
+oq
+ow
 aa
-on
-oz
-ox
+om
+oy
+ow
 aa
 ac
 "}
@@ -10762,72 +10690,72 @@ aa
 aa
 aa
 aa
-ci
-ci
+ch
+ch
 aa
 ab
-dr
-dr
+dq
+dq
+gj
+gw
 gk
-gx
+gk
+gT
 gl
 gl
-gU
+gm
+gm
 gm
 gm
 gn
+fY
 gn
 gn
+jr
+gb
 gn
-go
-fZ
-go
-go
-js
-gc
-go
-go
-gk
-gk
-gk
-gr
-lj
-lB
-lQ
-lj
+gn
+gj
+gj
+gj
+gq
+li
+lA
+lP
+li
 ay
-jR
+jQ
+ly
+ly
 lz
+ly
+ly
+ly
+ly
 lz
-lA
-lz
-lz
-lz
-lz
-lA
-lz
-md
-nd
-mU
-nz
+ly
+mc
+nc
+mT
+ny
 ac
 aa
 ay
 ab
 ay
 ay
-gP
-gr
+gO
+gq
 aa
 aa
 aa
-on
-os
-ox
+om
+or
+ow
 aa
-on
-oA
-ox
+om
+oz
+ow
 aa
 ac
 "}
@@ -10875,72 +10803,72 @@ aa
 aa
 aa
 aa
-cs
-cs
-cs
-cs
-cs
-fZ
-fZ
-gy
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-go
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-fZ
-gc
-fZ
-fZ
-gk
-kI
-kS
-gr
-gr
-lC
-gr
-gr
-gr
+cr
+cr
+cr
+cr
+cr
+fY
+fY
+gx
+fY
+fY
+fY
+fY
+fY
+fY
+gn
+fY
+fY
+fY
+fY
+fY
+fY
+fY
+gb
+fY
+fY
+gj
+kH
+kR
+gq
+gq
+lB
+gq
+gq
+gq
 aY
-lA
-lA
-lA
-lA
-lA
-lA
-lA
-lA
+lz
+lz
+lz
+lz
+lz
+lz
+lz
+lz
 ay
-md
-nd
-mU
-nz
+mc
+nc
+mT
+ny
 ac
 aa
 ay
 ay
 ay
-gP
-od
-gr
-nB
+gO
+oc
+gq
+nA
 aa
 aa
-on
-os
-ox
+om
+or
+ow
 aa
-on
-os
-ox
+om
+or
+ow
 aa
 ac
 "}
@@ -10981,78 +10909,78 @@ aa
 aa
 aa
 aa
-dk
+dj
 aa
 aa
 aa
 aa
 aa
 aa
-cs
-fv
-fF
-fx
-cs
-ga
-gl
-ga
+cr
+fu
+fE
+fw
+cr
 fZ
+gk
+fZ
+fY
+gm
+gm
+gn
+fY
 gn
 gn
-go
-fZ
-go
-go
-go
-fZ
-go
-gL
-go
-go
-go
-gc
-go
-go
-gk
-gk
-kT
+gn
+fY
+gn
+gK
+gn
+gn
+gn
+gb
+gn
+gn
+gj
+gj
+kS
 aY
 aY
-lD
-lR
-lX
+lC
+lQ
+lW
+mb
+aY
+ay
+ay
+ly
+ly
+lz
+ly
+ly
+ay
+gq
 mc
-aY
-ay
-ay
-lz
-lz
-lA
-lz
-lz
-ay
-gr
-md
-nd
-mU
-nz
+nc
+mT
+ny
 ac
 aa
-nB
-nB
-nB
-nB
-oe
-nB
-nB
+nA
+nA
+nA
+nA
+od
+nA
+nA
 ab
 aa
 aa
-ot
+os
 aa
 aa
 aa
-oB
+oA
 aa
 aa
 ac
@@ -11079,9 +11007,9 @@ bj
 ax
 bz
 bz
+bN
+bV
 bO
-bW
-bP
 ax
 aa
 aa
@@ -11100,74 +11028,74 @@ aa
 aa
 aa
 aa
-dk
-cs
+dj
+cr
+fv
 fw
-fx
-fx
-fR
+fw
+fQ
+ga
+gl
+gy
+fY
+gK
+gK
+gn
+fY
+gy
+gm
+gm
+fY
+gy
+gn
+gn
+jq
+gn
 gb
 gm
-gz
-fZ
-gL
-gL
-go
-fZ
-gz
+kn
 gn
-gn
-fZ
-gz
-go
-go
-jr
-go
-gc
-gn
-ko
-go
-gk
-gk
+gj
+gj
 aY
-lb
-gr
-gr
-gr
-gr
+la
+gq
+gq
+gq
+gq
 aY
-gr
-jR
+gq
+jQ
 ay
+ly
 lz
-lA
-lz
-lz
+ly
+ly
 ay
-gr
-md
-nd
-mU
-nz
+gq
+mc
+nc
+mT
+ny
 ac
 aa
-nJ
+nI
+nN
+nT
+nX
+oe
 nO
-nU
-nY
-of
-nP
+oj
 ok
 ol
-om
-oo
-ou
-oo
-oz
-oo
-ou
-oo
-oD
+on
+ot
+on
+oy
+on
+ot
+on
+oC
 ac
 "}
 (55,1,1) = {"
@@ -11192,10 +11120,10 @@ bj
 ax
 bz
 bK
-bO
-bX
-cc
-ce
+bN
+bW
+cb
+cd
 aa
 aa
 aa
@@ -11205,80 +11133,80 @@ aa
 aa
 aa
 aa
-dk
+dj
 aa
-dE
-dk
-aa
-aa
+dD
+dj
 aa
 aa
 aa
-cs
-fx
-fx
-fx
-cs
-gb
+aa
+aa
+cr
+fw
+fw
+fw
+cr
+ga
+gm
+gm
+gE
+gK
+gm
 gn
 gn
-gF
-gL
+gm
+gK
+gm
+fY
+gm
+gK
 gn
-go
-go
 gn
-gL
 gn
-fZ
+ga
 gn
-gL
-go
-go
-go
-gb
-go
+gm
 gn
-go
-kJ
-fZ
-ch
-gr
-gr
-lE
-lE
-gr
+kI
+fY
+cg
+gq
+gq
+lD
+lD
+gq
 aY
-gr
+gq
 ay
 ay
 ay
 aY
-lz
+ly
 ay
-gr
-gr
-md
-nd
-mU
-md
-nB
-nB
-nK
-nB
-nV
-nB
-og
-nB
-nB
+gq
+gq
+mc
+nc
+mT
+mc
+nA
+nA
+nJ
+nA
+nU
+nA
+of
+nA
+nA
 ab
 aa
 aa
-ot
+os
 aa
 aa
 aa
-oB
+oA
 aa
 aa
 ab
@@ -11306,93 +11234,93 @@ ax
 bz
 bE
 bK
-bY
-cd
-cf
-ci
-ci
-ci
-ci
-aa
-aa
-aa
-aa
-aa
-dk
-dv
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-cs
-fy
-fx
-fx
-fS
-gc
-go
-go
-fZ
-fZ
-gn
-gn
-fZ
-gz
-gz
-gL
-gz
-gz
-gz
-go
-js
-gL
-gc
-go
-gn
-go
-gn
-fZ
+bX
+cc
+ce
 ch
-lk
-lE
-lE
-lE
-gr
-aY
-gr
+ch
+ch
+ch
+aa
+aa
+aa
+aa
+aa
+dj
+du
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cr
+fx
+fw
+fw
+fR
+gb
+gn
+gn
+fY
+fY
+gm
+gm
+fY
+gy
+gy
+gK
+gy
+gy
+gy
+gn
+jr
+gK
+gb
+gn
+gm
+gn
+gm
+fY
+cg
 lj
-gr
-gr
+lD
+lD
+lD
+gq
+aY
+gq
+li
+gq
+gq
 aY
 ay
-gr
-gr
-gr
-md
-nm
-mI
-mI
-nC
-nF
-nL
-nP
-nP
-nZ
-nR
-nR
+gq
+gq
+gq
+mc
+nl
+mH
+mH
 nB
+nE
+nK
+nO
+nO
+nY
+nQ
+nQ
+nA
 aa
 aa
-on
-ov
-ox
+om
+ou
+ow
 aa
-on
-ov
-ox
+om
+ou
+ow
 aa
 ac
 "}
@@ -11418,10 +11346,10 @@ bj
 ax
 bE
 bE
-bQ
+bP
 bK
-bO
-cf
+bN
+ce
 aa
 aa
 aa
@@ -11431,81 +11359,81 @@ aa
 aa
 aa
 aa
-ci
-dk
-ci
+ch
+dj
+ch
 aa
 aa
 aa
 aa
 aa
 ab
-cs
-fz
-fx
-fx
-fS
-gc
-go
-gA
-fZ
-go
-go
-hb
-fZ
-fZ
+cr
+fy
+fw
+fw
+fR
+gb
+gn
 gz
-gk
-gk
-gk
-gk
-gk
-gk
-go
-gc
-gL
-go
-go
-fZ
-fZ
-ch
-ch
-ch
-ch
-ch
-md
-mf
-mf
-mB
-mf
-mf
-mf
-md
-md
-md
-md
-md
-nd
-mU
-mZ
-nB
-nB
-nB
+fY
+gn
+gn
+ha
+fY
+fY
+gy
+gj
+gj
+gj
+gj
+gj
+gj
+gn
+gb
+gK
+gn
+gn
+fY
+fY
+cg
+cg
+cg
+cg
+cg
+mc
+me
+me
+mA
+me
+me
+me
+mc
+mc
+mc
+mc
+mc
+nc
+mT
+mY
+nA
+nA
+nA
+nP
+nV
 nQ
-nW
-nR
-oh
-nR
-nB
+og
+nQ
+nA
 aa
 aa
-op
-ow
-oy
-aa
-on
+oo
 ov
 ox
+aa
+om
+ou
+ow
 aa
 ac
 "}
@@ -11531,10 +11459,10 @@ bj
 ax
 bz
 bL
-bR
+bQ
 bF
 bE
-cf
+ce
 aa
 aa
 aa
@@ -11544,81 +11472,81 @@ aa
 aa
 aa
 aa
-ci
-ci
-ci
+ch
+ch
+ch
 aa
 aa
 aa
 aa
 ab
 ab
-cs
-fA
-fx
-fx
-fS
-gc
-go
-go
-fZ
-gM
-go
-go
-fZ
-gz
-hD
-gk
-gP
-gC
-gC
-iq
-gk
-go
-gc
-go
-kq
-go
-kK
+cr
+fz
+fw
+fw
+fR
+gb
+gn
+gn
+fY
+gL
+gn
+gn
+fY
+gy
+hC
+gj
+gO
+gB
+gB
+ip
+gj
+gn
+gb
+gn
+kp
+gn
+kJ
 aa
-gD
+gC
 ay
 ab
 ab
 ab
-me
-ml
-mu
-mC
-mI
-mI
-mI
-mI
-mI
-mI
-mI
-mX
-nn
-nw
-mZ
-mZ
-nG
-nM
-nR
-nX
-oa
-oi
-nV
-nB
+md
+mk
+mt
+mB
+mH
+mH
+mH
+mH
+mH
+mH
+mH
+mW
+nm
+nv
+mY
+mY
+nF
+nL
+nQ
+nW
+nZ
+oh
+nU
+nA
 aa
 aa
-oq
-dk
+op
+dj
 aa
-dk
-on
-oC
-ox
+dj
+om
+oB
+ow
 aa
 ab
 "}
@@ -11646,8 +11574,8 @@ bz
 bM
 bL
 bE
-bO
-cf
+bN
+ce
 aa
 aa
 aa
@@ -11657,72 +11585,72 @@ aa
 aa
 aa
 aa
-ci
-ci
-ci
+ch
+ch
+ch
 aa
 aa
 aa
 ab
 ab
 ab
-cs
-fB
-fx
-fx
-fS
-gc
-gp
-gp
-fZ
-gN
+cr
+fA
+fw
+fw
+fR
+gb
 go
-fZ
-fZ
-gz
-gz
-gk
-gC
-iq
-ia
-gC
-gk
-gk
-jQ
-gk
-gk
-gk
-ch
+go
+fY
+gM
+gn
+fY
+fY
+gy
+gy
+gj
+gB
+ip
+hZ
+gB
+gj
+gj
+jP
+gj
+gj
+gj
+cg
 aa
 aa
 ab
-ch
+cg
 aa
 ab
-mf
-mf
-mf
-mD
-mD
-mD
-mD
-mD
-mD
-mf
-mU
-mU
-mZ
-mU
-mU
-mU
-nG
-nM
-nS
+me
+me
+me
+mC
+mC
+mC
+mC
+mC
+mC
+me
+mT
+mT
+mY
+mT
+mT
+mT
+nF
+nL
 nR
-ob
-nR
-oj
-nB
+nQ
+oa
+nQ
+oi
+nA
 aa
 aa
 aa
@@ -11758,53 +11686,53 @@ ax
 bF
 bK
 bK
-bZ
+bY
 bz
-cg
-cj
-cj
-cj
+cf
+ci
+ci
+ci
+cq
+cq
+cI
 cr
 cr
-cJ
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-gd
-cs
-cs
-fZ
-fZ
-fZ
-fZ
-fZ
-hD
-gL
-gk
-gP
-gC
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+gc
+cr
+cr
+fY
+fY
+fY
+fY
+fY
+hC
+gK
+gj
+gO
+gB
 aa
 aa
 ay
-fZ
-gc
-fZ
-fD
-fD
+fY
+gb
+fY
+fC
+fC
 ab
 aa
 aa
@@ -11821,21 +11749,21 @@ aa
 aa
 aa
 aa
-md
-mV
+mc
 mU
-mU
-mU
-mU
-mU
-mf
-mf
-mf
-mf
-mf
-mf
-mf
-mf
+mT
+mT
+mT
+mT
+mT
+me
+me
+me
+me
+me
+me
+me
+me
 ac
 ac
 ac
@@ -11870,64 +11798,64 @@ bj
 ax
 bG
 bz
-bO
-bO
-bO
+bN
+bN
+bN
 ax
 bj
 bj
 bj
-cs
-cx
-cK
-cx
-cT
-cx
-dl
-dw
-cx
-dl
-dw
-cx
-cx
-cx
-cs
-cs
-cs
-cs
-cs
-fx
-ge
-gq
-fx
-fZ
-gO
-fZ
-fZ
-fZ
-gz
-gL
-gk
-iq
-gC
+cr
+cw
+cJ
+cw
+cS
+cw
+dk
+dv
+cw
+dk
+dv
+cw
+cw
+cw
+cr
+cr
+cr
+cr
+cr
+fw
+gd
+gp
+fw
+fY
+gN
+fY
+fY
+fY
+gy
+gK
+gj
+ip
+gB
 aa
 aa
 ab
-jG
-jR
-jG
+jF
+jQ
+jF
 ab
 ab
 aa
 aa
-eV
+eU
 ab
 ab
 aa
 aa
 aY
 ay
-ch
+cg
 aa
 aa
 aa
@@ -11935,20 +11863,20 @@ aa
 aa
 aa
 aa
-md
-mU
-mU
-mU
-mU
-mZ
-nH
-nN
-nN
-nN
-oc
-nN
-nN
-nN
+mc
+mT
+mT
+mT
+mT
+mY
+nG
+nM
+nM
+nM
+ob
+nM
+nM
+nM
 aa
 aa
 aa
@@ -11982,60 +11910,60 @@ bj
 bj
 ax
 bz
-bO
-bO
+bN
+bN
 bz
 bz
 ax
 bj
 bj
 bj
-cs
-cx
-cK
-cx
-cT
-cx
-cx
-dx
-cx
-cx
-dx
-dd
-cx
-cx
-cs
-cx
-cx
-cx
-cs
-fx
-ge
-fx
-fx
-fZ
-gL
+cr
+cw
+cJ
+cw
+cS
+cw
+cw
+dw
+cw
+cw
+dw
+dc
+cw
+cw
+cr
+cw
+cw
+cw
+cr
+fw
+gd
+fw
+fw
+fY
+gK
 aa
 ab
-ch
+cg
 ay
-ch
+cg
 ab
 aa
 aa
 aa
 aa
 ab
-jG
-jS
-ch
+jF
+jR
+cg
 aa
 aa
 aa
 aa
 aa
 ab
-dk
+dj
 aa
 ab
 ab
@@ -12049,19 +11977,19 @@ aa
 aa
 aa
 aa
-mY
-mD
-mD
-nA
-nD
-mf
-mf
-mf
-mf
-mf
-mf
-mf
-mf
+mX
+mC
+mC
+nz
+nC
+me
+me
+me
+me
+me
+me
+me
+me
 aa
 aa
 aa
@@ -12103,46 +12031,46 @@ ax
 bj
 bj
 bj
-cs
-cy
-cL
+cr
 cx
-cT
-cx
-dm
-dy
-cF
-dY
-ep
-eA
-eH
-eA
-cF
-cF
-cF
-cF
-fK
-fT
-gf
-fT
-gB
-cs
-cs
+cJ
+cw
+cS
+cw
+dl
+dx
+cE
+dX
+eo
+cE
+eG
+cE
+cE
+cE
+cE
+cE
+fJ
+fS
+ge
+fS
+gA
+cr
+cr
 ab
-hc
-gC
-gC
-ch
+hb
+gB
+gB
+cg
 ab
 ab
 ab
 ab
 ab
 ay
-ch
-jR
-kb
-jG
+cg
+jQ
+ka
+jF
 aa
 aa
 aa
@@ -12165,16 +12093,16 @@ aa
 aa
 aa
 aa
-it
-nE
-nH
-nN
-nN
-nN
-nN
-nN
-oc
-oc
+is
+nD
+nG
+nM
+nM
+nM
+nM
+nM
+ob
+ob
 aa
 aa
 aa
@@ -12216,46 +12144,46 @@ ax
 bj
 bj
 bj
-cs
-cz
-cK
-cx
-cU
-cx
-cK
-dw
-cx
-cx
-dw
-cx
-cL
-cx
-cs
-cs
-cs
-cs
-cs
-fx
-fx
-fx
-fx
-cs
-cs
+cr
+cy
+cJ
+cw
+cT
+cw
+cJ
+dv
+cw
+cw
+dv
+cw
+cJ
+cw
+cr
+cr
+cr
+cr
+cr
+fw
+fw
+fw
+fw
+cr
+cr
 ab
-ch
+cg
 ay
-gC
-hc
+gB
+hb
 ab
 aa
 aa
 aa
 aa
 ab
-jG
-jG
+jF
+jF
 ay
-jG
+jF
 aa
 aa
 aa
@@ -12278,16 +12206,16 @@ aa
 aa
 aa
 aa
-it
-ml
-mf
-mf
-mf
-mf
-mf
-mf
-mf
-mf
+is
+mk
+me
+me
+me
+me
+me
+me
+me
+me
 aa
 aa
 aa
@@ -12329,36 +12257,36 @@ bj
 bj
 bj
 bj
-cs
-cA
-cM
-cF
-cV
-cF
-dn
-dw
-cx
-cx
-dw
-cx
-eI
-cx
-cx
-cs
-fC
-fC
-cs
-fx
-gg
-fx
-fx
-cs
+cr
+cz
+cL
+cE
+cU
+cE
+dm
+dv
+cw
+cw
+dv
+cw
+eH
+cw
+cw
+cr
+fB
+fB
+cr
+fw
+gf
+fw
+fw
+cr
 aa
 ay
-ch
+cg
 ay
-gC
-hc
+gB
+hb
 aa
 aa
 aa
@@ -12366,9 +12294,9 @@ aa
 aa
 ay
 aa
-jG
-kc
-jG
+jF
+kb
+jF
 aa
 aa
 aa
@@ -12391,9 +12319,9 @@ aa
 aa
 aa
 aa
-it
-ml
-iS
+is
+mk
+iR
 aa
 aa
 aa
@@ -12442,49 +12370,49 @@ bj
 bj
 bj
 bj
-cs
-cB
-cN
-cQ
-cs
-cs
-do
-cs
-dF
-dF
-eq
-eB
-eJ
-eO
-dF
-cs
-fC
-fC
-cs
-cs
-cs
-cs
-cs
-cs
+cr
+cA
+cM
+cP
+cr
+cr
+dn
+cr
+dE
+dE
+ep
+eA
+eI
+eN
+dE
+cr
+fB
+fB
+cr
+cr
+cr
+cr
+cr
+cr
 ab
 aa
-ch
-gC
+cg
+gB
 ay
-hc
+hb
 aa
 aa
-dk
+dj
 aa
 aa
 ab
 aa
-jG
-kd
+jF
+kc
 ay
 aa
 aa
-kU
+kT
 aa
 aa
 ab
@@ -12505,8 +12433,8 @@ aa
 aa
 aa
 aa
-mZ
-iS
+mY
+iR
 aa
 aa
 aa
@@ -12555,36 +12483,36 @@ bj
 bj
 bj
 bj
-cs
-cs
-cs
-cs
-cs
-cs
-dp
-cs
-dG
+cr
+cr
+cr
+cr
+cr
+cr
+do
+cr
+dF
+dY
 dZ
-ea
-ea
-eK
-eP
-fe
-fo
+dZ
+eJ
+eO
+fd
+fn
 aY
 ab
 ab
-dk
+dj
 ab
 aa
 aa
 aa
 ab
 aa
-hc
-gC
-gC
-hc
+hb
+gB
+gB
+hb
 aa
 aa
 aa
@@ -12592,9 +12520,9 @@ aa
 aa
 ab
 aa
-ch
-ke
-fD
+cg
+kd
+fC
 aa
 aa
 aa
@@ -12619,7 +12547,7 @@ aa
 aa
 aa
 aa
-iS
+iR
 aa
 aa
 aa
@@ -12668,22 +12596,22 @@ bj
 bj
 bj
 bj
-cs
-cC
-cx
-cR
-cT
-dd
-cK
-cs
-dH
-ea
-ea
-ea
-eK
-eQ
+cr
+cB
+cw
+cQ
+cS
+dc
+cJ
+cr
+dG
+dZ
+dZ
+dZ
+eJ
 eP
-fo
+eO
+fn
 ab
 aa
 aa
@@ -12694,20 +12622,20 @@ aa
 aa
 ay
 ay
-gW
-hp
-hq
 gV
-ia
+ho
+hp
+gU
+hZ
 aa
 aa
 aa
 aa
 ab
 aa
-ch
-kf
-ch
+cg
+ke
+cg
 aa
 aa
 aa
@@ -12729,7 +12657,7 @@ aa
 aa
 aa
 aa
-mv
+mu
 aa
 aa
 aa
@@ -12781,22 +12709,22 @@ as
 as
 as
 as
-cs
-cD
-cx
-cx
-cW
-cx
-cK
-cs
-dI
-eb
-er
+cr
+cC
+cw
+cw
+cV
+cw
+cJ
+cr
+dH
 ea
-eL
-ea
-ff
-fp
+eq
+dZ
+eJ
+dZ
+fe
+fo
 ay
 aa
 aa
@@ -12806,25 +12734,25 @@ aa
 aa
 ay
 ay
-gr
-gW
-hp
-hp
+gq
 gV
-gD
+ho
+ho
+gU
+gC
 aa
 aa
 aa
 aa
 ay
 ab
-jT
-kg
+jS
+kf
 aa
 aa
 aa
 ab
-ld
+lc
 ab
 ab
 aa
@@ -12843,7 +12771,7 @@ aa
 aa
 aa
 aa
-iR
+iQ
 aa
 aa
 aa
@@ -12894,22 +12822,22 @@ az
 az
 bH
 as
-cs
-cE
-cx
+cr
+cD
+cw
+cR
 cS
-cT
-cx
-cK
-cs
-dJ
-ea
-es
-ea
-eM
-eR
-fg
-fo
+cw
+cJ
+cr
+dI
+dZ
+er
+dZ
+eL
+eQ
+ff
+fn
 ay
 aa
 aa
@@ -12918,32 +12846,32 @@ aa
 aa
 aa
 ay
-gC
-gr
-gW
-hq
-hr
+gB
+gq
 gV
-ia
-ia
+hp
+hq
+gU
+hZ
+hZ
 aa
 aa
 aa
 ab
 aa
-ch
-kc
-jG
+cg
+kb
+jF
 aa
 aa
 aa
-ld
+lc
 aa
 aa
 ab
 aa
 aa
-eV
+eU
 aa
 aa
 aa
@@ -13007,22 +12935,22 @@ az
 az
 az
 az
-cs
-cs
-cs
-cs
-cs
-cx
-cK
-cs
-dK
+cr
+cr
+cr
+cr
+cr
+cw
+cJ
+cr
+dJ
+dZ
+dZ
+eB
 ea
-ea
-eC
-eb
-eS
-fh
-fo
+eR
+fg
+fn
 aa
 aa
 aa
@@ -13030,23 +12958,23 @@ aa
 aa
 aa
 aa
-ch
-ch
-ch
-gW
-hq
-hr
+cg
+cg
+cg
 gV
+hp
+hq
+gU
 ay
 ab
-iq
+ip
 aa
 aa
 ab
 aa
-ch
-jR
-jG
+cg
+jQ
+jF
 aa
 aa
 ab
@@ -13071,7 +12999,7 @@ aa
 aa
 aa
 aa
-mv
+mu
 aa
 aa
 aa
@@ -13117,25 +13045,25 @@ aN
 aN
 aN
 aN
-ck
+cj
 az
-cm
-cs
-cx
-cs
-cx
-cs
-cx
-cK
-cs
-dL
-ea
-ea
-ea
-ea
-ea
-dG
-fo
+cl
+cr
+cw
+cr
+cw
+cr
+cw
+cJ
+cr
+dK
+dZ
+dZ
+dZ
+dZ
+dZ
+dF
+fn
 aY
 ab
 ab
@@ -13146,20 +13074,20 @@ aa
 ay
 ay
 ay
-gW
-hr
+gV
 hq
-gV
-ib
-iq
+hp
+gU
+ia
+ip
 ab
-gP
-gV
+gO
+gU
 ay
 aa
-ch
-kc
-jG
+cg
+kb
+jF
 aa
 aa
 ab
@@ -13226,30 +13154,30 @@ bv
 bC
 bs
 az
-bS
+bR
 az
 az
 az
 aU
 aN
 aN
-ct
-cF
-ct
-cF
-cX
-cF
-dq
 cs
-dI
+cE
+cs
+cE
+cW
+cE
+dp
+cr
+dH
+dZ
 ea
-eb
-ea
-ea
-eS
-dG
-dz
-fD
+dZ
+dZ
+eR
+dF
+dy
+fC
 ab
 aa
 aa
@@ -13258,28 +13186,28 @@ aa
 ay
 ay
 aY
-gV
-gW
-gW
-hE
+gU
 gV
 gV
-gV
-gV
-gV
-gV
+hD
+gU
+gU
+gU
+gU
+gU
+gU
 ay
 ab
-hc
-kc
-jG
+hb
+kb
+jF
 aa
-kL
-gW
-gW
-kL
-kL
-kL
+kK
+gV
+gV
+kK
+kK
+kK
 aa
 aa
 aa
@@ -13346,22 +13274,22 @@ as
 as
 as
 as
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-cs
-dM
-ec
-ea
-eD
-ea
-eT
-eQ
-dz
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+dL
+eb
+dZ
+eC
+dZ
+eS
+eP
+dy
 ay
 aa
 aa
@@ -13369,34 +13297,34 @@ aa
 aa
 ay
 ay
-gD
-gr
+gC
+gq
+gU
+hc
+hr
+he
+he
+hc
+iq
+he
 gV
-hd
-hs
-hf
-hf
-hd
-ir
-hf
-gW
-gV
-gV
-gV
-gV
-kh
-gV
-kB
-kM
-hP
-kM
-ll
-ll
-ll
-lY
-mg
-mm
-mv
+gU
+gU
+gU
+gU
+kg
+gU
+kA
+kL
+hO
+kL
+lk
+lk
+lk
+lX
+mf
+ml
+mu
 aa
 aa
 aa
@@ -13457,7 +13385,7 @@ az
 as
 bi
 bi
-ch
+cg
 aa
 aa
 aa
@@ -13466,49 +13394,49 @@ aa
 aa
 aa
 ac
-dz
-dN
-ed
-et
-eE
-et
-eU
-fi
-dz
-ch
+dy
+dM
+ec
+es
+eD
+es
+eT
+fh
+dy
+cg
 aa
 aa
 aa
 aa
 ay
 ay
-gG
-gC
-gV
+gF
+gB
+gU
+hd
+hc
 he
-hd
-hf
-hf
-hd
-ir
-hf
-hf
-hf
-hf
-jH
-gW
-ki
-gW
-gW
-gW
-kV
-hf
-hf
-kM
-hf
-lZ
-hP
-lZ
+he
+hc
+iq
+he
+he
+he
+he
+jG
+gV
+kh
+gV
+gV
+gV
+kU
+he
+he
+kL
+he
+lY
+hO
+lY
 aa
 aa
 aa
@@ -13566,7 +13494,7 @@ aa
 aa
 aa
 as
-ca
+bZ
 as
 aa
 aa
@@ -13579,14 +13507,14 @@ aa
 aa
 aa
 aa
-ch
+cg
 aa
 ac
-eu
+et
 ac
 ac
 ay
-eu
+et
 ac
 ac
 aa
@@ -13595,33 +13523,33 @@ ay
 ay
 ay
 ay
-gH
-gD
-gV
-hf
-hs
-hf
-hP
-hf
-hf
-hf
-hf
-hf
-hf
-hf
-hf
-kj
-hf
-hf
-hf
-hf
-hf
-hf
-hf
-hf
-lY
-jF
-mn
+gG
+gC
+gU
+he
+hr
+he
+hO
+he
+he
+he
+he
+he
+he
+he
+he
+ki
+he
+he
+he
+he
+he
+he
+he
+he
+lX
+jE
+mm
 aa
 aa
 aa
@@ -13698,7 +13626,7 @@ aa
 aa
 aa
 aa
-eV
+eU
 aa
 aa
 aa
@@ -13706,35 +13634,35 @@ aa
 aa
 ay
 ay
-gr
-gC
-gr
-gP
+gq
+gB
+gq
+gO
+gU
+hf
+he
+he
+he
+hc
+iq
+he
 gV
-hg
-hf
-hf
-hf
-hd
-ir
-hf
-gW
-gW
-hf
-hf
-hf
-kk
-kr
-gW
-gW
-hf
-hP
-hf
-hf
-hf
-jJ
+gV
+he
+he
+he
+kj
+kq
+gV
+gV
+he
+hO
+he
+he
+he
+jI
 ay
-ch
+cg
 aa
 aa
 aa
@@ -13823,29 +13751,29 @@ aY
 aY
 aY
 aY
+gU
+he
+he
+he
+he
+ib
+ir
+iF
 gV
-hf
-hf
-hf
-hf
-ic
-is
-iG
-gW
-jd
-hf
-hf
-hf
-hP
-hf
-hf
-gW
-jt
-hf
-hf
-hf
-hf
-jJ
+jc
+he
+he
+he
+hO
+he
+he
+gV
+js
+he
+he
+he
+he
+jI
 ay
 aa
 aa
@@ -13930,35 +13858,35 @@ aa
 aa
 aa
 aa
-ch
-ch
-ch
-ch
-ch
-ch
-gW
+cg
+cg
+cg
+cg
+cg
+cg
+gV
+hg
 hh
-hi
-hf
-hf
-hf
-hf
-hd
-gW
-jd
-hf
-hf
-hf
-hf
-hf
-hf
-gW
-kV
-hf
-hP
-hf
-hf
-jJ
+he
+he
+he
+he
+hc
+gV
+jc
+he
+he
+he
+he
+he
+he
+gV
+kU
+he
+hO
+he
+he
+jI
 ay
 aa
 aa
@@ -14046,34 +13974,34 @@ aa
 ay
 ay
 ay
-gD
-gr
-gQ
-gW
-hi
-hf
-hf
-hf
-id
-hf
-hs
-gW
-jd
-jt
+gC
+gq
+gP
+gV
+hh
+he
+he
+he
+ic
+he
+hr
+gV
+jc
+js
+jH
+he
+he
+kr
+kB
+gV
+he
+he
+he
+he
+he
 jI
-hf
-hf
-ks
-kC
-gW
-hf
-hf
-hf
-hf
-hf
-jJ
 ay
-ch
+cg
 ac
 ac
 ac
@@ -14156,35 +14084,35 @@ aa
 aa
 aa
 aa
-ch
-fD
-ch
-ch
-fD
-ch
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-gW
-jU
-gW
-gW
-gW
-gW
+cg
+fC
+cg
+cg
+fC
+cg
 gV
-hf
-lm
-hf
-lS
-jJ
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+jT
+gV
+gV
+gV
+gV
+gU
+he
+ll
+he
+lR
+jI
 aa
 aa
 ay
@@ -14286,18 +14214,18 @@ aa
 aa
 aa
 aa
-jJ
-hP
-jJ
+jI
+hO
+jI
 aa
 aa
-gV
-gV
-gV
-gV
-gV
-gV
-gV
+gU
+gU
+gU
+gU
+gU
+gU
+gU
 aY
 aY
 aY
@@ -14399,9 +14327,9 @@ aa
 aa
 aa
 aa
-jK
-jU
-jK
+jJ
+jT
+jJ
 aa
 aa
 aa

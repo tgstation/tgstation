@@ -27,101 +27,85 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "ah" = (
-/obj/structure/foamedmetal,
-/turf/open/space,
-/area/shuttle/transport)
-"ai" = (
 /obj/machinery/vending/liberationstation,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aj" = (
+"ai" = (
 /obj/machinery/door/airlock/vault,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"ak" = (
+"aj" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"al" = (
+"ak" = (
 /obj/machinery/computer/shuttle/ferry/request,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"am" = (
+"al" = (
 /obj/structure/grille{
 	density = 0;
 	icon_state = "brokengrille"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"an" = (
+"am" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"ao" = (
+"an" = (
 /obj/structure/mirror/magic/badmin{
 	pixel_x = 30
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"ap" = (
+"ao" = (
 /turf/closed/wall,
 /area/shuttle/transport)
-"aq" = (
+"ap" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/vending/clothing,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"ar" = (
+"aq" = (
 /obj/structure/chair,
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"as" = (
+"ar" = (
 /obj/structure/emergency_shield,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/shuttle/transport)
-"at" = (
+"as" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"au" = (
+"at" = (
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"av" = (
+"au" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"aw" = (
+"av" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
+"aw" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
 "ax" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "ay" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"az" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"aA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/transport)
-"aB" = (
 /obj/structure/grille{
 	density = 0;
 	icon_state = "brokengrille"
@@ -129,60 +113,60 @@
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aC" = (
+"az" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"aD" = (
+"aA" = (
 /turf/open/floor/carpet,
 /area/shuttle/transport)
-"aE" = (
+"aB" = (
 /turf/open/floor/bluespace,
 /area/shuttle/transport)
-"aF" = (
+"aC" = (
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aG" = (
+"aD" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aH" = (
+"aE" = (
 /obj/machinery/newscaster{
 	pixel_y = 30
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aI" = (
+"aF" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/wiz,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aJ" = (
+"aG" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aK" = (
+"aH" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aL" = (
+"aI" = (
 /turf/closed/wall/rust,
 /area/shuttle/transport)
-"aM" = (
+"aJ" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/transport)
-"aN" = (
+"aK" = (
 /obj/machinery/power/grounding_rod{
 	anchored = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aO" = (
+"aL" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
@@ -197,66 +181,63 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aP" = (
+"aM" = (
 /obj/machinery/vending/magivend,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aQ" = (
+"aN" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aR" = (
+"aO" = (
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"aS" = (
+"aP" = (
 /obj/structure/table/wood,
 /obj/item/toy/crayon/spraycan,
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"aT" = (
+"aQ" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/centcom,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aU" = (
+"aR" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/rainbow,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aV" = (
+"aS" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aW" = (
+"aT" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aX" = (
+"aU" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aY" = (
+"aV" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
-"aZ" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/transport)
-"ba" = (
+"aW" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"bb" = (
+"aX" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "garbage";
@@ -264,7 +245,7 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"bc" = (
+"aY" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -272,21 +253,21 @@
 /obj/item/weapon/vending_refill/snack,
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"bd" = (
+"aZ" = (
 /obj/item/weapon/twohanded/required/kirbyplants/dead{
 	desc = "It doesn't look very healthy...";
 	name = "potted plant"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"be" = (
+"ba" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"bf" = (
+"bb" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "garbage"
@@ -294,7 +275,7 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"bg" = (
+"bc" = (
 /obj/machinery/conveyor{
 	dir = 10;
 	id = "garbage";
@@ -302,15 +283,15 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"bh" = (
+"bd" = (
 /obj/structure/foamedmetal,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"bi" = (
+"be" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"bj" = (
+"bf" = (
 /obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
@@ -337,7 +318,7 @@ aa
 aa
 af
 af
-aj
+ai
 af
 af
 aa
@@ -356,7 +337,7 @@ ab
 af
 ag
 ag
-am
+al
 af
 aa
 ag
@@ -372,55 +353,55 @@ aa
 (4,1,1) = {"
 ac
 af
-bh
-bh
-an
-aq
-as
-aB
-as
-as
-aX
-bh
-bh
-bh
-bi
-bj
+bd
+bd
+am
+ap
+ar
+ay
+ar
+ar
+aU
+bd
+bd
+bd
+be
+bf
 "}
 (5,1,1) = {"
 ad
+aJ
+ah
+aj
+an
+aj
+aj
+aj
+aj
 aM
-ai
-ak
-ao
-ak
-ak
-ak
-ak
-aP
-aX
+aU
+aW
 ba
+bd
 be
-bh
-bi
-bj
+bf
 "}
 (6,1,1) = {"
 ae
 ad
-aM
-al
-ap
-ap
-at
-ap
-aL
-aQ
-ap
-aL
-be
-bh
-aM
+aJ
+ak
+ao
+ao
+as
+ao
+aI
+aN
+ao
+aI
+ba
+bd
+aJ
 ad
 "}
 (7,1,1) = {"
@@ -428,16 +409,16 @@ ae
 ae
 ad
 ad
-aM
-ar
-au
-au
-au
-au
-au
-aL
-bf
-aM
+aJ
+aq
+at
+at
+at
+at
+at
+aI
+bb
+aJ
 ad
 ae
 "}
@@ -447,14 +428,14 @@ ae
 ae
 ae
 ad
-ar
-au
-au
-au
-aR
-au
-bb
-bg
+aq
+at
+at
+at
+aO
+at
+aX
+bc
 ad
 ae
 ae
@@ -464,15 +445,15 @@ ae
 ae
 ae
 ae
-ap
-ap
-av
-aC
-aC
-aS
-aC
-bc
-aM
+ao
+ao
+au
+az
+az
+aP
+az
+aY
+aJ
 ad
 ae
 ae
@@ -483,13 +464,13 @@ ae
 ae
 ae
 ae
-ap
-au
-aD
-aD
-aD
-aD
-bd
+ao
+at
+aA
+aA
+aA
+aA
+aZ
 ad
 ae
 ae
@@ -501,13 +482,13 @@ ae
 ae
 ae
 ae
-ap
-ap
-aD
-aD
-aD
-aD
-aM
+ao
+ao
+aA
+aA
+aA
+aA
+aJ
 ad
 ae
 ae
@@ -520,11 +501,11 @@ ae
 ae
 ae
 ae
-ap
-aD
-aD
-aD
-aD
+ao
+aA
+aA
+aA
+aA
 ad
 ae
 ae
@@ -538,11 +519,11 @@ ae
 ae
 ae
 ae
-ap
-aE
-aN
-aE
-aM
+ao
+aB
+aK
+aB
+aJ
 ad
 ae
 ae
@@ -556,10 +537,10 @@ ae
 ae
 ae
 ae
-aw
-aE
-aN
-aE
+av
+aB
+aK
+aB
 ad
 ae
 ae
@@ -574,10 +555,10 @@ ae
 ae
 ae
 ae
-aw
-aE
-aE
-aE
+av
+aB
+aB
+aB
 ad
 ae
 ae
@@ -593,10 +574,10 @@ ae
 ae
 ae
 ad
-ak
-aE
-ak
-aY
+aj
+aB
+aj
+aV
 ae
 ae
 ae
@@ -611,10 +592,10 @@ ae
 ae
 ae
 ad
-aF
-aE
-aT
-aw
+aC
+aB
+aQ
+av
 ae
 ae
 ae
@@ -629,9 +610,9 @@ ae
 ae
 ae
 ad
-aG
-aE
-aU
+aD
+aB
+aR
 ad
 ae
 ae
@@ -647,9 +628,9 @@ ae
 ae
 ae
 ad
-aH
 aE
-aV
+aB
+aS
 ad
 ae
 ae
@@ -664,11 +645,11 @@ ae
 ae
 ae
 ae
-ay
-aI
-aE
-aW
-ay
+aw
+aF
+aB
+aT
+aw
 ae
 ae
 ae
@@ -683,9 +664,9 @@ ae
 ae
 ae
 ad
-ak
-aE
-aW
+aj
+aB
+aT
 ad
 ae
 ae
@@ -701,9 +682,9 @@ ae
 ae
 ae
 ad
-aJ
-aE
-aW
+aG
+aB
+aT
 ad
 ae
 ae
@@ -719,9 +700,9 @@ ae
 ae
 ae
 ad
-aJ
-aE
-aW
+aG
+aB
+aT
 ad
 ae
 ae
@@ -736,11 +717,11 @@ ae
 ae
 ae
 ae
-az
-aJ
-aE
-aW
-az
+ax
+aG
+aB
+aT
+ax
 ae
 ae
 ae
@@ -755,9 +736,9 @@ ae
 ae
 ae
 ad
-aJ
-aE
-aW
+aG
+aB
+aT
 ad
 ae
 ae
@@ -773,9 +754,9 @@ ae
 ae
 ae
 ad
-aK
-aE
-aW
+aH
+aB
+aT
 ad
 ae
 ae
@@ -791,9 +772,9 @@ ae
 ae
 ae
 ad
-ay
-aO
-ay
+aw
+aL
+aw
 ad
 ae
 ae

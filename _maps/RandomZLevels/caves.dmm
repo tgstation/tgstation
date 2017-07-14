@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:21 (UTC)
 "aa" = (
 /turf/closed/indestructible/rock,
 /area/space)
@@ -1253,13 +1254,6 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "cJ" = (
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/BMPship{
-	name = "\improper BMP Asteroid Level 2"
-	})
-"cK" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HOLY SHIT NIGGA WHAT ARE YOU DOING'.";
 	name = "\improper HOLY SHIT NIGGA WHAT ARE YOU DOING"
@@ -1270,7 +1264,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"cL" = (
+"cK" = (
 /mob/living/simple_animal/hostile/spawner/mining/basilisk,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -1278,7 +1272,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"cM" = (
+"cL" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1287,7 +1281,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cN" = (
+"cM" = (
 /obj/machinery/door/window/eastleft,
 /obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/plating{
@@ -1295,7 +1289,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cO" = (
+"cN" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -1305,14 +1299,14 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cP" = (
+"cO" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cQ" = (
+"cP" = (
 /obj/item/weapon/pickaxe{
 	attack_verb = list("ineffectively hit");
 	desc = "A pickaxe thats been left to rust.";
@@ -1327,14 +1321,14 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"cR" = (
+"cQ" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cS" = (
+"cR" = (
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -1345,7 +1339,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cT" = (
+"cS" = (
 /obj/structure/window/reinforced,
 /obj/machinery/door/window{
 	base_state = "right";
@@ -1357,7 +1351,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cU" = (
+"cT" = (
 /mob/living/simple_animal/hostile/retaliate/bat{
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
@@ -1368,14 +1362,14 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"cV" = (
+"cU" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cW" = (
+"cV" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1384,7 +1378,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cX" = (
+"cW" = (
 /obj/structure/table,
 /obj/item/weapon/melee/baton,
 /turf/open/floor/plasteel{
@@ -1392,14 +1386,14 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cY" = (
+"cX" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"cZ" = (
+"cY" = (
 /obj/structure/sign/vacuum{
 	name = "\improper LOW AIR AREA";
 	pixel_x = 32
@@ -1409,13 +1403,13 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"da" = (
+"cZ" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"db" = (
+"da" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/weapon/stock_parts/cell/crap,
@@ -1424,7 +1418,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"dc" = (
+"db" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -1439,21 +1433,21 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dd" = (
+"dc" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"de" = (
+"dd" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"df" = (
+"de" = (
 /obj/structure/closet/secure_closet/miner{
 	name = "weapon equipment"
 	},
@@ -1465,7 +1459,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/research)
-"dg" = (
+"df" = (
 /obj/effect/bump_teleporter{
 	id = "mineintrodown";
 	id_target = "mineintroup"
@@ -1477,7 +1471,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dh" = (
+"dg" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
@@ -1485,7 +1479,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"di" = (
+"dh" = (
 /obj/structure/table,
 /obj/item/weapon/paper{
 	info = "<center> Mining is hell down here, you can feel the heat of the magma no matter how thick the suit is. Conditions are barely managble as is, restless nights and horrid work conditions. The ore maybe rich down here, but we've already lost a few men to the faults shifting, god knows how much longer till it all just collapses down and consumes everyone with it.</center>"
@@ -1498,7 +1492,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dj" = (
+"di" = (
 /obj/structure/ladder/unbreakable{
 	anchored = 1;
 	height = 2;
@@ -1510,7 +1504,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dk" = (
+"dj" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/plasteel{
@@ -1519,7 +1513,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dl" = (
+"dk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
@@ -1527,7 +1521,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dm" = (
+"dl" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
@@ -1535,7 +1529,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dn" = (
+"dm" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -1545,14 +1539,14 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"do" = (
+"dn" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dp" = (
+"do" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/item/clothing/glasses/meson,
@@ -1562,7 +1556,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dq" = (
+"dp" = (
 /obj/machinery/light/small/built{
 	dir = 4
 	},
@@ -1573,7 +1567,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dr" = (
+"dq" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
@@ -1581,7 +1575,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"ds" = (
+"dr" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/weapon/pickaxe{
 	attack_verb = list("ineffectively hit");
@@ -1597,17 +1591,17 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dt" = (
+"ds" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"du" = (
+"dt" = (
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dv" = (
+"du" = (
 /obj/machinery/suit_storage_unit/mining{
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
 	name = "rusted suit storage unit"
@@ -1618,7 +1612,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dw" = (
+"dv" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/effect/landmark/awaystart,
@@ -1628,7 +1622,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"dx" = (
+"dw" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/weapon/sord,
@@ -1636,45 +1630,45 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dy" = (
+"dx" = (
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dz" = (
+"dy" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dA" = (
+"dz" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dB" = (
+"dA" = (
 /obj/structure/dresser,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dC" = (
+"dB" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dD" = (
+"dC" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dE" = (
+"dD" = (
 /obj/machinery/light/small/built{
 	dir = 8
 	},
@@ -1682,14 +1676,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dF" = (
+"dE" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dG" = (
+"dF" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -1697,7 +1691,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dH" = (
+"dG" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/effect/landmark/awaystart,
@@ -1705,7 +1699,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dI" = (
+"dH" = (
 /obj/machinery/door/airlock{
 	name = "Dorm"
 	},
@@ -1713,31 +1707,31 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dJ" = (
+"dI" = (
 /obj/item/stack/rods,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dK" = (
+"dJ" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dL" = (
+"dK" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dM" = (
+"dL" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dN" = (
+"dM" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -1745,7 +1739,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dO" = (
+"dN" = (
 /mob/living/simple_animal/hostile/retaliate/bat{
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
@@ -1754,13 +1748,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dP" = (
+"dO" = (
 /obj/item/stack/rods,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dQ" = (
+"dP" = (
 /obj/machinery/door/airlock/mining{
 	name = "Dorm Access"
 	},
@@ -1768,24 +1762,24 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dR" = (
+"dQ" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dS" = (
+"dR" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dT" = (
+"dS" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dU" = (
+"dT" = (
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
@@ -1793,23 +1787,23 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"dV" = (
+"dU" = (
 /obj/machinery/door/airlock{
 	name = "Dorm"
 	},
 /turf/open/floor/wood,
 /area/awaymission/northblock)
-"dW" = (
+"dV" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"dX" = (
+"dW" = (
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"dY" = (
+"dX" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -1818,7 +1812,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"dZ" = (
+"dY" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -1827,13 +1821,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"ea" = (
+"dZ" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"eb" = (
+"ea" = (
 /obj/machinery/light/small/built{
 	dir = 8
 	},
@@ -1842,13 +1836,13 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"ec" = (
+"eb" = (
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"ed" = (
+"ec" = (
 /obj/structure/bed,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/wood{
@@ -1856,26 +1850,26 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"ee" = (
+"ed" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"ef" = (
+"ee" = (
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"eg" = (
+"ef" = (
 /obj/effect/decal/cleanable/robot_debris/old,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eh" = (
+"eg" = (
 /obj/structure/table,
 /obj/item/device/radio,
 /obj/item/device/radio,
@@ -1883,7 +1877,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ei" = (
+"eh" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
@@ -1891,12 +1885,12 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ej" = (
+"ei" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ek" = (
+"ej" = (
 /obj/structure/window{
 	icon_state = "window";
 	dir = 8
@@ -1906,41 +1900,41 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"el" = (
+"ek" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/northblock)
-"em" = (
+"el" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"en" = (
+"em" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"eo" = (
+"en" = (
 /obj/item/stack/rods,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"ep" = (
+"eo" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"eq" = (
+"ep" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1948,13 +1942,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"er" = (
+"eq" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"es" = (
+"er" = (
 /obj/structure/window{
 	icon_state = "window";
 	dir = 8
@@ -1965,25 +1959,25 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"et" = (
+"es" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/northblock)
-"eu" = (
+"et" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"ev" = (
+"eu" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ew" = (
+"ev" = (
 /obj/structure/table,
 /obj/item/device/mining_scanner,
 /obj/item/device/mining_scanner,
@@ -1991,7 +1985,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ex" = (
+"ew" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/weapon/survivalcapsule,
@@ -2000,13 +1994,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ey" = (
+"ex" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ez" = (
+"ey" = (
 /obj/machinery/light/small/built{
 	dir = 1
 	},
@@ -2018,7 +2012,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eA" = (
+"ez" = (
 /obj/structure/table,
 /obj/item/weapon/paper{
 	info = "<center><b>Survival Info For Miners</b></center><br><br><center>The caves are an unforgiving place, the only thing you'll have to traverse is the supplies in your locker and your own wit. Travel in packs when mining and try to shut down the monster dens before they overwhelm you. The job is dangerous but the haul is good, so remember this infomation and hopefully we'll all go home alive.</center>";
@@ -2028,13 +2022,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eB" = (
+"eA" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eC" = (
+"eB" = (
 /obj/structure/table,
 /obj/item/device/gps/mining,
 /obj/item/device/gps/mining,
@@ -2045,7 +2039,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eD" = (
+"eC" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/item/weapon/survivalcapsule,
 /obj/item/weapon/extinguisher/mini,
@@ -2053,29 +2047,29 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eE" = (
+"eD" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eF" = (
+"eE" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eG" = (
+"eF" = (
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eH" = (
+"eG" = (
 /obj/machinery/vending/sustenance,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eI" = (
+"eH" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/weapon/switchblade,
 /obj/item/weapon/switchblade,
@@ -2083,12 +2077,12 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eJ" = (
+"eI" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eK" = (
+"eJ" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
@@ -2097,13 +2091,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eL" = (
+"eK" = (
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eM" = (
+"eL" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -2114,19 +2108,19 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eN" = (
+"eM" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eO" = (
+"eN" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eP" = (
+"eO" = (
 /obj/structure/table,
 /obj/item/weapon/pickaxe{
 	attack_verb = list("ineffectively hit");
@@ -2148,19 +2142,19 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eQ" = (
+"eP" = (
 /obj/machinery/mineral/mint,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"eR" = (
+"eQ" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eS" = (
+"eR" = (
 /obj/machinery/light/small/built,
 /obj/machinery/suit_storage_unit/mining{
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
@@ -2170,13 +2164,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eT" = (
+"eS" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"eU" = (
+"eT" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -2184,30 +2178,30 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eV" = (
+"eU" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eW" = (
+"eV" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plasteel,
 /area/awaymission/listeningpost)
-"eX" = (
+"eW" = (
 /obj/structure/table,
 /obj/item/weapon/paper/pamphlet,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eY" = (
+"eX" = (
 /obj/structure/table,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"eZ" = (
+"eY" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2215,7 +2209,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"fa" = (
+"eZ" = (
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
@@ -2231,7 +2225,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"fb" = (
+"fa" = (
 /mob/living/simple_animal/hostile/spawner/mining/hivelord,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2239,7 +2233,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fc" = (
+"fb" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/paper{
 	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll";
@@ -2260,7 +2254,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fd" = (
+"fc" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2268,7 +2262,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fe" = (
+"fd" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2276,7 +2270,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"ff" = (
+"fe" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -2284,25 +2278,25 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fg" = (
+"ff" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fh" = (
+"fg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"fi" = (
+"fh" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"fj" = (
+"fi" = (
 /obj/effect/mob_spawn/human/skeleton/alive{
 	name = "spooky skeleton remains"
 	},
@@ -2312,7 +2306,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fk" = (
+"fj" = (
 /obj/item/weapon/grenade/syndieminibomb/concussion,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2320,7 +2314,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fl" = (
+"fk" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2328,12 +2322,12 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fm" = (
+"fl" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/listeningpost)
-"fn" = (
+"fm" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
 	opened = 1
@@ -2351,7 +2345,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fo" = (
+"fn" = (
 /mob/living/simple_animal/hostile/asteroid/fugu,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2359,7 +2353,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fp" = (
+"fo" = (
 /obj/structure/sign/pods{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
 	name = "\improper MECH TUNNEL PASSAGE A1 TO A2";
@@ -2372,14 +2366,14 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fq" = (
+"fp" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fr" = (
+"fq" = (
 /obj/machinery/light/small/built{
 	dir = 1
 	},
@@ -2389,14 +2383,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fs" = (
+"fr" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"ft" = (
+"fs" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,
@@ -2405,7 +2399,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fu" = (
+"ft" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/brute,
 /obj/item/weapon/reagent_containers/blood/OPlus,
@@ -2413,7 +2407,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fv" = (
+"fu" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2421,7 +2415,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fw" = (
+"fv" = (
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2429,7 +2423,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fx" = (
+"fw" = (
 /obj/effect/bump_teleporter{
 	id = "mineintroup";
 	id_target = "mineintrodown"
@@ -2439,38 +2433,38 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fy" = (
+"fx" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fz" = (
+"fy" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fA" = (
+"fz" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fB" = (
+"fA" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fC" = (
+"fB" = (
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fD" = (
+"fC" = (
 /obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
 	dir = 8
@@ -2480,13 +2474,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fE" = (
+"fD" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fF" = (
+"fE" = (
 /obj/item/slimepotion/fireproof,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2494,20 +2488,20 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fG" = (
+"fF" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
 	},
 /obj/structure/barricade/wooden,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship)
-"fH" = (
+"fG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fI" = (
+"fH" = (
 /obj/structure/sign/bluecross{
 	pixel_x = -32
 	},
@@ -2515,19 +2509,19 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fJ" = (
+"fI" = (
 /obj/structure/grille,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fK" = (
+"fJ" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fL" = (
+"fK" = (
 /obj/structure/sign/examroom{
 	pixel_y = 32
 	},
@@ -2535,7 +2529,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fM" = (
+"fL" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2543,13 +2537,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fN" = (
+"fM" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fO" = (
+"fN" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -2558,19 +2552,19 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fP" = (
+"fO" = (
 /obj/structure/grille,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fQ" = (
+"fP" = (
 /turf/open/floor/plasteel/elevatorshaft{
 	name = "elevator flooring";
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fR" = (
+"fQ" = (
 /obj/structure/grille,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/asteroid/basalt{
@@ -2579,7 +2573,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fS" = (
+"fR" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin,
 /obj/item/weapon/storage/firstaid/toxin,
@@ -2588,34 +2582,34 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fT" = (
+"fS" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fU" = (
+"fT" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/elevatorshaft{
 	name = "elevator flooring";
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fV" = (
+"fU" = (
 /turf/open/floor/plasteel/elevatorshaft{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	name = "elevator flooring";
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fW" = (
+"fV" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"fX" = (
+"fW" = (
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
@@ -2636,20 +2630,20 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"fY" = (
+"fX" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"fZ" = (
+"fY" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"ga" = (
+"fZ" = (
 /obj/structure/ladder/unbreakable{
 	anchored = 1;
 	height = 2;
@@ -2660,20 +2654,20 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gb" = (
+"ga" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gc" = (
+"gb" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gd" = (
+"gc" = (
 /obj/item/toy/beach_ball{
 	desc = "Its a beachball with a face crudely drawn onto it with some soot.";
 	name = "wilson"
@@ -2684,7 +2678,7 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"ge" = (
+"gd" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2692,14 +2686,14 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gf" = (
+"ge" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gg" = (
+"gf" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/donkpockets,
 /turf/open/floor/plating{
@@ -2707,14 +2701,14 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gh" = (
+"gg" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gi" = (
+"gh" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
@@ -2722,7 +2716,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gj" = (
+"gi" = (
 /obj/machinery/door/airlock/mining{
 	name = "Kitchen"
 	},
@@ -2730,7 +2724,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gk" = (
+"gj" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2738,19 +2732,19 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"gl" = (
+"gk" = (
 /obj/item/trash/plate,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gm" = (
+"gl" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gn" = (
+"gm" = (
 /obj/item/weapon/grown/log,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2758,34 +2752,34 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"go" = (
+"gn" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gp" = (
+"go" = (
 /obj/structure/table_frame,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gq" = (
+"gp" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gr" = (
+"gq" = (
 /obj/structure/table,
 /obj/item/weapon/kitchen/fork,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gs" = (
+"gr" = (
 /obj/item/device/assembly/igniter,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2793,32 +2787,32 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 2"
 	})
-"gt" = (
+"gs" = (
 /obj/structure/table_frame,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gu" = (
+"gt" = (
 /obj/item/stack/rods,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gv" = (
+"gu" = (
 /obj/structure/table_frame,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gw" = (
+"gv" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gx" = (
+"gw" = (
 /obj/structure/table,
 /obj/item/weapon/kitchen/fork,
 /obj/item/trash/plate,
@@ -2826,13 +2820,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gy" = (
+"gx" = (
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gz" = (
+"gy" = (
 /obj/machinery/door/airlock/external{
 	name = "Mess Hall"
 	},
@@ -2840,7 +2834,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gA" = (
+"gz" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2849,24 +2843,24 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gB" = (
+"gA" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gC" = (
+"gB" = (
 /obj/mecha/working/ripley/mining,
 /turf/open/floor/plasteel/recharge_floor,
 /area/awaymission/BMPship)
-"gD" = (
+"gC" = (
 /mob/living/simple_animal/hostile/spawner/mining/hivelord,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gE" = (
+"gD" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -2875,7 +2869,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gF" = (
+"gE" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/clothing/glasses/material,
@@ -2884,11 +2878,11 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gG" = (
+"gF" = (
 /obj/structure/mecha_wreckage/durand,
 /turf/open/floor/plasteel/recharge_floor,
 /area/awaymission/BMPship)
-"gH" = (
+"gG" = (
 /obj/structure/table,
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
 /obj/item/weapon/paper{
@@ -2899,63 +2893,63 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gI" = (
+"gH" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gJ" = (
+"gI" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gK" = (
+"gJ" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gL" = (
+"gK" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gM" = (
+"gL" = (
 /obj/structure/mecha_wreckage/ripley,
 /turf/open/floor/plasteel/recharge_floor,
 /area/awaymission/BMPship)
-"gN" = (
+"gM" = (
 /obj/structure/holohoop,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gO" = (
+"gN" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gP" = (
+"gO" = (
 /obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gQ" = (
+"gP" = (
 /mob/living/simple_animal/hostile/spawner/mining/basilisk,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gR" = (
+"gQ" = (
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
@@ -2966,13 +2960,13 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gS" = (
+"gR" = (
 /obj/structure/girder,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gT" = (
+"gS" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -2980,7 +2974,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/awaymission/BMPship)
-"gU" = (
+"gT" = (
 /obj/structure/holohoop{
 	dir = 1
 	},
@@ -2989,7 +2983,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
-"gV" = (
+"gU" = (
 /obj/effect/mine/explosive{
 	desc = "Rusted mines planted out by the miners before, probably to keep the cave monsters at bay.";
 	name = "rusted mine"
@@ -5003,10 +4997,10 @@ bL
 bL
 bL
 bL
-dX
-fx
-fx
-dX
+dW
+fw
+fw
+dW
 bL
 bL
 bL
@@ -5260,16 +5254,16 @@ bL
 bL
 bL
 bL
-dX
-fy
-fy
 dW
+fx
+fx
+dV
 bL
-dW
-dW
-dW
-dW
-dW
+dV
+dV
+dV
+dV
+dV
 bL
 bL
 bL
@@ -5517,16 +5511,16 @@ bL
 bL
 bL
 bL
-dW
-fy
-fy
-dW
+dV
+fx
+fx
+dV
 bL
+dV
+fx
+fx
+fx
 dW
-fy
-fy
-fy
-dX
 bL
 bL
 bL
@@ -5774,16 +5768,16 @@ bL
 bL
 bL
 bL
-dX
-fy
-fy
-dX
+dW
+fx
+fx
+dW
 bL
-dX
-fy
-ga
-fy
-dX
+dW
+fx
+fZ
+fx
+dW
 bL
 bL
 bL
@@ -6010,16 +6004,16 @@ bL
 bL
 bL
 bL
+ds
+ds
+ds
 dt
-dt
-dt
-du
-dL
 dK
-du
+dJ
 dt
+ds
+ds
 dt
-du
 bL
 bL
 bL
@@ -6031,16 +6025,16 @@ bL
 bL
 bL
 bL
+dV
+fx
+fx
 dW
-fy
-fy
-dX
 bL
-dW
-fy
-fy
-fy
-dW
+dV
+fx
+fx
+fx
+dV
 bL
 bL
 bL
@@ -6267,16 +6261,16 @@ bL
 bL
 bL
 bL
+ds
+dw
+dD
+dH
+dL
+dO
+dH
+dF
+dz
 dt
-dx
-dE
-dI
-dM
-dP
-dI
-dG
-dA
-du
 bL
 bL
 bL
@@ -6288,16 +6282,16 @@ bL
 bL
 bL
 bL
-dW
-fy
-fy
-dW
+dV
+fx
+fx
+dV
 bL
-dW
+dV
 bV
 bV
 bV
-dW
+dV
 bL
 bL
 bL
@@ -6524,16 +6518,16 @@ bL
 bL
 bL
 bL
-du
-dy
-dy
-dJ
-dM
-dM
 dt
-dy
-dB
-du
+dx
+dx
+dI
+dL
+dL
+ds
+dx
+dA
+dt
 bL
 bL
 bL
@@ -6545,10 +6539,10 @@ bL
 bL
 bL
 bL
-dX
-fz
-fz
 dW
+fy
+fy
+dV
 bL
 cG
 bV
@@ -6781,31 +6775,31 @@ bL
 bL
 bL
 bL
-du
-dz
-dF
-du
-dM
-dM
 dt
-dY
-dz
+dy
+dE
 dt
-bL
-bL
-bL
-bL
-bL
-bL
-bL
-bL
-bL
-bL
-bL
+dL
+dL
+ds
 dX
-fy
-fy
+dy
+ds
+bL
+bL
+bL
+bL
+bL
+bL
+bL
+bL
+bL
+bL
+bL
 dW
+fx
+fx
+dV
 bV
 bV
 bV
@@ -7038,16 +7032,16 @@ bL
 bL
 bL
 bL
-du
-du
-du
 dt
-dN
+dt
+dt
+ds
 dM
-du
-du
-du
+dL
 dt
+dt
+dt
+ds
 bL
 bL
 bL
@@ -7059,10 +7053,10 @@ bL
 bV
 bV
 bV
-fp
+fo
 bV
 bV
-fp
+fo
 cj
 bV
 bV
@@ -7295,16 +7289,16 @@ bL
 bL
 bL
 bL
-du
-dA
-dG
-dI
-dO
-dP
-dI
-dZ
-el
 dt
+dz
+dF
+dH
+dN
+dO
+dH
+dY
+ek
+ds
 bL
 bL
 bL
@@ -7552,16 +7546,16 @@ bL
 bL
 bL
 bL
-du
-dB
-dy
-dK
-dP
-dM
-dR
-ea
-dy
 dt
+dA
+dx
+dJ
+dO
+dL
+dQ
+dZ
+dx
+ds
 bL
 bL
 bL
@@ -7809,16 +7803,16 @@ bL
 bL
 bL
 bL
-dt
-dz
-dH
-dt
-dM
-dP
-dK
-dF
-dz
-dt
+ds
+dy
+dG
+ds
+dL
+dO
+dJ
+dE
+dy
+ds
 bL
 bL
 bL
@@ -8066,16 +8060,16 @@ bL
 bL
 bL
 bL
+ds
+ds
 dt
 dt
-du
-du
-dM
-dS
+dL
+dR
+ds
+ds
+ds
 dt
-dt
-dt
-du
 bL
 bL
 bV
@@ -8086,13 +8080,13 @@ bM
 bM
 bM
 bL
-dX
 dW
-dX
+dV
 dW
+dV
+dV
+dV
 dW
-dW
-dX
 bL
 bL
 bV
@@ -8318,38 +8312,38 @@ bL
 bL
 bL
 bV
-da
+cZ
 bL
 bL
 bL
 bL
+ds
+dB
+dD
+dH
+dL
+dS
+dU
+ea
+el
 dt
-dC
-dE
-dI
-dM
-dT
+bV
+bV
+bV
+bM
+bM
+bM
+bM
+bM
+bL
+bL
 dV
-eb
-em
-du
-bV
-bV
-bV
-bM
-bM
-bM
-bM
-bM
-bL
-bL
+fp
+fz
+dV
+fJ
+fR
 dW
-fq
-fA
-dW
-fK
-fS
-dX
 bL
 bL
 bV
@@ -8575,21 +8569,21 @@ bL
 bL
 bL
 bV
-da
-da
+cZ
+cZ
 bL
 bL
 bL
-dt
-dy
-dy
-dt
-dQ
-dQ
-dt
-ec
-en
-ee
+ds
+dx
+dx
+ds
+dP
+dP
+ds
+eb
+em
+ed
 bV
 bL
 bL
@@ -8600,13 +8594,13 @@ bL
 bL
 bL
 bL
+dV
+fq
+fA
+dV
+fK
+eu
 dW
-fr
-fB
-dW
-fL
-ev
-dX
 bL
 bL
 bV
@@ -8833,21 +8827,21 @@ bL
 bL
 bL
 bL
-da
+cZ
 bL
 bL
 bL
-dt
-dD
-dF
-dt
-dR
-dR
-dt
-ed
+ds
+dC
+dE
+ds
+dQ
+dQ
+ds
+ec
+en
 eo
-ep
-ef
+ee
 bM
 bM
 bM
@@ -8857,13 +8851,13 @@ bL
 bL
 bL
 bL
-dX
-fs
-fC
-fG
+dW
+fr
 fB
-fT
-dX
+fF
+fA
+fS
+dW
 bL
 bL
 cj
@@ -9094,16 +9088,16 @@ bV
 bV
 bV
 bV
-du
-du
-du
 dt
-dQ
-dQ
-du
-ee
-ep
-et
+dt
+dt
+ds
+dP
+dP
+dt
+ed
+eo
+es
 bV
 bM
 bM
@@ -9114,13 +9108,13 @@ bL
 bL
 bL
 bL
-dW
-ft
-ev
-dW
-fM
-ev
-dW
+dV
+fs
+eu
+dV
+fL
+eu
+dV
 bL
 bL
 bV
@@ -9359,8 +9353,8 @@ cx
 cx
 bV
 bV
-ef
-eu
+ee
+et
 bM
 bM
 bM
@@ -9371,13 +9365,13 @@ bV
 bL
 bL
 bL
-dX
-fu
-fD
-dX
-ev
-fB
 dW
+ft
+fC
+dW
+eu
+fA
+dV
 bL
 bL
 bV
@@ -9628,13 +9622,13 @@ cx
 cx
 cx
 cx
+dV
 dW
-dX
-dX
 dW
-fN
+dV
+fM
+dV
 dW
-dX
 bL
 bL
 bV
@@ -9872,7 +9866,7 @@ bV
 bV
 bV
 bV
-ef
+ee
 bV
 bM
 bM
@@ -9888,9 +9882,9 @@ cx
 cx
 cx
 bV
-fH
-ej
-fH
+fG
+ei
+fG
 bV
 bL
 bL
@@ -10136,18 +10130,18 @@ bM
 bM
 bL
 bL
-eQ
-eQ
+eP
+eP
 bV
 bV
 bV
-ff
+fe
 cx
 cx
 cx
+dV
+fM
 dW
-fN
-dX
 bV
 bL
 bL
@@ -10371,9 +10365,9 @@ bL
 ch
 cr
 cA
-cM
-cR
-cV
+cL
+cQ
+cU
 cr
 cg
 bL
@@ -10398,11 +10392,11 @@ bL
 bL
 bL
 bL
-dW
+dV
 bV
 cx
 cx
-fI
+fH
 bV
 bV
 bV
@@ -10628,9 +10622,9 @@ bL
 ch
 cs
 cB
-cN
-cS
-cW
+cM
+cR
+cV
 cB
 cg
 bL
@@ -10885,10 +10879,10 @@ cg
 cg
 ct
 cC
-cO
-cT
-cX
-db
+cN
+cS
+cW
+da
 cg
 cg
 bL
@@ -10902,17 +10896,17 @@ bL
 bL
 bL
 bL
-dX
-dX
 dW
 dW
-dW
-dW
-dW
+dV
+dV
+dV
+dV
+dV
 bL
 bL
 bL
-fg
+ff
 bV
 cx
 cx
@@ -11144,9 +11138,9 @@ cu
 cD
 cu
 cn
-cY
+cX
 cn
-dd
+dc
 cg
 bL
 bL
@@ -11159,17 +11153,17 @@ bL
 bL
 bL
 bL
-dX
-ex
-eD
-eD
-eD
-eD
-dX
+dW
+ew
+eC
+eC
+eC
+eC
+dW
 bL
 bL
 bL
-fg
+ff
 bV
 bV
 cx
@@ -11193,13 +11187,13 @@ bL
 bL
 bL
 cx
-ej
+ei
 bV
 bM
 bM
 bV
 bV
-ej
+ei
 bM
 bM
 bM
@@ -11403,7 +11397,7 @@ cn
 cn
 cn
 cn
-de
+dd
 ch
 bL
 bL
@@ -11416,13 +11410,13 @@ bL
 bL
 bL
 bL
+dV
+ex
+eu
+eu
+eu
+eQ
 dW
-ey
-ev
-ev
-ev
-eR
-dX
 bL
 bL
 bL
@@ -11451,7 +11445,7 @@ bL
 bL
 cx
 cx
-ej
+ei
 bV
 bM
 bV
@@ -11658,9 +11652,9 @@ cn
 cE
 cn
 cn
-cZ
+cY
 cn
-df
+de
 ch
 bV
 bL
@@ -11673,13 +11667,13 @@ bL
 bL
 bL
 bL
-dX
-ez
-eE
-ev
-ev
-eS
-dX
+dW
+ey
+eD
+eu
+eu
+eR
+dW
 bL
 bL
 bL
@@ -11705,18 +11699,18 @@ bV
 bL
 bL
 bL
-dW
-gN
+dV
+gM
 cx
-ej
+ei
 bV
 bM
 bM
 bM
 bV
 cx
-gU
-dW
+gT
+dV
 bM
 bM
 bL
@@ -11913,8 +11907,8 @@ ch
 cg
 cw
 cg
-cP
-cP
+cO
+cO
 cg
 cF
 cg
@@ -11930,29 +11924,29 @@ bL
 bL
 bL
 bL
-dX
-eA
-ev
-ev
-ev
-eT
 dW
+ez
+eu
+eu
+eu
+eS
+dV
 bL
 bV
 bV
-ff
+fe
 bV
 bV
 bV
 bV
-fO
+fN
 cx
 cx
 cx
 cx
 bV
 bV
-ff
+fe
 bV
 bV
 bV
@@ -11964,13 +11958,13 @@ bL
 bL
 bL
 cx
-gP
+gO
 cx
-ej
+ei
 bV
 bV
 bV
-ej
+ei
 cx
 cx
 bL
@@ -12187,29 +12181,29 @@ bL
 bL
 bL
 bL
-dX
-ev
-ev
-ev
-ev
-ev
-eF
-eG
-eG
-eG
-eF
-bV
-bV
-bV
-bV
 dW
+eu
+eu
+eu
+eu
+eu
+eE
+eF
+eF
+eF
+eE
+bV
+bV
+bV
+bV
+dV
 cx
 cx
 bV
 bV
 bV
 bV
-dW
+dV
 bL
 bL
 bL
@@ -12223,10 +12217,10 @@ bL
 cx
 cx
 cx
-fO
+fN
 cx
 bV
-gT
+gS
 cx
 cx
 cx
@@ -12427,8 +12421,8 @@ ci
 bV
 bV
 ch
-cP
-cP
+cO
+cO
 ch
 bV
 bV
@@ -12441,20 +12435,20 @@ bL
 bV
 bV
 bL
+dV
 dW
-dX
-dX
-dX
-eB
 dW
-eH
-eL
-ev
-eW
+dW
+eA
+dV
+eG
+eK
+eu
+eV
+eM
+eI
 eN
-eJ
-eO
-fh
+fg
 bV
 bV
 bV
@@ -12477,14 +12471,14 @@ bL
 bL
 bL
 bV
-fP
-fP
-fP
-dW
+fO
+fO
+fO
+dV
 cx
 cx
-dW
-fP
+dV
+fO
 bL
 bL
 bL
@@ -12698,20 +12692,20 @@ bL
 bV
 bV
 bL
-dW
-eg
-eq
-ev
-ev
+dV
+ef
+ep
+eu
+eu
+eE
+eE
+eE
 eF
 eF
-eF
-eG
-eG
-eX
-eJ
-eJ
-fh
+eW
+eI
+eI
+fg
 bV
 bV
 bV
@@ -12955,22 +12949,22 @@ bL
 bV
 bV
 bL
-dX
-eh
-ej
+dW
 eg
-ev
+ei
+ef
+eu
+eE
+eH
+eL
+eT
 eF
+eX
 eI
-eM
-eU
-eG
-eY
-eJ
-eJ
-eF
-fh
-eF
+eI
+eE
+fg
+eE
 bV
 bV
 bV
@@ -12992,7 +12986,7 @@ bL
 bV
 bV
 bV
-gQ
+gP
 bV
 bV
 cx
@@ -13212,22 +13206,22 @@ bL
 bV
 bV
 bL
-dX
+dW
+eh
+eq
 ei
-er
-ej
-ev
-eG
-eJ
-eN
-eJ
+eu
 eF
-eZ
-eJ
-eJ
-fi
-fm
-fi
+eI
+eM
+eI
+eE
+eY
+eI
+eI
+fh
+fl
+fh
 cx
 cx
 cx
@@ -13260,7 +13254,7 @@ bL
 bL
 bV
 bV
-gV
+gU
 bV
 bM
 bM
@@ -13469,22 +13463,22 @@ bL
 bV
 bV
 bL
-dX
-ej
-ej
-ev
-ev
-eG
-eJ
-eO
-eJ
+dW
+ei
+ei
+eu
+eu
 eF
-fa
-eJ
-eJ
-eF
-fh
-eF
+eI
+eN
+eI
+eE
+eZ
+eI
+eI
+eE
+fg
+eE
 bV
 bV
 bV
@@ -13726,46 +13720,46 @@ bL
 bV
 bV
 bL
-dW
-ek
-es
-ew
-eC
-eF
-eJ
-eJ
-eJ
-eJ
-eJ
-eJ
-eN
-fh
-bV
-bV
-bV
-bV
-bV
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-bV
+dV
+ej
+er
+ev
+eB
+eE
+eI
+eI
+eI
+eI
+eI
+eI
+eM
 fg
-fg
-gR
+bV
+bV
+bV
+bV
+bV
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+bV
+ff
+ff
+gQ
 bV
 bV
 bV
@@ -13983,29 +13977,29 @@ bL
 bV
 bV
 bV
+dV
+dV
 dW
 dW
-dX
-dX
-dW
-eF
-eK
-eP
-eV
-eF
+dV
+eE
 eJ
-eJ
-eJ
-fh
+eO
+eU
+eE
+eI
+eI
+eI
+fg
 bV
 bV
 bV
-ff
+fe
 bV
 cx
 cx
 bV
-ff
+fe
 bV
 bV
 bV
@@ -14245,24 +14239,24 @@ bV
 bV
 bV
 bL
+eE
+eE
+eE
 eF
 eF
+eE
+eE
+eE
 eF
-eG
-eG
-eF
-eF
-eF
-eG
 bV
 bV
 bV
-dW
-fP
+dV
+fO
 cx
 cx
-fJ
-dW
+fI
+dV
 bV
 bV
 bV
@@ -14514,12 +14508,12 @@ cG
 bV
 cj
 bV
-fJ
-fQ
-fQ
-fQ
-fQ
-fJ
+fI
+fP
+fP
+fP
+fP
+fI
 bV
 bV
 bV
@@ -14771,12 +14765,12 @@ bV
 bV
 bV
 bV
-fJ
-fQ
-fQ
-fQ
-fQ
-fJ
+fI
+fP
+fP
+fP
+fP
+fI
 bV
 bV
 bV
@@ -15028,12 +15022,12 @@ bV
 bV
 bV
 bV
-fJ
-fQ
-fU
-fQ
-fQ
-fJ
+fI
+fP
+fT
+fP
+fP
+fI
 bV
 bV
 bV
@@ -15278,25 +15272,25 @@ bM
 bM
 bM
 bL
-dW
+dV
 bV
 bV
 bV
 cj
 bV
 bV
-fJ
-fQ
-fQ
-fV
-fQ
-fJ
+fI
+fP
+fP
+fU
+fP
+fI
 bV
 bV
 bV
 bL
-dW
-ge
+dV
+gd
 cx
 cx
 bV
@@ -15541,14 +15535,14 @@ bV
 bV
 bV
 bV
-fE
-dW
-fJ
-fJ
-fJ
-fJ
-dW
-ge
+fD
+dV
+fI
+fI
+fI
+fI
+dV
+gd
 bV
 bV
 bL
@@ -15796,8 +15790,8 @@ bV
 bV
 bL
 bL
-fg
-fg
+ff
+ff
 bV
 bV
 bV
@@ -16316,16 +16310,16 @@ bL
 bL
 bL
 bL
-dX
+dW
+dV
+dV
 dW
 dW
-dX
-dX
-dX
 dW
-dX
+dV
 dW
-dW
+dV
+dV
 cx
 cx
 bV
@@ -16573,16 +16567,16 @@ bL
 bL
 bL
 bL
-dX
-fY
-gb
-dX
-gl
-ev
-ev
-fN
-ej
-gz
+dW
+fX
+ga
+dW
+gk
+eu
+eu
+fM
+ei
+gy
 cx
 cx
 bV
@@ -16830,16 +16824,16 @@ bM
 bM
 bM
 bM
-fW
-fZ
-ev
-gf
-gm
-ev
-ev
-fN
-ej
-gz
+fV
+fY
+eu
+ge
+gl
+eu
+eu
+fM
+ei
+gy
 cx
 cx
 bV
@@ -17088,16 +17082,16 @@ bM
 bM
 bM
 bM
-fZ
-gc
-gg
-fZ
-ev
-gm
+fY
+gb
+gf
+fY
+eu
+gl
+dV
 dW
-dX
-dW
-gA
+dV
+gz
 cx
 bV
 bV
@@ -17346,13 +17340,13 @@ bM
 bM
 bM
 bM
-fZ
-gh
+fY
+gg
 bM
-go
-gq
-gw
-fH
+gn
+gp
+gv
+fG
 bV
 bV
 cx
@@ -17606,10 +17600,10 @@ bM
 bM
 bM
 bM
-gp
-gt
-gx
-fH
+go
+gs
+gw
+fG
 bV
 bV
 cx
@@ -17859,14 +17853,14 @@ bM
 bM
 bM
 bM
-fZ
-fZ
-gi
-fZ
-fZ
-gq
-gy
-fH
+fY
+fY
+gh
+fY
+fY
+gp
+gx
+fG
 cj
 bV
 bV
@@ -18117,13 +18111,13 @@ bM
 bM
 bM
 bM
-fZ
+fY
+dV
+fY
+gp
+gt
+gp
 dW
-fZ
-gq
-gu
-gq
-dX
 bL
 bL
 bL
@@ -18133,8 +18127,8 @@ bV
 bM
 bM
 bV
-fN
-fH
+fM
+fG
 bM
 bM
 bL
@@ -18351,7 +18345,7 @@ bV
 cj
 bV
 bV
-dU
+dT
 bV
 bV
 bV
@@ -18374,13 +18368,13 @@ bM
 bM
 bM
 bM
-fZ
-gj
-ev
-gr
-gv
-gt
-dW
+fY
+gi
+eu
+gq
+gu
+gs
+dV
 bL
 bL
 bL
@@ -18388,10 +18382,10 @@ bL
 bL
 bV
 bV
-fH
-ej
-ej
-fH
+fG
+ei
+ei
+fG
 bM
 bM
 bM
@@ -18631,24 +18625,24 @@ bM
 bM
 bM
 bM
-fZ
-fW
-ev
-gq
-gm
-gq
+fY
+fV
+eu
+gp
+gl
+gp
+dV
+bL
+bL
+bL
+bL
+dV
+gJ
+dV
 dW
-bL
-bL
-bL
-bL
+fM
+fM
 dW
-gK
-dW
-dX
-fN
-fN
-dX
 bM
 bM
 bM
@@ -18889,23 +18883,23 @@ bM
 bM
 bM
 bM
+dV
 dW
-dX
+dV
+dV
 dW
 dW
-dX
-dX
 bL
 bV
+dV
 dW
-dX
-dW
-gL
-ej
-ej
+dV
+gK
+ei
+ei
 bV
-ej
-dX
+ei
+dW
 bM
 bM
 bM
@@ -19154,15 +19148,15 @@ bL
 bL
 bV
 bV
-fZ
-gF
-gH
-ej
-ej
+fY
+gE
+gG
+ei
+ei
 bV
 bV
 bV
-gS
+gR
 bM
 bM
 bV
@@ -19412,12 +19406,12 @@ bV
 bV
 bV
 bV
-fZ
-gI
-fZ
-gD
-eu
-eu
+fY
+gH
+fY
+gC
+et
+et
 bM
 bM
 bM
@@ -19668,10 +19662,10 @@ bV
 bV
 bV
 bV
-gD
-fZ
-fZ
-fZ
+gC
+fY
+fY
+fY
 bV
 bV
 bV
@@ -19923,15 +19917,15 @@ bL
 bL
 bL
 bV
-fW
-gB
-fZ
-gB
-gJ
-fZ
-fZ
+fV
+gA
+fY
+gA
+gI
+fY
+fY
 bM
-eu
+et
 bV
 bV
 bM
@@ -20180,17 +20174,17 @@ bL
 bL
 bL
 bL
-dX
-gC
-gE
-gG
-gJ
+dW
 gB
-fZ
+gD
+gF
+gI
+gA
+fY
 bM
 bV
-eu
-ej
+et
+ei
 bV
 bV
 bL
@@ -20437,17 +20431,17 @@ bL
 bL
 bL
 bL
+dV
+dV
+dV
 dW
+gI
+gL
+gI
+gN
 dW
-dW
-dX
 gJ
-gM
-gJ
-gO
-dX
-gK
-dW
+dV
 bV
 bV
 bL
@@ -20697,12 +20691,12 @@ bL
 bL
 bV
 bV
-dX
-dX
-dX
 dW
 dW
-dX
+dW
+dV
+dV
+dW
 bV
 bV
 bV
@@ -52780,8 +52774,8 @@ bK
 bK
 bK
 bQ
-dg
-dg
+df
+df
 bR
 bK
 bK
@@ -54085,7 +54079,7 @@ bK
 bJ
 bJ
 bJ
-fb
+fa
 bJ
 bJ
 bK
@@ -54354,9 +54348,9 @@ bK
 bJ
 bJ
 bJ
-gd
+gc
 bJ
-gn
+gm
 bJ
 bJ
 bJ
@@ -54578,10 +54572,10 @@ bJ
 bK
 bK
 bK
-dc
+db
 bJ
 bJ
-dc
+db
 bJ
 bJ
 bJ
@@ -54593,11 +54587,6 @@ bJ
 bJ
 bJ
 bK
-bK
-bK
-bK
-bK
-bJ
 bK
 bK
 bK
@@ -54607,14 +54596,19 @@ bK
 bK
 bK
 bK
+bJ
+bK
+bK
+bK
+bK
 bK
 bJ
 bJ
-fv
+fu
 bJ
-fl
-gn
-gn
+fk
+gm
+gm
 bJ
 bJ
 bJ
@@ -54868,10 +54862,10 @@ bJ
 bJ
 bJ
 bJ
-cQ
-gk
+cP
+gj
 bJ
-gs
+gr
 bJ
 bJ
 bJ
@@ -56904,7 +56898,7 @@ bJ
 bJ
 bJ
 bJ
-cU
+cT
 bJ
 bJ
 bJ
@@ -57921,7 +57915,7 @@ bJ
 bJ
 bJ
 bR
-dl
+dk
 bR
 bQ
 bQ
@@ -58177,11 +58171,11 @@ bO
 bJ
 bJ
 bJ
-dh
-dm
-dh
-do
-dv
+dg
+dl
+dg
+dn
+du
 bR
 bK
 bK
@@ -58435,10 +58429,10 @@ bJ
 bJ
 bQ
 bR
-dl
+dk
 bR
-dr
-do
+dq
+dn
 bR
 bK
 bK
@@ -58691,11 +58685,11 @@ bJ
 bJ
 cc
 bR
-di
+dh
+dm
 dn
-do
-do
-dr
+dn
+dq
 bQ
 bK
 bK
@@ -58948,11 +58942,11 @@ bJ
 bJ
 cc
 bQ
-dj
-do
-do
-do
-do
+di
+dn
+dn
+dn
+dn
 bR
 bK
 bK
@@ -59205,11 +59199,11 @@ cd
 bJ
 cm
 bQ
-dk
+dj
+do
 dp
-dq
-ds
-dw
+dr
+dv
 bR
 bK
 bK
@@ -60001,7 +59995,7 @@ bK
 bK
 bJ
 bJ
-fv
+fu
 bJ
 bK
 bK
@@ -60519,7 +60513,7 @@ bJ
 bJ
 bJ
 bJ
-fR
+fQ
 bK
 bK
 bK
@@ -60745,7 +60739,7 @@ cm
 bR
 bJ
 bJ
-cK
+cJ
 bK
 bK
 bN
@@ -60770,13 +60764,13 @@ bK
 bK
 bJ
 bJ
-fj
-fd
+fi
+fc
 bK
 bK
 bJ
 bJ
-fR
+fQ
 bJ
 bJ
 bK
@@ -61026,13 +61020,13 @@ bK
 bK
 bK
 bJ
-fd
+fc
 bJ
 bJ
 bK
 bK
 bJ
-fR
+fQ
 bJ
 bJ
 bJ
@@ -61289,7 +61283,7 @@ bK
 bK
 bK
 bK
-fR
+fQ
 bJ
 bJ
 bJ
@@ -61514,7 +61508,7 @@ bK
 bK
 bR
 bJ
-cQ
+cP
 bJ
 bJ
 bR
@@ -61770,7 +61764,7 @@ bJ
 bK
 bK
 bK
-cK
+cJ
 bJ
 bJ
 bR
@@ -62319,7 +62313,7 @@ bK
 bK
 bK
 bK
-fX
+fW
 bJ
 bJ
 bJ
@@ -65368,7 +65362,7 @@ bK
 bK
 bJ
 bJ
-cL
+cK
 bJ
 bJ
 bJ
@@ -65390,7 +65384,7 @@ bK
 bJ
 bJ
 bJ
-cU
+cT
 bJ
 bJ
 bJ
@@ -65398,7 +65392,7 @@ bJ
 bK
 bK
 bK
-fw
+fv
 bJ
 bJ
 cq
@@ -65627,7 +65621,7 @@ bK
 bJ
 bJ
 bJ
-cU
+cT
 bJ
 bJ
 bJ
@@ -65652,10 +65646,10 @@ bK
 bJ
 bJ
 bJ
-fe
-fk
-fn
 fd
+fj
+fm
+fc
 bJ
 bJ
 bJ
@@ -65908,12 +65902,12 @@ bK
 bK
 bJ
 bJ
-fc
+fb
 bJ
-fl
-fo
+fk
+fn
 bJ
-fF
+fE
 bJ
 bK
 bK
@@ -66152,7 +66146,7 @@ bJ
 bJ
 bJ
 cq
-cU
+cT
 bJ
 bK
 bK
@@ -66166,7 +66160,7 @@ bK
 bJ
 bJ
 bJ
-fd
+fc
 bJ
 bJ
 bJ

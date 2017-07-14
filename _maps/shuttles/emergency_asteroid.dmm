@@ -3,43 +3,34 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
-"ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"ad" = (
+"ac" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"ae" = (
+"ad" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"af" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/escape)
-"ag" = (
+"ae" = (
 /turf/open/space,
 /area/space/nearstation)
-"ah" = (
+"af" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"ai" = (
+"ag" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aj" = (
+"ah" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
@@ -53,108 +44,62 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"ak" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/shuttle/escape)
-"al" = (
+"ai" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"am" = (
+"aj" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"an" = (
+"ak" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"ao" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
-/area/shuttle/escape)
-"ap" = (
+"al" = (
 /obj/structure/ore_box,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"aq" = (
+"am" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"ar" = (
+"an" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"as" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
-/area/shuttle/escape)
-"at" = (
+"ao" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"au" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/shuttle/escape)
-"av" = (
+"ap" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"aw" = (
+"aq" = (
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"ax" = (
+"ar" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"ay" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
-/area/shuttle/escape)
-"az" = (
+"as" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"aA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
-/area/shuttle/escape)
-"aB" = (
+"at" = (
 /turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
-"aC" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f11"
-	},
-/area/shuttle/escape)
-"aD" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"aE" = (
+"au" = (
 /obj/structure/chair{
 	dir = 4
 	},
@@ -165,38 +110,38 @@
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"aF" = (
+"av" = (
 /obj/machinery/suit_storage_unit,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"aG" = (
+"aw" = (
 /obj/machinery/door/airlock/mining{
 	name = "Emergency Shuttle Storage";
 	req_access_txt = "0"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"aH" = (
+"ax" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aI" = (
+"ay" = (
 /obj/structure/closet,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aJ" = (
+"az" = (
 /obj/structure/table,
 /obj/item/weapon/extinguisher,
 /obj/item/weapon/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aK" = (
+"aA" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aL" = (
+"aB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/regular{
@@ -205,7 +150,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aM" = (
+"aC" = (
 /obj/structure/closet/emcloset,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -214,41 +159,35 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aN" = (
+"aD" = (
 /obj/structure/bed/roller,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aO" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1";
-	dir = 2
-	},
-/area/shuttle/escape)
-"aP" = (
+"aE" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"aQ" = (
+"aF" = (
 /obj/structure/bed,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"aR" = (
+"aG" = (
 /obj/machinery/computer/station_alert,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aS" = (
+"aH" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aT" = (
+"aI" = (
 /obj/structure/chair/office/light{
 	name = "Chief Engineer"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aU" = (
+"aJ" = (
 /obj/structure/chair/office/light{
 	name = "Captain"
 	},
@@ -257,13 +196,13 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aV" = (
+"aK" = (
 /obj/structure/chair/office/light{
 	name = "Head of Security"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aW" = (
+"aL" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
@@ -271,33 +210,33 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aX" = (
+"aM" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"aY" = (
+"aN" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aZ" = (
+"aO" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"ba" = (
+"aP" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bb" = (
+"aQ" = (
 /obj/machinery/computer/security,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"bc" = (
+"aR" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	pixel_x = -1;
@@ -305,80 +244,68 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bd" = (
+"aS" = (
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"be" = (
+"aT" = (
 /obj/structure/table,
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/pen,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bf" = (
+"aU" = (
 /obj/machinery/ai_slipper,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bg" = (
+"aV" = (
 /obj/machinery/door/airlock/glass_command{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bh" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/escape)
-"bi" = (
+"aW" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"bj" = (
+"aX" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bk" = (
+"aY" = (
 /obj/structure/chair/office/light{
 	dir = 1;
 	name = "Research Director"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bl" = (
+"aZ" = (
 /obj/structure/chair/office/light{
 	dir = 1;
 	name = "Head of Personnel"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bm" = (
+"ba" = (
 /obj/structure/chair/office/light{
 	dir = 1;
 	name = "Chief Medical Officer"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bn" = (
+"bb" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bo" = (
-/obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bp" = (
+"bc" = (
 /obj/machinery/computer/crew,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bq" = (
+"bd" = (
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
@@ -386,7 +313,7 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"br" = (
+"be" = (
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
@@ -394,11 +321,11 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bs" = (
+"bf" = (
 /obj/structure/bed,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bt" = (
+"bg" = (
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = -12;
@@ -409,17 +336,17 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bu" = (
+"bh" = (
 /obj/machinery/door/airlock{
 	name = "Emergency Shuttle Restroom"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bv" = (
+"bi" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bw" = (
+"bj" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -429,7 +356,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bx" = (
+"bk" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -438,32 +365,20 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"by" = (
+"bl" = (
 /obj/structure/table,
 /obj/item/weapon/extinguisher,
 /obj/item/weapon/crowbar,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bz" = (
+"bm" = (
 /obj/machinery/sleeper{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bB" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bC" = (
+"bn" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
@@ -471,11 +386,11 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bD" = (
+"bo" = (
 /obj/structure/closet/secure_closet/medical2,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bE" = (
+"bp" = (
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -484,18 +399,18 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bF" = (
+"bq" = (
 /obj/structure/table,
 /obj/item/weapon/retractor,
 /obj/item/weapon/hemostat,
 /obj/item/weapon/scalpel,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bG" = (
+"br" = (
 /obj/structure/table/optable,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bH" = (
+"bs" = (
 /obj/structure/table,
 /obj/item/weapon/circular_saw,
 /obj/item/weapon/cautery{
@@ -504,50 +419,33 @@
 /obj/item/weapon/surgical_drapes,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bI" = (
+"bt" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bJ" = (
+"bu" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"bK" = (
+"bv" = (
 /obj/structure/chair,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bL" = (
-/obj/structure/chair,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bM" = (
+"bx" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"bN" = (
+"by" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bO" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"bP" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bQ" = (
+"bA" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -555,419 +453,419 @@
 (1,1,1) = {"
 aa
 aa
+ab
+aj
+ab
 ac
-am
 ac
-ad
-ad
-bI
-ac
-am
-ac
+bt
+ab
+aj
+ab
 aa
 aa
 "}
 (2,1,1) = {"
-ac
-am
-ac
-an
-ac
-aR
-aS
-bj
-ac
-an
-ac
-am
-ac
+ab
+aj
+ab
+ak
+ab
+aG
+aH
+aX
+ab
+ak
+ab
+aj
+ab
 "}
 (3,1,1) = {"
-ac
-an
-ac
-ac
-ac
-aS
-aS
-aS
-ac
-ac
-ac
-an
-ac
+ab
+ak
+ab
+ab
+ab
+aH
+aH
+aH
+ab
+ab
+ab
+ak
+ab
 "}
 (4,1,1) = {"
-ac
-ac
-az
-aF
-ac
-aT
-bc
-bk
-ac
-bt
-az
-ac
-ac
+ab
+ab
+as
+av
+ab
+aI
+aR
+aY
+ab
+bg
+as
+ab
+ab
 "}
 (5,1,1) = {"
-ad
-ap
-aq
-bJ
 ac
-aU
-bd
-bl
-ac
-bO
+al
+am
 bu
-bE
-ad
+ab
+aJ
+aS
+aZ
+ab
+by
+bh
+bp
+ac
 "}
 (6,1,1) = {"
-ae
-aq
-aq
-aq
-ac
-aV
-be
-bm
-ac
-at
-ac
-ac
-ac
+ad
+am
+am
+am
+ab
+aK
+aT
+ba
+ab
+ao
+ab
+ab
+ab
 "}
 (7,1,1) = {"
-ad
-ar
-aq
-aq
 ac
-aW
-bf
-bn
+an
+am
+am
+ab
+aL
+aU
+bb
+ab
+ao
+bh
+bp
 ac
-at
-bu
-bE
-ad
 "}
 (8,1,1) = {"
-ac
-ac
-ac
-aG
-ac
-aX
-bg
-bi
-az
-bu
-az
-ac
-ac
+ab
+ab
+ab
+aw
+ab
+aM
+aV
+aW
+as
+bh
+as
+ab
+ab
 "}
 (9,1,1) = {"
-ag
-ac
-ac
-aH
-at
-at
-at
-at
-at
-at
-ac
-ac
+ae
+ab
+ab
+ax
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+ab
 aa
 "}
 (10,1,1) = {"
-ag
-ag
-ac
-aI
-at
-aY
-aY
-aY
-at
-bv
-ac
+ae
+ae
+ab
+ay
+ao
+aN
+aN
+aN
+ao
+bi
+ab
 aa
 aa
 "}
 (11,1,1) = {"
-ah
-ah
+af
+af
+at
+az
+ao
+aO
+af
+aA
+ao
 aB
-aJ
-at
-aZ
-ah
-aK
-at
-aL
-ac
+ab
 aa
 aa
 "}
 (12,1,1) = {"
-ai
-at
-at
-at
-at
-aZ
-ah
-aK
-at
-bP
-ac
+ag
+ao
+ao
+ao
+ao
+aO
+af
+aA
+ao
+bA
+ab
 aa
 aa
 "}
 (13,1,1) = {"
-ah
-ah
-aB
-bK
+af
+af
 at
-aZ
-ah
-aK
-at
-bw
-ac
+bv
+ao
+aO
+af
+aA
+ao
+bj
+ab
 aa
 aa
 "}
 (14,1,1) = {"
-ag
-ag
-ad
-aK
-at
-aZ
-ah
-aK
-at
-aZ
-ad
+ae
+ae
+ac
+aA
+ao
+aO
+af
+aA
+ao
+aO
+ac
 aa
 aa
 "}
 (15,1,1) = {"
-ag
-ag
-ad
-aK
-at
-at
-at
-at
-at
-aZ
-ad
+ae
+ae
+ac
+aA
+ao
+ao
+ao
+ao
+ao
+aO
+ac
 aa
 aa
 "}
 (16,1,1) = {"
-ag
-ag
-ad
-aK
-at
-aZ
-ah
-aK
-at
-aZ
-ad
+ae
+ae
+ac
+aA
+ao
+aO
+af
+aA
+ao
+aO
+ac
 aa
 aa
 "}
 (17,1,1) = {"
-ah
-ah
-aB
-bL
+af
+af
 at
-aZ
-ah
-aK
-at
-bx
-ac
+bv
+ao
+aO
+af
+aA
+ao
+bk
+ab
 aa
 aa
 "}
 (18,1,1) = {"
-aj
-at
-at
-at
-at
-aZ
 ah
-aK
-at
-bQ
-ac
+ao
+ao
+ao
+ao
+aO
+af
+aA
+ao
+bA
+ab
 aa
 aa
 "}
 (19,1,1) = {"
-ah
-ah
+af
+af
+at
 aB
-aL
-at
-aZ
-ah
-aK
-at
-by
-ac
+ao
+aO
+af
+aA
+ao
+bl
+ab
 aa
 aa
 "}
 (20,1,1) = {"
-ag
-ag
-ac
-aM
-at
-ba
-ba
-ba
-at
-aI
-ac
+ae
+ae
+ab
+aC
+ao
+aP
+aP
+aP
+ao
+ay
+ab
 aa
 aa
 "}
 (21,1,1) = {"
-ag
-ac
-ac
-aN
-at
-at
-at
-at
-at
-aN
-ac
-ac
+ae
+ab
+ab
+aD
+ao
+ao
+ao
+ao
+ao
+aD
+ab
+ab
 aa
 "}
 (22,1,1) = {"
+ab
+ab
+ab
 ac
+aE
 ac
+aW
 ac
-ad
-aP
-ad
-bi
-ad
-br
-ad
+be
 ac
-ac
-ac
+ab
+ab
+ab
 "}
 (23,1,1) = {"
-ac
-av
-aE
-av
-aw
-bb
-ac
-bp
-at
-at
-bC
-bF
-ac
+ab
+ap
+au
+ap
+aq
+aQ
+ab
+bc
+ao
+ao
+bn
+bq
+ab
 "}
 (24,1,1) = {"
-al
-aw
-aw
-aw
-aw
-aw
-ad
-at
-at
-at
-at
-bG
-ad
+ai
+aq
+aq
+aq
+aq
+aq
+ac
+ao
+ao
+ao
+ao
+br
+ac
 "}
 (25,1,1) = {"
-ac
-ax
-ax
-ax
-aw
-bM
-ac
-bN
-at
-bz
-bD
-bH
-ac
+ab
+ar
+ar
+ar
+aq
+bx
+ab
+by
+ao
+bm
+bo
+bs
+ab
 "}
 (26,1,1) = {"
+ab
+ab
+ab
+ab
 ac
+aE
+ab
+bd
 ac
-ac
-ac
-ad
-aP
-ac
-bq
-ad
-ac
-ac
-ac
-ac
+ab
+ab
+ab
+ab
 "}
 (27,1,1) = {"
 aa
 aa
+ab
+ab
+aF
+aq
 ac
-ac
-aQ
-aw
-ad
-at
-bs
-ac
-ac
+ao
+bf
+ab
+ab
 aa
 aa
 "}
 (28,1,1) = {"
-ag
-ag
-ag
+ae
+ae
+ae
+ab
+ab
 ac
+ab
 ac
-ad
-ac
-ad
-ac
-ac
+ab
+ab
 aa
 aa
 aa

@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:23 (UTC)
 "a" = (
 /turf/open/space,
 /area/space)
@@ -12,23 +13,20 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "d" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/transport)
-"e" = (
 /turf/open/floor/plasteel/freezer,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
-"f" = (
+"e" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"g" = (
+"f" = (
 /obj/machinery/computer/shuttle/ferry/request,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"h" = (
+"g" = (
 /obj/structure/closet/secure_closet/freezer/meat{
 	name = "\"meat\" fridge"
 	},
@@ -65,24 +63,24 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"i" = (
+"h" = (
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"j" = (
+"i" = (
 /obj/machinery/gibber,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"k" = (
+"j" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"l" = (
+"k" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"m" = (
+"l" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink";
@@ -90,21 +88,21 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"n" = (
+"m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"o" = (
+"n" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/transport)
-"p" = (
+"o" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"q" = (
+"p" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
@@ -119,130 +117,109 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"r" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/transport)
-"s" = (
-/turf/open/floor/plasteel/freezer,
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f10"
-	},
-/area/shuttle/transport)
-"t" = (
+"q" = (
 /obj/structure/closet/chefcloset,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"u" = (
+"r" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"v" = (
+"s" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
 	req_access = "28"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"w" = (
+"t" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
-"x" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/transport)
 
 (1,1,1) = {"
 a
 b
-p
+o
 b
 a
 "}
 (2,1,1) = {"
 b
-e
-i
-e
+d
+h
+d
 b
 "}
 (3,1,1) = {"
 c
-f
-i
-t
+e
+h
+q
 c
 "}
 (4,1,1) = {"
 c
-g
-i
-u
+f
+h
+r
 c
 "}
 (5,1,1) = {"
 c
+g
 h
-i
-u
+r
 c
 "}
 (6,1,1) = {"
 c
-i
-i
-u
+h
+h
+r
 c
 "}
 (7,1,1) = {"
 c
-j
 i
-i
+h
+h
 c
 "}
 (8,1,1) = {"
 c
-k
-i
-i
+j
+h
+h
 c
 "}
 (9,1,1) = {"
 c
-l
-l
-v
+k
+k
+s
 c
 "}
 (10,1,1) = {"
 c
-m
-i
-i
+l
+h
+h
 c
 "}
 (11,1,1) = {"
 c
-n
-i
-w
+m
+h
+t
 c
 "}
 (12,1,1) = {"
 c
-o
-q
-o
+n
+p
+n
 c
 "}

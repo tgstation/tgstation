@@ -1,23 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/supply)
-"b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
-"c" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/supply)
-"d" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/shuttle/supply)
-"e" = (
+"b" = (
 /obj/machinery/conveyor{
 	dir = 2;
 	id = "cargoshuttle";
@@ -25,7 +10,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"f" = (
+"c" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "cargoshuttle";
@@ -33,7 +18,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"g" = (
+"d" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "cargoshuttle";
@@ -41,7 +26,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"h" = (
+"e" = (
 /obj/machinery/conveyor{
 	dir = 9;
 	id = "cargoshuttle";
@@ -49,7 +34,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"i" = (
+"f" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "cargoshuttle";
@@ -57,7 +42,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"j" = (
+"g" = (
 /obj/machinery/conveyor{
 	dir = 10;
 	id = "cargoshuttle";
@@ -65,7 +50,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"k" = (
+"h" = (
 /obj/machinery/conveyor{
 	dir = 6;
 	id = "cargoshuttle";
@@ -73,7 +58,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"l" = (
+"i" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
 	name = "supply dock loading door"
@@ -85,20 +70,20 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"m" = (
+"j" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"n" = (
+"k" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
-"o" = (
+"l" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"p" = (
+"m" = (
 /obj/machinery/button/door{
 	dir = 2;
 	id = "QMLoaddoor2";
@@ -120,7 +105,7 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
-"q" = (
+"n" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
@@ -132,7 +117,7 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"r" = (
+"o" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
 	name = "supply dock loading door"
@@ -144,44 +129,29 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"s" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/supply)
-"t" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
-/area/shuttle/supply)
-"u" = (
+"p" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"v" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
-/area/shuttle/supply)
-"w" = (
+"q" = (
 /turf/open/space,
 /area/space)
-"x" = (
+"r" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"y" = (
+"s" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"z" = (
+"t" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"A" = (
+"u" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "cargoshuttle";
@@ -192,7 +162,7 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"B" = (
+"v" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -200,86 +170,86 @@
 /area/shuttle/supply)
 
 (1,1,1) = {"
-b
-b
-b
-b
-b
-b
-b
-b
-b
-w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+q
 "}
 (2,1,1) = {"
+a
 b
-e
-g
-e
-m
-B
-m
-g
+d
 b
-x
+j
+v
+j
+d
+a
+r
 "}
 (3,1,1) = {"
-b
-f
-g
-f
-m
-m
-m
-g
-u
-y
+a
+c
+d
+c
+j
+j
+j
+d
+p
+s
 "}
 (4,1,1) = {"
-b
-A
-g
-f
-m
-m
-m
-g
+a
 u
-y
+d
+c
+j
+j
+j
+d
+p
+s
 "}
 (5,1,1) = {"
-b
-f
-h
-j
-m
-m
-m
+a
+c
+e
 g
-u
-y
+j
+j
+j
+d
+p
+s
 "}
 (6,1,1) = {"
-b
+a
+c
 f
-i
+h
 k
-n
-p
-n
-g
-b
-z
+m
+k
+d
+a
+t
 "}
 (7,1,1) = {"
-b
-b
-b
+a
+a
+a
+i
 l
+a
+n
 o
-b
+a
 q
-r
-b
-w
 "}

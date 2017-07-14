@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:23 (UTC)
 "a" = (
 /turf/open/space,
 /area/space)
@@ -11,81 +12,48 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "d" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10"
-	},
-/area/space)
-"e" = (
 /turf/closed/wall/mineral/titanium,
 /area/space)
-"f" = (
+"e" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
-"g" = (
+"f" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
-"h" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13"
-	},
-/area/space)
-"i" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8"
-	},
-/area/space)
-"j" = (
+"g" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
-"k" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4"
-	},
-/area/space)
-"l" = (
+"h" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
-"m" = (
+"i" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
-"n" = (
+"j" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/space)
-"o" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5"
-	},
-/area/space)
-"p" = (
+"k" = (
 /obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/space)
-"q" = (
+"l" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/space)
-"r" = (
+"m" = (
 /obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
-/area/space)
-"s" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9"
-	},
 /area/space)
 
 (1,1,1) = {"
@@ -93,89 +61,89 @@ a
 a
 a
 b
-e
-e
-j
-j
-e
-e
+d
+d
+g
+g
+d
+d
 b
 "}
 (2,1,1) = {"
 b
+d
+d
+d
+h
+h
 e
 e
 e
-l
-l
-f
-f
-f
-n
-p
+j
+k
 "}
 (3,1,1) = {"
 c
-f
-f
 e
-f
-f
-f
-f
-f
-n
-q
+e
+d
+e
+e
+e
+e
+e
+j
+l
 "}
 (4,1,1) = {"
 c
+f
+e
 g
-f
+e
+e
+e
+e
+e
 j
-f
-f
-f
-f
-f
-n
-q
+l
 "}
 (5,1,1) = {"
 c
-f
-f
 e
-f
-f
-f
-f
-f
-n
-q
+e
+d
+e
+e
+e
+e
+e
+j
+l
 "}
 (6,1,1) = {"
 b
+d
+d
+d
+i
+i
 e
 e
 e
+j
 m
-m
-f
-f
-f
-n
-r
 "}
 (7,1,1) = {"
 a
 a
 a
 b
-e
-e
-j
-j
-e
-e
+d
+d
+g
+g
+d
+d
 b
 "}

@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 11-07-2017 21:22 (UTC)
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -8057,20 +8058,6 @@
 	name = "MO19 Arrivals"
 	})
 "le" = (
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006
-	},
-/turf/closed/wall/shuttle{
-	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"lf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/arrival{
 	dir = 8;
@@ -8080,7 +8067,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lg" = (
+"lf" = (
 /obj/item/weapon/cigbutt,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -8090,7 +8077,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lh" = (
+"lg" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -8104,7 +8091,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"li" = (
+"lh" = (
 /obj/item/stack/rods,
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -8123,7 +8110,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"lj" = (
+"li" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -8135,7 +8122,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lk" = (
+"lj" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -8149,7 +8136,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ll" = (
+"lk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -8161,7 +8148,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lm" = (
+"ll" = (
 /obj/machinery/door/airlock{
 	id_tag = "awaydorm1";
 	name = "Dorm 1"
@@ -8173,7 +8160,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ln" = (
+"lm" = (
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -8181,7 +8168,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lo" = (
+"ln" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -8200,7 +8187,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lp" = (
+"lo" = (
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -8210,7 +8197,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lq" = (
+"lp" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -8230,7 +8217,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lr" = (
+"lq" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -8241,7 +8228,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ls" = (
+"lr" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -8259,7 +8246,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lt" = (
+"ls" = (
 /obj/machinery/button/door{
 	id = "awaykitchen";
 	name = "Kitchen Shutters Control";
@@ -8274,7 +8261,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lu" = (
+"lt" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room";
 	req_access_txt = "201"
@@ -8286,7 +8273,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lv" = (
+"lu" = (
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
 	temperature = 273.15
@@ -8295,7 +8282,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lw" = (
+"lv" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink";
@@ -8309,7 +8296,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lx" = (
+"lw" = (
 /obj/structure/closet/crate{
 	desc = "It's a storage unit for kitchen clothes and equipment.";
 	name = "Kitchen Crate"
@@ -8324,25 +8311,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ly" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"lz" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"lA" = (
+"lx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -8350,25 +8319,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lB" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"lC" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"lD" = (
+"ly" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -8383,7 +8334,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lE" = (
+"lz" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 4
 	},
@@ -8395,7 +8346,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lF" = (
+"lA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -8406,7 +8357,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lG" = (
+"lB" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
@@ -8417,7 +8368,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lH" = (
+"lC" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 /obj/effect/turf_decal/stripes/line{
@@ -8430,7 +8381,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lI" = (
+"lD" = (
 /turf/open/floor/plasteel/neutral/corner{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
@@ -8441,7 +8392,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lJ" = (
+"lE" = (
 /turf/open/floor/plasteel/neutral/corner{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
@@ -8452,7 +8403,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lK" = (
+"lF" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /turf/open/floor/carpet{
@@ -8462,7 +8413,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lL" = (
+"lG" = (
 /obj/structure/table/wood,
 /obj/item/weapon/lighter,
 /obj/machinery/newscaster{
@@ -8475,7 +8426,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lM" = (
+"lH" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -8484,7 +8435,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lN" = (
+"lI" = (
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8492,7 +8443,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lO" = (
+"lJ" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -8501,7 +8452,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lP" = (
+"lK" = (
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -8511,7 +8462,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lQ" = (
+"lL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Kitchen";
@@ -8522,20 +8473,20 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lR" = (
+"lM" = (
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lS" = (
+"lN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lT" = (
+"lO" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/suit/hooded/chaplain_hoodie,
@@ -8544,7 +8495,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lU" = (
+"lP" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -8560,14 +8511,14 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lV" = (
+"lQ" = (
 /turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lW" = (
+"lR" = (
 /obj/structure/table,
 /obj/item/weapon/storage/lockbox,
 /turf/open/floor/mineral/titanium/blue,
@@ -8575,7 +8526,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lX" = (
+"lS" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
 /turf/open/floor/mineral/titanium/yellow,
@@ -8583,16 +8534,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"lY" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"lZ" = (
+"lT" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
 	},
@@ -8601,7 +8543,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ma" = (
+"lU" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -8613,13 +8555,13 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mb" = (
+"lV" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mc" = (
+"lW" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -8628,7 +8570,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"md" = (
+"lX" = (
 /obj/machinery/newscaster{
 	pixel_y = 30
 	},
@@ -8640,14 +8582,14 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"me" = (
+"lY" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mf" = (
+"lZ" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 4
 	},
@@ -8659,7 +8601,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mg" = (
+"ma" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -8670,7 +8612,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mh" = (
+"mb" = (
 /turf/open/floor/plasteel/neutral/corner{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 2;
@@ -8681,7 +8623,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mi" = (
+"mc" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window{
@@ -8695,7 +8637,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mj" = (
+"md" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -8704,7 +8646,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mk" = (
+"me" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -8713,7 +8655,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ml" = (
+"mf" = (
 /obj/structure/table,
 /obj/item/weapon/storage/backpack/satchel/leather/withwallet,
 /turf/open/floor/plasteel/black,
@@ -8721,7 +8663,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mm" = (
+"mg" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "secure";
 	locked = 0;
@@ -8740,7 +8682,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mn" = (
+"mh" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "freezer";
 	locked = 0;
@@ -8759,7 +8701,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mo" = (
+"mi" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "freezer";
 	locked = 0;
@@ -8778,7 +8720,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mp" = (
+"mj" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
 /turf/open/floor/mineral/titanium/blue,
@@ -8786,7 +8728,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mq" = (
+"mk" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -8798,20 +8740,20 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mr" = (
+"ml" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ms" = (
+"mm" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mt" = (
+"mn" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -8821,7 +8763,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mu" = (
+"mo" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -8833,7 +8775,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mv" = (
+"mp" = (
 /obj/structure/grille,
 /obj/structure/sign/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
@@ -8847,7 +8789,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mw" = (
+"mq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -8859,7 +8801,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mx" = (
+"mr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/corner{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -8871,7 +8813,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"my" = (
+"ms" = (
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "awaydorm2";
@@ -8891,7 +8833,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mz" = (
+"mt" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
@@ -8902,7 +8844,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mA" = (
+"mu" = (
 /obj/structure/closet/emcloset,
 /obj/structure/window,
 /turf/open/floor/plating{
@@ -8912,14 +8854,14 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mB" = (
+"mv" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mC" = (
+"mw" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/smoke{
 	pixel_y = -32
@@ -8929,7 +8871,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mD" = (
+"mx" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -8939,7 +8881,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mE" = (
+"my" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_x = -6;
@@ -8957,21 +8899,21 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mF" = (
+"mz" = (
 /obj/structure/chair/comfy/beige,
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mG" = (
+"mA" = (
 /obj/machinery/computer/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mH" = (
+"mB" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Shuttle Cockpit"
 	},
@@ -8980,14 +8922,14 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mI" = (
+"mC" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mJ" = (
+"mD" = (
 /obj/structure/sign/vacuum{
 	desc = "A beacon used by a teleporter.";
 	icon = 'icons/obj/radio.dmi';
@@ -9000,7 +8942,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mK" = (
+"mE" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
@@ -9009,7 +8951,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mL" = (
+"mF" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -9019,7 +8961,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mM" = (
+"mG" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9028,7 +8970,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mN" = (
+"mH" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -9056,7 +8998,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mO" = (
+"mI" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -9068,7 +9010,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mP" = (
+"mJ" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -9087,7 +9029,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mQ" = (
+"mK" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 8;
@@ -9105,7 +9047,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mR" = (
+"mL" = (
 /obj/machinery/door/airlock{
 	id_tag = "awaydorm2";
 	name = "Dorm 2"
@@ -9122,7 +9064,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mS" = (
+"mM" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 5;
@@ -9135,7 +9077,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mT" = (
+"mN" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -9153,7 +9095,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mU" = (
+"mO" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9162,7 +9104,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mV" = (
+"mP" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
@@ -9171,7 +9113,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mW" = (
+"mQ" = (
 /obj/structure/chair,
 /obj/machinery/light/small{
 	dir = 4
@@ -9181,16 +9123,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mX" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"mY" = (
+"mR" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -9200,7 +9133,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"mZ" = (
+"mS" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	icon_state = "ltrails_1"
@@ -9215,7 +9148,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"na" = (
+"mT" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/effect/decal/cleanable/blood,
@@ -9226,7 +9159,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nb" = (
+"mU" = (
 /obj/structure/closet/secure_closet{
 	desc = "It's a secure locker for personnel. The first card swiped gains control.";
 	icon_state = "cabinet";
@@ -9242,7 +9175,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nc" = (
+"mV" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/generic,
 /obj/structure/window,
@@ -9253,37 +9186,14 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nd" = (
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"ne" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"nf" = (
+"mW" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ng" = (
+"mX" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -9293,7 +9203,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nh" = (
+"mY" = (
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
@@ -9303,7 +9213,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ni" = (
+"mZ" = (
 /turf/open/floor/plasteel{
 	burnt = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -9316,7 +9226,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nj" = (
+"na" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -9333,7 +9243,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nk" = (
+"nb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/candy,
 /turf/open/floor/plating{
@@ -9343,7 +9253,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nl" = (
+"nc" = (
 /obj/item/weapon/cigbutt,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9352,7 +9262,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nm" = (
+"nd" = (
 /obj/structure/sign/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
@@ -9365,16 +9275,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nn" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"no" = (
+"ne" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -9386,7 +9287,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"np" = (
+"nf" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -9398,7 +9299,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nq" = (
+"ng" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	icon_state = "ltrails_2"
@@ -9420,7 +9321,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nr" = (
+"nh" = (
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -9430,7 +9331,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ns" = (
+"ni" = (
 /obj/structure/grille{
 	density = 0;
 	broken = 1;
@@ -9444,7 +9345,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nt" = (
+"nj" = (
 /obj/structure/grille,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9453,7 +9354,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nu" = (
+"nk" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -9468,20 +9369,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nv" = (
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
-/area/awaycontent/a1{
-	has_gravity = 1;
-	name = "MO19 Arrivals"
-	})
-"nw" = (
+"nl" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/barber{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -9492,7 +9380,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nx" = (
+"nm" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -9513,7 +9401,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ny" = (
+"nn" = (
 /obj/machinery/airalarm{
 	dir = 8;
 	frequency = 1439;
@@ -9531,7 +9419,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nz" = (
+"no" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "201";
 	req_one_access_txt = "0"
@@ -9543,7 +9431,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nA" = (
+"np" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -9554,7 +9442,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nB" = (
+"nq" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9563,7 +9451,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nC" = (
+"nr" = (
 /obj/item/stack/rods,
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -9587,7 +9475,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"nD" = (
+"ns" = (
 /obj/structure/grille{
 	density = 0;
 	broken = 1;
@@ -9611,7 +9499,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nE" = (
+"nt" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 8;
@@ -9628,7 +9516,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nF" = (
+"nu" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 8;
@@ -9644,7 +9532,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nG" = (
+"nv" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 6;
@@ -9660,7 +9548,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nH" = (
+"nw" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/machinery/button/door{
@@ -9682,7 +9570,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nI" = (
+"nx" = (
 /obj/structure/dresser,
 /obj/item/weapon/paper{
 	info = "<i>Bugs break out. I run to here and lock door. I hear door next to me break open and screams. All nice people here dead now. I no want to be eaten, and bottle always said to be coward way out, but person who say that is stupid. Mira, there is no escape for me, tell Alexis and Elena that father will never come home, and that I love you all.</i>";
@@ -9695,7 +9583,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nJ" = (
+"ny" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating{
 	broken = 1;
@@ -9706,7 +9594,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nK" = (
+"nz" = (
 /obj/structure/sign/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
@@ -9719,7 +9607,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nL" = (
+"nA" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9728,7 +9616,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nM" = (
+"nB" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
@@ -9743,7 +9631,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nN" = (
+"nC" = (
 /turf/open/floor/plasteel/neutral/side{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
@@ -9754,7 +9642,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nO" = (
+"nD" = (
 /obj/machinery/door/airlock{
 	icon_state = "closed";
 	id_tag = "awaydorm3";
@@ -9768,7 +9656,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nP" = (
+"nE" = (
 /obj/item/weapon/pen,
 /obj/item/weapon/storage/pill_bottle{
 	pixel_y = 6
@@ -9780,7 +9668,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nQ" = (
+"nF" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plating{
@@ -9790,7 +9678,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nR" = (
+"nG" = (
 /obj/structure/closet,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/open/floor/plating{
@@ -9800,7 +9688,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nS" = (
+"nH" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck,
 /turf/open/floor/plasteel{
@@ -9815,7 +9703,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nT" = (
+"nI" = (
 /obj/structure/closet/secure_closet{
 	desc = "It's a secure locker for personnel. The first card swiped gains control.";
 	icon_state = "cabinet";
@@ -9831,7 +9719,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nU" = (
+"nJ" = (
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
@@ -9842,7 +9730,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nV" = (
+"nK" = (
 /obj/structure/grille,
 /obj/structure/disposalpipe/segment,
 /obj/structure/window/reinforced/fulltile,
@@ -9853,7 +9741,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nW" = (
+"nL" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -9868,7 +9756,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nX" = (
+"nM" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
@@ -9884,7 +9772,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nY" = (
+"nN" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -9899,7 +9787,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"nZ" = (
+"nO" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -9918,7 +9806,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oa" = (
+"nP" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -9928,7 +9816,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"ob" = (
+"nQ" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
@@ -9943,7 +9831,7 @@
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
-"oc" = (
+"nR" = (
 /obj/structure/disposaloutlet,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -9965,7 +9853,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"od" = (
+"nS" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
@@ -9983,7 +9871,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oe" = (
+"nT" = (
 /obj/item/trash/candy,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -9999,7 +9887,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"of" = (
+"nU" = (
 /obj/item/weapon/shard,
 /turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
@@ -10012,7 +9900,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"og" = (
+"nV" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
@@ -10027,7 +9915,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oh" = (
+"nW" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
@@ -10042,7 +9930,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oi" = (
+"nX" = (
 /turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -10054,7 +9942,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oj" = (
+"nY" = (
 /obj/structure/grille{
 	density = 0;
 	broken = 1;
@@ -10071,7 +9959,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"ok" = (
+"nZ" = (
 /obj/item/stack/rods,
 /turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
@@ -10084,7 +9972,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"ol" = (
+"oa" = (
 /obj/item/stack/cable_coil,
 /turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
@@ -10097,7 +9985,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"om" = (
+"ob" = (
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
@@ -10112,7 +10000,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"on" = (
+"oc" = (
 /obj/item/stack/cable_coil{
 	amount = 2;
 	icon_state = "coil_red2";
@@ -10129,7 +10017,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oo" = (
+"od" = (
 /obj/item/stack/cable_coil{
 	amount = 1;
 	icon_state = "coil_red1";
@@ -10146,7 +10034,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"op" = (
+"oe" = (
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10160,7 +10048,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oq" = (
+"of" = (
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -10175,7 +10063,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"or" = (
+"og" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	dir = 8;
@@ -10192,7 +10080,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"os" = (
+"oh" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	dir = 8;
@@ -10209,7 +10097,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"ot" = (
+"oi" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	dir = 8;
@@ -10226,7 +10114,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"ou" = (
+"oj" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	dir = 8;
@@ -10243,7 +10131,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"ov" = (
+"ok" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	dir = 8;
@@ -10260,7 +10148,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"ow" = (
+"ol" = (
 /turf/open/floor/plasteel{
 	burnt = 1;
 	dir = 8;
@@ -10277,7 +10165,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"ox" = (
+"om" = (
 /turf/open/floor/plasteel{
 	burnt = 1;
 	dir = 8;
@@ -10294,7 +10182,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oy" = (
+"on" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -10306,7 +10194,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oz" = (
+"oo" = (
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10320,7 +10208,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oA" = (
+"op" = (
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -10336,7 +10224,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oB" = (
+"oq" = (
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -10352,7 +10240,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oC" = (
+"or" = (
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -10368,7 +10256,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oD" = (
+"os" = (
 /turf/open/floor/plating{
 	burnt = 1;
 	heat_capacity = 1e+006;
@@ -10384,7 +10272,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oE" = (
+"ot" = (
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -10399,7 +10287,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oF" = (
+"ou" = (
 /turf/open/floor/plasteel/floorgrime{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
@@ -10416,7 +10304,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oG" = (
+"ov" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10435,7 +10323,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oH" = (
+"ow" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10454,7 +10342,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oI" = (
+"ox" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10473,7 +10361,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oJ" = (
+"oy" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10492,7 +10380,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oK" = (
+"oz" = (
 /turf/open/floor/plasteel{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10511,7 +10399,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oL" = (
+"oA" = (
 /turf/open/floor/plasteel{
 	burnt = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10530,7 +10418,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oM" = (
+"oB" = (
 /turf/open/floor/plasteel{
 	burnt = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10549,7 +10437,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oN" = (
+"oC" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -10561,7 +10449,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oO" = (
+"oD" = (
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -10576,7 +10464,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oP" = (
+"oE" = (
 /turf/open/floor/plating{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10594,7 +10482,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oQ" = (
+"oF" = (
 /turf/open/floor/plating{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10612,7 +10500,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oR" = (
+"oG" = (
 /turf/open/floor/plating{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10630,7 +10518,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oS" = (
+"oH" = (
 /turf/open/floor/plating{
 	burnt = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -10648,7 +10536,7 @@
 	power_light = 0;
 	poweralm = 0
 	})
-"oT" = (
+"oI" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "science";
 	locked = 0;
@@ -10663,7 +10551,7 @@
 	has_gravity = 1;
 	name = "MO19 Research"
 	})
-"oU" = (
+"oJ" = (
 /obj/structure/window/reinforced,
 /obj/structure/closet/secure_closet{
 	icon_state = "science";
@@ -28597,14 +28485,14 @@ ab
 ab
 ab
 ab
-of
-oj
+nU
+nY
 ab
-op
-oz
+oe
+oo
 ab
-oE
-oO
+ot
+oD
 ab
 aa
 aa
@@ -28854,13 +28742,13 @@ ab
 ab
 ab
 ab
-og
-oi
+nV
+nX
 ab
-oq
+of
 ab
 ab
-oF
+ou
 ab
 ab
 aa
@@ -29111,14 +28999,14 @@ ab
 ab
 ab
 ab
-oh
-ok
+nW
+nZ
 ab
 ab
-oA
+op
 ab
 ab
-oP
+oE
 ab
 aa
 aa
@@ -29368,14 +29256,14 @@ ab
 ab
 ab
 ab
-oi
-ol
+nX
+oa
 ab
-or
-oB
+og
+oq
 ab
-oG
-oQ
+ov
+oF
 ab
 aa
 aa
@@ -29625,14 +29513,14 @@ ab
 ab
 ab
 ab
-oi
-om
+nX
+ob
 ab
-os
-oC
+oh
+or
 ab
-oH
-oR
+ow
+oG
 ab
 aa
 aa
@@ -29882,13 +29770,13 @@ ab
 ab
 ab
 ab
+nX
+oc
+ab
 oi
-on
-ab
-ot
 ab
 ab
-oI
+ox
 ab
 ab
 aa
@@ -30139,14 +30027,14 @@ ab
 ab
 ab
 ab
-oi
-oo
+nX
+od
 ab
-ou
-oD
+oj
+os
 ab
-oJ
-oS
+oy
+oH
 ab
 aa
 aa
@@ -30399,10 +30287,10 @@ ab
 ab
 ab
 ab
-ov
+ok
 ab
 ab
-oK
+oz
 ab
 ab
 aa
@@ -30913,10 +30801,10 @@ ab
 ab
 ab
 ab
-ow
+ol
 ab
 ab
-oL
+oA
 ab
 ab
 aa
@@ -31170,10 +31058,10 @@ ab
 ab
 ab
 ab
-ox
+om
 ab
 ab
-oM
+oB
 ab
 ab
 aa
@@ -31684,11 +31572,11 @@ ab
 ab
 ab
 ab
-oy
-oy
+on
+on
 ab
-oN
-oN
+oC
+oC
 ab
 aa
 aa
@@ -35763,9 +35651,9 @@ ba
 ba
 ba
 lc
-lA
-lA
-lA
+lx
+lx
+lx
 lc
 ba
 ba
@@ -36019,11 +35907,11 @@ ba
 ba
 ba
 lc
-lV
-mp
-mG
-mV
-lV
+lQ
+mj
+mA
+mP
+lQ
 lc
 ba
 ba
@@ -36276,11 +36164,11 @@ ba
 ba
 ba
 ld
+lR
+lV
 lW
-mb
-mc
-mb
-nf
+lV
+mW
 ld
 ba
 ba
@@ -36533,11 +36421,11 @@ eI
 ba
 ba
 ld
-lX
-mq
-mr
-mW
-lX
+lS
+mk
+ml
+mQ
+lS
 ld
 ba
 ba
@@ -36792,7 +36680,7 @@ ba
 ld
 ld
 ld
-mH
+mB
 ld
 ld
 ld
@@ -37047,11 +36935,11 @@ eJ
 ba
 ba
 ld
-lZ
-mr
-mr
-mr
-lZ
+lT
+ml
+ml
+ml
+lT
 ld
 ba
 ba
@@ -37304,11 +37192,11 @@ eJ
 hI
 ba
 ld
-ma
-mc
-mr
-mc
-ng
+lU
+lW
+ml
+lW
+mX
 ld
 ba
 ba
@@ -37560,13 +37448,13 @@ jT
 kt
 hI
 ba
-lA
-mb
-ms
-mI
-ms
-mb
-lA
+lx
+lV
+mm
+mC
+mm
+lV
+lx
 ba
 ba
 ba
@@ -37818,11 +37706,11 @@ ku
 io
 ba
 ld
-mc
-mt
-mJ
-mt
-mc
+lW
+mn
+mD
+mn
+lW
 ld
 ba
 ba
@@ -38075,11 +37963,11 @@ kv
 io
 ba
 ld
-md
-ms
-mI
-ms
-nh
+lX
+mm
+mC
+mm
+mY
 ld
 ba
 ba
@@ -38331,13 +38219,13 @@ jV
 ku
 io
 ba
-lA
-mc
-mc
-mr
-mc
-mc
-lA
+lx
+lW
+lW
+ml
+lW
+lW
+lx
 ba
 ba
 ba
@@ -38589,11 +38477,11 @@ kw
 hI
 lc
 ld
-me
-mb
-mr
-mb
-me
+lY
+lV
+ml
+lV
+lY
 ld
 lc
 ba
@@ -38845,13 +38733,13 @@ jU
 ku
 io
 ld
-lD
-lD
-mu
-mr
-mY
-lD
-lD
+ly
+ly
+mo
+ml
+mR
+ly
+ly
 ld
 ba
 ba
@@ -39102,13 +38990,13 @@ jW
 kv
 io
 lc
-lE
-mf
+lz
+lZ
 ld
-mK
+mE
 ld
-lE
-mf
+lz
+lZ
 lc
 ba
 ba
@@ -39362,7 +39250,7 @@ ba
 ba
 ba
 io
-mL
+mF
 io
 ba
 ba
@@ -39618,8 +39506,8 @@ hI
 ba
 ba
 ba
-mv
-lM
+mp
+lH
 io
 ba
 ba
@@ -39876,7 +39764,7 @@ hI
 io
 io
 io
-mM
+mG
 io
 io
 io
@@ -39884,7 +39772,7 @@ hI
 hI
 hI
 hI
-nW
+nL
 ba
 ba
 ba
@@ -40129,18 +40017,18 @@ jx
 jZ
 ky
 kN
-lf
-lF
-lF
-lF
+le
+lA
+lA
+lA
 jG
-lF
-lF
-no
-mM
-nA
-nK
-mM
+lA
+lA
+ne
+mG
+np
+nz
+mG
 dM
 ba
 ba
@@ -40386,18 +40274,18 @@ jy
 jU
 jE
 jG
-lg
-lG
-mg
-mw
-mN
-mg
-mg
-mg
-mM
-lM
-lN
-mM
+lf
+lB
+ma
+mq
+mH
+ma
+ma
+ma
+mG
+lH
+lI
+mG
 dM
 ba
 ba
@@ -40630,8 +40518,8 @@ dZ
 ea
 dZ
 dZ
-oT
-oU
+oI
+oJ
 hw
 hw
 hN
@@ -40643,8 +40531,8 @@ jz
 ka
 jF
 kO
-lh
-lH
+lg
+lC
 io
 io
 hI
@@ -40652,10 +40540,10 @@ io
 io
 io
 hI
-nB
+nq
+nA
+hI
 nL
-hI
-nW
 ba
 ba
 ba
@@ -40904,7 +40792,7 @@ hJ
 hJ
 io
 ba
-mO
+mI
 ba
 ba
 ba
@@ -41928,7 +41816,7 @@ io
 ke
 kD
 kQ
-li
+lh
 ba
 ba
 ba
@@ -42185,7 +42073,7 @@ hI
 kf
 kE
 hI
-lj
+li
 ba
 ba
 ba
@@ -42449,9 +42337,9 @@ ba
 ba
 ba
 ba
-np
+nf
 ba
-nC
+nr
 ja
 ba
 ba
@@ -42708,7 +42596,7 @@ ba
 ba
 hI
 jC
-nD
+ns
 jC
 jC
 jC
@@ -42964,11 +42852,11 @@ ba
 ba
 ba
 hI
-nw
-nE
+nl
+nt
+nB
+nH
 nM
-nS
-nX
 jC
 ba
 ba
@@ -43221,8 +43109,8 @@ hI
 hI
 hJ
 hJ
-nx
-nF
+nm
+nu
 kE
 kB
 kC
@@ -43470,20 +43358,20 @@ jD
 jU
 jF
 kS
-lk
-lI
-lI
-lI
-mP
+lj
+lD
+lD
+lD
+mJ
+mS
 mZ
-ni
-nq
+ng
 kG
-nG
+nv
 kE
 kE
 kE
-oa
+nP
 jC
 ba
 ba
@@ -43727,20 +43615,20 @@ jE
 jV
 jG
 kR
-ll
-lJ
-mh
-mx
-mQ
+lk
+lE
+mb
+mr
+mK
 kF
-nj
-mh
-ny
-mx
+na
+mb
+nn
+mr
+nC
+lE
 nN
-lJ
-nY
-ob
+nQ
 jC
 ba
 ba
@@ -43984,22 +43872,22 @@ jF
 jU
 hI
 hI
-lm
+ll
 hJ
 hI
 hI
-mR
+mL
 hJ
 hJ
 kV
 hI
 hJ
-nO
+nD
 hJ
 hI
 hI
 hJ
-lj
+li
 ba
 ba
 ba
@@ -44241,18 +44129,18 @@ jG
 jU
 hJ
 kT
-ln
-lK
+lm
+lF
 hJ
-my
-mS
-na
+ms
+mM
+mT
 hJ
-lM
+lH
 hJ
-nH
-nP
-nT
+nw
+nE
+nI
 hI
 ba
 ba
@@ -44498,18 +44386,18 @@ jF
 jU
 hI
 kU
-lo
-lL
-hJ
-mz
-mT
-nb
-hJ
-nr
-hI
-nI
 ln
-nU
+lG
+hJ
+mt
+mN
+mU
+hJ
+nh
+hI
+nx
+lm
+nJ
 hJ
 ba
 ba
@@ -44762,7 +44650,7 @@ hJ
 hJ
 hJ
 hI
-lp
+lo
 hI
 hJ
 hJ
@@ -45012,17 +44900,17 @@ jH
 kl
 kI
 kV
-lp
-lM
-lN
-lN
-lN
-lO
-nk
-ns
+lo
+lH
+lI
+lI
+lI
+lJ
+nb
+ni
 hJ
-lM
-lN
+lH
+lI
 hI
 dM
 ba
@@ -45031,7 +44919,7 @@ ba
 dM
 dM
 dM
-od
+nS
 ba
 ba
 ba
@@ -45270,23 +45158,23 @@ jG
 kJ
 hJ
 hJ
-lN
-mi
-mA
-mU
+lI
+mc
+mu
+mO
+mV
 nc
-nl
-nt
-nz
-lN
-nQ
-nV
-nZ
-nZ
-nZ
-nZ
-nZ
-oc
+nj
+no
+lI
+nF
+nK
+nO
+nO
+nO
+nO
+nO
+nR
 dM
 ba
 ba
@@ -45527,16 +45415,16 @@ jG
 jF
 kW
 hJ
-lO
+lJ
 hI
 hJ
 hI
 hI
-mM
+mG
 hI
 hI
-nJ
-nR
+ny
+nG
 hJ
 dM
 ba
@@ -45546,7 +45434,7 @@ dM
 dM
 dM
 ba
-oe
+nT
 ba
 ba
 ba
@@ -45784,13 +45672,13 @@ jG
 jG
 kX
 hI
-lM
+lH
 hI
 ba
 ba
 hI
-nm
-lP
+nd
+lK
 hI
 hJ
 hJ
@@ -46041,12 +45929,12 @@ jF
 jF
 kY
 hJ
-lP
+lK
 hI
 ba
 ba
 hI
-mM
+mG
 hI
 hI
 ba
@@ -46298,13 +46186,13 @@ jF
 jG
 kZ
 hJ
-lN
+lI
 hJ
 ba
 ba
 dM
 dM
-nu
+nk
 ba
 ba
 ba
@@ -46811,10 +46699,10 @@ jk
 jk
 jk
 la
-lq
+lp
 jk
-mj
-mB
+md
+mv
 hJ
 ba
 ba
@@ -47068,10 +46956,10 @@ jk
 jk
 jk
 jN
-lr
+lq
 jj
-mj
-mB
+md
+mv
 hI
 ba
 ba
@@ -47328,7 +47216,7 @@ jk
 jk
 jk
 jj
-mC
+mw
 hI
 ba
 ba
@@ -47582,9 +47470,9 @@ jN
 jk
 kL
 jk
-ls
+lr
 jk
-mk
+me
 hI
 hJ
 ba
@@ -47840,7 +47728,7 @@ jl
 jl
 jl
 hJ
-lQ
+lL
 hJ
 hJ
 ba
@@ -48097,8 +47985,8 @@ kn
 jO
 jO
 hJ
-lR
-lR
+lM
+lM
 hJ
 hJ
 ba
@@ -48353,10 +48241,10 @@ iX
 ko
 iX
 iX
-lt
-lR
-lS
-mD
+ls
+lM
+lN
+mx
 io
 ba
 ba
@@ -48611,9 +48499,9 @@ kp
 iX
 iX
 iX
-lS
-lR
-mE
+lN
+lM
+my
 io
 ba
 ba
@@ -48868,9 +48756,9 @@ kq
 ko
 iX
 iX
-lR
-lR
-mF
+lM
+lM
+mz
 io
 ba
 ba
@@ -49125,11 +49013,11 @@ kr
 iX
 lb
 iX
-lT
-ml
+lO
+mf
 hI
 hI
-lj
+li
 ba
 ba
 ba
@@ -49381,7 +49269,7 @@ jR
 ks
 kM
 hJ
-lu
+lt
 hJ
 hJ
 hI
@@ -49638,9 +49526,9 @@ io
 hJ
 hJ
 hJ
-lv
-lv
-mm
+lu
+lu
+mg
 hJ
 ba
 ba
@@ -49895,9 +49783,9 @@ ba
 ba
 ba
 hI
-lw
 lv
-mn
+lu
+mh
 hJ
 ba
 ba
@@ -50152,9 +50040,9 @@ ba
 ba
 ba
 hI
-lx
-lU
-mo
+lw
+lP
+mi
 hI
 ba
 ba

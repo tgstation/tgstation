@@ -218,11 +218,6 @@
 	},
 /area/ruin/unpowered)
 "B" = (
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/space)
-"C" = (
 /obj/structure/chair/wood/wings{
 	icon_state = "wooden_chair_wings";
 	dir = 4
@@ -233,7 +228,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"D" = (
+"C" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita,
 /obj/item/trash/plate,
@@ -242,7 +237,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"E" = (
+"D" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meat,
 /turf/open/floor/wood{
@@ -250,7 +245,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"F" = (
+"E" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday,
 /turf/open/floor/wood{
@@ -258,21 +253,21 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"G" = (
+"F" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"H" = (
+"G" = (
 /obj/item/chair/wood/wings,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"I" = (
+"H" = (
 /obj/item/weapon/kitchen/fork,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -280,7 +275,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"J" = (
+"I" = (
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -288,7 +283,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"K" = (
+"J" = (
 /obj/structure/chair/wood/wings{
 	icon_state = "wooden_chair_wings";
 	dir = 1
@@ -300,7 +295,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"L" = (
+"K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -308,7 +303,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"M" = (
+"L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/a_gift,
 /turf/open/floor/wood{
@@ -316,12 +311,12 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"N" = (
+"M" = (
 /obj/structure/lattice,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"O" = (
+"N" = (
 /obj/item/weapon/kitchen/knife,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -329,7 +324,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"P" = (
+"O" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -339,7 +334,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"Q" = (
+"P" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -448,7 +443,7 @@ e
 h
 h
 e
-Q
+P
 e
 d
 b
@@ -491,7 +486,7 @@ h
 h
 c
 e
-M
+L
 e
 c
 b
@@ -511,8 +506,8 @@ g
 o
 h
 h
-C
-J
+B
+I
 h
 d
 b
@@ -533,9 +528,9 @@ h
 p
 q
 x
-D
-K
-M
+C
+J
+L
 d
 b
 b
@@ -555,7 +550,7 @@ i
 h
 r
 y
-E
+D
 h
 h
 c
@@ -577,9 +572,9 @@ j
 h
 s
 z
-F
+E
 q
-N
+M
 c
 b
 b
@@ -599,7 +594,7 @@ e
 h
 t
 A
-G
+F
 q
 h
 c
@@ -621,9 +616,9 @@ k
 h
 s
 s
-H
+G
 h
-O
+N
 d
 b
 b
@@ -665,9 +660,9 @@ l
 i
 h
 e
-I
-L
-P
+H
+K
+O
 d
 b
 b
@@ -686,7 +681,7 @@ d
 d
 e
 e
-N
+M
 e
 e
 d

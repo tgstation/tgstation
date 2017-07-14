@@ -204,19 +204,7 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/powered/aesthetic)
-"Q" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
 "R" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/ruin/unpowered/no_grav)
-"S" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -422,7 +410,7 @@ O
 n
 k
 w
-Q
+P
 g
 F
 I
@@ -458,7 +446,7 @@ p
 u
 y
 g
-S
+R
 d
 d
 a

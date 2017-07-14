@@ -268,18 +268,6 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/golem_ship)
-"J" = (
-/obj/machinery/light/small,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
-"K" = (
-/obj/machinery/light/small,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
 "L" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -313,35 +301,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/golem_ship)
-"P" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
 "Q" = (
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
-"R" = (
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
-"S" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
-"T" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -355,22 +315,6 @@
 	},
 /area/ruin/powered/golem_ship)
 "V" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
-"W" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/golem_ship)
-"X" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -503,7 +447,7 @@ l
 Q
 G
 l
-T
+Q
 b
 b
 b
@@ -543,7 +487,7 @@ j
 l
 l
 b
-P
+L
 l
 G
 l
@@ -626,18 +570,18 @@ a
 a
 b
 c
-J
+I
 b
 l
 l
 O
 l
 l
-S
+O
 l
 z
 b
-W
+V
 F
 b
 a
@@ -714,7 +658,7 @@ a
 a
 b
 e
-K
+I
 b
 N
 l
@@ -725,7 +669,7 @@ v
 l
 B
 b
-X
+V
 f
 b
 a
@@ -786,7 +730,7 @@ h
 h
 b
 t
-R
+Q
 b
 h
 h
