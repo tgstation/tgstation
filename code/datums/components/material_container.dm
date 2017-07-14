@@ -18,6 +18,7 @@
 	var/list/allowed_typecache
 	var/last_inserted_type
 	var/last_amount_inserted
+	var/last_insert_success
 	var/datum/callback/precondition
 	//MAX_STACK_SIZE = 50
 	//MINERAL_MATERIAL_AMOUNT = 2000
@@ -46,13 +47,16 @@
 /datum/component/material_container/proc/OnExamine(mob/user)
 	for(var/I in materials)
 		var/datum/material/M = materials[I]
-		to_chat(user, "<span class='notice'>It has [amount(M.id)] units of [lowertext(M.name)] stored.</span>")
+		var/amt = amount(M.id)
+		if(amt)
+			to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
 	if(user.a_intent == INTENT_HARM || HAS_SECONDARY_FLAG(I, HOLOGRAM) || (tc && !is_type_in_typecache(I, tc)))
 		return FALSE
 	. = TRUE
+	last_insert_success = FALSE
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
 		return
@@ -66,9 +70,9 @@
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
-
 	var/inserted = insert_item(I)
 	if(inserted)
+		last_insert_success = TRUE
 		if(istype(I, /obj/item/stack))
 			to_chat(user, "<span class='notice'>You insert [inserted] sheet[inserted>1 ? "s" : ""] into [parent].</span>")
 			if(!QDELETED(I))

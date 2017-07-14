@@ -429,6 +429,8 @@
 /obj/machinery/mecha_part_fabricator/ComponentActivated(datum/component/C)
 	if(istype(C, /datum/component/material_container))
 		var/datum/component/material_container/M = C
+		if(!M.last_insert_success)
+			return
 		var/lit = M.last_inserted_type
 		var/stack_name
 		if(ispath(lit, /obj/item/weapon/ore/bluespace_crystal))
