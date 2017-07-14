@@ -75,7 +75,7 @@
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || istype(target,/obj/structure/))
-		target.ex_act(2)
+		target.ex_act(EXPLODE_HEAVY)
 
 /obj/item/projectile/beam/pulse/shot
 	damage = 40

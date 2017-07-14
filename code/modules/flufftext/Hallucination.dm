@@ -143,7 +143,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/fake_flood/proc/Expand()
 	for(var/turf/FT in flood_turfs)
-		for(var/dir in GLOB.cardinal)
+		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue

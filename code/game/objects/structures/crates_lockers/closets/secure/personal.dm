@@ -28,6 +28,7 @@
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )
+	new /obj/item/device/instrument/piano_synth(src)
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)

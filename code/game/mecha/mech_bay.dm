@@ -130,7 +130,7 @@
 		return
 	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
 	if(!recharge_port )
-		for(var/D in GLOB.cardinal)
+		for(var/D in GLOB.cardinals)
 			var/turf/A = get_step(src, D)
 			A = get_step(A, D)
 			recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in A

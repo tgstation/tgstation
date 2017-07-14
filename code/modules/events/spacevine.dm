@@ -553,7 +553,7 @@
 		buckle_mob(V, 1)
 
 /obj/structure/spacevine/proc/spread()
-	var/direction = pick(GLOB.cardinal)
+	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src,direction)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_spread(src, stepturf)
@@ -579,7 +579,7 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/spacevine/CanPass(atom/movable/mover, turf/target)
 	if(isvineimmune(mover))
 		. = TRUE
 	else

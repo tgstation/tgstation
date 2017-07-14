@@ -21,16 +21,6 @@ BONUS
 	transmittable = 0
 	level = 3
 
-/datum/symptom/viraladaptation/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(1)
-				to_chat(M, "<span class='notice'>You feel off, but no different from before.</span>")
-			if(5)
-				to_chat(M, "<span class='notice'>You feel better, but nothing interesting happens.</span>")
-
 /*
 //////////////////////////////////////
 Viral evolution
@@ -54,29 +44,19 @@ BONUS
 	transmittable = 3
 	level = 3
 
-/datum/symptom/viraladaptation/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(1)
-				to_chat(M, "<span class='notice'>You feel better, but no different from before.</span>")
-			if(5)
-				to_chat(M, "<span class='notice'>You feel off, but nothing interesting happens.</span>")
-
 /*
 //////////////////////////////////////
 
-Viral aggressive metabolism (ex-Longevity)
+Viral aggressive metabolism
 
-	No stealth.
+	Reduced stealth.
 	Small resistance boost.
-	Reduced stage speed.
-	Large transmittablity boost.
-	High Level.
+	Increased stage speed.
+	Small transmittablity boost.
+	Medium Level.
 
 Bonus
-	The virus starts at stage 5 and decrease over time until it self cures.
+	The virus starts at stage 5, but after a certain time will start curing itself.
 	Stages still increase naturally with stage speed.
 
 //////////////////////////////////////
@@ -85,23 +65,33 @@ Bonus
 /datum/symptom/viralreverse
 
 	name = "Viral aggressive metabolism"
-	stealth = 0
+	stealth = -2
 	resistance = 1
-	stage_speed = -2
-	transmittable = 3
+	stage_speed = 3
+	transmittable = 1
 	level = 3
+	symptom_delay_min = 1
+	symptom_delay_max = 1
+	var/time_to_cure
 
 /datum/symptom/viralreverse/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(!..())
+		return
+	if(time_to_cure > 0)
+		time_to_cure--
+	else
 		var/mob/living/M = A.affected_mob
 		Heal(M, A)
-	return
 
 /datum/symptom/viralreverse/proc/Heal(mob/living/M, datum/disease/advance/A)
 	A.stage -= 1
 	if(A.stage < 2)
+		to_chat(M, "<span class='notice'>You suddenly feel healthy.</span>")
 		A.cure()
 
 /datum/symptom/viralreverse/Start(datum/disease/advance/A)
+	..()
 	A.stage = 5
+	if(A.properties["stealth"] >= 4) //more time before it's cured
+		power = 2
+	time_to_cure = max(A.properties["resistance"], A.properties["stage_rate"]) * 10 * power

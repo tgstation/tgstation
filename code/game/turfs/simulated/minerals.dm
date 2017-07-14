@@ -32,7 +32,7 @@
 	icon = smooth_icon
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
-		for(var/dir in GLOB.cardinal)
+		for(var/dir in GLOB.cardinals)
 			if(prob(spreadChance))
 				var/turf/T = get_step(src, dir)
 				if(istype(T, /turf/closed/mineral/random))
@@ -116,7 +116,7 @@
 		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			src.attackby(M.selected,M)
 			return*/
-//Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
+//Aparantly mechs are just TOO COOL to call Collide())
 	else
 		return
 

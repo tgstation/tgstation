@@ -2406,11 +2406,7 @@
 	},
 /area/awaymission/snowdin/post)
 "gA" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "3"
-	},
+/obj/structure/closet/secure_closet/contraband/armory,
 /obj/item/weapon/gun/ballistic/automatic/speargun,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,

@@ -108,13 +108,11 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Bump(atom/A, yes)
-	if(!yes) //prevents multi bumps.
-		return
+/obj/item/projectile/meteor/Collide(atom/A)
 	if(A == firer)
 		loc = A.loc
 		return
-	A.ex_act(2)
+	A.ex_act(EXPLODE_HEAVY)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	for(var/mob/M in urange(10, src))
 		if(!M.stat)
@@ -329,7 +327,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/temp_visual/gravpush(Z)

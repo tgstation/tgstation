@@ -583,9 +583,10 @@
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP
+	faction_bonus_force = 30
+	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
-	var/beast_force_bonus = 30
 
 /obj/item/weapon/melee/transforming/cleaving_saw/examine(mob/user)
 	..()
@@ -625,34 +626,27 @@
 	if(!active)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
+/obj/item/weapon/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
+	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(!B)
+		if(!active) //This isn't in the above if-check so that the else doesn't care about active
+			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+	else
+		B.add_bleed(B.bleed_buildup)
+
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
-		var/beast_bonus_active = FALSE
-		var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
-		if(istype(target, /mob/living/simple_animal/hostile/asteroid) || ismegafauna(target))
-			if(!active)
-				if(!B)
-					target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
-				else
-					B.add_bleed(B.bleed_buildup)
-			else
-				force += beast_force_bonus //we do bonus damage against beastly creatures
-				beast_bonus_active = TRUE
 		..()
-		if(beast_bonus_active)
-			if(B)
-				B.add_bleed(B.bleed_buildup)
-			force -= beast_force_bonus
-		return
-	var/turf/user_turf = get_turf(user)
-	var/dir_to_target = get_dir(user_turf, get_turf(target))
-	swiping = TRUE
-	for(var/i in 1 to 3)
-		var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
-		for(var/mob/living/L in T)
-			if(user.Adjacent(L) && L.density)
-				melee_attack_chain(user, L)
-	swiping = FALSE
+	else
+		var/turf/user_turf = get_turf(user)
+		var/dir_to_target = get_dir(user_turf, get_turf(target))
+		swiping = TRUE
+		for(var/i in 1 to 3)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
+			for(var/mob/living/L in T)
+				if(user.Adjacent(L) && L.density)
+					melee_attack_chain(user, L)
+		swiping = FALSE
 
 //Dragon
 
@@ -1209,7 +1203,7 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
 /obj/item/weapon/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long

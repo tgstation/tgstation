@@ -49,7 +49,7 @@
 /mob/living/simple_animal/hostile/clockwork/fragment/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/mob/living/simple_animal/hostile/clockwork/fragment/Bump(atom/movable/AM)
+/mob/living/simple_animal/hostile/clockwork/fragment/Collide(atom/movable/AM)
 	. = ..()
 	if(movement_delay_time <= world.time && next_move <= world.time && isliving(AM) && !is_servant_of_ratvar(AM))
 		var/mob/living/L = AM

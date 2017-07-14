@@ -491,9 +491,9 @@ Class Procs:
 	if(prob(85) && explosive)
 		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
-		emp_act(2)
+		emp_act(EMP_LIGHT)
 	else
-		ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()

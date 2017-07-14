@@ -69,9 +69,7 @@
 	else
 		..()
 
-/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
+/obj/structure/table/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(mover.throwing)
@@ -369,7 +367,7 @@
 
 /obj/structure/table/optable/New()
 	..()
-	for(var/dir in GLOB.cardinal)
+	for(var/dir in GLOB.cardinals)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if(computer)
 			computer.table = src
@@ -407,8 +405,7 @@
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
 
-/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/structure/rack/CanPass(atom/movable/mover, turf/target)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))

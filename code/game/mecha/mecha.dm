@@ -539,7 +539,7 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle, yes)
+/obj/mecha/Collide(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		spawn()
 			if(can_move)
@@ -551,23 +551,22 @@
 				sleep(step_in*3)
 				can_move = 1
 	else
-		if(yes)
-			if(..()) //mech was thrown
-				return
-			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
-				if(nextsmash < world.time)
-					obstacle.mech_melee_attack(src)
-					if(!obstacle || !obstacle.density)
-						step(src,dir)
-					nextsmash = world.time + smashcooldown
-			if(isobj(obstacle))
-				var/obj/O = obstacle
-				if(!O.anchored)
-					step(obstacle, dir)
-			else if(ismob(obstacle))
-				var/mob/M = obstacle
-				if(!M.anchored)
-					step(obstacle, dir)
+		if(..()) //mech was thrown
+			return
+		if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
+			if(nextsmash < world.time)
+				obstacle.mech_melee_attack(src)
+				if(!obstacle || !obstacle.density)
+					step(src,dir)
+				nextsmash = world.time + smashcooldown
+		if(isobj(obstacle))
+			var/obj/O = obstacle
+			if(!O.anchored)
+				step(obstacle, dir)
+		else if(ismob(obstacle))
+			var/mob/M = obstacle
+			if(!M.anchored)
+				step(obstacle, dir)
 
 
 
