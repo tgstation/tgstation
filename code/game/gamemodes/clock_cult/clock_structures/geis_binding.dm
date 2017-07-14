@@ -17,13 +17,16 @@
 	debris = list()
 	can_buckle = TRUE
 	buckle_lying = 0
+	mouse_opacity = 2
 	var/mob/living/resisting = FALSE
 	var/mob_layer = MOB_LAYER
 	var/obj/item/clockwork/slab/slab
 
-/obj/structure/destructible/clockwork/geis_binding/Initialize()
+/obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, slab)
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
+	if(slab)
+		addtimer(CALLBACK(src, .proc/assign_slab, slab), 1)
 
 /obj/structure/destructible/clockwork/geis_binding/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -31,12 +34,10 @@
 	slab.icon_state = initial(slab.icon_state)
 	return ..()
 
-/obj/structure/destructible/clockwork/geis_binding/proc/assign_slab(obj/item/clockwork/slab/the_slab) //feed me energy
-	set waitfor = FALSE
+/obj/structure/destructible/clockwork/geis_binding/proc/assign_slab(obj/item/clockwork/slab/the_slab) //retuuuuuuuuurn the_slab
 	if(!the_slab)
 		return
 	slab = the_slab
-	sleep(1) //This is necessary for everything to happen properly with the ranged ability code
 	slab.busy = "Maintaining Geis bindings"
 	slab.icon_state = "judicial"
 
@@ -56,12 +57,6 @@
 		to_chat(resisting, "<span class='warning'>Your struggling ceases as you fall unconscious!</span>")
 		resisting = null
 		return
-	if(LAZYLEN(buckled_mobs))
-		for(var/V in buckled_mobs)
-			var/mob/living/L = V
-			if(is_servant_of_ratvar(L))
-				take_damage(obj_integrity) //be free!
-				return
 	take_damage(1, sound_effect = FALSE)
 	playsound(src, 'sound/effects/empulse.ogg', 20, TRUE) //Much quieter than normal attacks but still obvious
 

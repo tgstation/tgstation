@@ -72,10 +72,9 @@
 					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the scripture following this
 				if(L.buckled)
 					L.buckled.unbuckle_mob(L, TRUE)
-				var/obj/structure/destructible/clockwork/geis_binding/binding = new(get_turf(target))
+				var/obj/structure/destructible/clockwork/geis_binding/binding = new(get_turf(target), slab)
 				binding.setDir(target.dir)
 				binding.buckle_mob(L, TRUE)
-				binding.assign_slab(slab)
 				ranged_ability_user.start_pulling(binding)
 				successful = TRUE
 
