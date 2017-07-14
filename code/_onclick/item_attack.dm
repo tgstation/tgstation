@@ -16,7 +16,7 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
+	return SendSignal(COMSIG_PARENT_ATTACKBY, list(W, user, params), FALSE)
 
 /obj/attackby(obj/item/I, mob/living/user, params)
 	return ..() || I.attack_obj(src, user)
