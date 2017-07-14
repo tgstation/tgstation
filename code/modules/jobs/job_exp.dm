@@ -1,55 +1,8 @@
 GLOBAL_LIST_EMPTY(exp_to_update)
 GLOBAL_PROTECT(exp_to_update)
 
-// Admin Verbs
-/client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
-	set category = "Admin"
-	set name = "Check Player Playtime"
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/list/msg = list()
-	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
-	for(var/client/C in GLOB.clients)
-		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
-	msg += "</UL></BODY></HTML>"
-	src << browse(msg.Join(), "window=Player_playtime_check")
-
-/datum/admins/proc/cmd_show_exp_panel(client/C)
-	if(!C)
-		to_chat(usr, "ERROR: Client not found.")
-		return
-	if(!check_rights(R_ADMIN))
-		return
-	var/list/body = list()
-	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
-	body += C.get_exp_report()
-	body += "<A href='?_src_=holder;toggleexempt=\ref[C]'>Toggle Exempt status</a>"
-	body += "</BODY></HTML>"
-	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
-
-/datum/admins/proc/toggle_exempt_status(client/C)
-	if(!C)
-		to_chat(usr, "ERROR: Client not found.")
-		return
-	if(!check_rights(R_ADMIN))
-		return
-
-	C.set_db_player_flags()
-	var/dbflags = C.prefs.db_flags
-	var/newstate = FALSE
-	if(dbflags & DB_FLAG_EXEMPT)
-		newstate = FALSE
-	else
-		newstate = TRUE
-
-	message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
-	log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
-	C.update_flag_db(DB_FLAG_EXEMPT, newstate)
 
 // Procs
-
-
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
 		return 0
@@ -179,7 +132,6 @@ GLOBAL_PROTECT(exp_to_update)
 		if(L.is_afk())
 			continue
 		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
-		CHECK_TICK
 
 /datum/controller/subsystem/blackbox/proc/update_exp_db()
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
