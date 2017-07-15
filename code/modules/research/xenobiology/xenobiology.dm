@@ -567,7 +567,6 @@
 		var/mob/living/L = M
 		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
 			immune += L
-			continue
 	timestop()
 
 
