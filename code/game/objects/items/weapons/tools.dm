@@ -127,7 +127,8 @@
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = null
+	icon_state = "screwdriver"
+	item_state = "screwdriver"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
@@ -141,21 +142,44 @@
 	usesound = 'sound/items/screwdriver.ogg'
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	var/random_color = TRUE //if the screwdriver uses random coloring
+	var/static/list/screwdriver_colors = list(\
+	"blue" = rgb(24, 97, 213), \
+	"red" = rgb(149, 23, 16), \
+	"pink" = rgb(213, 24, 141), \
+	"brown" = rgb(160, 82, 18), \
+	"green" = rgb(14, 127, 27), \
+	"cyan" = rgb(24, 162, 213), \
+	"yellow" = rgb(213, 140, 24), \
+	)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New(loc, var/param_color = null)
-	..()
-	if(!icon_state)
-		if(!param_color)
-			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
-		icon_state = "screwdriver_[param_color]"
+/obj/item/weapon/screwdriver/Initialize()
+	. = ..()
+	if(random_color) //random colors!
+		var/our_color = pick(screwdriver_colors)
+		add_atom_colour(screwdriver_colors[our_color], FIXED_COLOUR_PRIORITY)
+		update_icon()
+	if(prob(75))
+		pixel_y = rand(0, 16)
 
-	if (prob(75))
-		src.pixel_y = rand(0, 16)
-	return
+/obj/item/weapon/screwdriver/update_icon()
+	if(!random_color) //icon override
+		return
+	cut_overlays()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "screwdriver_screwybits")
+	base_overlay.appearance_flags = RESET_COLOR
+	add_overlay(base_overlay)
+
+/obj/item/weapon/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
+	. = list()
+	if(isinhands && random_color)
+		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
+		M.appearance_flags = RESET_COLOR
+		. += M
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -171,15 +195,19 @@
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "screwdriver_brass"
+	item_state = "screwdriver_brass"
 	toolspeed = 0.5
+	random_color = FALSE
 
 /obj/item/weapon/screwdriver/abductor
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "screwdriver"
+	item_state = "screwdriver_nuke"
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
+	random_color = FALSE
 
 /obj/item/weapon/screwdriver/power
 	name = "hand drill"
@@ -197,6 +225,7 @@
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.25
+	random_color = FALSE
 
 /obj/item/weapon/screwdriver/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
