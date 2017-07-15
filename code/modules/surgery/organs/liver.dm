@@ -79,3 +79,10 @@
 	maxHealth = 200 //double the health of a normal liver
 	toxTolerance = 15 //can shrug off up to 15u of toxins
 	toxLethality = 0.3 //20% less damage than a normal liver
+
+/obj/item/organ/liver/cybernetic/emp_act(severity)
+	switch(severity)
+		if(1)
+			damage+=100
+		if(2)
+			damage+=50
