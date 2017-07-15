@@ -3,7 +3,7 @@
 	key_third_person = "farts"
 
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params)
-	var/fartsound = pick('hippiestation/sound/effects/fart.ogg','hippiestation/sound/effects/fart2.ogg','hippiestation/sound/effects/fart3.ogg')
+	var/fartsound = 'hippiestation/sound/effects/fart.ogg'
 	var/bloodkind = /obj/effect/decal/cleanable/blood
 	message = null
 	if(user.stat != CONSCIOUS)

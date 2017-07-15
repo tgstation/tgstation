@@ -66,10 +66,6 @@
 		qdel(inv)
 	..()
 	
-/obj/item/organ/butt/attack(mob/living/target, mob/living/user)
-     hitsound = pick('hippiestation/sound/effects/fart.ogg','hippiestation/sound/effects/fart2.ogg','hippiestation/sound/effects/fart3.ogg')
-     ..()
-
 /obj/item/organ/butt/attackby(var/obj/item/W, mob/user as mob, params) // copypasting bot manufucturing process, im a lazy fuck
 
 	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
@@ -91,7 +87,7 @@
 /obj/item/organ/butt/throw_impact(atom/hit_atom)
 	..()
 	var/mob/living/carbon/M = hit_atom
-	playsound(src, pick('hippiestation/sound/effects/fart.ogg','hippiestation/sound/effects/fart2.ogg','hippiestation/sound/effects/fart3.ogg'), 50, 1, 5)
+	playsound(src, 'hippiestation/sound/effects/fart.ogg', 50, 1, 5)
 	if((ishuman(hit_atom)))
 		M.apply_damage(5, STAMINA)
 		if(prob(5))
