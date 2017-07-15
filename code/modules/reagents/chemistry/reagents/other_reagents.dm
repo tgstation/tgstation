@@ -71,7 +71,7 @@
 	if(!B)
 		B = new(T)
 	if(data["blood_DNA"])
-		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+		B.forensics.blood[data["blood_DNA"]] = data["blood_type"]
 
 	for(var/datum/disease/D in data["viruses"])
 		var/datum/disease/newVirus = D.Copy(1)

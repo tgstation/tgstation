@@ -5,7 +5,6 @@
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	var/list/viruses = list()
-	blood_DNA = list()
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = MAX_SHOE_BLOODINESS
 
@@ -16,8 +15,8 @@
 	return ..()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if (C.blood_DNA)
-		blood_DNA |= C.blood_DNA.Copy()
+	if (C.forensics && C.forensics.blood)
+		forensics.blood |= C.forensics.blood.Copy()
 	..()
 
 /obj/effect/decal/cleanable/blood/old
@@ -28,7 +27,7 @@
 /obj/effect/decal/cleanable/blood/old/Initialize()
 	..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	blood_DNA["Non-human DNA"] = "A+"
+	forensics.blood["Non-human DNA"] = "A+"
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -44,8 +43,6 @@
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
-	blood_DNA = list()
-
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return 1
@@ -108,7 +105,7 @@
 	..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
-	blood_DNA["Non-human DNA"] = "A+"
+	forensics.blood["Non-human DNA"] = "A+"
 
 
 /obj/effect/decal/cleanable/blood/drip

@@ -6,12 +6,10 @@
 	var/flags = 0
 	var/list/secondary_flags
 
-	var/list/fingerprints
-	var/list/fingerprintshidden
-	var/list/blood_DNA
 	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
-	var/datum/reagents/reagents = null
+	var/datum/reagents/reagents
+	var/datum/forensics/forensics
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -90,6 +88,9 @@
 
 	if(reagents)
 		qdel(reagents)
+
+	if(forensics)
+		QDEL_NULL(forensics)
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
@@ -256,7 +257,7 @@
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(src.blood_DNA && !istype(src, /obj/effect/decal))
+	if(forensics.blood > 0 && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else
@@ -335,30 +336,30 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already
-	var/new_blood_dna = L.get_blood_dna_list()
+	var/new_blood_dna = L.forensics.blood
 	if(!new_blood_dna)
 		return 0
-	if(!blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
-		blood_DNA = list()
-	var/old_length = blood_DNA.len
-	blood_DNA |= new_blood_dna
-	if(blood_DNA.len == old_length)
+	if(!forensics)	//if our list of DNA doesn't exist yet, initialise it.
+		forensics = new
+	var/old_length = forensics.blood.len
+	forensics.blood |= new_blood_dna
+	if(forensics.blood.len == old_length)
 		return 0
 	return 1
 
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna)
-	if(!blood_DNA)
-		blood_DNA = list()
-	var/old_length = blood_DNA.len
-	blood_DNA |= blood_dna
-	if(blood_DNA.len > old_length)
+	if(!forensics)
+		forensics = new
+	var/old_length = forensics.blood.len
+	forensics.blood |= blood_dna
+	if(forensics.blood.len > old_length)
 		return 1//some new blood DNA was added
 
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
-	var/list/blood_dna = M.get_blood_dna_list()
+	var/list/blood_dna = M.forensics.blood
 	if(!blood_dna)
 		return 0
 	return add_blood(blood_dna)
@@ -371,7 +372,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return transfer_blood_dna(blood_dna)
 
 /obj/item/add_blood(list/blood_dna)
-	var/blood_count = !blood_DNA ? 0 : blood_DNA.len
+	var/blood_count = !forensics.blood ? 0 : forensics.blood.len
 	if(!..())
 		return 0
 	if(!blood_count)//apply the blood-splatter overlay if it isn't already in there
@@ -419,8 +420,8 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return 1
 
 /atom/proc/clean_blood()
-	if(islist(blood_DNA))
-		blood_DNA = null
+	if(islist(forensics.blood))
+		forensics.blood = null
 		return 1
 
 /atom/proc/wash_cream()

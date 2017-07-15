@@ -66,7 +66,7 @@
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))
-			if(I.blood_DNA)
+			if(I.forensics && I.forensics.blood)
 				msg += "<span class='warning'>It is holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
 				msg += "It is holding [bicon(I)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
