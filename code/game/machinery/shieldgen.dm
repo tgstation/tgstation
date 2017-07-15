@@ -192,7 +192,6 @@
 /obj/machinery/shieldgen/emag_act()
 	if(!(stat & BROKEN))
 		stat |= BROKEN
-		obj_integrity = 0
 		update_icon()
 
 /obj/machinery/shieldgen/update_icon()

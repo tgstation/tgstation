@@ -73,13 +73,14 @@
 	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		if(safety_mode)
-			safety_mode = FALSE
-			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
-		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	if(safety_mode)
+		safety_mode = FALSE
+		update_icon()
+	playsound(src, "sparks", 75, 1, -1)
+	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src].</span>")
 
 /obj/machinery/recycler/update_icon()
 	..()

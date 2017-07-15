@@ -150,10 +150,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = TRUE
-		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
+	if(emagged)
+		return
+	playsound(src, "sparks", 75, 1)
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
