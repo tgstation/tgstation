@@ -151,26 +151,6 @@
 	return TRUE
 
 
-//Anima Fragment: Creates an empty anima fragment, which produces an anima fragment that moves at extreme speed and does high damage.
-/datum/clockwork_scripture/create_object/anima_fragment
-	descname = "Fast Soul Vessel Shell"
-	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health and slight regeneration, notable melee power, \
-	and exceptional speed, though taking damage will temporarily slow it down."
-	invocations = list("Call forth...", "...the soldiers of Armorer.")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 4)
-	object_path = /obj/structure/destructible/clockwork/shell/fragment
-	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
-	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
-	usage_tip = "Useless without a soul vessel and should not be created without one."
-	tier = SCRIPTURE_APPLICATION
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 4
-	quickbind = TRUE
-	quickbind_desc = "Creates a Fragment Shell, which produces an Anima Fragment when filled with a Soul Vessel."
-
-
 //Sigil of Transmission: Creates a sigil of transmission that can store power for clockwork structures.
 /datum/clockwork_scripture/create_object/sigil_of_transmission
 	descname = "Structure Battery"
