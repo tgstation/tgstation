@@ -1,5 +1,5 @@
 /obj/machinery/manned_turret
-	rate_of_fire = 2
+	rate_of_fire = 1.5
 	number_of_shots = 20
 
 /obj/machinery/manned_turret/attackby(obj/item/W, mob/user, params)
