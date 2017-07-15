@@ -565,17 +565,15 @@
 	. = ..()
 	for(var/M in GLOB.player_list)
 		var/mob/living/L = M
-		for(var/V in L.mind.spell_list) //People who can stop time are immune to its effects
-			var/obj/O = V
-			if(istype(O, /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop))
-				immune += L
-				continue
+		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
+			immune += L
+			continue
 	timestop()
 
 
 /obj/effect/timestop/proc/timestop()
 	set waitfor = FALSE
-	playsound(get_turf(src), 'sound/magic/timeparadox2.ogg', 75, 1, -1)
+	playsound(src, 'sound/magic/timeparadox2.ogg', 75, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
 			if(isliving(A))
@@ -601,7 +599,7 @@
 		stoplag()
 
 	//End
-	playsound(get_turf(src), 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
+	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
 	for(var/mob/living/M in stopped_atoms)
 		unfreeze_mob(M)
 
