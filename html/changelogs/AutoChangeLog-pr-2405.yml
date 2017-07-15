@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Time stop is now fixed, finally!"
+  - soundadd: "Time stop's sound now plays in reverse when the effect ends."
