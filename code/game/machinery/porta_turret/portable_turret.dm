@@ -282,15 +282,16 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-		visible_message("[src] hums oddly...")
-		emagged = TRUE
-		controllock = 1
-		on = FALSE //turns off the turret temporarily
-		update_icon()
-		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-		on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	if(emagged)
+		return
+	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
+	visible_message("[src] hums oddly...")
+	emagged = TRUE
+	controllock = 1
+	on = FALSE //turns off the turret temporarily
+	update_icon()
+	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -717,12 +718,13 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-		emagged = TRUE
-		locked = FALSE
-		if(user && user.machine == src)
-			attack_hand(user)
+	if(emagged)
+		return
+	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
+	emagged = TRUE
+	locked = FALSE
+	if(user && user.machine == src)
+		attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))

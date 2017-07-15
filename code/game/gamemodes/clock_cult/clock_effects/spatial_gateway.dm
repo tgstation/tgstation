@@ -109,10 +109,10 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/clockwork/spatial_gateway/Bumped(atom/A)
+/obj/effect/clockwork/spatial_gateway/CollidedWith(atom/movable/AM)
 	..()
-	if(A && !QDELETED(A))
-		pass_through_gateway(A)
+	if(!QDELETED(AM))
+		pass_through_gateway(AM, FALSE)
 
 /obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
 	if(!linked_gateway)

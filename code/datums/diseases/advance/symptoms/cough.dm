@@ -64,5 +64,5 @@ BONUS
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 12)
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 18)
 			if(infective)
-				A.spread(A.holder, 1)
+				A.spread(1)
 

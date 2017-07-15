@@ -101,12 +101,13 @@
 		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
-	if(!emagged)
-		emagged = TRUE
-		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(4, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, "sparks", 50, 1)
+	if(emagged)
+		return
+	emagged = TRUE
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(4, 0, src.loc)
+	spark_system.start()
+	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
 	. = ..() //Sanity checks.

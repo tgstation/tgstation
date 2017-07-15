@@ -25,7 +25,6 @@
 	var/datum/research/files
 	var/selected_category
 	var/screen = 1
-	var/emag = FALSE //Gives access to other cool stuff
 
 	var/list/categories = list(
 							"human",
@@ -178,7 +177,7 @@
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
-		if(C=="special" && !emag)	//Only want to show special when console is emagged
+		if(C=="special" && !emagged)	//Only want to show special when console is emagged
 			continue
 
 		dat += "<td><A href='?src=\ref[src];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
@@ -233,10 +232,10 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
-	if(emag==TRUE)
+	if(emagged)
 		return
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			files.AddDesign2Known(D)
-	to_chat(user, "A warning flashes onto the screen, stating that safety overrides have been deactivated")
-	emag = TRUE
+	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
+	emagged = TRUE

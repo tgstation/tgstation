@@ -18,6 +18,8 @@
 		return voicespan
 
 /obj/item/device/megaphone/emag_act(mob/user)
+	if(emagged)
+		return
 	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
 	emagged = TRUE
 	voicespan = list(SPAN_REALLYBIG, "userdanger")
