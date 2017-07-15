@@ -1,0 +1,7 @@
+#Newscaster Relay Config
+#Servers on this list will have all newscaster entries made by players or admins sent to them if the config option is enabled.
+#Lines with # in them will be ignored
+#Format is whatever://server.address.here:server_port newscaster_comms_key_for_that_server
+#where a space is the separator.
+#Note that newscaster comms key is not the same thing as regular comms key!
+

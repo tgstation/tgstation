@@ -36,9 +36,12 @@
 	return(TOXLOSS)
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
-	view(user)
+	if(istype(user))
+		viewnews(user)
+	else
+		return ..()
 
-/obj/item/weapon/newspaper/view(mob/user)
+/obj/item/weapon/newspaper/proc/viewnews(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/list/dat = list()
@@ -158,7 +161,7 @@
 			curr_page--
 			playsound(src, "pageturn", 50, 1)
 		if(ismob(loc))
-			view(loc)
+			viewnews(loc)
 
 /obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
@@ -172,6 +175,6 @@
 				return
 			scribble_page = curr_page
 			scribble = s
-			view(user)
+			viewnews(user)
 	else
 		return ..()

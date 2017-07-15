@@ -39,8 +39,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	QDEL_LIST(comments)
 	return ..()
 
-/datum/newscaster/feed_message/proc/merge_to_and_del(datum/newscaster/D)
-	if(D.type != type)
+/datum/newscaster/feed_message/merge_to_and_del(datum/newscaster/feed_message/D)
+	if(!istype(D))
 		return FALSE
 	D.comments |= comments
 	qdel(src)
@@ -92,8 +92,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	QDEL_LIST(messages)
 	return ..()
 
-/datum/newscaster/feed_channel/merge_to_and_del(datum/newscaster/D)
-	if(D.type != type)
+/datum/newscaster/feed_channel/merge_to_and_del(datum/newscaster/feed_channel/D)
+	if(!istype(D))
 		return FALSE
 	D.messages |= messages
 	qdel(src)

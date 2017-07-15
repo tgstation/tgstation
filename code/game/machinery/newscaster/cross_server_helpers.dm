@@ -1,7 +1,7 @@
 
 /proc/handleIncomingNewscasterRelay(newsdatum_type, newsdatum_json)
 	if(!ispath(newsdatum_type))
-		newsdatum_type == text2path(newsdatum_type)
+		newsdatum_type = text2path(newsdatum_type)
 	switch(newsdatum_type)
 		if(/datum/newscaster/feed_channel)
 			handleIncomingNewscasterChannel(newsdatum_json)
@@ -43,22 +43,43 @@
 	if(istype(existing))
 		return FC.merge_to_and_del(existing)
 	else
-		var/datum/newscaaster/feed_message/FM = find_message_by_md5_in_channel(FC.messagemd5, find_channel_by_md5(FC.channelmd5))
-		if(istype(FM))
-			FM.comments += FC
+		var/datum/newscaaster/feed_message/FM1 = find_message_by_md5_in_channel(FC.messagemd5, find_channel_by_md5(FC.channelmd5))
+		if(istype(FM1))
+			FM1.comments += FC
 			return TRUE
 		return FALSE
 
+/proc/load_cross_news_list(filename = "config/newscaster_relay.txt")
+	var/list/Lines = world.file2list(filename)
+	for(var/t in Lines)
+		if(!t)
+			continue
+		t = trim(t)
+		if(length(t) == 0)
+			continue
+		else if(copytext(t, 1, 2) == "#")
+			continue
+		var/pos = findtext(t, " ")
+		var/addr = null
+		var/key = null
+		if(pos)
+			addr = lowertext(copytext(t, 1, pos))
+			key = copytext(t, pos + 1)
+		else
+			continue
+		global.newscaster_relay_list[addr] = key
+
 /proc/autoRelayNewscasterDatum(datum/newscaster/D)
-	if(!config.cross_allowed)
+	if(!config.cross_allowed || !config.news_cross_allowed)
 		return FALSE
-	var/list/message = list()
-	message["key"] = global.comms_key
-	message["source"] = "([config.cross_name])"
-	message["crossmessage"] = "Newscaster Relay"
-	message["newsdatum_type"] = "[D.type]"
-	message["newsdatum_json"] = D.to_json()
-	world.Export("[config.cross_address]?[list2params(message)]")
+	for(var/i in global.newscaster_relay_list)
+		var/list/message = list()
+		message["key"] = global.newscaster_relay_list[i]
+		message["source"] = "([config.cross_name])"
+		message["crossmessage"] = "Newscaster Relay"
+		message["newsdatum_type"] = "[D.type]"
+		message["newsdatum_json"] = D.to_json()
+		world.Export("[i]?[list2params(message)]")
 
 /proc/newscomment_from_json(jsontext)
 	var/datum/newscaster/feed_comment/FC = new
