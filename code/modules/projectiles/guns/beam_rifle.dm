@@ -510,7 +510,7 @@
 					var/turf/closed/wall/W = target
 					W.dismantle_wall(TRUE, TRUE)
 				else
-				  target.ex_act(EXPLODE_HEAVY)
+					target.ex_act(EXPLODE_HEAVY)
 			return TRUE
 	if(ismovableatom(target))
 		var/atom/movable/AM = target
@@ -553,7 +553,7 @@
 		handle_impact(target)
 
 /obj/item/projectile/beam/beam_rifle/Collide(atom/target)
-  paused = TRUE
+	paused = TRUE
 	if(check_pierce(target))
 		permutated += target
 		return FALSE
