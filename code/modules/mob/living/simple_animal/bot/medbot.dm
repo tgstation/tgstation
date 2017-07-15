@@ -372,7 +372,8 @@
 		return 1
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
-		for(var/datum/disease/D in C.viruses)
+		for(var/thing in C.viruses)
+			var/datum/disease/D = thing
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
 			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
 			&& D.severity != NONTHREAT \
@@ -423,7 +424,8 @@
 	else
 		if(treat_virus)
 			var/virus = 0
-			for(var/datum/disease/D in C.viruses)
+			for(var/thing in C.viruses)
+				var/datum/disease/D = thing
 				//detectable virus
 				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
 					if(D.severity != NONTHREAT)      //virus is harmful
