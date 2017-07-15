@@ -2,29 +2,27 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (notransform)
+	if(notransform)
 		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
 
+	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
+
 	if(..()) //not dead
 		handle_blood()
 
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			O.on_life()
+		handle_liver()
+
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
-
-	if(stat != DEAD)
-		handle_liver()
-
 
 	if(stat != DEAD)
 		return 1
@@ -223,6 +221,20 @@
 
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/proc/handle_organs()
+	for(var/V in internal_organs)
+		var/obj/item/organ/O = V
+		O.on_life()
+
+/mob/living/carbon/handle_diseases()
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(prob(D.infectivity))
+			D.spread()
+
+		if(stat != DEAD)
+			D.stage_act()
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)

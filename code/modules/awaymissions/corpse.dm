@@ -19,6 +19,7 @@
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	var/burn_damage = 0
+	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
 	density = TRUE
@@ -66,6 +67,8 @@
 		M.gender = mob_gender
 	if(faction)
 		M.faction = list(faction)
+	if(disease)
+		M.ForceContractDisease(new disease)
 	if(death)
 		M.death(1) //Kills the new mob
 
@@ -236,6 +239,19 @@
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
 ///////////Civilians//////////////////////
+
+/obj/effect/mob_spawn/human/corpse/assistant
+	name = "Assistant"
+	outfit = /datum/outfit/job/assistant
+
+/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection
+	disease = /datum/disease/beesease
+
+/obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection
+	disease = /datum/disease/brainrot
+
+/obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection
+	disease = /datum/disease/fluspanish
 
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
