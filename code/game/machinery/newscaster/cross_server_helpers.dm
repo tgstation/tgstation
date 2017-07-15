@@ -43,9 +43,9 @@
 	if(istype(existing))
 		return FC.merge_to_and_del(existing)
 	else
-		var/datum/newscaaster/feed_message/FM1 = find_message_by_md5_in_channel(FC.messagemd5, find_channel_by_md5(FC.channelmd5))
-		if(istype(FM1))
-			FM1.comments += FC
+		var/datum/newscaster/feed_message/FM = find_message_by_md5_in_channel(FC.messagemd5, find_channel_by_md5(FC.channelmd5))
+		if(istype(FM))
+			FM.comments += FC
 			return TRUE
 		return FALSE
 
