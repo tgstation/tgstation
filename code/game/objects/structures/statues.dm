@@ -115,7 +115,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/statue/uranium/Bumped(atom/user)
+/obj/structure/statue/uranium/CollidedWith(atom/movable/AM)
 	radiate()
 	..()
 
@@ -273,7 +273,7 @@
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/Bumped(atom/user)
+/obj/structure/statue/bananium/CollidedWith(atom/movable/AM)
 	honk()
 	..()
 

@@ -33,11 +33,12 @@
 		CRASH("Didn't find an input plate.")
 		return
 
-/obj/machinery/gibber/autogibber/Bumped(atom/A)
-	if(!input_plate) return
+/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
+	if(!input_plate)
+		return
 
-	if(ismob(A))
-		var/mob/M = A
+	if(ismob(AM))
+		var/mob/M = AM
 
 		if(M.loc == input_plate)
 			M.loc = src

@@ -86,7 +86,7 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/Bumped(AM as mob|obj)
+/turf/closed/wall/mineral/uranium/CollidedWith(atom/movable/AM)
 	radiate()
 	..()
 
