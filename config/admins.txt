@@ -130,9 +130,5 @@ Feemjmeem = Game Master
 JStheguy = Game Master
 excessiveuseofcobby = Game Master
 Plizzard = Game Master
-<<<<<<< HEAD
-octareenroon91 = Game Master
 McBawbaggings = Game Master
-=======
 octareenroon91 = Game Master
->>>>>>> 984fca5b78... Fixes the maid apron, adds in-hand sprites
