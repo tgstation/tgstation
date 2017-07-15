@@ -125,9 +125,4 @@
 		return ..()
 
 /mob/living/silicon/adjustToxLoss(amount, update_health, forced)
-	adjustBruteLoss(amount, update_health, forced)
-	return
-
-/mob/living/silicon/adjustOxyLoss(amount, update_health, forced)
-	adjustFireLoss(amount, update_health, forced)
-	return
+	return adjustFireLoss(amount, update_health, forced)
