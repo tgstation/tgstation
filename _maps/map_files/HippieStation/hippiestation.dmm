@@ -67395,8 +67395,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cWo" = (
-/obj/structure/statue/bananium/clown{
-	anchored = 1
+/obj/structure/statue/sandstone/assistant{
+	anchored = 1;
+	desc = "A solid bananium clown statue. Looks like it's chipping a little bit. Weird.";
+	icon_state = "clown";
+	name = "statue of a clown"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
