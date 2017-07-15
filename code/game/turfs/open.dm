@@ -47,10 +47,6 @@
 /turf/open/indestructible/boss/air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
-/turf/open/indestructible/boss/hot
-	icon = 'icons/turf/boss_floors_hot.dmi'
-	baseturf = /turf/open/indestructible/boss/hot
-
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -76,7 +72,7 @@
 	//cache some vars
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)

@@ -138,8 +138,8 @@
 	M.adjustToxLoss(4)
 	M.hallucination += 20
 	if(M.canmove && !istype(M.loc, /atom/movable))
-		step(M, pick(GLOB.cardinal))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
+		step(M, pick(GLOB.cardinals))
 	if(prob(40))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)

@@ -14,8 +14,7 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	anchored = 1
-	obj_integrity = 250
+	anchored = TRUE
 	max_integrity = 250
 	integrity_failure = 100
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
@@ -34,7 +33,7 @@
 		src.setDir(dir)
 	if(building)
 		buildstage = 0
-		panel_open = 1
+		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
@@ -80,7 +79,7 @@
 
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(!emagged)
-		emagged = 1
+		emagged = TRUE
 		if(user)
 			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
 								"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
@@ -110,7 +109,7 @@
 /obj/machinery/firealarm/proc/reset_in(time)
 	addtimer(CALLBACK(src, .proc/reset), time)
 
-/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

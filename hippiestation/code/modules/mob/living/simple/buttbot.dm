@@ -42,7 +42,7 @@
 		return
 
 	if(isturf(src.loc))
-		var/anydir = pick(GLOB.cardinal)
+		var/anydir = pick(GLOB.cardinals)
 		if(Process_Spacemove(anydir))
 			Move(get_step(src, anydir), anydir)
 

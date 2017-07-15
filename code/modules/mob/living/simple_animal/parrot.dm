@@ -33,7 +33,7 @@
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
-	density = 0
+	density = FALSE
 	health = 80
 	maxHealth = 80
 	pass_flags = PASSTABLE | PASSMOB
@@ -455,7 +455,7 @@
 		//Wander around aimlessly. This will help keep the loops from searches down
 		//and possibly move the mob into a new are in view of something they can use
 		if(prob(90))
-			step(src, pick(GLOB.cardinal))
+			step(src, pick(GLOB.cardinals))
 			return
 
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.

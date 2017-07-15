@@ -12,7 +12,7 @@
 	health = 350
 	maxHealth = 350
 	ventcrawler = VENTCRAWLER_NONE
-	density = 1
+	density = TRUE
 	pass_flags =  0
 	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)

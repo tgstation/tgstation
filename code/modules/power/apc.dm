@@ -43,10 +43,9 @@
 	desc = "A control terminal for the area electrical systems."
 
 	icon_state = "apc0"
-	anchored = 1
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	req_access = null
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
@@ -62,12 +61,12 @@
 	var/lighting = 3
 	var/equipment = 3
 	var/environ = 3
-	var/operating = 1
+	var/operating = TRUE
 	var/charging = 0
 	var/chargemode = 1
 	var/chargecount = 0
-	var/locked = 1
-	var/coverlocked = 1
+	var/locked = TRUE
+	var/coverlocked = TRUE
 	var/aidisabled = 0
 	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
@@ -126,7 +125,7 @@
 	if (building)
 		area = get_area(src)
 		opened = 1
-		operating = 0
+		operating = FALSE
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
@@ -137,9 +136,9 @@
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
+	area.power_light = FALSE
+	area.power_equip = FALSE
+	area.power_environ = FALSE
 	area.power_change()
 	if(occupier)
 		malfvacate(1)
@@ -373,7 +372,7 @@
 							return
 							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 						else if (emagged) // We emag board, not APC's frame
-							emagged = 0
+							emagged = FALSE
 							user.visible_message(\
 								"[user.name] has discarded emaged power control board from [src.name]!",\
 								"<span class='notice'>You discarded shorten board.</span>")
@@ -393,7 +392,7 @@
 							return
 			else if (opened!=2) //cover isn't removed
 				opened = 0
-				coverlocked = 1 //closing cover relocks it
+				coverlocked = TRUE //closing cover relocks it
 				update_icon()
 				return
 		else if (!(stat & BROKEN)) // b) on closed and not broken APC
@@ -525,7 +524,7 @@
 		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
-				locked = 1 //We placed new, locked board in
+				locked = TRUE //We placed new, locked board in
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
@@ -613,8 +612,8 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
-			emagged = 1
-			locked = 0
+			emagged = TRUE
+			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
 
@@ -636,7 +635,7 @@
 		return
 	..()
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
@@ -719,9 +718,9 @@
 		area.power_equip = (equipment > 1)
 		area.power_environ = (environ > 1)
 	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
@@ -1156,7 +1155,7 @@
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
-	operating = 0
+	operating = FALSE
 	if(occupier)
 		malfvacate(1)
 	update_icon()

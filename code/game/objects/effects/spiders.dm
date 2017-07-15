@@ -3,9 +3,9 @@
 	name = "web"
 	icon = 'icons/effects/effects.dmi'
 	desc = "it's stringy and sticky"
-	anchored = 1
-	density = 0
-	obj_integrity = 15
+	anchored = TRUE
+	density = FALSE
+	max_integrity = 15
 
 
 
@@ -35,8 +35,7 @@
 		icon_state = "stickyweb2"
 	. = ..()
 
-/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	else if(isliving(mover))
@@ -80,9 +79,9 @@
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
-	anchored = 0
+	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	obj_integrity = 3
+	max_integrity = 3
 	var/amount_grown = 0
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
@@ -104,7 +103,7 @@
 /obj/structure/spider/spiderling/nurse
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
 
-/obj/structure/spider/spiderling/Bump(atom/user)
+/obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
 	else
@@ -188,7 +187,7 @@
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web"
 	icon_state = "cocoon1"
-	obj_integrity = 60
+	max_integrity = 60
 
 /obj/structure/spider/cocoon/Initialize()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")

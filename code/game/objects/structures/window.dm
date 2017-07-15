@@ -2,13 +2,12 @@
 	name = "window"
 	desc = "A window."
 	icon_state = "window"
-	density = 1
+	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
-	anchored = 1 //initially is 0 for tile smoothing
+	anchored = TRUE //initially is 0 for tile smoothing
 	flags = ON_BORDER
 	max_integrity = 25
-	obj_integrity = 25
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
@@ -20,7 +19,7 @@
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
 	var/list/debris = list()
-	can_be_unanchored = 1
+	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
@@ -49,8 +48,7 @@
 		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
-	..()
-	obj_integrity = max_integrity
+	. = ..()
 	if(direct)
 		setDir(direct)
 	if(reinf && anchored)
@@ -116,7 +114,7 @@
 	else
 		..(FULLTILE_WINDOW_DIR)
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/window/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(dir == FULLTILE_WINDOW_DIR)
@@ -347,7 +345,7 @@
 		revrotate()
 
 /obj/structure/window/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	update_nearby_icons()
 	return ..()
@@ -426,17 +424,17 @@
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
-	
+
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
-	icon_state = "plasma_window"
+	icon_state = "plasmawindow"
 	reinf = FALSE
 	heat_resistance = 25000
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 00, "acid" = 100)
-	max_integrity = 50
+	max_integrity = 150
 	explosion_block = 1
-	glass_type = /obj/item/stack/sheet/glass/plasma
+	glass_type = /obj/item/stack/sheet/plasmaglass
 
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
@@ -444,13 +442,13 @@
 /obj/structure/window/plasma/reinforced
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
-	icon_state = "rplasmawindow"
+	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
-	max_integrity = 100
+	max_integrity = 500
 	explosion_block = 2
-	glass_type = /obj/item/stack/sheet/rglass/plasma
+	glass_type = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/window/plasma/reinforced/unanchored
 	anchored = FALSE
@@ -463,12 +461,6 @@
 	name = "frosted window"
 	icon_state = "fwindow"
 
-/obj/structure/window/reinforced/highpressure
-	name = "high pressure window"
-	max_integrity = 1000
-	heat_resistance = 50000
-	pressure_resistance = 4*ONE_ATMOSPHERE
-
 /* Full Tile Windows (more obj_integrity) */
 
 /obj/structure/window/fulltile
@@ -479,31 +471,31 @@
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
-	
+
 /obj/structure/window/plasma/fulltile
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
-	icon_state = "plasma_window"
+	icon_state = "plasmawindow"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 60
+	max_integrity = 100
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	glass_amount = 2
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
-	
+
 /obj/structure/window/plasma/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
-	icon_state = "rplasma_window"
+	icon_state = "rplasmawindow"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 120
+	max_integrity = 1000
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
@@ -521,19 +513,7 @@
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
-	level = 3
-	glass_amount = 2
-
-/obj/structure/window/reinforced/highpressure/fulltile
-	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
-	icon_state = "r_window"
-	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 1000
-	fulltile = TRUE
-	flags = PREVENT_CLICK_UNDER
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -547,7 +527,7 @@
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -555,7 +535,7 @@
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"
 	max_integrity = 150
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -662,7 +642,6 @@
 	dir = FULLTILE_WINDOW_DIR
 	opacity = TRUE
 	max_integrity = 15
-	obj_integrity = 15
 	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE

@@ -10,14 +10,13 @@
 	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = 0
-	density = 0
-	obj_integrity = 300
+	density = FALSE
 	max_integrity = 300
 	resistance_flags = FIRE_PROOF
-	heat_proof = 1
-	glass = 1
+	heat_proof = TRUE
+	glass = TRUE
 	var/nextstate = null
-	sub_door = 1
+	sub_door = TRUE
 	explosion_block = 1
 	safe = FALSE
 	closingLayer = CLOSED_FIREDOOR_LAYER
@@ -213,7 +212,7 @@
 	flags = ON_BORDER
 	CanAtmosPass = ATMOS_PASS_PROC
 
-/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -238,10 +237,9 @@
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"
 	icon = 'icons/obj/doors/Doorfire.dmi'
-	glass = 0
+	glass = FALSE
 	explosion_block = 2
 	assemblytype = /obj/structure/firelock_frame/heavy
-	obj_integrity = 550
 	max_integrity = 550
 
 
@@ -255,8 +253,8 @@
 	desc = "A partially completed firelock."
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "frame1"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	var/constructionStep = CONSTRUCTION_NOCIRCUIT
 	var/reinforced = 0
 

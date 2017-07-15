@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
 	return ..()
 
-/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -135,7 +135,7 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
-	for(dir in GLOB.cardinal)
+	for(dir in GLOB.cardinals)
 		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, dir))
 		if(teleporterf && teleporterf.is_operational())
 			return teleporterf

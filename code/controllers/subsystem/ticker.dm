@@ -34,6 +34,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
+	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
+
 	var/triai = 0							//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?

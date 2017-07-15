@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
+				log_talk(user,"[user] (PDA: [name]) sent \"[message]\" to [P.name]",LOGPDA)
 		else
 			if(!multiple)
 				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
@@ -546,7 +546,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(multiple)
 		show_to_sender(last_sucessful_msg,1)
 		show_to_ghosts(user,last_sucessful_msg,1)
-		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
+		log_talk(user,"[user] (PDA: [name]) sent \"[message]\" to Everyone",LOGPDA)
 
 /obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"

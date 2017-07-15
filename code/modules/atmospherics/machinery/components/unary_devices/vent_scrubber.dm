@@ -9,12 +9,12 @@
 	idle_power_usage = 10
 	active_power_usage = 60
 	can_unwrench = 1
-	welded = 0
+	welded = FALSE
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = 0
+	var/on = FALSE
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/scrub_CO2 = 1
@@ -160,7 +160,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!NODE1)
-		on = 0
+		on = FALSE
 	if(!on || welded)
 		return 0
 	scrub(loc)
@@ -352,10 +352,10 @@
 				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
-					welded = 1
+					welded = TRUE
 				else
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
-					welded = 0
+					welded = FALSE
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 				pipe_vision_img.plane = ABOVE_HUD_PLANE
@@ -377,7 +377,7 @@
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
-	welded = 0
+	welded = FALSE
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE

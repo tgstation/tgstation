@@ -8,7 +8,7 @@
 	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
-	var/processing = 0
+	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
@@ -206,6 +206,15 @@
 
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
+
+/datum/action/item_action/toggle_headphones
+	name = "Toggle Headphones"
+	desc = "UNTZ UNTZ UNTZ"
+
+/datum/action/item_action/toggle_headphones/Trigger()
+	var/obj/item/clothing/ears/headphones/H = target
+	if(istype(H))
+		H.toggle(owner)
 
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"

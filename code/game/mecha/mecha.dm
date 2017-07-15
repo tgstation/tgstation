@@ -16,9 +16,9 @@
 	name = "mecha"
 	desc = "Exosuit"
 	icon = 'icons/mecha/mecha.dmi'
-	density = 1 //Dense. To raise the heat.
+	density = TRUE //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
-	anchored = 1 //no pulling around.
+	anchored = TRUE //no pulling around.
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
@@ -30,8 +30,7 @@
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
 	var/melee_energy_drain = 15
-	obj_integrity = 300 //obj_integrity is health
-	max_integrity = 300
+	max_integrity = 300 //max_integrity is base health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
@@ -44,7 +43,7 @@
 	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect_system/spark_spread/spark_system = new
-	var/lights = 0
+	var/lights = FALSE
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
@@ -540,7 +539,7 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle, yes)
+/obj/mecha/Collide(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		spawn()
 			if(can_move)
@@ -552,23 +551,22 @@
 				sleep(step_in*3)
 				can_move = 1
 	else
-		if(yes)
-			if(..()) //mech was thrown
-				return
-			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
-				if(nextsmash < world.time)
-					obstacle.mech_melee_attack(src)
-					if(!obstacle || !obstacle.density)
-						step(src,dir)
-					nextsmash = world.time + smashcooldown
-			if(isobj(obstacle))
-				var/obj/O = obstacle
-				if(!O.anchored)
-					step(obstacle, dir)
-			else if(ismob(obstacle))
-				var/mob/M = obstacle
-				if(!M.anchored)
-					step(obstacle, dir)
+		if(..()) //mech was thrown
+			return
+		if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
+			if(nextsmash < world.time)
+				obstacle.mech_melee_attack(src)
+				if(!obstacle || !obstacle.density)
+					step(src,dir)
+				nextsmash = world.time + smashcooldown
+		if(isobj(obstacle))
+			var/obj/O = obstacle
+			if(!O.anchored)
+				step(obstacle, dir)
+		else if(ismob(obstacle))
+			var/mob/M = obstacle
+			if(!M.anchored)
+				step(obstacle, dir)
 
 
 

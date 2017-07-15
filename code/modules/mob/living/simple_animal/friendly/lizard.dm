@@ -15,7 +15,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	ventcrawler = VENTCRAWLER_ALWAYS
-	density = 0
+	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = 2

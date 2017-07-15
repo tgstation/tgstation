@@ -3,9 +3,9 @@
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "toilet00"
-	density = 0
-	anchored = 1
-	var/open = 0			//if the lid is up
+	density = FALSE
+	anchored = TRUE
+	var/open = FALSE			//if the lid is up
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
@@ -124,8 +124,8 @@
 	desc = "The HU-452, an experimental urinal. Comes complete with experimental urinal cake."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
@@ -194,10 +194,10 @@
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	use_power = NO_POWER_USE
-	var/on = 0
+	var/on = FALSE
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
@@ -208,7 +208,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
-	anchored = 1
+	anchored = TRUE
 	mouse_opacity = 0
 
 
@@ -287,8 +287,8 @@
 
 
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
-	O.clean_blood()
-
+	. = O.clean_blood()
+	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
 		var/obj/item/I = O
 		I.acid_level = 0
@@ -298,7 +298,8 @@
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
 		var/turf/tile = loc
-		loc.clean_blood()
+		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		tile.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
@@ -308,14 +309,15 @@
 	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
+	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = 1
 		check_heat(M)
 		for(var/obj/item/I in M.held_items)
-			I.clean_blood()
+			wash_obj(I)
 		if(M.back)
-			if(M.back.clean_blood())
+			if(wash_obj(M.back))
 				M.update_inv_back(0)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -341,38 +343,38 @@
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
 
 			if(H.head)
-				if(H.head.clean_blood())
+				if(wash_obj(H.head))
 					H.update_inv_head()
-			if(H.wear_suit)
+			if(wash_obj(H.wear_suit))
 				if(H.wear_suit.clean_blood())
 					H.update_inv_wear_suit()
-			else if(H.w_uniform)
+			else if(wash_obj(H.w_uniform))
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform()
 			if(washgloves)
 				H.clean_blood()
 			if(H.shoes && washshoes)
-				if(H.shoes.clean_blood())
+				if(wash_obj(H.shoes))
 					H.update_inv_shoes()
 			if(H.wear_mask)
 				if(washmask)
-					if(H.wear_mask.clean_blood())
+					if(wash_obj(H.wear_mask))
 						H.update_inv_wear_mask()
 			else
 				H.lip_style = null
 				H.update_body()
 			if(H.glasses && washglasses)
-				if(H.glasses.clean_blood())
+				if(wash_obj(H.glasses))
 					H.update_inv_glasses()
 			if(H.ears && washears)
-				if(H.ears.clean_blood())
+				if(wash_obj(H.ears))
 					H.update_inv_ears()
 			if(H.belt)
-				if(H.belt.clean_blood())
+				if(wash_obj(H.belt))
 					H.update_inv_belt()
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
-				if(M.wear_mask.clean_blood())
+				if(wash_obj(M.wear_mask))
 					M.update_inv_wear_mask(0)
 			M.clean_blood()
 	else
@@ -419,8 +421,8 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face."
-	anchored = 1
-	var/busy = 0 	//Something's being washed at the moment
+	anchored = TRUE
+	var/busy = FALSE 	//Something's being washed at the moment
 	var/dispensedreagent = "water" // for whenever plumbing happens
 
 
@@ -441,13 +443,13 @@
 		washing_face = 1
 	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
-	busy = 1
+	busy = TRUE
 
 	if(!do_after(user, 40, target = src))
-		busy = 0
+		busy = FALSE
 		return
 
-	busy = 0
+	busy = FALSE
 
 	user.visible_message("<span class='notice'>[user] washes their [washing_face ? "face" : "hands"] using [src].</span>", \
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
@@ -512,11 +514,11 @@
 
 	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
-		busy = 1
+		busy = TRUE
 		if(!do_after(user, 40, target = src))
-			busy = 0
+			busy = FALSE
 			return 1
-		busy = 0
+		busy = FALSE
 		O.clean_blood()
 		O.acid_level = 0
 		create_reagents(5)
@@ -567,9 +569,9 @@
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
 	layer = SIGN_LAYER
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 0
+	density = FALSE
 	var/open = TRUE
 
 /obj/structure/curtain/proc/toggle()
@@ -580,13 +582,13 @@
 	if(!open)
 		icon_state = "closed"
 		layer = WALL_OBJ_LAYER
-		density = 1
+		density = TRUE
 		open = FALSE
 
 	else
 		icon_state = "open"
 		layer = SIGN_LAYER
-		density = 0
+		density = FALSE
 		open = TRUE
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)

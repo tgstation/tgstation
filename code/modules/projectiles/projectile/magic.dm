@@ -91,7 +91,7 @@
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
 	if(istype(D,/obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = 0
+		A.locked = FALSE
 	D.open()
 
 /obj/item/projectile/magic/change
@@ -289,7 +289,7 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
 	target.animate_atom_living(firer)
 	..()
 
@@ -355,7 +355,7 @@
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer)
-				return Bump(L, TRUE)
+				return Collide(L)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning

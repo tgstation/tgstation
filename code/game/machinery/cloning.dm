@@ -3,16 +3,16 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
-#define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
+#define CLONE_INITIAL_DAMAGE     150    //Clones in clonepods start with 150 cloneloss damage and 150 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
 
 /obj/machinery/clonepod
-	anchored = 1
+	anchored = TRUE
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
-	density = 1
+	density = TRUE
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(GLOB.access_cloning) //For premature unlocking.
@@ -41,7 +41,7 @@
 	var/static/list/brine_types = list(
 		"salbutamol", // anti-oxyloss
 		"bicaridine", // NOBREATHE species take brute in crit
-		"corazone", // prevents cardiac arrest damage
+		"corazone", // prevents cardiac arrest and liver failure damage
 		"mimesbane") // stops them gasping from lack of air.
 
 /obj/machinery/clonepod/Initialize()
@@ -474,7 +474,9 @@
 	// Clones are in a pickled bath of mild chemicals, keeping
 	// them alive, despite their lack of internal organs
 	for(var/bt in brine_types)
-		if(occupant.reagents.get_reagent_amount(bt) < 1)
+		if(bt == "corazone" && occupant.reagents.get_reagent_amount(bt) < 2)
+			occupant.reagents.add_reagent(bt, 2)//pump it full of extra corazone as a safety, you can't OD on corazone.
+		else if(occupant.reagents.get_reagent_amount(bt) < 1)
 			occupant.reagents.add_reagent(bt, 1)
 
 /*

@@ -138,3 +138,11 @@
 #define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, He falls asleep and resets.
 
 #define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
+
+#define EXPLODE_NONE 0				//Don't even ask me why we need this.
+#define EXPLODE_DEVASTATE 1
+#define EXPLODE_HEAVY 2
+#define EXPLODE_LIGHT 3
+
+#define EMP_HEAVY 1
+#define EMP_LIGHT 2

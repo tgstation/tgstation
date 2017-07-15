@@ -6,8 +6,8 @@
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_access = list(GLOB.access_mineral_storeroom)
@@ -211,7 +211,7 @@
 		return
 	interact(user)
 
-/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 440, 550, master_ui, state)

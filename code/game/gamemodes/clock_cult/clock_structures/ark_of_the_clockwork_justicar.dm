@@ -3,7 +3,6 @@
 	name = "ark of the Clockwork Justicar"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 500
 	max_integrity = 500
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
@@ -160,7 +159,7 @@
 			to_chat(user, "<span class='big'><b>Components required until activation:</b></span>")
 			for(var/i in required_components)
 				if(required_components[i])
-					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
+					to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
 					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
 			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")

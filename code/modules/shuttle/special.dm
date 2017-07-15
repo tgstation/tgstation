@@ -55,9 +55,7 @@
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
-	desc = "Whether you're sleeping or waking, it's going to be \
-		quite chaotic."
-	obj_integrity = 1000
+	desc = "Whether you're sleeping or waking, it's going to be quite chaotic."
 	max_integrity = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
@@ -183,7 +181,6 @@
 /obj/structure/table/wood/bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags = NODECONSTRUCT
-	obj_integrity = 1000
 	max_integrity = 1000
 	var/boot_dir = 1
 
@@ -219,7 +216,7 @@
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 
-/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
 		return 1
 

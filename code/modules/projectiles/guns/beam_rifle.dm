@@ -355,7 +355,7 @@
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
 			if(prob(wall_devastate))
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 			return TRUE
 	if(ismovableatom(target))
 		var/atom/movable/AM = target
@@ -395,7 +395,7 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
+/obj/item/projectile/beam/beam_rifle/Collide(atom/target)
 	if(check_pierce(target))
 		permutated += target
 		return FALSE
@@ -403,7 +403,7 @@
 		cached = get_turf(target)
 	. = ..()
 
-/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
 	if(!QDELETED(target))
 		cached = get_turf(target)
 	handle_hit(target)
@@ -472,7 +472,7 @@
 		if(original && (original.layer>=2.75) || ismob(original))
 			if(loc == get_turf(original))
 				if(!(original in permutated))
-					Bump(original, 1)
+					Collide(original)
 		Range()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/Range()
@@ -507,7 +507,7 @@
 /obj/effect/temp_visual/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'
 	layer = ABOVE_MOB_LAYER
-	anchored = 1
+	anchored = TRUE
 	duration = 5
 	randomdir = FALSE
 	light_power = 1

@@ -7,7 +7,7 @@
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
-	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
+	var/summon_ignore_density = FALSE //if set to 1, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
 
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet

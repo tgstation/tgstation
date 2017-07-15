@@ -5,8 +5,7 @@
 	clockwork_desc = "A cloud of purple smoke that confuses and knocks down non-Servants that enter it."
 	gender = PLURAL
 	max_integrity = 5
-	obj_integrity = 5
-	density = 1
+	density = TRUE
 	color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
@@ -26,7 +25,7 @@
 			for(var/obj/structure/destructible/clockwork/taunting_trail/TT in loc)
 				if(TT != src)
 					qdel(TT)
-	setDir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinals))
 	transform = matrix()*1.3
 	animate(src, alpha = 100, time = 15)
 
@@ -37,7 +36,7 @@
 /obj/structure/destructible/clockwork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/items/welder.ogg', 50, 1)
 
-/obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target)
 	return TRUE
 
 /obj/structure/destructible/clockwork/taunting_trail/Crossed(atom/movable/AM)
@@ -48,7 +47,7 @@
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/Bump(atom/movable/AM)
+/obj/structure/destructible/clockwork/taunting_trail/Collide(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
