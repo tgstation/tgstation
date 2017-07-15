@@ -253,27 +253,30 @@
 
 /datum/objective/hijackclone/check_completion()
 	if(!owner.current)
-		return 0
+		return FALSE
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 0
+		return FALSE
 
 	var/in_shuttle = FALSE
 	for(var/mob/living/player in GLOB.player_list) //Make sure nobody else is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) in SSshuttle.emergency.shuttle_areas)
+		if(SSshuttle.emergency.shuttle_areas[get_area(player)])
+			if(player.mind && player.mind != owner)
+				if(player.stat != DEAD)
+					if(issilicon(player)) //Borgs are technically dead anyways
+						continue
+					if(isanimal(player)) //animals don't count
+						continue
+					if(isbrain(player)) //also technically dead
+						continue
 					var/location = get_turf(player.mind.current)
-					if(!istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						if(player.real_name != owner.current.real_name)
-							return FALSE
-						else
-							in_shuttle = TRUE
+					if(istype(location, /turf/open/floor/plasteel/shuttle/red))
+						continue
+					if(istype(location, /turf/open/floor/mineral/plastitanium/brig))
+						continue
+					if(player.real_name != owner.current.real_name)
+						return FALSE
+					else
+						in_shuttle = TRUE
 	return in_shuttle
 
 /datum/objective/block
