@@ -2545,7 +2545,8 @@
 "afz" = (
 /obj/machinery/door/window/brigdoor/northleft{
 	id = "Cell 6";
-	name = "Cell Door 6"
+	name = "Cell Door 6";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3369,7 +3370,7 @@
 /obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 4";
 	name = "Cell Door 4";
-	req_access_txt = "1"
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -4893,7 +4894,8 @@
 "akf" = (
 /obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 8";
-	name = "Cell Door 8"
+	name = "Cell Door 8";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -7605,7 +7607,7 @@
 /obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 2";
 	name = "Cell Door 2";
-	req_access_txt = "1"
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -7656,7 +7658,8 @@
 "apD" = (
 /obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 9";
-	name = "Cell Door 9"
+	name = "Cell Door 9";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -72144,7 +72147,7 @@
 /obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 3";
 	name = "Cell Door 3";
-	req_access_txt = "1"
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -87996,7 +87999,8 @@
 "dmi" = (
 /obj/machinery/door/window/brigdoor/northleft{
 	id = "Cell 5";
-	name = "Cell Door 5"
+	name = "Cell Door 5";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -88415,7 +88419,8 @@
 "dnc" = (
 /obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 7";
-	name = "Cell Door 7"
+	name = "Cell Door 7";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90895,7 +90900,7 @@
 /obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 1";
 	name = "Cell Door 1";
-	req_access_txt = "1"
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90914,7 +90919,8 @@
 "drV" = (
 /obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 10";
-	name = "Cell Door 10"
+	name = "Cell Door 10";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
