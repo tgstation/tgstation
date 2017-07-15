@@ -106,16 +106,12 @@
 			if(!storedpart)
 				return
 			storedpart.icon = style_list_icons[augstyle]
-			AltClick()
+			eject_part(user)
 
 		else
 			to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 
-
-/obj/machinery/aug_manipulator/AltClick(mob/living/user)
-	..()
-	if(user.incapacitated())
-		return
+/obj/machinery/aug_manipulator/proc/eject_part(mob/living/user)
 	if(storedpart)
 		storedpart.forceMove(get_turf(src))
 		storedpart = null
@@ -123,6 +119,12 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
+/obj/machinery/aug_manipulator/AltClick(mob/living/user)
+	..()
+	if(!user.canUseTopic(src))
+		return
+	else
+		eject_part(user)
 
 /obj/machinery/aug_manipulator/power_change()
 	..()
