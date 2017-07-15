@@ -308,6 +308,14 @@
 	reinf = 1
 	explosion_block = 1
 
+/obj/machinery/door/window/brigdoor/security/cell
+	name = "cell door"
+	req_access = list(ACCESS_BRIG)
+
+/obj/machinery/door/window/brigdoor/security/holding
+	name = "holding cell door"
+	req_access = list(ACCESS_SEC_DOORS, ACCESS_LAWYER)
+
 /obj/machinery/door/window/clockwork
 	name = "brass windoor"
 	desc = "A thin door with translucent brass paneling."
@@ -419,6 +427,70 @@
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/southright
+	dir = SOUTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/northleft
+	dir = NORTH
+
+/obj/machinery/door/window/brigdoor/security/cell/eastleft
+	dir = EAST
+
+/obj/machinery/door/window/brigdoor/security/cell/westleft
+	dir = WEST
+
+/obj/machinery/door/window/brigdoor/security/cell/southleft
+	dir = SOUTH
+
+/obj/machinery/door/window/brigdoor/security/cell/northright
+	dir = NORTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/eastright
+	dir = EAST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/westright
+	dir = WEST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/southright
+	dir = SOUTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/northleft
+	dir = NORTH
+
+/obj/machinery/door/window/brigdoor/security/holding/eastleft
+	dir = EAST
+
+/obj/machinery/door/window/brigdoor/security/holding/westleft
+	dir = WEST
+
+/obj/machinery/door/window/brigdoor/security/holding/southleft
+	dir = SOUTH
+
+/obj/machinery/door/window/brigdoor/security/holding/northright
+	dir = NORTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/eastright
+	dir = EAST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/westright
+	dir = WEST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/southright
 	dir = SOUTH
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
