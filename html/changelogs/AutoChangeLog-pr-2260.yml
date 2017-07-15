@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Hotel staff who have left their starting z level will get teleported back to their spawner now."
+  - tweak: "Hotel staff now spawn with IDs (ported from pre-rebase)"
