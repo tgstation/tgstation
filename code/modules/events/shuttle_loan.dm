@@ -21,7 +21,7 @@
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
+	dispatch_type = ANTIDOTE_NEEDED /*pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY) */
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -132,7 +132,7 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/item/weapon/reagent_containers/glass/bottle/virus_type = pick(/obj/item/weapon/reagent_containers/glass/bottle/beesease, /obj/item/weapon/reagent_containers/glass/bottle/brainrot, /obj/item/weapon/reagent_containers/glass/bottle/fluspanish)
+				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
@@ -142,7 +142,7 @@
 					else if(prob(25))
 						shuttle_spawns.Add(/obj/item/weapon/shard)
 					T = pick_n_take(empty_shuttle_turfs)
-					new virus_type(T)
+					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)

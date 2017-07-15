@@ -635,7 +635,7 @@
 		B.add_bleed(B.bleed_buildup)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!active || swiping)
+	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		..()
 	else
 		var/turf/user_turf = get_turf(user)

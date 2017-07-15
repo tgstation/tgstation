@@ -19,10 +19,6 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-	if(stat != DEAD)
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
