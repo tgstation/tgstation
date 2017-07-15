@@ -106,12 +106,30 @@
 	metabolization_rate = 0.05
 	taste_description = "salt"
 
+/datum/reagent/blackpowder/on_mob_life(mob/living/M)
+	M.losebreath += 10
+	if(holder.has_reagent("blackpowder"))
+		holder.remove_reagent("blackpowder", 10)
+		holder.add_reagent("dampblackpowder", 5)
+
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
 	e.start()
 	holder.clear_reagents()
+
+/datum/reagent/dampblackpowder
+	name = "Damp Black Powder"
+	id = "blackpowder"
+	description = "It's all wet and damp now, and unlikely to explode. Very bad for the heart and prevents breathing."
+	reagent_state = LIQUID
+	color = "#000000"
+	taste_description = "salt"
+
+/datum/reagent/dampblackpowder/on_mob_life(mob/living/M)
+	M.losebreath += 2
+	M.visible_message("<span class='userdanger'>[M] clutches their chest and heaves in pain!</span>")
 
 /datum/reagent/flash_powder
 	name = "Flash Powder"
