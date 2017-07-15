@@ -2212,6 +2212,7 @@
 #include "hippiestation\code\game\objects\items\weapons\storage\toolbox.dm"
 #include "hippiestation\code\game\objects\items\weapons\storage\uplink_kits.dm"
 #include "hippiestation\code\game\objects\structures\false_walls.dm"
+#include "hippiestation\code\game\objects\structures\manned_turret.dm"
 #include "hippiestation\code\game\objects\structures\tables_racks.dm"
 #include "hippiestation\code\game\objects\structures\tank_dispenser.dm"
 #include "hippiestation\code\game\objects\structures\beds_chairs\chair.dm"
