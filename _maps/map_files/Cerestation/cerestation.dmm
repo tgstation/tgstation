@@ -2545,7 +2545,8 @@
 "afz" = (
 /obj/machinery/door/window/brigdoor/northleft{
 	id = "Cell 6";
-	name = "Cell Door 6"
+	name = "Cell Door 6";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -87998,7 +87999,8 @@
 "dmi" = (
 /obj/machinery/door/window/brigdoor/northleft{
 	id = "Cell 5";
-	name = "Cell Door 5"
+	name = "Cell Door 5";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
