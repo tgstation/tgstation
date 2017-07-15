@@ -243,8 +243,10 @@
 /datum/action/item_action/synthswitch/Trigger()
 	if(istype(target, /obj/item/device/instrument/piano_synth))
 		var/obj/item/device/instrument/piano_synth/synth = target
-		synth.changeInstrument(input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes)
-		return
+		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
+		if(!synth.insTypes[chosen])
+			return
+		return synth.changeInstrument(chosen)
 	return ..()
 
 /datum/action/item_action/vortex_recall
