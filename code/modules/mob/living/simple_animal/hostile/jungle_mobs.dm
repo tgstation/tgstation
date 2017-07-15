@@ -577,7 +577,7 @@
 	icon_state = "mook_leap_cloud"
 	layer = BELOW_MOB_LAYER
 	pixel_x = -16
-	pixel_y = -12
+	pixel_y = -16
 	duration = 10
 
 #undef MOOK_ATTACK_NEUTRAL
@@ -592,9 +592,6 @@
 #define SEEDLING_STATE_WARMUP 1
 #define SEEDLING_STATE_ACTIVE 2
 #define SEEDLING_STATE_RECOVERY 3
-
-#define SEEDLING_STATE_REGENERATING 4
-#define SEEDLING_REGENERATION_TIME 30
 
 
 /mob/living/simple_animal/hostile/jungle/seedling
@@ -623,7 +620,6 @@
 	anchored = TRUE
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	var/obj/seedling_weakpoint/weak_point
-	var/datum/beam/solar_beam = null
 	var/mob/living/beam_debuff_target
 	var/solar_beam_identifier = 0
 
@@ -639,7 +635,7 @@
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
 
-/obj/item/projectile/seedling/Bump(atom/A, yes)//Stops seedlings from destroying other jungle mobs through FF
+/obj/item/projectile/seedling/Collide(atom/A)//Stops seedlings from destroying other jungle mobs through FF
 	if(isliving(A))
 		var/mob/living/L = A
 		if("jungle" in L.faction)
@@ -674,29 +670,22 @@
 
 /datum/status_effect/seedling_beam_indicator/Destroy()
 	if(owner)
-		owner.overlays -= beam_overlay
+		owner.cut_overlay(beam_overlay)
 	QDEL_NULL(beam_overlay)
 	return ..()
 
 /datum/status_effect/seedling_beam_indicator/tick()
 	var/target_angle = Get_Angle(owner, target)
-	owner.overlays -= beam_overlay
+	owner.cut_overlay(beam_overlay)
 	angle = target_angle
 	var/matrix/final = matrix()
 	final.Turn(target_angle)
 	beam_overlay.transform = final
-	owner.overlays += beam_overlay
-
+	owner.add_overlay(beam_overlay)
 
 /datum/status_effect/seedling_beam_indicator/be_replaced()
-	owner.underlays -= beam_overlay
+	owner.cut_overlay(beam_overlay)
 	..()
-
-/mob/living/simple_animal/hostile/jungle/seedling/Initialize()
-	. = ..()
-	var/obj/seedling_weakpoint/W = new /obj/seedling_weakpoint(src)
-	weak_point = W
-	W.our_seedling = src
 
 /mob/living/simple_animal/hostile/jungle/seedling/Goto()
 	if(combatant_state != SEEDLING_STATE_NEUTRAL)
@@ -744,8 +733,8 @@
 	if(combatant_state == SEEDLING_STATE_ACTIVE && living_target && beam_id == solar_beam_identifier)
 		if(living_target.z == z)
 			update_icons()
-			solar_beam = new(get_turf(src),get_turf(target),time=5,beam_icon_state="solar_beam",maxdistance = INFINITY,btype=/obj/effect/ebeam/solarbeam,beam_sleep_time = 0.5)
-			INVOKE_ASYNC(solar_beam, /datum/beam.proc/Start)
+			var/atom/A = get_turf(src)
+			A.Beam(get_turf(living_target),"solar_beam",time=5, maxdistance=INFINITY,beam_type=/obj/effect/ebeam/solarbeam,beam_sleep_time = 0.5)
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
 			living_target.IgniteMob()
@@ -759,13 +748,12 @@
 		combatant_state = SEEDLING_STATE_ACTIVE
 		update_icons()
 		var/datum/callback/cb = CALLBACK(src, .proc/InaccurateShot)
-		var/i
-		for(i=0, i<13, i++)
+		for(var/i in 1 to 13)
 			addtimer(cb, i)
 		addtimer(CALLBACK(src, .proc/AttackRecovery), 14)
 
 /mob/living/simple_animal/hostile/jungle/seedling/proc/InaccurateShot()
-	if(target && !QDELETED(target) && combatant_state == SEEDLING_STATE_ACTIVE)
+	if(!QDELETED(target) && combatant_state == SEEDLING_STATE_ACTIVE && !stat)
 		if(get_dist(src,target) <= 3)//If they're close enough just aim straight at them so we don't miss at point blank ranges
 			Shoot(target)
 			return
@@ -787,17 +775,13 @@
 		ranged_cooldown = world.time + ranged_cooldown_time
 		if(target)
 			face_atom(target)
-		if(solar_beam)
-			qdel(solar_beam)
-			solar_beam = null
 		addtimer(CALLBACK(src, .proc/ResetNeutral), 10)
 
 /mob/living/simple_animal/hostile/jungle/seedling/proc/ResetNeutral()
-	if(combatant_state != SEEDLING_STATE_REGENERATING)
-		combatant_state = SEEDLING_STATE_NEUTRAL
-		if(target && !stat)
-			update_icons()
-			Goto(target, move_to_delay, minimum_distance)
+	combatant_state = SEEDLING_STATE_NEUTRAL
+	if(target && !stat)
+		update_icons()
+		Goto(target, move_to_delay, minimum_distance)
 
 /mob/living/simple_animal/hostile/jungle/seedling/adjustHealth()
 	. = ..()
@@ -806,72 +790,6 @@
 		beam_debuff_target = null
 		solar_beam_identifier = 0
 		AttackRecovery()
-	if(health <= 0)
-		if(combatant_state == SEEDLING_STATE_REGENERATING)
-			return
-		if(weak_point && !stat)
-			SeedlingStartRegeneration()
-
-/mob/living/simple_animal/hostile/jungle/seedling/update_stat()
-	if(combatant_state == SEEDLING_STATE_REGENERATING)
-		return
-	return ..()
-
-/mob/living/simple_animal/hostile/jungle/seedling/proc/SeedlingStartRegeneration()
-	weak_point.loc = get_turf(src)
-	weak_point.RandomizeScreenLocation()
-	combatant_state = SEEDLING_STATE_REGENERATING
-	mouse_opacity = 0
-	update_icons()
-	walk(src,0)
-	wander = FALSE
-	addtimer(CALLBACK(src, .proc/SeedlingRegenerate), SEEDLING_REGENERATION_TIME)
-
-/mob/living/simple_animal/hostile/jungle/seedling/proc/SeedlingRegenerate()
-	if(weak_point && !QDELETED(weak_point) && combatant_state == SEEDLING_STATE_REGENERATING)
-		revive(TRUE)
-		mouse_opacity = 1
-		weak_point.loc = src
-		wander = TRUE
-		combatant_state = SEEDLING_STATE_NEUTRAL
-		ResetNeutral()
-
-/obj/seedling_weakpoint
-	name = "seedling weakpoint"
-	anchored = TRUE
-	max_integrity = 45
-	icon = 'icons/mob/jungle/arachnid.dmi'
-	icon_state = "seedling_weakpoint1"
-	pixel_x = -16
-	pixel_y = -14
-	layer = ABOVE_ALL_MOB_LAYER
-	var/mob/living/simple_animal/hostile/jungle/seedling/our_seedling
-
-/obj/seedling_weakpoint/Destroy()
-	. = ..()
-	if(our_seedling && !QDELETED(our_seedling))
-		if(!our_seedling.stat)
-			our_seedling.combatant_state = SEEDLING_STATE_NEUTRAL
-			our_seedling.death()
-
-/obj/seedling_weakpoint/proc/RandomizeScreenLocation()
-	var/diceroll = rand(1,3)
-	icon_state = "seedling_weakpoint[diceroll]"
-
-/obj/seedling_weakpoint/attackby(obj/item/weapon/W, mob/user, params)
-	if(!W.is_sharp())
-		to_chat(user, "<span class='danger'>You need something sharp for this!</span>")
-		return
-	RandomizeScreenLocation()
-	return ..()
-
-/obj/seedling_weakpoint/play_attack_sound()
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
-
-/mob/living/simple_animal/hostile/jungle/seedling/update_stat()
-	if(weak_point && !QDELETED(weak_point))
-		return
-	return ..()
 
 /mob/living/simple_animal/hostile/jungle/seedling/update_icons()
 	. = ..()
@@ -885,8 +803,6 @@
 				icon_state = "seedling_fire"
 			if(SEEDLING_STATE_RECOVERY)
 				icon_state = "seedling"
-			if(SEEDLING_STATE_REGENERATING)
-				icon_state = "seedling_wilting"
 
 /mob/living/simple_animal/hostile/jungle/seedling/GiveTarget()
 	if(target)
@@ -899,15 +815,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/jungle/seedling/death()
-	. = ..()
-	mouse_opacity = 1
-	anchored = FALSE
-
-
 #undef SEEDLING_STATE_NEUTRAL
 #undef SEEDLING_STATE_WARMUP
 #undef SEEDLING_STATE_ACTIVE
 #undef SEEDLING_STATE_RECOVERY
-#undef SEEDLING_STATE_REGENERATING
-#undef SEEDLING_REGENERATION_TIME
