@@ -48,7 +48,7 @@
 		density = FALSE
 	..()
 
-/obj/vehicle/scooter/skateboard/Bump(atom/A)
+/obj/vehicle/scooter/skateboard/Collide(atom/A)
 	..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]

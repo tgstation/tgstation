@@ -267,13 +267,6 @@
 
 	return min(1,thermal_protection)
 
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
-	dna.species.handle_chemicals_in_body(src)
-
-
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high
 	if(!stat)
