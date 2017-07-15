@@ -7425,7 +7425,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "Cell 1";
 	name = "Cell 1";
-	req_access_txt = "1"
+	req_access_txt = "2"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7479,7 +7479,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "Cell 2";
 	name = "Cell 2";
-	req_access_txt = "1"
+	req_access_txt = "2"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7500,7 +7500,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "Cell 3";
 	name = "Cell 3";
-	req_access_txt = "1"
+	req_access_txt = "2"
 	},
 /obj/structure/cable{
 	d1 = 4;
