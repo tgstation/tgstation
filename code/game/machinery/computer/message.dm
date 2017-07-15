@@ -40,21 +40,22 @@
 		return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
-	if(!emagged)
-		if(!isnull(src.linkedServer))
-			emagged = TRUE
-			screen = 2
-			spark_system.set_up(5, 0, src)
-			src.spark_system.start()
-			var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
-			MK.loc = src.loc
-			// Will help make emagging the console not so easy to get away with.
-			MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-			var/time = 100 * length(src.linkedServer.decryptkey)
-			addtimer(CALLBACK(src, .proc/UnmagConsole), time)
-			message = rebootmsg
-		else
-			to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+	if(emagged)
+		return
+	if(!isnull(src.linkedServer))
+		emagged = TRUE
+		screen = 2
+		spark_system.set_up(5, 0, src)
+		src.spark_system.start()
+		var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
+		MK.loc = src.loc
+		// Will help make emagging the console not so easy to get away with.
+		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+		var/time = 100 * length(src.linkedServer.decryptkey)
+		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
+		message = rebootmsg
+	else
+		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
 /obj/machinery/computer/message_monitor/Initialize()
 	..()

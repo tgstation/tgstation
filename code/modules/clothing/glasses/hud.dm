@@ -18,15 +18,17 @@
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
-	if(emagged == 0)
-		emagged = TRUE
-		desc = "[desc] The display is flickering slightly."
+	if(emagged)
+		return
+	emagged = TRUE
+	desc = "[desc] The display is flickering slightly."
 
 /obj/item/clothing/glasses/hud/emag_act(mob/user)
-	if(emagged == 0)
-		emagged = TRUE
-		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
-		desc = "[desc] The display is flickering slightly."
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+	desc = "[desc] The display is flickering slightly."
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
