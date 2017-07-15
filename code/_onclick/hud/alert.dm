@@ -109,16 +109,25 @@
 
 
 //Gas alerts
-/obj/screen/alert/oxy
+/obj/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
-	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
-The box in your backpack has an oxygen tank and breath mask in it."
-	icon_state = "oxy"
+	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
+	icon_state = "not_enough_oxy"
 
 /obj/screen/alert/too_much_oxy
 	name = "Choking (O2)"
 	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_oxy"
+
+/obj/screen/alert/not_enough_nitro
+	name = "Choking (No N2)"
+	desc = "You're not getting enough nitrogen. Find some good air before you pass out!"
+	icon_state = "not_enough_nitro"
+
+/obj/screen/alert/too_much_nitro
+	name = "Choking (N2)"
+	desc = "There's too much nitrogen in the air, and you're breathing it in! Find some good air before you pass out!"
+	icon_state = "too_much_nitro"
 
 /obj/screen/alert/not_enough_co2
 	name = "Choking (No CO2)"
@@ -137,8 +146,7 @@ The box in your backpack has an oxygen tank and breath mask in it."
 
 /obj/screen/alert/tox_in_air
 	name = "Choking (Plasma)"
-	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
-The box in your backpack has an oxygen tank and gas mask in it."
+	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "tox_in_air"
 //End gas alerts
 

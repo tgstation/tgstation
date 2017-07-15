@@ -112,7 +112,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
 
 	var/safe_oxy_min = 16
@@ -143,14 +143,14 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
-		clear_alert("oxy")
+		clear_alert("not_enough_oxy")
 
 	breath_gases["o2"][MOLES] -= oxygen_used
 	breath_gases["co2"][MOLES] += oxygen_used

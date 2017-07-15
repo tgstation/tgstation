@@ -839,12 +839,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			hal_screwyhud = 0
 
 		if("fake_alert")
-			var/alert_type = pick("oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
+			var/alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
 			if(specific)
 				alert_type = specific
 			switch(alert_type)
-				if("oxy")
-					throw_alert("oxy", /obj/screen/alert/oxy, override = TRUE)
+				if("not_enough_oxy")
+					throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy, override = TRUE)
 				if("not_enough_tox")
 					throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox, override = TRUE)
 				if("not_enough_co2")
