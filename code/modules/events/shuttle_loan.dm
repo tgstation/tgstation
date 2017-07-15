@@ -21,7 +21,7 @@
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = ANTIDOTE_NEEDED /*pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY) */
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
