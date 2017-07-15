@@ -1,0 +1,5 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - balance: "The Gang manned turret needs to be wrenched down in order to fire"
+  - balance: "The Gang manned turret now only shoots half as many bullets and i's rate of fire is about %50 slower so you can still suppress a hallway for a while."
