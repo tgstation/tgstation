@@ -1601,7 +1601,7 @@
 		new item(C)
 
 
-/datum/supply_packs/bigband
+/datum/supply_packs/misc/bigband
 	contains = list(/obj/item/device/instrument/violin,
 					/obj/item/device/instrument/guitar,
 					/obj/item/device/instrument/glockenspiel,
@@ -1610,7 +1610,6 @@
 					/obj/item/device/instrument/trombone,
 					/obj/item/device/instrument/recorder,
 					/obj/item/device/instrument/harmonica,
-					/obj/structure/piano/xylophone,
 					/obj/structure/piano)
 	name = "Big band instrument collection"
 	cost = 5000
