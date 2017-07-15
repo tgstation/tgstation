@@ -126,3 +126,6 @@
 
 /mob/living/silicon/adjustToxLoss(amount, update_health, forced)
 	return adjustFireLoss(amount, update_health, forced)
+
+/mob/living/silicon/getToxLoss()
+	return fireloss
