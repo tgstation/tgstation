@@ -48,10 +48,8 @@
 	max_integrity = 20
 	var/allow_walk = 1 //can we pass through it on walk intent
 
-/obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target)
 	if(!density)
-		return 1
-	if(air_group || (height==0))
 		return 1
 	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
 		return 1

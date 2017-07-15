@@ -92,7 +92,7 @@
 	generator = null
 	return ..()
 
-/obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	return !density
