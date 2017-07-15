@@ -1,4 +1,6 @@
-hippiestation/sound/lobby/title1.ogg
-hippiestation/sound/lobby/title2.ogg
-hippiestation/sound/lobby/title3.ogg
-hippiestation/sound/lobby/title4.ogg
+hippiestation/sound/lobby/MacDeMarcoPassingOutThePiecesOFFICIALSINGLE6Lk3NFWw9Fg.ogg
+hippiestation/sound/lobby/GranTurismo3ConcentrationadzUSH1vZYU.ogg
+hippiestation/sound/lobby/macdemarcodonjuanmZrTD7F9yfo.ogg
+hippiestation/sound/lobby/DJCamQuartetRebirthofCooloU0ZmbBY9QI.ogg
+hippiestation/sound/lobby/MacDeMarcoCookingUpSomethingGoodLiveatPartTimePunksStudion4AZdabfblg.ogg
+hippiestation/sound/lobby/SAINTPEPSIENJOYYOURSELFMusicVideohI0qMtdfng.ogg
