@@ -12,8 +12,9 @@ All ShuttleMove procs go here
 
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
-/turf/proc/toShuttleMove(turf/oldT)
-	for(var/atom/movable/thing in src)
+/turf/proc/toShuttleMove(turf/oldT, shuttle_dir)
+	for(var/i in 1 to contents.len)
+		var/atom/movable/thing = contents[i]
 		if(ismob(thing))
 			if(isliving(thing))
 				var/mob/living/M = thing
@@ -33,14 +34,14 @@ All ShuttleMove procs go here
 			if(istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
 				continue
 			if(!thing.anchored)
-				step(thing, dir)
+				step(thing, shuttle_dir)
 			else
 				qdel(thing)
 
 	return TRUE
 
 // Called on the old turf to move the turf data
-/turf/proc/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force)
+/turf/proc/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force, move_dir)
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
 
@@ -60,7 +61,7 @@ All ShuttleMove procs go here
 
 // Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT)
-	if(SSlighting.initialized)
+	if(SSlighting.initialized && FALSE)
 		var/atom/movable/lighting_object/old_obj = lighting_object
 		var/atom/movable/lighting_object/new_obj = oldT.lighting_object
 		if(old_obj)
@@ -77,7 +78,7 @@ All ShuttleMove procs go here
 	return FALSE
 
 // Called on atoms to move the atom to the new location
-/atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force)
+/atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
 
@@ -93,7 +94,7 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on atoms after everything has been moved
-/atom/movable/proc/afterShuttleMove(list/movement_force)
+/atom/movable/proc/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	if(light)
 		update_light()
 	return TRUE
@@ -108,6 +109,8 @@ All ShuttleMove procs go here
 /area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
+	if(istype(src, /area/space))
+		message_admins("A SPACE AREA MOVED FROM [ADMIN_COORDJMP(oldT)] to [ADMIN_COORDJMP(newT)]")
 
 	contents -= oldT
 	underlying_old_area.contents += oldT
@@ -115,7 +118,8 @@ All ShuttleMove procs go here
 	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
-	//parallax_movedir = old_dest_area.parallax_movedir //Our area should use the parallax of the area it's moving in to for transit space
+	parallax_movedir = old_dest_area.parallax_movedir
+	
 	old_dest_area.contents -= newT
 	contents += newT
 	newT.change_area(old_dest_area, src)
@@ -314,11 +318,11 @@ All ShuttleMove procs go here
 		else
 			shake_camera(src, 7, 1)
 
-/mob/living/carbon/afterShuttleMove(list/movement_force)
+/mob/living/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
 	if(movement_force && !buckled)
 		if(movement_force["THROW"])
-			var/throw_dir = pick(GLOB.cardinals)
+			var/throw_dir = move_dir
 			var/turf/target = get_edge_target_turf(src, throw_dir)
 			var/range = movement_force["THROW"]
 			var/speed = range/5

@@ -177,7 +177,7 @@
 	for(var/i in 1 to assigned_turfs.len)
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
-			T.empty(/turf/open/space, /turf/open/space)
+			T.ChangeTurf(/turf/open/space,new_baseturf=/turf/open/space)
 			T.flags |= UNUSED_TRANSIT_TURF
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
@@ -452,7 +452,7 @@
 		pod.check()
 
 //this is the main proc. It instantly moves our mobile port to stationary port new_dock
-/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/new_dock, force=FALSE)
+/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
 
 	if(new_dock.get_docked() == src)
@@ -493,26 +493,31 @@
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
 		rotation = SimplifyDegrees(rotation)
 
+	if(!movement_direction)
+		movement_direction = turn(preferred_direction, 180)
+
 	remove_ripples()
 
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
-	var/list/areas_to_move = list() //list containing all unique areas so we don't call (before|after)ShuttleMove multiple times on the same area
+	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
 
 	/****************************************All beforeShuttleMove procs*****************************************/
 	var/index = 1
 	while(index < old_turfs.len)
+	//for(var/T in old_turfs) //Sorry remie
 		var/turf/oldT = old_turfs[index]
 		var/turf/newT = new_turfs[index]
 		var/area/old_area = oldT.loc
 		var/move_turf = TRUE //Should this turf be moved, if false remove from the turf list
 		if(!(shuttle_areas[old_area]))
 			move_turf = FALSE
-		move_turf = oldT.fromShuttleMove(newT, turf_type, baseturf_type)									//turf
-		if(move_turf) //Only call toShuttleMove if the source turf is willing to move
-			move_turf = newT.toShuttleMove(oldT)															//turf
+		if(move_turf)
+			move_turf = oldT.fromShuttleMove(newT, turf_type, baseturf_type)								//turf
+			if(move_turf) //Only call toShuttleMove if the source turf is willing to move
+				move_turf = newT.toShuttleMove(oldT, dir)													//turf
 		for(var/ii in 1 to oldT.contents.len)
 			var/atom/movable/moving_atom = oldT.contents[ii]
-			if(moving_atom.beforeShuttleMove(newT, rotation)) 												//atoms
+			if(moving_atom.beforeShuttleMove(newT, rotation) && !move_turf) 								//atoms
 				old_contents += oldT
 				new_contents += newT
 		if(!move_turf)
@@ -538,9 +543,9 @@
 			continue
 		for(var/thing in oldT) //Needs to be this kind of loop in case, because of shuttle rotation shenanigans, the destination turf is the same as the source turf
 			var/atom/movable/moving_atom = thing
-			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force)									//atoms
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
 			moved_atoms += moving_atom
-		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force) 						//turfs
+		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force, movement_direction) 	//turfs
 		var/area/shuttle_area = oldT.loc
 		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) 										//areas
 
@@ -551,10 +556,8 @@
 			continue
 		for(var/thing in oldT)
 			var/atom/movable/moving_atom = thing
-			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force)									//atoms
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
 			moved_atoms += moving_atom
-		var/area/shuttle_area = oldT.loc
-		shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)											//area
 	
 	/******************************************All afterShuttleMove procs****************************************/
 	
@@ -565,7 +568,7 @@
 
 	for(var/i in 1 to moved_atoms.len)
 		var/atom/movable/moved_object = moved_atoms[i]
-		moved_object.afterShuttleMove(movement_force)														//atoms
+		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction)			//atoms
 
 	underlying_old_area.afterShuttleMove()
 
@@ -607,7 +610,7 @@
 	// then try again
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(dock(destination))
+			if(dock(destination, preferred_direction))
 				setTimer(20)
 				return
 		if(SHUTTLE_RECALL)

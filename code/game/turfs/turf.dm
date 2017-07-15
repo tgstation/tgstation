@@ -197,8 +197,8 @@
 		qdel(L)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
-	return ChangeTurf(path, defer_change, ignore_air)
+/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf)
+	return ChangeTurf(path, defer_change, ignore_air, new_baseturf)
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf)
