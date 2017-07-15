@@ -33,6 +33,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	slab.busy = null
 	slab.icon_state = initial(slab.icon_state)
+	slab = null
 	return ..()
 
 /obj/structure/destructible/clockwork/geis_binding/proc/assign_slab() //retuuuuuuuuurn the slaaaaaaaaaaaaaab
