@@ -22,11 +22,12 @@
 	var/mob_layer = MOB_LAYER
 	var/obj/item/clockwork/slab/slab
 
-/obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, slab)
+/obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, obj/item/clockwork/slab/the_slab)
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
-	if(slab)
-		addtimer(CALLBACK(src, .proc/assign_slab, slab), 1)
+	if(!QDELETED(the_slab) && istype(the_slab))
+		slab = the_slab
+		addtimer(CALLBACK(src, .proc/assign_slab), 1)
 
 /obj/structure/destructible/clockwork/geis_binding/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -34,10 +35,9 @@
 	slab.icon_state = initial(slab.icon_state)
 	return ..()
 
-/obj/structure/destructible/clockwork/geis_binding/proc/assign_slab(obj/item/clockwork/slab/the_slab) //retuuuuuuuuurn the_slab
-	if(!the_slab)
+/obj/structure/destructible/clockwork/geis_binding/proc/assign_slab() //retuuuuuuuuurn the slaaaaaaaaaaaaaab
+	if(QDELETED(slab))
 		return
-	slab = the_slab
 	slab.busy = "Maintaining Geis bindings"
 	slab.icon_state = "judicial"
 
@@ -51,7 +51,7 @@
 /obj/structure/destructible/clockwork/geis_binding/process()
 	if(!pulledby || !is_servant_of_ratvar(pulledby))
 		take_damage(1) //Quickly decays when not pulled by a servant
-	if(!resisting)
+	if(QDELETED(resisting))
 		return
 	if(resisting.stat)
 		to_chat(resisting, "<span class='warning'>Your struggling ceases as you fall unconscious!</span>")
