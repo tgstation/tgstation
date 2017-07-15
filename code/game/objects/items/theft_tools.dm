@@ -182,10 +182,8 @@
 
 /obj/item/nuke_core_container/supermatter/attackby(obj/item/weapon/hemostat/supermatter/tongs, mob/user)
 	if(istype(tongs))
-		if(!user.temporarilyRemoveItemFromInventory(tongs))
-			to_chat(user, "<span class='warning'>\The [tongs] is stuck to your hand!</span>")
-		else
-			load(sliver, user)
+		//try to load shard into core
+		load(tongs, user)
 	else
 		return ..()
 
