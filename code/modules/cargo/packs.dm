@@ -1600,8 +1600,7 @@
 		var/item = pick_n_take(L)
 		new item(C)
 
-
-/datum/supply_packs/misc/bigband
+/datum/supply_pack/misc/bigband
 	contains = list(/obj/item/device/instrument/violin,
 					/obj/item/device/instrument/guitar,
 					/obj/item/device/instrument/glockenspiel,
