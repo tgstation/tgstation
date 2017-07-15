@@ -62,7 +62,7 @@
 //process()
 	//return
 
-/obj/machinery/door/Bumped(atom/AM)
+/obj/machinery/door/CollidedWith(atom/movable/AM)
 	if(operating || emagged)
 		return
 	if(ismob(AM))

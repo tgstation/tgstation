@@ -27,7 +27,7 @@
 	..()
 	collision_ignite(AM)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/CollidedWith(atom/movable/AM)
 	..()
 	collision_ignite(AM)
 

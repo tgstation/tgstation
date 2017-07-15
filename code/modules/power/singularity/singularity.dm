@@ -107,9 +107,8 @@
 	return
 
 
-/obj/singularity/Bumped(atom/A)
-	consume(A)
-	return
+/obj/singularity/CollidedWith(atom/movable/AM)
+	consume(AM)
 
 
 /obj/singularity/process()

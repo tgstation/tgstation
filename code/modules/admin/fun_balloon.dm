@@ -120,29 +120,29 @@
 	var/list/warp_points = list()
 
 
-/obj/effect/forcefield/arena_shuttle/Bumped(mob/M as mob|obj)
+/obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
+	if(!isliving(AM))
+		return
 	if(!warp_points.len)
 		warp_points = get_area_turfs(/area/shuttle/escape)
 		for(var/turf/T in warp_points)
-			for(var/atom/movable/AM in T)
-				if(AM.density && AM.anchored)
+			for(var/atom/movable/TAM in T)
+				if(TAM.density && TAM.anchored)
 					warp_points -= T
 					break
-	if(!isliving(M))
-		return
+
+	var/mob/living/L = AM
+	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
+		to_chat(L, "Your offering is accepted. You may pass.")
+		qdel(L.pulling)
+		var/turf/LA = pick(warp_points)
+		L.forceMove(LA)
+		L.hallucination = 0
+		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
+		for(var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw in L)
+			qdel(chainsaw)
 	else
-		var/mob/living/L = M
-		if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
-			to_chat(L, "Your offering is accepted. You may pass.")
-			qdel(L.pulling)
-			var/turf/LA = pick(warp_points)
-			L.forceMove(LA)
-			L.hallucination = 0
-			to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
-			for(var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw in L)
-				qdel(chainsaw)
-		else
-			to_chat(L, "You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.")
+		to_chat(L, "You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.")
 
 /obj/effect/landmark/shuttle_arena_safe
 	name = "hall of champions"
@@ -157,19 +157,20 @@
 	name = "portal"
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle_entrance/Bumped(mob/M as mob|obj)
+/obj/effect/forcefield/arena_shuttle_entrance/CollidedWith(atom/movable/AM)
+	if(!isliving(AM))
+		return
+
 	if(!warp_points.len)
 		for(var/obj/effect/landmark/shuttle_arena_entrance/S in GLOB.landmarks_list)
 			warp_points |= S
-	if(!isliving(M))
-		return
 
 	var/obj/effect/landmark/LA = pick(warp_points)
-
+	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>")
 	spawn()
-		var/obj/effect/mine/pickup/bloodbath/B = new(M)
+		var/obj/effect/mine/pickup/bloodbath/B = new (M)
 		B.mineEffect(M)
 
 
