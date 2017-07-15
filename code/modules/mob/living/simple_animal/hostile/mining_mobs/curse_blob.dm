@@ -5,6 +5,7 @@
 	icon_state = "curseblob"
 	icon_living = "curseblob"
 	icon_aggro = "curseblob"
+	movement_type = FLYING
 	move_to_delay = 5
 	vision_range = 20
 	aggro_vision_range = 20
@@ -69,7 +70,7 @@
 		return
 
 //if it's not our target, we ignore it
-/mob/living/simple_animal/hostile/asteroid/curseblob/CanPass(atom/movable/mover, turf/target, height = 0)
+/mob/living/simple_animal/hostile/asteroid/curseblob/CanPass(atom/movable/mover, turf/target)
 	if(mover == set_target)
 		return FALSE
 	if(istype(mover, /obj/item/projectile))

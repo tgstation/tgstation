@@ -554,7 +554,7 @@
 						var/obj/machinery/door/airlock/AL = D
 						if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
 							inactivity_period = 20
-							AL.panel_open = 1
+							AL.panel_open = TRUE
 							AL.update_icon()
 							AL.shock(src,(100 - smartness)/2)
 							sleep(5)
@@ -570,7 +570,7 @@
 							sleep(5)
 							if(QDELETED(AL))
 								return
-							AL.panel_open = 0
+							AL.panel_open = FALSE
 							AL.update_icon()
 							D.open(2)	//crowbar force
 						else

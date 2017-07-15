@@ -154,10 +154,11 @@ Actual Adjacent procs :
 /turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
 	var/list/L = new()
 	var/turf/T
+	var/static/space_type_cache = typecacheof(list(/turf/open/space))
 
-	for(var/dir in GLOB.cardinal)
+	for(var/dir in GLOB.cardinals)
 		T = get_step(src,dir)
-		if(simulated_only && !istype(T))
+		if(!T || (simulated_only && space_type_cache[T.type]))
 			continue
 		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
 			L.Add(T)

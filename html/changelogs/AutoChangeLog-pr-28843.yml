@@ -1,5 +1,0 @@
-author: "Steelpoint (Ancient Station)"
-delete-after: True
-changes: 
-  - rscadd: "Major changes to Ancient Station include new sounds for the prototype RIG hardsuit, the NASA Engineering Voidsuit slowing the user down properly and new insulated gloves in engineering."
-  - rscadd: "Several minor changes, such as an extra oxygen tank, spawn in equipment and minor tile changes."

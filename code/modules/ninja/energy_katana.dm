@@ -69,7 +69,6 @@
 	block_chance = 50
 	slot_flags = SLOT_BELT
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	bypass_density = TRUE

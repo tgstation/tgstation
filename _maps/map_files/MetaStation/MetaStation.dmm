@@ -3531,15 +3531,11 @@
 /turf/open/floor/plasteel/vault,
 /area/security/prison)
 "agH" = (
-/obj/structure/closet/secure_closet/brig{
-	anchored = 1
-	},
+/obj/structure/closet/secure_closet/brig,
 /turf/open/floor/plasteel/vault,
 /area/security/prison)
 "agI" = (
-/obj/structure/closet/secure_closet/brig{
-	anchored = 1
-	},
+/obj/structure/closet/secure_closet/brig,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -4476,12 +4472,7 @@
 	},
 /area/security/warden)
 "aiz" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Secure Evidence Closet";
-	req_access_txt = "0";
-	req_one_access_txt = "3,4"
-	},
+/obj/structure/closet/secure_closet/evidence,
 /obj/item/weapon/storage/secure/briefcase{
 	name = "Secure Evidence Briefcase";
 	pixel_x = 3;
@@ -20095,8 +20086,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "aMo" = (
-/obj/structure/reflector/box{
-	anchored = 1;
+/obj/structure/reflector/box/anchored{
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -37596,12 +37586,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	desc = "Ian's bed! Looks comfy.";
-	name = "Ian's bed";
-	pixel_y = 2
-	},
+/obj/structure/bed/dogbed/ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bsQ" = (
@@ -40667,8 +40652,7 @@
 	},
 /obj/structure/cable/yellow,
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 35;
-	layer = 3.1
+	amount = 35
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/storage/satellite)
@@ -57650,8 +57634,7 @@
 /area/maintenance/disposal/incinerator)
 "cfs" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -58256,11 +58239,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "cgG" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -59897,12 +59876,8 @@
 	},
 /area/medical/medbay/central)
 "cjS" = (
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
@@ -62107,7 +62082,6 @@
 	dir = 8
 	},
 /obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9;
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -70297,9 +70271,7 @@
 	network = list("Toxins");
 	use_power = 0
 	},
-/obj/item/target/alien{
-	anchored = 1
-	},
+/obj/item/target/alien/anchored,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -71049,15 +71021,9 @@
 	pixel_x = 29;
 	receive_ore_updates = 1
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 4
@@ -77257,7 +77223,7 @@
 "cQD" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
-	amount = 20;
+	amount = 40;
 	pixel_x = 3;
 	pixel_y = -4
 	},
@@ -82454,9 +82420,7 @@
 	},
 /area/maintenance/port/fore)
 "daY" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -82961,19 +82925,15 @@
 "dcc" = (
 /obj/structure/table/glass,
 /obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9;
 	pixel_y = 4
 	},
 /obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9;
 	pixel_y = 4
 	},
 /obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9;
 	pixel_y = 4
 	},
 /obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9;
 	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/glass/beaker{
@@ -83882,8 +83842,7 @@
 /area/science/xenobiology)
 "ddD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8;
-	
+	dir = 8
 	},
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria{
@@ -84335,8 +84294,7 @@
 /area/engine/engineering)
 "deK" = (
 /obj/structure/cable/white,
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 2;
 	state = 2
 	},
@@ -84419,10 +84377,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "deY" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 1;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -84462,18 +84418,14 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dff" = (
-/obj/structure/reflector/double{
-	anchored = 1;
-	dir = 1;
-	icon_state = "reflector_double"
+/obj/structure/reflector/double/anchored{
+	dir = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "dfg" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 8;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -84522,9 +84474,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "dfq" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -84574,8 +84524,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 1;
 	state = 2
 	},
@@ -84586,8 +84535,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 1;
 	state = 2
 	},
@@ -86988,9 +86936,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "dlS" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -86998,9 +86944,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dlT" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -112974,16 +112918,16 @@ cRo
 cMI
 cZe
 cZe
+cYF
+cYF
+cYF
 cZe
+cYF
+cYF
 cZe
-cZe
-cZe
-cZe
-cZe
-cZe
-cZe
-cZe
-cZe
+cYF
+cYF
+cYF
 cZe
 cZe
 aaa

@@ -87,7 +87,7 @@
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 0
-	var/on = 1
+	var/on = TRUE
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
@@ -143,7 +143,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	needs_permit = 0
 	force = 0
-	on = 0
+	on = FALSE
 
 /obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user

@@ -70,7 +70,6 @@
 "ak" = (
 /obj/structure/dresser,
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/vault,
@@ -298,7 +297,6 @@
 "aP" = (
 /obj/structure/dresser,
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault{
@@ -312,9 +310,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aR" = (
-/obj/structure/closet/emcloset{
-	anchored = 1
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/item/weapon/tank/internals/emergency_oxygen/engi,
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
@@ -372,7 +368,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "aX" = (
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /obj/structure/sink{
@@ -394,9 +389,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "ba" = (
-/obj/structure/closet/emcloset{
-	anchored = 1
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/item/weapon/tank/internals/emergency_oxygen/engi,
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
@@ -555,8 +548,7 @@
 /obj/structure/table/reinforced,
 /obj/item/device/healthanalyzer,
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 5;
-	layer = 3.1
+	amount = 5
 	},
 /turf/open/floor/plasteel/podhatch,
 /area/ruin/powered/syndicate_lava_base)

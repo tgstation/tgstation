@@ -920,11 +920,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acv" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "3"
-	},
+/obj/structure/closet/secure_closet/contraband/armory,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory)
 "acw" = (
@@ -2587,9 +2583,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/prison)
 "afH" = (
-/obj/structure/closet/secure_closet/brig{
-	anchored = 1
-	},
+/obj/structure/closet/secure_closet/brig,
 /turf/open/floor/plasteel/red/side,
 /area/security/prison)
 "afI" = (
@@ -3695,14 +3689,10 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "ahX" = (
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahY" = (
@@ -8736,8 +8726,7 @@
 	amount = 5
 	},
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 10;
-	layer = 2.9
+	amount = 10
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/department/electrical)
@@ -25665,12 +25654,8 @@
 "bio" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/requests_console{
 	department = "Chemistry";
 	departmentType = 2;
@@ -27950,6 +27935,10 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -28254,11 +28243,7 @@
 /area/crew_quarters/heads/hop)
 "bnQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	desc = "Ian's bed! Looks comfy.";
-	name = "Ian's bed"
-	},
+/obj/structure/bed/dogbed/ian,
 /mob/living/simple_animal/pet/dog/corgi/Ian{
 	dir = 8
 	},
@@ -30031,9 +30016,7 @@
 	},
 /area/science/explab)
 "brD" = (
-/obj/structure/closet/emcloset{
-	pixel_x = -2
-	},
+/obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -39322,9 +39305,7 @@
 	network = list("Toxins");
 	use_power = 0
 	},
-/obj/item/target/alien{
-	anchored = 1
-	},
+/obj/item/target/alien/anchored,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -40157,9 +40138,7 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -41168,15 +41147,9 @@
 /area/science/misc_lab)
 "bPG" = (
 /obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -41535,6 +41508,8 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bQF" = (
@@ -48445,8 +48420,7 @@
 /area/engine/atmos)
 "cfS" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -53642,7 +53616,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqT" = (
@@ -53671,9 +53645,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqW" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/item/weapon/tank/internals/plasma,
 /obj/structure/cable/yellow,
 /obj/effect/turf_decal/stripes/line{
@@ -54091,7 +54063,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crX" = (
-/obj/structure/closet/emcloset,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -54099,6 +54070,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crY" = (
@@ -54141,8 +54113,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "csf" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 8;
 	state = 2
 	},
@@ -55164,8 +55135,7 @@
 	},
 /obj/item/clothing/head/welding,
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 35;
-	layer = 3.1
+	amount = 35
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -57676,8 +57646,7 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4";
-	
+	icon_state = "2-4"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57706,8 +57675,7 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57784,12 +57752,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 4;
-	icon_state = "emitter";
-	state = 2;
-	
+	state = 2
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -57797,8 +57762,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57811,8 +57775,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57820,8 +57783,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -59492,9 +59454,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEu" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -59536,9 +59496,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEz" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -59683,9 +59641,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEN" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -59721,9 +59677,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cES" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -59823,9 +59777,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFd" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -59861,9 +59813,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cFi" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -60489,14 +60439,11 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGU" = (
-/obj/structure/reflector/double{
-	anchored = 1
-	},
+/obj/structure/reflector/double/anchored,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGV" = (
-/obj/structure/reflector/box{
-	anchored = 1;
+/obj/structure/reflector/box/anchored{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -60600,17 +60547,14 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 4;
-	icon_state = "emitter";
 	state = 2
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHi" = (
-/obj/structure/reflector/box{
-	anchored = 1;
+/obj/structure/reflector/box/anchored{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -60620,10 +60564,8 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 8;
-	icon_state = "emitter";
 	state = 2
 	},
 /turf/open/floor/plating,
@@ -60658,18 +60600,14 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHo" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 1;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHp" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 4;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -62568,9 +62506,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cMI" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -62578,9 +62514,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cMJ" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -91129,7 +91063,7 @@ cDo
 cgR
 cqA
 cqT
-czh
+csg
 cEm
 crU
 csb

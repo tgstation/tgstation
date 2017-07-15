@@ -1,0 +1,4 @@
+author: "NewSta"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the maid apron being invisible when in-hand or attached to the maid outfit."

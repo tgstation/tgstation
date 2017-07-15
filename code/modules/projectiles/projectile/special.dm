@@ -8,7 +8,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 
 
-/obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 1, 1)
 	return 1
@@ -16,7 +16,7 @@
 
 /obj/item/projectile/ion/weak
 
-/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 0, 0)
 	return 1
@@ -27,7 +27,7 @@
 	icon_state= "bolter"
 	damage = 50
 
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2)
 	return 1
@@ -38,7 +38,7 @@
 	icon_state= "bolter"
 	damage = 60
 
-/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
@@ -52,7 +52,7 @@
 	armour_penetration = 100
 	dismemberment = 100
 
-/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
 
@@ -88,7 +88,7 @@
 	var/temperature = 100
 
 
-/obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+/obj/item/projectile/temp/on_hit(atom/target, blocked = FALSE)//These two could likely check temp protection on the mob
 	..()
 	if(isliving(target))
 		var/mob/M = target
@@ -108,13 +108,11 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Bump(atom/A, yes)
-	if(!yes) //prevents multi bumps.
-		return
+/obj/item/projectile/meteor/Collide(atom/A)
 	if(A == firer)
 		loc = A.loc
 		return
-	A.ex_act(2)
+	A.ex_act(EXPLODE_HEAVY)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	for(var/mob/M in urange(10, src))
 		if(!M.stat)
@@ -129,7 +127,7 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -150,7 +148,7 @@
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
 
-/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
@@ -190,7 +188,7 @@
 	damage = 25
 	knockdown = 50
 
-/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
 	return 1
@@ -329,7 +327,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/temp_visual/gravpush(Z)

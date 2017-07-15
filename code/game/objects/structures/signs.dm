@@ -1,10 +1,9 @@
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 0
+	density = FALSE
 	layer = SIGN_LAYER
-	obj_integrity = 100
 	max_integrity = 100
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/buildable_sign = 1 //unwrenchable and modifiable
@@ -113,7 +112,6 @@
 /obj/structure/sign/map
 	name = "station map"
 	desc = "A framed picture of the station."
-	obj_integrity = 500
 	max_integrity = 500
 
 /obj/structure/sign/map/left

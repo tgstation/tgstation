@@ -1,4 +1,5 @@
 
+#define MUSIC_MAXLINES 300
 
 /datum/song
 	var/name = "Untitled"
@@ -172,7 +173,7 @@
 					Combined, an example is: <i>E-E4/4,F#/2,G#/8,B/8,E3-E4/4</i>
 					<br>
 					Lines may be up to 50 characters.<br>
-					A song may only contain up to 50 lines.<br>
+					A song may only contain up to [MUSIC_MAXLINES] lines.<br>
 					"}
 		else
 			dat += "<B><A href='?src=\ref[src];help=2'>Show Help</A></B><BR>"
@@ -192,9 +193,9 @@
 			lines.Cut(1,2)
 		else
 			tempo = sanitize_tempo(5) // default 120 BPM
-		if(lines.len > 50)
+		if(lines.len > MUSIC_MAXLINES)
 			to_chat(usr, "Too many lines!")
-			lines.Cut(51)
+			lines.Cut(MUSIC_MAXLINES + 1)
 		var/linenum = 1
 		for(var/l in lines)
 			if(lentext(l) > 50)
@@ -258,7 +259,7 @@
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
 		if(!newline || !in_range(instrumentObj, usr))
 			return
-		if(lines.len > 50)
+		if(lines.len > MUSIC_MAXLINES)
 			return
 		if(lentext(newline) > 50)
 			newline = copytext(newline, 1, 50)
@@ -311,8 +312,8 @@
 	name = "space minimoog"
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "minimoog"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/datum/song/song
 
 
@@ -365,7 +366,7 @@
 					"[user] tightens \the [src]'s casters.", \
 					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
+				anchored = TRUE
 		else if(anchored)
 			playsound(src.loc, O.usesound, 50, 1)
 			to_chat(user, "<span class='notice'> You begin to loosen \the [src]'s casters...</span>")
@@ -374,6 +375,6 @@
 					"[user] loosens \the [src]'s casters.", \
 					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchored = FALSE
 	else
 		return ..()

@@ -71,7 +71,7 @@
 	damage = 0
 	icon_state = "tentacle_end"
 
-/obj/item/projectile/mega_arachnid/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target) && blocked < 100)
 		var/obj/item/weapon/restraints/legcuffs/beartrap/mega_arachnid/B = new /obj/item/weapon/restraints/legcuffs/beartrap/mega_arachnid(get_turf(target))
 		B.Crossed(target)
@@ -133,7 +133,7 @@
 	nondirectional_sprite = TRUE
 	impact_effect_type = /obj/effect/temp_visual/leaper_projectile_impact
 
-/obj/item/projectile/leaper/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/leaper/on_hit(atom/target, blocked = FALSE)
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -170,7 +170,6 @@
 	desc = "A floating bubble containing leaper venom, the contents are under a surprising amount of pressure."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "leaper"
-	obj_integrity = 10
 	max_integrity = 10
 	density = FALSE
 
@@ -536,7 +535,7 @@
 				var/mob/living/simple_animal/hostile/jungle/mook/M = ML
 				if(!M.stat)
 					mook_under_us = TRUE
-					var/anydir = pick(GLOB.cardinal)
+					var/anydir = pick(GLOB.cardinals)
 					Move(get_step(src, anydir), anydir)
 					continue
 

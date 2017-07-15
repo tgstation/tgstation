@@ -37,12 +37,12 @@
 	var/bot_name
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
-	var/emagged = 0
+	var/emagged = FALSE
 	var/list/prev_access = list()
-	var/on = 1
-	var/open = 0//Maint panel
-	var/locked = 1
-	var/hacked = 0 //Used to differentiate between being hacked by silicons and emagged by humans.
+	var/on = TRUE
+	var/open = FALSE//Maint panel
+	var/locked = TRUE
+	var/hacked = FALSE //Used to differentiate between being hacked by silicons and emagged by humans.
 	var/text_hack = ""		//Custom text returned to a silicon upon hacking a bot.
 	var/text_dehack = "" 	//Text shown when resetting a bots hacked status to normal.
 	var/text_dehack_fail = "" //Shown when a silicon tries to reset a bot emagged with the emag item, which cannot be reset.
@@ -103,14 +103,14 @@
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return 0
-	on = 1
+	on = TRUE
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
 	return 1
 
 /mob/living/simple_animal/bot/proc/turn_off()
-	on = 0
+	on = FALSE
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -168,14 +168,14 @@
 
 /mob/living/simple_animal/bot/emag_act(mob/user)
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
-		locked = 0
-		emagged = 1
+		locked = FALSE
+		emagged = TRUE
 		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
 		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
-		locked = 1 //Access denied forever!
+		locked = TRUE //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
@@ -719,7 +719,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else	// no path, so calculate new one
 		calc_summon_path()
 
-/mob/living/simple_animal/bot/Bump(M as mob|obj) //Leave no door unopened!
+/mob/living/simple_animal/bot/Collide(M as mob|obj) //Leave no door unopened!
 	. = ..()
 	if((istype(M, /obj/machinery/door/airlock) ||  istype(M, /obj/machinery/door/window)) && (!isnull(access_card)))
 		var/obj/machinery/door/D = M
@@ -771,15 +771,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("hack")
 			if(emagged != 2)
 				emagged = 2
-				hacked = 1
-				locked = 1
+				hacked = TRUE
+				locked = TRUE
 				to_chat(usr, "<span class='warning'>[text_hack]</span>")
 				bot_reset()
 			else if(!hacked)
 				to_chat(usr, "<span class='boldannounce'>[text_dehack_fail]</span>")
 			else
-				emagged = 0
-				hacked = 0
+				emagged = FALSE
+				hacked = FALSE
 				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
 				bot_reset()
 		if("ejectpai")

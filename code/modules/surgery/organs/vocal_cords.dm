@@ -407,7 +407,7 @@
 		for(var/i=1, i<=(5*power_multiplier), i++)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				step(L, direction ? direction : pick(GLOB.cardinal))
+				step(L, direction ? direction : pick(GLOB.cardinals))
 			sleep(10)
 
 	//WALK

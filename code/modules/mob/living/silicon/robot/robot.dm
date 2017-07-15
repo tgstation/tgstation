@@ -45,12 +45,12 @@
 	var/obj/machinery/camera/camera = null
 
 	var/opened = 0
-	var/emagged = 0
+	var/emagged = FALSE
 	var/emag_cooldown = 0
 	var/wiresexposed = 0
 
 	var/ident = 0
-	var/locked = 1
+	var/locked = TRUE
 	var/list/req_access = list(GLOB.access_robotics)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
@@ -547,7 +547,7 @@
 	if(locked)
 		switch(alert("You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
-				locked = 0
+				locked = FALSE
 				update_icons()
 				to_chat(usr, "<span class='notice'>You unlock your cover.</span>")
 
@@ -942,7 +942,7 @@
 			camera.toggle_cam(src,0)
 		update_headlamp()
 		if(admin_revive)
-			locked = 1
+			locked = TRUE
 		notify_ai(NEW_BORG)
 		. = 1
 

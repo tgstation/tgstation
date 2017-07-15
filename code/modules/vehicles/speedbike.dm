@@ -38,7 +38,7 @@
 	pixel_y = -48 //to fix the offset when Initialized()
 	pixel_x = -48
 
-/obj/vehicle/space/speedbike/speedwagon/Bump(atom/movable/A)
+/obj/vehicle/space/speedbike/speedwagon/Collide(atom/movable/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/atom/throw_target = get_edge_target_turf(A, src.dir)
@@ -65,4 +65,4 @@
 	if(src.has_buckled_mobs())
 		for(var/atom/A in range(2, src))
 			if(!(A in src.buckled_mobs))
-				Bump(A)
+				Collide(A)

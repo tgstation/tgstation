@@ -123,8 +123,8 @@
 	health = 1e6
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0
@@ -171,7 +171,7 @@
 /mob/living/simple_animal/shade/howling_ghost/adjustHealth()
 	. = 0
 
-/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 

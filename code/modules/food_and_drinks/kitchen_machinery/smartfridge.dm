@@ -7,8 +7,8 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -442,7 +442,8 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/flu_virion = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/plasma = 1,
-		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/formaldehyde = 1)
 
 // ----------------------------
 // Disk """fridge"""

@@ -434,7 +434,7 @@
 	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
-	target.ex_act(3)
+	target.ex_act(EXPLODE_LIGHT)
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisperseTarget(mob/living/target)
@@ -527,7 +527,6 @@
 	layer = MOB_LAYER
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_color = LIGHT_COLOR_CYAN
-	obj_integrity = 30
 	max_integrity = 30
 	anchored = TRUE
 	var/lon_range = 1
@@ -550,9 +549,8 @@
 	name = "swarmer trap"
 	desc = "A quickly assembled trap that electrifies living beings and overwhelms machine sensors. Will not retain its form if damaged enough."
 	icon_state = "trap"
-	obj_integrity = 10
 	max_integrity = 10
-	density = 0
+	density = FALSE
 
 /obj/structure/swarmer/trap/Crossed(atom/movable/AM)
 	if(isliving(AM))
@@ -594,7 +592,6 @@
 	desc = "A quickly assembled energy blockade. Will not retain its form if damaged enough, but disabler beams and swarmers pass right through."
 	icon_state = "barricade"
 	light_range = 1
-	obj_integrity = 50
 	max_integrity = 50
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)

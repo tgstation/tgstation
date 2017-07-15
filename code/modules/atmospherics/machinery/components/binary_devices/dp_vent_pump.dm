@@ -20,7 +20,7 @@ Acts like a normal vent, but has an input AND output.
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 0
+	var/on = FALSE
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = ONE_ATMOSPHERE

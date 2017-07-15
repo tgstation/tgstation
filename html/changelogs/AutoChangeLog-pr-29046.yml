@@ -1,5 +1,0 @@
-author: "Ergovisavi"
-delete-after: True
-changes: 
-  - rscadd: "Adds another planetstation mob, the \"wanderer/mook\" to the backend"
-  - bugfix: "Fixes a problem with player controlled leapers where they occasionally can't fire"

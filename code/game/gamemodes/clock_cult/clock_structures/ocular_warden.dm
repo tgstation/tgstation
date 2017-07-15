@@ -5,7 +5,6 @@
 	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
-	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
 	layer = WALL_OBJ_LAYER
@@ -102,7 +101,7 @@
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
 			else
-				setDir(pick(GLOB.cardinal))//Random rotation
+				setDir(pick(GLOB.cardinals))//Random rotation
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()

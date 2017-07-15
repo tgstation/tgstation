@@ -10,7 +10,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 	layer = EDGED_TURF_LAYER
 	temperature = TCMB
@@ -32,7 +32,7 @@
 	icon = smooth_icon
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
-		for(var/dir in GLOB.cardinal)
+		for(var/dir in GLOB.cardinals)
 			if(prob(spreadChance))
 				var/turf/T = get_step(src, dir)
 				if(istype(T, /turf/closed/mineral/random))
@@ -116,7 +116,7 @@
 		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			src.attackby(M.selected,M)
 			return*/
-//Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
+//Aparantly mechs are just TOO COOL to call Collide())
 	else
 		return
 

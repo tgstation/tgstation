@@ -2,8 +2,8 @@
 /obj/item/device/instrument
 	name = "generic instrument"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
 	max_integrity = 100
+	icon = 'icons/obj/musician.dmi'
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "ogg"
@@ -46,7 +46,6 @@
 /obj/item/device/instrument/violin
 	name = "space violin"
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
-	icon = 'icons/obj/musician.dmi'
 	icon_state = "violin"
 	item_state = "violin"
 	force = 10
@@ -60,10 +59,16 @@
 	item_state = "golden_violin"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/device/instrument/piano_synth
+	name = "synthesizer"
+	desc = "An electronic synthesizer that can play piano music."
+	icon_state = "synth"
+	item_state = "synth"
+	instrumentId = "piano"
+
 /obj/item/device/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."
-	icon = 'icons/obj/musician.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"
 	force = 10
@@ -74,7 +79,6 @@
 /obj/item/device/instrument/eguitar
 	name = "electric guitar"
 	desc = "Makes all your shredding needs possible."
-	icon = 'icons/obj/musician.dmi'
 	icon_state = "eguitar"
 	item_state = "eguitar"
 	force = 12

@@ -63,14 +63,14 @@
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(31, 2, 3)// of 94 standard, 6 contraband, 9 premium
-	init_charges = list(27, 2, 3)
+	charges = list(32, 2, 3)// of 96 standard, 6 contraband, 9 premium
+	init_charges = list(32, 2, 3)
 
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(31, 4, 4)// of 101 standard, 12 contraband, 10 premium(?)
-	init_charges = list(31, 4, 4)
+	charges = list(37, 4, 4)// of 111 standard, 12 contraband, 10 premium(?)
+	init_charges = list(37, 4, 4)
 
 /obj/item/weapon/vending_refill/medical
 	machine_name = "NanoMed"

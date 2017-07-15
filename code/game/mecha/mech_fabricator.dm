@@ -3,8 +3,8 @@
 	icon_state = "fab-idle"
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -87,7 +87,7 @@
 	if(emagged)
 		return
 
-	emagged = 0.5
+	emagged = FALSE
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)
 	say("Attempting auto-repair...")
@@ -96,7 +96,7 @@
 	sleep(30)
 	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
 	req_access = null
-	emagged = 1
+	emagged = TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""

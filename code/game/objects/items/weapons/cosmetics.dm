@@ -6,7 +6,7 @@
 	icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
-	var/open = 0
+	var/open = FALSE
 
 
 /obj/item/weapon/lipstick/purple

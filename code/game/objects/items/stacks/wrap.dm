@@ -16,7 +16,7 @@
 
 /obj/item/stack/wrapping_paper/use(used, transfer)
 	var/turf/T = get_turf(src)
-	..()
+	. = ..()
 	if(QDELETED(src) && !transfer)
 		new /obj/item/weapon/c_tube(T)
 
@@ -102,7 +102,7 @@
 
 /obj/item/stack/packageWrap/use(used, transfer = FALSE)
 	var/turf/T = get_turf(src)
-	..()
+	. = ..()
 	if(QDELETED(src) && !transfer)
 		new /obj/item/weapon/c_tube(T)
 

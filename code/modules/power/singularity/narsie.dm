@@ -4,7 +4,7 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
 	pixel_y = -85
-	density = 0
+	density = FALSE
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
@@ -114,7 +114,7 @@
 	return clashing
 
 
-/obj/singularity/narsie/Bump(atom/A)
+/obj/singularity/narsie/Collide(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie

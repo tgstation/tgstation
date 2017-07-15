@@ -31,4 +31,4 @@
 	desc = "A lightweight support lattice."
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice"
-	density = 1
+	density = TRUE

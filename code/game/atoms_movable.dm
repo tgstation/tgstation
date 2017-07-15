@@ -9,7 +9,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
-	var/anchored = 0
+	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
@@ -217,8 +217,12 @@
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	return
 
-/atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
-	if((A && yes))
+
+//This is tg's equivalent to the byond bump, it used to be called bump with a second arg
+//to differentiate it, naturally everyone forgot about this immediately and so some things
+//would bump twice, so now it's called Collide
+/atom/movable/proc/Collide(atom/A)	
+	if((A))
 		if(throwing)
 			throwing.hit_atom(A)
 			. = 1
@@ -313,7 +317,7 @@
 	set waitfor = 0
 	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
+/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()
@@ -406,7 +410,7 @@
 			return 0
 	return 1
 
-/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
+/atom/movable/CanPass(atom/movable/mover, turf/target)
 	if(mover in buckled_mobs)
 		return 1
 	return ..()

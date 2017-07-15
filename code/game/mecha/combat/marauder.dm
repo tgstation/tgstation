@@ -3,7 +3,6 @@
 	name = "\improper Marauder"
 	icon_state = "marauder"
 	step_in = 5
-	obj_integrity = 500
 	max_integrity = 500
 	deflect_chance = 25
 	armor = list(melee = 50, bullet = 55, laser = 40, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
@@ -47,7 +46,7 @@
 	icon_state = "seraph"
 	operation_req_access = list(GLOB.access_cent_specops)
 	step_in = 3
-	obj_integrity = 550
+	max_integrity = 550
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	internal_damage_threshold = 20
 	force = 55
