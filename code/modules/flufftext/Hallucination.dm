@@ -691,15 +691,15 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /datum/hallucination/whispers/New(mob/living/carbon/T, forced = TRUE)
 	..()
-	var/speak_messages = list("[pick("I'm watching you...","I know what you're doing","What are you hiding?","I saw that")]",\ //they KNOW
-	"[pick("","Hey, ","Hi ","Hello ","Wait, ","It's ")][target.first_name()]!",\ //yes, you
-	"[pick("Get out","Go away","Fuck off","OUT!")]",\ //Shoo
-	"[pick("Kchck-Chkck? Kchchck!","EEEeeeeEEEE","#@§*&£","H-hhhhh...)]",\ //wat
-	"[pick("Did you hear that?","Did you see that?","What was that?")]",\ //that
-	"[pick("Hail Ratvar","Hail Nar'Sie","Viva!","[generate_code_phrase()]","Are you mr. [pick(GLOB.possible_changeling_IDs)]?")]",\ //Hi i'm mr. antag
-	"[pick("Why?","What?","Wait, what?","Wait","Hold on","Uh...")]",\ //Odd during a conversation
+	var/speak_messages = list("[pick("I'm watching you...","I know what you're doing","What are you hiding?","I saw that")]",\
+	"[pick("","Hey, ","Hi ","Hello ","Wait, ","It's ")][target.first_name()]!",\
+	"[pick("Get out","Go away","Fuck off","OUT!")]",\
+	"[pick("Kchck-Chkck? Kchchck!","EEEeeeeEEEE","#@§*&£","H-hhhhh...")]",\
+	"[pick("Did you hear that?","Did you see that?","What was that?")]",\
+	"[pick("Hail Ratvar","Hail Nar'Sie","Viva!","[generate_code_phrase()]","Are you mr. [pick(GLOB.possible_changeling_IDs)]?")]",\
+	"[pick("Why?","What?","Wait, what?","Wait","Hold on","Uh...")]",\
 	"Give me that!",\
-	"HELP[pick(""," ME"," HIM"," HER"," THEM")]!!",\ //chelp
+	"HELP[pick(""," ME"," HIM"," HER"," THEM")]!!",\
 	"RUN!!",\
 	"I'm infected, [pick("stay away","don't get close","be careful","help me","kill me")]")
 
