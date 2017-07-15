@@ -69,7 +69,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
 
-/obj/effect/immovablerod/Bump(atom/clong)
+/obj/effect/immovablerod/Collide(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
