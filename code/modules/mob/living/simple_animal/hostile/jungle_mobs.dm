@@ -745,7 +745,7 @@
 	if(combatant_state == SEEDLING_STATE_ACTIVE && living_target && beam_id == solar_beam_identifier)
 		if(living_target.z == z)
 			update_icons()
-			solar_beam = new(src,target,time=5,beam_icon_state="solar_beam",maxdistance = INFINITY,btype=/obj/effect/ebeam/solarbeam,beam_sleep_time = 0.5)
+			solar_beam = new(get_turf(src),get_turf(target),time=5,beam_icon_state="solar_beam",maxdistance = INFINITY,btype=/obj/effect/ebeam/solarbeam,beam_sleep_time = 0.5)
 			INVOKE_ASYNC(solar_beam, /datum/beam.proc/Start)
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
@@ -805,6 +805,7 @@
 	if(combatant_state == SEEDLING_STATE_ACTIVE && beam_debuff_target)
 		beam_debuff_target.remove_status_effect(/datum/status_effect/seedling_beam_indicator)
 		beam_debuff_target = null
+		solar_beam_identifier = 0
 		AttackRecovery()
 	if(health <= 0)
 		if(combatant_state == SEEDLING_STATE_REGENERATING)
