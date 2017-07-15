@@ -136,7 +136,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centerstation/CollidedWith(atom/movable/AM)
 	if(!active)
 		return
 	if(!detect())
@@ -212,7 +212,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return TRUE
 	return FALSE
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centeraway/CollidedWith(atom/movable/AM)
 	if(!detect())
 		return
 	if(!active)

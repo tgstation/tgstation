@@ -33,7 +33,7 @@
 	else
 		INVOKE_ASYNC(src, .proc/close)
 
-/obj/machinery/door/poddoor/Bumped(atom/AM)
+/obj/machinery/door/poddoor/CollidedWith(atom/movable/AM)
 	if(density)
 		return 0
 	else

@@ -217,14 +217,18 @@
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	return
 
-/atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
-	if((A && yes))
+
+//This is tg's equivalent to the byond bump, it used to be called bump with a second arg
+//to differentiate it, naturally everyone forgot about this immediately and so some things
+//would bump twice, so now it's called Collide
+/atom/movable/proc/Collide(atom/A)	
+	if((A))
 		if(throwing)
 			throwing.hit_atom(A)
 			. = 1
 			if(!A || QDELETED(A))
 				return
-		A.Bumped(src)
+		A.CollidedWith(src)
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)

@@ -43,11 +43,11 @@
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/Bumped(atom/movable/AM)
+/obj/structure/destructible/clockwork/taunting_trail/CollidedWith(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/Bump(atom/movable/AM)
+/obj/structure/destructible/clockwork/taunting_trail/Collide(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 

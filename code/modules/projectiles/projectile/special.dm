@@ -108,9 +108,7 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Bump(atom/A, yes)
-	if(!yes) //prevents multi bumps.
-		return
+/obj/item/projectile/meteor/Collide(atom/A)
 	if(A == firer)
 		loc = A.loc
 		return

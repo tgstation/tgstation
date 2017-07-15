@@ -148,8 +148,9 @@
 		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
 /obj/item/device/lightreplacer/emag_act()
-	if(!emagged)
-		Emag()
+	if(emagged)
+		return
+	Emag()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	to_chat(user, status_string())

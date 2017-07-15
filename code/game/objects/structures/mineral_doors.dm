@@ -37,10 +37,10 @@
 	..()
 	move_update_air(T)
 
-/obj/structure/mineral_door/Bumped(atom/user)
+/obj/structure/mineral_door/CollidedWith(atom/movable/AM)
 	..()
 	if(!state)
-		return TryToSwitchState(user)
+		return TryToSwitchState(AM)
 
 /obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
 	if(isAI(user)) //so the AI can't open it

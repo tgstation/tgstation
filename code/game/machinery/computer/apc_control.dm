@@ -192,7 +192,7 @@
 		logs = list()
 	interact(usr) //Refresh the UI after a filter changes
 
-/obj/machinery/computer/apc_control/emag_act(mob/living/user)
+/obj/machinery/computer/apc_control/emag_act(mob/user)
 	if(emagged)
 		return
 	user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")

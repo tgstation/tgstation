@@ -612,6 +612,7 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
+			playsound(src, "sparks", 75, 1)
 			emagged = TRUE
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")

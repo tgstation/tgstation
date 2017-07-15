@@ -51,6 +51,18 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 
+	if(!(NOLIVER in dna.species.species_traits))
+		if(dna.species.mutantliver)
+			internal_organs += new dna.species.mutantliver()
+		else
+			internal_organs += new /obj/item/organ/liver()
+
+	if(!(NOSTOMACH in dna.species.species_traits))
+		if(dna.species.mutantstomach)
+			internal_organs += new dna.species.mutantstomach()
+		else
+			internal_organs += new /obj/item/organ/stomach()
+
 	internal_organs += new dna.species.mutanteyes
 	internal_organs += new dna.species.mutantears
 	internal_organs += new dna.species.mutanttongue
@@ -115,7 +127,8 @@
 				//Virsuses
 				if(viruses.len)
 					stat("Viruses:", null)
-					for(var/datum/disease/D in viruses)
+					for(var/thing in viruses)
+						var/datum/disease/D = thing
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
@@ -882,7 +895,7 @@
 		return 1
 	..()
 
-/mob/living/carbon/human/Bump(atom/A)
+/mob/living/carbon/human/Collide(atom/A)
 	..()
 	var/crashdir = get_dir(src, A)
 	var/obj/item/device/flightpack/FP = get_flightpack()

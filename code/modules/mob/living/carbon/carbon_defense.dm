@@ -107,11 +107,13 @@
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
-	for(var/datum/disease/D in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			user.ContractDisease(D)
 
-	for(var/datum/disease/D in user.viruses)
+	for(var/thing in user.viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
@@ -124,11 +126,13 @@
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
-	for(var/datum/disease/D in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			M.ContractDisease(D)
 
-	for(var/datum/disease/D in M.viruses)
+	for(var/thing in M.viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
@@ -137,7 +141,8 @@
 		return 0
 
 	if(..()) //successful monkey bite.
-		for(var/datum/disease/D in M.viruses)
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
 			ForceContractDisease(D)
 		return 1
 

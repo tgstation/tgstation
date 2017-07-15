@@ -102,14 +102,13 @@
 	return 0 //Will there be an impact? Who knows.  Will we see it? No.
 
 
-/obj/singularity/Bump(atom/A)
+/obj/singularity/Collide(atom/A)
 	consume(A)
 	return
 
 
-/obj/singularity/Bumped(atom/A)
-	consume(A)
-	return
+/obj/singularity/CollidedWith(atom/movable/AM)
+	consume(AM)
 
 
 /obj/singularity/process()
