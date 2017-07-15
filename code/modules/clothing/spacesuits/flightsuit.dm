@@ -104,8 +104,6 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
-	var/atom/movable/cached_pull
-	var/turf/old_pull_turf
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
@@ -247,24 +245,9 @@
 	momentum_y = Clamp(momentum_y + amounty, -momentum_max, momentum_max)
 	calculate_momentum_speed()
 
-/obj/item/device/flightpack/proc/update_cached_pull()
-	if(!wearer)
-		return
-	if(!QDELETED(wearer.pulling))
-		cached_pull = wearer.pulling
-	if(istype(cached_pull))
-		old_pull_turf = get_turf(cached_pull)
-	else if(old_pull_turf)
-		old_pull_turf = null
-
-/obj/item/device/flightpack/proc/handle_linked_movement(turf/oldTurf, turf/newTurf)
-	if(!QDELETED(cached_pull))
-		cached_pull.forceMove(oldTurf)
-
 /obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
 	if(!flight)
 		return
-	update_cached_pull()
 	var/momentum_increment = momentum_gain
 	if(boost)
 		momentum_increment = boost_power
@@ -281,7 +264,6 @@
 			adjust_momentum(momentum_increment, 0)
 		if(WEST)
 			adjust_momentum(-momentum_increment, 0)
-	handle_linked_movement(oldLoc, get_turf(wearer))
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
@@ -303,14 +285,10 @@
 		return FALSE
 	momentum_decay()
 	for(var/i in 1 to momentum_speed)
-		var/turf/oldturf = get_turf(wearer)
-		update_cached_pull()
 		if(momentum_speed_x >= i)
-			if(step(wearer, drift_dir_x))
-				handle_linked_movement(oldturf, get_turf(wearer))
+			step(wearer, drift_dir_x)
 		if(momentum_speed_y >= i)
-			if(step(wearer, drift_dir_y))
-				handle_linked_movement(oldturf, get_turf(wearer))
+			step(wearer, drift_dir_y)
 		sleep(1)
 
 //Make the wearer lose some momentum.
@@ -548,11 +526,8 @@
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
 	spawn()
 		door.Open()
-	update_cached_pull()
-	var/turf/old = get_turf(wearer)
 	var/turf/T = get_turf(door)
 	wearer.forceMove(T)
-	handle_linked_movement(old, T)
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
@@ -578,23 +553,17 @@
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
 		var/turf/target = get_turf(A)
-		var/turf/old = get_turf(wearer)
 		if(istype(A, /obj/machinery/door/window) && (get_turf(wearer) == get_turf(A)))
 			target = get_step(A, A.dir)
-		update_cached_pull()
 		wearer.forceMove(target)
-		handle_linked_movement(old, target)
 	return pass
 
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
 		return FALSE
-	update_cached_pull()
-	var/turf/old = get_turf(wearer)
 	var/turf/T = get_turf(victim)
 	wearer.forceMove(T)
-	handle_linked_movement(old, T)
 	wearer.visible_message("<span class='notice'>[wearer] flies over [victim]!</span>")
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
@@ -663,11 +632,11 @@
 	wearer.movement_type |= FLYING
 	wearer.pass_flags |= flight_passflags
 	usermessage("ENGAGING FLIGHT ENGINES.")
-	update_slowdown()
 	wearer.floating = TRUE
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	//I DONT HAVE SOUND EFFECTS YET playsound(
 	flight = TRUE
+	update_slowdown()
 	update_icon()
 	ion_trail.start()
 
@@ -679,7 +648,6 @@
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
-		update_slowdown()
 		wearer.floating = FALSE
 		wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
 		//NO SOUND YET	playsound(
@@ -687,6 +655,7 @@
 		wearer.movement_type &= ~FLYING
 		wearer.pass_flags &= ~flight_passflags
 		flight = FALSE
+		update_slowdown()
 		if(suit && suit.shoes)
 			suit.shoes.toggle(FALSE)
 		if(isturf(wearer.loc))
