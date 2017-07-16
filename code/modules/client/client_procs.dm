@@ -423,10 +423,11 @@ GLOBAL_LIST(external_rsc_urls)
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
-			if(config.allow_panic_bunker_bounce && tdata != "redirect")
+			var/list/connectiontopic_a = params2list(connectiontopic)
+			if(config.allow_panic_bunker_bounce && !connectiontopic_a["redirect"])
 				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name].</span>")
 				winset(src, null, "command=.options")
-				src << link("[config.panic_address]?redirect")
+				src << link("[config.panic_address]?redirect=1")
 			qdel(src)
 			return
 		
