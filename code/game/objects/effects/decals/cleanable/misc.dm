@@ -80,9 +80,8 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
-	var/list/viruses = list()
 
-/obj/effect/decal/cleanable/vomit/attack_hand(var/mob/user)
+/obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
@@ -97,12 +96,6 @@
 							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
 			reagents.trans_to(H, reagents.total_volume)
 			qdel(src)
-
-/obj/effect/decal/cleanable/vomit/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	viruses = null
-	return ..()
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"

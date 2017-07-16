@@ -56,6 +56,7 @@
 		if(user)
 			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return
+
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
 		to_chat(user, "<span class='warning'>It's locked!</span>")

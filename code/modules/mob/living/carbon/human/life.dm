@@ -30,8 +30,7 @@
 		return
 
 	if(..()) //not dead
-		for(var/datum/mutation/human/HM in dna.mutations)
-			HM.on_life(src)
+		handle_active_genes()
 
 	if(stat != DEAD)
 		//heart attack stuff
@@ -267,13 +266,6 @@
 
 	return min(1,thermal_protection)
 
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
-	dna.species.handle_chemicals_in_body(src)
-
-
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high
 	if(!stat)
@@ -339,6 +331,9 @@
 
 	heart.beating = !status
 
+/mob/living/carbon/human/proc/handle_active_genes()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
 	if(!can_heartattack())

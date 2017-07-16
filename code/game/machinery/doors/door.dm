@@ -62,7 +62,7 @@
 //process()
 	//return
 
-/obj/machinery/door/Bumped(atom/AM)
+/obj/machinery/door/CollidedWith(atom/movable/AM)
 	if(operating || emagged)
 		return
 	if(ismob(AM))
@@ -98,7 +98,7 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density

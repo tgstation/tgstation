@@ -102,14 +102,13 @@
 /atom/proc/handle_ricochet(obj/item/projectile/P)
 	return
 
-/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
-	return (!density || !height)
+/atom/proc/CanPass(atom/movable/mover, turf/target)
+	return !density
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return FALSE
-
 
 	if(T.z == ZLEVEL_TRANSIT)
 		for(var/A in SSshuttle.mobile)
@@ -180,7 +179,7 @@
 	return
 
 
-/atom/proc/Bumped(AM as mob|obj)
+/atom/proc/CollidedWith(atom/movable/AM)
 	return
 
 // Convenience proc to see if a container is open for chemistry handling

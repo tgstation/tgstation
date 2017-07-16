@@ -113,7 +113,7 @@
 
 //List of active diseases
 
-	var/list/viruses = list() // replaces var/datum/disease/virus
+	var/list/viruses = list() // list of all diseases in a mob
 	var/list/resistances = list()
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER

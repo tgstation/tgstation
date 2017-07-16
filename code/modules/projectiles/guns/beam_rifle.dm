@@ -354,7 +354,7 @@
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
 			if(prob(wall_devastate))
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 			return TRUE
 	if(ismovableatom(target))
 		var/atom/movable/AM = target
@@ -394,7 +394,7 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
+/obj/item/projectile/beam/beam_rifle/Collide(atom/target)
 	if(check_pierce(target))
 		permutated += target
 		return FALSE
@@ -471,7 +471,7 @@
 		if(original && (original.layer>=2.75) || ismob(original))
 			if(loc == get_turf(original))
 				if(!(original in permutated))
-					Bump(original, 1)
+					Collide(original)
 		Range()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/Range()

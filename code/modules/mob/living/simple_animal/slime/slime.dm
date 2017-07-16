@@ -148,7 +148,7 @@
 
 	. += config.slime_delay
 
-/mob/living/simple_animal/slime/ObjBump(obj/O)
+/mob/living/simple_animal/slime/ObjCollide(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)

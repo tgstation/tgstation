@@ -332,7 +332,7 @@
 			eject()
 			. = TRUE
 
-/obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
@@ -345,7 +345,7 @@
 			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
 		return 0
 	else
-		return ..(mover, target, height)
+		return ..(mover, target)
 
 /obj/machinery/disposal/bin/flush()
 	..()
@@ -458,7 +458,7 @@
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
 	if(!AM.disposalEnterTry())
 		return
 	switch(dir)

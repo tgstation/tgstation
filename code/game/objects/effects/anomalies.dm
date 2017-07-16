@@ -106,11 +106,11 @@
 /obj/effect/anomaly/grav/Crossed(mob/A)
 	gravShock(A)
 
-/obj/effect/anomaly/grav/Bump(mob/A)
+/obj/effect/anomaly/grav/Collide(mob/A)
 	gravShock(A)
 
-/obj/effect/anomaly/grav/Bumped(mob/A)
-	gravShock(A)
+/obj/effect/anomaly/grav/CollidedWith(atom/movable/AM)
+	gravShock(AM)
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
 	if(boing && isliving(A) && !A.stat)
@@ -141,11 +141,11 @@
 /obj/effect/anomaly/flux/Crossed(mob/living/M)
 	mobShock(M)
 
-/obj/effect/anomaly/flux/Bump(mob/living/M)
+/obj/effect/anomaly/flux/Collide(mob/living/M)
 	mobShock(M)
 
-/obj/effect/anomaly/flux/Bumped(mob/living/M)
-	mobShock(M)
+/obj/effect/anomaly/flux/CollidedWith(atom/movable/AM)
+	mobShock(AM)
 
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
 	if(canshock && istype(M))
@@ -185,9 +185,9 @@
 	for(var/mob/living/M in range(1,src))
 		do_teleport(M, locate(M.x, M.y, M.z), 4)
 
-/obj/effect/anomaly/bluespace/Bumped(atom/A)
-	if(isliving(A))
-		do_teleport(A, locate(A.x, A.y, A.z), 8)
+/obj/effect/anomaly/bluespace/CollidedWith(atom/movable/AM)
+	if(isliving(AM))
+		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8)
 
 /obj/effect/anomaly/bluespace/detonate()
 	var/turf/T = safepick(get_area_turfs(impact_area))
@@ -303,7 +303,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 7, 5)
 		else
-			O.ex_act(2)
+			O.ex_act(EXPLODE_HEAVY)
 
 /obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)

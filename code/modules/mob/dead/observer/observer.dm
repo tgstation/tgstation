@@ -151,7 +151,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 	return ..()
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
+/mob/dead/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 /*
@@ -317,7 +317,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Re-enter Corpse"
 	if(!client)
 		return
-	if(!(mind && mind.current))
+	if(!mind || QDELETED(mind.current))
 		to_chat(src, "<span class='warning'>You have no body.</span>")
 		return
 	if(!can_reenter_corpse)
