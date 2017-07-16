@@ -6,7 +6,7 @@
 	var/icon_state_on = "emitter_+a"
 	anchored = FALSE
 	density = TRUE
-	req_access = list(GLOB.access_engine_equip)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
