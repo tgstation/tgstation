@@ -35,16 +35,17 @@
 	vision_range = 7
 	aggro_vision_range = 15
 	var/phase = PHASE_VOID
-	var/form = FORM_DRAGON
+	var/form = FORM_ACCURSED
 	var/transition = FALSE //If we're transitioning between phases
 	var/list/forms = list(, \
-	"base" = list(-16, -16), \
-	"dragon" = list(-16, 0), \
-	"bubblegum" = list(-32, 0), \
-	"colossus" = list(-32, 0), \
-	"watcher" = list(-10, 0)) //A list of all the possible forms, with pixel offsets; if pixel_x and pixel_y are 0 for a mob, don't add an entry!
+	FORM_DRAGON = list("x" = -16, "y" = 0, "icon" = 'icons/mob/lavaland/64x64megafauna.dmi', "state" = "dragon"), \
+	FORM_BUBBLEGUM = list("x" = -32, "y" = 0, "icon" = 'icons/mob/lavaland/96x96megafauna.dmi', "state" = "bubblegum"), \
+	FORM_COLOSSUS = list("x" = -32, "y" = 0, "icon" = 'icons/mob/lavaland/96x96megafauna.dmi', "state" = "eva"), \
+	FORM_HIEROPHANT = list("x" = 0, "y" = 0, "icon" = 'icons/mob/lavaland/hierophant_new.dmi', "state" = "hierophant"), \
+	) //A list of all the possible forms, with pixel offsets, icons, and states
 	var/list/forms_this_cycle //Forms done during this "transition" cycle; we go through each form once before we reset
 	var/has_used_ability = FALSE //If the Seer has used its form's "special ability" yet
+	var/charging = FALSE //Used to track the Howling Charge ability
 	var/time_in_form = 0 //How many ticks the Seer has spent in this form
 	var/turf/original_location
 
@@ -60,7 +61,10 @@
 	. = ..()
 	time_in_form++
 	if(!target)
-		adjustBruteLoss(-25) //rapid healing while not engaged
+		if(loc != original_location)
+			playsound(src, 'sound/magic/blink.ogg', 50, FALSE)
+			forceMove(original_location)
+			playsound(src, 'sound/magic/blink.ogg', 50, FALSE)
 		if(form != FORM_ACCURSED)
 			change_form(FORM_ACCURSED)
 		if(prob(10))
@@ -75,6 +79,11 @@
 				if(time_in_form >= FORM_TIME_MU)
 					change_form()
 	update_icon()
+
+/mob/living/simple_animal/hostile/megafauna/seer/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(GLOB.necropolis_gate)
+		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //a good try.
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/seer/proc/handle_phases()
 	var/health_percentage = health / maxHealth
@@ -100,16 +109,15 @@
 				update_icon()
 
 /mob/living/simple_animal/hostile/megafauna/seer/Move()
-	. = ..()
-	if(form == FORM_BUBBLEGUM)
-		if(!canmove) //charge!
-			new/obj/effect/temp_visual/decoy/fading(loc, src)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 50, TRUE)
-
-/mob/living/simple_animal/hostile/megafauna/seer/Goto(target, delay, minimum_distance)
 	if(!canmove)
 		return
 	. = ..()
+	if(form == FORM_BUBBLEGUM)
+		if(notransform) //charge!
+			new/obj/effect/temp_visual/decoy/fading(loc, src)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 50, TRUE)
+	else if(form == FORM_HIEROPHANT)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/seer/proc/change_form(force_form, silent)
 	if(!LAZYLEN(forms_this_cycle))
@@ -141,18 +149,22 @@
 	cut_overlays()
 	pixel_x = -16
 	pixel_y = -16
+	icon = initial(icon)
+	color = initial(color)
 	switch(phase)
 		if(PHASE_VOID)
 			icon_state = "seer"
 		if(PHASE_ALPHA, PHASE_MU)
-			/*icon_state = "seer_[form]"
-			if(forms[form])
+			if(form != FORM_ACCURSED)
 				var/list/L = forms[form]
-				pixel_x = L[1]
-				pixel_y = L[2]
+				pixel_x = L["x"]
+				pixel_y = L["y"]
+				icon = L["icon"]
+				icon_state = L["state"]
+				icon_living = icon_state
+				color = list(rgb(5, 5, 5), rgb(5, 5, 5), rgb(5, 5, 5), rgb(5, 5, 5))
 			else
-				pixel_x = 0
-				pixel_y = 0*/
+				icon_state = "seer"
 		if(PHASE_OMEGA)
 			icon_state = "seer_frenzy"
 
@@ -173,9 +185,9 @@
 	else
 		switch(rand(1, 3))
 			if(1)
-				cursed_flames()
+				cursed_flames(GLOB.cardinals)
 			if(2)
-				vacuous_spiral()
+				cursed_flames(GLOB.diagonals)
 			if(3)
 				blackflame_firestorm()
 
@@ -203,16 +215,18 @@
 	light_range = 3
 	light_color = "#35005B"
 	var/chain_length = 1
+	var/grow_delay = 1
 
-/obj/effect/cursed_flames/Initialize(mapload, direction, chain_len)
+/obj/effect/cursed_flames/Initialize(mapload, direction, chain_len, delay = 1)
 	. = ..()
 	chain_length = chain_len
 	setDir(direction)
+	grow_delay = delay
 	if(chain_length >= 10)
 		return INITIALIZE_HINT_QDEL //no chains longer than 7!
 	for(var/mob/living/L in get_turf(src))
 		engulf(L)
-	addtimer(CALLBACK(src, .proc/new_flames), 1)
+	addtimer(CALLBACK(src, .proc/new_flames), grow_delay)
 	QDEL_IN(src, 10)
 
 /obj/effect/cursed_flames/Crossed(atom/movable/M)
@@ -223,7 +237,7 @@
 	var/turf/T = get_step(src, dir)
 	if(iswallturf(T))
 		return //and no fire on walls!
-	new/obj/effect/cursed_flames(get_step(src, dir), dir, chain_length + 1)
+	new/obj/effect/cursed_flames(get_step(src, dir), dir, chain_length + 1, grow_delay)
 
 /obj/effect/cursed_flames/proc/engulf(mob/living/L)
 	if("boss" in L.faction)
@@ -243,7 +257,7 @@
 	if(QDELETED(T) && T == get_turf(src))
 		return
 	new/obj/effect/temp_visual/dragon_swoop/bubblegum(T)
-	canmove = FALSE
+	charging = TRUE
 	setDir(get_dir(src, T))
 	visible_message("<span class='revenboldnotice'>[src] howls and prepares to charge!</span>")
 	playsound(src, 'sound/effects/curseattack.ogg', 75, TRUE, frequency = 0.9)
@@ -251,7 +265,7 @@
 	throw_at(T, get_dist(src, T), 1, src, 0)
 
 /mob/living/simple_animal/hostile/megafauna/seer/throw_impact(atom/A)
-	if(form != FORM_BUBBLEGUM || canmove || !isliving(A))
+	if(form != FORM_BUBBLEGUM || !charging || !isliving(A))
 		. = ..()
 	else
 		var/mob/living/L = A
@@ -264,7 +278,7 @@
 		shake_camera(L, 4, 3)
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 		L.throw_at(throwtarget, 3)
-	canmove = TRUE
+	charging = FALSE
 
 
 
@@ -373,7 +387,7 @@
 	playsound(src, 'sound/magic/fireball.ogg', 100, TRUE, frequency = 0.5)
 	playsound(src, 'sound/effects/ghost2.ogg', 100, TRUE, frequency = 0.5)
 	for(var/D in GLOB.alldirs)
-		new/obj/effect/cursed_flames(get_step(src, D), D, 1)
+		new/obj/effect/cursed_flames(get_step(src, D), D, 1, 2)
 
 
 
@@ -397,11 +411,13 @@
 
 /obj/effect/seer_death/proc/death_animation()
 	visible_message("<span class='big revenboldnotice'>[src] writhes and howls with unearthly agony!</span>")
-	playsound(src, 'sound/creatures/seer_deathblow.ogg', 100, FALSE)
+	for(var/mob/M in GLOB.player_list)
+		if(M.z == z)
+			M.playsound_local(M, 'sound/creatures/seer_deathblow.ogg', 100, FALSE)
 	sleep(35)
 	playsound(src, 'sound/creatures/seer_scream.ogg', 100, FALSE)
-	animate(src, pixel_y = -9, alpha = 0, time = 50)
-	QDEL_IN(src, 50)
+	animate(src, pixel_y = -9, alpha = 25, time = 30)
+	QDEL_IN(src, 30)
 
 #undef PHASE_VOID
 #undef PHASE_ALPHA

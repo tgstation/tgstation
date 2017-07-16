@@ -161,7 +161,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		sleep(50)
 	..()
 
-/obj/structure/necropolis_gate/legion_gate/toggle_the_gate(mob/user, legion_damaged)
+/obj/structure/necropolis_gate/legion_gate/toggle_the_gate(mob/user, seer_damaged)
 	if(open)
 		return
 	. = ..()
@@ -169,19 +169,20 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		locked = TRUE
 		var/turf/T = get_turf(src)
 		visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
-		if(legion_damaged)
-			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
-			log_game("Legion took damage while the necropolis gate was closed and released itself.")
+		if(seer_damaged)
+			message_admins("The Seer took damage while the necropolis gate was closed, and has released itself!")
+			log_game("The Seer took damage while the necropolis gate was closed and released itself.")
 		else
-			message_admins("[user ? key_name_admin(user):"Unknown"] has released Legion!")
-			log_game("[user ? key_name(user):"Unknown"] released Legion.")
+			message_admins("[user ? key_name_admin(user):"Unknown"] has released the Seer!")
+			log_game("[user ? key_name(user):"Unknown"] released the Seer.")
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
-				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
-				M.playsound_local(T, 'sound/creatures/legion_spawn.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
-				flash_color(M, flash_color = "#FF0000", flash_time = 50)
+				to_chat(M, "<span class='userdanger'>Something pained and terrible opens its eyes. A horrible feeling of vulnerability drapes over you \
+				like a blanket. You are being watched.</span>")
+				M.playsound_local(T, 'sound/creatures/seer_deathblow.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
+				flash_color(M, flash_color = "#1D2953", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
-		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
+		notify_ghosts("The Seer has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
 
 /obj/effect/temp_visual/necropolis
 	icon = 'icons/effects/96x96.dmi'
