@@ -499,9 +499,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/atom/A = processing_list[1]
 		processing_list -= A
 
-		for(var/atom/a in A)
-			if(!(a in assembled))
-				processing_list |= a
+		processing_list |= (A.contents - assembled)
 
 		assembled |= A
 
