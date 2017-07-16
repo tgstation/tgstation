@@ -162,11 +162,15 @@
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
+				var/turf/T = get_turf(D)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)][ADMIN_JMP(T)]!")
+				log_game("[key_name(usr)] detonated [key_name(D)]!")
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, D)
 				s.start()
 				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
 				D.gib()
+
 
 	src.updateUsrDialog()
 	return
