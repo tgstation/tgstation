@@ -18,18 +18,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/hal_screwyhud = SCREWYHUD_NONE
 	var/next_hallucination = 0
 
-/mob/living/carbon/proc/handle_hallucinations()
-	if(world.time < next_hallucination)
-		return
-	//Least obvious
-	var/list/minor = list(
+var/static/list/hallucinations_minor = list(
 	/datum/hallucination/sound,
 	/datum/hallucination/bolts,
 	/datum/hallucination/whispers,
 	/datum/hallucination/message,
 	/datum/hallucination/hudscrew)
-	//Something's wrong here
-	var/list/medium = list(
+
+var/static/list/hallucinations_medium = list(
 	/datum/hallucination/fake_alert,
 	/datum/hallucination/items,
 	/datum/hallucination/items_other,
@@ -40,8 +36,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	/datum/hallucination/battle,
 	/datum/hallucination/fire,
 	/datum/hallucination/self_delusion)
-	//AAAAH
-	var/list/major = list(
+
+var/static/list/hallucinations_major = list(
 	/datum/hallucination/fakeattacker,
 	/datum/hallucination/death,
 	/datum/hallucination/xeno_attack,
@@ -49,12 +45,16 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	/datum/hallucination/delusion,
 	/datum/hallucination/oh_yeah)
 
+/mob/living/carbon/proc/handle_hallucinations()
+	if(world.time < next_hallucination)
+		return
+
 	if(hallucination)
-		var/list/current = minor
+		var/list/current = hallucinations_minor
 		if(prob(25) && hallucination > 100)
-			current = medium
+			current = hallucinations_medium
 		else if(prob(10) && hallucination > 200)
-			current = major
+			current = hallucinations_major
 		var/halpick = pick(current)
 		new halpick(src, FALSE)
 
@@ -1073,3 +1073,23 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				target.client.images -= target.halbody
 			QDEL_NULL(target.halbody)
 	qdel(src)
+
+//hallucination projectile code in code/modules/projectiles/projectile/special.dm
+/datum/hallucination/stray_bullet
+	cost = 15
+
+/datum/hallucination/stray_bullet/New(mob/living/carbon/T, forced = TRUE)
+	..()
+	var/list/turf/startlocs = (view(world.view+1,target)-view(world.view,target))
+	var/turf/start = pick(startlocs)
+	var/obj/item/projectile/hallucination/bullet/H = new(start)
+	target.playsound_local(start, H.hal_fire_sound, 60, 1)
+	H.hal_target = target
+	H.current = start
+	H.starting = start
+	H.yo = target.y - start.y
+	H.xo = target.x - start.x
+	H.original = target
+	H.fire()
+	qdel(src)
+

@@ -386,3 +386,129 @@
 		var/obj/effect/ebeam/B = b
 		animate(B, alpha = 0, time = 32)
 	return ..()
+
+/obj/item/projectile/hallucination
+	name = "bullet"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "bullet"
+	hitsound = ""
+	suppressed = TRUE
+	ricochets_max = 0
+	ricochet_chance = 0
+	damage = 0
+	nodamage = TRUE
+	projectile_type = /obj/item/projectile/hallucination
+	log_override = TRUE
+	var/hal_icon_state
+	var/image/fake_icon
+	var/mob/living/carbon/hal_target
+	var/hal_fire_sound
+	var/hal_hitsound
+	var/hal_impact_effect
+	var/hal_hitsound_wall
+
+/obj/item/projectile/hallucination/fire()
+	..()
+	fake_icon = image('icons/obj/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
+	if(hal_target.client)
+		hal_target.client.images += fake_icon
+
+/obj/item/projectile/hallucination/Destroy()
+	if(hal_target.client)
+		hal_target.client.images -= fake_icon
+	QDEL_NULL(fake_icon)
+	return ..()
+
+/obj/item/projectile/hallucination/Collide(atom/A)
+	if(!ismob(A))
+		hal_target.playsound_local(loc, hal_hitsound_wall, 40, 1)
+		spawn_hit(A)
+	else if(A == hal_target)
+		hal_target.playsound_local(A, hal_hitsound, 100, 1)
+		target_on_hit(A)
+	qdel(src)
+	return TRUE
+
+/obj/item/projectile/hallucination/proc/target_on_hit(mob/M)
+	var/organ_hit_text = ""
+	if(isliving(M))
+		var/mob/living/L = M
+		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
+		if(limb_hit)
+			organ_hit_text = " in \the [parse_zone(limb_hit)]"
+	if(M == hal_target)
+		to_chat(hal_target, "<span class='userdanger'>[M] is hit by \a [src][organ_hit_text]!</span>")
+		hal_apply_effect()
+	else if(M in view(hal_target))
+		to_chat(hal_target, "<span class='danger'>[M] is hit by \a [src][organ_hit_text]!</span>")
+	if(damage_type == BRUTE)
+		var/splatter_dir = dir
+		if(starting)
+			splatter_dir = get_dir(starting, get_turf(M))
+		spawn_blood(M, splatter_dir)
+	else if(hal_impact_effect)
+		spawn_hit(M)
+
+/obj/item/projectile/hallucination/proc/spawn_blood(mob/M, set_dir)
+	if(!hal_target.client)
+		return
+	var/splatter_icon_state
+	if(set_dir in GLOB.diagonals)
+		splatter_icon_state = "splatter[pick(1, 2, 6)]"
+	else
+		splatter_icon_state = "splatter[pick(3, 4, 5)]"
+
+	var/image/blood = image('icons/effects/blood.dmi', M, splatter_icon_state, ABOVE_MOB_LAYER)
+	var/target_pixel_x = 0
+	var/target_pixel_y = 0
+	switch(set_dir)
+		if(NORTH)
+			target_pixel_y = 16
+		if(SOUTH)
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(EAST)
+			target_pixel_x = 16
+		if(WEST)
+			target_pixel_x = -16
+		if(NORTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = 16
+		if(NORTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = 16
+		if(SOUTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(SOUTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+	hal_target.client.images += blood
+	animate(blood, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = 5)
+	QDEL_IN(blood, 5)
+
+/obj/item/projectile/hallucination/proc/spawn_hit(atom/A)
+	if(!hal_target.client)
+		return
+
+	var/image/hit_effect = image('icons/effects/blood.dmi', A, hal_impact_effect, ABOVE_MOB_LAYER)
+	hit_effect.pixel_x = A.pixel_x + rand(-4,4)
+	hit_effect.pixel_y = A.pixel_y + rand(-4,4)
+	hal_target.client.images += hit_effect
+	QDEL_IN(hit_effect, 5)
+
+/obj/item/projectile/hallucination/proc/hal_apply_effect()
+	return
+
+/obj/item/projectile/hallucination/bullet
+	name = "bullet"
+	hal_icon_state = "bullet"
+	hal_fire_sound = "gunshot"
+	hal_hitsound = 'sound/weapons/pierce.ogg'
+	hal_impact_effect = "impact_bullet"
+	hal_hitsound_wall = "ricochet"
+
+/obj/item/projectile/hallucination/bullet/hal_apply_effect()
+	hal_target.adjustStaminaLoss(60)
