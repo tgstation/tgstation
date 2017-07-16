@@ -424,13 +424,13 @@ GLOBAL_LIST(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
 			var/list/connectiontopic_a = params2list(connectiontopic)
-			if(config.allow_panic_bunker_bounce && !connectiontopic_a["redirect"])
-				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name].</span>")
+			if(config.panic_address && !connectiontopic_a["redirect"])
+				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name ? config.panic_server_name : config.panic_address].</span>")
 				winset(src, null, "command=.options")
 				src << link("[config.panic_address]?redirect=1")
 			qdel(src)
 			return
-		
+
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
 		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `lastseen`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
