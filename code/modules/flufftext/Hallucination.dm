@@ -22,30 +22,31 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(world.time < next_hallucination)
 		return
 	//Least obvious
-	var/list/minor = list(\
-	/datum/hallucination/sound,\
-	/datum/hallucination/bolts,\
-	/datum/hallucination/whispers,\
-	/datum/hallucination/message,\
+	var/list/minor = list(
+	/datum/hallucination/sound,
+	/datum/hallucination/bolts,
+	/datum/hallucination/whispers,
+	/datum/hallucination/message,
 	/datum/hallucination/hudscrew)
 	//Something's wrong here
-	var/list/medium = list(\
-	/datum/hallucination/fake_alert,\
-	/datum/hallucination/items,\
-	/datum/hallucination/items_other,\
-	/datum/hallucination/dangerflash,\
-	/datum/hallucination/bolts,\
-	/datum/hallucination/fake_flood,\
-	/datum/hallucination/husks,\
-	/datum/hallucination/battle,\
+	var/list/medium = list(
+	/datum/hallucination/fake_alert,
+	/datum/hallucination/items,
+	/datum/hallucination/items_other,
+	/datum/hallucination/dangerflash,
+	/datum/hallucination/bolts,
+	/datum/hallucination/fake_flood,
+	/datum/hallucination/husks,
+	/datum/hallucination/battle,
+	/datum/hallucination/fire,
 	/datum/hallucination/self_delusion)
 	//AAAAH
-	var/list/major = list(\
-	/datum/hallucination/fakeattacker,\
-	/datum/hallucination/death,\
-	/datum/hallucination/xeno_attack,\
-	/datum/hallucination/singularity_scare,\
-	/datum/hallucination/delusion,\
+	var/list/major = list(
+	/datum/hallucination/fakeattacker,
+	/datum/hallucination/death,
+	/datum/hallucination/xeno_attack,
+	/datum/hallucination/singularity_scare,
+	/datum/hallucination/delusion,
 	/datum/hallucination/oh_yeah)
 
 	if(hallucination)
@@ -144,7 +145,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(!U.welded)
 			center = get_turf(U)
 			break
-	flood_images += image(image_icon,src,image_state,MOB_LAYER)
+	flood_images += image(image_icon,center,image_state,MOB_LAYER)
 	flood_turfs += center
 	if(target.client) target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
@@ -220,7 +221,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		sleep(10)
 		var/xeno_name = xeno.name
 		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
-		sleep(10)
+		sleep(30)
 		qdel(xeno)
 		to_chat(target, "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>")
 	qdel(src)
@@ -637,7 +638,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1, -1)
+					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1)
 					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
@@ -846,9 +847,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /datum/hallucination/fake_alert
 	cost = 15
 
-/datum/hallucination/fake_alert/New(mob/living/carbon/T, forced = TRUE, specific)
+/datum/hallucination/fake_alert/New(mob/living/carbon/T, forced = TRUE, specific, duration = 150)
 	..()
-	var/alert_type = pick("oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
+	var/alert_type = pick("oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temphot","tempcold","pressure")
 	if(specific)
 		alert_type = specific
 	switch(alert_type)
@@ -873,11 +874,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			target.throw_alert("weightless", /obj/screen/alert/weightless, override = TRUE)
 		if("fire")
 			target.throw_alert("fire", /obj/screen/alert/fire, override = TRUE)
-		if("temp")
-			if(prob(50))
-				target.throw_alert("temp", /obj/screen/alert/hot, 3, override = TRUE)
-			else
-				target.throw_alert("temp", /obj/screen/alert/cold, 3, override = TRUE)
+		if("temphot")
+			target.throw_alert("temp", /obj/screen/alert/hot, 3, override = TRUE)
+		if("tempcold")
+			target.throw_alert("temp", /obj/screen/alert/cold, 3, override = TRUE)
 		if("pressure")
 			if(prob(50))
 				target.throw_alert("pressure", /obj/screen/alert/highpressure, 2, override = TRUE)
@@ -892,7 +892,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			target.throw_alert("hacked", /obj/screen/alert/hacked, override = TRUE)
 		if("charge")
 			target.throw_alert("charge",/obj/screen/alert/emptycell, override = TRUE)
-	sleep(rand(100,200))
+	sleep(duration)
 	target.clear_alert(alert_type, clear_override = TRUE)
 	qdel(src)
 
@@ -992,7 +992,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	..()
 	target.hal_screwyhud = SCREWYHUD_DEAD
 	target.SetUnconscious(400)
-	var/area/area = get_area(src)
+	var/area/area = get_area(target)
 	to_chat(target, "<span class='deadsay'><b>[target.mind.name]</b> has died at <b>[area.name]</b>.</span>")
 	if(prob(50))
 		var/list/dead_people = list()
@@ -1008,6 +1008,34 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	target.SetSleeping(0)
 	qdel(src)
 
+/datum/hallucination/fire
+	cost = 25
+
+/datum/hallucination/fire/New(mob/living/carbon/T, forced = TRUE)
+	..()
+	var/image/fire_overlay = image('icons/mob/OnFire.dmi', target, "Standing", ABOVE_MOB_LAYER)
+	if(target.client)
+		target.client.images += fire_overlay
+	to_chat(target, "<span class='userdanger'>You're set on fire!</span>")
+	target.throw_alert("fire", /obj/screen/alert/fire, override = TRUE)
+	sleep(20)
+	target.throw_alert("temp", /obj/screen/alert/hot, 1, override = TRUE)
+	sleep(30)
+	target.clear_alert("temp", clear_override = TRUE)
+	target.throw_alert("temp", /obj/screen/alert/hot, 2, override = TRUE)
+	sleep(30)
+	target.clear_alert("temp", clear_override = TRUE)
+	target.throw_alert("temp", /obj/screen/alert/hot, 3, override = TRUE)
+	for(var/i in 1 to rand(5, 10))
+		target.adjustStaminaLoss(15)
+		sleep(25)
+	target.clear_alert("fire", clear_override = TRUE)
+	target.clear_alert("temp", clear_override = TRUE)
+	if(target.client)
+		target.client.images -= fire_overlay
+	QDEL_NULL(fire_overlay)
+	qdel(src)
+
 /datum/hallucination/husks
 	cost = 20
 
@@ -1015,7 +1043,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	..()
 	if(!target.halbody)
 		var/list/possible_points = list()
-		for(var/turf/open/floor/F in view(src,world.view))
+		for(var/turf/open/floor/F in view(target,world.view))
 			possible_points += F
 		if(possible_points.len)
 			var/turf/open/floor/husk_point = pick(possible_points)
