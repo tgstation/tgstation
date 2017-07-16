@@ -1600,6 +1600,19 @@
 		var/item = pick_n_take(L)
 		new item(C)
 
+/datum/supply_pack/misc/bigband
+	contains = list(/obj/item/device/instrument/violin,
+					/obj/item/device/instrument/guitar,
+					/obj/item/device/instrument/glockenspiel,
+					/obj/item/device/instrument/accordion,
+					/obj/item/device/instrument/saxophone,
+					/obj/item/device/instrument/trombone,
+					/obj/item/device/instrument/recorder,
+					/obj/item/device/instrument/harmonica,
+					/obj/structure/piano)
+	name = "Big band instrument collection"
+	cost = 5000
+	crate_name = "Big band musical instruments collection"
 
 /datum/supply_pack/misc/randomised/contraband
 	name = "Contraband Crate"
