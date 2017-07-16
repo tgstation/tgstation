@@ -494,6 +494,7 @@ Difficulty: Hard
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 	var/monster_damage_boost = TRUE
+	var/blast_type = /obj/effect/temp_visual/hierophant/blast
 	var/damage = 10
 
 /obj/effect/temp_visual/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
@@ -538,8 +539,9 @@ Difficulty: Hard
 				moving--
 				sleep(speed)
 			targetturf = get_turf(target)
+
 /obj/effect/temp_visual/hierophant/chaser/proc/make_blast()
-	var/obj/effect/temp_visual/hierophant/blast/B = new(loc, caster, friendly_fire_check)
+	var/obj/effect/temp_visual/hierophant/blast/B = new blast_type(loc, caster, friendly_fire_check)
 	B.damage = damage
 	B.monster_damage_boost = monster_damage_boost
 
