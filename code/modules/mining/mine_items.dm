@@ -35,7 +35,7 @@
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
 	icon_state = "mining"
-	req_access = list(GLOB.access_mining)
+	req_access = list(ACCESS_MINING)
 
 /obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()

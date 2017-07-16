@@ -10,8 +10,8 @@
 	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
-	req_access = list(GLOB.access_mineral_storeroom)
-	var/req_access_reclaim = GLOB.access_mining_station
+	req_access = list(ACCESS_MINERAL_STOREROOM)
+	var/req_access_reclaim = ACCESS_MINING_STATION
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
