@@ -55,6 +55,8 @@
 /mob/living/simple_animal/hostile/megafauna/seer/Initialize()
 	. = ..()
 	original_location = get_turf(src)
+	if(prob(1))
+		name = pick("big angry curse ball", "It's A Bunch Of Ghosts Guys")
 
 /mob/living/simple_animal/hostile/megafauna/seer/Destroy()
 	new/obj/effect/seer_death(get_turf(src))
