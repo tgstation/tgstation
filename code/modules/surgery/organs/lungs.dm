@@ -84,7 +84,7 @@
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else if(safe_co2_min)
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
-		else if (safe_nitro_min)
+		else if(safe_nitro_min)
 			H.throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 		return FALSE
 
@@ -200,9 +200,9 @@
 			var/ratio = (breath_gases["plasma"][MOLES]/safe_toxins_max) * 10
 			if(H.reagents)
 				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
-			H.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 		else
-			H.clear_alert("tox_in_air")
+			H.clear_alert("too_much_tox")
 
 
 	//Too little toxins!

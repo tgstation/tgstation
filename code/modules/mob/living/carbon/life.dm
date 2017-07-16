@@ -175,9 +175,9 @@
 		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
 		if(reagents)
 			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
-		clear_alert("tox_in_air")
+		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
 	if(breath_gases["n2o"])
