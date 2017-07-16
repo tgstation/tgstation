@@ -90,7 +90,7 @@
 
 /obj/item/clothing/glasses/meson/engine/update_icon()
 	icon_state = mesons_on ? "trayson-meson" : "trayson-tray"
-	if(istype(loc,/mob/living/carbon/human/))
+	if(istype(loc, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/user = loc
 		if(user.glasses == src)
 			user.update_inv_glasses()
@@ -116,7 +116,7 @@
 
 /obj/item/clothing/glasses/meson/engine/tray/update_icon()
 	icon_state = "trayson-tray[on ? "" : "_off"]"
-	if(istype(loc,/mob/living/carbon/human/))
+	if(istype(loc, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/user = loc
 		if(user.glasses == src)
 			user.update_inv_glasses()

@@ -126,7 +126,7 @@
 			return TRUE
 
 	//finally check for centcom itself
-	return istype(T.loc,/area/centcom)
+	return istype(T.loc, /area/centcom)
 
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
@@ -136,7 +136,7 @@
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
 		return 0
 
-	if(istype(T.loc,/area/shuttle/syndicate) || istype(T.loc,/area/syndicate_mothership))
+	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership))
 		return 1
 
 	return 0

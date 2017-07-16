@@ -518,7 +518,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 
 /obj/item/weapon/pipe_dispenser/pre_attackby(atom/A, mob/user)
-	if(!user.IsAdvancedToolUser() || istype(A,/turf/open/space/transit))
+	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
 	//make sure what we're clicking is valid for the current mode
