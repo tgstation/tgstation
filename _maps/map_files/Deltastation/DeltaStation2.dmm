@@ -29332,7 +29332,6 @@
 /obj/item/device/healthanalyzer,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -76821,7 +76820,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /obj/machinery/status_display{
@@ -80243,7 +80241,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -81350,7 +81347,6 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -103228,7 +103224,6 @@
 /obj/item/weapon/reagent_containers/syringe/antiviral,
 /obj/item/weapon/reagent_containers/dropper,
 /obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 2
 	},
