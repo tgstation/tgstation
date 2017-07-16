@@ -66820,7 +66820,6 @@
 	pixel_y = -30
 	},
 /obj/item/weapon/stamp/rd{
-	pixel_x = -11;
 	pixel_x = 3;
 	pixel_y = -2
 	},
