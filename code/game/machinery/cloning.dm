@@ -304,7 +304,7 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/computer/cloning))

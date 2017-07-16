@@ -79,7 +79,7 @@
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
-			else if(istype(target,/obj/mecha))
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
@@ -94,7 +94,7 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
-			else if(istype(target,/obj/mecha))
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes

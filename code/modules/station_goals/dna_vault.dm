@@ -80,7 +80,7 @@
 	if(!proximity || !target)
 		return
 	//tray plants
-	if(istype(target,/obj/machinery/hydroponics))
+	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/H = target
 		if(!H.myseed)
 			return
@@ -94,7 +94,7 @@
 		to_chat(user, "<span class='notice'>Plant data added to local storage.<span>")
 
 	//animals
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/living/carbon/alien))
+	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey, /mob/living/carbon/alien))
 	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target

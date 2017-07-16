@@ -11,7 +11,7 @@
 		if(!istype(I.rpg_loot))
 			I.rpg_loot = new(I)
 
-		if(istype(I,/obj/item/weapon/storage))
+		if(istype(I, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = I
 			if(prob(upgrade_scroll_chance) && S.contents.len < S.storage_slots && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new

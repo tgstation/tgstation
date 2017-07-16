@@ -86,7 +86,7 @@
 	D.Open()
 
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
-	if(istype(D,/obj/machinery/door/airlock))
+	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		A.locked = FALSE
 	D.open()

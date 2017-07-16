@@ -76,7 +76,7 @@
 						anchored  = 0
 						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 	//Finishing the frame
-	else if(istype(W,/obj/item/stack/sheet))
+	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)
 			return
 		var/obj/item/stack/sheet/S = W
@@ -88,7 +88,7 @@
 				S.use(5)
 				new /obj/structure/reflector/single (src.loc)
 				qdel (src)
-		if(istype(W,/obj/item/stack/sheet/rglass))
+		if(istype(W, /obj/item/stack/sheet/rglass))
 			if(S.get_amount() < 10)
 				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return

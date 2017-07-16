@@ -85,7 +85,7 @@
 			return TRUE
 
 	// CLOTHING
-	else if(istype(I,/obj/item/clothing))
+	else if(istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
 		monkeyDrop(C)
 		addtimer(CALLBACK(src, .proc/pickup_and_wear, C), 5)
@@ -445,7 +445,7 @@
 		retaliate(user)
 
 /mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+	if(istype(Proj , /obj/item/projectile/beam)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)

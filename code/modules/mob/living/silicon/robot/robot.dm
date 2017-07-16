@@ -633,7 +633,7 @@
 		if(istype(module, /obj/item/weapon/robot_module/miner))
 			if(istype(loc, /turf/open/floor/plating/asteroid))
 				for(var/obj/item/I in held_items)
-					if(istype(I,/obj/item/weapon/storage/bag/ore))
+					if(istype(I, /obj/item/weapon/storage/bag/ore))
 						loc.attackby(I, src)
 #undef BORG_CAMERA_BUFFER
 

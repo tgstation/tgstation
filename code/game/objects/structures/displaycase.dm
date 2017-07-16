@@ -132,7 +132,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	else if(!alert && istype(W,/obj/item/weapon/crowbar) && openable) //Only applies to the lab cage and player made display cases
+	else if(!alert && istype(W, /obj/item/weapon/crowbar) && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")

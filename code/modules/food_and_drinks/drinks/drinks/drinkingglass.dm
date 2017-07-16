@@ -91,7 +91,7 @@
 	list_reagents = list("nuka_cola" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)

@@ -258,7 +258,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		var/jobs_all = ""
 		var/list/alljobs = list("Unassigned")
-		alljobs += (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
+		alljobs += (istype(src, /obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
 		for(var/job in alljobs)
 			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 
@@ -303,7 +303,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=\ref[src];choice=demote'>Demote</a>)</span>"
 
 			var/accesses = ""
-			if(istype(src,/obj/machinery/computer/card/centcom))
+			if(istype(src, /obj/machinery/computer/card/centcom))
 				accesses += "<h5>Central Command:</h5>"
 				for(var/A in get_all_centcom_access())
 					if(A in modify.access)
@@ -433,7 +433,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if(authenticated)
 					var/access_type = text2num(href_list["access_target"])
 					var/access_allowed = text2num(href_list["allowed"])
-					if(access_type in (istype(src,/obj/machinery/computer/card/centcom)?get_all_centcom_access() : get_all_accesses()))
+					if(access_type in (istype(src, /obj/machinery/computer/card/centcom)?get_all_centcom_access() : get_all_accesses()))
 						modify.access -= access_type
 						if(access_allowed == 1)
 							modify.access += access_type
@@ -460,7 +460,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
 						return
 
-					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					modify.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
 					modify.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
