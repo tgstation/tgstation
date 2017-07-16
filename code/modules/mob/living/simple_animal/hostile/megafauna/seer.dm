@@ -1,3 +1,4 @@
+#define MEDAL_PREFIX "Seer"
 #define PHASE_VOID "void" //The Seer hasn't been aggroed.
 #define PHASE_ALPHA "alpha" //The first phase; the Seer swaps between megafauna types, using different abilities for each.
 #define FORM_TIME_ALPHA 7 //The amount of ticks the Seer will spend in a form in Alpha phase
@@ -34,6 +35,8 @@
 	idle_vision_range = 7
 	vision_range = 7
 	aggro_vision_range = 15
+	medal_type = MEDAL_PREFIX
+	score_type = SEER_SCORE
 	var/phase = PHASE_VOID
 	var/form = FORM_ACCURSED
 	var/transition = FALSE //If we're transitioning between phases
@@ -102,11 +105,6 @@
 			phase = PHASE_MU
 		if(0.5 to 1)
 			phase = PHASE_ALPHA
-		if(1)
-			if(phase != PHASE_VOID)
-				phase = PHASE_VOID
-				forceMove(original_location)
-				update_icon()
 
 /mob/living/simple_animal/hostile/megafauna/seer/Move()
 	if(!canmove)
@@ -432,7 +430,4 @@
 #undef FORM_BUBBLEGUM
 #undef FORM_COLOSSUS
 #undef FORM_HIEROPHANT
-#undef FORM_GOLIATH
-#undef FORM_WATCHER
-#undef FORM_LEGION
-#undef FORM_GOLDGRUB
+#undef MEDAL_PREFIX
