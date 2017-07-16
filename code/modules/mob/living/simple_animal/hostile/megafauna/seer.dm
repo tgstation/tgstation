@@ -193,7 +193,7 @@
 
 
 
-//Cursed Flames: Dragon form attack. Spews cursed fire in the cardinal directions.
+//Cursed Flames: Dragon form attack. Spews cursed fire in four directions.
 /mob/living/simple_animal/hostile/megafauna/seer/proc/cursed_flames(force_dir)
 	visible_message("<span class='revenboldnotice'>[src] spews cursed flames!</span>")
 	playsound(src, 'sound/magic/fireball.ogg', 100, TRUE)
@@ -223,7 +223,7 @@
 	setDir(direction)
 	grow_delay = delay
 	if(chain_length >= 10)
-		return INITIALIZE_HINT_QDEL //no chains longer than 7!
+		return INITIALIZE_HINT_QDEL //no chains longer than 10!
 	for(var/mob/living/L in get_turf(src))
 		engulf(L)
 	addtimer(CALLBACK(src, .proc/new_flames), grow_delay)
@@ -350,7 +350,7 @@
 /obj/item/projectile/vacuous_bolt
 	name = "vacuous bolt"
 	icon_state = "greyscale_bolt"
-	damage = 15
+	damage = 8
 	armour_penetration = 100
 	speed = 2
 	eyeblur = 0
@@ -362,7 +362,7 @@
 
 
 
-//Hunting Curse: Hierophant form attack. Spawns a Hierophant chaser.
+//Hunting Curse: Hierophant form attack. Spawns three Hierophant chasers.
 /mob/living/simple_animal/hostile/megafauna/seer/proc/hunting_curse()
 	visible_message("<span class='revenboldnotice'>[src] disgorges a blob of shadows that crawls towards [target]!</span>")
 	playsound(src, 'sound/effects/splat.ogg', 75, TRUE)
@@ -399,6 +399,10 @@
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	pixel_x = -16
 	pixel_y = -16
+	layer = LARGE_MOB_LAYER
+	density = TRUE
+	anchored = TRUE
+	light_range = 3
 
 /obj/effect/seer_death/Initialize()
 	. = ..()
