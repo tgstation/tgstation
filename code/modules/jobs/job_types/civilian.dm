@@ -33,6 +33,7 @@ Clown
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/device/instrument/bikehorn = 1,
 		)
 
 	implants = list(/obj/item/weapon/implant/sad_trombone)
