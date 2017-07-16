@@ -139,27 +139,21 @@
 	return 0
 
 /obj/item/weapon/melee/transforming/energy/sword/saber
-	var/list/possible_colors = list("red", "blue", "green", "purple")
+	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_GREEN, "green" = LIGHT_COLOR_LIGHT_CYAN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/Initialize(mapload)
 	. = ..()
 	if(LAZYLEN(possible_colors))
-		item_color = pick(possible_colors)
-		switch(item_color)//Only run this check if the color was picked randomly, so that colors can be manually set for non-random colored energy weapons.
-			if("red")
-				light_color = LIGHT_COLOR_RED
-			if("green")
-				light_color = LIGHT_COLOR_GREEN
-			if("blue")
-				light_color = LIGHT_COLOR_LIGHT_CYAN
-			if("purple")
-				light_color = LIGHT_COLOR_LAVENDER
+		var/set_color = pick(possible_colors)
+		item_color = set_color
+		light_color = possible_colors[set_color]
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/process()
 	. = ..()
 	if(hacked)
-		light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+		var/set_color = pick(possible_colors)
+		light_color = possible_colors[set_color]
 		update_light()
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/blue
