@@ -286,7 +286,7 @@
 		if("Assistant")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
 		if("Captain","Head of Personnel")
-			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain, /obj/item/weapon/disk/nuclear)
 		if("Cook")
 			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "souschef"
@@ -308,7 +308,7 @@
 			favoured_types = list(/obj/item/weapon/mop, /obj/item/weapon/reagent_containers/glass/bucket, /obj/item/weapon/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
 			functions += "dojanitor"
 		if("Clown")
-			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
+			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana, /obj/item/weapon/grown/bananapeel)
 			functions += "clowning"
 		if("Mime")
 			functions -= "chatter"
@@ -1281,7 +1281,7 @@
 		var/list/rangeCheck = view(6,src)
 
 		//Make some basic custom food
-		var/list/customableTypes = list(/obj/item/weapon/reagent_containers/food/snacks/customizable,/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain,/obj/item/weapon/reagent_containers/food/snacks/pizzabread,/obj/item/weapon/reagent_containers/food/snacks/bun,/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain,/obj/item/weapon/reagent_containers/food/snacks/pie/plain,/obj/item/weapon/reagent_containers/food/snacks/pastrybase)
+		var/list/customableTypes = list(/obj/item/weapon/reagent_containers/food/snacks/customizable, /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain, /obj/item/weapon/reagent_containers/food/snacks/pizzabread, /obj/item/weapon/reagent_containers/food/snacks/bun, /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain, /obj/item/weapon/reagent_containers/food/snacks/pie/plain, /obj/item/weapon/reagent_containers/food/snacks/pastrybase)
 
 		var/foundCustom
 
@@ -1410,7 +1410,7 @@
 						RT.attackby(toPlop,src)
 
 		if(!foundCookable)
-			var/list/allTypes = list(/obj/item/weapon/reagent_containers/food/snacks/piedough,/obj/item/weapon/reagent_containers/food/snacks/cakebatter,/obj/item/weapon/reagent_containers/food/snacks/dough,/obj/item/weapon/reagent_containers/food/snacks/flatdough)
+			var/list/allTypes = list(/obj/item/weapon/reagent_containers/food/snacks/piedough, /obj/item/weapon/reagent_containers/food/snacks/cakebatter, /obj/item/weapon/reagent_containers/food/snacks/dough, /obj/item/weapon/reagent_containers/food/snacks/flatdough)
 
 			for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
 				var/obj/item/weapon/reagent_containers/food/snacks/O = A
