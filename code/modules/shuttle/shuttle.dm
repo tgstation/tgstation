@@ -503,8 +503,7 @@
 
 	/****************************************All beforeShuttleMove procs*****************************************/
 	var/index = 1
-	while(index < old_turfs.len)
-	//for(var/T in old_turfs) //Sorry remie
+	while(index <= old_turfs.len)
 		var/turf/oldT = old_turfs[index]
 		var/turf/newT = new_turfs[index]
 		var/area/old_area = oldT.loc

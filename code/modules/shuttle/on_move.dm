@@ -109,8 +109,6 @@ All ShuttleMove procs go here
 /area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
-	if(istype(src, /area/space))
-		message_admins("A SPACE AREA MOVED FROM [ADMIN_COORDJMP(oldT)] to [ADMIN_COORDJMP(newT)]")
 
 	contents -= oldT
 	underlying_old_area.contents += oldT
