@@ -189,7 +189,7 @@
 		head.overlays += body
 		return head
 	else
-		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', item_state) //Item state, because some screwdrivers use different icon files
+		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -213,7 +213,7 @@
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "screwdriver"
+	icon_state = "screwdriver_a"
 	item_state = "screwdriver_nuke"
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
