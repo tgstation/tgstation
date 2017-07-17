@@ -282,17 +282,6 @@ GLOBAL_LIST(external_rsc_urls)
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
-			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
-			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
-			if(config.allow_panic_bunker_bounce && tdata != "redirect")
-				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name].</span>")
-				winset(src, null, "command=.options")
-				src << link("[config.panic_address]?redirect")
-			qdel(src)
-			return 0
-
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (config.irc_first_connection_alert)
@@ -428,6 +417,18 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.Execute())
 		return
 	if(!query_client_in_db.NextRow())
+		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
+			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
+			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
+			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
+			var/list/connectiontopic_a = params2list(connectiontopic)
+			if(config.panic_address && !connectiontopic_a["redirect"])
+				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name ? config.panic_server_name : config.panic_address].</span>")
+				winset(src, null, "command=.options")
+				src << link("[config.panic_address]?redirect=1")
+			qdel(src)
+			return
+
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
 		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `lastseen`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
