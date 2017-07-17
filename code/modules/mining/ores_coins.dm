@@ -53,7 +53,8 @@
 			var/mob/living/L = AM
 			if(istype(L.pulling, /obj/structure/ore_box))
 				box = L.pulling
-				forceMove(box)
+				for(var/obj/item/weapon/ore/O in OB)
+					OB.remove_from_storage(src, box)
 			if(show_message)
 				playsound(L, "rustle", 50, TRUE)
 				if(box)
