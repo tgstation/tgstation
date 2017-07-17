@@ -141,3 +141,5 @@
 
 	var/list/progressbars = null	//for stacking do_after bars
 	var/list/can_ride_typecache = list()
+
+	var/list/mousemove_intercept_objects
