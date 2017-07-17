@@ -347,7 +347,7 @@
 				break
 		else
 			if(L.stat == DEAD)
-				var/revival_cost = base_revive_cost
+				var/revival_cost = revive_cost
 				if(GLOB.ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)

@@ -76,7 +76,7 @@
 					L.Knockdown(100)
 				else
 					L.Knockdown(40)
-				GLOB.clockwork_vitality += target.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar
+				GLOB.clockwork_vitality += L.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar
 			break_spear(T)
 	else
 		..()
