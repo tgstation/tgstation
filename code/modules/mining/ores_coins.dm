@@ -27,6 +27,7 @@
 	for(var/obj/item/weapon/ore/O in loc)
 		if(O != src)
 			show_message = FALSE
+			break
 	var/obj/item/weapon/storage/bag/ore/OB
 	if(istype(loc, /turf/open/floor/plating/asteroid))
 		if(ishuman(AM))
