@@ -194,11 +194,14 @@
 					valueholder = input(user,"Enter variable value:" ,"Value") as turf in world
 		if(AREA_BUILDMODE)
 			var/list/gen_paths = subtypesof(/datum/mapGenerator)
-
-			var/type = input(user,"Select Generator Type","Type") as null|anything in gen_paths
+			var/list/options = list()
+			for(var/path in gen_paths)
+				var/datum/mapGenerator/MP = path
+				options[initial(MP.buildmode_name)] = path
+			var/type = input(user,"Select Generator Type","Type") as null|anything in options
 			if(!type) return
 
-			generator_path = type
+			generator_path = options[type]
 			cornerA = null
 			cornerB = null
 

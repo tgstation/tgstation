@@ -10,6 +10,8 @@
 		modules = list(/datum/mapGeneratorModule/bottomLayer/shuttleFloor, \
 		/datum/mapGeneratorModule/border/shuttleWalls,\
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room"
 
 /datum/mapGenerator/shuttle/floor
 	modules = list(/datum/mapGeneratorModule/bottomLayer/shuttleFloor)
+	buildmode_name = "Block: Shuttle Floor"

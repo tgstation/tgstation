@@ -26,25 +26,12 @@
 /datum/mapGeneratorModule/bottomLayer/massdelete/generate()
 	if(!mother)
 		return
-	var/list/atoms = list()
 	for(var/V in mother.map)
 		var/turf/T = V
 		if(deleteturfs)
 			T.empty(delmobs = deletemobs)
 		else
-			atoms += T.contents
-	for(var/V in atoms)
-		if(ismob(V) && !deletemobs)
-			continue
-		if(istype(V, /mob/dead))
-			continue
-		if(istype(V, /obj/effect/landmark))
-			continue
-		if(istype(V, /obj/docking_port))
-			continue
-		if(!isobj(V) && !ismob(V))
-			continue
-		qdel(V, TRUE)
+			T.empty(T.type, delmobs = deletemobs)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs
 	deletemobs = FALSE
