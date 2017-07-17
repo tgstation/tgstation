@@ -7,7 +7,7 @@
 // Generators
 
 /datum/mapGenerator/shuttle/full
-		modules = list(/datum/mapGeneratorModule/bottomLayer/shuttleFloor, \
+	modules = list(/datum/mapGeneratorModule/bottomLayer/shuttleFloor, \
 		/datum/mapGeneratorModule/border/shuttleWalls,\
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
 	buildmode_name = "Pattern: Shuttle Room"
