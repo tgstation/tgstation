@@ -437,9 +437,15 @@
 	mouse_opacity = 2
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/New()
-	..()
-	transform = matrix(200, 0, 0, 0, 200, 0)
+/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
+	screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
+	var/list/ret = list()
+	for(var/X in 0 to (view_size_x * 2))
+		for(var/Y in 0  to (view_size_y * 2))
+			var/obj/screen/click_catcher/CC = new()
+			CC.screen_loc = "EAST-[X],NORTH-[Y]"
+			ret += CC
+	return ret
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -447,12 +453,11 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
 		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
 	. = 1
-
 
 /* MouseWheelOn */
 
