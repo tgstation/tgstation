@@ -181,6 +181,16 @@
 		M.appearance_flags = RESET_COLOR
 		. += M
 
+/obj/item/weapon/screwdriver/get_belt_overlay()
+	if(random_color)
+		var/mutable_appearance/body = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver")
+		var/mutable_appearance/head = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_head")
+		body.color = color
+		head.overlays += body
+		return head
+	else
+		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', item_state) //Item state, because some screwdrivers use different icon files
+
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()

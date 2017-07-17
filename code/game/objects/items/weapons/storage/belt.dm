@@ -13,7 +13,7 @@
 	cut_overlays()
 	if(content_overlays)
 		for(var/obj/item/I in contents)
-			var/mutable_appearance/M = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', I.icon_state)
+			var/mutable_appearance/M = I.get_belt_overlay()
 			add_overlay(M)
 	..()
 
