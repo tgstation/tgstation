@@ -38,8 +38,9 @@
 	metal = RESIN_FOAM
 
 
-/obj/effect/particle_effect/foam/New(loc)
-	..(loc)
+/obj/effect/particle_effect/foam/Initialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 100)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
@@ -100,15 +101,6 @@
 		reagents.reaction(L, VAPOR, fraction)
 	lifetime--
 	return 1
-
-/obj/effect/particle_effect/foam/Crossed(atom/movable/AM)
-	if(istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		M.slip(100, src)
-
-/obj/effect/particle_effect/foam/metal/Crossed(atom/movable/AM)
-	return
-
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
