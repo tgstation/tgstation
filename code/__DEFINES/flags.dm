@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 //turf-only flags
 #define NOJAUNT		1
-#define UNUSED_TRANSIT_TURF 2
+#define UNUSED_RESERVATION_TURF 2
 #define CAN_BE_DIRTY 4 //If a turf can be made dirty at roundstart. This is also used in areas.
 #define NO_DEATHRATTLE 16 // Do not notify deadchat about any deaths that occur on this turf.
 //#define CHECK_RICOCHET	32		//Same thing as atom flag.
