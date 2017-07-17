@@ -284,6 +284,7 @@ Pipelines + Other Objects -> Pipe network
 
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
+<<<<<<< HEAD
 	return 1
 
 //Properly updates pipes on shuttle movement
@@ -329,3 +330,6 @@ Pipelines + Other Objects -> Pipe network
 	else
 		// atmosinit() calls update_icon(), so we don't need to call it
 		update_icon()
+=======
+	return 1
+>>>>>>> 1d201939ba... [Ready] Shuttle dock() rewrite (#29049)
