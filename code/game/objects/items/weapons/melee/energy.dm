@@ -160,10 +160,10 @@
 	possible_colors = list("red" = LIGHT_COLOR_RED)
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/blue
-	possible_colors = list("blue" = LIGHT_COLOR_CYAN)
+	possible_colors = list("blue" = LIGHT_COLOR_LIGHT_CYAN)
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/green
-	possible_colors = list("green" = LIGHT_COLOR_LIGHT_GREEN)
+	possible_colors = list("green" = LIGHT_COLOR_GREEN)
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/purple
 	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
