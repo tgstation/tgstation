@@ -117,7 +117,7 @@
 				return FALSE
 
 	var/list/large_dense = list()
-	
+
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
@@ -407,36 +407,18 @@
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-<<<<<<< HEAD
-/turf/proc/empty(turf_type=/turf/open/space, delmobs = TRUE, forceop = FALSE)
-	// Remove all atoms except observers, landmarks, docking ports
-	var/turf/T0 = src
-	for(var/A in T0.GetAllContents())
-		if(!delmobs && ismob(A))
-			continue
-		if(istype(A, /mob/dead))
-			continue
-		if(istype(A, /obj/effect/landmark))
-			continue
-		if(istype(A, /obj/docking_port))
-			continue
-		if(A == T0)
-			continue
-		qdel(A, force=TRUE)
-
-	T0.ChangeTurf(turf_type, FALSE, FALSE, forceop)
-=======
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type)
+/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, delmobs = TRUE, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/turf/T0 = src
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
 	var/list/allowed_contents = typecache_filter_list(T0.GetAllContents(),ignored_atoms)
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
+		if(ismob(thing) && !delmobs)
+			continue	//sorry
 		qdel(thing, force=TRUE)
 
-	T0.ChangeTurf(turf_type, FALSE, FALSE, baseturf_type)
->>>>>>> tgstation/master
+	T0.ChangeTurf(turf_type, FALSE, FALSE, baseturf_type, forceop)
 
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
