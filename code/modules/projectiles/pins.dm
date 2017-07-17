@@ -8,7 +8,7 @@
 	flags = CONDUCT
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
-	var/emagged = 0
+	var/emagged = FALSE
 	var/fail_message = "<span class='warning'>INVALID USER.</span>"
 	var/selfdestruct = 0 // Explode when user check is failed.
 	var/force_replace = 0 // Can forcefully replace other pins.
@@ -39,9 +39,10 @@
 				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/device/firing_pin/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
 
 /obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/weapon/gun/G)
 	gun = G

@@ -1,0 +1,4 @@
+author: "MrStonedOne & Fox-McCloud"
+delete-after: True
+changes: 
+  - tweak: "Made pathfinding much quicker"

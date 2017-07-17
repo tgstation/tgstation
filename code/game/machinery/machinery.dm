@@ -99,11 +99,10 @@ Class Procs:
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
-	obj_integrity = 200
 	max_integrity = 200
 
 	var/stat = 0
-	var/emagged = 0
+	var/emagged = FALSE
 	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
@@ -115,13 +114,13 @@ Class Procs:
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/global/gl_uid = 1
-	var/panel_open = 0
-	var/state_open = 0
+	var/panel_open = FALSE
+	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache = list(/mob/living) // turned into typecache in Initialize
 	var/atom/movable/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
-	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
+	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
 
@@ -163,8 +162,8 @@ Class Procs:
 	..()
 
 /obj/machinery/proc/open_machine(drop = 1)
-	state_open = 1
-	density = 0
+	state_open = TRUE
+	density = FALSE
 	if(drop)
 		dropContents()
 	update_icon()
@@ -180,8 +179,8 @@ Class Procs:
 	occupant = null
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)
-	state_open = 0
-	density = 1
+	state_open = FALSE
+	density = TRUE
 	if(!target)
 		for(var/am in loc)
 			if(!is_type_in_typecache(am, occupant_typecache))
@@ -352,11 +351,11 @@ Class Procs:
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(loc, S.usesound, 50, 1)
 		if(!panel_open)
-			panel_open = 1
+			panel_open = TRUE
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
-			panel_open = 0
+			panel_open = FALSE
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
 		return 1
@@ -492,9 +491,9 @@ Class Procs:
 	if(prob(85) && explosive)
 		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
-		emp_act(2)
+		emp_act(EMP_LIGHT)
 	else
-		ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()

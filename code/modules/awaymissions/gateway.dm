@@ -5,8 +5,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
 	var/checkparts = TRUE
@@ -21,7 +21,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
 		switch(dir)
 			if(SOUTH,SOUTHEAST,SOUTHWEST)
-				density = 0
+				density = FALSE
 	..()
 
 /obj/machinery/gateway/proc/toggleoff()
@@ -136,7 +136,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centerstation/CollidedWith(atom/movable/AM)
 	if(!active)
 		return
 	if(!detect())
@@ -212,7 +212,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return TRUE
 	return FALSE
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centeraway/CollidedWith(atom/movable/AM)
 	if(!detect())
 		return
 	if(!active)

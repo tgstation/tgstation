@@ -2,10 +2,10 @@
 	name = "robotic fabricator"
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/metal_amount = 0
-	var/operating = 0
+	var/operating = FALSE
 	var/obj/item/being_built = null
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
@@ -127,7 +127,7 @@ Please wait until completion...</TT><BR>
 			var/building = text2path(build_type)
 			if (!isnull(building))
 				if (src.metal_amount >= build_cost)
-					src.operating = 1
+					operating = TRUE
 					src.use_power = ACTIVE_POWER_USE
 
 					src.metal_amount = max(0, src.metal_amount - build_cost)
@@ -142,7 +142,7 @@ Please wait until completion...</TT><BR>
 							src.being_built.loc = get_turf(src)
 							src.being_built = null
 						src.use_power = IDLE_POWER_USE
-						src.operating = 0
+						operating = FALSE
 						cut_overlay("fab-active")
 		return
 

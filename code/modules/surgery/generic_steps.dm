@@ -2,7 +2,7 @@
 //make incision
 /datum/surgery_step/incise
 	name = "make incision"
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/melee/energy/sword = 75, /obj/item/weapon/kitchen/knife = 65,
+	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/melee/transforming/energy/sword = 75, /obj/item/weapon/kitchen/knife = 65,
 		/obj/item/weapon/shard = 45, /obj/item = 30) // 30% success with any sharp item.
 	time = 16
 
@@ -87,7 +87,7 @@
 //saw bone
 /datum/surgery_step/saw
 	name = "saw bone"
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100,
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/transforming/energy/sword/cyborg/saw = 100,
 		/obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/required/chainsaw = 50,
 		/obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 54

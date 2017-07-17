@@ -2,8 +2,8 @@
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
@@ -25,6 +25,7 @@
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
+	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
@@ -39,6 +40,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
+	var/is_reflectable = FALSE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
 	var/knockdown = 0
@@ -81,7 +83,7 @@
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
 		if(impact_effect_type)
@@ -135,9 +137,7 @@
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
-/obj/item/projectile/Bump(atom/A, yes)
-	if(!yes) //prevents double bumps.
-		return
+/obj/item/projectile/Collide(atom/A)
 	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
@@ -160,6 +160,8 @@
 	var/turf/target_turf = get_turf(A)
 
 	if(!prehit(A))
+		if(forcedodge)
+			loc = target_turf
 		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
@@ -222,7 +224,8 @@
 			if(spread)
 				Angle += (rand() - 0.5) * spread
 			var/matrix/M = new
-			M.Turn(Angle)
+			if(!nondirectional_sprite)
+				M.Turn(Angle)
 			transform = M
 
 			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
@@ -262,10 +265,10 @@
 			old_pixel_x = pixel_x_offset
 			old_pixel_y = pixel_y_offset
 
-			if(original && (original.layer>=2.75) || ismob(original))
+			if(original && (original.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
-						Bump(original, 1)
+						Collide(original)
 			Range()
 			if (delay > 0)
 				sleep(delay)
@@ -277,10 +280,10 @@
 				if((!( current ) || loc == current))
 					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
+				if(original && (original.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
 					if(loc == get_turf(original))
 						if(!(original in permutated))
-							Bump(original, 1)
+							Collide(original)
 				Range()
 			sleep(config.run_speed * 0.9)
 
@@ -335,7 +338,7 @@
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
-		Bump(AM, 1)
+		Collide(AM)
 
 /obj/item/projectile/Destroy()
 	return ..()

@@ -16,7 +16,7 @@
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -63,7 +63,7 @@
 		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
 		return
 
-	if(!(GLOB.access_heads in ID.access))
+	if(!(ACCESS_HEADS in ID.access))
 		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
@@ -259,7 +259,7 @@
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
-				if(get_area(player) == areaInstance)
+				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
 					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
@@ -369,13 +369,20 @@
 				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
-			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)
-				parallax_slowdown()
-				for(var/A in SSshuttle.mobile)
-					var/obj/docking_port/mobile/M = A
-					if(M.launch_status == ENDGAME_LAUNCHED)
-						if(istype(M, /obj/docking_port/mobile/pod))
-							M.parallax_slowdown()
+			if(time_left <= PARALLAX_LOOP_TIME)
+				var/area_parallax = FALSE
+				for(var/place in shuttle_areas)
+					var/area/shuttle/shuttle_area = place
+					if(shuttle_area.parallax_movedir)
+						area_parallax = TRUE
+						break
+				if(area_parallax)
+					parallax_slowdown()
+					for(var/A in SSshuttle.mobile)
+						var/obj/docking_port/mobile/M = A
+						if(M.launch_status == ENDGAME_LAUNCHED)
+							if(istype(M, /obj/docking_port/mobile/pod))
+								M.parallax_slowdown()
 
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
@@ -441,16 +448,17 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
-	density = 0
+	density = FALSE
 	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
@@ -499,8 +507,8 @@
 /obj/item/weapon/storage/pod
 	name = "emergency space suits"
 	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
 	var/unlocked = FALSE
@@ -529,12 +537,6 @@
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return MouseDrop(user)
-
-/obj/item/weapon/storage/pod/onShuttleMove()
-	unlocked = TRUE
-	// If the pod was launched, the storage will always open.
-	return ..()
-
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"

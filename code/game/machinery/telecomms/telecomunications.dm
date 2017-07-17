@@ -26,8 +26,8 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
 	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
-	var/toggled = 1 	// Is it toggled on
-	var/on = 1
+	var/toggled = TRUE 	// Is it toggled on
+	var/on = TRUE
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
@@ -143,11 +143,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		var/turf/position = get_turf(src)
 		listening_level = position.z
 
-/obj/machinery/telecomms/onShuttleMove(turf/T1, rotation)
-	. = ..()
-	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
-		listening_level = T1.z
-
 /obj/machinery/telecomms/Initialize(mapload)
 	..()
 	if(mapload && autolinkers.len)
@@ -193,11 +188,11 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 	if(toggled)
 		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
-			on = 0
+			on = FALSE
 		else
-			on = 1
+			on = TRUE
 	else
-		on = 0
+		on = FALSE
 
 /obj/machinery/telecomms/process()
 	update_power()

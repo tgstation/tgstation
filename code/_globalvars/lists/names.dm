@@ -19,5 +19,6 @@ GLOBAL_LIST_INIT(posibrain_names, world.file2list("strings/names/posibrain.txt")
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
 GLOBAL_LIST_INIT(adjectives, world.file2list("strings/names/adjectives.txt"))
+GLOBAL_LIST_INIT(dream_strings, world.file2list("strings/dreamstrings.txt"))
 //loaded on startup because of "
 //would include in rsc if ' was used

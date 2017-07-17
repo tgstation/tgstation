@@ -920,11 +920,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acv" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "3"
-	},
+/obj/structure/closet/secure_closet/contraband/armory,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory)
 "acw" = (
@@ -2587,9 +2583,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/prison)
 "afH" = (
-/obj/structure/closet/secure_closet/brig{
-	anchored = 1
-	},
+/obj/structure/closet/secure_closet/brig,
 /turf/open/floor/plasteel/red/side,
 /area/security/prison)
 "afI" = (
@@ -3695,14 +3689,10 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "ahX" = (
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahY" = (
@@ -5021,10 +5011,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akO" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 1";
-	name = "Cell 1";
-	req_access_txt = "1"
+	name = "Cell 1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5056,10 +5045,9 @@
 /turf/closed/wall,
 /area/security/brig)
 "akR" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
-	name = "Cell 2";
-	req_access_txt = "1"
+	name = "Cell 2"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5083,10 +5071,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akT" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
-	name = "Cell 3";
-	req_access_txt = "1"
+	name = "Cell 3"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5183,10 +5170,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "ala" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 4";
-	name = "Cell 4";
-	req_access_txt = "1"
+	name = "Cell 4"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8736,8 +8722,7 @@
 	amount = 5
 	},
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 10;
-	layer = 2.9
+	amount = 10
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/department/electrical)
@@ -10280,8 +10265,7 @@
 /area/maintenance/arrivals/north)
 "axe" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -19784,7 +19768,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUb" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/brown{
 	dir = 10
 	},
@@ -25666,12 +25650,8 @@
 "bio" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/requests_console{
 	department = "Chemistry";
 	departmentType = 2;
@@ -27951,6 +27931,10 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -28255,11 +28239,7 @@
 /area/crew_quarters/heads/hop)
 "bnQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	desc = "Ian's bed! Looks comfy.";
-	name = "Ian's bed"
-	},
+/obj/structure/bed/dogbed/ian,
 /mob/living/simple_animal/pet/dog/corgi/Ian{
 	dir = 8
 	},
@@ -30032,9 +30012,7 @@
 	},
 /area/science/explab)
 "brD" = (
-/obj/structure/closet/emcloset{
-	pixel_x = -2
-	},
+/obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -32343,7 +32321,6 @@
 /area/medical/sleeper)
 "bwD" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -33644,7 +33621,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4;
 	external_pressure_bound = 140;
-	pressure_checks = 0
+	pressure_checks = 0;
 	name = "server vent"
 	},
 /turf/open/floor/circuit{
@@ -34083,7 +34060,6 @@
 /area/medical/sleeper)
 "bAq" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -39325,9 +39301,7 @@
 	network = list("Toxins");
 	use_power = 0
 	},
-/obj/item/target/alien{
-	anchored = 1
-	},
+/obj/item/target/alien/anchored,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -40160,9 +40134,7 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -41171,15 +41143,9 @@
 /area/science/misc_lab)
 "bPG" = (
 /obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -41538,6 +41504,8 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bQF" = (
@@ -46430,9 +46398,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	dir = 1
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -47812,7 +47778,6 @@
 /area/engine/engineering)
 "ceo" = (
 /obj/machinery/keycard_auth{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel,
@@ -48451,8 +48416,7 @@
 /area/engine/atmos)
 "cfS" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -48833,13 +48797,13 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
@@ -48847,7 +48811,7 @@
 	dir = 9
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgL" = (
@@ -49321,7 +49285,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chG" = (
@@ -49724,7 +49688,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -50360,8 +50324,7 @@
 	dir = 4;
 	name = "Research Monitor";
 	network = list("RD");
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/heads/chief)
@@ -52657,7 +52620,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "coL" = (
@@ -53274,7 +53237,7 @@
 /area/engine/engineering)
 "cqa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -53649,7 +53612,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqT" = (
@@ -53678,9 +53641,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqW" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/item/weapon/tank/internals/plasma,
 /obj/structure/cable/yellow,
 /obj/effect/turf_decal/stripes/line{
@@ -54098,7 +54059,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crX" = (
-/obj/structure/closet/emcloset,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -54106,6 +54066,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crY" = (
@@ -54122,7 +54083,7 @@
 /area/space)
 "csa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -54148,8 +54109,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "csf" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 8;
 	state = 2
 	},
@@ -55171,8 +55131,7 @@
 	},
 /obj/item/clothing/head/welding,
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 35;
-	layer = 3.1
+	amount = 35
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -56753,7 +56712,6 @@
 /area/shuttle/escape)
 "cxS" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -57378,7 +57336,6 @@
 /area/shuttle/abandoned)
 "czC" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
@@ -57685,8 +57642,7 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4";
-	
+	icon_state = "2-4"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57715,8 +57671,7 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57793,12 +57748,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 4;
-	icon_state = "emitter";
-	state = 2;
-	
+	state = 2
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -57806,8 +57758,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57820,8 +57771,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -57829,8 +57779,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -58989,7 +58938,7 @@
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -59501,9 +59450,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEu" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -59518,7 +59465,7 @@
 /area/engine/supermatter)
 "cEv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -59538,16 +59485,14 @@
 /area/engine/supermatter)
 "cEy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEz" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -59692,9 +59637,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEN" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -59730,9 +59673,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cES" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -59832,9 +59773,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFd" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -59843,7 +59782,7 @@
 /area/engine/engineering)
 "cFe" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
@@ -59863,16 +59802,14 @@
 /area/engine/engineering)
 "cFh" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cFi" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -60375,7 +60312,7 @@
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -60384,7 +60321,7 @@
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
 	},
@@ -60401,7 +60338,7 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -60435,7 +60372,7 @@
 /area/engine/engineering)
 "cGK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -60443,7 +60380,7 @@
 /area/engine/engineering)
 "cGL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -60498,14 +60435,11 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGU" = (
-/obj/structure/reflector/double{
-	anchored = 1
-	},
+/obj/structure/reflector/double/anchored,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGV" = (
-/obj/structure/reflector/box{
-	anchored = 1;
+/obj/structure/reflector/box/anchored{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -60609,17 +60543,14 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 4;
-	icon_state = "emitter";
 	state = 2
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHi" = (
-/obj/structure/reflector/box{
-	anchored = 1;
+/obj/structure/reflector/box/anchored{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -60629,10 +60560,8 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 8;
-	icon_state = "emitter";
 	state = 2
 	},
 /turf/open/floor/plating,
@@ -60667,18 +60596,14 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHo" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 1;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHp" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 4;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -61104,17 +61029,13 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "cIl" = (
-/obj/machinery/computer/med_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
 "cIm" = (
-/obj/machinery/computer/crew{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/crew/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -61139,17 +61060,13 @@
 	},
 /area/shuttle/syndicate)
 "cIq" = (
-/obj/machinery/computer/camera_advanced{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate)
 "cIr" = (
-/obj/machinery/computer/secure_data{
-	icon_keyboard = "syndi_key"
-	},
+/obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -62475,77 +62392,77 @@
 /area/shuttle/mining)
 "cMm" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMn" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMo" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMp" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMq" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMr" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMs" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMt" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMu" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMw" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMx" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMz" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMA" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMB" = (
@@ -62585,9 +62502,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cMI" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -62595,9 +62510,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cMJ" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -62615,7 +62528,7 @@
 /area/engine/supermatter)
 "cMN" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cMO" = (
@@ -83911,12 +83824,12 @@ aaa
 aaa
 aaa
 cTg
-cTl
-cTn
-cTr
-cTu
-cTw
-cTz
+cTg
+cTi
+cTg
+cTi
+cTg
+cTg
 aaa
 bCq
 bPS
@@ -84167,13 +84080,13 @@ aaa
 aaa
 aaa
 aaa
-cTh
+cTg
 bGg
 cTo
 cMl
 bHx
 cTx
-cTA
+cTg
 aaa
 bLv
 bPR
@@ -84427,7 +84340,7 @@ bDi
 cTi
 bGh
 bHx
-cTs
+cTo
 bHx
 bLt
 bMF
@@ -84681,13 +84594,13 @@ bzP
 bAS
 bxu
 aaa
-cTj
+cTg
 bGg
-cTp
-cTt
+cTo
+cTo
 bHx
 bLs
-cTB
+cTg
 aaa
 bLv
 bPT
@@ -84938,13 +84851,13 @@ bzR
 byd
 bxx
 aaa
-cTk
-cTm
-cTq
+cTg
+cTg
+cTi
 bJc
-cTv
-cTy
-cTC
+cTi
+cTg
+cTg
 aaa
 bCq
 bPV
@@ -91146,7 +91059,7 @@ cDo
 cgR
 cqA
 cqT
-czh
+csg
 cEm
 crU
 csb

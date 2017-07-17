@@ -272,7 +272,11 @@
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
 
 					// check if target has a weapon
-					var/obj/item/weapon/W = locate(/obj/item/weapon) in target.held_items
+					var/obj/item/weapon/W
+					for(var/obj/item/weapon/I in target.held_items)
+						if(!(I.flags & ABSTRACT))
+							W = I
+							break
 
 					// if the target has a weapon, chance to disarm them
 					if(W && prob(MONKEY_ATTACK_DISARM_PROB))
@@ -447,7 +451,7 @@
 				retaliate(Proj.firer)
 	..()
 
-/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

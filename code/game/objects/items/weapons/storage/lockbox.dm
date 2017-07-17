@@ -7,7 +7,7 @@
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
-	req_access = list(GLOB.access_armory)
+	req_access = list(ACCESS_ARMORY)
 	var/locked = TRUE
 	var/broken = FALSE
 	var/open = FALSE
@@ -56,6 +56,7 @@
 		if(user)
 			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return
+
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
 		to_chat(user, "<span class='warning'>It's locked!</span>")
@@ -87,7 +88,7 @@
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
-	req_access = list(GLOB.access_security)
+	req_access = list(ACCESS_SECURITY)
 
 /obj/item/weapon/storage/lockbox/loyalty/PopulateContents()
 	for(var/i in 1 to 3)
@@ -98,7 +99,7 @@
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
 	desc = "You have a bad feeling about opening this."
-	req_access = list(GLOB.access_security)
+	req_access = list(ACCESS_SECURITY)
 
 /obj/item/weapon/storage/lockbox/clusterbang/PopulateContents()
 	new /obj/item/weapon/grenade/clusterbuster(src)
@@ -112,7 +113,7 @@
 	max_w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 10
 	max_combined_w_class = 20
-	req_access = list(GLOB.access_captain)
+	req_access = list(ACCESS_CAPTAIN)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
@@ -161,7 +162,7 @@
 /obj/item/weapon/storage/lockbox/medal/sec
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
-	req_access = list(GLOB.access_hos)
+	req_access = list(ACCESS_HOS)
 
 /obj/item/weapon/storage/lockbox/medal/sec/PopulateContents()
 	for(var/i in 1 to 3)
@@ -170,7 +171,7 @@
 /obj/item/weapon/storage/lockbox/medal/sci
 	name = "science medal box"
 	desc = "A locked box used to store medals to be given to members of the science department."
-	req_access = list(GLOB.access_rd)
+	req_access = list(ACCESS_RD)
 
 /obj/item/weapon/storage/lockbox/medal/sci/PopulateContents()
 	for(var/i in 1 to 3)

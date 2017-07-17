@@ -77,7 +77,6 @@
 /area/ruin/powered/animal_hospital)
 "an" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /obj/machinery/light{

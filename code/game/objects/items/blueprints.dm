@@ -309,7 +309,7 @@
 			return ROOM_ERR_TOOLARGE
 		var/turf/T = pending[1] //why byond havent list::pop()?
 		pending -= T
-		for (var/dir in GLOB.cardinal)
+		for (var/dir in GLOB.cardinals)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
@@ -343,7 +343,7 @@
 
 	for(var/V in border) //lazy but works
 		var/turf/F = V
-		for(var/direction in GLOB.cardinal)
+		for(var/direction in GLOB.cardinals)
 			if(direction == border[F])
 				continue //don't want to grab turfs from outside the border
 			var/turf/U = get_step(F, direction)

@@ -4,7 +4,7 @@
 	desc = "A gently thrumming tear in reality."
 	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
-	density = 1
+	density = TRUE
 	light_range = 2
 	light_power = 3
 	light_color = "#6A4D2F"
@@ -109,10 +109,10 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/clockwork/spatial_gateway/Bumped(atom/A)
+/obj/effect/clockwork/spatial_gateway/CollidedWith(atom/movable/AM)
 	..()
-	if(A && !QDELETED(A))
-		pass_through_gateway(A)
+	if(!QDELETED(AM))
+		pass_through_gateway(AM, FALSE)
 
 /obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
 	if(!linked_gateway)

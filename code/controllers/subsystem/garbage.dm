@@ -189,6 +189,7 @@ SUBSYSTEM_DEF(garbage)
 	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(isnull(D.gc_destroyed))
+		D.SendSignal(COMSIG_PARENT_QDELETED)
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
@@ -236,6 +237,7 @@ SUBSYSTEM_DEF(garbage)
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
+// TODO: Move this and all datum var definitions into code/datums/datum.dm
 /datum/proc/Destroy(force=FALSE)
 	tag = null
 	var/list/timers = active_timers
@@ -245,6 +247,7 @@ SUBSYSTEM_DEF(garbage)
 		if (timer.spent)
 			continue
 		qdel(timer)
+	QDEL_LIST(datum_components)
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.

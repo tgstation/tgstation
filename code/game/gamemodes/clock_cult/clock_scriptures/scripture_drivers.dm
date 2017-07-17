@@ -170,7 +170,9 @@
 	return target && binding && target.buckled == binding && !is_servant_of_ratvar(target) && target.stat != DEAD
 
 /datum/clockwork_scripture/geis/scripture_effects()
-	return add_servant_of_ratvar(target)
+	. = add_servant_of_ratvar(target)
+	if(.)
+		add_logs(invoker, target, "Converted", object = "Geis")
 
 
 //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.

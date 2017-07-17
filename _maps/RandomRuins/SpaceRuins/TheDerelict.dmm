@@ -1509,8 +1509,7 @@
 /area/derelict/singularity_engine)
 "en" = (
 /obj/machinery/power/emitter{
-	dir = 1;
-	icon_state = "emitter"
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
@@ -2872,7 +2871,6 @@
 /area/derelict/medical/chapel)
 "iA" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/white,

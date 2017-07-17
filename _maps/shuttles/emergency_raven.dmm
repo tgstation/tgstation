@@ -521,7 +521,6 @@
 /area/shuttle/escape)
 "bm" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkpurple/side{

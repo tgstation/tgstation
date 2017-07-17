@@ -67,7 +67,7 @@
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 

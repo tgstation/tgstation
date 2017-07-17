@@ -87,9 +87,8 @@
 
 	var/check_randomizer = 0
 
-	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
-	var/panic_server_name = "somewhere else"
-	var/panic_address = "byond://" //Reconnect a player this linked server if this server isn't accepting new players
+	var/panic_server_name
+	var/panic_address //Reconnect a player this linked server if this server isn't accepting new players
 
 	//IP Intel vars
 	var/ipintel_email
@@ -194,7 +193,7 @@
 	var/allowwebclient = 0
 	var/webclientmembersonly = 0
 
-	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
+	var/sandbox_autoclose = FALSE // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
@@ -455,11 +454,12 @@
 				if("cross_comms_name")
 					cross_name = value
 				if("panic_server_name")
-					panic_server_name = value
+					if (value != "\[Put the name here\]")
+						panic_server_name = value
 				if("panic_server_address")
-					panic_address = value
-					if(value != "byond:\\address:port")
-						allow_panic_bunker_bounce = 1
+					if(value != "byond://address:port")
+						panic_address = value
+
 				if("medal_hub_address")
 					global.medal_hub = value
 				if("medal_hub_password")

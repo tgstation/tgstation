@@ -452,3 +452,39 @@ Proc for attack log creation, because really why not
 			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
+
+
+/proc/log_talk(mob/user,message,logtype)
+	var/turf/say_turf = get_turf(user)
+
+	var/sayloc = ""
+	if(say_turf)
+		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
+
+
+	var/logmessage = "[message] [sayloc]"
+
+	switch(logtype)
+
+		if(LOGDSAY)
+			log_dsay(logmessage)
+		if(LOGSAY)
+			log_say(logmessage)
+		if(LOGWHISPER)
+			log_whisper(logmessage)
+		if(LOGEMOTE)
+			log_emote(logmessage)
+		if(LOGPDA)
+			log_pda(logmessage)
+		if(LOGCHAT)
+			log_chat(logmessage)
+		if(LOGCOMMENT)
+			log_comment(logmessage)
+		if(LOGASAY)
+			log_adminsay(logmessage)
+		if(LOGOOC)
+			log_ooc(logmessage)
+		else
+			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
+			log_say(logmessage)
+

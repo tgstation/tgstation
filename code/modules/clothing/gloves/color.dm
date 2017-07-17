@@ -22,6 +22,14 @@
 	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
+/obj/item/clothing/gloves/color/fyellow/old
+	desc = "Old and worn out insulated gloves, hopefully they still work."
+	name = "worn out insulated gloves"
+
+/obj/item/clothing/gloves/color/fyellow/old/Initialize()
+	. = ..()
+	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
+
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"

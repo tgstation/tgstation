@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - bugfix: "The Ark of the Clockwork Justicar will still forcibly take up a 3x3 area even if it still needs components to activate."
