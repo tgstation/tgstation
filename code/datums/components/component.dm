@@ -1,8 +1,8 @@
 /datum/component
-	var/enabled = TRUE      					// Enables or disables the components
-	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER	// How components of the same type are handled in the same parent
-	var/list/signal_procs						// list of signals -> callbacks
-	var/datum/parent							// parent datum
+	var/enabled = TRUE
+	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
+	var/list/signal_procs
+	var/datum/parent
 
 /datum/component/New(datum/P, ...)
 	var/dm = dupe_mode
@@ -11,20 +11,21 @@
 		if(old)
 			switch(dm)
 				if(COMPONENT_DUPE_HIGHLANDER)
+					InheritComponent(old, FALSE)
 					P.RemoveComponent(old)
-					old = null	//in case SendSignal() blocks
 				if(COMPONENT_DUPE_UNIQUE)
+					old.InheritComponent(src, TRUE)
 					qdel(src)
 					return
-	P.SendSignal(COMSIG_COMPONENT_ADDED, list(src), FALSE)
+	P.SendSignal(COMSIG_COMPONENT_ADDED, list(src))
 	LAZYADD(P.datum_components, src)
 	parent = P
 
 /datum/component/Destroy()
-	RemoveNoSignal()
+	_RemoveNoSignal()
 	return ..()
 
-/datum/component/proc/RemoveNoSignal()
+/datum/component/proc/_RemoveNoSignal()
 	var/datum/P = parent
 	if(P)
 		LAZYREMOVE(P.datum_components, src)
@@ -43,32 +44,34 @@
 	
 	procs[sig_type] = CALLBACK(src, proc_on_self)    
 
-/datum/component/proc/ReceiveSignal(sigtype, list/sig_args, async)
+/datum/component/proc/ReceiveSignal(sigtype, list/sig_args)
 	var/list/sps = signal_procs
 	var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 	if(!CB)
 		return FALSE
-	if(!async)
-		return CB.Invoke(arglist(sig_args))
-	else
-		return CB.InvokeAsync(arglist(sig_args))
+	return CB.InvokeAsync(arglist(sig_args))
+
+/datum/component/proc/InheritComponent(datum/component/C, i_am_original)
+	return
+
+/datum/component/proc/OnTransfer(datum/new_parent)
+	return
 
 /datum/var/list/datum_components //list of /datum/component
 
-// Send a signal to all other components in the container.
-/datum/proc/SendSignal(sigtype, list/sig_args, async = FALSE)
+/datum/proc/SendSignal(sigtype, list/sig_args)
 	var/list/comps = datum_components
 	. = FALSE
 	for(var/I in comps)
 		var/datum/component/C = I
 		if(!C.enabled)
 			continue
-		if(C.ReceiveSignal(sigtype, sig_args, async))
+		if(C.ReceiveSignal(sigtype, sig_args))
 			ComponentActivated(C)
 			. = TRUE
 
-// Callback for when a component activates
 /datum/proc/ComponentActivated(datum/component/C)
+	return
 
 /datum/proc/GetComponent(c_type)
 	for(var/I in datum_components)
@@ -87,10 +90,6 @@
 		if(istype(I, c_type))
 			. += I
 
-/datum/proc/AddComponents(list/new_types)
-	for(var/new_type in new_types)
-		AddComponent(new_type)
-
 /datum/proc/AddComponent(new_type, ...)
 	var/nt = new_type
 	args[1] = src
@@ -100,6 +99,19 @@
 /datum/proc/RemoveComponent(datum/component/C)
 	if(!C)
 		return
-	C.RemoveNoSignal()
-	SendSignal(COMSIG_COMPONENT_REMOVING, list(C), FALSE)
+	C._RemoveNoSignal()
+	SendSignal(COMSIG_COMPONENT_REMOVING, list(C))
 	qdel(C)
+
+/datum/proc/TakeComponent(datum/component/C)
+	if(!C)
+		return
+	var/datum/helicopter = C.parent
+	if(helicopter == src)
+		//wat
+		return
+	C._RemoveNoSignal()
+	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, list(C))
+	C.OnTransfer(src)
+	C.parent = src
+	SendSignal(COMSIG_COMPONENT_ADDED, list(C))
