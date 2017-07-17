@@ -144,6 +144,8 @@
 				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 			if ("can_open")
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+			if ("curse")
+				soundin = pick('sound/effects/curse1.ogg', 'sound/effects/curse2.ogg', 'sound/effects/curse3.ogg', 'sound/effects/curse4.ogg', 'sound/effects/curse5.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)

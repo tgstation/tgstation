@@ -48,6 +48,10 @@
 	name = "Hierophant's Arena"
 	icon_state = "dk_yellow"
 
+/area/ruin/unpowered/seer
+	name = "Seer's Sanctum"
+	icon_state = "dk_yellow"
+
 /area/ruin/powered/pride
 	icon_state = "dk_yellow"
 

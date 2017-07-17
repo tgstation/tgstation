@@ -6,14 +6,11 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ac" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "ad" = (
 /turf/closed/mineral/random/high_chance/volcanic,
 /area/lavaland/surface/outdoors)
@@ -2818,8 +2815,9 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "fV" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
+/obj/structure/stone_tile/slab,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
 "fW" = (
 /obj/structure/necropolis_gate/locked,
 /obj/structure/stone_tile/slab,
@@ -3168,18 +3166,16 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gC" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 8
 	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/center,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "gD" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile{
@@ -3413,11 +3409,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hg" = (
-/obj/structure/stone_tile/surrounding,
-/obj/structure/stone_tile/center/cracked,
-/mob/living/simple_animal/hostile/megafauna/legion,
+/obj/structure/stone_tile/slab/burnt,
+/mob/living/simple_animal/hostile/megafauna/seer,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "hh" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -3708,7 +3703,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "hK" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -3932,7 +3927,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "ie" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -5724,20 +5719,13 @@
 	dir = 4
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mr" = (
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/block{
 	dir = 4
 	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "ms" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -5747,7 +5735,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mt" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -5931,23 +5919,23 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mQ" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
+/obj/structure/necropolis_gate/locked,
+/obj/structure/stone_tile/slab,
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mR" = (
-/obj/structure/stone_tile/block{
+/obj/structure/stone_tile{
 	dir = 8
 	},
-/obj/structure/stone_tile/block{
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mS" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
@@ -5960,7 +5948,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mT" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -5994,29 +5982,22 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mW" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
+/obj/structure/stone_tile/block/burnt,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mX" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/obj/structure/stone_tile/cracked{
+/obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/center/burnt,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mY" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -6026,20 +6007,13 @@
 	},
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "mZ" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/block{
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "na" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -6053,31 +6027,29 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "nb" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 4
 	},
-/obj/structure/stone_tile,
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "nc" = (
-/obj/structure/stone_tile/cracked{
+/obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 4
 	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/center,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "nd" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -6090,7 +6062,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "ne" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -6100,11 +6072,11 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "nf" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
 "ng" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -6114,7 +6086,300 @@
 	dir = 1
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/seer)
+"nh" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"ni" = (
+/obj/structure/stone_tile/surrounding,
+/obj/structure/stone_tile/center/cracked,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nj" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nk" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nl" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nm" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nn" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"no" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"np" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nq" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nr" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"ns" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nt" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nu" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nv" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nw" = (
+/obj/structure/stone_tile/surrounding/burnt,
+/obj/structure/stone_tile/center,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nx" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"ny" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nz" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nA" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nB" = (
+/obj/structure/stone_tile/burnt,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nC" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nD" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 6
+	},
+/obj/structure/stone_tile/center/burnt,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nE" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nF" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nG" = (
+/obj/structure/stone_tile/block/burnt,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nH" = (
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nI" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
+"nJ" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/seer)
 
 (1,1,1) = {"
 aa
@@ -37215,15 +37480,15 @@ aj
 "}
 (122,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+nh
+no
+mR
+nv
+nx
+mR
+nD
+nf
+mY
 aa
 iC
 gr
@@ -37472,15 +37737,15 @@ aj
 "}
 (123,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ni
+mR
+nt
+mR
+ny
+mS
+nE
+nH
+fV
 aa
 iD
 ag
@@ -37729,15 +37994,15 @@ aj
 "}
 (124,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+nj
+np
+mR
+mR
+mR
+nA
+nF
+mR
+nd
 aa
 aa
 ji
@@ -37986,17 +38251,17 @@ aj
 "}
 (125,1,1) = {"
 aa
-aa
-aa
+nk
+mR
 mS
 mV
 mq
-na
+mV
 nd
+ng
+mR
 aa
 aa
-fV
-fV
 gr
 jH
 gO
@@ -38243,17 +38508,17 @@ aj
 "}
 (126,1,1) = {"
 aa
-aa
+nl
 fV
-gj
+mR
 gC
 mr
 nb
 ne
+mS
+mR
 aa
 aa
-fV
-fV
 jk
 gr
 gr
@@ -38501,15 +38766,15 @@ aj
 (127,1,1) = {"
 mQ
 mR
-fW
-mT
+mR
+fV
 mW
 hg
 ac
 nf
-ac
-ac
-ac
+nI
+mR
+nJ
 af
 lg
 fT
@@ -38757,17 +39022,17 @@ aj
 "}
 (128,1,1) = {"
 aa
-aa
-fV
-gk
+mR
+nq
+mR
 mX
 mZ
 nc
 ng
+mR
+mR
 aa
 aa
-fV
-fV
 jl
 gr
 ah
@@ -39014,17 +39279,17 @@ aj
 "}
 (129,1,1) = {"
 aa
-aa
-aa
-mU
+nm
+mR
+mS
 mY
 ms
 hJ
 id
+mR
+mS
 aa
 aa
-fV
-fV
 jm
 jL
 gM
@@ -39271,15 +39536,15 @@ aj
 "}
 (130,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mR
+nr
+mR
+nw
+nz
+nB
+nG
+mR
+fV
 aa
 aa
 gr
@@ -39528,15 +39793,15 @@ aj
 "}
 (131,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+nn
+mR
+nu
+mR
+mR
+nC
+mR
+nd
+mR
 aa
 iD
 ah
@@ -39785,15 +40050,15 @@ aj
 "}
 (132,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mR
+ns
+mR
+mR
+mS
+ms
+mR
+mR
+mS
 aa
 iD
 gr

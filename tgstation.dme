@@ -1738,6 +1738,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\hierophant.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\legion.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\megafauna.dm"
+#include "code\modules\mob\living\simple_animal\hostile\megafauna\seer.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\swarmer.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\basilisk.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\curse_blob.dm"
