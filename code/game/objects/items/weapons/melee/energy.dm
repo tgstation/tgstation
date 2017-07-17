@@ -139,7 +139,7 @@
 	return 0
 
 /obj/item/weapon/melee/transforming/energy/sword/saber
-	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_CYAN, "green" = LIGHT_COLOR_LIGHT_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
+	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/Initialize(mapload)
