@@ -67,8 +67,8 @@
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
-#define MIN_PLASMA_DAMAGE					1
-#define MAX_PLASMA_DAMAGE					10
+#define MIN_TOXIC_GAS_DAMAGE				1
+#define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000

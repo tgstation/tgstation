@@ -173,8 +173,7 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
-		if(reagents)
-			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")

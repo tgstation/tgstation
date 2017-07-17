@@ -30,18 +30,20 @@
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas.
 
-	var/oxy_breath_dam_min = 1
-	var/oxy_breath_dam_max = 10
+	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/oxy_damage_type = OXY
-	var/nitro_breath_dam_min = 1
-	var/nitro_breath_dam_max = 10
+	var/nitro_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+	var/nitro_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/nitro_damage_type = OXY
-	var/co2_breath_dam_min = 1
-	var/co2_breath_dam_max = 10
+	var/co2_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+	var/co2_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/co2_damage_type = OXY
-	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
-	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
+	var/tox_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+	var/tox_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+	var/tox_damage_type = TOX
 
+	var/cold_message = "your face freezing and an icicle forming"
 	var/cold_level_1_threshold = 260
 	var/cold_level_2_threshold = 200
 	var/cold_level_3_threshold = 120
@@ -50,6 +52,7 @@
 	var/cold_level_3_damage = COLD_GAS_DAMAGE_LEVEL_3
 	var/cold_damage_type = BURN
 
+	var/hot_message = "your face burning and a searing heat"
 	var/heat_level_1_threshold = 360
 	var/heat_level_2_threshold = 400
 	var/heat_level_3_threshold = 1000
@@ -198,8 +201,7 @@
 	if(safe_toxins_max)
 		if(Toxins_pp > safe_toxins_max)
 			var/ratio = (breath_gases["plasma"][MOLES]/safe_toxins_max) * 10
-			if(H.reagents)
-				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
+			H.apply_damage_type(Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
 			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 		else
 			H.clear_alert("too_much_tox")
@@ -270,29 +272,35 @@
 
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
-	if(abs(310.15 - breath.temperature) > 50)
+	var/breath_temperature = breath.temperature
 
-		var/species_traits = list()
-		if(H && H.dna && H.dna.species && H.dna.species.species_traits)
-			species_traits = H.dna.species.species_traits
+	var/species_traits = list()
+	if(H && H.dna && H.dna.species && H.dna.species.species_traits)
+		species_traits = H.dna.species.species_traits
 
-		if(!(GLOB.mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
-			switch(breath.temperature)
-				if(-INFINITY to cold_level_3_threshold)
-					H.apply_damage_type(cold_level_3_damage, cold_damage_type)
-				if(cold_level_3_threshold to cold_level_2_threshold)
-					H.apply_damage_type(cold_level_2_damage, cold_damage_type)
-				if(cold_level_2_threshold to cold_level_1_threshold)
-					H.apply_damage_type(cold_level_1_damage, cold_damage_type)
+	if(!(GLOB.mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
+		var/cold_modifier = H.dna.species.coldmod
+		if(breath_temperature < cold_level_3_threshold)
+			H.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
+		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
+			H.apply_damage_type(cold_level_2_damage*cold_modifier, cold_damage_type)
+		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
+			H.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
+		if(breath_temperature < cold_level_1_threshold)
+			if(prob(20))
+				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
 
-		if(!(RESISTHOT in species_traits)) // HEAT DAMAGE
-			switch(breath.temperature)
-				if(heat_level_1_threshold to heat_level_2_threshold)
-					H.apply_damage_type(heat_level_1_damage, heat_damage_type)
-				if(heat_level_2_threshold to heat_level_3_threshold)
-					H.apply_damage_type(heat_level_2_damage, heat_damage_type)
-				if(heat_level_3_threshold to INFINITY)
-					H.apply_damage_type(heat_level_3_damage, heat_damage_type)
+	if(!(RESISTHOT in species_traits)) // HEAT DAMAGE
+		var/heat_modifier = H.dna.species.heatmod
+		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
+			H.apply_damage_type(heat_level_1_damage*heat_modifier, heat_damage_type)
+		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
+			H.apply_damage_type(heat_level_2_damage*heat_modifier, heat_damage_type)
+		if(breath_temperature > heat_level_3_threshold)
+			H.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
+		if(breath_temperature > heat_level_1_threshold)
+			if(prob(20))
+				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
