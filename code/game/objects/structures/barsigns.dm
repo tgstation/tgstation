@@ -3,7 +3,7 @@
 	desc = "A bar sign with no writing on it"
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
-	req_access = list(GLOB.access_bar)
+	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 250
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -119,10 +119,10 @@
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
 	emagged = TRUE
-	req_access = list(GLOB.access_syndicate)
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
 	sleep(100) //10 seconds
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
+	req_access = list(ACCESS_SYNDICATE)
 
 
 /obj/structure/sign/barsign/proc/pick_sign()

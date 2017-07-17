@@ -149,7 +149,7 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= GLOB.access_cent_bar
+	access_card.access |= ACCESS_CENT_BAR
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -167,7 +167,7 @@
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= GLOB.access_cent_bar
+	access_card.access |= ACCESS_CENT_BAR
 	access_card.flags |= NODROP
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
@@ -207,7 +207,7 @@
 			return TRUE
 
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (GLOB.access_cent_bar in ID.access))
+	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers

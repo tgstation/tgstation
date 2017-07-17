@@ -3,7 +3,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/ferry
 	shuttleId = "ferry"
 	possible_destinations = "ferry_home;ferry_away"
-	req_access = list(GLOB.access_cent_general)
+	req_access = list(ACCESS_CENT_GENERAL)
 
 	var/aiControlDisabled = 1
 
@@ -20,7 +20,7 @@
 	var/last_request //prevents spamming admins
 	var/cooldown = 600
 	possible_destinations = "ferry_home;ferry_away"
-	req_access = list(GLOB.access_cent_general)
+	req_access = list(ACCESS_CENT_GENERAL)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/machinery/computer/shuttle/ferry/request/Topic(href, href_list)

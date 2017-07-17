@@ -21,6 +21,7 @@
 #include "code\__DATASTRUCTURES\linked_lists.dm"
 #include "code\__DATASTRUCTURES\priority_queue.dm"
 #include "code\__DATASTRUCTURES\stacks.dm"
+#include "code\__DEFINES\access.dm"
 #include "code\__DEFINES\admin.dm"
 #include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\atmospherics.dm"
