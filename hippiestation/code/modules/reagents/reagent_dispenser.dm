@@ -43,12 +43,12 @@
 /obj/structure/reagent_dispensers/chemical/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(container_type & DRAWABLE)
-			container_type |= INJECTABLE
+			container_type |= OPENCONTAINER
 			container_type &= ~DRAWABLE
 			to_chat(user, "<span class='notice'>You unfasten the tank's cap.</span>")
-		else if(container_type & INJECTABLE)
+		else if(container_type & OPENCONTAINER)
 			container_type |= DRAWABLE
-			container_type &= ~INJECTABLE
+			container_type &= ~OPENCONTAINER
 			to_chat(user, "<span class='notice'>You fasten the tank's cap.</span>")
 		update_icon()
 		playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
