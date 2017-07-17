@@ -8,7 +8,7 @@
 	item_state = "ratvarian_spear"
 	force = 15 //Extra damage is dealt to targets in attack()
 	throwforce = 25
-	armour_penetration = 20
+	armour_penetration = 10
 	sharpness = IS_SHARP_ACCURATE
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
