@@ -139,7 +139,7 @@
 	return 0
 
 /obj/item/weapon/melee/transforming/energy/sword/saber
-	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_GREEN, "green" = LIGHT_COLOR_LIGHT_CYAN, "purple" = LIGHT_COLOR_LAVENDER)
+	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_CYAN, "green" = LIGHT_COLOR_LIGHT_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/Initialize(mapload)
@@ -156,17 +156,17 @@
 		light_color = possible_colors[set_color]
 		update_light()
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/blue
-	possible_colors = list("blue")
+/obj/item/weapon/melee/transforming/energy/sword/saber/red
+	possible_colors = list("red" = LIGHT_COLOR_RED)
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/purple
-	possible_colors = list("purple")
+/obj/item/weapon/melee/transforming/energy/sword/saber/blue
+	possible_colors = list("blue" = LIGHT_COLOR_CYAN)
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/green
-	possible_colors = list("green")
+	possible_colors = list("green" = LIGHT_COLOR_LIGHT_GREEN)
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/red
-	possible_colors = list("red")
+/obj/item/weapon/melee/transforming/energy/sword/saber/purple
+	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
 
 /obj/item/weapon/melee/transforming/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/device/multitool))
