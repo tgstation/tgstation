@@ -188,7 +188,7 @@
 			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
 			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
-		L.Knockdown(5) //knocks down briefly when exploding
+		L.Knockdown(15) //knocks down briefly when exploding
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
@@ -200,7 +200,7 @@
 			L.adjustFireLoss(5)
 		targetsjudged++
 		if(!QDELETED(L))
-			L.adjustBruteLoss(15) //does a decent amount of damage
+			L.adjustBruteLoss(20) //does a decent amount of damage
 		add_logs(user, L, "struck with a judicial blast")
 	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
 	sleep(3) //so the animation completes properly
