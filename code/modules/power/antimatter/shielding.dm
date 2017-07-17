@@ -1,7 +1,7 @@
 //like orange but only checks north/south/east/west for one step
 /proc/cardinalrange(var/center)
 	var/list/things = list()
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(center, direction)
 		if(!T) continue
 		things += T.contents
@@ -50,7 +50,7 @@
 			break
 
 	if(!control_unit)//No other guys nearby look for a control unit
-		for(var/direction in GLOB.cardinal)
+		for(var/direction in GLOB.cardinals)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
 				break
@@ -72,9 +72,7 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target)
 	return 0
 
 
@@ -114,11 +112,11 @@
 				if(shield.control_unit == control_unit)
 					if(shield.processing)
 						coredirs |= direction
-					if(direction in GLOB.cardinal)
+					if(direction in GLOB.cardinals)
 						dirs |= direction
 
 			else
-				if(istype(machine, /obj/machinery/power/am_control_unit) && (direction in GLOB.cardinal))
+				if(istype(machine, /obj/machinery/power/am_control_unit) && (direction in GLOB.cardinals))
 					var/obj/machinery/power/am_control_unit/control = machine
 					if(control == control_unit)
 						dirs |= direction

@@ -8,7 +8,7 @@
 	anchored = FALSE
 	verb_say = "states"
 	density = TRUE
-	req_access = list(GLOB.access_engine)
+	req_access = list(ACCESS_ENGINE)
 	var/active = FALSE
 	var/list/rangers = list()
 	var/charge = 35
@@ -392,7 +392,7 @@
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
-			M.setDir(pick(GLOB.cardinal))
+			M.setDir(pick(GLOB.cardinals))
 			M.lay_down(TRUE)
 		 time--
 

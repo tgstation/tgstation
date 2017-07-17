@@ -434,7 +434,7 @@
 	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
-	target.ex_act(3)
+	target.ex_act(EXPLODE_LIGHT)
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisperseTarget(mob/living/target)

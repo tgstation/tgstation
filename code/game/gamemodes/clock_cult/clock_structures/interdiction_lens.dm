@@ -119,19 +119,19 @@
 					successfulprocess = TRUE
 					if(C.emped)
 						continue
-					C.emp_act(1)
+					C.emp_act(EMP_HEAVY)
 				else if(istype(A, /obj/item/device/radio))
 					var/obj/item/device/radio/O = A
 					successfulprocess = TRUE
 					if(O.emped || !O.on)
 						continue
-					O.emp_act(1)
+					O.emp_act(EMP_HEAVY)
 				else if((isliving(A) && !is_servant_of_ratvar(A)) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
 					for(var/obj/item/device/radio/O in A.GetAllContents())
 						successfulprocess = TRUE
 						if(O.emped || !O.on)
 							continue
-						O.emp_act(1)
+						O.emp_act(EMP_HEAVY)
 
 			CHECK_TICK
 

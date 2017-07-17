@@ -19,13 +19,21 @@
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
+/obj/structure/blob/attack_hand(mob/M)
+	. = ..()
+	M.changeNext_move(CLICK_CD_MELEE)
+	var/a = pick("gently stroke", "nuzzle", "affectionatly pet", "cuddle")
+	M.visible_message("<span class='notice'>[M] [a]s [src]!</span>", "<span class='notice'>You [a] [src]!</span>")
+	playsound(src, 'sound/effects/blobattack.ogg', 50, 1) //SQUISH SQUISH
+	
+
 
 /obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		GLOB.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
-	setDir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinals))
 	update_icon()
 	.= ..()
 	ConsumeTile()
@@ -65,9 +73,7 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
+/obj/structure/blob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSBLOB))
 		return 1
 	return 0
@@ -171,11 +177,11 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, T, 5)) //is the target turf impassable
+	if(!T.CanPass(src, T)) //is the target turf impassable
 		make_blob = FALSE
 		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
-		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
+		if(!A.CanPass(src, T)) //is anything in the turf impassable
 			make_blob = FALSE
 		A.blob_act(src) //also hit everything in the turf
 

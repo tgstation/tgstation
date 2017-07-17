@@ -2,23 +2,17 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/carbon/Initialize()
+	. = ..()
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
-	..()
 
 /mob/living/carbon/Destroy()
-	for(var/guts in internal_organs)
-		qdel(guts)
-	for(var/atom/movable/food in stomach_contents)
-		qdel(food)
-	for(var/BP in bodyparts)
-		qdel(BP)
-	for(var/imp in implants)
-		qdel(imp)
-	bodyparts = list()
+	QDEL_LIST(internal_organs)
+	QDEL_LIST(stomach_contents)
+	QDEL_LIST(bodyparts)
+	QDEL_LIST(implants)
 	remove_from_all_data_huds()
-	if(dna)
-		qdel(dna)
+	QDEL_NULL(dna)
 	return ..()
 
 /mob/living/carbon/relaymove(mob/user, direction)
@@ -716,8 +710,9 @@
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
-	for(var/datum/disease/D in viruses)
-		if (D.severity != NONTHREAT)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(D.severity != NONTHREAT)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()

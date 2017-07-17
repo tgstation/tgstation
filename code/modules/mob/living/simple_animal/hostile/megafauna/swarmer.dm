@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	. = ..()
 	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
-	for(var/ddir in GLOB.cardinal)
+	for(var/ddir in GLOB.cardinals)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))
 		var/mob/living/simple_animal/hostile/swarmer/ai/resource/R = new(loc)
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid

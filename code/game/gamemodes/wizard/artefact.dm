@@ -437,7 +437,7 @@
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
-	W.access += GLOB.access_maint_tunnels
+	W.access += ACCESS_MAINT_TUNNELS
 	W.assignment = "Multiverse Traveller"
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
@@ -517,7 +517,7 @@
 					user.unset_machine()
 			if("r_leg","l_leg")
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(GLOB.cardinal))
+				var/turf/T = get_step(target,pick(GLOB.cardinals))
 				target.Move(T)
 			if("r_arm","l_arm")
 				target.click_random_mob()

@@ -73,13 +73,14 @@
 	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		if(safety_mode)
-			safety_mode = FALSE
-			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
-		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	if(safety_mode)
+		safety_mode = FALSE
+		update_icon()
+	playsound(src, "sparks", 75, 1, -1)
+	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src].</span>")
 
 /obj/machinery/recycler/update_icon()
 	..()
@@ -88,14 +89,7 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-// This is purely for admin possession !FUN!.
-/obj/machinery/recycler/Bump(atom/movable/AM)
-	..()
-	if(AM)
-		Bumped(AM)
-
-
-/obj/machinery/recycler/Bumped(atom/movable/AM)
+/obj/machinery/recycler/CollidedWith(atom/movable/AM)
 
 	if(stat & (BROKEN|NOPOWER))
 		return

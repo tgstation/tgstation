@@ -72,8 +72,9 @@
 				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
-	if(!emagged)
-		src.req_access = list()
-		emagged = TRUE
-		to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
+	if(emagged)
+		return
+	req_access = null
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 

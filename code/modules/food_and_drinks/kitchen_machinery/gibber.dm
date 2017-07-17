@@ -21,7 +21,7 @@
 
 /obj/machinery/gibber/autogibber/Initialize()
 	. = ..()
-	for(var/i in GLOB.cardinal)
+	for(var/i in GLOB.cardinals)
 		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
 		if(input_obj)
 			if(isturf(input_obj.loc))
@@ -33,11 +33,12 @@
 		CRASH("Didn't find an input plate.")
 		return
 
-/obj/machinery/gibber/autogibber/Bumped(atom/A)
-	if(!input_plate) return
+/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
+	if(!input_plate)
+		return
 
-	if(ismob(A))
-		var/mob/M = A
+	if(ismob(AM))
+		var/mob/M = AM
 
 		if(M.loc == input_plate)
 			M.loc = src

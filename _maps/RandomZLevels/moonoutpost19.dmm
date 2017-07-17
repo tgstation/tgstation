@@ -3813,9 +3813,7 @@
 	})
 "fg" = (
 /obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/light/small{
 	active_power_usage = 0;
 	dir = 1;

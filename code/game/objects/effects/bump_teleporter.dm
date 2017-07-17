@@ -19,16 +19,12 @@
 	LAZYREMOVE(AllTeleporters, src)
 	return ..()
 
-/obj/effect/bump_teleporter/Bumped(atom/user)
-	if(!ismob(user))
-		//user.loc = src.loc	//Stop at teleporter location
+/obj/effect/bump_teleporter/CollidedWith(atom/movable/AM)
+	if(!ismob(AM))
 		return
-
 	if(!id_target)
-		//user.loc = src.loc	//Stop at teleporter location, there is nowhere to teleport to.
 		return
 
 	for(var/obj/effect/bump_teleporter/BT in AllTeleporters)
 		if(BT.id == src.id_target)
-			usr.loc = BT.loc	//Teleport to location with correct id.
-			return
+			AM.forceMove(BT.loc) //Teleport to location with correct id.

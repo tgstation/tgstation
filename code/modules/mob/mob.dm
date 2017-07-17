@@ -11,8 +11,7 @@
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
-	for(var/infection in viruses)
-		qdel(infection)
+	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null

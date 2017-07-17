@@ -67,7 +67,7 @@ Pipelines + Other Objects -> Pipe network
 	node_connects.len = device_type
 
 	for(DEVICE_TYPE_LOOP)
-		for(var/D in GLOB.cardinal)
+		for(var/D in GLOB.cardinals)
 			if(D & GetInitDirections())
 				if(D in node_connects)
 					continue
@@ -177,7 +177,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
 	if(!fuck_you_dir)
-		fuck_you_dir = pick(GLOB.cardinal)
+		fuck_you_dir = pick(GLOB.cardinals)
 	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
 	var/range = pressures/250
 	var/speed = range/5
@@ -285,47 +285,3 @@ Pipelines + Other Objects -> Pipe network
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return 1
-
-//Properly updates pipes on shuttle movement
-/obj/machinery/atmospherics/shuttleRotate(rotation)
-	var/list/real_node_connect = getNodeConnects()
-	for(DEVICE_TYPE_LOOP)
-		real_node_connect[I] = angle2dir(rotation+dir2angle(real_node_connect[I]))
-
-	..()
-	SetInitDirections()
-	var/list/supposed_node_connect = getNodeConnects()
-	var/list/nodes_copy = nodes.Copy()
-
-	for(DEVICE_TYPE_LOOP)
-		var/new_pos = supposed_node_connect.Find(real_node_connect[I])
-		nodes[new_pos] = nodes_copy[I]
-
-/obj/machinery/atmospherics/afterShuttleMove()
-	..()
-	var/missing_nodes = FALSE
-	for(DEVICE_TYPE_LOOP)
-		if(src.nodes[I])
-			var/obj/machinery/atmospherics/node = src.nodes[I]
-			var/connected = FALSE
-			for(var/D in GLOB.cardinal)
-				if(node in get_step(src, D))
-					connected = TRUE
-					break
-
-			if(!connected)
-				nullifyNode(I)
-
-		if(!src.nodes[I])
-			missing_nodes = TRUE
-
-	if(missing_nodes)
-		atmosinit()
-		for(var/obj/machinery/atmospherics/A in pipeline_expansion())
-			A.atmosinit()
-			if(A.returnPipenet())
-				A.addMember(src)
-		build_network()
-	else
-		// atmosinit() calls update_icon(), so we don't need to call it
-		update_icon()

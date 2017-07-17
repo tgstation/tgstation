@@ -119,7 +119,7 @@
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
-	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
+	playsound(src, "sparks", 100, 0)
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	if(open)
@@ -632,7 +632,7 @@
 	return
 
 // called when bot bumps into anything
-/mob/living/simple_animal/bot/mulebot/Bump(atom/obs)
+/mob/living/simple_animal/bot/mulebot/Collide(atom/obs)
 	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
 		if(isliving(obs))
 			var/mob/living/L = obs
@@ -748,4 +748,4 @@
 #undef DELIGHT
 
 /obj/machinery/bot_core/mulebot
-	req_access = list(GLOB.access_cargo)
+	req_access = list(ACCESS_CARGO)

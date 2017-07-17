@@ -2749,11 +2749,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/armory)
 "agm" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "3"
-	},
+/obj/structure/closet/secure_closet/contraband/armory,
 /obj/item/weapon/book/codex_gigas,
 /obj/item/weapon/poster/random_contraband,
 /obj/item/weapon/grenade/smokebomb,
@@ -3074,9 +3070,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/transfer)
 "ahc" = (
-/obj/structure/closet/secure_closet/brig{
-	anchored = 1
-	},
+/obj/structure/closet/secure_closet/brig,
 /turf/open/floor/plasteel/black,
 /area/security/prison)
 "ahd" = (
@@ -7369,11 +7363,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aqc" = (
@@ -7967,11 +7957,7 @@
 /turf/open/floor/plasteel/darkyellow,
 /area/bridge)
 "arv" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/bridge)
 "arw" = (
@@ -10909,12 +10895,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	desc = "Ian's bed! Looks comfy.";
-	name = "Ian's bed";
-	pixel_y = 2
-	},
+/obj/structure/bed/dogbed/ian,
 /mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -13609,8 +13590,7 @@
 /area/hallway/primary/central)
 "aDM" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -24836,8 +24816,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -27155,15 +27134,9 @@
 /area/science/xenobiology)
 "bhs" = (
 /obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -37785,11 +37758,7 @@
 /turf/open/floor/plating,
 /area/science/mineral_storeroom)
 "bCY" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -41809,8 +41778,7 @@
 /area/space)
 "bLO" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel,
@@ -43860,11 +43828,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bQp" = (
@@ -43884,9 +43848,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bQq" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/item/weapon/tank/internals/plasma,
 /obj/structure/cable/yellow,
 /obj/effect/turf_decal/stripes/line{
@@ -43895,9 +43857,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bQr" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -43951,11 +43911,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bQz" = (
@@ -44280,8 +44236,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "bRj" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 4;
 	state = 2
 	},
@@ -44319,8 +44274,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "bRo" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	dir = 8;
 	state = 2
 	},
@@ -44731,11 +44685,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bSo" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bSp" = (
@@ -48142,8 +48092,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -48204,11 +48153,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cbc" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cbd" = (
@@ -49048,11 +48993,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	desc = "It's a storage unit for emergency breath masks and O2 tanks, and is securely bolted in place.";
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
 "cdf" = (
@@ -49878,8 +49819,7 @@
 /area/chapel/main/monastery)
 "cfi" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -51738,6 +51678,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cjR" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjS" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjT" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjU" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjV" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"cjW" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -66747,13 +66705,13 @@ aCh
 aCh
 aCh
 aCh
-aCh
+cjT
 cjC
 aJL
 aJL
 aJL
 cjE
-aCh
+cjV
 aCh
 aCh
 aCh
@@ -67000,7 +66958,7 @@ aaa
 aaa
 aCh
 aCh
-aCh
+cjR
 aEr
 aFm
 aGh
@@ -68028,7 +67986,7 @@ aaa
 aaa
 aCh
 aCh
-aCh
+cjS
 aEu
 aFn
 aGh
@@ -68289,13 +68247,13 @@ aCh
 aCh
 aCh
 aCh
-aCh
+cjU
 cjC
 aJK
 aJK
 aJK
 cjE
-aCh
+cjW
 aCh
 aCh
 aCh
@@ -82963,7 +82921,7 @@ aAs
 aDJ
 bcJ
 bcI
-beP
+bdD
 bdG
 bgX
 bia
@@ -87055,18 +87013,18 @@ aJk
 aKl
 aHQ
 aMu
-bVG
+aHQ
 bVI
 aPg
 aQm
-bVG
+aHQ
 aSj
-bVG
+aHQ
 aTS
 aUS
-bVG
+aHQ
 bVI
-bVG
+aHQ
 axi
 aDd
 bar
