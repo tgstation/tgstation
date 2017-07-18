@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/weapon/melee/energy/sword/saber
+	item = /obj/item/weapon/melee/transforming/energy/sword/saber
 	cost = 8
 
 /datum/uplink_item/dangerous/doublesword

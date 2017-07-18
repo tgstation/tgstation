@@ -7422,10 +7422,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aql" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 1";
-	name = "Cell 1";
-	req_access_txt = "1"
+	name = "Cell 1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7476,10 +7475,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aqp" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
-	name = "Cell 2";
-	req_access_txt = "1"
+	name = "Cell 2"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7497,10 +7495,9 @@
 /turf/closed/wall,
 /area/security/brig)
 "aqr" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
-	name = "Cell 3";
-	req_access_txt = "1"
+	name = "Cell 3"
 	},
 /obj/structure/cable{
 	d1 = 4;

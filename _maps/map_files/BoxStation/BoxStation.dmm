@@ -5011,10 +5011,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akO" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 1";
-	name = "Cell 1";
-	req_access_txt = "1"
+	name = "Cell 1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5046,10 +5045,9 @@
 /turf/closed/wall,
 /area/security/brig)
 "akR" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
-	name = "Cell 2";
-	req_access_txt = "1"
+	name = "Cell 2"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5073,10 +5071,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akT" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
-	name = "Cell 3";
-	req_access_txt = "1"
+	name = "Cell 3"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5173,10 +5170,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "ala" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 4";
-	name = "Cell 4";
-	req_access_txt = "1"
+	name = "Cell 4"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -26572,6 +26568,7 @@
 	layer = 3;
 	pixel_x = 32
 	},
+/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bkp" = (

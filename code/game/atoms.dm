@@ -113,20 +113,27 @@
 	if(T.z == ZLEVEL_TRANSIT)
 		for(var/A in SSshuttle.mobile)
 			var/obj/docking_port/mobile/M = A
-			if(M.launch_status == ENDGAME_TRANSIT && T in M.areaInstance)
-				return TRUE
+			if(M.launch_status == ENDGAME_TRANSIT)
+				for(var/place in M.shuttle_areas)
+					var/area/shuttle/shuttle_area = place
+					if(T in shuttle_area)
+						return TRUE
 
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
 		return FALSE
 
-	//check for centcomm shuttles
+	//Check for centcom itself
+	if(istype(T.loc, /area/centcom))
+		return TRUE
+
+	//Check for centcomm shuttles
 	for(var/A in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = A
-		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
-			return TRUE
-
-	//finally check for centcom itself
-	return istype(T.loc,/area/centcom)
+		if(M.launch_status == ENDGAME_LAUNCHED)
+			for(var/place in M.shuttle_areas)
+				var/area/shuttle/shuttle_area = place
+				if(T in shuttle_area)
+					return TRUE
 
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
