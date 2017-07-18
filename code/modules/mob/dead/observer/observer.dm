@@ -456,28 +456,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
-/mob/dead/observer/verb/change_view_range()
-	set category = "Ghost"
-	set name = "View Range"
-	set desc = "Change your view range."
-
-	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(client.view == world.view)
-		var/list/views = list()
-		for(var/i in 1 to max_view)
-			views |= i
-		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
-		if(new_view)
-			client.change_view(Clamp(new_view, 1, max_view))
-	else
-		client.change_view(world.view)
-
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
 	set hidden = TRUE
-	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(input)
-		client.change_view(Clamp(client.view + input, 1, max_view))
+	
+	return
+	//var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
+	
+	/*if(input)
+		client.change_view(Clamp(client.view + input, 1, max_view))*
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
