@@ -17,7 +17,7 @@
 					old.InheritComponent(src, TRUE)
 					qdel(src)
 					return
-	P.SendSignal(COMSIG_COMPONENT_ADDED, list(src))
+	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
 	LAZYADD(P.datum_components, src)
 	parent = P
 
@@ -25,7 +25,7 @@
 	var/datum/P = parent
 	if(P)
 		_RemoveNoSignal()
-		P.SendSignal(COMSIG_COMPONENT_REMOVING, list(C))
+		P.SendSignal(COMSIG_COMPONENT_REMOVING, C)
 	return ..()
 
 /datum/component/proc/_RemoveNoSignal()
@@ -47,12 +47,14 @@
 	
 	procs[sig_type] = CALLBACK(src, proc_on_self)    
 
-/datum/component/proc/ReceiveSignal(sigtype, list/sig_args)
+/datum/component/proc/ReceiveSignal(sigtype, ...)
 	var/list/sps = signal_procs
 	var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 	if(!CB)
 		return FALSE
-	return CB.InvokeAsync(arglist(sig_args))
+	var/list/arguments = args.Copy()
+	arguments.Cut(1, 2)
+	return CB.InvokeAsync(arglist(arguments))
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
@@ -62,14 +64,14 @@
 
 /datum/var/list/datum_components //list of /datum/component
 
-/datum/proc/SendSignal(sigtype, list/sig_args)
+/datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	. = FALSE
 	for(var/I in comps)
 		var/datum/component/C = I
 		if(!C.enabled)
 			continue
-		if(C.ReceiveSignal(sigtype, sig_args))
+		if(C.ReceiveSignal(arglist(args)))
 			ComponentActivated(C)
 			. = TRUE
 
@@ -107,7 +109,7 @@
 		//wat
 		return
 	C._RemoveNoSignal()
-	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, list(C))
+	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
 	C.OnTransfer(src)
 	C.parent = src
-	SendSignal(COMSIG_COMPONENT_ADDED, list(C))
+	SendSignal(COMSIG_COMPONENT_ADDED, C)
