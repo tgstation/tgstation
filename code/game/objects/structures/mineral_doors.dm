@@ -122,7 +122,7 @@
 		icon_state = initial_state
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
 		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)

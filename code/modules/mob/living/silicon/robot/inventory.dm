@@ -12,7 +12,7 @@
 	if(!O)
 		return 0
 	O.mouse_opacity = 2
-	if(istype(O,/obj/item/borg/sight))
+	if(istype(O, /obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
 		update_sight()

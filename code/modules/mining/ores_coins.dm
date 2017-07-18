@@ -410,7 +410,7 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
-	else if(istype(W,/obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(!string_attached)
 			..()
 			return

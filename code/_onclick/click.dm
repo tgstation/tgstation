@@ -95,7 +95,7 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src,params)
 

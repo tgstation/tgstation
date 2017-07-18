@@ -155,10 +155,10 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(istype(Proj,/obj/item/projectile/beam))
+	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
 		burn = TRUE
-	else if(istype(Proj,/obj/item/projectile/ion))
+	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
 		burn = TRUE
 	if(burn)
