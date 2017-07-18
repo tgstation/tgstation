@@ -127,7 +127,8 @@
 				//Virsuses
 				if(viruses.len)
 					stat("Viruses:", null)
-					for(var/datum/disease/D in viruses)
+					for(var/thing in viruses)
+						var/datum/disease/D = thing
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
@@ -397,7 +398,7 @@
 						if (!G.emagged)
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
-								if(GLOB.access_sec_doors in access)
+								if(ACCESS_SEC_DOORS in access)
 									allowed_access = H.get_authentification_name()
 						else
 							allowed_access = "@%&ERROR_%$*"
@@ -590,7 +591,7 @@
 
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck)
-		if(!idcard || !(GLOB.access_weapons in idcard.access))
+		if(!idcard || !(ACCESS_WEAPONS in idcard.access))
 			for(var/obj/item/I in held_items)
 				if(weaponcheck.Invoke(I))
 					threatcount += 4

@@ -383,9 +383,10 @@
 	..()
 
 /obj/machinery/vending/emag_act(mob/user)
-	if(!emagged)
-		emagged  = 1
-		to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)

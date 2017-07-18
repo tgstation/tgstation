@@ -118,7 +118,7 @@
 	if(foundIDs.len)
 		for(var/obj/item/weapon/card/id/ID in foundIDs)
 			ID.name = "lead agent card"
-			ID.access += GLOB.access_syndicate_leader
+			ID.access += ACCESS_SYNDICATE_LEADER
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 

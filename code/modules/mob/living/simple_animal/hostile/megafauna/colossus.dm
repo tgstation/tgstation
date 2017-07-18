@@ -437,7 +437,7 @@ Difficulty: Very Hard
 	playsound(user, activation_sound, 100, 1)
 	return TRUE
 
-/obj/machinery/anomalous_crystal/Bumped(atom/AM as mob|obj)
+/obj/machinery/anomalous_crystal/CollidedWith(atom/movable/AM)
 	..()
 	if(ismob(AM))
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)

@@ -30,8 +30,7 @@
 		return
 
 	if(..()) //not dead
-		for(var/datum/mutation/human/HM in dna.mutations)
-			HM.on_life(src)
+		handle_active_genes()
 
 	if(stat != DEAD)
 		//heart attack stuff
@@ -332,6 +331,9 @@
 
 	heart.beating = !status
 
+/mob/living/carbon/human/proc/handle_active_genes()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
 	if(!can_heartattack())

@@ -162,7 +162,8 @@
 	//set reagent data
 	B.data["donor"] = O
 
-	for(var/datum/disease/D in O.viruses)
+	for(var/thing in O.viruses)
+		var/datum/disease/D = thing
 		if(!(D.spread_flags & SPECIAL))
 			B.data["viruses"] += D.Copy()
 	if(O.has_dna())

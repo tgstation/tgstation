@@ -384,7 +384,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "bt" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/melee/energy/sword/saber/red,
+/obj/item/weapon/melee/transforming/energy/sword/saber/red,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "bu" = (
@@ -1479,7 +1479,7 @@
 /area/awaymission/spacebattle/cruiser)
 "eW" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
-/obj/item/weapon/melee/energy/sword/saber/red,
+/obj/item/weapon/melee/transforming/energy/sword/saber/red,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)

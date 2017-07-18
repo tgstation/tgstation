@@ -52,7 +52,7 @@
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
 
 		if("murder") // 28 tc now
-			new /obj/item/weapon/melee/energy/sword/saber(src)
+			new /obj/item/weapon/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon(src)

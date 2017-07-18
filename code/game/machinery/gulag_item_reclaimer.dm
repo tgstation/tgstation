@@ -3,7 +3,7 @@
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_taken"
-	req_access = list(GLOB.access_security) //reqaccess to access all stored items
+	req_access = list(ACCESS_SECURITY) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -25,9 +25,10 @@
 	return ..()
 
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
-	if(!emagged) // emagging lets anyone reclaim all the items
-		req_access = list()
-		emagged = TRUE
+	if(emagged) // emagging lets anyone reclaim all the items
+		return
+	req_access = list()
+	emagged = TRUE
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/id/prisoner))
