@@ -613,6 +613,3 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
-
-/atom/Crossed(atom/movable/AM)
-	SendSignal(COMSIG_ATOM_CROSSED, AM)

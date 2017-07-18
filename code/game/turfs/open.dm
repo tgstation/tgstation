@@ -219,10 +219,8 @@
 	switch(wet)
 		if(TURF_WET_WATER)
 			AddComponent(/datum/component/slippery, 60, NO_SLIP_WHEN_WALKING)
-				M.inertia_dir = 0
 		if(TURF_WET_LUBE)
 			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
-				M.confused = max(M.confused, 8)
 		if(TURF_WET_ICE)
 			AddComponent(/datum/component/slippery, 120, SLIDE | GALOSHES_DONT_HELP)
 		if(TURF_WET_PERMAFROST)
@@ -230,14 +228,14 @@
 		if(TURF_WET_SLIDE)
 			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
 		else
-			RemoveComponent(GetComponent(/datum/component/slippery))
+			qdel(GetComponent(/datum/component/slippery))
 
 /turf/open/ComponentActivated(datum/component/C)
 	..()
 	var/datum/component/slippery/S = C
 	if(!istype(S))
 		return
-	var/mob/M = S.last_successful_slip
+	var/mob/M = S.slip_victim
 	if(!M)
 		return
 	switch(wet)
