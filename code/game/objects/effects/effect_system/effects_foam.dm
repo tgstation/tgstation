@@ -29,6 +29,10 @@
 	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
 
+/obj/effect/particle_effect/foam/metal/Initialize()
+	. = ..()
+	qdel(GetComponent(/datum/component/slippery))
+
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
 	metal = IRON_FOAM
