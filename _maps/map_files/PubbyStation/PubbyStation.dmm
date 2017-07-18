@@ -52400,13 +52400,37 @@
 /obj/structure/sign/biohazard{
 	pixel_x = -32
 	},
-/obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/weapon/paper/pamphlet,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmv" = (
-/obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/structure/closet/crate/internals,
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmw" = (
@@ -52436,10 +52460,22 @@
 /area/teleporter)
 "cmy" = (
 /obj/structure/table,
-/obj/machinery/recharger,
+/obj/item/device/radio/off{
+	pixel_y = 6
+	},
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off,
 /obj/structure/sign/biohazard{
 	pixel_x = 32
 	},
+/obj/item/device/radio/off,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmz" = (
@@ -52578,10 +52614,12 @@
 	pixel_y = -24;
 	req_access_txt = "31"
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmQ" = (
@@ -52776,6 +52814,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cnk" = (
@@ -52783,6 +52824,9 @@
 	dir = 1
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cnl" = (
@@ -52912,6 +52956,39 @@
 /obj/structure/transit_tube/crossing,
 /turf/open/space/basic,
 /area/space)
+"cnE" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/plaque{
+	name = "A dedication to the brave adventurers who traveled through the portal to face the challenges beyond the void. To those whom follow, may the gods aid you on your journey.";
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/black,
+/area/teleporter)
+"cnF" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/teleporter)
+"cnG" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"cnH" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aaa
@@ -88202,7 +88279,7 @@ aaa
 aGN
 clI
 clS
-clS
+cnE
 cmj
 cmu
 cmD
@@ -88722,7 +88799,7 @@ cmw
 cmF
 cmP
 cmX
-azs
+cnG
 cny
 cny
 cny
@@ -88975,11 +89052,11 @@ clL
 clV
 cmb
 cmm
-cmx
-cmG
 aJh
+cmG
+cnF
 cmY
-aAs
+cnH
 auB
 aad
 auB
