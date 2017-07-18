@@ -123,9 +123,3 @@
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(affect_silicon)
 		return ..()
-
-/mob/living/silicon/adjustToxLoss(amount, update_health, forced)
-	return adjustFireLoss(amount, update_health, forced)
-
-/mob/living/silicon/getToxLoss()
-	return fireloss
