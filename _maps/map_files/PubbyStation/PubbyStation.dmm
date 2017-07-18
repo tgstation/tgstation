@@ -7911,11 +7911,6 @@
 	name = "bridge external shutters";
 	opacity = 0
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23
-	},
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "arp" = (
@@ -52207,7 +52202,8 @@
 /turf/open/floor/plasteel/black,
 /area/teleporter)
 "clX" = (
-/obj/structure/transit_tube/diagonal,
+/obj/structure/transit_tube/curved,
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
 "clY" = (
@@ -52267,13 +52263,16 @@
 /turf/open/space/basic,
 /area/space)
 "cmh" = (
-/obj/structure/transit_tube/diagonal,
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
 "cmi" = (
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
 "cmj" = (
@@ -52334,10 +52333,6 @@
 /turf/open/space/basic,
 /area/space)
 "cmp" = (
-/obj/structure/transit_tube/station,
-/obj/structure/transit_tube_pod{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 2
@@ -52351,24 +52346,26 @@
 /turf/open/floor/plating,
 /area/bridge)
 "cmq" = (
-/obj/structure/transit_tube/horizontal,
+/obj/structure/transit_tube_pod{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/bridge)
 "cmr" = (
-/obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/bridge)
 "cms" = (
@@ -52380,6 +52377,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/transit_tube/curved/flipped{
+	icon_state = "curved1";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/bridge)
 "cmt" = (
@@ -52517,6 +52518,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/sign/securearea,
 /turf/closed/wall,
 /area/bridge)
 "cmJ" = (
@@ -52533,6 +52535,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/sign/securearea,
 /turf/closed/wall,
 /area/bridge)
 "cmL" = (
@@ -52615,20 +52618,10 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "cmU" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
-	id = "bridgespace";
-	name = "bridge external shutters";
-	opacity = 0
-	},
-/turf/open/floor/plasteel/black,
-/area/bridge)
-"cmV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/bridge)
-"cmW" = (
+"cmV" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -52639,7 +52632,7 @@
 	dir = 1
 	},
 /area/bridge)
-"cmX" = (
+"cmW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	lockdownbyai = 0;
@@ -52655,7 +52648,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/teleporter)
-"cmY" = (
+"cmX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "stationawaygate";
@@ -52664,7 +52657,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/teleporter)
-"cmZ" = (
+"cmY" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "stationawaygate";
@@ -52672,11 +52665,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
-"cna" = (
+"cmZ" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall/r_wall,
 /area/teleporter)
-"cnb" = (
+"cna" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -52686,7 +52679,7 @@
 	temperature = 80
 	},
 /area/bridge)
-"cnc" = (
+"cnb" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -52697,10 +52690,15 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/bridge)
-"cnd" = (
+"cnc" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"cnd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/weapon/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "cne" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -52784,6 +52782,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cnl" = (
@@ -52903,6 +52902,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
+"cnC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/transit_tube/crossing,
+/turf/open/space/basic,
+/area/space)
+"cnD" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/transit_tube/crossing,
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -80998,7 +81007,7 @@ aad
 bUH
 amQ
 amh
-cmf
+cme
 cmq
 cmC
 cmJ
@@ -81255,11 +81264,11 @@ aaa
 afp
 afp
 afp
-cmg
+cme
 cmr
 avM
 cmK
-cmU
+aro
 asr
 cnn
 auk
@@ -81512,13 +81521,13 @@ aaa
 aaa
 aaa
 aaa
-cmh
+cme
 cms
 apG
 cmL
-cmV
+cmU
 ass
-cno
+cnn
 aul
 avx
 awW
@@ -81767,16 +81776,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cka
 clX
-cmi
+cks
 cmt
 apG
 cmM
-cmW
-cnb
+cmV
+cna
 cnp
-cnz
+cnl
 ato
 ato
 ato
@@ -82023,7 +82032,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cka
 clO
 aad
 anX
@@ -82288,7 +82297,7 @@ aoK
 apI
 aqC
 arq
-cnc
+cnb
 cnq
 aun
 avz
@@ -82536,8 +82545,8 @@ aaa
 aaa
 aaa
 aaa
-clx
-clD
+cld
+cka
 aaa
 aaa
 anY
@@ -82794,7 +82803,7 @@ aaa
 aaa
 cld
 aaa
-clE
+cka
 aaa
 aaa
 anY
@@ -83047,12 +83056,12 @@ aaa
 aaa
 aaa
 aaa
-ckv
+cka
 ckM
-cle
-cly
-clF
-clP
+cka
+cka
+cka
+cka
 aad
 anZ
 aoN
@@ -83304,9 +83313,9 @@ aaa
 aaa
 aaa
 aaa
-ckw
+cka
 ckN
-clf
+cka
 aaa
 aaa
 aaa
@@ -83561,9 +83570,9 @@ aaa
 aaa
 aaa
 aaa
-ckx
+cka
 ckO
-clg
+cka
 aaa
 aaa
 aaa
@@ -83818,9 +83827,9 @@ aaa
 aaa
 aaa
 aaa
-cky
-ckP
-clh
+cka
+ckO
+cka
 aaa
 aaa
 aaa
@@ -84075,12 +84084,12 @@ aaa
 aaa
 aaa
 aaa
-ckz
-ckQ
-cli
-clz
-clG
-clQ
+cka
+ckO
+cka
+cka
+cka
+cka
 aad
 anZ
 aoR
@@ -84332,9 +84341,9 @@ aaa
 aaa
 aaa
 aaa
-ckA
-ckR
-clj
+cka
+ckN
+cka
 aaa
 aaa
 aaa
@@ -84589,9 +84598,9 @@ aaa
 aaa
 aaa
 aaa
-ckB
-ckS
-clk
+cka
+ckO
+cka
 aaa
 aaa
 aaa
@@ -84846,9 +84855,9 @@ aaa
 aaa
 aaa
 aaa
-ckC
-ckT
-cll
+cka
+ckO
+cka
 aaa
 aaa
 aaa
@@ -85103,12 +85112,12 @@ aaa
 aaa
 aaa
 aaa
-ckD
-ckU
-clm
-clA
-clH
-clR
+cka
+ckO
+cka
+cka
+cka
+cka
 aad
 aoa
 aoJ
@@ -85360,9 +85369,9 @@ aaa
 aaa
 aaa
 aaa
-ckE
-ckV
-cln
+cka
+ckO
+cka
 aaa
 aaa
 aaa
@@ -85617,9 +85626,9 @@ aaa
 aaa
 aaa
 aaa
-ckF
-ckW
-clo
+cka
+ckN
+cka
 aaa
 aaa
 aaa
@@ -85874,9 +85883,9 @@ aaa
 aaa
 aaa
 aaa
-ckG
-ckX
-clp
+cka
+ckO
+cka
 aaa
 aaa
 aaa
@@ -86130,10 +86139,10 @@ aaa
 aaa
 aaa
 aaa
-ckq
-ckH
+aaa
+cka
 ckY
-clq
+cka
 aaa
 aaa
 aaa
@@ -86382,15 +86391,15 @@ acf
 acf
 acf
 bUp
-ckb
-cke
-ckh
-ckk
-ckn
-ckr
-ckI
-ckZ
-clr
+cka
+cka
+cka
+cka
+cka
+cka
+clC
+cka
+aaa
 aaa
 aaa
 aoV
@@ -86400,8 +86409,8 @@ aoW
 aoW
 aoW
 aoW
-cnd
-aty
+cka
+cka
 aaa
 aaa
 axg
@@ -86637,15 +86646,15 @@ aen
 aeA
 aeK
 cjX
-cjY
+cjX
 cjZ
-ckc
-ckf
-cki
-ckl
-cko
+cnC
+cjZ
+cjZ
+cjZ
+cnD
 cks
-ckJ
+cka
 aaa
 aaa
 aaa
@@ -86896,17 +86905,17 @@ acf
 aad
 aad
 cka
-ckd
-ckg
-ckj
-ckm
-ckp
-ckt
-ckK
-aaa
-aaa
-aaa
-aaa
+cka
+cka
+cka
+cka
+cka
+cka
+cka
+cka
+cka
+cka
+cka
 aad
 aoW
 apP
@@ -86914,7 +86923,7 @@ aqL
 arz
 asF
 atC
-axi
+cnd
 cnr
 aaa
 aaa
@@ -87158,12 +87167,12 @@ aaa
 aaa
 aaa
 aaa
-cku
-ckL
-cla
-cls
-clB
-aad
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aad
 aoW
 apQ
@@ -87417,7 +87426,7 @@ aaa
 aaa
 aaa
 aaa
-clb
+aaa
 aaa
 aaa
 aaa
@@ -87429,7 +87438,7 @@ arB
 asH
 atE
 cnf
-cnt
+cns
 aaa
 aad
 axg
@@ -87943,7 +87952,7 @@ aGN
 aGN
 aGN
 cnh
-cnv
+cns
 aad
 auB
 bUT
@@ -88193,12 +88202,12 @@ aaa
 aGN
 clI
 clS
-clY
+clS
 cmj
 cmu
 cmD
 cmN
-cmX
+cmW
 cni
 cnw
 auz
@@ -88446,7 +88455,7 @@ aaa
 aaa
 aaa
 aaa
-clt
+cka
 aGN
 clJ
 clT
@@ -88458,7 +88467,7 @@ cmO
 aGN
 cnj
 cnx
-auA
+cnx
 avP
 ayd
 ayd
@@ -88712,11 +88721,11 @@ cml
 cmw
 cmF
 cmP
-cmY
+cmX
 azs
 cny
-cnA
-cnB
+cny
+cny
 aye
 aye
 azs
@@ -88960,7 +88969,7 @@ aaa
 aaa
 aaa
 aaa
-clu
+cka
 aGN
 clL
 clV
@@ -88969,7 +88978,7 @@ cmm
 cmx
 cmG
 aJh
-cmZ
+cmY
 aAs
 auB
 aad
@@ -89217,16 +89226,16 @@ aaa
 aaa
 aaa
 aaa
-clv
+cka
 aGN
 clM
 clW
-cmc
+clW
 cmn
 cmy
 cmH
 cmQ
-cna
+cmZ
 cnk
 auB
 aad
@@ -89473,8 +89482,8 @@ aaa
 aaa
 aaa
 aaa
-clc
-clw
+cka
+cka
 aGN
 aGN
 aGN
@@ -89488,7 +89497,7 @@ auB
 avO
 aaa
 aaa
-aty
+cka
 aaa
 aaa
 aaa
@@ -89733,19 +89742,19 @@ agU
 agT
 agT
 aaa
-clN
+cka
 aaa
-cmd
+cka
 aaa
-cmz
+cka
 aaa
-cmR
-aaa
-aaa
+cka
 aaa
 aaa
 aaa
-aty
+aaa
+aaa
+cka
 aaa
 aaa
 aaa
@@ -89993,16 +90002,16 @@ agT
 agT
 agU
 agT
-cmo
-cmA
+cka
+cka
 aaa
-cmS
-aaa
-aaa
+cka
 aaa
 aaa
 aaa
-aty
+aaa
+aaa
+cka
 aaa
 aaa
 aaa
