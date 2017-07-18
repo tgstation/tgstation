@@ -28,10 +28,7 @@
 		return
 	for(var/V in mother.map)
 		var/turf/T = V
-		if(deleteturfs)
-			T.empty(delmobs = deletemobs)
-		else
-			T.empty(T.type, delmobs = deletemobs)
+		T.empty(deleteturfs? null : T.type, delmobs = deletemobs, forceop = TRUE)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs
 	deletemobs = FALSE

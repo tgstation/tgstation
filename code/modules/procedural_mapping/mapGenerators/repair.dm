@@ -73,12 +73,11 @@
 	var/y_low = 0
 	var/y_high = 0
 	var/z = 0
-	var/cleanload = FALSE
+	var/cleanload = TRUE
 	var/datum/mapGeneratorModule/reload_station_map/loader
 	buildmode_name = "Repair: Reload Block \[DO NOT USE\]"
 
 /datum/mapGenerator/repair/reload_station_map/clean
-	cleanload = TRUE
 	buildmode_name = "Repair: Reload Block - Mass Delete"
 
 /datum/mapGenerator/repair/reload_station_map/clean/in_place
