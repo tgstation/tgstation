@@ -60,7 +60,6 @@
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever
 		D.visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
-		D.holder = carriermind.current
 		D.affected_mob = carriermind.current
 		carriermind.current.viruses += D
 	..()
@@ -107,10 +106,8 @@
 
 /datum/game_mode/monkey/declare_completion()
 	if(check_monkey_victory())
-		feedback_set_details("round_end_result","win - monkey win")
-		feedback_set("round_end_result",escaped_monkeys)
+		SSticker.mode_result = "win - monkey win"
 		to_chat(world, "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>")
 	else
-		feedback_set_details("round_end_result","loss - staff stopped the monkeys")
-		feedback_set("round_end_result",escaped_monkeys)
+		SSticker.mode_result = "loss - staff stopped the monkeys"
 		to_chat(world, "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>")

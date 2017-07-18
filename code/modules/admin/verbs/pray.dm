@@ -17,23 +17,23 @@
 		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
 
-	var/image/cross = image('icons/obj/storage.dmi',"bible")
+	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")
 	var/font_color = "purple"
 	var/prayer_type = "PRAYER"
 	var/deity
 	if(usr.job == "Chaplain")
-		cross = image('icons/obj/storage.dmi',"kingyellow")
+		cross.icon_state = "kingyellow"
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
 		if(SSreligion.deity)
 			deity = SSreligion.deity
 	else if(iscultist(usr))
-		cross = image('icons/obj/storage.dmi',"tome")
+		cross.icon_state = "tome"
 		font_color = "red"
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar-Sie"
 
-	msg = "<span class='adminnotice'>\icon[cross]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [msg]</span>"
+	msg = "<span class='adminnotice'>[bicon(cross)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [msg]</span>"
 
 	for(var/client/C in GLOB.admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
@@ -43,7 +43,7 @@
 					C << 'sound/effects/pray.ogg'
 	to_chat(usr, "Your prayers have been received by the gods.")
 
-	feedback_add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/Centcomm_announce(text , mob/Sender)

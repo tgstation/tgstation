@@ -129,7 +129,7 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
@@ -206,7 +206,7 @@
 				toggle_all_ctf(user)
 		return
 
-	if(SSticker.current_state < GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
@@ -433,7 +433,7 @@
 
 /obj/item/projectile/beam/ctf/red
 	icon_state = "laser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 // BLUE TEAM GUNS
 
@@ -448,7 +448,7 @@
 
 /obj/item/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
 /datum/outfit/ctf
 	name = "CTF"
@@ -585,10 +585,10 @@
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bump(atom/movable/AM)
+/obj/effect/ctf/ammo/Collide(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bumped(atom/movable/AM)
+/obj/effect/ctf/ammo/CollidedWith(atom/movable/AM)
 	reload(AM)
 
 /obj/effect/ctf/ammo/proc/reload(mob/living/M)
@@ -630,7 +630,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"

@@ -41,7 +41,7 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce()
-	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/AI/meteors.ogg')
+	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/ai/meteors.ogg')
 
 /datum/round_event/meteor_wave/tick()
 	if(IsMultiple(activeFor, 3))

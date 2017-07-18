@@ -23,10 +23,9 @@ field_generator power level display
 	desc = "A large thermal battery that projects a high amount of energy when powered."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
-	anchored = 0
-	density = 1
-	use_power = 0
-	obj_integrity = 500
+	anchored = FALSE
+	density = TRUE
+	use_power = NO_POWER_USE
 	max_integrity = 500
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
 	armor = list(melee = 25, bullet = 10, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
@@ -71,7 +70,7 @@ field_generator power level display
 					"<span class='notice'>You turn on the [name].</span>", \
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				investigate_log("<font color='green'>activated</font> by [user.key].", INVESTIGATE_SINGULO)
 
 				add_fingerprint(user)
 	else
@@ -197,13 +196,13 @@ field_generator power level display
 	else
 		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0
 		check_power_level()
 		return 0
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
-/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = 0, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
+/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = FALSE, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
 	if((G && (G == src)) || (failsafe >= 8))//Loopin, set fail
 		return 0
 	else
@@ -324,7 +323,7 @@ field_generator power level display
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

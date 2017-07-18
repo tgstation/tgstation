@@ -10,8 +10,8 @@
 /datum/plant_gene/proc/Copy()
 	return new type
 
-
-
+/datum/plant_gene/proc/apply_vars(obj/item/seeds/S) // currently used for fire resist, can prob. be further refactored
+	return
 
 // Core plant genes store 5 main variables: lifespan, endurance, production, yield, potency
 /datum/plant_gene/core
@@ -201,7 +201,7 @@
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
 	// Applies other trait effects (teleporting, etc) to the target by on_slip.
 	name = "Slippery Skin"
-	rate = 0.1
+	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
 /datum/plant_gene/trait/slip/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
@@ -209,17 +209,16 @@
 		var/obj/item/seeds/seed = G.seed
 		var/mob/living/carbon/M = target
 
-		var/stun_len = seed.potency * rate * 0.8
 		if(istype(G) && ispath(G.trash, /obj/item/weapon/grown))
 			return
+		var/stun_len = seed.potency * rate
 
 		if(!istype(G, /obj/item/weapon/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
 			stun_len /= 3
 
-		var/stun = min(stun_len, 7)
-		var/weaken = min(stun_len, 7)
+		var/knockdown = min(stun_len, 140)
 
-		if(M.slip(stun, weaken, G))
+		if(M.slip(knockdown, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_slip(G, M)
 
@@ -268,7 +267,7 @@
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_id = "glow"
-	var/glow_color = "#AAD84B"
+	var/glow_color = "#C3E381"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
 	return 1.4 + S.potency*rate
@@ -285,6 +284,7 @@
 	//adds -potency*(rate*0.05) light power to products
 	name = "Shadow Emission"
 	rate = 0.04
+	glow_color = "#AAD84B"
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
 	return -max(S.potency*(rate*0.05), 0.075)
@@ -409,6 +409,17 @@
 	S.set_up(G.reagents, smoke_amount, splat_location, 0)
 	S.start()
 	G.reagents.clear_reagents()
+
+/datum/plant_gene/trait/fire_resistance // Lavaland
+	name = "Fire Resistance"
+
+/datum/plant_gene/trait/fire_resistance/apply_vars(obj/item/seeds/S)
+	if(!(S.resistance_flags & FIRE_PROOF))
+		S.resistance_flags |= FIRE_PROOF
+
+/datum/plant_gene/trait/fire_resistance/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
+	if(!(G.resistance_flags & FIRE_PROOF))
+		G.resistance_flags |= FIRE_PROOF
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"

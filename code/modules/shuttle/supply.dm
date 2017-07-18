@@ -9,7 +9,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
-		/obj/machinery/telepad,
 		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn,
@@ -42,15 +41,17 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /obj/docking_port/mobile/supply/canMove()
 	if(z == ZLEVEL_STATION)
-		return check_blacklist(areaInstance)
+		return check_blacklist(shuttle_areas)
 	return ..()
 
-/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstance)
-	for(var/trf in areaInstance)
-		var/turf/T = trf
-		for(var/a in T.GetAllContents())
-			if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-				return FALSE
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
+	for(var/place in areaInstances)
+		var/area/shuttle/shuttle_area = place
+		for(var/trf in shuttle_area)
+			var/turf/T = trf
+			for(var/a in T.GetAllContents())
+				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+					return FALSE
 	return TRUE
 
 /obj/docking_port/mobile/supply/request()
@@ -71,10 +72,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return
 
 	var/list/empty_turfs = list()
-	for(var/turf/open/floor/T in areaInstance)
-		if(is_blocked_turf(T))
-			continue
-		empty_turfs += T
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/turf/open/floor/T in shuttle_area)
+			if(is_blocked_turf(T))
+				continue
+			empty_turfs += T
 
 	var/value = 0
 	var/purchases = 0
@@ -90,14 +93,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
-		feedback_add_details("cargo_imports",
+		SSblackbox.add_details("cargo_imports",
 			"[SO.pack.type]|[SO.pack.name]|[SO.pack.cost]")
-		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", "cargo")
+		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", "cargo")
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
 	var/presale_points = SSshuttle.points
@@ -108,10 +111,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/msg = ""
 	var/sold_atoms = ""
 
-	for(var/atom/movable/AM in areaInstance)
-		if(AM.anchored)
-			continue
-		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/atom/movable/AM in shuttle_area)
+			if(AM.anchored)
+				continue
+			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."
@@ -127,4 +132,4 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		E.export_end()
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
+	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

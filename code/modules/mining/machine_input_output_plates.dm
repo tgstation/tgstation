@@ -4,8 +4,8 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	name = "Input area"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 
 /obj/machinery/mineral/input/New()
 	icon_state = "blank"
@@ -14,8 +14,8 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
 	name = "Output area"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 
 /obj/machinery/mineral/output/New()
 	icon_state = "blank"
@@ -25,7 +25,7 @@
 	var/output_dir = SOUTH
 
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
-	S.loc = loc
+	S.forceMove(loc)
 	var/turf/T = get_step(src,output_dir)
 	if(T)
-		S.loc = T
+		S.forceMove(T)

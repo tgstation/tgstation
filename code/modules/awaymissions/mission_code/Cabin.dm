@@ -4,7 +4,7 @@
 	desc = "warm and toasty"
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "firepit-active"
-	density = 0
+	density = FALSE
 	var/active = 1
 
 /obj/structure/firepit/Initialize()
@@ -86,7 +86,7 @@
 	/datum/mapGeneratorModule/snow/bunnies)
 
 /datum/mapGeneratorModule/snow/checkPlaceAtom(turf/T)
-	if(istype(T,/turf/open/floor/plating/asteroid/snow))
+	if(istype(T, /turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
 

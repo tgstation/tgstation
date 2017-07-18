@@ -30,8 +30,8 @@ Borg Hypospray
 								//Used as list for input() in shakers.
 
 
-/obj/item/weapon/reagent_containers/borghypo/New()
-	..()
+/obj/item/weapon/reagent_containers/borghypo/Initialize()
+	. = ..()
 
 	for(var/R in reagent_ids)
 		add_reagent(R)

@@ -33,7 +33,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
+	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
@@ -66,9 +66,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
 // the power cable object
-/obj/structure/cable/New()
-	..()
-
+/obj/structure/cable/Initialize()
+	. = ..()
 
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	var/dash = findtext(icon_state, "-")
@@ -108,9 +107,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if(level == 1 && isturf(loc))
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	updateicon()
+	update_icon()
 
-/obj/structure/cable/proc/updateicon()
+/obj/structure/cable/update_icon()
 	if(invisibility)
 		icon_state = "[d1]-[d2]-f"
 	else
@@ -131,7 +130,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
-		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
+		investigate_log("was cut by [key_name(usr, usr.client)] in [get_area(T)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
 
@@ -156,9 +155,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+		do_sparks(5, TRUE, src)
 		return 1
 	else
 		return 0
@@ -304,7 +301,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	//first let's add turf cables to our powernet
 	//then we'll connect machines on turf with a node cable is present
 	for(var/AM in loc)
-		if(istype(AM,/obj/structure/cable))
+		if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
 			if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) //only connected if they have a common direction
 				if(C.powernet == powernet)
@@ -314,7 +311,7 @@ By design, d1 is the smallest direction and d2 is the highest
 				else
 					powernet.add_cable(C) //the cable was powernetless, let's just add it to our powernet
 
-		else if(istype(AM,/obj/machinery/power/apc))
+		else if(istype(AM, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM
 			if(!N.terminal)
 				continue // APC are connected through their terminal
@@ -324,7 +321,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			to_connect += N.terminal //we'll connect the machines after all cables are merged
 
-		else if(istype(AM,/obj/machinery/power)) //other power machines
+		else if(istype(AM, /obj/machinery/power)) //other power machines
 			var/obj/machinery/power/M = AM
 
 			if(M.powernet == powernet)
@@ -393,7 +390,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			qdel(PN)
 
 // cut the cable's powernet at this cable and updates the powergrid
-/obj/structure/cable/proc/cut_cable_from_powernet()
+/obj/structure/cable/proc/cut_cable_from_powernet(remove=TRUE)
 	var/turf/T1 = loc
 	var/list/P_list
 	if(!T1)
@@ -415,7 +412,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/obj/O = P_list[1]
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
-	loc = null
+	if(remove)
+		loc = null
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
 	spawn(0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
@@ -428,6 +426,22 @@ By design, d1 is the smallest direction and d2 is the highest
 		for(var/obj/machinery/power/P in T1)
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
+
+/obj/structure/cable/shuttleRotate(rotation)
+	//..() is not called because wires are not supposed to have a non-default direction
+	//Rotate connections
+	if(d1)
+		d1 = angle2dir(rotation+dir2angle(d1))
+	if(d2)
+		d2 = angle2dir(rotation+dir2angle(d2))
+
+	//d1 should be less than d2 for cable icons to work
+	if(d1 > d2)
+		var/temp = d1
+		d1 = d2
+		d2 = temp
+	update_icon()
+
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
@@ -459,6 +473,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
+	full_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -477,8 +492,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/New(loc, new_amount = null, var/param_color = null)
-	..()
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, param_color = null)
+	. = ..()
 	if(new_amount) // MAXCOIL by default
 		amount = new_amount
 	if(param_color)
@@ -584,7 +599,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		C.d1 = 0 //it's a O-X node cable
 		C.d2 = dirn
 		C.add_fingerprint(user)
-		C.updateicon()
+		C.update_icon()
 
 		//create a new powernet with the cable, if needed it will be merged later
 		var/datum/powernet/PN = new()
@@ -650,7 +665,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
-			NC.updateicon()
+			NC.update_icon()
 
 			//create a new powernet with the cable, if needed it will be merged later
 			var/datum/powernet/newPN = new()
@@ -699,7 +714,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		C.update_stored(2, item_color)
 
 		C.add_fingerprint()
-		C.updateicon()
+		C.update_icon()
 
 
 		C.mergeConnectedNetworks(C.d1) //merge the powernets...
@@ -729,9 +744,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 /obj/item/stack/cable_coil/cut
 	item_state = "coil_red2"
 
-/obj/item/stack/cable_coil/cut/New(loc)
-	..()
-	src.amount = rand(1,2)
+/obj/item/stack/cable_coil/cut/Initialize(mapload)
+	. =..()
+	amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
@@ -769,7 +784,11 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	item_color = "white"
 	icon_state = "coil_white"
 
-/obj/item/stack/cable_coil/random/New()
+/obj/item/stack/cable_coil/random/Initialize(mapload)
+	. = ..()
 	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
-	..()
+
+
+/obj/item/stack/cable_coil/random/five
+	amount = 5

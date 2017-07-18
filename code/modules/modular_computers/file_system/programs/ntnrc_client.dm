@@ -1,6 +1,6 @@
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
-	filedesc = "NTNet Relay Chat Client"
+	filedesc = "Chat Client"
 	program_icon_state = "command"
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8
@@ -9,6 +9,8 @@
 	network_destination = "NTNRC server"
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = 1
+	tgui_id = "ntos_net_chat"
+
 	var/last_message = null				// Used to generate the toolbar icon
 	var/username
 	var/datum/ntnet_conversation/channel = null
@@ -32,7 +34,7 @@
 			if(!message || !channel)
 				return
 			channel.add_message(message, username)
-			log_chat("[user]/([user.ckey]) as [username] sent to [channel.title]: [message]")
+			log_talk(user,"[key_name(user)] as [username] sent to [channel.title]: [message]",LOGCHAT)
 
 		if("PRG_joinchannel")
 			. = 1
@@ -83,7 +85,7 @@
 					channel = null
 				return 1
 			var/mob/living/user = usr
-			if(can_run(usr, 1, GLOB.access_network))
+			if(can_run(usr, 1, ACCESS_NETWORK))
 				if(channel)
 					var/response = alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
 					if(response == "Yes")
@@ -179,21 +181,6 @@
 		channel.remove_client(src)
 		channel = null
 	..()
-
-/datum/computer_file/program/chatclient/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-
-		ui = new(user, src, ui_key, "ntnet_chat", "NTNet Relay Chat Client", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
 	if(!GLOB.ntnet_global || !GLOB.ntnet_global.chat_channels)

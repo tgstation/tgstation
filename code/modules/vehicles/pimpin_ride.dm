@@ -8,7 +8,7 @@
 	var/floorbuffer = FALSE
 
 /obj/vehicle/janicart/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/vehicle/janicart/Destroy()

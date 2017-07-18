@@ -326,7 +326,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return 0
 	if(!istype(M))
 		return 0
@@ -377,7 +377,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
 	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
@@ -396,17 +396,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.action = action
 					A.target = source
 					if(!alert_overlay)
-						var/old_layer = source.layer
-						var/old_plane = source.plane
-						source.layer = FLOAT_LAYER
-						source.plane = FLOAT_PLANE
-						A.add_overlay(source)
-						source.layer = old_layer
-						source.plane = old_plane
-					else
-						alert_overlay.layer = FLOAT_LAYER
-						alert_overlay.plane = FLOAT_PLANE
-						A.add_overlay(alert_overlay)
+						alert_overlay = new(source)
+					alert_overlay.layer = FLOAT_LAYER
+					alert_overlay.plane = FLOAT_PLANE
+					A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))

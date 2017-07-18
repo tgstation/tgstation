@@ -22,7 +22,7 @@ Doesn't work on other aliens/AI.*/
 	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
-	if(!istype(usr,/mob/living/carbon))
+	if(!iscarbon(usr))
 		return 1
 	var/mob/living/carbon/user = usr
 	if(cost_check(check_turf,user))
@@ -84,7 +84,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
+		log_talk(user,"AlienWhisper: [key_name(user)]->[M.key] : [msg]",LOGSAY)
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -179,7 +179,7 @@ Doesn't work on other aliens/AI.*/
 	var/message
 	if(active)
 		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
-		remove_ranged_ability(message)
+		remove_ranged_ability(user,message)
 	else
 		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
 		add_ranged_ability(user, message, TRUE)

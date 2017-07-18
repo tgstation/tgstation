@@ -7,9 +7,9 @@
 	name = "telecommunications mainframe"
 	icon_state = "comm_server"
 	desc = "A compact machine used for portable subspace telecommuniations processing."
-	density = 1
-	anchored = 1
-	use_power = 0
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	machinetype = 6
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel

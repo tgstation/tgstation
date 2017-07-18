@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(throwing)
 	priority = 25
 	wait = 1
 	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun
 	var/list/processing = list()

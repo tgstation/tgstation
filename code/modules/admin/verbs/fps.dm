@@ -19,6 +19,6 @@
 	var/msg = "[key_name(src)] has modified world.fps to [new_fps]"
 	log_admin(msg, 0)
 	message_admins(msg, 0)
-	feedback_add_details("admin_toggle","Set Server FPS|[new_fps]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Set Server FPS|[new_fps]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	world.fps = new_fps

@@ -14,12 +14,11 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	anchored = 1
-	obj_integrity = 250
+	anchored = TRUE
 	max_integrity = 250
 	integrity_failure = 100
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
@@ -34,7 +33,7 @@
 		src.setDir(dir)
 	if(building)
 		buildstage = 0
-		panel_open = 1
+		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
@@ -79,12 +78,13 @@
 	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		if(user)
-			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
-								"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+	if(emagged)
+		return
+	emagged = TRUE
+	if(user)
+		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
+							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
+	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(!emagged && detecting && !stat && (temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
@@ -110,7 +110,7 @@
 /obj/machinery/firealarm/proc/reset_in(time)
 	addtimer(CALLBACK(src, .proc/reset), time)
 
-/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -153,6 +153,21 @@
 		return
 
 	if(panel_open)
+
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(obj_integrity < max_integrity)
+				if(WT.remove_fuel(0,user))
+					to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+					playsound(loc, WT.usesound, 40, 1)
+					if(do_after(user, 40*WT.toolspeed, target = src))
+						obj_integrity = max_integrity
+						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+						to_chat(user, "<span class='notice'>You repair [src].</span>")
+			else
+				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			return
+
 		switch(buildstage)
 			if(2)
 				if(istype(W, /obj/item/device/multitool))
@@ -190,6 +205,7 @@
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
+								stat &= ~BROKEN
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/weapon/electronics/firealarm(user.loc)
@@ -230,9 +246,10 @@
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 1)
-		var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
-		if(!disassembled)
-			I.obj_integrity = I.max_integrity * 0.5
+		if(!(stat & BROKEN))
+			var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
+			if(!disassembled)
+				I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 

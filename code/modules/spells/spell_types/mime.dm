@@ -90,7 +90,7 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "Shoot a mimed bullet from your fingers that does a stun and some damage."
+	desc = "Shoot a mimed bullet from your fingers that stuns and does some damage."
 	school = "mime"
 	panel = "Mime"
 	charge_max = 300

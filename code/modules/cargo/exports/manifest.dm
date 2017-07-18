@@ -2,6 +2,7 @@
 // +200 credits flat.
 /datum/export/manifest_correct
 	cost = 200
+	k_elasticity = 0
 	unit_name = "approved manifest"
 	export_types = list(/obj/item/weapon/paper/manifest)
 
@@ -18,6 +19,7 @@
 // Refunds the package cost minus the cost of crate.
 /datum/export/manifest_error_denied
 	cost = -500
+	k_elasticity = 0
 	unit_name = "correctly denied manifest"
 	export_types = list(/obj/item/weapon/paper/manifest)
 

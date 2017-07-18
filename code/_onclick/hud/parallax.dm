@@ -21,6 +21,7 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
+		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -261,9 +262,9 @@
 		for(var/y in -count to count)
 			if(x == 0 && y == 0)
 				continue
-			var/image/I = image(icon, null, icon_state)
-			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
-			new_overlays += I
+			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
+			texture_overlay.transform = matrix(1, 0, x*480, 0, 1, y*480)
+			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)
 	view_sized = view
@@ -277,6 +278,11 @@
 	icon_state = "layer2"
 	speed = 1
 	layer = 2
+
+/obj/screen/parallax_layer/layer_3
+	icon_state = "layer3"
+	speed = 1.4
+	layer = 3
 
 #undef LOOP_NONE
 #undef LOOP_NORMAL

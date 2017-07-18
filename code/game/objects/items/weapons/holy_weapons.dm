@@ -39,7 +39,7 @@
 
 	SSreligion.holy_weapon_type = holy_weapon.type
 
-	feedback_set_details("chaplain_weapon","[choice]")
+	SSblackbox.set_details("chaplain_weapon","[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
@@ -71,7 +71,7 @@
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
-		. += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
@@ -91,7 +91,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/weapon/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
@@ -214,7 +214,7 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	var/mob/dead/observer/theghost = null
 
 	if(LAZYLEN(candidates))
@@ -262,7 +262,7 @@
 
 /obj/item/weapon/nullrod/clown
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "honkrender"
+	icon_state = "clownrender"
 	item_state = "render"
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."

@@ -141,18 +141,21 @@
 			add_overlay("[icon_state]_open")
 			var/i = contents.len
 			for(var/C in contents)
+				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+				inserted_overlay.pixel_x = 1 * (i - 1)
 				if(istype(C, /obj/item/weapon/lighter/greyscale))
-					add_overlay(image(icon = src.icon, icon_state = "lighter_in", pixel_x = 1 * (i -1)))
+					inserted_overlay.icon_state = "lighter_in"
 				else if(istype(C, /obj/item/weapon/lighter))
-					add_overlay(image(icon = src.icon, icon_state = "zippo_in", pixel_x = 1 * (i -1)))
+					inserted_overlay.icon_state = "zippo_in"
 				else
-					add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (i -1)))
+					inserted_overlay.icon_state = "cigarette"
+				add_overlay(inserted_overlay)
 				i--
 	else
 		cut_overlays()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M, /mob))
+	if(!ismob(M))
 		return
 	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(cig)
@@ -247,13 +250,14 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/update_icon()
+	cut_overlays()
 	if(fancy_open)
-		cut_overlays()
 		add_overlay("[icon_state]_open")
+		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, icon_type)
 		for(var/c = contents.len, c >= 1, c--)
-			add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1)))
+			cigar_overlay.pixel_x = 4 * (c - 1)
+			add_overlay(cigar_overlay)
 	else
-		cut_overlays()
 		icon_state = "cigarcase"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba

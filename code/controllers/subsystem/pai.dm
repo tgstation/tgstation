@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(pai)
 		var/obj/item/device/paicard/card = locate(href_list["device"])
 		if(card.pai)
 			return
-		if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+		if(istype(card, /obj/item/device/paicard) && istype(candidate, /datum/paiCandidate))
 			if(check_ready(candidate) != candidate)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(pai)
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
 			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
-			to_chat(G, "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
+			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)

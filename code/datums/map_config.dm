@@ -4,15 +4,15 @@
 //  -Cyberboss
 
 /datum/map_config
-    var/config_filename = "_maps/tgstation2.json"
+    var/config_filename = "_maps/boxstation.json"
     var/map_name = "Box Station"
-    var/map_path = "map_files/TgStation"
-    var/map_file = "tgstation.2.1.3.dmm"
+    var/map_path = "map_files/BoxStation"
+    var/map_file = "BoxStation.dmm"
 
     var/minetype = "lavaland"
 
-    var/list/transition_config = list(MAIN_STATION = CROSSLINKED,
-                                    CENTCOMM = SELFLOOPING,
+    var/list/transition_config = list(CENTCOMM = SELFLOOPING,
+									MAIN_STATION = CROSSLINKED,
                                     EMPTY_AREA_1 = CROSSLINKED,
                                     EMPTY_AREA_2 = CROSSLINKED,
                                     MINING = SELFLOOPING,

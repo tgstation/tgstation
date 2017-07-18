@@ -1,6 +1,4 @@
 /datum/riding
-	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
-	var/generic_pixel_y = 0 //All dirs show this pixel_y for the driver, use these vars if the pixel shift is stable across all dir, override handle_vehicle_offsets otherwise.
 	var/next_vehicle_move = 0 //used for move delays
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype = null
@@ -34,16 +32,36 @@
 /datum/riding/proc/force_dismount(mob/living/M)
 	ridden.unbuckle_mob(M)
 
-//Override this to set your vehicle's various pixel offsets
-//if they differ between directions, otherwise use the
-//generic variables
 /datum/riding/proc/handle_vehicle_offsets()
+	var/ridden_dir = "[ridden.dir]"
+	var/passindex = 0
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
+			passindex++
 			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(ridden.dir)
-			buckled_mob.pixel_x = generic_pixel_x
-			buckled_mob.pixel_y = generic_pixel_y
+			var/list/offsets = get_offsets(passindex)
+			var/rider_dir = get_rider_dir(passindex)
+			buckled_mob.setDir(rider_dir)
+			dir_loop:
+				for(var/offsetdir in offsets)
+					if(offsetdir == ridden_dir)
+						var/list/diroffsets = offsets[offsetdir]
+						buckled_mob.pixel_x = diroffsets[1]
+						if(diroffsets.len >= 2)
+							buckled_mob.pixel_y = diroffsets[2]
+						if(diroffsets.len == 3)
+							buckled_mob.layer = diroffsets[3]
+						break dir_loop
+
+
+//Override this to set your vehicle's various pixel offsets
+/datum/riding/proc/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, 0), "[SOUTH]" = list(0, 0), "[EAST]" = list(0, 0), "[WEST]" = list(0, 0))
+
+//Override this to set the passengers/riders dir based on which passenger they are.
+//ie: rider facing the vehicle's dir, but passenger 2 facing backwards, etc.
+/datum/riding/proc/get_rider_dir(pass_index)
+	return ridden.dir
 
 //KEYS
 /datum/riding/proc/keycheck(mob/user)
@@ -88,9 +106,6 @@
 	if(ridden.has_gravity())
 		return 1
 
-	if(ridden.pulledby)
-		return 1
-
 	return 0
 
 /datum/riding/space/Process_Spacemove(direction)
@@ -100,9 +115,11 @@
 //atv
 /datum/riding/atv
 	keytype = /obj/item/key
-	generic_pixel_x = 0
-	generic_pixel_y = 4
 	vehicle_move_delay = 1
+
+/datum/riding/atv/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
+
 
 /datum/riding/atv/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
@@ -150,24 +167,9 @@
 	keytype = /obj/item/key/janitor
 
 
-/datum/riding/janicart/handle_vehicle_offsets()
-	..()
-	if(ridden.has_buckled_mobs())
-		for(var/m in ridden.buckled_mobs)
-			var/mob/living/buckled_mob = m
-			switch(buckled_mob.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
-				if(EAST)
-					buckled_mob.pixel_x = -12
-					buckled_mob.pixel_y = 7
-				if(SOUTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 7
-				if(WEST)
-					buckled_mob.pixel_x = 12
-					buckled_mob.pixel_y = 7
+/datum/riding/janicart/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 7), "[EAST]" = list(-12, 7), "[WEST]" = list( 12, 7))
+
 //scooter
 /datum/riding/scooter/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
@@ -175,20 +177,14 @@
 	else
 		ridden.layer = OBJ_LAYER
 
+/datum/riding/scooter/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0), "[SOUTH]" = list(-2), "[EAST]" = list(0), "[WEST]" = list( 2))
+
 /datum/riding/scooter/handle_vehicle_offsets()
 	..()
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
 			var/mob/living/buckled_mob = m
-			switch(buckled_mob.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = 0
-				if(EAST)
-					buckled_mob.pixel_x = -2
-				if(SOUTH)
-					buckled_mob.pixel_x = 0
-				if(WEST)
-					buckled_mob.pixel_x = 2
 			if(buckled_mob.get_num_legs() > 0)
 				buckled_mob.pixel_y = 5
 			else
@@ -209,15 +205,17 @@
 //secway
 /datum/riding/secway
 	keytype = /obj/item/key/security
-	generic_pixel_x = 0
-	generic_pixel_y = 4
+
+/datum/riding/secway/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
 
 //i want to ride my
 /datum/riding/bicycle
 	keytype = null
-	generic_pixel_x = 0
-	generic_pixel_y = 4
 	vehicle_move_delay = 0
+
+/datum/riding/bicycle/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
 
 //speedbike
 /datum/riding/space/speedbike
@@ -233,53 +231,27 @@
 			ridden.pixel_x = -18
 			ridden.pixel_y = 0
 
-/datum/riding/space/speedbike/handle_vehicle_offsets()
-	if(ridden.has_buckled_mobs())
-		for(var/m in ridden.buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(ridden.dir)
-			switch(ridden.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = -8
-				if(SOUTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
-				if(EAST)
-					buckled_mob.pixel_x = -10
-					buckled_mob.pixel_y = 5
-				if(WEST)
-					buckled_mob.pixel_x = 10
-					buckled_mob.pixel_y = 5
+/datum/riding/space/speedbike/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, -8), "[SOUTH]" = list(0, 4), "[EAST]" = list(-10, 5), "[WEST]" = list( 10, 5))
 
 //SPEEDUWAGON
 
 /datum/riding/space/speedwagon
 	vehicle_move_delay = 0
 
-/datum/riding/space/speedwagon/handle_vehicle_offsets()
-	if(ridden.has_buckled_mobs())
-		for(var/m in ridden.buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(ridden.dir)
-			ridden.pixel_x = -48
-			ridden.pixel_y = -48
-			switch(ridden.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = -10
-					buckled_mob.pixel_y = -3
-				if(SOUTH)
-					buckled_mob.pixel_x = 16
-					buckled_mob.pixel_y = 3
-				if(EAST)
-					buckled_mob.pixel_x = -4
-					buckled_mob.pixel_y = 30
-				if(WEST)
-					buckled_mob.pixel_x = 4
-					buckled_mob.pixel_y = -1
-
 /datum/riding/space/speedwagon/handle_vehicle_layer()
 	ridden.layer = BELOW_MOB_LAYER
+
+/datum/riding/space/speedwagon/get_offsets(pass_index) // list(dir = x, y, layer)
+	switch(pass_index)
+		if(1)
+			return list("[NORTH]" = list(-10, -4), "[SOUTH]" = list(16, 3), "[EAST]" = list(-4, 30), "[WEST]" = list(4, -3))
+		if(2)
+			return list("[NORTH]" = list(19, -5, 4), "[SOUTH]" = list(-13, 3, 4), "[EAST]" = list(-4, -3, 4.1), "[WEST]" = list(4, 28, 3.9))
+		if(3)
+			return list("[NORTH]" = list(-10, -18, 4.2), "[SOUTH]" = list(16, 25, 3.9), "[EAST]" = list(-22, 30), "[WEST]" = list(22, -3, 4.1))
+		if(4)
+			return list("[NORTH]" = list(19, -18, 4.2), "[SOUTH]" = list(-13, 25, 3.9), "[EAST]" = list(-22, 3, 3.9), "[WEST]" = list(22, 28))
 
 ///////////////BOATS////////////
 /datum/riding/boat
@@ -297,17 +269,15 @@
 
 /datum/riding/boat/dragon
 	keytype = null
-	generic_pixel_y = 2
-	generic_pixel_x = 1
 	vehicle_move_delay = 1
 
+/datum/riding/boat/dragon/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(1, 2), "[SOUTH]" = list(1, 2), "[EAST]" = list(1, 2), "[WEST]" = list( 1, 2))
 
 ///////////////ANIMALS////////////
 //general animals
 /datum/riding/animal
 	keytype = null
-	generic_pixel_x = 0
-	generic_pixel_y = 4
 
 /datum/riding/animal/handle_ride(mob/user, direction)
 	if(user.incapacitated())
@@ -345,22 +315,9 @@
 	if(H.pulling == M)
 		H.stop_pulling()
 
-/datum/riding/human/handle_vehicle_offsets()
-	for(var/mob/living/M in ridden.buckled_mobs)
-		M.setDir(ridden.dir)
-		switch(ridden.dir)
-			if(NORTH)
-				M.pixel_x = 0
-				M.pixel_y = 6
-			if(SOUTH)
-				M.pixel_x = 0
-				M.pixel_y = 6
-			if(EAST)
-				M.pixel_x = -6
-				M.pixel_y = 4
-			if(WEST)
-				M.pixel_x = 6
-				M.pixel_y = 4
+/datum/riding/human/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, 6), "[SOUTH]" = list(0, 6), "[EAST]" = list(-6, 4), "[WEST]" = list( 6, 4))
+
 
 /datum/riding/human/handle_vehicle_layer()
 	if(ridden.buckled_mobs && ridden.buckled_mobs.len)
@@ -373,8 +330,7 @@
 
 /datum/riding/human/force_dismount(mob/living/user)
 	ridden.unbuckle_mob(user)
-	user.Weaken(3)
-	user.Stun(3)
+	user.Knockdown(60)
 	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
 
 /datum/riding/cyborg
@@ -383,7 +339,7 @@
 /datum/riding/cyborg/ride_check(mob/user)
 	if(user.incapacitated())
 		var/kick = TRUE
-		if(istype(ridden, /mob/living/silicon/robot))
+		if(iscyborg(ridden))
 			var/mob/living/silicon/robot/R = ridden
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
@@ -391,7 +347,7 @@
 			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
 			Unbuckle(user)
 			return
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			Unbuckle(user)
@@ -407,6 +363,9 @@
 	else
 		ridden.layer = MOB_LAYER
 
+/datum/riding/cyborg/get_offsets(pass_index) // list(dir = x, y, layer)
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(-6, 3), "[WEST]" = list( 6, 3))
+
 /datum/riding/cyborg/handle_vehicle_offsets()
 	if(ridden.has_buckled_mobs())
 		for(var/mob/living/M in ridden.buckled_mobs)
@@ -417,19 +376,7 @@
 					M.pixel_x = R.module.ride_offset_x[dir2text(ridden.dir)]
 					M.pixel_y = R.module.ride_offset_y[dir2text(ridden.dir)]
 			else
-				switch(ridden.dir)
-					if(NORTH)
-						M.pixel_x = 0
-						M.pixel_y = 4
-					if(SOUTH)
-						M.pixel_x = 0
-						M.pixel_y = 4
-					if(EAST)
-						M.pixel_x = -6
-						M.pixel_y = 3
-					if(WEST)
-						M.pixel_x = 6
-						M.pixel_y = 3
+				..()
 
 /datum/riding/cyborg/force_dismount(mob/living/M)
 	ridden.unbuckle_mob(M)
@@ -438,7 +385,7 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [ridden]!</span>")
 	M.throw_at(target, 14, 5, ridden)
-	M.Weaken(3)
+	M.Knockdown(60)
 
 /datum/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/amount_equipped = 0

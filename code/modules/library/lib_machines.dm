@@ -270,7 +270,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
-				findscanner(9)
+				scanner = findscanner(9)
 			if(!scanner)
 				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
@@ -314,7 +314,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/findscanner(viewrange)
-	for(var/obj/machinery/libraryscanner/S in range(viewrange))
+	for(var/obj/machinery/libraryscanner/S in range(viewrange, get_turf(src)))
 		return S
 	return null
 
@@ -340,7 +340,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
 	if(density && !emagged)
-		emagged = 1
+		emagged = TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())
@@ -498,8 +498,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	name = "scanner control interface"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/obj/item/weapon/book/cache		// Last scanned book
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
@@ -554,9 +554,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	name = "book binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
-	anchored = 1
-	density = 1
-	var/busy = 0
+	anchored = TRUE
+	density = TRUE
+	var/busy = FALSE
 
 /obj/machinery/bookbinder/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
@@ -577,9 +577,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	P.loc = src
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
-	busy = 1
+	busy = TRUE
 	sleep(rand(200,400))
-	busy = 0
+	busy = FALSE
 	if(P)
 		if(!stat)
 			visible_message("[src] whirs as it prints and binds a new book.")

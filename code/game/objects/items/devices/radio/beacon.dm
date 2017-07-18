@@ -7,8 +7,8 @@
 	origin_tech = "bluespace=1"
 	dog_fashion = null
 
-/obj/item/device/radio/beacon/New()
-	..()
+/obj/item/device/radio/beacon/Initialize()
+	. = ..()
 	GLOB.teleportbeacons += src
 
 /obj/item/device/radio/beacon/Destroy()

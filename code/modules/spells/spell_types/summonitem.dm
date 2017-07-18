@@ -86,7 +86,7 @@
 									break
 
 					else
-						if(istype(item_to_retrieve.loc,/obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
+						if(istype(item_to_retrieve.loc, /obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
 							var/obj/machinery/portable_atmospherics/P = item_to_retrieve.loc
 							P.disconnect()
 							P.update_icon()
@@ -103,10 +103,10 @@
 			if(!L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.loc = L.loc
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
-				playsound(get_turf(L), 'sound/magic/SummonItems_generic.ogg', 50, 1)
+				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
 			else
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
-				playsound(get_turf(L), 'sound/magic/SummonItems_generic.ogg', 50, 1)
+				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
 
 
 		if(message)

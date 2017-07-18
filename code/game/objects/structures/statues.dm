@@ -6,9 +6,8 @@
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = ""
-	density = 1
-	anchored = 0
-	obj_integrity = 100
+	density = TRUE
+	anchored = FALSE
 	max_integrity = 100
 	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
@@ -27,7 +26,7 @@
 					return
 				user.visible_message("[user] loosened the [name]'s bolts!", \
 									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
-				anchored = 0
+				anchored = FALSE
 		else
 			if(!isfloorturf(src.loc))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
@@ -40,10 +39,10 @@
 					return
 				user.visible_message("[user] has secured the [name]'s bolts.", \
 									 "<span class='notice'>You have secured the [name]'s bolts.</span>")
-				anchored = 1
+				anchored = TRUE
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,40*W.toolspeed, target = src))
@@ -69,7 +68,7 @@
 		if(do_after(user, 40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
-			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			deconstruct(TRUE)
@@ -96,7 +95,7 @@
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
-	obj_integrity = 300
+	max_integrity = 300
 	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
@@ -116,7 +115,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/statue/uranium/Bumped(atom/user)
+/obj/structure/statue/uranium/CollidedWith(atom/movable/AM)
 	radiate()
 	..()
 
@@ -141,7 +140,7 @@
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
-	obj_integrity = 200
+	max_integrity = 200
 	material_drop_type = /obj/item/stack/sheet/mineral/plasma
 	desc = "This statue is suitably made from plasma."
 
@@ -156,25 +155,27 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(istype(Proj,/obj/item/projectile/beam))
+	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
 		burn = TRUE
-	else if(istype(Proj,/obj/item/projectile/ion))
+	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
 		burn = TRUE
 	if(burn)
+		var/turf/T = get_turf(src)
 		if(Proj.firer)
-			message_admins("Plasma statue ignited by [key_name_admin(Proj.firer)](<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-			log_game("Plasma statue ignited by [key_name(Proj.firer)] in ([x],[y],[z])")
+			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_COORDJMP(T)]",0,1)
+			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [COORD(T)]")
 		else
-			message_admins("Plasma statue ignited by [Proj]. No known firer.(<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-			log_game("Plasma statue ignited by [Proj] in ([x],[y],[z]). No known firer.")
+			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_COORDJMP(T)]",0,1)
+			log_game("Plasma statue ignited by [Proj] in [COORD(T)]. No known firer.")
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")
+		var/turf/T = get_turf(src)
+		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma statue ignited by [key_name(user)] in [COORD(T)]")
 		ignite(W.is_hot())
 	else
 		return ..()
@@ -190,7 +191,7 @@
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
-	obj_integrity = 300
+	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/gold
 	desc = "This is a highly valuable statue made from gold."
 
@@ -217,7 +218,7 @@
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
-	obj_integrity = 300
+	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/silver
 	desc = "This is a valuable statue made from silver."
 
@@ -244,7 +245,7 @@
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
-	obj_integrity = 1000
+	max_integrity = 1000
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
 	desc = "This is a very expensive diamond statue"
 
@@ -263,7 +264,7 @@
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
-	obj_integrity = 300
+	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
@@ -272,7 +273,7 @@
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/Bumped(atom/user)
+/obj/structure/statue/bananium/CollidedWith(atom/movable/AM)
 	honk()
 	..()
 
@@ -298,7 +299,7 @@
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
-	obj_integrity = 50
+	max_integrity = 50
 	material_drop_type = /obj/item/stack/sheet/mineral/sandstone
 
 /obj/structure/statue/sandstone/assistant
@@ -316,7 +317,7 @@
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
-	obj_integrity = 50
+	max_integrity = 50
 	material_drop_type = /obj/item/stack/sheet/mineral/snow
 
 /obj/structure/statue/snow/snowman

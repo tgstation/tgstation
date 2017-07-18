@@ -9,7 +9,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/human
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/kebab
 	name = "Kebab"
@@ -18,7 +18,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/tofukebab
 	name = "Tofu kebab"
@@ -27,7 +27,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/tofu
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/tailkebab
 	name = "Lizard tail kebab"
@@ -36,7 +36,7 @@
 		/obj/item/severedtail = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/tail
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 // see code/module/crafting/table.dm
 
@@ -50,7 +50,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cubancarp
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/fishandchips
 	name = "Fish and chips"
@@ -59,7 +59,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fishandchips
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/fishfingers
 	name = "Fish fingers"
@@ -69,7 +69,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fishfingers
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/sashimi
 	name = "Sashimi"
@@ -79,7 +79,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sashimi
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
 
@@ -91,7 +91,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
 
@@ -103,7 +103,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/bearsteak
 	name = "Filet migrawr"
@@ -113,7 +113,7 @@
 	)
 	tools = list(/obj/item/weapon/lighter)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bearsteak
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/enchiladas
 	name = "Enchiladas"
@@ -123,7 +123,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/enchiladas
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/stewedsoymeat
 	name = "Stewed soymeat"
@@ -133,7 +133,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/sausage
 	name = "Sausage"
@@ -142,7 +142,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sausage
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/nugget
 	name = "Chicken nugget"
@@ -150,7 +150,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/nugget
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/rawkhinkali
 	name = "Raw Khinkali"
@@ -159,4 +159,14 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
 	)
 	result =  /obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
-	category = CAT_MEAT
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/pigblanket
+	name = "Pig in a Blanket"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/butter = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pigblanket
+	subcategory = CAT_MEAT

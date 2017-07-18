@@ -10,3 +10,5 @@
 	w_class = WEIGHT_CLASS_SMALL
 	steel_sheet_cost = 1
 	slot_flags = SLOT_ID | SLOT_BELT
+	has_light = TRUE //LED flashlight!
+	comp_light_luminosity = 2.3 //Same as the PDA

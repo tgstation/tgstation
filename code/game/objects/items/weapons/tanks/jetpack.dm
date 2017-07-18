@@ -76,7 +76,7 @@
 	return 1
 
 /obj/item/weapon/tank/jetpack/suicide_act(mob/user)
-	if (istype(user,/mob/living/carbon/human/))
+	if (istype(user, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
 		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
 		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")
@@ -207,9 +207,3 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
-
-/mob/has_gravity(turf/T)
-	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
-	if(J && J.on)
-		return FALSE
-	return ..()

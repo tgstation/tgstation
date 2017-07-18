@@ -1,12 +1,14 @@
 /datum/computer_file/program/filemanager
 	filename = "filemanager"
-	filedesc = "NTOS File Manager"
+	filedesc = "File Manager"
 	extended_desc = "This program allows management of files."
 	program_icon_state = "generic"
 	size = 8
 	requires_ntnet = 0
 	available_on_ntnet = 0
 	undeletable = 1
+	tgui_id = "ntos_file_manager"
+
 	var/open_file
 	var/error
 
@@ -175,18 +177,6 @@
 	t = replacetext(t, "\[sign\]", "<span class=\"paper_field\"></span>")
 	t = parse_tags(t)
 	return t
-
-/datum/computer_file/program/filemanager/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "file_manager", "NTOS File Manager", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)
 	var/list/data = get_header_data()

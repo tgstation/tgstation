@@ -3,12 +3,15 @@
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/computer/crew
 
 	light_color = LIGHT_COLOR_BLUE
+
+/obj/machinery/computer/crew/syndie
+	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
@@ -56,7 +59,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	jobs["Bartender"] = 61
 	jobs["Cook"] = 62
 	jobs["Botanist"] = 63
-	jobs["Librarian"] = 64
+	jobs["Curator"] = 64
 	jobs["Chaplain"] = 65
 	jobs["Clown"] = 66
 	jobs["Mime"] = 67
@@ -153,8 +156,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 					U = H.w_uniform
 
 					// Are the suit sensors on?
-					if (U.has_sensor && U.sensor_mode)
-						pos = H.z == 0 || U.sensor_mode == 3 ? get_turf(H) : null
+					if ((U.has_sensor > 0) && U.sensor_mode)
+						pos = H.z == 0 || U.sensor_mode == SENSOR_COORDS ? get_turf(H) : null
 
 						// Special case: If the mob is inside an object confirm the z-level on turf level.
 						if (H.z == 0 && (!pos || pos.z != z)) continue
@@ -170,10 +173,10 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 							assignment = ""
 							ijob = 80
 
-						if (U.sensor_mode >= 1) life_status = (!H.stat ? "true" : "false")
+						if (U.sensor_mode >= SENSOR_LIVING) life_status = (!H.stat ? "true" : "false")
 						else                    life_status = null
 
-						if (U.sensor_mode >= 2)
+						if (U.sensor_mode >= SENSOR_VITALS)
 							dam1 = round(H.getOxyLoss(),1)
 							dam2 = round(H.getToxLoss(),1)
 							dam3 = round(H.getFireLoss(),1)
@@ -184,7 +187,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 							dam3 = null
 							dam4 = null
 
-						if (U.sensor_mode >= 3)
+						if (U.sensor_mode >= SENSOR_COORDS)
 							if (!pos) pos = get_turf(H)
 							var/area/player_area = get_area(H)
 

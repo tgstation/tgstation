@@ -1,6 +1,6 @@
 GLOBAL_VAR_INIT(highlander, FALSE)
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
 	GLOB.highlander = TRUE
@@ -79,7 +79,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 /proc/only_me()
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
 
@@ -99,7 +99,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 
 		var/datum/gang/multiverse/G = new(src, "[H.real_name]")
 		SSticker.mode.gangs += G
-		G.bosses += H.mind
+		G.bosses[H.mind] = 0	//No they don't use influence but this prevents runtimes.
 		G.add_gang_hud(H.mind)
 		H.mind.gang_datum = G
 

@@ -8,6 +8,7 @@
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
+	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -27,9 +28,8 @@
 /obj/item/organ/heart/attack_self(mob/user)
 	..()
 	if(!beating)
-		visible_message("<span class='notice'>[user] squeezes [src] to \
-			make it beat again!</span>", "<span class='notice'>You squeeze \
-			[src] to make it beat again!</span>")
+		user.visible_message("<span class='notice'>[user] squeezes [src] to \
+			make it beat again!</span>","<span class='notice'>You squeeze [src] to make it beat again!</span>")
 		Restart()
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
 
@@ -48,6 +48,24 @@
 	S.icon_state = "heart-off"
 	return S
 
+/obj/item/organ/heart/on_life()
+	if(owner.client)
+		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+
+		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
+		var/mob/living/carbon/H = owner
+		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
+			beat = BEAT_SLOW
+			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
+			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
+		if(beat == BEAT_SLOW && H.health > HEALTH_THRESHOLD_CRIT)
+			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+			beat = BEAT_NONE
+
+		if(H.jitteriness)
+			if(!beat || beat == BEAT_SLOW)
+				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
+				beat = BEAT_FAST
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -99,7 +117,7 @@
 //You are now brea- pumping blood manually
 /datum/action/item_action/organ_action/cursed_heart/Trigger()
 	. = ..()
-	if(. && istype(target,/obj/item/organ/heart/cursed))
+	if(. && istype(target, /obj/item/organ/heart/cursed))
 		var/obj/item/organ/heart/cursed/cursed_heart = target
 
 		if(world.time < (cursed_heart.last_pump + (cursed_heart.pump_delay-10))) //no spam

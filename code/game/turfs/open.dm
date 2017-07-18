@@ -3,7 +3,7 @@
 
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
-	var/image/wet_overlay = null
+	var/mutable_appearance/wet_overlay
 
 /turf/open/indestructible
 	name = "floor"
@@ -27,23 +27,36 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
 	baseturf = /turf/open/indestructible/necropolis
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/necropolis/Initialize()
-	..()
+	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
 /turf/open/indestructible/necropolis/air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
+/turf/open/indestructible/boss //you put stone tiles on this and use it as a base
+	name = "necropolis floor"
+	icon = 'icons/turf/boss_floors.dmi'
+	icon_state = "boss"
+	baseturf = /turf/open/indestructible/boss
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/indestructible/boss/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 
 /turf/open/indestructible/hierophant/two
+
+/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 /turf/open/indestructible/paper
 	name = "notebook floor"
@@ -59,7 +72,7 @@
 	//cache some vars
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)
@@ -134,7 +147,7 @@
 		qdel(hotspot)
 	return 1
 
-/turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	if(C.movement_type & FLYING)
 		return 0
 	if(has_gravity(src))
@@ -144,7 +157,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
@@ -159,11 +172,10 @@
 
 		var/olddir = C.dir
 		if(!(lube & SLIDE_ICE))
-			C.Stun(s_amount)
-			C.Weaken(w_amount)
+			C.Knockdown(knockdown_amount)
 			C.stop_pulling()
 		else
-			C.Stun(1)
+			C.Stun(20)
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
@@ -183,17 +195,22 @@
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
 			cut_overlay(wet_overlay)
-			wet_overlay = null
+		else
+			wet_overlay = mutable_appearance()
 		var/turf/open/floor/F = src
 		if(istype(F))
 			if(wet_setting == TURF_WET_PERMAFROST)
-				wet_overlay = image('icons/effects/water.dmi', src, "ice_floor")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "ice_floor"
 			else if(wet_setting == TURF_WET_ICE)
-				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
+				wet_overlay.icon = 'icons/turf/overlays.dmi'
+				wet_overlay.icon_state = "snowfloor"
 			else
-				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "wet_floor_static"
 		else
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
+			wet_overlay.icon = 'icons/effects/water.dmi'
+			wet_overlay.icon_state = "wet_static"
 		add_overlay(wet_overlay)
 	HandleWet()
 

@@ -5,12 +5,11 @@
 
 /obj/structure/easel
 	name = "easel"
-	desc = "only for the finest of art!"
+	desc = "Only for the finest of art!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
-	density = 1
+	density = TRUE
 	resistance_flags = FLAMMABLE
-	obj_integrity = 60
 	max_integrity = 60
 	var/obj/item/weapon/canvas/painting = null
 
@@ -49,7 +48,7 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 
 /obj/item/weapon/canvas
 	name = "canvas"
-	desc = "draw out your soul on this canvas!"
+	desc = "Draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
 	resistance_flags = FLAMMABLE

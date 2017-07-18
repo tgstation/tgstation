@@ -1,64 +1,37 @@
-/datum/game_mode/traitor/double_agents
-	name = "double agents"
-	config_tag = "double_agents"
+/datum/game_mode
+	var/list/target_list = list()
+	var/list/late_joining_list = list()
+
+/datum/game_mode/traitor/internal_affairs
+	name = "Internal Affairs"
+	config_tag = "internal_affairs"
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
+	traitor_name = "Nanotrasen Internal Affairs Agent"
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 4 // Four additional traitors
+	antag_datum = ANTAG_DATUM_IAA
 
-	announce_text = "There are double agents trying to kill each other!\n\
-	<span class='danger'>Traitors</span>: Eliminate your targets and protect yourself!\n\
-	<span class='notice'>Crew</span>: Stop the double agents before they can cause too much mayhem."
+	announce_text = "There are Nanotrasen Internal Affairs Agents trying to kill each other!\n\
+	<span class='danger'>IAA</span>: Eliminate your targets and protect yourself!\n\
+	<span class='notice'>Crew</span>: Stop the IAA agents before they can cause too much mayhem."
 
-	var/list/target_list = list()
-	var/list/late_joining_list = list()
 
-/datum/game_mode/traitor/double_agents/post_setup()
+
+/datum/game_mode/traitor/internal_affairs/post_setup()
 	var/i = 0
-	for(var/datum/mind/traitor in traitors)
+	for(var/datum/mind/traitor in pre_traitors)
 		i++
-		if(i + 1 > traitors.len)
+		if(i + 1 > pre_traitors.len)
 			i = 0
-		target_list[traitor] = traitors[i + 1]
+		target_list[traitor] = pre_traitors[i+1]	
 	..()
 
-/datum/game_mode/traitor/double_agents/forge_traitor_objectives(datum/mind/traitor)
 
-	if(target_list.len && target_list[traitor]) // Is a double agent
-
-		// Assassinate
-		var/datum/mind/target_mind = target_list[traitor]
-		if(issilicon(target_mind.current))
-			var/datum/objective/destroy/destroy_objective = new
-			destroy_objective.owner = traitor
-			destroy_objective.target = target_mind
-			destroy_objective.update_explanation_text()
-			traitor.objectives += destroy_objective
-		else
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = traitor
-			kill_objective.target = target_mind
-			kill_objective.update_explanation_text()
-			traitor.objectives += kill_objective
-
-		// Escape
-		if(issilicon(traitor.current))
-			var/datum/objective/survive/survive_objective = new
-			survive_objective.owner = traitor
-			traitor.objectives += survive_objective
-		else
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = traitor
-			traitor.objectives += escape_objective
-
-	else
-		..() // Give them standard objectives.
-	return
-
-/datum/game_mode/traitor/double_agents/add_latejoin_traitor(datum/mind/character)
+/datum/game_mode/traitor/internal_affairs/add_latejoin_traitor(datum/mind/character)
 
 	check_potential_agents()
 
@@ -87,7 +60,7 @@
 		late_joining_list += character
 	return
 
-/datum/game_mode/traitor/double_agents/proc/check_potential_agents()
+/datum/game_mode/traitor/internal_affairs/proc/check_potential_agents()
 
 	for(var/M in late_joining_list)
 		if(istype(M, /datum/mind))
@@ -100,3 +73,5 @@
 
 		// If any check fails, remove them from our list
 		late_joining_list -= M
+
+

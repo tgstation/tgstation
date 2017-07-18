@@ -27,8 +27,7 @@
 	desc = "Made by Abjuration Inc"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
-	anchored = 1
-	obj_integrity = 200
+	anchored = TRUE
 	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
@@ -64,17 +63,18 @@
 		next_check = world.time + cooldown
 
 /obj/structure/academy_wizard_spawner/proc/give_control()
+	set waitfor = FALSE
+
 	if(!current_wizard)
 		return
-	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
-		var/mob/dead/observer/chosen = null
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
+	var/mob/dead/observer/chosen = null
 
-		if(candidates.len)
-			chosen = pick(candidates)
-			message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
-			current_wizard.ghostize() // on the off chance braindead defender gets back in
-			current_wizard.key = chosen.key
+	if(candidates.len)
+		chosen = pick(candidates)
+		message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
+		current_wizard.ghostize() // on the off chance braindead defender gets back in
+		current_wizard.key = chosen.key
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
@@ -178,9 +178,9 @@
 			S.speedmod += 1
 		if(7)
 			//Throw
-			user.Stun(3)
+			user.Stun(60)
 			user.adjustBruteLoss(50)
-			var/throw_dir = pick(GLOB.cardinal)
+			var/throw_dir = pick(GLOB.cardinals)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)

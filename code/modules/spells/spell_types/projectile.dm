@@ -1,3 +1,6 @@
+
+//NEEDS MAJOR CODE CLEANUP.
+
 /obj/effect/proc_holder/spell/targeted/projectile
 	name = "Projectile"
 	desc = "This spell summons projectiles which try to hit the targets."
@@ -25,62 +28,69 @@
 /obj/effect/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
 	playMagSound()
 	for(var/mob/living/target in targets)
-		spawn(0)
-			var/obj/effect/proc_holder/spell/targeted/projectile
-			if(istext(proj_type))
-				var/projectile_type = text2path(proj_type)
-				projectile = new projectile_type(user)
-			if(istype(proj_type,/obj/effect/proc_holder/spell))
-				projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
-				projectile:linked_spells += proj_type
-			projectile.icon = proj_icon
-			projectile.icon_state = proj_icon_state
-			projectile.setDir(get_dir(target,projectile))
-			projectile.name = proj_name
+		launch(target, user)
 
-			var/current_loc = user.loc
+/obj/effect/proc_holder/spell/targeted/projectile/proc/launch(mob/living/target, mob/user)
+	set waitfor = FALSE
+	var/obj/effect/proc_holder/spell/targeted/projectile
+	if(istext(proj_type))
+		var/projectile_type = text2path(proj_type)
+		projectile = new projectile_type(user)
+	if(istype(proj_type, /obj/effect/proc_holder/spell))
+		projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
+		var/obj/effect/proc_holder/spell/targeted/trigger/T = projectile
+		T.linked_spells += proj_type
+	projectile.icon = proj_icon
+	projectile.icon_state = proj_icon_state
+	projectile.setDir(get_dir(target,projectile))
+	projectile.name = proj_name
 
-			projectile.loc = current_loc
+	var/current_loc = user.loc
 
-			for(var/i = 0,i < proj_lifespan,i++)
-				if(!projectile)
-					break
+	projectile.loc = current_loc
 
-				if(proj_homing)
-					if(proj_insubstantial)
-						projectile.setDir(get_dir(projectile,target))
-						projectile.loc = get_step_to(projectile,target)
-					else
-						step_to(projectile,target)
-				else
-					if(proj_insubstantial)
-						projectile.loc = get_step(projectile,dir)
-					else
-						step(projectile,dir)
+	for(var/i = 0,i < proj_lifespan,i++)
+		if(!projectile)
+			break
 
-				if(!projectile) // step and step_to sleeps so we'll have to check again.
-					break
+		if(proj_homing)
+			if(proj_insubstantial)
+				projectile.setDir(get_dir(projectile,target))
+				projectile.loc = get_step_to(projectile,target)
+			else
+				step_to(projectile,target)
+		else
+			if(proj_insubstantial)
+				projectile.loc = get_step(projectile,dir)
+			else
+				step(projectile,dir)
 
-				if(!target || (!proj_lingering && projectile.loc == current_loc)) //if it didn't move since last time
-					qdel(projectile)
-					break
+		if(!projectile) // step and step_to sleeps so we'll have to check again.
+			break
 
-				if(proj_trail && projectile)
-					spawn(0)
-						if(projectile)
-							var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
-							trail.icon = proj_trail_icon
-							trail.icon_state = proj_trail_icon_state
-							trail.density = 0
-							QDEL_IN(trail, proj_trail_lifespan)
+		if(!target || (!proj_lingering && projectile.loc == current_loc)) //if it didn't move since last time
+			qdel(projectile)
+			break
 
-				if(projectile.loc in range(target.loc,proj_trigger_range))
-					projectile.perform(list(target),user=user)
-					break
+		if(proj_trail && projectile)
+			spawntrail(projectile)
 
-				current_loc = projectile.loc
+		if(projectile.loc in range(target.loc,proj_trigger_range))
+			projectile.perform(list(target),user=user)
+			break
 
-				sleep(proj_step_delay)
+		current_loc = projectile.loc
 
-			if(projectile)
-				qdel(projectile)
+		sleep(proj_step_delay)
+
+	if(projectile)
+		qdel(projectile)
+
+/obj/effect/proc_holder/spell/targeted/projectile/proc/spawntrail(obj/effect/proc_holder/spell/targeted/projectile)
+	set waitfor = FALSE
+	if(projectile)
+		var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
+		trail.icon = proj_trail_icon
+		trail.icon_state = proj_trail_icon_state
+		trail.density = FALSE
+		QDEL_IN(trail, proj_trail_lifespan)

@@ -111,6 +111,7 @@
 		for(var/datum/plant_gene/trait/trait in seed.genes)
 			trait.on_squash(src, target)
 
+	reagents.reaction(T)
 	for(var/A in T)
 		reagents.reaction(A)
 

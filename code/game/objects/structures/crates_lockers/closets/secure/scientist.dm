@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/RD
 	name = "\proper research director's locker"
-	req_access = list(GLOB.access_rd)
+	req_access = list(ACCESS_RD)
 	icon_state = "rd"
 
 /obj/structure/closet/secure_closet/RD/PopulateContents()
@@ -19,6 +19,7 @@
 	new /obj/item/weapon/tank/internals/air(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/megaphone/command(src)
+	new /obj/item/weapon/storage/lockbox/medal/sci(src)
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/device/laser_pointer(src)

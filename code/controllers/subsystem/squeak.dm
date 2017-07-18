@@ -4,7 +4,7 @@
 
 SUBSYSTEM_DEF(squeak)
 	name = "Squeak"
-	priority = 40
+	init_order = INIT_ORDER_SQUEAK
 	flags = SS_NO_FIRE
 
 	var/list/exposed_wires = list()

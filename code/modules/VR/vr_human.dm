@@ -7,7 +7,7 @@
 
 
 /mob/living/carbon/human/virtual_reality/Initialize()
-	..()
+	. = ..()
 	quit_action = new()
 	quit_action.Grant(src)
 

@@ -34,7 +34,7 @@
 	if(!check_sprite(target))
 		return
 	if(!active_dummy)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>Scanned [target].</span>")
 			var/obj/temp = new/obj()
@@ -56,13 +56,13 @@
 		qdel(active_dummy)
 		active_dummy = null
 		to_chat(usr, "<span class='notice'>You deactivate \the [src].</span>")
-		new /obj/effect/overlay/temp/emp/pulse(get_turf(src))
+		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 		C.activate(usr, saved_appearance, src)
 		to_chat(usr, "<span class='notice'>You activate \the [src].</span>")
-		new /obj/effect/overlay/temp/emp/pulse(get_turf(src))
+		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
@@ -89,8 +89,8 @@
 /obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
-	density = 0
-	var/can_move = 1
+	density = FALSE
+	var/can_move = 0
 	var/obj/item/device/chameleon/master = null
 
 /obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
@@ -126,19 +126,21 @@
 	if(isspaceturf(loc) || !direction)
 		return //No magical space movement!
 
-	if(can_move)
-		can_move = 0
+	if(can_move < world.time)
+		var/amount
 		switch(user.bodytemperature)
 			if(300 to INFINITY)
-				spawn(10) can_move = 1
+				amount = 10
 			if(295 to 300)
-				spawn(13) can_move = 1
+				amount = 13
 			if(280 to 295)
-				spawn(16) can_move = 1
+				amount = 16
 			if(260 to 280)
-				spawn(20) can_move = 1
+				amount = 20
 			else
-				spawn(25) can_move = 1
+				amount = 25
+
+		can_move = world.time + amount
 		step(src, direction)
 	return
 

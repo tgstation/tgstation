@@ -4,12 +4,12 @@
 	desc = "A locker that holds guns."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "shotguncase"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	opacity = 0
-	var/case_type = null
+	var/case_type = ""
 	var/gun_category = /obj/item/weapon/gun
-	var/open = 1
+	var/open = TRUE
 	var/capacity = 4
 
 /obj/structure/guncase/Initialize(mapload)
@@ -25,8 +25,10 @@
 /obj/structure/guncase/update_icon()
 	cut_overlays()
 	if(case_type && LAZYLEN(contents))
+		var/mutable_appearance/gun_overlay = mutable_appearance(icon, case_type)
 		for(var/i in 1 to contents.len)
-			add_overlay(image(icon = src.icon, icon_state = "[case_type]", pixel_x = 3 * (i - 1) ))
+			gun_overlay.pixel_x = 3 * (i - 1)
+			add_overlay(gun_overlay)
 	if(open)
 		add_overlay("[icon_state]_open")
 	else

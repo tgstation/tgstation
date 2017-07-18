@@ -57,7 +57,6 @@
 /area/ruin/unpowered)
 "aj" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (EAST)";
 	icon_state = "pile";
 	dir = 4
 	},
@@ -158,7 +157,6 @@
 /area/ruin/unpowered)
 "az" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (WEST)";
 	name = "broken plating";
 	icon_state = "plating";
 	dir = 8
@@ -168,7 +166,6 @@
 /area/ruin/unpowered)
 "aA" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (NORTH)";
 	icon_state = "pile";
 	dir = 1
 	},
@@ -310,7 +307,6 @@
 /area/ruin/unpowered)
 "aZ" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (WEST)";
 	icon_state = "pile";
 	dir = 8
 	},
@@ -432,7 +428,6 @@
 "bs" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular (NORTH)";
 	icon_state = "singular";
 	dir = 1
 	},
@@ -440,7 +435,6 @@
 /area/template_noop)
 "bt" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-side (NORTH)";
 	icon_state = "side";
 	dir = 1
 	},
@@ -460,7 +454,6 @@
 "bw" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (NORTH)";
 	name = "broken plating";
 	icon_state = "plating";
 	dir = 1
@@ -469,7 +462,6 @@
 /area/ruin/unpowered)
 "bx" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (EAST)";
 	name = "broken plating";
 	icon_state = "plating";
 	dir = 4
@@ -479,7 +471,6 @@
 /area/ruin/unpowered)
 "by" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (EAST)";
 	icon_state = "pile";
 	dir = 4
 	},
@@ -488,7 +479,6 @@
 "bz" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (EAST)";
 	name = "broken plating";
 	icon_state = "plating";
 	dir = 4
@@ -503,7 +493,6 @@
 /area/template_noop)
 "bB" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular (EAST)";
 	icon_state = "singular";
 	dir = 4
 	},
@@ -513,7 +502,6 @@
 "bC" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-corner (NORTH)";
 	icon_state = "corner";
 	dir = 1
 	},
@@ -521,7 +509,6 @@
 /area/ruin/unpowered)
 "bD" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular (EAST)";
 	icon_state = "singular";
 	dir = 4
 	},
@@ -530,7 +517,6 @@
 "bE" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-corner (WEST)";
 	icon_state = "corner";
 	dir = 8
 	},
@@ -539,7 +525,6 @@
 "bF" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-side (EAST)";
 	icon_state = "side";
 	dir = 4
 	},
@@ -547,7 +532,6 @@
 /area/ruin/unpowered)
 "bG" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular (EAST)";
 	icon_state = "singular";
 	dir = 4
 	},
@@ -564,7 +548,6 @@
 "bI" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (WEST)";
 	name = "broken plating";
 	icon_state = "plating";
 	dir = 8

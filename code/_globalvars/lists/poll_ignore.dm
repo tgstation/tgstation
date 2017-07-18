@@ -5,5 +5,6 @@
 #define POLL_IGNORE_POSSESSED_BLADE "possessed_blade"
 #define POLL_IGNORE_ALIEN_LARVA "alien_larva"
 #define POLL_IGNORE_CLOCKWORK_MARAUDER "clockwork_marauder"
+#define POLL_IGNORE_SYNDICATE "syndicate"
 
 GLOBAL_LIST_EMPTY(poll_ignore)

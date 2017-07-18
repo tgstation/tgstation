@@ -236,3 +236,12 @@
 	var/shape = pick("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
+
+/obj/item/weapon/reagent_containers/food/snacks/pigblanket
+	name = "pig in a blanket"
+	desc = "A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it."
+	icon_state = "pigblanket"
+	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#800000"
+	tastes = list("meat" = 1, "butter" = 1)

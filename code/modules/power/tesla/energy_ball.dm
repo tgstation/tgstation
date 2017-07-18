@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	move_self = 1
 	grav_pull = 0
 	contained = 0
-	density = 1
+	density = TRUE
 	energy = 0
 	dissipate = 1
 	dissipate_delay = 5
@@ -39,6 +39,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
+
+/obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
+	. = ..()
+	if(!is_miniball)
+		set_light(10, 7, "#EEEEFF")
 
 /obj/singularity/energy_ball/ex_act(severity, target)
 	return
@@ -53,6 +58,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 		qdel(EB)
 
 	. = ..()
+
+/obj/singularity/energy_ball/admin_investigate_setup()
+	if(istype(loc, /obj/singularity/energy_ball))
+		return
+	..()
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -117,7 +127,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 /obj/singularity/energy_ball/proc/new_mini_ball()
 	if(!loc)
 		return
-	var/obj/singularity/energy_ball/EB = new(loc)
+	var/obj/singularity/energy_ball/EB = new(loc, 0, TRUE)
 
 	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
 	var/icon/I = icon(icon,icon_state,dir)
@@ -128,11 +138,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 
-/obj/singularity/energy_ball/Bump(atom/A)
+/obj/singularity/energy_ball/Collide(atom/A)
 	dust_mobs(A)
 
-/obj/singularity/energy_ball/Bumped(atom/A)
-	dust_mobs(A)
+/obj/singularity/energy_ball/CollidedWith(atom/movable/AM)
+	dust_mobs(AM)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
@@ -262,7 +272,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			if(stun_mobs)
-				S.emp_act(2)
+				S.emp_act(EMP_LIGHT)
 			tesla_zap(S, 7, power / 1.5, explosive, stun_mobs) // metallic folks bounce it further
 		else
 			tesla_zap(closest_mob, 5, power / 1.5, explosive, stun_mobs)

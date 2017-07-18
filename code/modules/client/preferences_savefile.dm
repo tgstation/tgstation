@@ -1,8 +1,8 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	10
+#define SAVEFILE_VERSION_MIN	15
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	17
+#define SAVEFILE_VERSION_MAX	18
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -88,15 +88,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 10)
-		toggles |= MEMBER_PUBLIC
-	if(current_version < 11)
-		chat_toggles = TOGGLES_DEFAULT_CHAT
-		toggles = TOGGLES_DEFAULT
-	if(current_version < 12)
-		ignoring = list()
-	if(current_version < 15)
-		toggles |= SOUND_ANNOUNCEMENTS
 
 
 //should this proc get fairly long (say 3 versions long),
@@ -106,16 +97,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //It's only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(pref_species && !(pref_species.id in GLOB.roundstart_species))
-		var/rando_race = pick(config.roundstart_races)
-		pref_species = new rando_race()
-
-	if(current_version < 13 || !istext(backbag))
-		switch(backbag)
-			if(2)
-				backbag = DSATCHEL
-			else
-				backbag = DBACKPACK
 	if(current_version < 16)
 		var/berandom
 		S["userandomjob"] >> berandom
@@ -156,12 +137,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
 	S["windowflash"]		>> windowflashing
+	S["be_special"] 		>> be_special
 
-	if(islist(S["be_special"]))
-		S["be_special"] 	>> be_special
-	else //force update and store the old bitflag version of be_special
-		needs_update = 11
-		S["be_special"] 	>> old_be_special
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -177,6 +154,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
+	S["menuoptions"]		>> menuoptions
+	S["enable_tips"]		>> enable_tips
+	S["tip_delay"]			>> tip_delay
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -199,6 +179,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	menuoptions		= SANITIZE_LIST(menuoptions)
+	be_special		= SANITIZE_LIST(be_special)
+
 
 	return 1
 
@@ -235,6 +218,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
+	S["menuoptions"]		<< menuoptions
+	S["enable_tips"]		<< enable_tips
+	S["tip_delay"]			<< tip_delay
 
 	return 1
 
@@ -265,9 +251,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
 		var/newtype = GLOB.roundstart_species[species_id]
 		pref_species = new newtype()
-	else
+	else if (config.roundstart_races.len)
 		var/rando_race = pick(config.roundstart_races)
-		pref_species = new rando_race()
+		if (rando_race)
+			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		S["features["mcolor"]"]	<< "#FFF"
@@ -444,7 +431,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
-/*
+
+#ifdef TESTING
 //DEBUG
 //Some crude tools for testing savefiles
 //path is the savefile path
@@ -455,4 +443,5 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /client/verb/savefile_import(path as text)
 	var/savefile/S = new /savefile(path)
 	S.ImportText("/",file("[path].txt"))
-*/
+
+#endif

@@ -5,7 +5,7 @@
 	start_active = 1
 
 /obj/machinery/camera/emp_proof/Initialize()
-	..()
+	. = ..()
 	upgradeEmpProof()
 
 // X-RAY
@@ -15,7 +15,7 @@
 	icon_state = "xraycam" // Thanks to Krutchen for the icons.
 
 /obj/machinery/camera/xray/Initialize()
-	..()
+	. = ..()
 	upgradeXRay()
 
 // MOTION
@@ -32,7 +32,7 @@
 	start_active = 1
 
 /obj/machinery/camera/all/Initialize()
-	..()
+	. = ..()
 	upgradeEmpProof()
 	upgradeXRay()
 	upgradeMotion()
@@ -43,23 +43,22 @@
 	var/number = 0 //camera number in area
 
 //This camera type automatically sets it's name to whatever the area that it's in is called.
-/obj/machinery/camera/autoname/Initialize(mapload)
-	if(mapload)
-		..()
-		return TRUE
-	else
-		if(!initialized)
-			..()
-		number = 1
-		var/area/A = get_area(src)
-		if(A)
-			for(var/obj/machinery/camera/autoname/C in GLOB.machines)
-				if(C == src) continue
-				var/area/CA = get_area(C)
-				if(CA.type == A.type)
-					if(C.number)
-						number = max(number, C.number+1)
-			c_tag = "[A.name] #[number]"
+/obj/machinery/camera/autoname/Initialize()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/camera/autoname/LateInitialize()
+	. = ..()
+	number = 1
+	var/area/A = get_area(src)
+	if(A)
+		for(var/obj/machinery/camera/autoname/C in GLOB.machines)
+			if(C == src) continue
+			var/area/CA = get_area(C)
+			if(CA.type == A.type)
+				if(C.number)
+					number = max(number, C.number+1)
+		c_tag = "[A.name] #[number]"
 
 // CHECKS
 

@@ -27,8 +27,8 @@
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/obj/machinery/power/turbine/turbine
@@ -47,8 +47,8 @@
 	desc = "A gas turbine used for backup power generation."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/opened = 0
@@ -86,7 +86,7 @@
 							/obj/item/weapon/stock_parts/manipulator = 6)
 
 /obj/machinery/power/compressor/Initialize()
-	..()
+	. = ..()
 	locate_machinery()
 	if(!turbine)
 		stat |= BROKEN
@@ -98,7 +98,7 @@
 
 // Crucial to make things work!!!!
 // OLD FIX - explanation given down below.
-// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0)
+// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target)
 // 		return !density
 
 /obj/machinery/power/compressor/locate_machinery()
@@ -170,13 +170,13 @@
 
 
 	if(rpm>50000)
-		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "comp-o4", FLY_LAYER))
 	else if(rpm>10000)
-		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "comp-o3", FLY_LAYER))
 	else if(rpm>2000)
-		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "comp-o2", FLY_LAYER))
 	else if(rpm>500)
-		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "comp-o1", FLY_LAYER))
 	 //TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
@@ -202,7 +202,7 @@
 							/obj/item/weapon/stock_parts/capacitor = 6)
 
 /obj/machinery/power/turbine/Initialize()
-	..()
+	. = ..()
 	locate_machinery()
 	if(!compressor)
 		stat |= BROKEN
@@ -255,7 +255,7 @@
 // If it works, put an overlay that it works!
 
 	if(lastgen > 100)
-		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "turb-o", FLY_LAYER))
 
 	updateDialog()
 
@@ -338,7 +338,7 @@
 
 
 /obj/machinery/computer/turbine_computer/Initialize()
-	..()
+	. = ..()
 	locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()

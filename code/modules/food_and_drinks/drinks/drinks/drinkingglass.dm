@@ -7,7 +7,6 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	materials = list(MAT_GLASS=500)
-	obj_integrity = 20
 	max_integrity = 20
 	spillable = 1
 	resistance_flags = ACID_PROOF
@@ -22,9 +21,9 @@
 		if(R.glass_icon_state)
 			icon_state = R.glass_icon_state
 		else
-			var/image/I = image(icon, "glassoverlay")
-			I.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(I)
+			var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
+			reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(reagent_overlay)
 	else
 		icon_state = "glass_empty"
 		name = "drinking glass"
@@ -64,9 +63,9 @@
 			icon_state = largest_reagent.shot_glass_icon_state
 		else
 			icon_state = "shotglassclear"
-			var/image/I = image(icon, "shotglassoverlay")
-			I.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(I)
+			var/mutable_appearance/shot_overlay = mutable_appearance(icon, "shotglassoverlay")
+			shot_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(shot_overlay)
 
 
 	else
@@ -92,7 +91,7 @@
 	list_reagents = list("nuka_cola" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)

@@ -1,19 +1,19 @@
 /obj/machinery/power/emitter
-	name = "Emitter"
-	desc = "A heavy duty industrial laser.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	name = "emitter"
+	desc = "A heavy-duty industrial laser, often used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	var/icon_state_on = "emitter_+a"
-	anchored = 0
-	density = 1
-	req_access = list(GLOB.access_engine_equip)
+	anchored = FALSE
+	density = TRUE
+	req_access = list(ACCESS_ENGINE_EQUIP)
 
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0
 	var/atom/target = null
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 300
 
@@ -25,13 +25,26 @@
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 
 	var/datum/effect_system/spark_spread/sparks
+
+/obj/machinery/power/emitter/anchored
+	anchored = TRUE
+
+/obj/machinery/power/emitter/ctf
+	name = "Energy Cannon"
+	active = TRUE
+	active_power_usage = FALSE
+	idle_power_usage = FALSE
+	locked = TRUE
+	req_access_txt = "100"
+	state = 2
+	use_power = FALSE
 
 /obj/machinery/power/emitter/New()
 	..()
@@ -88,18 +101,20 @@
 		rotate()
 
 /obj/machinery/power/emitter/Initialize()
-	..()
+	. = ..()
 	if(state == 2 && anchored)
 		connect_to_network()
 
 	sparks = new
+	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
 
 /obj/machinery/power/emitter/Destroy()
-	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
-		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
+	if(SSticker && SSticker.IsRoundInProgress())
+		var/turf/T = get_turf(src)
+		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Emitter deleted at [COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]", INVESTIGATE_SINGULO)
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -120,15 +135,15 @@
 			if(src.active==1)
 				src.active = 0
 				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
-				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
-				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]","singulo")
+				message_admins("Emitter turned off by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
+				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			else
 				src.active = 1
 				to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
-				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]","singulo")
+				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -152,7 +167,7 @@
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
-			src.use_power = 1	*/
+			src.use_power = IDLE_POWER_USE	*/
 	return 1
 
 
@@ -169,12 +184,12 @@
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]","singulo")
+				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 		else
 			if(powered)
 				powered = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
+				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
 		if(charge <=80)
@@ -340,11 +355,12 @@
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(!emagged)
-		locked = 0
-		emagged = 1
-		if(user)
-			user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")
+	if(emagged)
+		return
+	locked = FALSE
+	emagged = TRUE
+	if(user)
+		user.visible_message("[user.name] emags the [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype
@@ -391,7 +407,7 @@
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	var/obj/machinery/power/emitter/prototype/PE
 	var/mob/living/carbon/U
 

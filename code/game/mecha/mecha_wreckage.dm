@@ -7,10 +7,10 @@
 	name = "exosuit wreckage"
 	desc = "Remains of some unfortunate mecha. Completely unrepairable, but perhaps something can be salvaged."
 	icon = 'icons/mecha/mecha.dmi'
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	opacity = 0
-	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel,/obj/item/stack/sheet/metal,/obj/item/stack/rods)
+	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/metal, /obj/item/stack/rods)
 	var/list/wirecutters_salvage = list(/obj/item/stack/cable_coil)
 	var/list/crowbar_salvage = list()
 	var/salvage_num = 5
@@ -23,7 +23,7 @@
 		AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
 		AI.death() //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
 		AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
-		add_overlay(image('icons/obj/projectiles.dmi', icon_state = "green_laser")) //Overlay for the recovery beacon
+		add_overlay(mutable_appearance('icons/obj/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
 		AI.controlled_mech = null
 		AI.remote_control = null
 

@@ -32,10 +32,10 @@
 		atoms += B
 		for(var/A in B)
 			atoms += A
-			if(istype(A,/obj/structure/cable))
+			if(istype(A, /obj/structure/cable))
 				cables += A
 				continue
-			if(istype(A,/obj/machinery/atmospherics))
+			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
 
 	SSatoms.InitializeAtoms(atoms)
@@ -51,7 +51,7 @@
 		return FALSE
 
 	smooth_zlevel(world.maxz)
-	SortAreas()
+	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
@@ -71,6 +71,9 @@
 	if(!bounds)
 		return
 
+	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
+		repopulate_sorted_areas()
+	
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 

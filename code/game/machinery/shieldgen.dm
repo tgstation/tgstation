@@ -3,12 +3,11 @@
 	desc = "An energy shield used to contain hull breaches."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
-	density = 1
+	density = TRUE
 	opacity = 0
-	anchored = 1
+	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	max_integrity = 200
-	obj_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
+	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/emergency_shield/New()
@@ -17,7 +16,7 @@
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -25,12 +24,6 @@
 	var/turf/T = loc
 	..()
 	move_update_air(T)
-
-/obj/structure/emergency_shield/CanPass(atom/movable/mover, turf/target, height)
-	if(!height)
-		return FALSE
-	else
-		return ..()
 
 /obj/structure/emergency_shield/emp_act(severity)
 	switch(severity)
@@ -42,22 +35,19 @@
 /obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
 
 /obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage was dealt
-		set_opacity(1)
-		spawn(20)
-			set_opacity(0)
+		new /obj/effect/temp_visual/impact_effect/ion(loc)
 
 /obj/structure/emergency_shield/sanguine
 	name = "sanguine barrier"
 	desc = "A potent shield summoned by cultists to defend their rites."
 	icon_state = "shield-red"
-	obj_integrity = 60
 	max_integrity = 60
 
 /obj/structure/emergency_shield/sanguine/emp_act(severity)
@@ -67,7 +57,6 @@
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
 	color = "#FF0000"
-	obj_integrity = 20
 	max_integrity = 20
 	mouse_opacity = 0
 
@@ -79,30 +68,30 @@
 	desc = "Used to seal minor hull breaches."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
-	density = 1
+	density = TRUE
 	opacity = 0
-	anchored = 0
+	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	req_access = list(GLOB.access_engine)
+	req_access = list(ACCESS_ENGINE)
 	max_integrity = 100
-	obj_integrity = 100
-	var/active = 0
-	var/list/deployed_shields = list()
-	var/locked = 0
+	var/active = FALSE
+	var/list/deployed_shields
+	var/locked = FALSE
 	var/shield_range = 4
 
-/obj/machinery/shieldgen/Destroy()
-	for(var/obj/structure/emergency_shield/ES in deployed_shields)
-		qdel(ES)
+/obj/machinery/shieldgen/Initialize(mapload)
+	. = ..()
 	deployed_shields = list()
+	if(mapload && active && anchored)
+		shields_up()
+
+/obj/machinery/shieldgen/Destroy()
+	QDEL_LIST(deployed_shields)
 	return ..()
 
 
 /obj/machinery/shieldgen/proc/shields_up()
-	if(active)
-		return 0 //If it's already turned on, how did this get called?
-
-	active = 1
+	active = TRUE
 	update_icon()
 
 	for(var/turf/target_tile in range(shield_range, src))
@@ -111,15 +100,9 @@
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
-	if(!active)
-		return 0 //If it's already off, how did this get called?
-
-	active = 0
+	active = FALSE
 	update_icon()
-
-	for(var/obj/structure/emergency_shield/ES in deployed_shields)
-		qdel(ES)
-	deployed_shields.Cut()
+	QDEL_LIST(deployed_shields)
 
 /obj/machinery/shieldgen/process()
 	if((stat & BROKEN) && active)
@@ -187,14 +170,14 @@
 		if(!anchored && !isinspace())
 			playsound(src.loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
-			anchored = 1
+			anchored = TRUE
 		else if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 				shields_down()
-			anchored = 0
+			anchored = FALSE
 
 	else if(W.GetID())
 		if(allowed(user))
@@ -209,7 +192,6 @@
 /obj/machinery/shieldgen/emag_act()
 	if(!(stat & BROKEN))
 		stat |= BROKEN
-		obj_integrity = 0
 		update_icon()
 
 /obj/machinery/shieldgen/update_icon()
@@ -225,17 +207,16 @@
 	desc = "A shield generator."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "Shield_Gen"
-	anchored = 0
-	density = 1
-	req_access = list(GLOB.access_teleporter)
+	anchored = FALSE
+	density = TRUE
+	req_access = list(ACCESS_TELEPORTER)
 	flags = CONDUCT
-	use_power = 0
-	obj_integrity = 300
+	use_power = NO_POWER_USE
 	max_integrity = 300
 	var/active = FALSE
 	var/power = 0
 	var/maximum_stored_power = 500
-	var/locked = 1
+	var/locked = TRUE
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
 
@@ -243,10 +224,10 @@
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
 	icon_state = "Shield_Gen"
-	req_access = list(GLOB.access_xenobiology)
+	req_access = list(ACCESS_XENOBIOLOGY)
 
 /obj/machinery/shieldwallgen/Destroy()
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		cleanup_field(d)
 	return ..()
 
@@ -283,7 +264,7 @@
 		icon_state = "Shield_Gen +a"
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				if(setup_field(d))
 					fields++
 			if(fields)
@@ -293,11 +274,11 @@
 				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "Shield_Gen"
 			active = FALSE
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
 		icon_state = "Shield_Gen"
-		for(var/d in GLOB.cardinal)
+		for(var/d in GLOB.cardinals)
 			cleanup_field(d)
 
 /obj/machinery/shieldwallgen/proc/setup_field(direction)
@@ -398,8 +379,8 @@
 	desc = "An energy shield."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldwall"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_range = 3
 	var/needs_power = FALSE
@@ -436,9 +417,9 @@
 /obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
 
 //the shield wall is immune to damage but it drains the stored power of the generators.
 /obj/machinery/shieldwall/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -452,10 +433,7 @@
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.use_stored_power(drain_amount*0.5)
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return FALSE
-
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)
 	else

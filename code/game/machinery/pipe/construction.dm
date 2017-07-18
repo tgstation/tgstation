@@ -34,6 +34,7 @@ Buildable meters
 		PIPE_CONNECTOR, \
 		PIPE_UVENT, \
 		PIPE_SCRUBBER, \
+		PIPE_INJECTOR, \
 		PIPE_HEAT_EXCHANGE, \
 		\
 		PIPE_PUMP, \
@@ -93,6 +94,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_CONNECTOR]"		 = "connector", \
 	"[PIPE_UVENT]"			 = "uvent", \
 	"[PIPE_SCRUBBER]"		 = "scrubber", \
+	"[PIPE_INJECTOR]"		 = "injector", \
 	"[PIPE_HEAT_EXCHANGE]"	 = "heunary", \
 	\
 	"[PIPE_PUMP]"			 = "pump", \
@@ -120,6 +122,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		"[PIPE_CONNECTOR]" 		= "connector", \
 		"[PIPE_UVENT]" 			= "vent", \
 		"[PIPE_SCRUBBER]" 		= "scrubber", \
+		"[PIPE_INJECTOR]"		= "injector", \
 		"[PIPE_HEAT_EXCHANGE]" 	= "heat exchanger", \
 		\
 		"[PIPE_PUMP]" 			= "pump", \
@@ -244,10 +247,12 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 /obj/item/pipe/suicide_act(mob/user)
 	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
 		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		if(istype(user, /mob/living/carbon))
+		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)
-				C.vomit(0,1,0,4,0)
+				C.vomit(0, TRUE, FALSE, 4, FALSE)
+				if(prob(20))
+					C.spew_organ()
 				sleep(5)
 			C.blood_volume = 0
 		return(OXYLOSS|BRUTELOSS)
