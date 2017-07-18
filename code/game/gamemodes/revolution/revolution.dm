@@ -28,6 +28,7 @@
 	var/finished = 0
 	var/check_counter = 0
 	var/max_headrevs = 3
+	var/warning_count = 0
 	var/list/datum/mind/heads_to_kill = list()
 
 ///////////////////////////
@@ -114,6 +115,10 @@
 
 
 /datum/game_mode/revolution/process()
+	var/tick = world.time - (SSticker.round_start_time + 10 * 60 * 30)
+	if(tick > 0 && tick % (10 * 60 * 15) == warning_count)
+		++warning_count
+		message_admins(pick("Resist the urge to griff...", "Shit round, I know...", "Don't. Touch. Debug.", "I know it's tempting, but don't adminbus!"))
 	check_counter++
 	if(check_counter >= 5)
 		if(!finished)
