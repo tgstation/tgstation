@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(hallucinations_minor, list(
 	/datum/hallucination/bolts,
 	/datum/hallucination/whispers,
 	/datum/hallucination/message,
-	/datum/hallucination/hudscrew)
+	/datum/hallucination/hudscrew))
 
 GLOBAL_LIST_INIT(hallucinations_medium, list(
 	/datum/hallucination/fake_alert,
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(hallucinations_medium, list(
 	/datum/hallucination/husks,
 	/datum/hallucination/battle,
 	/datum/hallucination/fire,
-	/datum/hallucination/self_delusion)
+	/datum/hallucination/self_delusion))
 
 GLOBAL_LIST_INIT(hallucinations_major, list(
 	/datum/hallucination/fakeattacker,
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	/datum/hallucination/xeno_attack,
 	/datum/hallucination/singularity_scare,
 	/datum/hallucination/delusion,
-	/datum/hallucination/oh_yeah)
+	/datum/hallucination/oh_yeah))
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(world.time < next_hallucination)
