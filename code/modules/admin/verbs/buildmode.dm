@@ -171,7 +171,7 @@
 					objholder = /obj/structure/closet
 					alert("That path is not allowed.")
 			else
-				if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
+				if(ispath(objholder, /mob) && !check_rights(R_DEBUG,0))
 					objholder = /obj/structure/closet
 		if(VAR_BUILDMODE)
 			var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
@@ -224,7 +224,7 @@
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
-		if(istype(M.client.click_intercept,/datum/buildmode))
+		if(istype(M.client.click_intercept, /datum/buildmode))
 			var/datum/buildmode/B = M.client.click_intercept
 			B.quit()
 			log_admin("[key_name(usr)] has left build mode.")
@@ -262,7 +262,7 @@
 				else if(isfloorturf(object))
 					var/turf/T = object
 					T.ChangeTurf(/turf/open/space)
-				else if(istype(object,/turf/closed/wall/r_wall))
+				else if(istype(object, /turf/closed/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/closed/wall)
 				else if(isobj(object))
@@ -291,7 +291,7 @@
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)
 			if(left_click)
-				if(ispath(objholder,/turf))
+				if(ispath(objholder, /turf))
 					var/turf/T = get_turf(object)
 					log_admin("Build Mode: [key_name(user)] modified [T] ([T.x],[T.y],[T.z]) to [objholder]")
 					T.ChangeTurf(objholder)

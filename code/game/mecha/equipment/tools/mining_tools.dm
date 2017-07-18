@@ -116,7 +116,7 @@
 	if(!loc)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
-	if(istype(loc,/obj/mecha/working) && scanning_time <= world.time)
+	if(istype(loc, /obj/mecha/working) && scanning_time <= world.time)
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return

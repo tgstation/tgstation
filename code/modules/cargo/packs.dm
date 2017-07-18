@@ -546,7 +546,7 @@
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	cost = 2000
-	contains = list(/obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0},/obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0}) //FALSE doesn't work in modified type paths apparently.
+	contains = list(/obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0}, /obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0}) //FALSE doesn't work in modified type paths apparently.
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 

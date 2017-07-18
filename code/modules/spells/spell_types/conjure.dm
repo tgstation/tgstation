@@ -28,7 +28,7 @@
 		var/spawn_place = pick(targets)
 		if(summon_ignore_prev_spawn_points)
 			targets -= spawn_place
-		if(ispath(summoned_object_type,/turf))
+		if(ispath(summoned_object_type, /turf))
 			var/turf/O = spawn_place
 			var/N = summoned_object_type
 			O.ChangeTurf(N)
