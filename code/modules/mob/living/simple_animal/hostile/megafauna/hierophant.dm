@@ -24,7 +24,7 @@ The Hierophant's attacks are as follows;
 	If below half health, the created Cross Blast may fire in all directions.
 - Creates an expanding AoE burst.
 
-- IF TARGET WAS STRUCK IN MELEE: Creates a 3x3 square of blasts under the target.
+- IF ATTACKING IN MELEE: Creates an expanding AoE burst.
 
 Cross Blasts and the AoE burst gain additional range as Hierophant loses health, while Chasers gain additional speed.
 
