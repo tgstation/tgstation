@@ -37,7 +37,7 @@
 	to_chat(user, "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)].")
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable) && istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+	if(!istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable) && istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
@@ -78,7 +78,7 @@
 	name = "[customname] [initial(name)]"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/initialize_custom_food(obj/item/BASE, obj/item/I, mob/user)
-	if(istype(BASE,/obj/item/weapon/reagent_containers))
+	if(istype(BASE, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RC = BASE
 		RC.reagents.trans_to(src,RC.reagents.total_volume)
 	for(var/obj/O in BASE.contents)
@@ -288,7 +288,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")

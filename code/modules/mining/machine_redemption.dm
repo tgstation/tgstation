@@ -173,7 +173,7 @@
 
 	if(!powered())
 		return
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())

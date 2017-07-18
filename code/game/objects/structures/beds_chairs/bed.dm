@@ -49,7 +49,7 @@
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/roller/robo))
+	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
 		if(R.loaded)
 			to_chat(user, "<span class='warning'>You already have a roller bed docked!</span>")

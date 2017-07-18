@@ -562,7 +562,7 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
+	validSurfaces = list(/turf/open/floor, /turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
 
 	pre_noise = TRUE

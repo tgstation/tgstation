@@ -339,13 +339,13 @@
 				if(0.75 to INFINITY)
 					occupant.clear_alert("charge")
 				if(0.5 to 0.75)
-					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 1)
+					occupant.throw_alert("charge", /obj/screen/alert/lowcell, 1)
 				if(0.25 to 0.5)
-					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 2)
+					occupant.throw_alert("charge", /obj/screen/alert/lowcell, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 3)
+					occupant.throw_alert("charge", /obj/screen/alert/lowcell, 3)
 				else
-					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
+					occupant.throw_alert("charge", /obj/screen/alert/emptycell)
 
 		var/integrity = obj_integrity/max_integrity*100
 		switch(integrity)
