@@ -26,7 +26,7 @@
 	var/datum/P = parent
 	if(P)
 		_RemoveNoSignal()
-		P.SendSignal(COMSIG_COMPONENT_REMOVING, C)
+		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
 	return ..()
 
 /datum/component/proc/_RemoveNoSignal()
