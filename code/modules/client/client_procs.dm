@@ -655,7 +655,6 @@ GLOBAL_LIST(external_rsc_urls)
 		CRASH("change_view called without argument.")
 
 	view = new_size
-	apply_clickcatcher()
 
 /client/proc/generate_clickcatcher()
 	if(!void)
