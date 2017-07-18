@@ -239,13 +239,13 @@
 /obj/structure/displaycase/captain
 	alert = 1
 	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
-	req_access = list(GLOB.access_cent_specops)
+	req_access = list(ACCESS_CENT_SPECOPS)
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
-	req_access = list(GLOB.access_rd)
+	req_access = list(ACCESS_RD)
 
 
 

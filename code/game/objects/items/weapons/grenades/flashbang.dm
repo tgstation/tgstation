@@ -34,4 +34,4 @@
 		M.soundbang_act(1, 200, 10, 15)
 
 	else
-		M.soundbang_act(1, max(20/max(1,distance), 3), rand(0, 5))
+		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))

@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	icon_state = "ca"
 	anchored = FALSE
 	density = TRUE
-	req_access = list(GLOB.access_engine_equip)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 //	use_power = NO_POWER_USE
 	max_integrity = 350
 	integrity_failure = 80

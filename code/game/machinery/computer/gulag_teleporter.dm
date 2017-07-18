@@ -4,7 +4,7 @@
 	desc = "Used to send criminals to the Labor Camp"
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(GLOB.access_armory)
+	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
 	var/obj/item/weapon/card/id/prisoner/id = null

@@ -1,7 +1,7 @@
 /obj/structure/closet/secure_closet/personal
 	desc = "It's a secure locker for personnel. The first card swiped gains control."
 	name = "personal closet"
-	req_access = list(GLOB.access_all_personal_lockers)
+	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	var/registered_name = null
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()

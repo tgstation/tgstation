@@ -3,7 +3,7 @@
 	desc = "Used to remotely control the flow of power to different parts of the station."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
-	req_access = list(GLOB.access_engine)
+	req_access = list(ACCESS_ENGINE)
 	circuit = /obj/item/weapon/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/list/apcs //APCs the computer has access to

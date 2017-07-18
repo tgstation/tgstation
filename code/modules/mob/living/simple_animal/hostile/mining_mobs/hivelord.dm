@@ -316,7 +316,7 @@
 			mask = /obj/item/clothing/mask/breath
 		if("Operative")
 			id_job = "Operative"
-			id_access_list = list(GLOB.access_syndicate)
+			id_access_list = list(ACCESS_SYNDICATE)
 			outfit = /datum/outfit/syndicatecommandocorpse
 		if("Shadow")
 			mob_species = /datum/species/shadow

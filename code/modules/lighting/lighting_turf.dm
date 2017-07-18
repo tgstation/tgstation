@@ -32,7 +32,7 @@
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
 	if (lighting_object)
-		return
+		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
 
 	var/area/A = loc
 	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)

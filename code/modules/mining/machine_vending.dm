@@ -274,10 +274,10 @@
 /obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
 	if(istype(AM, /obj/item/weapon/card/id) && proximity)
 		var/obj/item/weapon/card/id/I = AM
-		I.access |=	GLOB.access_mining
-		I.access |= GLOB.access_mining_station
-		I.access |= GLOB.access_mineral_storeroom
-		I.access |= GLOB.access_cargo
+		I.access |=	ACCESS_MINING
+		I.access |= ACCESS_MINING_STATION
+		I.access |= ACCESS_MINERAL_STOREROOM
+		I.access |= ACCESS_CARGO
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 	..()
