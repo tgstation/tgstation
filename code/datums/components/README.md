@@ -56,10 +56,6 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
     * All components a datum owns are deleted with the datum
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
-1. `/datum/proc/RemoveComponent(datum/component/C)` (public, final)
-    * Sends the `COMSIG_COMPONENT_REMOVING` signal to the datum
-    * Deletes the passed component
-    * Component deleting must use this
 1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract)
     * Called on a component's `parent` after a signal recieved causes it to activate. `src` is the parameter
     * Will only be called if a component's callback returns `TRUE`
@@ -72,9 +68,9 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Extra arguments are to be specified in the signal definition
 1. `/datum/component/New(datum/parent, ...)` (protected, virtual)
     * Forwarded the arguments from `AddComponent()`
-1. `/datum/component/Destroy()` (private)
-    * Use `RemoveComponent()` instead of `qdel()` to properly delete a component
-    * `qdel()` still works but it suppresses the `COMSIG_COMPONENT_REMOVING` signal and is not intended behavior
+1. `/datum/component/Destroy()` (virtual)
+    * Sends the `COMSIG_COMPONENT_REMOVING` signal to the parent datum if the `parent` isn't being qdeleted
+    * Properly removes the component from `parent` and cleans up references
 1. `/datum/component/proc/InheritComponent(datum/component/C, i_am_original(boolean))` (abstract)
     * Called on a component when a component of the same type was added to the same parent
     * See `/datum/component/var/dupe_mode`
