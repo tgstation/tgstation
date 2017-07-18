@@ -65,7 +65,7 @@
 	item_state = "eng_hardsuit"
 	max_integrity = 300
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 50, acid = 75)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/construction/rcd, /obj/item/weapon/pipe_dispenser)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/device/t_scanner, /obj/item/weapon/construction/rcd, /obj/item/weapon/pipe_dispenser)
 	siemens_coefficient = 0
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	actions_types = list(/datum/action/item_action/toggle_helmet)
@@ -203,7 +203,7 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 75)
 	brightness_on = 7
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
 
 
 /obj/item/clothing/suit/space/hardsuit/mining
@@ -214,7 +214,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 75)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/storage/bag/ore, /obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
 
 	//Syndicate hardsuit
@@ -304,7 +304,7 @@
 	item_color = "syndi"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50, fire = 50, acid = 90)
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/transforming/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/melee/transforming/energy/sword/saber, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	jetpack = /obj/item/weapon/tank/jetpack/suit
 
@@ -378,7 +378,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50, fire = 100, acid = 100)
-	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/weapon/teleportation_scroll, /obj/item/weapon/tank/internals)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
@@ -400,7 +400,7 @@
 	name = "medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/storage/firstaid, /obj/item/device/healthanalyzer, /obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 
@@ -444,7 +444,7 @@
 	item_state = "hardsuit-rd"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy/wormhole_projector,
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy/wormhole_projector,
 	/obj/item/weapon/hand_tele, /obj/item/device/aicard)
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60, fire = 60, acid = 80)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
@@ -466,7 +466,7 @@
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
 
@@ -508,7 +508,7 @@
 	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available Usually reserved for heavy hitter corporate security, this one has a regal finish in Nanotrasen company colors. Better not let the assistants get a hold of it."
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
-	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
+	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight, /obj/item/weapon/gun/energy, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -579,7 +579,7 @@
 	desc = "A hardsuit with built in energy shielding. Will rapidly recharge when not under fire."
 	icon_state = "hardsuit-hos"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/gun, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/current_charges = 3
@@ -698,7 +698,7 @@
 	item_state = "syndie_hardsuit"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50, fire = 100, acid = 100)
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/transforming/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/melee/transforming/energy/sword/saber, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
 

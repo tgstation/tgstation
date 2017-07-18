@@ -882,7 +882,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if("hacked")
 					throw_alert("hacked", /obj/screen/alert/hacked, override = TRUE)
 				if("charge")
-					throw_alert("charge",/obj/screen/alert/emptycell, override = TRUE)
+					throw_alert("charge", /obj/screen/alert/emptycell, override = TRUE)
 			sleep(rand(100,200))
 			clear_alert(alert_type, clear_override = TRUE)
 

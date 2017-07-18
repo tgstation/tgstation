@@ -50,7 +50,7 @@
 /obj/machinery/computer/holodeck/LateInitialize()
 	if(ispath(holodeck_type, /area))
 		linked = pop(get_areas(holodeck_type, FALSE))
-	if(ispath(offline_program,/area))
+	if(ispath(offline_program, /area))
 		offline_program = pop(get_areas(offline_program), FALSE)
 	// the following is necessary for power reasons
 	if(!linked || !offline_program)

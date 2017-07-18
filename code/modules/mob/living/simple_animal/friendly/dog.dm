@@ -177,13 +177,13 @@
 						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
 						return
 
-					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+					if(istype(item_to_add, /obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
 					//The objects that corgis can wear on their backs.
 					var/allowed = FALSE
-					if(ispath(item_to_add.dog_fashion,/datum/dog_fashion/back))
+					if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/back))
 						allowed = TRUE
 
 					if(!allowed)
@@ -213,7 +213,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
-	if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+	if(istype(item_to_add, /obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)
 		return
 

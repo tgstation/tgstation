@@ -23,7 +23,7 @@
 	var/contains_sample = 0
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
+	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		if(!contains_sample)
 			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
 				if(bloodSample.data["mind"] && bloodSample.data["cloneable"] == 1)
@@ -99,7 +99,7 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		podman.hardset_dna(null,null,podman.real_name,blood_type,/datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		podman.hardset_dna(null,null,podman.real_name,blood_type, /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

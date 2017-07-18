@@ -1593,9 +1593,9 @@
 	agent_landmarks.len = 4
 	scientist_landmarks.len = 4
 	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
+		if(istype(A, /obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+		else if(istype(A, /obj/effect/landmark/abductor/scientist))
 			scientist_landmarks[text2num(A.team)] = A
 
 	var/obj/effect/landmark/L

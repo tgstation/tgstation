@@ -201,7 +201,7 @@ Auto Patrol[]"},
 		set_weapon()
 
 /mob/living/simple_animal/bot/ed209/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/laser)||istype(Proj,/obj/item/projectile/bullet))
+	if(istype(Proj , /obj/item/projectile/beam/laser)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)

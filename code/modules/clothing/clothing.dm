@@ -49,7 +49,7 @@
 	if(pockets && over_object == M)
 		return pockets.MouseDrop(over_object)
 
-	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return
 
 	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
@@ -499,7 +499,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.02
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals)
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

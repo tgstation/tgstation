@@ -123,7 +123,7 @@
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O, /obj/structure/sign/poster))
 			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
 			return
 		stuff_on_wall++

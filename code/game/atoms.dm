@@ -143,7 +143,7 @@
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
 		return 0
 
-	if(istype(T.loc,/area/shuttle/syndicate) || istype(T.loc,/area/syndicate_mothership))
+	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership))
 		return 1
 
 	return 0

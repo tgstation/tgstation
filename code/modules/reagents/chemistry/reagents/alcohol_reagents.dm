@@ -43,11 +43,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/item/weapon/paper))
+	if(istype(O, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()
 		to_chat(usr, "<span class='notice'>[paperaffected]'s ink washes away.</span>")
-	if(istype(O,/obj/item/weapon/book))
+	if(istype(O, /obj/item/weapon/book))
 		if(reac_volume >= 5)
 			var/obj/item/weapon/book/affectedbook = O
 			affectedbook.dat = null

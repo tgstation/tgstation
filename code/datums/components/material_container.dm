@@ -123,7 +123,7 @@
 /datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1)
 	if(!I)
 		return 0
-	if(istype(I,/obj/item/stack))
+	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
 		return insert_stack(I, S.amount)
 
