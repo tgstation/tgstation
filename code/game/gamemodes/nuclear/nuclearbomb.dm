@@ -83,7 +83,7 @@
 
 /obj/machinery/nuclearbomb/syndicate/Initialize()
 	. = ..()
-	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
+	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
 	if(existing)
 		qdel(src)
 		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
