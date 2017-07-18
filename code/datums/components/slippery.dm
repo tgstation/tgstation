@@ -1,12 +1,12 @@
 /datum/component/slippery
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/intensity
-	var/lube_flags = NONE
+	var/lube_flags
 	var/mob/slip_victim
 
-/datum/component/slippery/New(datum/P, _intensity, _lube_flags)
+/datum/component/slippery/New(datum/P, _intensity, _lube_flags = NONE)
 	..()
-	intensity = _intensity
+	intensity = max(_intensity, 0)
 	lube_flags = _lube_flags
 	if(ismovableatom(P))
 		RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/Slip)
