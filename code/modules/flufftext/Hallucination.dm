@@ -1078,11 +1078,14 @@ var/static/list/hallucinations_major = list(
 /datum/hallucination/stray_bullet
 	cost = 15
 
-/datum/hallucination/stray_bullet/New(mob/living/carbon/T, forced = TRUE)
+/datum/hallucination/stray_bullet/New(mob/living/carbon/C, forced = TRUE)
 	..()
-	var/list/turf/startlocs = (view(world.view+1,target)-view(world.view,target))
+	var/list/turf/startlocs = list()
+	for(var/turf/T in view(world.view+1,target)-view(world.view,target))
+		startlocs += T
 	var/turf/start = pick(startlocs)
-	var/obj/item/projectile/hallucination/bullet/H = new(start)
+	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))
+	var/obj/item/projectile/hallucination/H = new proj_type(start)
 	target.playsound_local(start, H.hal_fire_sound, 60, 1)
 	H.hal_target = target
 	H.current = start
