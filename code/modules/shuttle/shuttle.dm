@@ -407,8 +407,6 @@
 				underlying_area = new area_type(null)
 			for(var/ii in shuttle_turfs)
 				var/turf/T = shuttle_turfs[ii]
-				if(!T)
-					continue
 				var/area/old_area = T.loc
 				underlying_area.contents += T
 				T.change_area(old_area, underlying_area)
