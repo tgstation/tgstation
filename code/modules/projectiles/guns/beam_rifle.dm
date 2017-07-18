@@ -681,11 +681,9 @@
 			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 		old_pixel_x = pixel_x_offset
 		old_pixel_y = pixel_y_offset
-		if(original && (original.layer>=2.75) || ismob(original))
-			if(loc == get_turf(original))
-				if(!(original in permutated))
-					Collide(original)
-	    c2 = loc
+		if(can_hit_target(original, permutated))
+			Collide(original)
+		c2 = loc
 		Range()
 		if(check_for_turf_edge(loc))
 			spawn_tracer(constant_tracer)
