@@ -14,7 +14,7 @@
 		RegisterSignal(COMSIG_ATOM_ENTERED, .proc/Slip)
 
 /datum/component/slippery/Destroy()
-	slip_victim = null
+	ClearMobRef()
 	return ..()
 
 /datum/component/slippery/proc/Slip(atom/movable/AM)
