@@ -55,6 +55,10 @@
 		return
 
 	else if(istype(O, /obj/item/bodypart))
+		var/obj/item/bodypart/B = O
+		if(B.status != BODYPART_ROBOTIC)
+			to_chat(user, "<span class='warning'>The machine only accepts cybernetics!</span>")
+			return
 		if(storedpart)
 			to_chat(user, "<span class='warning'>There is already something inside!</span>")
 			return
@@ -87,7 +91,7 @@
 	else
 		return ..()
 
-/obj/machinery/aug_manipulator/deconstruct(disassembled = TRUE)
+/obj/machinery/aug_manipulator/obj_break(damage_flag)
 	if(!(flags & NODECONSTRUCT))
 		if(!(stat & BROKEN))
 			stat |= BROKEN
