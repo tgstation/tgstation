@@ -154,7 +154,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	if(isliving(A))
 		var/mob/living/L = A
 		L.gib()
-	else if(istype(A,/obj/))
+	else if(istype(A, /obj/))
 		var/obj/O = A
 		O.ex_act(EXPLODE_DEVASTATE)
 		if(O) qdel(O)

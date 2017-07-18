@@ -171,7 +171,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
- * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/mine/explored)
+ * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"}, /area/mine/explored)
  *
  * WORKING :
  *
@@ -292,7 +292,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
 	var/first_turf_index = 1
-	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
+	while(!ispath(members[first_turf_index], /turf)) //find first /turf object in members
 		first_turf_index++
 
 	//turn off base new Initialization until the whole thing is loaded

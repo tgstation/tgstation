@@ -360,7 +360,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()
-	if(head_revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
+	if(head_revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
 		var/num_revs = 0
 		var/num_survivors = 0
 		for(var/mob/living/carbon/survivor in GLOB.living_mob_list)
@@ -377,14 +377,14 @@
 		text += "<br>"
 		to_chat(world, text)
 
-	if(revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
+	if(revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
 			text += printplayer(rev, 1)
 		text += "<br>"
 		to_chat(world, text)
 
-	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution) )
+	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution) )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)

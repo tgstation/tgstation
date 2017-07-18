@@ -3,7 +3,7 @@
 
 GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
 GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple", "white"))
-GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/obj/item/clothing/suit/jacket/leather/overcoat,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/jacket/miljacket,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/pirate,/obj/item/clothing/suit/poncho,/obj/item/clothing/suit/apron/overalls,/obj/item/clothing/suit/jacket/letterman))
+GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, /obj/item/clothing/suit/jacket/leather/overcoat, /obj/item/clothing/suit/jacket/puffer, /obj/item/clothing/suit/jacket/miljacket, /obj/item/clothing/suit/jacket/puffer, /obj/item/clothing/suit/pirate, /obj/item/clothing/suit/poncho, /obj/item/clothing/suit/apron/overalls, /obj/item/clothing/suit/jacket/letterman))
 
 /datum/game_mode
 	var/list/datum/gang/gangs = list()

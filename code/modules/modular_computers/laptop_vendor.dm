@@ -241,7 +241,7 @@
 
 
 /obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/stack/spacecash))
+	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/c = I
 
 		if(!user.drop_item(c))
