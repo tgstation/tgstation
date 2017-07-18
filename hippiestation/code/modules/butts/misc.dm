@@ -19,5 +19,5 @@
 
 /obj/item/clothing/proc/checkbuttuniform(mob/user)
 	var/obj/item/organ/butt/B = user.getorgan(/obj/item/organ/butt)
-	if(B)
+	if(B && istype(B.inv))
 		B.inv.close_all()

@@ -1,3 +1,6 @@
+/obj/item/weapon/storage/internal/pocket/butt/CanReachStorage(atom/target,user,depth)
+	return TRUE
+
 /obj/item/weapon/storage/internal/pocket/butt/handle_item_insertion(obj/item/W, prevent_warning = 1, mob/user)
 	if(istype(loc, /obj/item/organ/butt))
 		var/obj/item/organ/butt/B = loc

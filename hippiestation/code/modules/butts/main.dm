@@ -47,9 +47,13 @@
 	inv.max_combined_w_class = max_combined_w_class
 
 /obj/item/organ/butt/Remove(mob/living/carbon/M, special = 0)
-	..()
-	if(inv)
+	if(inv && islist(inv.contents))
 		inv.close_all()
+		if(LAZYLEN(inv.contents))
+			for(var/i in inv.contents)
+				var/obj/item/I = i
+				inv.remove_from_storage(I, get_turf(src))
+	..()
 
 /obj/item/organ/butt/on_life()
 	if(owner && inv)
@@ -58,12 +62,13 @@
 				owner.bleed(4)
 
 /obj/item/organ/butt/Destroy()
-	if(inv)
+	if(inv && islist(inv.contents))
+		inv.close_all()
 		if(LAZYLEN(inv.contents))
 			for(var/i in inv.contents)
 				var/obj/item/I = i
 				inv.remove_from_storage(I, get_turf(src))
-		qdel(inv)
+	QDEL_NULL(inv)
 	..()
 	
 /obj/item/organ/butt/attackby(var/obj/item/W, mob/user as mob, params) // copypasting bot manufucturing process, im a lazy fuck
@@ -86,13 +91,7 @@
 
 /obj/item/organ/butt/throw_impact(atom/hit_atom)
 	..()
-	var/mob/living/carbon/M = hit_atom
 	playsound(src, 'hippiestation/sound/effects/fart.ogg', 50, 1, 5)
-	if((ishuman(hit_atom)))
-		M.apply_damage(5, STAMINA)
-		if(prob(5))
-			M.Knockdown(60)
-			visible_message("<span class='danger'>The [src.name] smacks [M] right in the face!</span>", 3)
 
 /proc/buttificate(phrase)
 	var/params = replacetext(phrase, " ", "&")
