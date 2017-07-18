@@ -20,14 +20,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/hal_screwyhud = SCREWYHUD_NONE
 	var/next_hallucination = 0
 
-var/static/list/hallucinations_minor = list(
+GLOBAL_LIST_INIT(hallucinations_minor, list(
 	/datum/hallucination/sounds,
 	/datum/hallucination/bolts,
 	/datum/hallucination/whispers,
 	/datum/hallucination/message,
 	/datum/hallucination/hudscrew)
 
-var/static/list/hallucinations_medium = list(
+GLOBAL_LIST_INIT(hallucinations_medium, list(
 	/datum/hallucination/fake_alert,
 	/datum/hallucination/items,
 	/datum/hallucination/items_other,
@@ -39,7 +39,7 @@ var/static/list/hallucinations_medium = list(
 	/datum/hallucination/fire,
 	/datum/hallucination/self_delusion)
 
-var/static/list/hallucinations_major = list(
+GLOBAL_LIST_INIT(hallucinations_major, list(
 	/datum/hallucination/fakeattacker,
 	/datum/hallucination/death,
 	/datum/hallucination/xeno_attack,
@@ -52,11 +52,11 @@ var/static/list/hallucinations_major = list(
 		return
 
 	if(hallucination)
-		var/list/current = hallucinations_minor
+		var/list/current = GLOB.hallucinations_minor
 		if(prob(25) && hallucination > 100)
-			current = hallucinations_medium
+			current = GLOB.hallucinations_medium
 		else if(prob(10) && hallucination > 200)
-			current = hallucinations_major
+			current = GLOB.hallucinations_major
 		var/halpick = pick(current)
 		new halpick(src, FALSE)
 
