@@ -12,7 +12,7 @@
 			switch(dm)
 				if(COMPONENT_DUPE_HIGHLANDER)
 					InheritComponent(old, FALSE)
-					P.RemoveComponent(old)
+					qdel(old)
 				if(COMPONENT_DUPE_UNIQUE)
 					old.InheritComponent(src, TRUE)
 					qdel(src)
@@ -22,7 +22,10 @@
 	parent = P
 
 /datum/component/Destroy()
-	_RemoveNoSignal()
+	var/datum/P = parent
+	if(P)
+		_RemoveNoSignal()
+		P.SendSignal(COMSIG_COMPONENT_REMOVING, list(C))
 	return ..()
 
 /datum/component/proc/_RemoveNoSignal()
@@ -95,13 +98,6 @@
 	args[1] = src
 	var/datum/component/C = new nt(arglist(args))
 	return QDELING(C) ? GetComponent(new_type) : C
-
-/datum/proc/RemoveComponent(datum/component/C)
-	if(!C)
-		return
-	C._RemoveNoSignal()
-	SendSignal(COMSIG_COMPONENT_REMOVING, list(C))
-	qdel(C)
 
 /datum/proc/TakeComponent(datum/component/C)
 	if(!C)
