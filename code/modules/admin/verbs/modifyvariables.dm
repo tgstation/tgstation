@@ -30,7 +30,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else if (isloc(var_value))
 		. = VV_ATOM_REFERENCE
 
-	else if (istype(var_value,/client))
+	else if (istype(var_value, /client))
 		. = VV_CLIENT
 
 	else if (istype(var_value, /datum))
