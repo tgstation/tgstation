@@ -1,5 +1,7 @@
-/obj/item/weapon/storage/internal/pocket/butt/CanReachStorage(atom/target,user,depth)
-	return TRUE
+/mob/living/DirectAccess(atom/target)
+	if(..() || istype(target.loc, /obj/item/weapon/storage/internal/pocket/butt))
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/storage/internal/pocket/butt/handle_item_insertion(obj/item/W, prevent_warning = 1, mob/user)
 	if(istype(loc, /obj/item/organ/butt))
@@ -66,3 +68,8 @@
 					user.visible_message("<span class='warning'>[user] hides [I] inside [src == user ? "his own" : "[user]'s"] butt.</span>", "<span class='warning'>You hide [I] inside [user == src ? "your" : "[user]'s"] butt.</span>")
 				return TRUE
 	return FALSE
+
+/obj/item/clothing/proc/checkbuttuniform(mob/user)
+	var/obj/item/organ/butt/B = user.getorgan(/obj/item/organ/butt)
+	if(B && istype(B.inv))
+		B.inv.close_all()
