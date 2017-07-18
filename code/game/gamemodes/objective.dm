@@ -240,7 +240,7 @@
 		return 0
 	if(issilicon(owner.current))
 		return 0
-	if(!(SSshuttle.emergency.shuttle_areas[get_area(owner.current)]))
+	if(!SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
 		return 0
 	return SSshuttle.emergency.is_hijacked()
 
