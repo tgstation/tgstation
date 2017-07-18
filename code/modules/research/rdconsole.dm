@@ -321,7 +321,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/obj/I in linked_destroy.contents)
 					for(var/mob/M in I.contents)
 						M.death()
-					if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+					if(istype(I, /obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
 						var/obj/item/stack/sheet/S = I
 						if(S.amount > 1)
 							S.amount--

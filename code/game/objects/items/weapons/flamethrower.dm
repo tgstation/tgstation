@@ -115,7 +115,7 @@
 		update_icon()
 		return
 
-	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
+	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			if(user.transferItemToLoc(W,src))
 				ptank.forceMove(get_turf(src))

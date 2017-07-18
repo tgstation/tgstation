@@ -283,7 +283,7 @@
 				O.lockcharge = TRUE
 				O.update_canmove()
 
-	else if(istype(W,/obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
 	else
 		return ..()

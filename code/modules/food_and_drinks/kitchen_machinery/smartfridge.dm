@@ -149,7 +149,7 @@
 
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/) || istype(O,/obj/item/weapon/grown/))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/weapon/grown/))
 		return TRUE
 	return FALSE
 
@@ -160,7 +160,7 @@
 			to_chat(usr, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 			return
 	else
-		if(istype(O.loc,/obj/item/weapon/storage))
+		if(istype(O.loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = O.loc
 			S.remove_from_storage(O,src)
 		O.forceMove(src)
@@ -315,11 +315,11 @@
 			update_icon()
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
 			return TRUE
-	if(istype(O,/obj/item/stack/sheet/wetleather/))
+	if(istype(O, /obj/item/stack/sheet/wetleather/))
 		return TRUE
 	return FALSE
 
@@ -363,9 +363,9 @@
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(!istype(O,/obj/item/weapon/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
+	if(!istype(O, /obj/item/weapon/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
 		return FALSE
-	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
+	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O, /obj/item/weapon/reagent_containers/food/drinks) || istype(O, /obj/item/weapon/reagent_containers/food/condiment))
 		return TRUE
 
 // ----------------------------
@@ -375,7 +375,7 @@
 	desc = "A refrigerated storage unit for food."
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/))
 		return TRUE
 	return FALSE
 
@@ -387,9 +387,9 @@
 	desc = "A refrigerated storage unit for slime extracts."
 
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
-	if(istype(O,/obj/item/slime_extract))
+	if(istype(O, /obj/item/slime_extract))
 		return TRUE
-	if(istype(O,/obj/item/device/slime_scanner))
+	if(istype(O, /obj/item/device/slime_scanner))
 		return TRUE
 	return FALSE
 
@@ -404,20 +404,20 @@
 	desc = "A refrigerated storage unit for medicine storage."
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/storage/pill_bottle))
+	if(istype(O, /obj/item/weapon/storage/pill_bottle))
 		if(O.contents.len)
 			for(var/obj/item/I in O)
 				if(!accept_check(I))
 					return FALSE
 			return TRUE
 		return FALSE
-	if(!istype(O,/obj/item/weapon/reagent_containers))
+	if(!istype(O, /obj/item/weapon/reagent_containers))
 		return FALSE
-	if(istype(O,/obj/item/weapon/reagent_containers/pill)) // empty pill prank ok
+	if(istype(O, /obj/item/weapon/reagent_containers/pill)) // empty pill prank ok
 		return TRUE
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
 		return FALSE
-	if(istype(O,/obj/item/weapon/reagent_containers/syringe) || istype(O,/obj/item/weapon/reagent_containers/glass/bottle) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker) || istype(O,/obj/item/weapon/reagent_containers/spray))
+	if(istype(O, /obj/item/weapon/reagent_containers/syringe) || istype(O, /obj/item/weapon/reagent_containers/glass/bottle) || istype(O, /obj/item/weapon/reagent_containers/glass/beaker) || istype(O, /obj/item/weapon/reagent_containers/spray))
 		return TRUE
 	return FALSE
 
@@ -453,7 +453,7 @@
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/disk/))
+	if(istype(O, /obj/item/weapon/disk/))
 		return TRUE
 	else
 		return FALSE

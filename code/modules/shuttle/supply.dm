@@ -41,15 +41,17 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /obj/docking_port/mobile/supply/canMove()
 	if(z == ZLEVEL_STATION)
-		return check_blacklist(areaInstance)
+		return check_blacklist(shuttle_areas)
 	return ..()
 
-/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstance)
-	for(var/trf in areaInstance)
-		var/turf/T = trf
-		for(var/a in T.GetAllContents())
-			if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-				return FALSE
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
+	for(var/place in areaInstances)
+		var/area/shuttle/shuttle_area = place
+		for(var/trf in shuttle_area)
+			var/turf/T = trf
+			for(var/a in T.GetAllContents())
+				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+					return FALSE
 	return TRUE
 
 /obj/docking_port/mobile/supply/request()
@@ -70,10 +72,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return
 
 	var/list/empty_turfs = list()
-	for(var/turf/open/floor/T in areaInstance)
-		if(is_blocked_turf(T))
-			continue
-		empty_turfs += T
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/turf/open/floor/T in shuttle_area)
+			if(is_blocked_turf(T))
+				continue
+			empty_turfs += T
 
 	var/value = 0
 	var/purchases = 0
@@ -107,10 +111,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/msg = ""
 	var/sold_atoms = ""
 
-	for(var/atom/movable/AM in areaInstance)
-		if(AM.anchored && !istype(AM, /obj/mecha))
-			continue
-		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/atom/movable/AM in shuttle_area)
+			if(AM.anchored)
+				continue
+			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."

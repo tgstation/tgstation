@@ -122,7 +122,7 @@
 		var/replaced_something = TRUE
 
 		for(var/obj/item/I in S.contents)
-			if(istype(I,/obj/item/weapon/light))
+			if(istype(I, /obj/item/weapon/light))
 				var/obj/item/weapon/light/L = I
 				found_lightbulbs = TRUE
 				if(src.uses >= max_uses)

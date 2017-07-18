@@ -161,7 +161,7 @@ As a Servant, the Judicial Visor is an effective defensive combat tool in small 
 As a Servant, making, and protecting, Tinkerer's Caches is extremely important, as caches are required to unlock scripture and share components.
 As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-Servant that can see them and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
 As a Servant, Clockwork Structures that require power will draw power from the APC if they cannot find a different source of power, and most power-using Structures will rapidly drain the APC.
-As a Servant, you can repair Servant cyborgs and Clockwork Structures with a Replica Fabricator at a rate of 25W power to 1 health.
+As a Servant, you can repair Servant cyborgs and Clockwork Structures with a Replica Fabricator at a rate of 25W power to 1 health. Damaged Clockwork Structures are less efficient, so don't forget to repair them!
 As a Servant, securing a reliable source of component generation is high-priority, as simply handing out slabs will slowly become inefficient. Try placing Tinkerer's Caches near clockwork walls or creating and powering Tinkerer's Daemons.
 As a Servant, only a single held Clockwork Slab will generate components, no matter how many you're holding. In addition, slabs will generate components slower with large amounts of Servants; you can see the exact time with Recollection.
 As a Servant, you can use Geis to easily convert single targets, as it binds them in place, preventing escape unless they react quickly enough. Having another Servant apply Geis to someone already bound will prevent their escape and mute them, even if they reacted quickly.
@@ -174,7 +174,7 @@ As a Servant, creating and activating the Gateway to the Celestial Derelict is y
 As a Servant, you can impale human targets with a Ratvarian Spear by pulling them, then attacking them. This does massive damage and stuns them, and should effectively win the fight.
 As a Servant, Sentinel's Compromise can instantly return you or another Servant to a fighting state by converting half of all their brute, burn, and oxygen damage to toxin, effectively halving the damage they have. Clockwork Floors will also rapidly heal toxin damage in Servants, allowing the Compromise more effectiveness.
 As a Servant, Belligerent and Taunting Tirade are extremely powerful for disabling and disrupting large groups of enemies, though they render you somewhat vulnerable, as Belligerent requires that you stand still, and Taunting Tirade makes you extremely obvious.
-As a Servant, you can unwrench Clockwork Structures, but doing so will damage them, severely weakening them until repaired with a Replica Fabricator or Mending Mantra. Damage from other sources will also similarly weaken structures.
+As a Servant, you can unwrench Clockwork Structures to move them around.
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
 As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.

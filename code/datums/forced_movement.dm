@@ -84,7 +84,7 @@
 
 /mob/Collide(atom/A)
 	. = ..()
-	if(force_moving && force_moving.allow_climbing && istype(A,/obj/structure))
+	if(force_moving && force_moving.allow_climbing && istype(A, /obj/structure))
 		var/obj/structure/S = A
 		if(S.climbable)
 			S.do_climb(src)

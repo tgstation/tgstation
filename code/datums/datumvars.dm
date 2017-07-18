@@ -62,7 +62,7 @@
 
 
 
-	if(istype(D,/atom))
+	if(istype(D, /atom))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = new /icon(AT.icon, AT.icon_state)
@@ -77,7 +77,7 @@
 		sprite_text = "<img src='vv[hash].png'></td><td>"
 	var/list/atomsnowflake = list()
 
-	if(istype(D,/atom))
+	if(istype(D, /atom))
 		var/atom/A = D
 		if(isliving(A))
 			atomsnowflake += "<a href='?_src_=vars;rename=[refid]'><b>[D]</b></a>"
@@ -575,7 +575,7 @@
 				return
 
 			var/D = locate(href_list["datumedit"])
-			if(!istype(D,/datum))
+			if(!istype(D, /datum))
 				to_chat(usr, "This can only be used on datums")
 				return
 
@@ -586,7 +586,7 @@
 				return
 
 			var/D = locate(href_list["datumchange"])
-			if(!istype(D,/datum))
+			if(!istype(D, /datum))
 				to_chat(usr, "This can only be used on datums")
 				return
 
