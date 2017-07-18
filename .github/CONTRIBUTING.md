@@ -274,7 +274,13 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 #### Use
 * Bitwise AND - '&'
 	* Should be written as ```bitfield & bitflag``` NEVER ```bitflag & bitfield```, both are valid, but the latter is confusing and nonstandard.
-
+* Do not explicitly assign `null` to newly declared variables as this is already their default value
+* When defining new datums, place newly defined variables at the bottom
+* If a datum has already been declared somewhere, additional var definitions should not be made outside of that block
+* Associated lists declarations must have their key value quoted if it's a string
+	* WRONG: list(a = "b")
+	* RIGHT: list("a" = "b")
+* Do not call procs for reasons other than their intended purpose. (i.e. New(), Destroy(), Crossed(), Topic(), attackby(), attack_hand() should not be called directly). Create seperate procs that encapsule the functionality you're trying to perform instead.
 
 ### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
