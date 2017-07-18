@@ -26,3 +26,7 @@
 
 /datum/component/slippery/proc/ClearMobRef()
 	slip_victim = null
+
+/datum/component/slippery/InheritComponent(datum/component/slippery/S, i_am_original)
+	intensity = max(S.intensity, intensity)
+	lube_flags |= S.lube_flags
