@@ -496,7 +496,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		return
 
 	var/static/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
-	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
+	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/transforming/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
@@ -839,12 +839,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			hal_screwyhud = 0
 
 		if("fake_alert")
-			var/alert_type = pick("oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
+			var/alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
 			if(specific)
 				alert_type = specific
 			switch(alert_type)
-				if("oxy")
-					throw_alert("oxy", /obj/screen/alert/oxy, override = TRUE)
+				if("not_enough_oxy")
+					throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy, override = TRUE)
 				if("not_enough_tox")
 					throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox, override = TRUE)
 				if("not_enough_co2")
@@ -853,8 +853,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy, override = TRUE)
 				if("too_much_co2")
 					throw_alert("too_much_co2", /obj/screen/alert/too_much_co2, override = TRUE)
-				if("tox_in_air")
-					throw_alert("tox_in_air", /obj/screen/alert/tox_in_air, override = TRUE)
+				if("too_much_tox")
+					throw_alert("too_much_tox", /obj/screen/alert/too_much_tox, override = TRUE)
 				if("nutrition")
 					if(prob(50))
 						throw_alert("nutrition", /obj/screen/alert/fat, override = TRUE)
@@ -882,7 +882,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if("hacked")
 					throw_alert("hacked", /obj/screen/alert/hacked, override = TRUE)
 				if("charge")
-					throw_alert("charge",/obj/screen/alert/emptycell, override = TRUE)
+					throw_alert("charge", /obj/screen/alert/emptycell, override = TRUE)
 			sleep(rand(100,200))
 			clear_alert(alert_type, clear_override = TRUE)
 

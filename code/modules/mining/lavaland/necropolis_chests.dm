@@ -425,7 +425,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc,/obj/mecha))
+		if (istype(usr.loc, /obj/mecha))
 			return
 
 		if(!M.incapacitated())

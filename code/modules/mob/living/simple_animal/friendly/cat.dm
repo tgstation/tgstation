@@ -81,7 +81,6 @@
 	gold_core_spawnable = 0
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
-	var/emagged = FALSE
 	var/cats_deployed = 0
 	var/memory_saved = 0
 
@@ -138,21 +137,6 @@
 		if(family[cat_type] > 0)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
-
-/mob/living/simple_animal/pet/cat/Runtime/emag_act(mob/user)
-	if(emagged)
-		return
-	emagged = TRUE
-	playsound(src, 'sound/magic/lightning_chargeup.ogg', 50, 0)
-	audible_message("<span class='warning'>Runtime emits an alarming buzz!</span>")
-	sleep(95)
-	playsound(src, 'hippiestation/sound/voice/scream_cat.ogg', 50, 1)
-	SpinAnimation(500,1)
-	sleep(5) //comedic timing
-	do_sparks(8, FALSE, loc)
-	explosion(src.loc, 0, 0, 1, 3)
-	visible_message("<span class='warning'>Runtime has encountered a fatal error.</span>")
-	gib()
 	
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"

@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/RD
 	name = "\proper research director's locker"
-	req_access = list(GLOB.access_rd)
+	req_access = list(ACCESS_RD)
 	icon_state = "rd"
 
 /obj/structure/closet/secure_closet/RD/PopulateContents()

@@ -29332,7 +29332,6 @@
 /obj/item/device/healthanalyzer,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -43217,10 +43216,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/window/brigdoor/westright{
+/obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig1";
-	name = "Cell 1";
-	req_access_txt = "2"
+	name = "Cell 1"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -47208,10 +47206,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/window/brigdoor/westright{
+/obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig2";
-	name = "Cell 2";
-	req_access_txt = "2"
+	name = "Cell 2"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -55947,9 +55944,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/window/brigdoor/westright{
-	name = "Holding Cell";
-	req_access_txt = "63"
+/obj/machinery/door/window/brigdoor/security/holding/westright{
+	name = "Holding Cell"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -76821,7 +76817,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /obj/machinery/status_display{
@@ -80243,7 +80238,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -81350,7 +81344,6 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -93145,6 +93138,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dxQ" = (
@@ -103228,7 +103222,6 @@
 /obj/item/weapon/reagent_containers/syringe/antiviral,
 /obj/item/weapon/reagent_containers/dropper,
 /obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 2
 	},

@@ -1,6 +1,6 @@
 // simple is_type and similar inline helpers
 
-#define islist(L) (istype(L,/list))
+#define islist(L) (istype(L, /list))
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
@@ -9,11 +9,15 @@
 //Turfs
 #define isopenturf(A) (istype(A, /turf/open))
 
+#define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))
+
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
 #define isclosedturf(A) (istype(A, /turf/closed))
+
+#define isindestructiblewall(A) (istype(A, /turf/closed/indestructible))
 
 #define iswallturf(A) (istype(A, /turf/closed/wall))
 

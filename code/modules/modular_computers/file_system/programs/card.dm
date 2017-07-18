@@ -3,7 +3,7 @@
 	filedesc = "ID Card Modification"
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	transfer_access = GLOB.access_heads
+	transfer_access = ACCESS_HEADS
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "ntos_card"
@@ -448,25 +448,25 @@
 			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
 			if(auth_card)
 				region_access = list()
-				if(GLOB.access_change_ids in auth_card.GetAccess())
+				if(ACCESS_CHANGE_IDS in auth_card.GetAccess())
 					minor = 0
 					authenticated = 1
 					return 1
 				else
-					if((GLOB.access_hop in auth_card.access) && ((target_dept==1) || !target_dept))
+					if((ACCESS_HOP in auth_card.access) && ((target_dept==1) || !target_dept))
 						region_access |= 1
 						region_access |= 6
 						get_subordinates("Head of Personnel")
-					if((GLOB.access_hos in auth_card.access) && ((target_dept==2) || !target_dept))
+					if((ACCESS_HOS in auth_card.access) && ((target_dept==2) || !target_dept))
 						region_access |= 2
 						get_subordinates("Head of Security")
-					if((GLOB.access_cmo in auth_card.access) && ((target_dept==3) || !target_dept))
+					if((ACCESS_CMO in auth_card.access) && ((target_dept==3) || !target_dept))
 						region_access |= 3
 						get_subordinates("Chief Medical Officer")
-					if((GLOB.access_rd in auth_card.access) && ((target_dept==4) || !target_dept))
+					if((ACCESS_RD in auth_card.access) && ((target_dept==4) || !target_dept))
 						region_access |= 4
 						get_subordinates("Research Director")
-					if((GLOB.access_ce in auth_card.access) && ((target_dept==5) || !target_dept))
+					if((ACCESS_CE in auth_card.access) && ((target_dept==5) || !target_dept))
 						region_access |= 5
 						get_subordinates("Chief Engineer")
 					if(region_access.len)

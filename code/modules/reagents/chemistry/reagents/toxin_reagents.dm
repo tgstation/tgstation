@@ -196,12 +196,12 @@
 	taste_mult = 1
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/structure/alien/weeds))
+	if(istype(O, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
-	else if(istype(O,/obj/structure/glowshroom)) //even a small amount is enough to kill it
+	else if(istype(O, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-	else if(istype(O,/obj/structure/spacevine))
+	else if(istype(O, /obj/structure/spacevine))
 		var/obj/structure/spacevine/SV = O
 		SV.on_chem_effect(src)
 

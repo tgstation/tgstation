@@ -326,7 +326,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
-	client.view = world.view
+	client.change_view(world.view)
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
@@ -468,16 +468,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.view = Clamp(new_view, 1, max_view)
+			client.change_view(Clamp(new_view, 1, max_view))
 	else
-		client.view = world.view
+		client.change_view(world.view)
 
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
 	set hidden = TRUE
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.view = Clamp(client.view + input, 1, max_view)
+		client.change_view(Clamp(client.view + input, 1, max_view))
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"

@@ -1,9 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - rscdel: "blood and gibs on turfs can no longer infect nearby people"
-  - tweak: "Tuberculosis bypasses species virus immunity (it's not a virus!)"
-  - tweak: "Disease and appendicitis events no longer infect clientless mobs"
-  - tweak: "Disease event will no longer pick virus immune mobs"
-  - tweak: "Appendicitis event will no longer pick mobs without an appendix"
-  - bugfix: "Fixed changeling panacea curing non-harmful viruses"

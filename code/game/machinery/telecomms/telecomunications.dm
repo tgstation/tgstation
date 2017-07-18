@@ -143,11 +143,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		var/turf/position = get_turf(src)
 		listening_level = position.z
 
-/obj/machinery/telecomms/onShuttleMove(turf/T1, rotation)
-	. = ..()
-	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
-		listening_level = T1.z
-
 /obj/machinery/telecomms/Initialize(mapload)
 	..()
 	if(mapload && autolinkers.len)

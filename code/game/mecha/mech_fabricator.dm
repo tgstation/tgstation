@@ -8,7 +8,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
-	req_access = list(GLOB.access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
 	var/time_coeff = 1
 	var/component_coeff = 1
 	var/datum/material_container/materials

@@ -315,7 +315,7 @@
 /obj/effect/mob_spawn/human/bartender
 	name = "Space Bartender"
 	id_job = "Bartender"
-	id_access_list = list(GLOB.access_bar)
+	id_access_list = list(ACCESS_BAR)
 	outfit = /datum/outfit/spacebartender
 
 /obj/effect/mob_spawn/human/bartender/alive
@@ -369,7 +369,7 @@
 /obj/effect/mob_spawn/human/bridgeofficer
 	name = "Bridge Officer"
 	id_job = "Bridge Officer"
-	id_access_list = list(GLOB.access_cent_captain)
+	id_access_list = list(ACCESS_CENT_CAPTAIN)
 	outfit = /datum/outfit/nanotrasenbridgeofficercorpse
 
 /datum/outfit/nanotrasenbridgeofficercorpse
@@ -385,7 +385,7 @@
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
 	id_job = "Commander"
-	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
+	id_access_list = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE)
 	outfit = /datum/outfit/nanotrasencommandercorpse
 
 /datum/outfit/nanotrasencommandercorpse
@@ -405,7 +405,7 @@
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
 	id_job = "Private Security Force"
-	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage, GLOB.access_security)
+	id_access_list = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY)
 	outfit = /datum/outfit/nanotrasensoldiercorpse
 
 /datum/outfit/nanotrasensoldiercorpse

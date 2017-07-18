@@ -84,7 +84,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/bandana
 	glasses = /obj/item/clothing/glasses/eyepatch
-	r_hand = /obj/item/weapon/melee/energy/sword/pirate
+	r_hand = /obj/item/weapon/melee/transforming/energy/sword/pirate
 
 /datum/outfit/pirate/space
 	name = "Space Pirate"
@@ -147,7 +147,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber
+	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/weapon/storage/secure/briefcase
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/device/pda/heads
@@ -344,7 +344,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 	back = /obj/item/weapon/storage/backpack/security
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber
+	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber
 	r_pocket = /obj/item/weapon/shield/energy
 	suit_store = /obj/item/weapon/tank/internals/emergency_oxygen
 	belt = /obj/item/weapon/gun/ballistic/revolver/mateba

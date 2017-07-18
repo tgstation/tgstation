@@ -482,11 +482,11 @@
 			if(WEST)
 				_x = -zoom_amt
 
-		user.client.view = zoom_out_amt
+		user.client.change_view(zoom_out_amt)
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
-		user.client.view = world.view
+		user.client.change_view(world.view)
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 	return zoomed

@@ -9,7 +9,7 @@
 
 /datum/surgery_step/sever_limb
 	name = "sever limb"
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 80, /obj/item/weapon/twohanded/required/chainsaw = 80, /obj/item/weapon/mounted_chainsaw = 80, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 40, /obj/item/weapon/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/transforming/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 80, /obj/item/weapon/twohanded/required/chainsaw = 80, /obj/item/weapon/mounted_chainsaw = 80, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 40, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -56,7 +56,7 @@
 		src.cards.Add(card)
 
 /obj/item/weapon/deck/attackby(obj/O, mob/user)
-	if (istype(O,/obj/item/weapon/hand))
+	if (istype(O, /obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 
 		for (var/datum/playingcard/P in H.cards) src.cards.Add(P)
@@ -152,7 +152,7 @@
 			return
 		P.name = cardtext
 		blank = 0
-	else if(istype(O,/obj/item/weapon/hand))
+	else if(istype(O, /obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 
 		for(var/datum/playingcard/P in src.cards) H.cards.Add(P)

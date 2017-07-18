@@ -52,7 +52,7 @@
 			transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 
@@ -167,13 +167,13 @@
 
 /turf/closed/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
 	//check for wall mounted frames
-	if(istype(W,/obj/item/wallframe))
+	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
 		return 1
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/poster))
+	else if(istype(W, /obj/item/weapon/poster))
 		place_poster(W,user)
 		return 1
 

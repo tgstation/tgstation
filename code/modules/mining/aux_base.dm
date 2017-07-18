@@ -20,7 +20,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/launch_warning = TRUE
 	var/list/turrets = list() //List of connected turrets
 
-	req_one_access = list(GLOB.access_cargo, GLOB.access_construction, GLOB.access_heads, GLOB.access_research)
+	req_one_access = list(ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_HEADS, ACCESS_RESEARCH)
 	var/possible_destinations
 	clockwork = TRUE
 	var/obj/item/device/gps/internal/base/locator
@@ -127,12 +127,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 				T.on = !T.on
 
 	updateUsrDialog()
-
-
-/obj/machinery/computer/auxillary_base/onShuttleMove(turf/T1, rotation)
-	..()
-	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
-		SSblackbox.add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
 
 /obj/machinery/computer/auxillary_base/proc/set_mining_mode()
 	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.
@@ -244,11 +238,6 @@ obj/docking_port/stationary/public_mining_dock
 	dwidth = 3
 	width = 7
 	height = 5
-
-obj/docking_port/stationary/public_mining_dock/onShuttleMove()
-	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
-	return 0
-
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
