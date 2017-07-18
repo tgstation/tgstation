@@ -30,6 +30,8 @@
 
 	var/running_bob_anim = FALSE
 
+	var/escape_in_progress = FALSE
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
@@ -251,11 +253,16 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
+	if(escape_in_progress)
+		to_chat(user, "<span class='notice'>You are already trying to exit (This will take around 30 seconds)</span>")
+		return
+	escape_in_progress = TRUE
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
 		if(occupant == user) // Check they're still here.
 			open_machine()
+	escape_in_progress = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()

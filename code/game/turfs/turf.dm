@@ -153,7 +153,7 @@
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//slipping
-	if (istype(AM,/mob/living/carbon))
+	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		if(M.movement_type & FLYING)
 			return

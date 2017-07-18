@@ -126,7 +126,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/the_cost = get_cost(O)
 	var/amount = get_amount(O)
 	total_cost += the_cost
-	if(istype(O,/datum/export/material))
+	if(istype(O, /datum/export/material))
 		total_amount += amount*MINERAL_MATERIAL_AMOUNT
 	else
 		total_amount += amount

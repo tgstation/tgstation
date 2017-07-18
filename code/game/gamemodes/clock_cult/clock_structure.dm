@@ -87,13 +87,6 @@
 		. *= min(max_integrity/max(obj_integrity, 1), 4)
 	. = round(., 0.01)
 
-/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user, silent)
-	if(anchored && obj_integrity <= round(max_integrity * 0.25, 1))
-		if(!silent)
-			to_chat(user, "<span class='warning'>[src] is too damaged to unsecure!</span>")
-		return FAILED_UNFASTEN
-	return ..()
-
 /obj/structure/destructible/clockwork/attack_ai(mob/user)
 	if(is_servant_of_ratvar(user))
 		attack_hand(user)
@@ -108,7 +101,7 @@
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
-			update_anchored(user, TRUE)
+			update_anchored(user)
 		return 1
 	return ..()
 
@@ -125,7 +118,7 @@
 		if(do_damage)
 			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
-		to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
+			to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
 /obj/structure/destructible/clockwork/emp_act(severity)
 	if(anchored && unanchored_icon)

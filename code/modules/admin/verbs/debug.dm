@@ -460,10 +460,10 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			id.update_label()
 
 			if(worn)
-				if(istype(worn,/obj/item/device/pda))
+				if(istype(worn, /obj/item/device/pda))
 					worn:id = id
 					id.loc = worn
-				else if(istype(worn,/obj/item/weapon/storage/wallet))
+				else if(istype(worn, /obj/item/weapon/storage/wallet))
 					worn:front_id = id
 					id.loc = worn
 					worn.update_icon()
