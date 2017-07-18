@@ -12,8 +12,9 @@
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
-	if (src.getFireLoss())
-		if (src.getFireLoss() < maxHealth*0.5)
+	if (getFireLoss() || getToxLoss())
+		var/overall_fireloss = getFireLoss() + getToxLoss()
+		if (overall_fireloss < maxHealth * 0.5)
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
