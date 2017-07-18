@@ -115,7 +115,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/statue/uranium/Bumped(atom/user)
+/obj/structure/statue/uranium/CollidedWith(atom/movable/AM)
 	radiate()
 	..()
 
@@ -155,10 +155,10 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(istype(Proj,/obj/item/projectile/beam))
+	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
 		burn = TRUE
-	else if(istype(Proj,/obj/item/projectile/ion))
+	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
 		burn = TRUE
 	if(burn)
@@ -273,7 +273,7 @@
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/Bumped(atom/user)
+/obj/structure/statue/bananium/CollidedWith(atom/movable/AM)
 	honk()
 	..()
 

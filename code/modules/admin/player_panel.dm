@@ -598,7 +598,7 @@
 
 		if(istype(SSticker.mode, /datum/game_mode/blob) || blob_minds.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			if(istype(SSticker.mode,/datum/game_mode/blob))
+			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/mode = SSticker.mode
 				blob_minds |= mode.blob_overminds
 				dat += "<tr><td><i>Progress: [GLOB.blobs_legit.len]/[mode.blobwincount]</i></td></tr>"

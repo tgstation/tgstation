@@ -8,10 +8,17 @@
 
 /datum/round_event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
-		var/foundAlready = 0	//don't infect someone that already has the virus
-		for(var/datum/disease/D in H.viruses)
-			foundAlready = 1
-		if(H.stat == 2 || foundAlready)
+		if(!H.client)
+			continue
+		if(H.stat == DEAD)
+			continue
+		if(!H.getorgan(/obj/item/organ/appendix)) //Don't give the disease to some who lacks it, only for it to be auto-cured
+			continue
+		var/foundAlready = FALSE	//don't infect someone that already has appendicitis
+		for(var/datum/disease/appendicitis/A in H.viruses)
+			foundAlready = TRUE
+			break
+		if(foundAlready)
 			continue
 
 		var/datum/disease/D = new /datum/disease/appendicitis

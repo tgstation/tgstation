@@ -69,6 +69,7 @@
 	desc = "Boom"
 	icon_state = "missile"
 	damage = 30
+	ricochets_max = 0 //it's a MISSILE
 
 /obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
 	..()

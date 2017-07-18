@@ -29,25 +29,6 @@
 	return ..()
 
 
-//Cogscarab: Creates an empty cogscarab shell, which produces a cogscarab dedicated to maintaining and defending the cult.
-/datum/clockwork_scripture/create_object/cogscarab
-	descname = "Constructor Soul Vessel Shell"
-	name = "Cogscarab"
-	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt fabricator."
-	invocations = list("Call forth...", "...the workers of Armorer.")
-	channel_time = 60
-	consumed_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
-	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
-	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
-	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
-	usage_tip = "Useless without a soul vessel and should not be created without one."
-	tier = SCRIPTURE_SCRIPT
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 2
-	quickbind = TRUE
-	quickbind_desc = "Creates a Cogscarab Shell, which produces a Cogscarab when filled with a Soul Vessel."
-
-
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
 /datum/clockwork_scripture/create_object/vitality_matrix
 	descname = "Trap, Damage to Healing"
@@ -199,26 +180,6 @@
 	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
-
-
-//Soul Vessel: Creates a soul vessel, which can seek a ghost or be used on the uncovered head of a dead or dying human to take their brain.
-/datum/clockwork_scripture/create_object/soul_vessel
-	descname = "Clockwork Posibrain"
-	name = "Soul Vessel"
-	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
-	invocations = list("Herd the souls of...", "...the blasphemous damned!")
-	channel_time = 30
-	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
-	whispered = TRUE
-	object_path = /obj/item/device/mmi/posibrain/soul_vessel
-	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
-	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
-	tier = SCRIPTURE_SCRIPT
-	space_allowed = TRUE
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
-	quickbind = TRUE
-	quickbind_desc = "Creates a Soul Vessel, which can be placed in construct shells and cyborg bodies once filled."
 
 
 //Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.

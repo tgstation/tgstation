@@ -52,6 +52,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 		if(!emagged)
 			flick("apc-spark", G)
+			playsound(loc, "sparks", 50, 1)
 			emagged = TRUE
 			locked = FALSE
 			update_icon()

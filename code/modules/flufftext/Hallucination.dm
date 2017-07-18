@@ -516,7 +516,7 @@ var/static/list/hallucinations_major = list(
 		return
 
 	var/static/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
-	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
+	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/transforming/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
@@ -695,7 +695,7 @@ var/static/list/hallucinations_major = list(
 	var/speak_messages = list("[pick("I'm watching you...","I know what you're doing","What are you hiding?","I saw that")]",\
 	"[pick("","Hey, ","Hi ","Hello ","Wait, ","It's ")][target.first_name()]!",\
 	"[pick("Get out","Go away","Fuck off","OUT!")]",\
-	"[pick("Kchck-Chkck? Kchchck!","EEEeeeeEEEE","#@§*&£","H-hhhhh...")]",\
+	"[pick("Kchck-Chkck? Kchchck!","EEEeeeeEEEE","#@ï¿½*&ï¿½","H-hhhhh...")]",\
 	"[pick("Did you hear that?","Did you see that?","What was that?")]",\
 	"[pick("Hail Ratvar","Hail Nar'Sie","Viva!","[generate_code_phrase()]","Are you mr. [pick(GLOB.possible_changeling_IDs)]?")]",\
 	"[pick("Why?","What?","Wait, what?","Wait","Hold on","Uh...")]",\
@@ -1095,4 +1095,3 @@ var/static/list/hallucinations_major = list(
 	H.original = target
 	H.fire()
 	qdel(src)
-

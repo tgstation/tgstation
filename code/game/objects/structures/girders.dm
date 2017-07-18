@@ -114,7 +114,7 @@
 			to_chat(user, "<span class='warning'>There is already a false wall present!</span>")
 			return
 
-		if(istype(W,/obj/item/stack/rods))
+		if(istype(W, /obj/item/stack/rods))
 			var/obj/item/stack/rods/S = W
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
@@ -145,11 +145,11 @@
 					qdel(src)
 				return
 
-		if(!istype(W,/obj/item/stack/sheet))
+		if(!istype(W, /obj/item/stack/sheet))
 			return
 
 		var/obj/item/stack/sheet/S = W
-		if(istype(S,/obj/item/stack/sheet/metal))
+		if(istype(S, /obj/item/stack/sheet/metal))
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need two sheets of metal to create a false wall!</span>")
@@ -179,7 +179,7 @@
 					qdel(src)
 				return
 
-		if(istype(S,/obj/item/stack/sheet/plasteel))
+		if(istype(S, /obj/item/stack/sheet/plasteel))
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need at least two sheets to create a false wall!</span>")
@@ -282,7 +282,7 @@
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
-		var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
 		new remains(loc)
 	qdel(src)
 

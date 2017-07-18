@@ -306,7 +306,7 @@
 			else
 				limb.icon_state = "[animal_origin]_[body_zone]"
 		else
-			limb.icon = 'icons/mob/augments.dmi'
+			limb.icon = 'icons/mob/augmentation/augments.dmi'
 			limb.icon_state = "[animal_origin]_[body_zone]"
 		return
 

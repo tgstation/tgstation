@@ -11,7 +11,7 @@
 	var/uses = 20
 	var/cooldown = 0
 	var/cooldown_time = 100
-	req_access = list(GLOB.access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 
 /obj/machinery/ai_slipper/examine(mob/user)
 	..()

@@ -32,7 +32,7 @@
 	if(prob(80))	//mid dirt  - 1/15
 		return
 
-	if(istype(A, /area/engine)  || istype(A, /area/crew_quarters/heads/chief) || istype(A,/area/assembly) || istype(A, /area/science/robotics) || istype(A,/area/maintenance) || istype(A,/area/construction))
+	if(istype(A, /area/engine)  || istype(A, /area/crew_quarters/heads/chief) || istype(A, /area/assembly) || istype(A, /area/science/robotics) || istype(A, /area/maintenance) || istype(A, /area/construction))
 	 	//Blood, sweat, and oil.  Oh, and dirt.
 		if(prob(3))
 			new /obj/effect/decal/cleanable/blood/old(src)

@@ -62,7 +62,8 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat = 0
-	for(var/datum/disease/D in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			if (D.severity != NONTHREAT) //a buffing virus gets an icon
 				threat = 2
@@ -199,17 +200,17 @@
 		holder = hud_list[i]
 		holder.icon_state = null
 	for(var/obj/item/weapon/implant/I in implants)
-		if(istype(I,/obj/item/weapon/implant/tracking))
+		if(istype(I, /obj/item/weapon/implant/tracking))
 			holder = hud_list[IMPTRACK_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_tracking"
-		else if(istype(I,/obj/item/weapon/implant/mindshield))
+		else if(istype(I, /obj/item/weapon/implant/mindshield))
 			holder = hud_list[IMPLOYAL_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_loyal"
-		else if(istype(I,/obj/item/weapon/implant/chem))
+		else if(istype(I, /obj/item/weapon/implant/chem))
 			holder = hud_list[IMPCHEM_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size

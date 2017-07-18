@@ -44,4 +44,4 @@ Bonus
 				M.emote("sniff")
 		else
 			M.emote("sneeze")
-			A.spread(A.holder, 4 + power)
+			A.spread(4 + power)

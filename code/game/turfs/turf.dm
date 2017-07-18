@@ -153,7 +153,7 @@
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//slipping
-	if (istype(AM,/mob/living/carbon))
+	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		if(M.movement_type & FLYING)
 			return
@@ -197,11 +197,11 @@
 		qdel(L)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
-	return ChangeTurf(path, defer_change, ignore_air)
+/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf)
+	return ChangeTurf(path, defer_change, ignore_air, new_baseturf)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf)
 	if(!path)
 		return
 	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
@@ -212,7 +212,10 @@
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
-	W.baseturf = old_baseturf
+	if(new_baseturf)
+		W.baseturf = new_baseturf
+	else
+		W.baseturf = old_baseturf
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
@@ -222,10 +225,6 @@
 /turf/proc/AfterChange(ignore_air = FALSE) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
 	CalculateAdjacentTurfs()
-
-	if(!can_have_cabling())
-		for(var/obj/structure/cable/C in contents)
-			C.deconstruct()
 
 	//update firedoor adjacency
 	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
@@ -408,21 +407,16 @@
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space)
+/turf/proc/empty(turf_type=/turf/open/space, baseturf_type)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/turf/T0 = src
-	for(var/A in T0.GetAllContents())
-		if(istype(A, /mob/dead))
-			continue
-		if(istype(A, /obj/effect/landmark))
-			continue
-		if(istype(A, /obj/docking_port))
-			continue
-		if(A == T0)
-			continue
-		qdel(A, force=TRUE)
+	var/static/list/ignored_atoms = typecacheof(list(/turf, /mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
+	var/list/allowed_contents = typecache_filter_list(T0.GetAllContents(),ignored_atoms,reversed=TRUE)
+	for(var/i in 1 to allowed_contents.len)
+		var/thing = allowed_contents[i]
+		qdel(thing, force=TRUE)
 
-	T0.ChangeTurf(turf_type)
+	T0.ChangeTurf(turf_type, FALSE, FALSE, baseturf_type)
 
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
