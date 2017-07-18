@@ -1,5 +1,4 @@
 /datum/component/slippery
-	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/intensity
 	var/lube_flags
 	var/mob/slip_victim
@@ -26,7 +25,3 @@
 
 /datum/component/slippery/proc/ClearMobRef()
 	slip_victim = null
-
-/datum/component/slippery/InheritComponent(datum/component/slippery/S, i_am_original)
-	intensity = max(S.intensity, intensity)
-	lube_flags |= S.lube_flags
