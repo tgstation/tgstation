@@ -175,7 +175,7 @@ Difficulty: Hard
 	if(!stat && .)
 		var/obj/effect/temp_visual/hierophant/squares/HS = new(oldLoc)
 		HS.setDir(movement_dir)
-		playsound(loc, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
 		if(target)
 			arena_trap(target)
 
