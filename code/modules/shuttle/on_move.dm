@@ -13,31 +13,30 @@ All ShuttleMove procs go here
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
 /turf/proc/toShuttleMove(turf/oldT, shuttle_dir)
-	if(contents.len)
-		for(var/i in 1 to contents.len)
-			var/atom/movable/thing = contents[i]
-			if(ismob(thing))
-				if(isliving(thing))
-					var/mob/living/M = thing
-					if(M.buckled)
-						M.buckled.unbuckle_mob(M, 1)
-					if(M.pulledby)
-						M.pulledby.stop_pulling()
-					M.stop_pulling()
-					M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
-					if(M.key || M.get_ghost(TRUE))
-						SSblackbox.add_details("shuttle_gib", "[type]")
-					else
-						SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
-					M.gib()
-
-			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-				if(istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
-					continue
-				if(!thing.anchored)
-					step(thing, shuttle_dir)
+	for(var/i in contents)
+		var/atom/movable/thing = i
+		if(ismob(thing))
+			if(isliving(thing))
+				var/mob/living/M = thing
+				if(M.buckled)
+					M.buckled.unbuckle_mob(M, 1)
+				if(M.pulledby)
+					M.pulledby.stop_pulling()
+				M.stop_pulling()
+				M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
+				if(M.key || M.get_ghost(TRUE))
+					SSblackbox.add_details("shuttle_gib", "[type]")
 				else
-					qdel(thing)
+					SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
+				M.gib()
+
+		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
+			if(istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+				continue
+			if(!thing.anchored)
+				step(thing, shuttle_dir)
+			else
+				qdel(thing)
 
 	return TRUE
 
