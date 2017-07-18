@@ -233,7 +233,7 @@
 					return
 			else /*if(src.justzap)*/
 				return
-		else if(user.hallucination > 50 && ishuman(user) && prob(4) && src.operating == FALSE)
+		else if(user.hallucination > 50 && ishuman(user) && prob(4) && !operating)
 			hallucinate_shock(user)
 			return
 	if (cyclelinkedairlock)

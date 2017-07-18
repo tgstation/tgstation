@@ -933,13 +933,15 @@
 			if(!check_rights(0))
 				return
 
-			var/mob/living/carbon/C = locate(href_list["hallucinate"])
+			var/mob/living/carbon/C = locate(href_list["hallucinate"]) in GLOB.mob_list
 			if(!istype(C))
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
 			var/list/hallucinations = subtypesof(/datum/hallucination)
 			var/result = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in hallucinations
+			if(!usr)
+				return
 			if(!C)
 				to_chat(usr, "Mob doesn't exist anymore")
 				return

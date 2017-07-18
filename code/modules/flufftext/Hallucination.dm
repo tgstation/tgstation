@@ -11,6 +11,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
+#define HAL_LINES_FILE "hallucination.json"
+
 /mob/living/carbon
 	var/image/halimage
 	var/image/halbody
@@ -19,7 +21,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/next_hallucination = 0
 
 var/static/list/hallucinations_minor = list(
-	/datum/hallucination/sound,
+	/datum/hallucination/sounds,
 	/datum/hallucination/bolts,
 	/datum/hallucination/whispers,
 	/datum/hallucination/message,
@@ -59,7 +61,7 @@ var/static/list/hallucinations_major = list(
 		new halpick(src, FALSE)
 
 /datum/hallucination
-	var/mob/living/carbon/target = null
+	var/mob/living/carbon/target
 	var/cost = 5 //affects the amount of hallucination reduced, and cooldown until the next hallucination
 
 /datum/hallucination/New(mob/living/carbon/T, forced = TRUE)
@@ -90,7 +92,8 @@ var/static/list/hallucinations_major = list(
 	..()
 	target = T
 	current_image = GetImage()
-	if(target.client) target.client.images |= current_image
+	if(target.client)
+		target.client.images |= current_image
 
 /obj/effect/hallucination/simple/proc/GetImage()
 	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
@@ -102,10 +105,12 @@ var/static/list/hallucinations_major = list(
 
 /obj/effect/hallucination/simple/proc/Show(update=1)
 	if(active)
-		if(target.client) target.client.images.Remove(current_image)
+		if(target.client)
+			target.client.images.Remove(current_image)
 		if(update)
 			current_image = GetImage()
-		if(target.client) target.client.images |= current_image
+		if(target.client)
+			target.client.images |= current_image
 
 /obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=0,new_py=0)
 	image_state = new_state
@@ -121,8 +126,9 @@ var/static/list/hallucinations_major = list(
 	Show()
 
 /obj/effect/hallucination/simple/Destroy()
-	if(target.client) target.client.images.Remove(current_image)
-	active = 0
+	if(target.client)
+		target.client.images.Remove(current_image)
+	active = FALSE
 	return ..()
 
 #define FAKE_FLOOD_EXPAND_TIME 20
@@ -692,22 +698,22 @@ var/static/list/hallucinations_major = list(
 
 /datum/hallucination/whispers/New(mob/living/carbon/T, forced = TRUE)
 	..()
-	var/speak_messages = list("[pick("I'm watching you...","I know what you're doing","What are you hiding?","I saw that")]",\
-	"[pick("","Hey, ","Hi ","Hello ","Wait, ","It's ")][target.first_name()]!",\
-	"[pick("Get out","Go away","Fuck off","OUT!")]",\
-	"[pick("Kchck-Chkck? Kchchck!","EEEeeeeEEEE","#@�*&�","H-hhhhh...")]",\
-	"[pick("Did you hear that?","Did you see that?","What was that?")]",\
-	"[pick("Hail Ratvar","Hail Nar'Sie","Viva!","[generate_code_phrase()]","Are you mr. [pick(GLOB.possible_changeling_IDs)]?")]",\
-	"[pick("Why?","What?","Wait, what?","Wait","Hold on","Uh...")]",\
-	"Give me that!",\
-	"HELP[pick(""," ME"," HIM"," HER"," THEM")]!!",\
-	"RUN!!",\
-	"I'm infected, [pick("stay away","don't get close","be careful","help me","kill me")]")
+	var/speak_messages = list("[pick_list_replacements(HAL_LINES_FILE, "suspicion")]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "greetings")][target.first_name()]!",\
+	"[pick_list_replacements(HAL_LINES_FILE, "getout")]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "weird")]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "didyouhearthat")]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "imatraitor")]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "doubt")]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "aggressive")]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "help")]!!",\
+	"[pick_list_replacements(HAL_LINES_FILE, "escape")]",\
+	"I'm infected, [pick_list_replacements(HAL_LINES_FILE, "infection_advice")]!")
 
 	var/radio_messages = list("Set [target.first_name()] to arrest!",\
-	"[pick("Captain","Hos","Cmo","Rd","Ce","Hop","Janitor","AI","Viro","Qm","[target.first_name()]")] is [pick("rogue","cult","clockcult","a revhead","a gang leader","a traitor","a ling","dead")]!",\
+	"[pick_list_replacements(HAL_LINES_FILE, "people")] is [pick_list_replacements(HAL_LINES_FILE, "accusations")]!",\
 	"Help!",\
-	"[pick("Cult", "Wizard", "Blob", "Ling", "Ops", "Swarmers", "Revenant", "Traitor", "Harm", "I hear flashing", "Help")] in [pick(GLOB.teleportlocs)][prob(50)?"!":"!!"]",\
+	"[pick_list_replacements(HAL_LINES_FILE, "threat")] in [pick_list_replacements(HAL_LINES_FILE, "location")][prob(50)?"!":"!!"]",\
 	"Where's [target.first_name()]?"\
 	,"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!"\
 	,"AI [pick("rogue", "is dead")]!!")
@@ -753,15 +759,15 @@ var/static/list/hallucinations_major = list(
 		"<B>[target]</B> sneezes.", \
 		//The truth, revealed
 		"<span class='warning'>You're hallucinating.</span>", \
-		//Direct speech
-		"<span class='notice'>[pick("Hmm...","Yes.","No.","Ignore that last message.","You should stop doing that.","Good luck.")]</span>")
+		//Direct advice
+		"[pick_list_replacements(HAL_LINES_FILE, "advice")]")
 	to_chat(target, chosen)
 	qdel(src)
 
-/datum/hallucination/sound
+/datum/hallucination/sounds
 	cost = 15
 
-/datum/hallucination/sound/New(mob/living/carbon/T, forced = TRUE)
+/datum/hallucination/sounds/New(mob/living/carbon/T, forced = TRUE)
 	..()
 	//Strange audio
 	switch(rand(1,20))
@@ -793,12 +799,12 @@ var/static/list/hallucinations_major = list(
 	//Rare audio
 		if(10)
 	//These sounds are (mostly) taken from Hidden: Source
-			var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/heart_beat.ogg', 'sound/effects/screech.ogg',\
+			var/static/list/hallucinations_creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/heart_beat.ogg', 'sound/effects/screech.ogg',\
 				'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
 				'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
 				'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 				'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-			target.playsound_local(null, pick(creepyasssounds), 50, 1)
+			target.playsound_local(null, pick(hallucinations_creepyasssounds), 50, 1)
 		if(11)
 			target.playsound_local(null, 'sound/effects/ratvar_rises.ogg', 100)
 			sleep(150)
@@ -856,12 +862,12 @@ var/static/list/hallucinations_major = list(
 
 /datum/hallucination/fake_alert/New(mob/living/carbon/T, forced = TRUE, specific, duration = 150)
 	..()
-	var/alert_type = pick("oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temphot","tempcold","pressure")
+	var/alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","weightless","fire","locked","hacked","temphot","tempcold","pressure")
 	if(specific)
 		alert_type = specific
 	switch(alert_type)
 		if("oxy")
-			target.throw_alert("oxy", /obj/screen/alert/oxy, override = TRUE)
+			target.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy, override = TRUE)
 		if("not_enough_tox")
 			target.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox, override = TRUE)
 		if("not_enough_co2")
@@ -871,7 +877,7 @@ var/static/list/hallucinations_major = list(
 		if("too_much_co2")
 			target.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2, override = TRUE)
 		if("tox_in_air")
-			target.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air, override = TRUE)
+			target.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox, override = TRUE)
 		if("nutrition")
 			if(prob(50))
 				target.throw_alert("nutrition", /obj/screen/alert/fat, override = TRUE)
@@ -1095,3 +1101,4 @@ var/static/list/hallucinations_major = list(
 	H.original = target
 	H.fire()
 	qdel(src)
+
