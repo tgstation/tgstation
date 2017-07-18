@@ -24,6 +24,32 @@
 	to_chat(user, "<font color='red'>You have <b>BANNED</b> [M]</font>")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
+
+/obj/item/weapon/greatbanhammer
+	desc = "The Great Banhammer, long fabled and often imitated, it shines brightly."
+	name = "great banhammer"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "greatbanhammer"
+	slot_flags = SLOT_BELT
+	throwforce = 0
+	w_class = WEIGHT_CLASS_NORMAL
+	throw_speed = 3
+	throw_range = 7
+	attack_verb = list("actually banned")
+
+/obj/item/weapon/greatbanhammer/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]selfself with the [src.name]! It looks like [user.p_theyre()] to ban [user.p_them()]self from life</span>")
+	if(user.client)
+		AddBan(user.ckey, user.computer_id, "Killed themselves with the all mighty great banhammer", "banhammer", 1, 1440)
+	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+
+/obj/item/weapon/greatbanhammer/attack(mob/M, mob/user)
+	to_chat(M, "<font color='red'><b.>You have been banned for no reason by [user]<b></font>")
+	to_chat(user, "<font color='red'>You have actually <b>BANNED</b> [M]. No really, they are banned for a day. Good job.</font>")
+	playsound(loc, 'sound/effects/adminhelp.ogg', 20)
+	AddBan(M.ckey, M.computer_id, "Banned by the wielder of the Great Banhammer", "greatbanhammer", 1, 1440)
+
+
 /obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
