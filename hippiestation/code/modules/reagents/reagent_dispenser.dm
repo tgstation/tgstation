@@ -26,7 +26,7 @@
 	name = "chem tank"
 	desc = "It can hold a large amount of chemicals. Use a screwdriver to open and close its lid."
 	icon_state = "chem"
-	tank_volume = 300
+	tank_volume = 1000
 	use_reagent_icon = TRUE
 	reagent_id = null
 
