@@ -114,6 +114,6 @@
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
 
-/obj/item/weapon/grown/bananapeel/specialpeel/Initialize(AM)
+/obj/item/weapon/grown/bananapeel/specialpeel/Initialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
