@@ -22,10 +22,12 @@
 	parent = P
 
 /datum/component/Destroy()
+	enabled = FALSE
 	var/datum/P = parent
 	if(P)
 		_RemoveNoSignal()
 		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+	LAZYCLEARLIST(signal_procs)
 	return ..()
 
 /datum/component/proc/_RemoveNoSignal()
@@ -35,6 +37,8 @@
 		parent = null
 
 /datum/component/proc/RegisterSignal(sig_type, proc_on_self, override = FALSE)
+	if(QDELETED(src))
+		return
 	var/list/procs = signal_procs
 	if(!procs)
 		procs = list()
