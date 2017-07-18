@@ -78,7 +78,7 @@
 		transitioning = FALSE
 		icon_state = "seer_frenzy"
 		visible_message("<span class='revenboldnotice big'>[src] goes into a frenzy!</span>")
-		playsound(src, 'sound/creatures/seer_deathblow.ogg', 100, TRUE, frequency = 1.25)
+		playsound(src, 'sound/creatures/seer_deathblow.ogg', 100, TRUE, frequency = 1.1)
 	else //Defaults to PHASE_NULL
 		icon_state = "seer"
 		visible_message("<span class='revennotice italics'>[src] lumbers forward!</span>")
@@ -96,11 +96,9 @@
 	pixel_x = -16
 	pixel_y = -16
 	layer = LARGE_MOB_LAYER
-	duration = 25
+	duration = 40
 	density = TRUE
-	anchored = TRUE
 	light_range = 3
-	mouse_opacity = 0
 
 /obj/effect/temp_visual/seer_death/Initialize()
 	. = ..()

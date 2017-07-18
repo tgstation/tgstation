@@ -179,7 +179,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			if(M.z == z)
 				to_chat(M, "<span class='userdanger'>Something pained and terrible opens its eyes. A horrible feeling of vulnerability drapes over you \
 				like a blanket. You are being watched.</span>")
-				M.playsound_local(T, 'sound/creatures/seer_deathblow.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
+				M.playsound_local(T, 'sound/creatures/seer_released.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
 				flash_color(M, flash_color = "#1D2953", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("The Seer has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
