@@ -685,7 +685,7 @@
 			if(loc == get_turf(original))
 				if(!(original in permutated))
 					Collide(original)
-    c2 = loc
+	    c2 = loc
 		Range()
 		if(check_for_turf_edge(loc))
 			spawn_tracer(constant_tracer)
