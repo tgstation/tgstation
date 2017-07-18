@@ -350,7 +350,7 @@ h1.alert, h2.alert		{color: #000000;}
 .command_headset		{font-weight: bold; font-size: 24px;}
 .small					{font-size: 8px;}
 .big					{font-size: 24px;}
-.reallybig				{font-size: 36px;}
+.reallybig				{font-size: 32px;}
 .greentext				{color: #00FF00;	font-size: 24px;}
 .redtext				{color: #FF0000;	font-size: 24px;}
 .clown					{color: #FF69Bf;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
@@ -359,7 +359,7 @@ h1.alert, h2.alert		{color: #000000;}
 BIG IMG.icon 			{width: 32px; height: 32px;}
 
 .memo					{color: #638500;	text-align: center;}
-.memoedit				{text-align: center;	font-size: 24px;}
+.memoedit				{text-align: center;	font-size: 16px;}
 .abductor				{color: #800080; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}
