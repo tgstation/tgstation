@@ -89,14 +89,14 @@
 	return
 
 //returns a new list with only atoms that are in typecache L
-/proc/typecache_filter_list(list/atoms, list/typecache, inversion = FALSE)
+/proc/typecache_filter_list(list/atoms, list/typecache, reversed = FALSE)
 	. = list()
-	if(!inversion)
+	if(!reversed)
 		for (var/thing in atoms)
 			var/atom/A = thing
 			if (typecache[A.type])
 				. += A
-	else	//Inverted.
+	else	//Inverted, only check it once.
 		for(var/i in atoms)
 			var/atom/a = i
 			if(!typecache[a.type])
