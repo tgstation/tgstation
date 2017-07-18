@@ -9,7 +9,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
-	AddComponents(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE)
+	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	if(on)
