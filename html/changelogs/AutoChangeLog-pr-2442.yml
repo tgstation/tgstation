@@ -1,0 +1,4 @@
+author: "Dannno/Supermichael777/InsaneHyena"
+delete-after: True
+changes: 
+  - rscadd: "You can now pick from a few different styles when augmenting someone with robot parts by putting them in the augment manipulator. Alt+click to take parts out."

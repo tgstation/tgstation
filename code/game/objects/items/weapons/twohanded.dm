@@ -360,7 +360,7 @@
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
-	// same as /obj/item/weapon/melee/energy, mostly
+	// same as /obj/item/weapon/melee/transforming/energy, mostly
 	if(!wielded)
 		return ""
 	var/in_mouth = ""
