@@ -636,7 +636,11 @@
 
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
+		if(!active)
+			faction_bonus_force = 0
 		..()
+		if(!active)
+			faction_bonus_force = initial(faction_bonus_force)
 	else
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(target))
