@@ -90,7 +90,7 @@
 	sort_priority = 4
 	quickbind = TRUE
 	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
-	slab_icon = "compromise"
+	slab_overlay = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
 	<b>Left-click a fellow Servant or yourself to heal!\n\
@@ -111,7 +111,7 @@
 	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Allows you to bind and start converting an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
-	slab_icon = "geis"
+	slab_overlay = "geis"
 	ranged_type = /obj/effect/proc_holder/slab/geis
 	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
 	<b>Left-click a target within melee range to convert!\n\

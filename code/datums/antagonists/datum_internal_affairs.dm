@@ -152,7 +152,7 @@
 	if(!owner||!owner.objectives)
 		return
 	for (var/objective_ in owner.objectives)
-		if(!(istype(objective_, /datum/objective/escape)||istype(objective_,/datum/objective/survive)))
+		if(!(istype(objective_, /datum/objective/escape)||istype(objective_, /datum/objective/survive)))
 			continue
 		remove_objective(objective_)
 		

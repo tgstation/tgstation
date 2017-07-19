@@ -181,6 +181,16 @@
 		M.appearance_flags = RESET_COLOR
 		. += M
 
+/obj/item/weapon/screwdriver/get_belt_overlay()
+	if(random_color)
+		var/mutable_appearance/body = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver")
+		var/mutable_appearance/head = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_head")
+		body.color = color
+		head.overlays += body
+		return head
+	else
+		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
@@ -203,7 +213,7 @@
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "screwdriver"
+	icon_state = "screwdriver_a"
 	item_state = "screwdriver_nuke"
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1

@@ -13,8 +13,8 @@ All ShuttleMove procs go here
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
 /turf/proc/toShuttleMove(turf/oldT, shuttle_dir)
-	for(var/i in 1 to contents.len)
-		var/atom/movable/thing = contents[i]
+	for(var/i in contents)
+		var/atom/movable/thing = i
 		if(ismob(thing))
 			if(isliving(thing))
 				var/mob/living/M = thing
@@ -55,7 +55,7 @@ All ShuttleMove procs go here
 		new_open.copy_air_with_tile(src)
 
 	//Source turf changes
-	ChangeTurf(turf_type, FALSE, TRUE, baseturf_type)
+	ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
 
 	return TRUE
 

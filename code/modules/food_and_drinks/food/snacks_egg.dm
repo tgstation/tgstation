@@ -112,7 +112,7 @@
 	tastes = list("egg" = 1, "cheese" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/kitchen/fork))
+	if(istype(W, /obj/item/weapon/kitchen/fork))
 		var/obj/item/weapon/kitchen/fork/F = W
 		if(F.forkload)
 			to_chat(user, "<span class='warning'>You already have omelette on your fork!</span>")
