@@ -42,7 +42,7 @@
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(src.loc)
+		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(loc)
 		M.icon_state = icon_dead
 		M.name = name
 		if(toast)
