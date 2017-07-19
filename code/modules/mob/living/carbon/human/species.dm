@@ -926,9 +926,9 @@
 
 /datum/species/proc/handle_disgust(mob/living/carbon/human/H, var/metabolism_rate)
 	if(H.disgust)
-		var/pukeprob = 5 + 0.1 * H.disgust
+		var/pukeprob = 5 + 0.05 * H.disgust
 		if(H.disgust >= DISGUST_LEVEL_GROSS)
-			if(prob(25))
+			if(prob(10))
 				H.stuttering += 1
 				H.confused += 2
 			if(prob(10) && !H.stat)
@@ -941,10 +941,10 @@
 				H.vomit(10, 0, 1, 0, 1, 0)
 			H.Dizzy(5)
 		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
-			if(prob(50))
+			if(prob(25))
 				H.blur_eyes(3) //We need to add more shit down here
 
-		H.adjust_disgust(-1 * metabolism_rate)
+		H.adjust_disgust(-0.5 * metabolism_rate)
 
 	switch(H.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
