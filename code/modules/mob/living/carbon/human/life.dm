@@ -424,4 +424,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
+	if(disgust)
+		var/pukeprob = 5 + 0.1 * disgust
+		if(disgust >= DISGUST_LEVEL_GROSS)
+			if(prob(25))
+				stuttering += 1
+				confused += 2
+			if(prob(10) && !stat)
+				to_chat(src, "<span class='warning'>You feel kind of iffy...</span>")
+			jitteriness = max(jitteriness - 3, 0)
+		if(disgust >= DISGUST_LEVEL_VERYGROSS)
+			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
+				confused += 2.5
+				stuttering += 1
+				vomit(10, 0, 1, 0, 1, 0)
+			Dizzy(5)
+		if(disgust >= DISGUST_LEVEL_DISGUSTED)
+			if(prob(50))
+				blur_eyes(3) //We need to add more shit down here
+
+
 #undef HUMAN_MAX_OXYLOSS

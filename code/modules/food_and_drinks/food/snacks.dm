@@ -107,10 +107,10 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(foodtype & H.dna.species.toxic_food)
-					M << "<span class='notice'>What the hell was that thing?!</span>"
+					to_chat(M,"<span class='notice'>What the hell was that thing?!</span>")
 					M.adjust_disgust(25 + 30 * fraction)
 				else if(foodtype & H.dna.species.disliked_food)
-					M << "<span class='notice'>That didn't taste very good...</span>"
+					to_chat(M,"<span class='notice'>That didn't taste very good...</span>")
 					M.adjust_disgust(11 + 15 * fraction)
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST, fraction)

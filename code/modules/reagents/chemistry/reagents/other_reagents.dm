@@ -1630,3 +1630,14 @@
 	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
+
+/datum/reagent/pukonium
+	name = "pukonium"
+	id = "pukonium"
+	description = "Vile liquid that is refined in the faraway lands of Ko-Der-Bus"
+	color = "360f0f"
+	metabolization_rate = 5
+
+/datum/reagent/pukonium/on_mob_life(mob/living/M)
+	M.adjust_disgust(10)
+	..()
