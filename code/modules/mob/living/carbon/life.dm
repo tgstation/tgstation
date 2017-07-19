@@ -379,6 +379,9 @@
 	if(druggy)
 		adjust_drugginess(-1)
 
+	if(disgust)
+		adjust_disgust(-1)
+
 	if(hallucination)
 		spawn handle_hallucinations()
 		hallucination = max(hallucination-2,0)
@@ -434,4 +437,3 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
-
