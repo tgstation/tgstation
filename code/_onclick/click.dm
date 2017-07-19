@@ -448,16 +448,12 @@
 		M.Scale(tx, ty)
 		transform = M
 		screen_loc = "CENTER-16,CENTER-16"
-		to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed by transform, with transformation x/y at [tx]/[ty]</span>")
-		to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed with size [view_size_x]/[view_size_y]! Icon is at [newicon.Width()]/[newicon.Height()] pixels!</span>")
 	else
 		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
 		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
 		icon = newicon
-		to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed with size [view_size_x]/[view_size_y]! Icon is at [newicon.Width()]/[newicon.Height()] pixels!</span>")
 
 /obj/screen/click_catcher/Click(location, control, params)
-	to_chat(world, "<span class='boldnotice'>DEBUG: Clickcatcher Click with params [params]</span>")
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"] && iscarbon(usr))
 		var/mob/living/carbon/C = usr
@@ -468,14 +464,6 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
-
-/obj/screen/click_catcher/MouseMove(location,control,params)
-	to_chat(world, "<span class='boldnotice'>DEBUG: Clickcatcher MouseMove with params [params]</span>")
-	return ..()
-
-/obj/screen/click_catcher/MouseDrag(over_object,src_location,over_location,src_control,over_control,params)
-	to_chat(world, "<span class='boldnotice'>DEBUG: Clickcatcher MouseDrag with params [params]</span>")
-	return ..()
 
 /* MouseWheelOn */
 
