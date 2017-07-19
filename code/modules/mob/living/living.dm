@@ -374,7 +374,7 @@
 	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
-	se
+	set_disgust(0)
 	SetStun(0, FALSE)
 	SetKnockdown(0, FALSE)
 	SetSleeping(0, FALSE)
