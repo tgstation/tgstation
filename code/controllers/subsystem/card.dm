@@ -50,3 +50,18 @@ SUBSYSTEM_DEF(card)
 	for(var/i in 1 to num)
 		cards += get_new_card(card_type)
 	return cards
+
+/datum/controller/subsystem/card/proc/make_physical_card(amount, deck)
+	var/list/cards = get_cards(amount)
+	for(var/a in cards)
+		var/datum/griffeningcard/card_data = cards[1]
+		var/obj/item/griffening_single/physicalcard = new /obj/item/griffening_single //Var P is the card to be generated, it gets data
+		physicalcard.name = card_data.name
+		physicalcard.desc = card_data.desc
+		physicalcard.ATK = card_data.ATK
+		physicalcard.DEF = card_data.DEF
+		physicalcard.LVL = card_data.LVL
+		cards -= card_data //Removes itself so there can be another card at position one for when this loops around
+		var/obj/item/weapon/storage/backpack/deckgriffening/D = deck //The cardhand
+		D.contents += physicalcard
+		continue
