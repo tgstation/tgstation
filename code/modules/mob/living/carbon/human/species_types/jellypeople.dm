@@ -9,7 +9,7 @@
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	toxic_food = MEAT | VEGETABLES | GRAIN | FRUIT | DAIRY
+	toxic_food = MEAT | DAIRY
 	liked_food = TOXIC
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
