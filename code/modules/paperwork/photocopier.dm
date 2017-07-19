@@ -310,6 +310,17 @@
 			anchored = !anchored
 	else if(istype(O, /obj/item/areaeditor/blueprints))
 		to_chat(user, "<span class='warning'>The Blueprint is too large to put into the copier. You need to find something else to record the document</span>")
+	else if(istype(O, obj/item/griffening_single))
+		if(user.job in list("Curator"))
+			if(src.toner => 1)
+				playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
+				to_chat(user, "You slap the photocopier with the griffening card and watch the photocopier print out copies of the card.")	
+				var/obj/item/griffening_single/cardcopied = O
+				for(var/i = 0, i < 3, i++) //3 cards per print
+					new O(src)
+				toner - 1
+		else
+			to_chat(user, "You think that someone with more experience in collecting such valuable objects would be able to do this.")
 	else
 		return ..()
 
