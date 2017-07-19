@@ -573,6 +573,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return 1
 	return 0
 
+/obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+
 /obj/item/proc/is_hot()
 	return heat
 
