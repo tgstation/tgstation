@@ -438,7 +438,6 @@
 	screen_loc = "CENTER"
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
-	screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
 	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "blank")
 	if(view_size_x > 16 || view_size_y > 16)
 		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
@@ -448,7 +447,9 @@
 		var/matrix/M = new
 		M.Scale(tx, ty)
 		transform = M
+		screen_loc = "CENTER-16,CENTER-16"
 	else
+		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
 		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
 		icon = newicon
 	to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed with size [view_size_x]/[view_size_y]! Icon is at [newicon.Width()]/[newicon.Height()] pixels!</span>")
