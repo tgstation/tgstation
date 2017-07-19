@@ -21,8 +21,7 @@
 
 
 /obj/screen/movable/MouseDrop(over_object, src_location, over_location, src_control, over_control, params)
-	if(locked)
-		Shake(5, 5, 5) //no! I am locked! begone!
+	if(locked) //no! I am locked! begone!
 		return
 	var/list/PM = params2list(params)
 
