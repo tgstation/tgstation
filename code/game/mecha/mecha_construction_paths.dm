@@ -74,10 +74,10 @@
 
 
 /datum/construction/mecha/ripley_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
+	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg), //4
 					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg)//5
 					)
 
@@ -283,11 +283,11 @@
 
 
 /datum/construction/mecha/gygax_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/gygax_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/gygax_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/gygax_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/gygax_head)
 					)
 
@@ -568,11 +568,11 @@
 	return
 
 /datum/construction/mecha/firefighter_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg), //5
 					 list("key"=/obj/item/clothing/suit/fire)//6
 					)
 
@@ -792,11 +792,11 @@
 
 
 /datum/construction/mecha/honker_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/honker_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/honker_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/honker_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/honker_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/honker_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/honker_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/honker_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/honker_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
@@ -819,17 +819,17 @@
 
 /datum/construction/mecha/honker
 	result = "/obj/mecha/combat/honker"
-	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
-					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
-					 list("key"=/obj/item/weapon/bikehorn),//3
-					 list("key"=/obj/item/clothing/mask/gas/clown_hat),//4
-					 list("key"=/obj/item/weapon/bikehorn),//5
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting),//6
-					 list("key"=/obj/item/weapon/bikehorn),//7
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/peripherals),//8
-					 list("key"=/obj/item/weapon/bikehorn),//9
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/main),//10
-					 list("key"=/obj/item/weapon/bikehorn),//11
+	steps = list(list("key"=/obj/item/weapon/bikehorn), //1
+					 list("key"=/obj/item/clothing/shoes/clown_shoes), //2
+					 list("key"=/obj/item/weapon/bikehorn), //3
+					 list("key"=/obj/item/clothing/mask/gas/clown_hat), //4
+					 list("key"=/obj/item/weapon/bikehorn), //5
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting), //6
+					 list("key"=/obj/item/weapon/bikehorn), //7
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/peripherals), //8
+					 list("key"=/obj/item/weapon/bikehorn), //9
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/main), //10
+					 list("key"=/obj/item/weapon/bikehorn), //11
 					 )
 
 /datum/construction/mecha/honker/action(atom/used_atom,mob/user)
@@ -868,11 +868,11 @@
 	return
 
 /datum/construction/mecha/durand_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/durand_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/durand_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/durand_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/durand_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/durand_head)
 					)
 
@@ -1156,11 +1156,11 @@
 
 /datum/construction/mecha/phazon_chassis
 	result = "/obj/mecha/combat/phazon"
-	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/phazon_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/phazon_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/phazon_head)
 					)
 
@@ -1487,11 +1487,11 @@
 //ODYSSEUS
 
 /datum/construction/mecha/odysseus_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/odysseus_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/odysseus_head),//2
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm),//4
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/odysseus_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/odysseus_head), //2
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm), //4
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/odysseus_right_leg)//6
 					)
 

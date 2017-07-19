@@ -245,7 +245,7 @@
 
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
-		if(istype(A,/obj/structure/chair))
+		if(istype(A, /obj/structure/chair))
 			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))

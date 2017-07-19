@@ -26,11 +26,11 @@
 						src.visible_message("<span class='warning'>[src] seems to have been harmed by the purity of [attacker]'s clothes.</span>", "<span class='notice'>Unsullied white clothing is disrupting your form.</span>")
 						return whiteness[U.type] + 1
 		if(BANE_TOOLBOX)
-			if(istype(weapon,/obj/item/weapon/storage/toolbox))
+			if(istype(weapon, /obj/item/weapon/storage/toolbox))
 				src.visible_message("<span class='warning'>The [weapon] seems unusually robust this time.</span>", "<span class='notice'>The [weapon] is your unmaking!</span>")
 				return 2.5 // Will take four hits with a normal toolbox to crit.
 		if(BANE_HARVEST)
-			if(istype(weapon,/obj/item/weapon/reagent_containers/food/snacks/grown/))
+			if(istype(weapon, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 				visible_message("<span class='warning'>The spirits of the harvest aid in the exorcism.</span>", "<span class='notice'>The harvest spirits are harming you.</span>")
 				Knockdown(40)
 				qdel(weapon)

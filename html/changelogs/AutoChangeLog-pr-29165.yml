@@ -1,4 +1,0 @@
-author: "shizcalev"
-delete-after: True
-changes: 
-  - bugfix: "Cerestation's emergency shuttle autopilot will no longer fly you in reverse back to Centcom!"

@@ -194,7 +194,7 @@
 		if(AM == source)
 			continue			//we don't want to return source
 
-		if(!cable_only && istype(AM,/obj/machinery/power))
+		if(!cable_only && istype(AM, /obj/machinery/power))
 			var/obj/machinery/power/P = AM
 			if(P.powernet == 0)
 				continue		// exclude APCs which have powernet=0
@@ -203,7 +203,7 @@
 				if(d == 0)
 					. += P
 
-		else if(istype(AM,/obj/structure/cable))
+		else if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
 
 			if(!unmarked || !C.powernet)
@@ -228,13 +228,13 @@
 		P = worklist[index] //get the next power object found
 		index++
 
-		if( istype(P,/obj/structure/cable))
+		if( istype(P, /obj/structure/cable))
 			var/obj/structure/cable/C = P
 			if(C.powernet != PN) //add it to the powernet, if it isn't already there
 				PN.add_cable(C)
 			worklist |= C.get_connections() //get adjacents power objects, with or without a powernet
 
-		else if(P.anchored && istype(P,/obj/machinery/power))
+		else if(P.anchored && istype(P, /obj/machinery/power))
 			var/obj/machinery/power/M = P
 			found_machines |= M //we wait until the powernet is fully propagates to connect the machines
 
@@ -279,7 +279,7 @@
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
-	if(istype(M.loc,/obj/mecha))
+	if(istype(M.loc, /obj/mecha))
 		return 0	//feckin mechs are dumb
 	if(dist_check)
 		if(!in_range(source,M))
@@ -292,21 +292,21 @@
 				return 0		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
-	if(istype(power_source,/area))
+	if(istype(power_source, /area))
 		source_area = power_source
 		power_source = source_area.get_apc()
-	if(istype(power_source,/obj/structure/cable))
+	if(istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
 	var/obj/item/weapon/stock_parts/cell/cell
 
-	if(istype(power_source,/datum/powernet))
+	if(istype(power_source, /datum/powernet))
 		PN = power_source
-	else if(istype(power_source,/obj/item/weapon/stock_parts/cell))
+	else if(istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell = power_source
-	else if(istype(power_source,/obj/machinery/power/apc))
+	else if(istype(power_source, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
 		cell = apc.cell
 		if (apc.terminal)
@@ -338,7 +338,7 @@
 
 	if (source_area)
 		source_area.use_power(drained_energy/GLOB.CELLRATE)
-	else if (istype(power_source,/datum/powernet))
+	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
 		PN.load+=drained_power
 	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))

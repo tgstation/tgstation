@@ -1,6 +1,6 @@
 /obj/item/weapon/electronics/airlock
 	name = "airlock electronics"
-	req_access = list(GLOB.access_maint_tunnels)
+	req_access = list(ACCESS_MAINT_TUNNELS)
 
 	var/list/accesses = list()
 	var/one_access = 0

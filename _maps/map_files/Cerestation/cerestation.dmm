@@ -2543,7 +2543,7 @@
 	},
 /area/ai_monitored/security/armory)
 "afz" = (
-/obj/machinery/door/window/brigdoor/northleft{
+/obj/machinery/door/window/brigdoor/security/cell/northleft{
 	id = "Cell 6";
 	name = "Cell Door 6"
 	},
@@ -3366,10 +3366,9 @@
 	},
 /area/security/prison)
 "agY" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 4";
-	name = "Cell Door 4";
-	req_access_txt = "1"
+	name = "Cell Door 4"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -4891,7 +4890,7 @@
 	},
 /area/security/prison)
 "akf" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 8";
 	name = "Cell Door 8"
 	},
@@ -6352,10 +6351,9 @@
 	},
 /area/security/prison)
 "amZ" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 8";
-	name = "Cell Door 8";
-	req_access_txt = "1"
+	name = "Cell Door 8"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -7602,10 +7600,9 @@
 	},
 /area/security/prison)
 "apz" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 2";
-	name = "Cell Door 2";
-	req_access_txt = "1"
+	name = "Cell Door 2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -7654,7 +7651,7 @@
 	},
 /area/security/prison)
 "apD" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 9";
 	name = "Cell Door 9"
 	},
@@ -8044,10 +8041,9 @@
 	},
 /area/quartermaster/miningdock)
 "aqu" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 3";
-	name = "Cell Door 3";
-	req_access_txt = "1"
+	name = "Cell Door 3"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -8110,10 +8106,9 @@
 	},
 /area/security/warden)
 "aqB" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 7";
-	name = "Cell Door 7";
-	req_one_access_txt = "1"
+	name = "Cell Door 7"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -10024,10 +10019,9 @@
 	},
 /area/security/armory)
 "auu" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 2";
-	name = "Cell Door 2";
-	req_access_txt = "1"
+	name = "Cell Door 2"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -10071,10 +10065,9 @@
 	},
 /area/security/warden)
 "auy" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 6";
-	name = "Cell Door 6";
-	req_access_txt = "1"
+	name = "Cell Door 6"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -12397,10 +12390,9 @@
 	},
 /area/security/brig)
 "azj" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 1";
-	name = "Cell Door 1";
-	req_access_txt = "1"
+	name = "Cell Door 1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -46657,7 +46649,6 @@
 "bIB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -47246,7 +47237,6 @@
 "bJN" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -51645,7 +51635,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -66192,7 +66181,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -70268,7 +70256,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -72141,10 +72128,9 @@
 	},
 /area/quartermaster/sorting)
 "cEr" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 3";
-	name = "Cell Door 3";
-	req_access_txt = "1"
+	name = "Cell Door 3"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73567,9 +73553,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Holding Cell";
-	req_access_txt = "2"
+/obj/machinery/door/window/brigdoor/security/holding{
+	name = "Holding Cell"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -87994,7 +87979,7 @@
 	},
 /area/security/prison)
 "dmi" = (
-/obj/machinery/door/window/brigdoor/northleft{
+/obj/machinery/door/window/brigdoor/security/cell/northleft{
 	id = "Cell 5";
 	name = "Cell Door 5"
 	},
@@ -88413,7 +88398,7 @@
 	},
 /area/security/prison)
 "dnc" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 7";
 	name = "Cell Door 7"
 	},
@@ -90269,7 +90254,6 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot{
-	pixel_y = 1;
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -90892,10 +90876,9 @@
 	},
 /area/security/armory)
 "drT" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 1";
-	name = "Cell Door 1";
-	req_access_txt = "1"
+	name = "Cell Door 1"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90912,7 +90895,7 @@
 	},
 /area/security/prison)
 "drV" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 10";
 	name = "Cell Door 10"
 	},

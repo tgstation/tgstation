@@ -6,6 +6,7 @@
 	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
+	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
@@ -103,6 +104,12 @@
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
+
+/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file)
+	. = list()
+	if(isinhands && item_state && inhand_overlay)
+		var/mutable_appearance/M = mutable_appearance(icon_file, "slab_[inhand_overlay]")
+		. += M
 
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have

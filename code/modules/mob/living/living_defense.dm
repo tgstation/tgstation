@@ -67,7 +67,7 @@
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		if(istype(I,/obj/item/weapon)) //If the item is a weapon...
+		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
 			var/obj/item/weapon/W = I
 			dtype = W.damtype
 

@@ -79,10 +79,13 @@
 		SSshuttle.shuttle_loan = null
 
 		var/list/empty_shuttle_turfs = list()
-		for(var/turf/open/floor/T in SSshuttle.supply.areaInstance)
-			if(is_blocked_turf(T))
-				continue
-			empty_shuttle_turfs += T
+		var/list/area/shuttle/shuttle_areas = SSshuttle.supply.shuttle_areas
+		for(var/place in shuttle_areas)
+			var/area/shuttle/shuttle_area = place
+			for(var/turf/open/floor/T in shuttle_area)
+				if(is_blocked_turf(T))
+					continue
+				empty_shuttle_turfs += T
 		if(!empty_shuttle_turfs.len)
 			return
 

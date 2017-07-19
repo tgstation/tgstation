@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(pai)
 		var/obj/item/device/paicard/card = locate(href_list["device"])
 		if(card.pai)
 			return
-		if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+		if(istype(card, /obj/item/device/paicard) && istype(candidate, /datum/paiCandidate))
 			if(check_ready(candidate) != candidate)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)

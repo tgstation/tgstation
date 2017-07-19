@@ -3,7 +3,7 @@
 	desc = "Used to manage tracking implants placed inside criminals."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(GLOB.access_brig)
+	req_access = list(ACCESS_BRIG)
 	var/id = 0
 	var/temp = null
 	var/status = 0

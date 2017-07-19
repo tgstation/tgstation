@@ -271,10 +271,10 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I, /obj/item/device/radio/))
 			var/obj/item/device/radio/r = I
 			r.listening = 0
-			if(!istype(I,/obj/item/device/radio/headset))
+			if(!istype(I, /obj/item/device/radio/headset))
 				r.broadcasting = 0 //goddamned headset hacks
 
 /obj/item/device/firing_pin/abductor
