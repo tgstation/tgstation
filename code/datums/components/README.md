@@ -27,7 +27,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 ### Vars
 
 1. `/datum/var/list/datum_components` (private)
-    * Lazy list of all components a datum has   (TODO: Make this a typecache with longer paths overwriting shorter ones maybe? It'd be weird)
+    * Lazy associated list of type -> component/list of components.
 1. `/datum/component/var/enabled` (protected, boolean)
     * If the component is enabled. If not, it will not react to signals
     * TRUE by default
