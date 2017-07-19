@@ -568,6 +568,7 @@
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
 
+	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
 
