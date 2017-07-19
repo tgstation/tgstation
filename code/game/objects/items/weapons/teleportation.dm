@@ -201,7 +201,7 @@ Frequency:
 	active_portal_pairs[created[1]] = created[2]
 	var/obj/effect/portal/c1 = created[1]
 	var/obj/effect/portal/c2 = created[2]
-	investigate_log("was used by [user]([user.ckey]) at \[[user.x]/[user.y]/[user.z]\] to create a portal pair with destinations \[[c1.x]/[c1.y]/[c1.z]\] and \[[c2.x]/[c2.y]/[c2.z]\].", INVESTIGATE_PORTAL)
+	investigate_log("was used by [user]([user.ckey]) at COORDS(user) to create a portal pair with destinations COORDS(c1) and COORDS(c2).", INVESTIGATE_PORTAL)
 	add_fingerprint(user)
 
 /obj/item/weapon/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
