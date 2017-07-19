@@ -460,10 +460,10 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			id.update_label()
 
 			if(worn)
-				if(istype(worn,/obj/item/device/pda))
+				if(istype(worn, /obj/item/device/pda))
 					worn:id = id
 					id.loc = worn
-				else if(istype(worn,/obj/item/weapon/storage/wallet))
+				else if(istype(worn, /obj/item/weapon/storage/wallet))
 					worn:front_id = id
 					id.loc = worn
 					worn.update_icon()
@@ -666,7 +666,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			F.active = 1
 			F.state = 2
 			F.power = 250
-			F.anchored = 1
+			F.anchored = TRUE
 			F.warming_up = 3
 			F.start_fields()
 			F.update_icon()

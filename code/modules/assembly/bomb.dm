@@ -7,7 +7,7 @@
 	throw_speed = 2
 	throw_range = 4
 	flags = CONDUCT
-	var/status = 0   //0 - not readied //1 - bomb finished with welder
+	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a plasma tank
 	origin_tech = "materials=1;engineering=1"
@@ -44,12 +44,12 @@
 		return
 	if((istype(W, /obj/item/weapon/weldingtool) && W:welding))
 		if(!status)
-			status = 1
+			status = TRUE
 			GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
 			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
 			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		else
-			status = 0
+			status = FALSE
 			GLOB.bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
 			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
 	add_fingerprint(user)

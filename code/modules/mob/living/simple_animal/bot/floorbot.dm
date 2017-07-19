@@ -4,8 +4,8 @@
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "floorbot0"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	health = 25
 	maxHealth = 25
 
@@ -61,7 +61,7 @@
 	target = null
 	oldloc = null
 	ignore_list = list()
-	anchored = 0
+	anchored = FALSE
 	update_icon()
 
 /mob/living/simple_animal/bot/floorbot/set_custom_texts()
@@ -252,12 +252,12 @@
 				repair(target)
 			else if(emagged == 2 && isfloorturf(target))
 				var/turf/open/floor/F = target
-				anchored = 1
+				anchored = TRUE
 				mode = BOT_REPAIRING
 				F.ReplaceWithLattice()
 				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
 				spawn(5)
-					anchored = 0
+					anchored = FALSE
 					mode = BOT_IDLE
 					target = null
 			path = list()
@@ -280,11 +280,11 @@
 		if(HULL_BREACH) //The most common job, patching breaches in the station's hull.
 			if(is_hull_breach(scan_target)) //Ensure that the targeted space turf is actually part of the station, and not random space.
 				result = scan_target
-				anchored = 1 //Prevent the floorbot being blown off-course while trying to reach a hull breach.
+				anchored = TRUE //Prevent the floorbot being blown off-course while trying to reach a hull breach.
 		if(LINE_SPACE_MODE) //Space turfs in our chosen direction are considered.
 			if(get_dir(src, scan_target) == targetdirection)
 				result = scan_target
-				anchored = 1
+				anchored = TRUE
 		if(PLACE_TILE)
 			F = scan_target
 			if(istype(F, /turf/open/floor/plating)) //The floor must not already have a tile.
@@ -315,7 +315,7 @@
 	else if(!isfloorturf(target_turf))
 		return
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
-		anchored = 1
+		anchored = TRUE
 		icon_state = "floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
@@ -330,7 +330,7 @@
 		var/turf/open/floor/F = target_turf
 
 		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || istype(F, /turf/open/floor/plating)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
-			anchored = 1
+			anchored = TRUE
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
@@ -341,7 +341,7 @@
 				F.ChangeTurf(/turf/open/floor/plasteel)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !istype(F, /turf/open/floor/plating))
-			anchored = 1
+			anchored = TRUE
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
@@ -355,7 +355,7 @@
 					speak("Requesting refill of custom floortiles to continue replacing.")
 	mode = BOT_IDLE
 	update_icon()
-	anchored = 0
+	anchored = FALSE
 	target = null
 
 /mob/living/simple_animal/bot/floorbot/update_icon()
@@ -363,7 +363,7 @@
 
 
 /mob/living/simple_animal/bot/floorbot/explode()
-	on = 0
+	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
@@ -385,7 +385,7 @@
 	..()
 
 /obj/machinery/bot_core/floorbot
-	req_one_access = list(GLOB.access_construction, GLOB.access_robotics)
+	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
 
 /mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A)
 	if(isturf(A))

@@ -134,7 +134,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. <font size=6><b>DON'T</b></font> abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
-	id_access_list = list(GLOB.access_syndicate)
+	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/lavaland_syndicate
 	assignedrole = "Lavaland Syndicate"
 
@@ -161,7 +161,7 @@
 
 /datum/outfit/lavaland_syndicate/comms
 	name = "Lavaland Syndicate Comms Agent"
-	r_hand = /obj/item/weapon/melee/energy/sword/saber
+	r_hand = /obj/item/weapon/melee/transforming/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
 	l_pocket = /obj/item/weapon/card/id/syndicate/anyone

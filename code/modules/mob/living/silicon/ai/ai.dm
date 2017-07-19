@@ -16,8 +16,8 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	canmove = 0
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
@@ -877,7 +877,7 @@
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
 		light_cameras()
-	if(istype(A,/obj/machinery/camera))
+	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
 		if(ismovableatom(A))

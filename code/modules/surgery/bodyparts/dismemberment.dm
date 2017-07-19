@@ -30,7 +30,7 @@
 	var/turf/location = C.loc
 	if(istype(location))
 		C.add_splatter_floor(location)
-	var/direction = pick(GLOB.cardinal)
+	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
 	for(var/i in 1 to t_range-1)

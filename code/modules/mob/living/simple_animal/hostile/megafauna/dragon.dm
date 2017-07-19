@@ -130,7 +130,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
 
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/fire_wall, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
@@ -191,7 +191,9 @@ Difficulty: Medium
 		sleep(1)
 		if(QDELETED(src) || stat == DEAD) //we got hit and died, rip us
 			qdel(F)
-			swooping &= ~SWOOP_DAMAGEABLE
+			if(stat == DEAD)
+				swooping &= ~SWOOP_DAMAGEABLE
+				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
 			return
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE

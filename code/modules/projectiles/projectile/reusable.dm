@@ -5,7 +5,7 @@
 	var/dropped = 0
 	impact_effect_type = null
 
-/obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	handle_drop()
 

@@ -12,7 +12,7 @@
 	range = 7
 	cooldown_min = 30
 	selection_type = "range"
-	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
+	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 	action_icon_state = "barn"
 

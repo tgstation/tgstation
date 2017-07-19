@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	wait = 1
 	priority = 500
 	init_order = INIT_ORDER_OVERLAY
-	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP 
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP
 
 	stat_tag = "Ov"
 	currentrun = null
@@ -45,12 +45,14 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
 
 /atom/proc/compile_overlays()
-	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
-		overlays = our_overlays + priority_overlays
-	else if(LAZYLEN(our_overlays))
-		overlays = our_overlays
-	else if(LAZYLEN(priority_overlays))
-		overlays = priority_overlays
+	var/list/oo = our_overlays
+	var/list/po = priority_overlays
+	if(LAZYLEN(po) && LAZYLEN(oo))
+		overlays = oo + po
+	else if(LAZYLEN(oo))
+		overlays = oo
+	else if(LAZYLEN(po))
+		overlays = po
 	else
 		overlays.Cut()
 	flags &= ~OVERLAY_QUEUED

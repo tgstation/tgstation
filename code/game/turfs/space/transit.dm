@@ -25,11 +25,14 @@
 	dir = EAST
 
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
-	throw_atom(AM)
+	if(!locate(/obj/structure/lattice) in src)
+		throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
 	if(!AM || istype(AM, /obj/docking_port))
 		return
+	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
+		return			// Don't move multi tile objects if their origin isnt in transit
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 

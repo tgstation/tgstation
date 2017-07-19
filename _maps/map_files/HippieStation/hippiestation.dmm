@@ -5205,10 +5205,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akO" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 1";
-	name = "Cell 1";
-	req_access_txt = "1"
+	name = "Cell 1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5240,10 +5239,9 @@
 /turf/closed/wall,
 /area/security/brig)
 "akR" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
-	name = "Cell 2";
-	req_access_txt = "1"
+	name = "Cell 2"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5267,10 +5265,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akT" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
-	name = "Cell 3";
-	req_access_txt = "1"
+	name = "Cell 3"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5367,10 +5364,9 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "ala" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 4";
-	name = "Cell 4";
-	req_access_txt = "1"
+	name = "Cell 4"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -27486,6 +27482,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bkp" = (
@@ -50572,13 +50569,13 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
@@ -51446,7 +51443,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -55899,7 +55896,7 @@
 /area/space)
 "csa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -60927,7 +60924,7 @@
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -61462,7 +61459,7 @@
 /area/engine/supermatter)
 "cEv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -61485,7 +61482,7 @@
 /area/engine/supermatter)
 "cEy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	icon_state = "manifold";
 	dir = 4
@@ -61801,7 +61798,7 @@
 /area/engine/engineering)
 "cFe" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
@@ -61824,7 +61821,7 @@
 /area/engine/engineering)
 "cFh" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
@@ -62347,7 +62344,7 @@
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
@@ -62356,7 +62353,7 @@
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
@@ -62373,7 +62370,7 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -62407,7 +62404,7 @@
 /area/engine/engineering)
 "cGK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -62415,7 +62412,7 @@
 /area/engine/engineering)
 "cGL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -64521,72 +64518,72 @@
 /area/engine/engineering)
 "cMn" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMo" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMp" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMq" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMr" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMs" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMt" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMu" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMw" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMx" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMz" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMA" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMB" = (
@@ -64667,7 +64664,7 @@
 /area/engine/supermatter)
 "cMN" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cMO" = (
@@ -67395,8 +67392,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cWo" = (
-/obj/structure/statue/bananium/clown{
-	anchored = 1
+/obj/structure/statue/sandstone/assistant{
+	anchored = 1;
+	desc = "A solid bananium clown statue. Looks like it's chipping a little bit. Weird.";
+	icon_state = "clown";
+	name = "statue of a clown"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)

@@ -4,9 +4,8 @@
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
-	density = 1
-	anchored = 1
-	obj_integrity = 350
+	density = TRUE
+	anchored = TRUE
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 	layer = ABOVE_WINDOW_LAYER
@@ -30,6 +29,8 @@
 	var/radio_channel = "Medical"
 
 	var/running_bob_anim = FALSE
+
+	var/escape_in_progress = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -252,11 +253,16 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
+	if(escape_in_progress)
+		to_chat(user, "<span class='notice'>You are already trying to exit (This will take around 30 seconds)</span>")
+		return
+	escape_in_progress = TRUE
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
 		if(occupant == user) // Check they're still here.
 			open_machine()
+	escape_in_progress = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
@@ -301,7 +307,7 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

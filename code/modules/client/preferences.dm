@@ -141,6 +141,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a> "
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Loadout</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -474,6 +475,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 
 			dat += "</td></tr></table>"
+		else
+			dat = hippie_dat_replace(current_tab)
 
 	dat += "<hr><center>"
 

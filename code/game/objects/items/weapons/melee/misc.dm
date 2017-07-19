@@ -65,6 +65,18 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
+/obj/item/weapon/melee/sabre/on_exit_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+
+/obj/item/weapon/melee/sabre/on_enter_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
@@ -75,7 +87,7 @@
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 0
-	var/on = 1
+	var/on = TRUE
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
@@ -131,7 +143,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	needs_permit = 0
 	force = 0
-	on = 0
+	on = FALSE
 
 /obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -148,7 +160,7 @@
 		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
-		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(get_turf(H), H.dna)
 		return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
@@ -244,13 +256,13 @@
 /obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.drop_item()
-	shard.Bumped(user)
+	shard.CollidedWith(user)
 
 /obj/item/weapon/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
 		shard.Consume()
 	else if(!isturf(target))
-		shard.Bumped(target)
+		shard.CollidedWith(target)
 	else
 		consume_turf(target)
 

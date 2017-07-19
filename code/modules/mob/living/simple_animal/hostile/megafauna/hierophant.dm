@@ -255,7 +255,7 @@ Difficulty: Hard
 					animate(src, color = "#660099", time = 6)
 					sleep(6)
 					var/list/targets = ListTargets()
-					var/list/cardinal_copy = GLOB.cardinal.Copy()
+					var/list/cardinal_copy = GLOB.cardinals.Copy()
 					while(health && targets.len && cardinal_copy.len)
 						var/mob/living/pickedtarget = pick(targets)
 						if(targets.len >= cardinal_copy.len)
@@ -281,7 +281,7 @@ Difficulty: Hard
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
 			var/obj/effect/temp_visual/hierophant/chaser/OC = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
-			OC.moving_dir = pick(GLOB.cardinal - C.moving_dir)
+			OC.moving_dir = pick(GLOB.cardinals - C.moving_dir)
 
 	else if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
 		blink(target)
@@ -315,7 +315,7 @@ Difficulty: Hard
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
@@ -345,7 +345,7 @@ Difficulty: Hard
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
 	arena_cooldown = world.time + initial(arena_cooldown)
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
 		if(t && get_dist(t, T) == 11)
@@ -467,7 +467,7 @@ Difficulty: Hard
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target, height = 0)
+/obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target)
 	if(QDELETED(caster))
 		return FALSE
 	if(mover == caster.pulledby)
@@ -507,7 +507,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/chaser/proc/get_target_dir()
 	. = get_cardinal_dir(src, targetturf)
 	if((. != previous_moving_dir && . == more_previouser_moving_dir) || . == 0) //we're alternating, recalculate
-		var/list/cardinal_copy = GLOB.cardinal.Copy()
+		var/list/cardinal_copy = GLOB.cardinals.Copy()
 		cardinal_copy -= more_previouser_moving_dir
 		. = pick(cardinal_copy)
 

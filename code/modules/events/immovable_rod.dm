@@ -20,7 +20,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
-	var/startside = pick(GLOB.cardinal)
+	var/startside = pick(GLOB.cardinals)
 	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION)
 	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION)
 	new /obj/effect/immovablerod(startT, endT)
@@ -31,8 +31,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"
 	throwforce = 100
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/z_original = 0
 	var/destination
 	var/notify = TRUE
@@ -69,7 +69,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
 
-/obj/effect/immovablerod/Bump(atom/clong)
+/obj/effect/immovablerod/Collide(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
@@ -80,7 +80,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	if(isturf(clong) || isobj(clong))
 		if(clong.density)
-			clong.ex_act(2)
+			clong.ex_act(EXPLODE_HEAVY)
 
 	else if(isliving(clong))
 		penetrate(clong)
@@ -100,4 +100,4 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		var/mob/living/carbon/human/H = L
 		H.adjustBruteLoss(160)
 	if(L && (L.density || prob(10)))
-		L.ex_act(2)
+		L.ex_act(EXPLODE_HEAVY)

@@ -2543,7 +2543,7 @@
 	},
 /area/ai_monitored/security/armory)
 "afz" = (
-/obj/machinery/door/window/brigdoor/northleft{
+/obj/machinery/door/window/brigdoor/security/cell/northleft{
 	id = "Cell 6";
 	name = "Cell Door 6"
 	},
@@ -3366,10 +3366,9 @@
 	},
 /area/security/prison)
 "agY" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 4";
-	name = "Cell Door 4";
-	req_access_txt = "1"
+	name = "Cell Door 4"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -4891,7 +4890,7 @@
 	},
 /area/security/prison)
 "akf" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 8";
 	name = "Cell Door 8"
 	},
@@ -6352,10 +6351,9 @@
 	},
 /area/security/prison)
 "amZ" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 8";
-	name = "Cell Door 8";
-	req_access_txt = "1"
+	name = "Cell Door 8"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -7602,10 +7600,9 @@
 	},
 /area/security/prison)
 "apz" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 2";
-	name = "Cell Door 2";
-	req_access_txt = "1"
+	name = "Cell Door 2"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -7654,7 +7651,7 @@
 	},
 /area/security/prison)
 "apD" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 9";
 	name = "Cell Door 9"
 	},
@@ -8044,10 +8041,9 @@
 	},
 /area/quartermaster/miningdock)
 "aqu" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 3";
-	name = "Cell Door 3";
-	req_access_txt = "1"
+	name = "Cell Door 3"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -8110,10 +8106,9 @@
 	},
 /area/security/warden)
 "aqB" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 7";
-	name = "Cell Door 7";
-	req_one_access_txt = "1"
+	name = "Cell Door 7"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -10024,10 +10019,9 @@
 	},
 /area/security/armory)
 "auu" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 2";
-	name = "Cell Door 2";
-	req_access_txt = "1"
+	name = "Cell Door 2"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -10071,10 +10065,9 @@
 	},
 /area/security/warden)
 "auy" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 6";
-	name = "Cell Door 6";
-	req_access_txt = "1"
+	name = "Cell Door 6"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -12397,10 +12390,9 @@
 	},
 /area/security/brig)
 "azj" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 1";
-	name = "Cell Door 1";
-	req_access_txt = "1"
+	name = "Cell Door 1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -32943,8 +32935,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -32971,8 +32962,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -32984,8 +32974,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/emitter{
-	anchored = 1;
+/obj/machinery/power/emitter/anchored{
 	state = 2
 	},
 /turf/open/floor/plating{
@@ -34154,28 +34143,22 @@
 	},
 /area/engine/engineering)
 "bmB" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 4;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
 "bmC" = (
-/obj/structure/reflector/box{
-	anchored = 1
-	},
+/obj/structure/reflector/box/anchored,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
 "bmD" = (
-/obj/structure/reflector/single{
-	anchored = 1;
-	dir = 1;
-	icon_state = "reflector"
+/obj/structure/reflector/single/anchored{
+	dir = 1
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37462,7 +37445,7 @@
 /area/engine/engineering)
 "bsb" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38211,9 +38194,7 @@
 	},
 /area/engine/supermatter)
 "btu" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -38229,7 +38210,7 @@
 	dir = 6
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38264,15 +38245,13 @@
 	dir = 10
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/supermatter)
 "btA" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
 	d2 = 4
@@ -39127,7 +39106,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -39145,15 +39124,13 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/highpressure/fulltile,
+/obj/structure/window/plasma/reinforced/fulltile,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/supermatter)
 "buZ" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
 	d2 = 4
@@ -39885,9 +39862,7 @@
 	},
 /area/engine/engineering)
 "bwo" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -41616,7 +41591,6 @@
 "bzz" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	name = "scrubbers pipe";
 	dir = 4
 	},
 /turf/open/floor/plasteel/black{
@@ -46675,7 +46649,6 @@
 "bIB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -46802,12 +46775,8 @@
 "bIO" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 10;
@@ -47268,7 +47237,6 @@
 "bJN" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -51591,7 +51559,6 @@
 /area/engine/atmos)
 "bRz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	name = "scrubbers pipe";
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -51605,7 +51572,6 @@
 	name = "Waste Loop"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	name = "scrubbers pipe";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -51669,7 +51635,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -59265,7 +59230,7 @@
 	height = 20;
 	name = "Cere emergency shuttle";
 	port_angle = 90;
-	preferred_direction = 2;
+	preferred_direction = 1;
 	width = 42
 	},
 /obj/docking_port/stationary{
@@ -66216,7 +66181,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -70292,7 +70256,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -72165,10 +72128,9 @@
 	},
 /area/quartermaster/sorting)
 "cEr" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 3";
-	name = "Cell Door 3";
-	req_access_txt = "1"
+	name = "Cell Door 3"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73591,9 +73553,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Holding Cell";
-	req_access_txt = "2"
+/obj/machinery/door/window/brigdoor/security/holding{
+	name = "Holding Cell"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -88018,7 +87979,7 @@
 	},
 /area/security/prison)
 "dmi" = (
-/obj/machinery/door/window/brigdoor/northleft{
+/obj/machinery/door/window/brigdoor/security/cell/northleft{
 	id = "Cell 5";
 	name = "Cell Door 5"
 	},
@@ -88437,7 +88398,7 @@
 	},
 /area/security/prison)
 "dnc" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 7";
 	name = "Cell Door 7"
 	},
@@ -88758,8 +88719,7 @@
 /area/security/processing)
 "dnR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90294,7 +90254,6 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot{
-	pixel_y = 1;
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -90917,10 +90876,9 @@
 	},
 /area/security/armory)
 "drT" = (
-/obj/machinery/door/window/brigdoor/westleft{
+/obj/machinery/door/window/brigdoor/security/cell/westleft{
 	id = "Cell 1";
-	name = "Cell Door 1";
-	req_access_txt = "1"
+	name = "Cell Door 1"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90937,7 +90895,7 @@
 	},
 /area/security/prison)
 "drV" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/security/cell/eastleft{
 	id = "Cell 10";
 	name = "Cell Door 10"
 	},

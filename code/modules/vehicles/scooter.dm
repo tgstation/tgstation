@@ -35,7 +35,7 @@
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
 
-	density = 0
+	density = FALSE
 
 /obj/vehicle/scooter/skateboard/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
@@ -43,16 +43,16 @@
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	if(has_buckled_mobs())
-		density = 1
+		density = TRUE
 	else
-		density = 0
+		density = FALSE
 	..()
 
-/obj/vehicle/scooter/skateboard/Bump(atom/A)
+/obj/vehicle/scooter/skateboard/Collide(atom/A)
 	..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
-		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinal))
+		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(100)

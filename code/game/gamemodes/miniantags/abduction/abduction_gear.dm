@@ -271,10 +271,10 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I, /obj/item/device/radio/))
 			var/obj/item/device/radio/r = I
 			r.listening = 0
-			if(!istype(I,/obj/item/device/radio/headset))
+			if(!istype(I, /obj/item/device/radio/headset))
 				r.broadcasting = 0 //goddamned headset hacks
 
 /obj/item/device/firing_pin/abductor
@@ -600,7 +600,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alien_frame"
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
-	density = 1
+	density = TRUE
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -694,7 +694,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	typetext = "abductor"
 	icontext = "abductor"
 	airlock_type = /obj/machinery/door/airlock/abductor
-	anchored = 1
+	anchored = TRUE
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)

@@ -141,7 +141,7 @@
 /mob/living/simple_animal/revenant/say(message)
 	if(!message)
 		return
-	log_say("[key_name(src)] : [message]")
+	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in GLOB.mob_list)
 		if(isrevenant(M))
@@ -279,7 +279,7 @@
 		to_chat(src, "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>")
 		return FALSE
 	for(var/obj/O in T)
-		if(O.density && !O.CanPass(src, T, 5))
+		if(O.density && !O.CanPass(src, T))
 			to_chat(src, "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>")
 			return FALSE
 	if(inhibited)

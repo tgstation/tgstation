@@ -154,7 +154,7 @@
 
 
 /obj/item/weapon/stock_parts/cell/blob_act(obj/structure/blob/B)
-	ex_act(1)
+	ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)

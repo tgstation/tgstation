@@ -194,7 +194,7 @@
 			arcade_action()
 
 		else if (href_list["charge"])
-			blocked = 1
+			blocked = TRUE
 			var/chargeamt = rand(4,7)
 			temp = "You regain [chargeamt] points"
 			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
@@ -221,7 +221,7 @@
 
 		if(emagged)
 			Reset()
-			emagged = 0
+			emagged = FALSE
 
 	add_fingerprint(usr)
 	updateUsrDialog()
@@ -241,7 +241,7 @@
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
-				emagged = 0
+				emagged = FALSE
 			else
 				SSblackbox.inc("arcade_win_normal")
 				prizevend()
@@ -297,22 +297,23 @@
 
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
-	if(!emagged)
-		temp = "If you die in the game, you die for real!"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = FALSE
-		blocked = FALSE
+	if(emagged)
+		return
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = FALSE
+	blocked = FALSE
 
-		emagged = TRUE
+	emagged = TRUE
 
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"
 
 
-		updateUsrDialog()
+	updateUsrDialog()
 
 
 
@@ -342,7 +343,7 @@
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/computer/arcade/orion_trail
-	var/busy = 0 //prevent clickspam that allowed people to ~speedrun~ the game.
+	var/busy = FALSE //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0
 	var/electronics = 0
@@ -440,7 +441,7 @@
 		if(emagged)
 			to_chat(user, "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>")
 			user.death()
-			emagged = 0 //removes the emagged status after you lose
+			emagged = FALSE //removes the emagged status after you lose
 			gameStatus = ORION_STATUS_START
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -482,7 +483,7 @@
 
 	if(busy)
 		return
-	busy = 1
+	busy = TRUE
 
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
@@ -622,7 +623,7 @@
 						var/mob/living/L = usr
 						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
-					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
+					emagged = FALSE //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 					sleep(50)
 					say("[S] winks out, just as suddenly as it appeared.")
 					qdel(S)
@@ -646,7 +647,7 @@
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 				if(emagged)
 					usr.death(0)
-					emagged = 0
+					emagged = FALSE
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
 			else if(emagged)
@@ -754,7 +755,7 @@
 
 	add_fingerprint(usr)
 	updateUsrDialog()
-	busy = 0
+	busy = FALSE
 	return
 
 
@@ -1036,17 +1037,18 @@
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
 		prizevend()
-	emagged = 0
+	emagged = FALSE
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
-		name = "The Orion Trail: Realism Edition"
-		desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
-		newgame()
-		emagged = 1
+	if(emagged)
+		return
+	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
+	name = "The Orion Trail: Realism Edition"
+	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
+	newgame()
+	emagged = TRUE
 
 /mob/living/simple_animal/hostile/syndicate/ranged/orion
 	name = "Spaceport Security"

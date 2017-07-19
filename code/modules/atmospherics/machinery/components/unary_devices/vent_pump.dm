@@ -11,12 +11,12 @@
 	icon_state = "vent_map"
 	use_power = IDLE_POWER_USE
 	can_unwrench = 1
-	welded = 0
+	welded = FALSE
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = 0
+	var/on = FALSE
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND
@@ -107,7 +107,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!NODE1)
-		on = 0
+		on = FALSE
 	if(!on || welded)
 		return 0
 
@@ -271,10 +271,10 @@
 				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = 1
+					welded = TRUE
 				else
 					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = 0
+					welded = FALSE
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 				pipe_vision_img.plane = ABOVE_HUD_PLANE
@@ -305,7 +305,7 @@
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
-	welded = 0
+	welded = FALSE
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE

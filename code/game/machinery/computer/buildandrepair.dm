@@ -12,7 +12,7 @@
 				to_chat(user, "<span class='notice'>You start wrenching the frame into place...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					anchored = 1
+					anchored = TRUE
 					state = 1
 				return
 			if(istype(P, /obj/item/weapon/weldingtool))
@@ -36,7 +36,7 @@
 				to_chat(user, "<span class='notice'>You start to unfasten the frame...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
-					anchored = 0
+					anchored = FALSE
 					state = 0
 				return
 			if(istype(P, /obj/item/weapon/circuitboard/computer) && !circuit)
@@ -308,7 +308,7 @@
 	build_path = /obj/machinery/computer/rdconsole/core
 
 /obj/item/weapon/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "R&D Console - Robotics (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
@@ -339,17 +339,17 @@
 	name = "Supply Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo
 	origin_tech = "programming=3"
-	var/contraband = 0
-	var/emagged = 0
+	var/contraband = FALSE
+	var/emagged = FALSE
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/device/multitool))
+	if(istype(I, /obj/item/device/multitool))
 		if(!emagged)
 			contraband = !contraband
 			to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
 		else
 			to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
-	else if(istype(I,/obj/item/weapon/card/emag))
+	else if(istype(I, /obj/item/weapon/card/emag))
 		if(!emagged)
 			contraband = TRUE
 			emagged = TRUE
@@ -441,7 +441,7 @@
 	origin_tech = "programming=1"
 
 /obj/item/weapon/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole

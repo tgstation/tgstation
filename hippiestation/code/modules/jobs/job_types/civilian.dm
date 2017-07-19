@@ -1,8 +1,8 @@
 /datum/job/clown
-	access = list(GLOB.access_theatre, GLOB.access_maint_tunnels)
-	minimal_access = list(GLOB.access_theatre, GLOB.access_maint_tunnels)
+	access = list(ACCESS_THEATRE, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_THEATRE, ACCESS_MAINT_TUNNELS)
 
 /datum/job/mime
-	access = list(GLOB.access_theatre, GLOB.access_maint_tunnels)
-	minimal_access = list(GLOB.access_theatre, GLOB.access_maint_tunnels)
+	access = list(ACCESS_THEATRE, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_THEATRE, ACCESS_MAINT_TUNNELS)
 

@@ -134,6 +134,8 @@
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
+
+//Wisp Lantern
 /obj/item/device/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
@@ -179,7 +181,6 @@
 			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
 	..()
 
-//Wisp Lantern
 /obj/effect/wisp
 	name = "friendly wisp"
 	desc = "Happy to light your way."
@@ -188,29 +189,54 @@
 	luminosity = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
+//Red/Blue Cubes
 /obj/item/device/warp_cube
 	name = "blue cube"
 	desc = "A mysterious blue cube."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blue_cube"
+	var/teleport_color = "#3FBAFD"
 	var/obj/item/device/warp_cube/linked
-
-
-//Red/Blue Cubes
+	var/teleporting = FALSE
 
 /obj/item/device/warp_cube/attack_self(mob/user)
 	if(!linked)
 		to_chat(user, "[src] fizzles uselessly.")
 		return
-	new /obj/effect/particle_effect/smoke(user.loc)
-	user.forceMove(get_turf(linked))
+	if(teleporting)
+		return
+	teleporting = TRUE
+	linked.teleporting = TRUE
+	var/turf/T = get_turf(src)
+	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
 	SSblackbox.add_details("warp_cube","[src.type]")
-	new /obj/effect/particle_effect/smoke(user.loc)
+	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
+	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
+	user.forceMove(link_holder) //mess around with loc so the user can't wander around
+	sleep(2.5)
+	if(QDELETED(user))
+		qdel(link_holder)
+		return
+	if(QDELETED(linked))
+		user.forceMove(get_turf(link_holder))
+		qdel(link_holder)
+		return
+	link_holder.forceMove(get_turf(linked))
+	sleep(2.5)
+	if(QDELETED(user))
+		qdel(link_holder)
+		return
+	teleporting = FALSE
+	if(!QDELETED(linked))
+		linked.teleporting = FALSE
+	user.forceMove(get_turf(link_holder))
+	qdel(link_holder)
 
 /obj/item/device/warp_cube/red
 	name = "red cube"
 	desc = "A mysterious red cube."
 	icon_state = "red_cube"
+	teleport_color = "#FD3F48"
 
 /obj/item/device/warp_cube/red/Initialize()
 	..()
@@ -218,6 +244,12 @@
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
+
+/obj/effect/warp_cube
+	mouse_opacity = 0
+
+/obj/effect/warp_cube/ex_act(severity, target)
+	return
 
 //Meat Hook
 /obj/item/weapon/gun/magic/hook
@@ -393,7 +425,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc,/obj/mecha))
+		if (istype(usr.loc, /obj/mecha))
 			return
 
 		if(!M.incapacitated())
@@ -551,9 +583,10 @@
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP
+	faction_bonus_force = 30
+	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
-	var/beast_force_bonus = 30
 
 /obj/item/weapon/melee/transforming/cleaving_saw/examine(mob/user)
 	..()
@@ -593,34 +626,27 @@
 	if(!active)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
+/obj/item/weapon/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
+	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(!B)
+		if(!active) //This isn't in the above if-check so that the else doesn't care about active
+			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+	else
+		B.add_bleed(B.bleed_buildup)
+
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
-		var/beast_bonus_active = FALSE
-		var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
-		if(istype(target, /mob/living/simple_animal/hostile/asteroid) || ismegafauna(target))
-			if(!active)
-				if(!B)
-					target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
-				else
-					B.add_bleed(B.bleed_buildup)
-			else
-				force += beast_force_bonus //we do bonus damage against beastly creatures
-				beast_bonus_active = TRUE
 		..()
-		if(beast_bonus_active)
-			if(B)
-				B.add_bleed(B.bleed_buildup)
-			force -= beast_force_bonus
-		return
-	var/turf/user_turf = get_turf(user)
-	var/dir_to_target = get_dir(user_turf, get_turf(target))
-	swiping = TRUE
-	for(var/i in 1 to 3)
-		var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
-		for(var/mob/living/L in T)
-			if(user.Adjacent(L) && L.density)
-				melee_attack_chain(user, L)
-	swiping = FALSE
+	else
+		var/turf/user_turf = get_turf(user)
+		var/dir_to_target = get_dir(user_turf, get_turf(target))
+		swiping = TRUE
+		for(var/i in 1 to 3)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
+			for(var/mob/living/L in T)
+				if(user.Adjacent(L) && L.density)
+					melee_attack_chain(user, L)
+		swiping = FALSE
 
 //Dragon
 
@@ -1177,7 +1203,7 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
 /obj/item/weapon/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long

@@ -30,7 +30,6 @@
 	item_state = "paper"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	obj_integrity = 50
 	max_integrity = 50
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
@@ -113,7 +112,7 @@
 	materials = list(MAT_METAL=2000)
 	var/pictures_max = 10
 	var/pictures_left = 10
-	var/on = 1
+	var/on = TRUE
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info. Keeping this here allows us to share some procs w/ regualar camera
 	var/see_ghosts = 0 //for the spoop of it
@@ -436,10 +435,10 @@
 	pictures_left--
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = "camera_off"
-	on = 0
+	on = FALSE
 	spawn(64)
 		icon_state = "camera"
-		on = 1
+		on = TRUE
 
 /obj/item/device/camera/siliconcam/proc/toggle_camera_mode()
 	if(in_camera_mode)

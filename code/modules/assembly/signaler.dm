@@ -160,7 +160,7 @@ Code:
 // It's necessary because the signaler doens't have an off state.
 // Generated during grenade construction.  -Sayu
 /obj/item/device/assembly/signaler/reciever
-	var/on = 0
+	var/on = FALSE
 
 /obj/item/device/assembly/signaler/reciever/proc/toggle_safety()
 	on = !on

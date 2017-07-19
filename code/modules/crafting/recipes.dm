@@ -229,7 +229,7 @@
 /datum/crafting_recipe/dragonsbreath
 	name = "Dragonsbreath Shell"
 	result = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,/datum/reagent/phosphorus = 5)
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1, /datum/reagent/phosphorus = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 	category = CAT_WEAPONRY
@@ -394,7 +394,7 @@
 	name = "Paper Frames"
 	result = /obj/item/stack/sheet/paperframes/five
 	time = 10
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,/obj/item/weapon/paper = 20)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5, /obj/item/weapon/paper = 20)
 	category = CAT_MISC
 
 /datum/crafting_recipe/naturalpaper

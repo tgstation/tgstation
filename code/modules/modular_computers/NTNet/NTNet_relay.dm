@@ -7,8 +7,8 @@
 	idle_power_usage = 100
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
 	var/enabled = 1				// Set to 0 if the relay was turned off
 	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
@@ -59,7 +59,7 @@
 		GLOB.ntnet_global.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
-/obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 

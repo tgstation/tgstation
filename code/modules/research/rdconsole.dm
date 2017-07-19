@@ -47,7 +47,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
 
-	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
+	req_access = list(ACCESS_TOX)	//DATA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
 	var/selected_category
 	var/list/datum/design/matching_designs = list() //for the search function
@@ -150,10 +150,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
+	if(emagged)
+		return
+	playsound(src, "sparks", 75, 1)
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
@@ -295,13 +296,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!cancontinue)
 			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
 			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
-		linked_destroy.busy = 1
+		linked_destroy.busy = TRUE
 		screen = 0.1
 		updateUsrDialog()
 		flick("d_analyzer_process", linked_destroy)
 		spawn(24)
 			if(linked_destroy)
-				linked_destroy.busy = 0
+				linked_destroy.busy = FALSE
 				if(!linked_destroy.loaded_item)
 					screen = 1.0
 					return
@@ -320,7 +321,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/obj/I in linked_destroy.contents)
 					for(var/mob/M in I.contents)
 						M.death()
-					if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+					if(istype(I, /obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
 						var/obj/item/stack/sheet/S = I
 						if(S.amount > 1)
 							S.amount--
@@ -412,7 +413,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		var/g2g = 1
 		var/enough_materials = 1
-		linked_lathe.busy = 1
+		linked_lathe.busy = TRUE
 		flick("protolathe_n",linked_lathe)
 		use_power(power)
 
@@ -455,7 +456,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
 							already_logged = 1
 				screen = old_screen
-				linked_lathe.busy = 0
+				linked_lathe.busy = FALSE
 			else
 				say("Protolathe connection failed. Production halted.")
 				screen = 1.0
@@ -488,7 +489,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		var/g2g = 1
 		var/enough_materials = 1
-		linked_imprinter.busy = 1
+		linked_imprinter.busy = TRUE
 		flick("circuit_imprinter_ani", linked_imprinter)
 		use_power(power)
 
@@ -521,7 +522,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					new_item.materials = efficient_mats.Copy()
 					SSblackbox.add_details("circuit_printed","[new_item.type]")
 				screen = old_screen
-				linked_imprinter.busy = 0
+				linked_imprinter.busy = FALSE
 			else
 				say("Circuit Imprinter connection failed. Production halted.")
 				screen = 1.0

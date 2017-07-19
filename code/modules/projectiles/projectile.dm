@@ -2,8 +2,8 @@
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
@@ -40,6 +40,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
+	var/is_reflectable = FALSE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
 	var/knockdown = 0
@@ -82,7 +83,7 @@
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
 		if(impact_effect_type)
@@ -136,9 +137,7 @@
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
-/obj/item/projectile/Bump(atom/A, yes)
-	if(!yes) //prevents double bumps.
-		return
+/obj/item/projectile/Collide(atom/A)
 	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
@@ -161,6 +160,8 @@
 	var/turf/target_turf = get_turf(A)
 
 	if(!prehit(A))
+		if(forcedodge)
+			loc = target_turf
 		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
@@ -263,11 +264,8 @@
 				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 			old_pixel_x = pixel_x_offset
 			old_pixel_y = pixel_y_offset
-
-			if(original && (original.layer>=2.75) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original, 1)
+			if(can_hit_target(original, permutated))
+				Collide(original)
 			Range()
 			if (delay > 0)
 				sleep(delay)
@@ -279,12 +277,18 @@
 				if((!( current ) || loc == current))
 					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Bump(original, 1)
+				if(can_hit_target(original, permutated))
+					Collide(original)
 				Range()
 			sleep(config.run_speed * 0.9)
+
+//Returns true if the target atom is on our current turf and above the right layer
+/obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
+	if(target && (target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target))
+		if(loc == get_turf(target))
+			if(!(target in passthrough))
+				return TRUE
+	return FALSE
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
@@ -337,7 +341,7 @@
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
-		Bump(AM, 1)
+		Collide(AM)
 
 /obj/item/projectile/Destroy()
 	return ..()

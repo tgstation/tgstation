@@ -3,10 +3,10 @@
 	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
-	density = 1
-	anchored = 1
-	state_open = 1
-	var/busy = 0
+	density = TRUE
+	anchored = TRUE
+	state_open = TRUE
+	var/busy = FALSE
 	var/bloody_mess = 0
 	var/has_corgi = 0
 	var/obj/item/color_source
@@ -34,7 +34,7 @@
 	if(has_corgi)
 		bloody_mess = 1
 
-	busy = 1
+	busy = TRUE
 	update_icon()
 	sleep(200)
 	wash_cycle()
@@ -52,7 +52,7 @@
 		AM.clean_blood()
 		AM.machine_wash(src)
 
-	busy = 0
+	busy = FALSE
 	if(color_source)
 		qdel(color_source)
 		color_source = null
@@ -74,7 +74,7 @@
 
 /obj/item/weapon/paper/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
-		if(istype(WM.color_source,/obj/item/toy/crayon))
+		if(istype(WM.color_source, /obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
 			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
@@ -211,7 +211,7 @@
 			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
-		if(istype(W,/obj/item/toy/crayon) || istype(W,/obj/item/weapon/stamp))
+		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/weapon/stamp))
 			color_source = W
 		update_icon()
 
@@ -237,7 +237,7 @@
 	if(!state_open)
 		open_machine()
 	else
-		state_open = 0 //close the door
+		state_open = FALSE //close the door
 		update_icon()
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
@@ -246,6 +246,6 @@
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()
-	density = 1 //because machinery/open_machine() sets it to 0
+	density = TRUE //because machinery/open_machine() sets it to 0
 	color_source = null
 	has_corgi = 0

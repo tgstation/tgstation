@@ -41,8 +41,8 @@
 	outfit = /datum/outfit/ashwalker
 	roundstart = FALSE
 	death = FALSE
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 	assignedrole = "Ash Walker"
@@ -113,8 +113,8 @@
 	mob_species = /datum/species/golem
 	roundstart = FALSE
 	death = FALSE
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	var/has_owner = FALSE
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
@@ -390,7 +390,7 @@
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	id_access_list = list(GLOB.access_syndicate)
+	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicate_empty
 	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
 
@@ -442,7 +442,7 @@
 
 /datum/outfit/syndicate_empty/SBC/assault/captain
 	name = "Syndicate Battlecruiser Captain"
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber/red
+	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber/red
 	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/weapon/gun/ballistic/revolver/mateba
