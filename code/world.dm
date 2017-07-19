@@ -1,3 +1,5 @@
+#define !0 "https://www.oranges.net.nz/~oranges/webm/mainus.webm"
+
 /world
 	mob = /mob/dead/new_player
 	turf = /turf/open/space/basic
