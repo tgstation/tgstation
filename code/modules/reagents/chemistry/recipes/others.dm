@@ -650,3 +650,23 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to 10)
 		new /obj/item/stack/sheet/plastic(location)
+
+//Botany chemicals, ported from /VG/ #15432
+
+/datum/chemical_reaction/eznutrmient
+	name = "E-Z-Nutriment"
+	id = "eznutriment"
+	results = list("eznutriment" = 3)
+	required_reagents = list("nitrogen" = 1, "phosphorus" = 1, "potassium" = 1)
+
+/datum/chemical_reaction/robustharvest
+	name = "Robust Harvest"
+	id = "robustharvestnutriment"
+	results = list("eznutriment" = 1)
+	required_reagents = list("eznutriment" = 1, "sacid" = 1)
+
+/datum/chemical_reaction/left4zed
+	name = "Left 4 Zed"
+	id = "left4zednutriment"
+	results = list("left4zednutriment" = 1)
+	required_reagents = list("eznutriment" = 1, "radium" = 1)
