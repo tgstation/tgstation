@@ -48040,7 +48040,6 @@
 	req_access_txt = "11";
 	req_one_access_txt = "0"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfa" = (

@@ -61353,6 +61353,7 @@
 /area/engine/engineering)
 "cno" = (
 /obj/effect/landmark/start/station_engineer,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
 "cnp" = (
@@ -113079,6 +113080,29 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"eqb" = (
+/obj/structure/sign/electricshock,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/engine/atmospherics_engine)
+"eqc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmospherics_engine)
 
 (1,1,1) = {"
 aaa
@@ -138082,8 +138106,8 @@ ajL
 alP
 ajL
 akR
-aoI
-apK
+eqb
+eqc
 ard
 asi
 ehy

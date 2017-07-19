@@ -1080,7 +1080,6 @@
 	id = "detectivewindows";
 	name = "Detective Privacy Blast door"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "abV" = (
@@ -1780,6 +1779,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
@@ -4532,6 +4534,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahE" = (
@@ -4986,7 +4993,6 @@
 	id = "detectivewindows";
 	name = "Detective Privacy Blast door"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "aiv" = (
@@ -12947,6 +12953,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/landmark/revenantspawn,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -13271,6 +13278,9 @@
 "avm" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -13549,7 +13559,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central{
@@ -19713,9 +19723,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/central)
 "aGJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/white{
 	d1 = 4;
 	d2 = 8;
@@ -19727,6 +19734,9 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/central)
 "aGK" = (
@@ -19983,6 +19993,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -20262,6 +20275,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aHz" = (
@@ -20887,6 +20901,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIw" = (
@@ -21861,7 +21876,6 @@
 /area/crew_quarters/kitchen)
 "aKf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
@@ -21876,6 +21890,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -25669,8 +25686,8 @@
 	pixel_y = -32
 	},
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -34834,6 +34851,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side,
 /area/hallway/secondary/entry)
 "bhG" = (
@@ -35257,14 +35275,12 @@
 	},
 /area/hallway/secondary/entry)
 "biv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
@@ -35464,9 +35480,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -77091,7 +77105,7 @@ bfT
 bgD
 bhq
 bie
-biK
+biG
 bjk
 bjA
 bjL
@@ -85806,8 +85820,8 @@ aNF
 ank
 aPw
 aQz
-aRw
-aRw
+aVA
+aVA
 aTO
 aUH
 aVA

@@ -77913,7 +77913,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -77965,7 +77964,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -123968,7 +123966,7 @@ cRk
 dcH
 cSf
 cSl
-cSu
+cSJ
 cSa
 cSJ
 cSJ
