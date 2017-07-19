@@ -18,6 +18,7 @@
 	actions_types = list(/datum/action/item_action/rcl)
 	var/list/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
 	var/current_color_index = 1
+	var/ghetto = FALSE
 
 /obj/item/weapon/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -40,6 +41,19 @@
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(!loaded)
 			return
+		if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
+			to_chat(user, "<span class='warning'>You attempt to loosen the securing screws on the side, but it falls apart!</span>")
+			while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
+				var/diff = loaded.amount % 30
+				if(diff)
+					loaded.use(diff)
+					new /obj/item/stack/cable_coil(get_turf(user), diff)
+				else
+					loaded.use(30)
+					new /obj/item/stack/cable_coil(get_turf(user), 30)
+			qdel(src)
+			return
+
 		to_chat(user, "<span class='notice'>You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires.</span>")
 		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 			var/diff = loaded.amount % 30
@@ -127,24 +141,31 @@
 	if(is_empty(user, 0))
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
-	if(last)
-		if(get_dist(last, user) == 1) //hacky, but it works
-			var/turf/T = get_turf(user)
-			if(T.intact || !T.can_have_cabling())
+
+	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
+		to_chat(user, "<span class='warning'>[src]'s wires jam!</span>")
+		active = FALSE
+		return
+	else
+		if(last)
+			if(get_dist(last, user) == 1) //hacky, but it works
+				var/turf/T = get_turf(user)
+				if(T.intact || !T.can_have_cabling())
+					last = null
+					return
+				if(get_dir(last, user) == last.d2)
+					//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
+					last = null
+					return
+				loaded.cable_join(last, user, FALSE)
+				if(is_empty(user))
+					return //If we've run out, display message and exit
+			else
 				last = null
-				return
-			if(get_dir(last, user) == last.d2)
-				//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
-				last = null
-				return
-			loaded.cable_join(last, user, FALSE)
-			if(is_empty(user))
-				return //If we've run out, display message and exit
-		else
-			last = null
-	loaded.item_color	 = colors[current_color_index]
-	last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
-	is_empty(user) //If we've run out, display message
+		loaded.item_color	 = colors[current_color_index]
+		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
+		is_empty(user) //If we've run out, display message
+
 
 /obj/item/weapon/twohanded/rcl/pre_loaded/Initialize () //Comes preloaded with cable, for testing stuff
 	. = ..()
@@ -160,3 +181,22 @@
 			current_color_index = 1
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
+
+/obj/item/weapon/twohanded/rcl/ghetto
+	actions_types = list()
+	max_amount = 30
+	name = "makeshift rapid cable layer"
+	ghetto = TRUE
+
+/obj/item/weapon/twohanded/rcl/ghetto/update_icon()
+	if(!loaded)
+		icon_state = "rclg-0"
+		item_state = "rclg-0"
+		return
+	switch(loaded.amount)
+		if(1 to INFINITY)
+			icon_state = "rclg-1"
+			item_state = "rcl"
+		else
+			icon_state = "rclg-1"
+			item_state = "rclg-1"
