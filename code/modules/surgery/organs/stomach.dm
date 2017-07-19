@@ -7,18 +7,19 @@
 	slot = "stomach"
 	attack_verb = list("gored", "squished", "slapped", "digested")
 	desc = "Onaka ga suite imasu."
+	var/disgustmetabolism = 1
 
 /obj/item/organ/stomach/on_life()
 	var/mob/living/carbon/human/H = owner
 
 	if(istype(H))
 		H.dna.species.handle_digestion(H)
-		H.dna.species.handle_disgust(H)
+		H.dna.species.handle_disgust(H, disgustmetabolism)
 
 /obj/item/organ/stomach/Remove()
 	..()
 	var/mob/living/carbon/human/H = owner
-	
+
 	if(istype(H))
 		H.clear_alert("disgust")
 

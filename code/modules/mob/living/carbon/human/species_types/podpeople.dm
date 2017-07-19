@@ -10,8 +10,8 @@
 	burnmod = 1.25
 	heatmod = 1.5
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
-	disliked_food = VEGETABLES | FRUIT | GRAIN //They think plant murder is wrong.
-	liked_food = GROSS | MEAT | DAIRY
+	disliked_food = MEAT | DAIRY
+	liked_food = VEGETABLES | FRUIT | GRAIN
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

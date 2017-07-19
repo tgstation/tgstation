@@ -22,8 +22,6 @@
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
-	disliked_food = FRUIT | VEGETABLES
-	liked_food = MEAT | GROSS
 
 	var/prefix = "Iron"
 	var/list/special_names
