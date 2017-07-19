@@ -286,15 +286,6 @@
 	return
 
 /obj/machinery/firealarm/partyalarm/ui_data(mob/user)
-	var/list/data = list()
-	data["emagged"] = emagged
-
-	if(src.z == ZLEVEL_STATION)
-		data["seclevel"] = get_security_level()
-	else
-		data["seclevel"] = "green"
-
+	. = ..()
 	var/area/A = get_area(src)
-	data["alarm"] = A.party
-
-	return data
+	.["alarm"] = A.party
