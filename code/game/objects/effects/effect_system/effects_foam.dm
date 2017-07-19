@@ -29,9 +29,8 @@
 	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
 
-/obj/effect/particle_effect/foam/metal/Initialize()
-	. = ..()
-	qdel(GetComponent(/datum/component/slippery))
+/obj/effect/particle_effect/foam/metal/MakeSlippery()
+	return
 
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
@@ -44,10 +43,13 @@
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 100)
+	MakeSlippery()
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+
+/obj/effect/particle_effect/foam/proc/MakeSlippery()
+	AddComponent(/datum/component/slippery, 100)
 
 /obj/effect/particle_effect/foam/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
