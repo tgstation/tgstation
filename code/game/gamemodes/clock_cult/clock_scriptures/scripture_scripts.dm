@@ -347,7 +347,7 @@
 
 /datum/clockwork_scripture/ranged_ability/volt_ray
 	name = "Volt Ray"
-	slab_icon = "volt"
+	slab_overlay = "volt"
 	allow_mobility = FALSE
 	ranged_type = /obj/effect/proc_holder/slab/volt
 	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\

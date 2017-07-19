@@ -89,15 +89,6 @@
 	return
 
 //returns a new list with only atoms that are in typecache L
-<<<<<<< HEAD
-/proc/typecache_filter_list(list/atoms, list/typecache, reversed=FALSE)
-	. = list()
-	for (var/thing in atoms)
-		var/atom/A = thing
-		if (typecache[A.type] && !reversed)
-			. += A
-		else if(reversed)
-=======
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
 	for (var/thing in atoms)
@@ -110,7 +101,6 @@
 	for (var/thing in atoms)
 		var/atom/A = thing
 		if (!typecache[A.type])
->>>>>>> c8e874073b... Merge pull request #29367 from optimumtact/fuck
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
