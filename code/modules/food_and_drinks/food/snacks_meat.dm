@@ -181,7 +181,7 @@
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
 	tastes = list("the jungle" = 1, "bananas" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")

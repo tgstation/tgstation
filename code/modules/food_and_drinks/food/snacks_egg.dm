@@ -9,6 +9,7 @@
 	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 4, "sweetness" = 1)
+	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"

@@ -26,7 +26,7 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
 	tastes = list("pie" = 1)
-	foodtype = GRAIN | DAIRY
+	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
@@ -56,7 +56,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 10, "berryjuice" = 5, "vitamin" = 2)
 	tastes = list("pie" = 1, "blackberries" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
 	name = "beary pie"
@@ -65,7 +65,7 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
 	list_reagents = list("nutriment" = 2, "vitamin" = 3)
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
-	foodtype = GRAIN
+	foodtype = GRAIN | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"
@@ -132,7 +132,7 @@
 	icon_state = "applepie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	tastes = list("pie" = 1, "apple" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 
 
@@ -142,7 +142,7 @@
 	icon_state = "cherrypie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	tastes = list("pie" = 7, "Nicole Paige Brooks" = 2)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/pumpkinpie
@@ -173,7 +173,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)
 	tastes = list("pie" = 1, "apple" = 1, "expensive metal" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/grapetart
 	name = "grape tart"
@@ -182,7 +182,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 4, "vitamin" = 4)
 	tastes = list("pie" = 1, "grape" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/blumpkinpie
 	name = "blumpkin pie"
@@ -213,7 +213,7 @@
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 8)
 	tastes = list("jelly" = 1, "sweet potato" = 1)
-	foodtype = GRAIN | VEGETABLES
+	foodtype = GRAIN | VEGETABLES | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice
 	name = "dulce de batata slice"
@@ -224,7 +224,7 @@
 	filling_color = "#8B4513"
 	list_reagents = list("nutriment" = 2)
 	tastes = list("jelly" = 1, "sweet potato" = 1)
-	foodtype = GRAIN | VEGETABLES
+	foodtype = GRAIN | VEGETABLES | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/frostypie
 	name = "frosty pie"
@@ -232,4 +232,4 @@
 	icon_state = "frostypie"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 	tastes = list("mint" = 1, "pie" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR

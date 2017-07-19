@@ -45,7 +45,7 @@
 	bonus_reagents = list("nutriment" = 1, "slimejelly" = 5, "vitamin" = 5)
 	list_reagents = list("nutriment" = 5, "slimejelly" = 5, "water" = 5, "vitamin" = 4)
 	tastes = list("slime" = 1)
-	foodtype = TOXIC
+	foodtype = TOXIC | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/blood
 	name = "tomato soup"
@@ -73,7 +73,7 @@
 	bonus_reagents = list("nutriment" = 1, "banana" = 5, "vitamin" = 8)
 	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 5, "vitamin" = 8)
 	tastes = list("a bad joke" = 1)
-	foodtype = FRUIT
+	foodtype = FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/vegetable
 	name = "vegetable soup"
@@ -216,7 +216,7 @@
 	icon_state = "sweetpotatosoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 5)
 	tastes = list("sweet potato" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
 	name = "red beet soup"

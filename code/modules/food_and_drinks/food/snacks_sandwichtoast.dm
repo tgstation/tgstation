@@ -86,12 +86,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry
 	bonus_reagents = list("cherryjelly" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 1, "cherryjelly" = 5, "vitamin" = 2)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime
 	bonus_reagents = list("slimejelly" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 1, "slimejelly" = 5, "vitamin" = 2)
-	foodtype = GRAIN | TOXIC
+	foodtype = GRAIN | TOXIC | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread
 	name = "two bread"

@@ -7,5 +7,6 @@
 #define DAIRY 64
 #define FRIED 128
 #define ALCOHOL 256
-#define GROSS 512
-#define TOXIC 1024
+#define SUGAR 512
+#define GROSS 1024
+#define TOXIC 2048

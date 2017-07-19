@@ -36,7 +36,7 @@
 	list_reagents = list("nutriment" = 4, "sugar" = 2)
 	filling_color = "#FF8C00"
 	tastes = list("candy corn" = 1)
-	foodtype = JUNKFOOD
+	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
@@ -45,7 +45,7 @@
 	list_reagents = list("nutriment" = 2, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
-	foodtype = JUNKFOOD
+	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
@@ -147,7 +147,7 @@
 	list_reagents = list("nutriment" = 3, "sugar" = 2)
 	filling_color = "#FF4500"
 	tastes = list("apple" = 2, "sweetness" = 2)
-	foodtype = JUNKFOOD | FRUIT
+	foodtype = JUNKFOOD | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/mint
 	name = "mint"
@@ -157,7 +157,7 @@
 	trash = /obj/item/trash/plate
 	list_reagents = list("minttoxin" = 1)
 	filling_color = "#800000"
-	foodtype = TOXIC
+	foodtype = TOXIC | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/eggwrap
 	name = "egg wrap"
@@ -196,7 +196,7 @@
 	list_reagents = list("nutriment" = 3, "cocoa" = 1)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
-	foodtype = JUNKFOOD
+	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/fudgedice
 	name = "fudge dice"
@@ -207,7 +207,7 @@
 	filling_color = "#A0522D"
 	trash = /obj/item/weapon/dice/fudge
 	tastes = list("fudge" = 1)
-	foodtype = JUNKFOOD
+	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
@@ -217,7 +217,7 @@
 	list_reagents = list("nutriment" = 3, "sugar" = 1)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 3, "oranges" = 1)
-	foodtype = JUNKFOOD
+	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 	name = "eggplant parmigiana"
@@ -288,7 +288,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 4)
 	filling_color = "#8B1105"
 	tastes = list("sweet potato" = 1)
-	foodtype = GRAIN | VEGETABLES
+	foodtype = GRAIN | VEGETABLES | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
 	name = "roast parsnip"
@@ -329,7 +329,7 @@
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
 	filling_color = "#FFFACD"
 	tastes = list("ice cream" = 1, "banana" = 1)
-	foodtype = FRUIT | DAIRY
+	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/honkdae
 	name = "honkdae"
@@ -339,7 +339,7 @@
 	list_reagents = list("nutriment" = 6, "banana" = 10, "vitamin" = 4)
 	filling_color = "#FFFACD"
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
-	foodtype = FRUIT | DAIRY
+	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/nachos
 	name = "nachos"
@@ -391,7 +391,7 @@
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
 	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
-	foodtype = FRUIT
+	foodtype = FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
 	name = "stuffed legion"
@@ -416,7 +416,7 @@
 	attack_verb = list("slapped", "slathered")
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop
 	name = "lollipop"
@@ -427,7 +427,7 @@
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)
-	foodtype = JUNKFOOD
+	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/New()
 	..()

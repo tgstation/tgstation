@@ -80,7 +80,7 @@
 	icon_state = "sugarcane"
 	filling_color = "#FFD700"
 	bitesize_mod = 2
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | SUGAR
 
 
 // Gatfruit

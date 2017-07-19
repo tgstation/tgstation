@@ -11,6 +11,7 @@
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	foodtype = ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
 	..()
@@ -172,6 +173,7 @@
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
 	list_reagents = list("nothing" = 100)
+	foodtype = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
@@ -190,6 +192,7 @@
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
 	list_reagents = list("holywater" = 100)
+	foodtype = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
@@ -206,6 +209,7 @@
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK."
 	icon_state = "kahluabottle"
 	list_reagents = list("kahlua" = 100)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager
 	name = "College Girl Goldschlager"
@@ -224,6 +228,7 @@
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
 	list_reagents = list("wine" = 100)
+	foodtype = FRUIT | ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Extra-Strong Absinthe"
@@ -283,6 +288,7 @@
 	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
 	icon_state = "lizardwine"
 	list_reagents = list("lizardwine" = 100)
+	foodtype = FRUIT | ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/hcider
 	name = "Jian Hard Cider"
@@ -306,6 +312,7 @@
 	item_state = "carton"
 	isGlass = 0
 	list_reagents = list("orangejuice" = 100)
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
@@ -314,6 +321,7 @@
 	item_state = "carton"
 	isGlass = 0
 	list_reagents = list("cream" = 100)
+	foodtype = DAIRY
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
@@ -322,6 +330,7 @@
 	item_state = "carton"
 	isGlass = 0
 	list_reagents = list("tomatojuice" = 100)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
@@ -330,6 +339,7 @@
 	item_state = "carton"
 	isGlass = 0
 	list_reagents = list("limejuice" = 100)
+	foodtype = FRUIT
 
 
 ////////////////////////// MOLOTOV ///////////////////////
