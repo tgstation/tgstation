@@ -645,8 +645,9 @@
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(target))
 		swiping = TRUE
-		for(var/i in 1 to 3)
-			var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
+		var/static/list/cleaving_saw_cleave_angles = list(0, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
+		for(var/i in cleaving_saw_cleave_angles)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, i)
 			for(var/mob/living/L in T)
 				if(user.Adjacent(L) && L.density)
 					melee_attack_chain(user, L)
