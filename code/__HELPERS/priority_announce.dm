@@ -52,7 +52,7 @@
 
 	for(var/mob/M in GLOB.player_list)
 		var/turf/T = get_turf(M)
-		if(!isnewplayer(M) && M.can_hear() && (M.client.holder || istype(M, /mob/dead/observer) || (T && T.CanMinorAnnounce()))
+		if(M.client.holder || istype(M, /mob/dead/observer) || (T && M.can_hear() && T.CanMinorAnnounce()))
 			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
