@@ -18833,7 +18833,7 @@
 "aOW" = (
 /obj/structure/kitchenspike,
 /obj/item/device/assembly/mousetrap,
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aOX" = (
@@ -25784,7 +25784,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -35519,7 +35519,7 @@
 /area/maintenance/department/engine)
 "byd" = (
 /obj/structure/closet/masks,
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
