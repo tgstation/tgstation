@@ -52,8 +52,16 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 /datum/controller/global_vars/Initialize()
 	gvars_datum_init_order = list()
 	gvars_datum_protected_varlist = list("gvars_datum_protected_varlist")
-	
-	for(var/I in typesof(/datum/controller/global_vars/proc))
+	var/list/global_procs = typesof(/datum/controller/global_vars/proc)
+	var/expected_len = vars.len - gvars_datum_in_built_vars.len
+	if(global_procs.len != expected_len)
+		warning("Unable to detect all global initialization procs! Expected [expected_len] got [global_procs.len]!")
+		if(global_procs.len)
+			var/list/expected_global_procs = vars - gvars_datum_in_built_vars
+			for(var/I in global_procs)
+				expected_global_procs -= replacetext("[I]", "InitGlobal", "")
+			log_world("Missing procs: [expected_global_procs.Join(", ")]")
+	for(var/I in global_procs)
 		var/start_tick = world.time
 		call(src, I)()
 		var/end_tick = world.time
