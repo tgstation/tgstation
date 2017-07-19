@@ -225,18 +225,6 @@
 
 	return hear
 
-
-/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
-
-	set background = BACKGROUND_ENABLED
-
-	. = list()
-	// Returns a list of mobs who can hear any of the radios given in @radios
-	for(var/obj/item/device/radio/R in radios)
-		if(R)
-			. |= get_hearers_in_view(R.canhear_range, R)
-
-
 #define SIGN(X) ((X<0)?-1:1)
 
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)

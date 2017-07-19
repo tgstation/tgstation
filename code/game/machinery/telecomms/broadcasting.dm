@@ -86,19 +86,18 @@
 
 	if(data == 1)
 		for(var/obj/item/device/radio/intercom/R in GLOB.all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
-				radios += R
+			radios += R
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
 	else if(data == 2)
 
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
+		for(var/I in GLOB.all_radios["[freq]"])
+			var/obj/item/device/radio/R = I
 			if(R.subspace_transmission)
 				continue
 
-			if(R.receive_range(freq, level) > -1)
-				radios += R
+			radios += R
 
 	// --- This space left blank for Syndicate data ---
 
@@ -106,41 +105,42 @@
 
 	else if(data == 5)
 
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
+		for(var/I in GLOB.all_radios["[freq]"])
+			var/obj/item/device/radio/R = I
 			if(!R.independent)
 				continue
 
-			if(R.receive_range(freq, level) > -1)
-				radios += R
+			radios += R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
-				radios += R
+		for(var/I in GLOB.all_radios["[freq]"])
+			radios += I
 
 		var/freqtext = num2text(freq)
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[GLOB.SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(GLOB.SYND_FREQ, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
-				radios |= R
-
-	// Get a list of mobs who can hear from the radios we collected.
-	var/list/receive = get_mobs_in_radio_ranges(radios) //this includes all hearers.
-
-	for(var/mob/R in receive) //Filter receiver list.
-		if (R.client && R.client.holder && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
-			receive -= R
-
-	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
-			receive |= M
+		if(freqtext in GLOB.reverseradiochannels)
+			for(var/I in GLOB.all_radios["[GLOB.SYND_FREQ]"])//syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
+				radios |= I
 
 	var/rendered = virt.compose_message(virt, language, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
-	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, language, message, freq, spans)
 
-	if(length(receive))
+	var/list/received = 0
+	//Send it to the radios
+	for(var/I in radios)
+		var/obj/item/device/radio/R = I
+		received += R.ReceiveBroadcast(rendered, virt, language, message, freq, spans)
+
+	for(var/mob/dead/observer/M in GLOB.player_list)
+		var/client/C = M.client
+		if(!C)
+			continue
+		var/datum/preferences/prefs = C.prefs
+		if((prefs.chat_toggles & CHAT_GHOSTRADIO) && !(C.holder && !(prefs.chat_toggles & CHAT_RADIO)))
+			M.Hear(rendered, virt, language, message, freq, spans)
+			++received
+
+	if(received)
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
 		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"

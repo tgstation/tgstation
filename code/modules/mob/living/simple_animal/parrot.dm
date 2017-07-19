@@ -265,8 +265,8 @@
 									available_channels.Add(":u")
 								if("Service")
 									available_channels.Add(":v")
-
-						if(headset_to_add.translate_binary)
+						var/obj/item/device/encryptionkey/EK = headset_to_add.keyslot
+						if(EK && is_type_in_typecache(/datum/language/machine, EK.translate_languages))
 							available_channels.Add(":b")
 		else
 			..()

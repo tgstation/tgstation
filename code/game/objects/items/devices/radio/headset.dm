@@ -286,9 +286,6 @@
 			src.channels += ch_name
 			src.channels[ch_name] = keyslot2.channels[ch_name]
 
-		if(keyslot2.translate_binary)
-			src.translate_binary = 1
-
 		if(keyslot2.syndie)
 			src.syndie = 1
 

@@ -70,7 +70,8 @@
 	if(ears)
 		var/obj/item/device/radio/headset/dongle = ears
 		if(!istype(dongle)) return 0
-		if(dongle.translate_binary) return 1
+		var/obj/item/device/encryptionkey/EK = dongle.keyslot
+		if(EK && is_type_in_typecache(/datum/language/machine, EK.translate_languages)) return TRUE
 
 /mob/living/carbon/human/radio(message, message_mode, list/spans, language)
 	. = ..()
