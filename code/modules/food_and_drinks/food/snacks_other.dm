@@ -31,8 +31,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
-	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
-	junkiness = 20
 	icon_state = "candy_corn"
 	list_reagents = list("nutriment" = 4, "sugar" = 2)
 	filling_color = "#FF8C00"
@@ -42,7 +40,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
-	junkiness = 20
 	icon_state = "chocolatebar"
 	list_reagents = list("nutriment" = 2, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
@@ -60,7 +57,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/popcorn
 	name = "popcorn"
 	desc = "Now let's find some cinema."
-	junkiness = 4
 	icon_state = "popcorn"
 	trash = /obj/item/trash/popcorn
 	list_reagents = list("nutriment" = 2)
@@ -146,7 +142,6 @@
 	desc = "An apple coated in sugary sweetness."
 	icon_state = "candiedapple"
 	bitesize = 3
-	junkiness = 5
 	bonus_reagents = list("nutriment" = 2, "sugar" = 3)
 	list_reagents = list("nutriment" = 3, "sugar" = 2)
 	filling_color = "#FF4500"

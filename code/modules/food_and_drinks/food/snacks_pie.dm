@@ -114,7 +114,6 @@
 	..()
 	if(fey)
 		reagents.add_reagent("omnizine", 5)
-		foodtype = GRAIN | VEGETABLES
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/xemeatpie

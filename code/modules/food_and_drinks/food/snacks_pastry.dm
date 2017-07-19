@@ -7,7 +7,6 @@
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
 	bitesize = 5
-	junkiness = 10
 	bonus_reagents = list("sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sugar" = 2)
 	var/extra_reagent = null
@@ -166,7 +165,6 @@
 	name = "cookie"
 	desc = "COOKIE!!!"
 	icon_state = "COOKIE!!!"
-	junkiness = 5
 	bitesize = 1
 	bonus_reagents = list("nutriment" = 1)
 	list_reagents = list("nutriment" = 1)
@@ -352,4 +350,3 @@
 	filling_color = "#F2CE91"
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtype = GRAIN
-
