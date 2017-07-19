@@ -1634,7 +1634,7 @@
 /datum/reagent/pukonium
 	name = "pukonium"
 	id = "pukonium"
-	description = "Vile liquid that is refined in the faraway lands of Ko-Der-Bus"
+	description = "Vile liquid that is refined in the faraway lands of Ko-Der-Buus"
 	color = "360f0f"
 	metabolization_rate = 5
 
