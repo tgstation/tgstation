@@ -432,27 +432,29 @@
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "blank"
+	icon_state = "flash"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER"
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
-	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "blank")
+	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
 	if(view_size_x > 16 || view_size_y > 16)
 		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
 		icon = newicon
-		var/tx = 16/view_size_x
-		var/ty = 16/view_size_y
+		var/tx = view_size_x/16
+		var/ty = view_size_y/16
 		var/matrix/M = new
 		M.Scale(tx, ty)
 		transform = M
 		screen_loc = "CENTER-16,CENTER-16"
+		to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed by transform, with transformation x/y at [tx]/[ty]</span>")
+		to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed with size [view_size_x]/[view_size_y]! Icon is at [newicon.Width()]/[newicon.Height()] pixels!</span>")
 	else
 		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
 		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
 		icon = newicon
-	to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed with size [view_size_x]/[view_size_y]! Icon is at [newicon.Width()]/[newicon.Height()] pixels!</span>")
+		to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed with size [view_size_x]/[view_size_y]! Icon is at [newicon.Width()]/[newicon.Height()] pixels!</span>")
 
 /obj/screen/click_catcher/Click(location, control, params)
 	to_chat(world, "<span class='boldnotice'>DEBUG: Clickcatcher Click with params [params]</span>")
