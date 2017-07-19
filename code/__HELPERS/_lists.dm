@@ -89,6 +89,10 @@
 	return
 
 //returns a new list with only atoms that are in typecache L
+<<<<<<< HEAD
+=======
+//if reversed, return a new list with only atoms that aren't in typecache L
+>>>>>>> f44b6db92e... Merge pull request #29363 from tgstation/optimumtact-patch-1
 /proc/typecache_filter_list(list/atoms, list/typecache, reversed=FALSE)
 	. = list()
 	for (var/thing in atoms)
