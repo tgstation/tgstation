@@ -10,6 +10,7 @@
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = null
+	liked_food = GROSS | MEAT | RAW
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
