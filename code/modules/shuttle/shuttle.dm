@@ -177,7 +177,7 @@
 	for(var/i in 1 to assigned_turfs.len)
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
-			T.ChangeTurf(/turf/open/space,new_baseturf=/turf/open/space)
+			T.ChangeTurf(/turf/open/space,/turf/open/space)
 			T.flags |= UNUSED_TRANSIT_TURF
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
@@ -385,7 +385,7 @@
 
 	var/turf_type = /turf/open/space
 	var/baseturf_type = /turf/open/space
-	var/area_type = /area/space
+	var/underlying_area_type = /area/space
 	// If the shuttle is docked to a stationary port, restore its normal
 	// "empty" area and turf
 	if(current_dock)
@@ -394,28 +394,30 @@
 		if(current_dock.baseturf_type)
 			baseturf_type = current_dock.baseturf_type
 		if(current_dock.area_type)
-			area_type = current_dock.area_type
+			underlying_area_type = current_dock.area_type
 
-	var/list/shuttle_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/old_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/area/underlying_area = locate(underlying_area_type) in GLOB.sortedAreas
+	if(!underlying_area)
+		underlying_area = new underlying_area_type(null)
 
-	//remove area surrounding docking port
-	for(var/i in 1 to shuttle_areas.len)
-		var/area/shuttle_area = shuttle_areas[i]
-		if(shuttle_area.contents.len)
-			var/area/underlying_area = locate("[area_type]")
-			if(!underlying_area)
-				underlying_area = new area_type(null)
-			for(var/ii in shuttle_turfs)
-				var/turf/T = shuttle_turfs[ii]
-				var/area/old_area = T.loc
-				underlying_area.contents += T
-				T.change_area(old_area, underlying_area)
-
-	for(var/i in shuttle_turfs)
-		var/turf/T = i
-		if(!T)
+	to_chat(world, num2text(old_turfs.len))
+	var/i
+	for(i in 1 to old_turfs.len)
+		var/turf/oldT = old_turfs[i]
+		if(!oldT)
 			continue
-		T.empty(turf_type, baseturf_type)
+		var/area/old_area = oldT.loc
+		underlying_area.contents += oldT
+		oldT.change_area(old_area, underlying_area)
+	to_chat(world, num2text(i))
+	for(i in 1 to old_turfs.len)
+		to_chat(world, "TAKE [num2text(i)]")
+		var/turf/oldT = old_turfs[i]
+		if(!oldT)
+			continue
+		oldT.empty(turf_type, baseturf_type)
+	to_chat(world, num2text(i))
 
 	qdel(src, force=TRUE)
 

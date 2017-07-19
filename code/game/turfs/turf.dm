@@ -197,11 +197,11 @@
 		qdel(L)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf)
-	return ChangeTurf(path, defer_change, ignore_air, new_baseturf)
+/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
+	return ChangeTurf(path, new_baseturf, defer_change, ignore_air)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE, new_baseturf)
+/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
 	if(!path)
 		return
 	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
@@ -409,18 +409,19 @@
 
 /turf/proc/empty(turf_type=/turf/open/space, baseturf_type)
 	// Remove all atoms except observers, landmarks, docking ports
-	var/turf/T0 = src
-	var/static/list/ignored_atoms = typecacheof(list(/turf, /mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list(T0.GetAllContents(),ignored_atoms,reversed=TRUE)
+	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
+	var/list/allowed_contents = typecache_filter_list(GetAllContents(),ignored_atoms,reversed=TRUE)
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
+		if(thing == src)
+			continue
 		qdel(thing, force=TRUE)
 
-	T0.ChangeTurf(turf_type, FALSE, FALSE, baseturf_type)
+	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE)
 
-	SSair.remove_from_active(T0)
-	T0.CalculateAdjacentTurfs()
-	SSair.add_to_active(T0,1)
+	SSair.remove_from_active(newT)
+	newT.CalculateAdjacentTurfs()
+	SSair.add_to_active(newT,1)
 
 /turf/proc/is_transition_turf()
 	return
