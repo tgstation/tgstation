@@ -294,7 +294,6 @@
 
 /datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/M)
 	switch(current_cycle)
-		if(1 to 10)
 		if(10 to 20)
 			M.confused += 1
 			M.drowsyness += 1
