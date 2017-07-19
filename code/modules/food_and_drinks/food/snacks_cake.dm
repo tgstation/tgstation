@@ -6,6 +6,7 @@
 	volume = 80
 	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 	tastes = list("cake" = 1)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
@@ -13,6 +14,7 @@
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	customfoodfilling = 0 //to avoid infinite cake-ception
 	tastes = list("cake" = 1)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
 	name = "vanilla cake"
@@ -21,6 +23,7 @@
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/cake
 	bonus_reagents = list("nutriment" = 10, "vitamin" = 2)
 	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/plain
 	name = "vanilla cake slice"
@@ -29,6 +32,7 @@
 	filling_color = "#FFD700"
 	customfoodfilling = 1
 	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/carrot
 	name = "carrot cake"
@@ -39,6 +43,7 @@
 	bonus_reagents = list("nutriment" = 3, "oculine" = 5, "vitamin" = 10)
 	list_reagents = list("nutriment" = 20, "oculine" = 10, "vitamin" = 5)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
+	foodtype = GRAIN | DAIRY | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/carrot
 	name = "carrot cake slice"
@@ -47,6 +52,7 @@
 	filling_color = "#FFA500"
 	list_reagents = list("nutriment" = 4, "oculine" = 2, "vitamin" = 1)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
+	foodtype = GRAIN | DAIRY | VEGETABLES
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/brain
@@ -58,6 +64,7 @@
 	bonus_reagents = list("nutriment" = 5, "mannitol" = 10, "vitamin" = 10)
 	list_reagents = list("nutriment" = 20, "mannitol" = 10, "vitamin" = 5)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
+	foodtype = GRAIN | DAIRY | MEAT | GROSS
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brain
@@ -67,6 +74,7 @@
 	filling_color = "#FF69B4"
 	list_reagents = list("nutriment" = 4, "mannitol" = 2, "vitamin" = 1)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
+	foodtype = GRAIN | DAIRY | MEAT | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/cheese
 	name = "cheese cake"
@@ -76,6 +84,7 @@
 	slices_num = 5
 	bonus_reagents = list("vitamin" = 10)
 	tastes = list("cake" = 4, "cream cheese" = 3)
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/cheese
@@ -84,6 +93,7 @@
 	icon_state = "cheesecake_slice"
 	filling_color = "#FFFACD"
 	tastes = list("cake" = 4, "cream cheese" = 3)
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/orange
@@ -94,6 +104,7 @@
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/orange
 	name = "orange cake slice"
@@ -101,6 +112,7 @@
 	icon_state = "orangecake_slice"
 	filling_color = "#FFA500"
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/lime
 	name = "lime cake"
@@ -110,6 +122,7 @@
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lime
 	name = "lime cake slice"
@@ -117,6 +130,7 @@
 	icon_state = "limecake_slice"
 	filling_color = "#00FF00"
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/lemon
@@ -127,6 +141,7 @@
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "sourness" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lemon
@@ -135,6 +150,7 @@
 	icon_state = "lemoncake_slice"
 	filling_color = "#FFEE00"
 	tastes = list("cake" = 5, "sweetness" = 2, "sourness" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/chocolate
@@ -145,6 +161,7 @@
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
 	tastes = list("cake" = 5, "sweetness" = 1, "chocolate" = 4)
+	foodtype = GRAIN | DAIRY | JUNKFOOD
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate
@@ -153,6 +170,7 @@
 	icon_state = "chocolatecake_slice"
 	filling_color = "#A0522D"
 	tastes = list("cake" = 5, "sweetness" = 1, "chocolate" = 4)
+	foodtype = GRAIN | DAIRY | JUNKFOOD
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday
@@ -164,6 +182,7 @@
 	bonus_reagents = list("nutriment" = 7, "sprinkles" = 10, "vitamin" = 5)
 	list_reagents = list("nutriment" = 20, "sprinkles" = 10, "vitamin" = 5)
 	tastes = list("cake" = 5, "sweetness" = 1)
+	foodtype = GRAIN | DAIRY | JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday
 	name = "birthday cake slice"
@@ -172,6 +191,7 @@
 	filling_color = "#DC143C"
 	list_reagents = list("nutriment" = 4, "sprinkles" = 2, "vitamin" = 1)
 	tastes = list("cake" = 5, "sweetness" = 1)
+	foodtype = GRAIN | DAIRY | JUNKFOOD
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/apple
@@ -182,6 +202,7 @@
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
 	tastes = list("cake" = 5, "sweetness" = 1, "apple" = 1)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple
 	name = "apple cake slice"
@@ -189,11 +210,13 @@
 	icon_state = "applecakeslice"
 	filling_color = "#FF4500"
 	tastes = list("cake" = 5, "sweetness" = 1, "apple" = 1)
+	foodtype = GRAIN | DAIRY | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom
 	name = "cake slice"
 	icon_state = "plaincake_slice"
 	filling_color = "#FFFFFF"
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/slimecake
 	name = "Slime cake"
@@ -202,6 +225,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	tastes = list("cake" = 5, "sweetness" = 1, "slime" = 1)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake
 	name = "slime cake slice"
@@ -209,6 +233,7 @@
 	icon_state = "slimecake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("cake" = 5, "sweetness" = 1, "slime" = 1)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/pumpkinspice
 	name = "pumpkin spice cake"
@@ -217,6 +242,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/pumpkinspice
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 5)
 	tastes = list("cake" = 5, "sweetness" = 1, "pumpkin" = 1)
+	foodtype = GRAIN | DAIRY | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/pumpkinspice
 	name = "pumpkin spice cake slice"
@@ -224,3 +250,5 @@
 	icon_state = "pumpkinspicecakeslice"
 	filling_color = "#FFD700"
 	tastes = list("cake" = 5, "sweetness" = 1, "pumpkin" = 1)
+
+	foodtype = GRAIN | DAIRY | VEGETABLES

@@ -18,6 +18,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
 	tastes = list("egg" = 1)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
@@ -90,6 +91,7 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 3)
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
+	foodtype = MEAT | FRIED
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
@@ -99,6 +101,7 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	tastes = list("egg" = 1)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette	//FUCK THIS
 	name = "omelette du fromage"
@@ -110,6 +113,7 @@
 	bitesize = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("egg" = 1, "cheese" = 1)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/kitchen/fork))
@@ -138,3 +142,5 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
+
+	foodtype = MEAT

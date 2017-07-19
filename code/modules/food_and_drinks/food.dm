@@ -6,6 +6,7 @@
 	volume = 50	//Sets the default container amount for all food items.
 	container_type = INJECTABLE
 	resistance_flags = FLAMMABLE
+	var/foodtype
 
 /obj/item/weapon/reagent_containers/food/New()
 		..()
