@@ -951,6 +951,7 @@
 		var/datum/objective/survive/survive = new
 		survive.owner = L.mind
 		L.mind.objectives += survive
+		add_logs(user, L, "took out a blood contract on", src)
 		to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
 		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		var/obj/effect/mine/pickup/bloodbath/B = new(L)
