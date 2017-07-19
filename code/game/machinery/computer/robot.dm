@@ -158,7 +158,7 @@
 
 	else if (href_list["killdrone"])
 		if(src.allowed(usr))
-			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
+			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"]) in GLOB.mob_list
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
