@@ -548,6 +548,24 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/weapon/grenade/chem_grenade/pukonium
+	name = "pukonium grenade"
+	desc = "Filled with some of the most rancid stuff ever, will probably make anyone within a mile of it dry heave."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/pukonium/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent("pukonium", 60)
+	B1.reagents.add_reagent("potassium", 40)
+	B2.reagents.add_reagent("phosphorus", 40)
+	B2.reagents.add_reagent("sugar", 40)
+
+	beakers += B1
+	beakers += B2
+
 #undef EMPTY
 #undef WIRED
 #undef READY

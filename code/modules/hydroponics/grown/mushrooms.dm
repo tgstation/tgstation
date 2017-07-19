@@ -25,6 +25,7 @@
 
 
 
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"

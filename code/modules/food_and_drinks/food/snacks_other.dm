@@ -161,6 +161,7 @@
 	trash = /obj/item/trash/plate
 	list_reagents = list("minttoxin" = 1)
 	filling_color = "#800000"
+	foodtype = TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/eggwrap
 	name = "egg wrap"
