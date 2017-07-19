@@ -211,6 +211,17 @@
 	materials = list(MAT_METAL = 600, MAT_GLASS = 250)
 	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
 	category = list("Misc", "Medical Designs")
+	
+	/datum/design/cyberimp_surgical
+    name = "Surgical Arm Implant"
+    desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+    id = "ci-surgey"
+    req_tech = list("materials" = 3, "engineering" = 3, "biotech" = 3, "programming" = 2, "magnets" = 3)
+    build_type = PROTOLATHE | MECHFAB
+    materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
+    construction_time = 200
+    build_path = /obj/item/organ/cyberimp/arm/surgery
+    category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_toolset
 	name = "Toolset Arm Implant"
