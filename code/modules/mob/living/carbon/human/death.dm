@@ -7,7 +7,7 @@
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
 		new /obj/effect/gibspawner/human(get_turf(src), dna)
-	else
+	else if(!(NOBLOOD in dna.species.species_traits))
 		new /obj/effect/gibspawner/humanbodypartless(get_turf(src), dna)
 
 /mob/living/carbon/human/spawn_dust(just_ash = FALSE)
