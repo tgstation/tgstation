@@ -212,7 +212,7 @@
 	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
 	category = list("Misc", "Medical Designs")
 
-	/datum/design/cyberimp_surgical
+/datum/design/cyberimp_surgical
     name = "Surgical Arm Implant"
     desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
     id = "ci-surgey"
