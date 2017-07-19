@@ -411,7 +411,12 @@
 	// Remove all atoms except observers, landmarks, docking ports
 	var/turf/T0 = src
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
+<<<<<<< HEAD
 	var/list/allowed_contents = typecache_filter_list(T0.GetAllContents(),ignored_atoms,reversed=TRUE)
+=======
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(),ignored_atoms)
+	allowed_contents -= src
+>>>>>>> c8e874073b... Merge pull request #29367 from optimumtact/fuck
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
