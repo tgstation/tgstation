@@ -90,7 +90,7 @@
 
 //returns a new list with only atoms that are in typecache L
 //if reversed, return a new list with only atoms that aren't in typecache L
-/proc/typecache_filter_list(list/atoms, list/typecache, reversed)
+/proc/typecache_filter_list(list/atoms, list/typecache, reversed=FALSE)
 	. = list()
 	for (var/thing in atoms)
 		var/atom/A = thing
