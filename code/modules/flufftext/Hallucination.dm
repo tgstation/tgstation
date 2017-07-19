@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(hallucinations_minor, list(
 	/datum/hallucination/bolts,
 	/datum/hallucination/whispers,
 	/datum/hallucination/message,
-	/datum/hallucination/hudscrew)
+	/datum/hallucination/hudscrew))
 
 GLOBAL_LIST_INIT(hallucinations_medium, list(
 	/datum/hallucination/fake_alert,
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(hallucinations_medium, list(
 	/datum/hallucination/husks,
 	/datum/hallucination/battle,
 	/datum/hallucination/fire,
-	/datum/hallucination/self_delusion)
+	/datum/hallucination/self_delusion))
 
 GLOBAL_LIST_INIT(hallucinations_major, list(
 	/datum/hallucination/fakeattacker,
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	/datum/hallucination/xeno_attack,
 	/datum/hallucination/singularity_scare,
 	/datum/hallucination/delusion,
-	/datum/hallucination/oh_yeah)
+	/datum/hallucination/oh_yeah))
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(world.time < next_hallucination)
@@ -65,6 +65,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/cost = 5 //affects the amount of hallucination reduced, and cooldown until the next hallucination
 
 /datum/hallucination/New(mob/living/carbon/T, forced = TRUE)
+	set waitfor = 0
 	target = T
 	if(!forced)
 		target.hallucination = max(0, target.hallucination - cost)
@@ -472,7 +473,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/delusion
 	cost = 40
 
-/datum/hallucination/self_delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null)
+/datum/hallucination/self_delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null, wabbajack = TRUE) //set wabbajack to false if you want to use another fake source
 	..()
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie","robot")
@@ -496,8 +497,9 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			A = image(custom_icon_file, target, custom_icon)
 	A.override = 1
 	if(target.client)
-		to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
-		target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1, -1)
+		if(wabbajack)
+			to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
+			target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1)
 		delusion = A
 		target.client.images |= A
 	QDEL_IN(src, duration)
@@ -1002,23 +1004,30 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 40
 
 /datum/hallucination/death/New(mob/living/carbon/T, forced = TRUE)
+	set waitfor = 0
 	..()
 	target.hal_screwyhud = SCREWYHUD_DEAD
-	target.SetUnconscious(400)
+	target.Knockdown(300)
+	target.silent += 10
 	var/area/area = get_area(target)
 	to_chat(target, "<span class='deadsay'><b>[target.mind.name]</b> has died at <b>[area.name]</b>.</span>")
 	if(prob(50))
+		var/mob/fakemob
 		var/list/dead_people = list()
 		for(var/mob/dead/observer/G in GLOB.player_list)
 			dead_people += G
-		var/mob/dead/observer/fakemob = pick(dead_people)
+		if(LAZYLEN(dead_people))
+			fakemob = pick(dead_people)
+		else
+			fakemob = target //ever been so lonely you had to haunt yourself?
 		if(fakemob)
-			sleep(rand(30, 60))
-			to_chat(target, "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","welcome [target.first_name()]","you too?","is the AI malf?",\
+			sleep(rand(20, 50))
+			to_chat(target, "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","hey [target.first_name()]","you too?","is the AI rogue?",\
 			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>")
-	sleep(rand(50,70))
+	sleep(rand(70,90))
 	target.hal_screwyhud = SCREWYHUD_NONE
-	target.SetSleeping(0)
+	target.SetKnockdown(0)
+	target.silent = 0
 	qdel(src)
 
 /datum/hallucination/fire
@@ -1087,7 +1096,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 /datum/hallucination/stray_bullet/New(mob/living/carbon/C, forced = TRUE)
 	..()
 	var/list/turf/startlocs = list()
-	for(var/turf/T in view(world.view+1,target)-view(world.view,target))
+	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))
 		startlocs += T
 	var/turf/start = pick(startlocs)
 	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))
