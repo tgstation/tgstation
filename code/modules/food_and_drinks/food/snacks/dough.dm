@@ -11,7 +11,6 @@
 	list_reagents = list("nutriment" = 6)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("dough" = 1)
-	w_class = 3
 	foodtype = GRAIN
 
 
