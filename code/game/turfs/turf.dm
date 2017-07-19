@@ -411,10 +411,9 @@
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
 	var/list/allowed_contents = typecache_filter_list(GetAllContents(),ignored_atoms,reversed=TRUE)
+	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
-		if(thing == src)
-			continue
 		qdel(thing, force=TRUE)
 
 	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE)

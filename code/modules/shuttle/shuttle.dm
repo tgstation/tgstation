@@ -401,7 +401,6 @@
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
-	to_chat(world, num2text(old_turfs.len))
 	var/i
 	for(i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
@@ -410,14 +409,11 @@
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
 		oldT.change_area(old_area, underlying_area)
-	to_chat(world, num2text(i))
 	for(i in 1 to old_turfs.len)
-		to_chat(world, "TAKE [num2text(i)]")
 		var/turf/oldT = old_turfs[i]
 		if(!oldT)
 			continue
 		oldT.empty(turf_type, baseturf_type)
-	to_chat(world, num2text(i))
 
 	qdel(src, force=TRUE)
 

@@ -89,13 +89,12 @@
 	return
 
 //returns a new list with only atoms that are in typecache L
-/proc/typecache_filter_list(list/atoms, list/typecache, reversed=FALSE)
+//if reversed, return a new list with only atoms that aren't in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache, reversed)
 	. = list()
 	for (var/thing in atoms)
 		var/atom/A = thing
-		if (typecache[A.type] && !reversed)
-			. += A
-		else if(reversed)
+		if(typecache[A.type] != reversed) //This assumes typecache[A.type] is either null or TRUE. God help you if it's FALSE
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
