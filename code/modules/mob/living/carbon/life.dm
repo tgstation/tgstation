@@ -379,9 +379,6 @@
 	if(druggy)
 		adjust_drugginess(-1)
 
-	if(disgust)
-		adjust_disgust(-1)
-
 	if(hallucination)
 		spawn handle_hallucinations()
 		hallucination = max(hallucination-2,0)

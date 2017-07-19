@@ -5,7 +5,7 @@
 /mob/living/carbon/damage_eyes(amount)
 	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
 	if (!eyes)
-		return 
+		return
 	if(amount>0)
 		eyes.eye_damage = amount
 		if(eyes.eye_damage > 20)
@@ -17,7 +17,7 @@
 /mob/living/carbon/set_eye_damage(amount)
 	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
 	if (!eyes)
-		return 
+		return
 	eyes.eye_damage = max(amount,0)
 	if(eyes.eye_damage > 20)
 		if(eyes.eye_damage > 30)
@@ -67,39 +67,12 @@
 	var/old_disgust = disgust
 	if(amount>0)
 		disgust = min(disgust+amount, DISGUST_LEVEL_MAXEDOUT)
-		switch(disgust)
-			if(0 to DISGUST_LEVEL_GROSS)
-				clear_alert("disgust")
-			if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-				throw_alert("disgust", /obj/screen/alert/gross)
-			if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-				throw_alert("disgust", /obj/screen/alert/verygross)
-			if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-				throw_alert("disgust", /obj/screen/alert/disgusted)
 
 	else if(old_disgust)
 		disgust = max(disgust+amount, 0)
-		switch(disgust)
-			if(0 to DISGUST_LEVEL_GROSS)
-				clear_alert("disgust")
-			if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-				throw_alert("disgust", /obj/screen/alert/gross)
-			if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-				throw_alert("disgust", /obj/screen/alert/verygross)
-			if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-				throw_alert("disgust", /obj/screen/alert/disgusted)
 
 /mob/living/carbon/set_disgust(amount)
 	disgust = amount
-	switch(disgust)
-		if(0 to DISGUST_LEVEL_GROSS)
-			clear_alert("disgust")
-		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-			throw_alert("disgust", /obj/screen/alert/gross)
-		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-			throw_alert("disgust", /obj/screen/alert/verygross)
-		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-			throw_alert("disgust", /obj/screen/alert/disgusted)
 
 /mob/living/carbon/cure_blind()
 	if(disabilities & BLIND)

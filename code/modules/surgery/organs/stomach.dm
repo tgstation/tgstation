@@ -13,6 +13,11 @@
 
 	if(istype(H))
 		H.dna.species.handle_digestion(H)
+		H.dna.species.handle_disgust(H)
+
+/obj/item/organ/stomach/Remove()
+	..()
+	H.clear_alert("disgust")
 
 /obj/item/organ/stomach/fly
 	name = "insectoid stomach"
@@ -21,5 +26,5 @@
 
 /obj/item/organ/stomach/plasmaman
 	name = "digestive crystal"
-	icon_state = "pstomach" 
+	icon_state = "pstomach"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
