@@ -72,6 +72,7 @@
 
 //Please don't roast me too hard
 /client/MouseMove(object,location,control,params)
+	to_chat(world, "<span class='boldnotice'>DEBUG: Client MouseMove with params [params]</span>")
 	mouseParams = params
 	mouseLocation = location
 	mouseObject = object
@@ -84,6 +85,7 @@
 	return
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	to_chat(world, "<span class='boldnotice'>DEBUG: Client MouseMove with params [params]</span>")
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object

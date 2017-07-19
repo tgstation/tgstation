@@ -432,32 +432,47 @@
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "click_catcher"
+	icon_state = "blank"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER"
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
 	screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
-	var/list/ret = list()
-	for(var/X in 0 to (view_size_x * 2))
-		for(var/Y in 0  to (view_size_y * 2))
-			var/obj/screen/click_catcher/CC = new()
-			CC.screen_loc = "EAST-[X],NORTH-[Y]"
-			ret += CC
-	return ret
+	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "blank")
+	if(view_size_x > 16 || view_size_y > 16)
+		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
+		icon = newicon
+		var/tx = 16/view_size_x
+		var/ty = 16/view_size_y
+		var/matrix/M = new
+		M.Scale(tx, ty)
+		transform = M
+	else
+		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
+		icon = newicon
+	to_chat(world, "<span class='boldnotice'>DEBUG: Updating greed with size [view_size_x]/[view_size_y]! Icon is at [newicon.Width()]/[newicon.Height()] pixels!</span>")
 
 /obj/screen/click_catcher/Click(location, control, params)
+	to_chat(world, "<span class='boldnotice'>DEBUG: Clickcatcher Click with params [params]</span>")
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"] && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
 		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
 	. = 1
+
+/obj/screen/click_catcher/MouseMove(location,control,params)
+	to_chat(world, "<span class='boldnotice'>DEBUG: Clickcatcher MouseMove with params [params]</span>")
+	return ..()
+
+/obj/screen/click_catcher/MouseDrag(over_object,src_location,over_location,src_control,over_control,params)
+	to_chat(world, "<span class='boldnotice'>DEBUG: Clickcatcher MouseDrag with params [params]</span>")
+	return ..()
 
 /* MouseWheelOn */
 
