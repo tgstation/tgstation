@@ -156,7 +156,6 @@
 				return
 			boxes += add
 			newbox.boxes.Cut()
-			newbox.forceMove(src)
 			to_chat(user, "<span class='notice'>You put [newbox] on top of [src]!</span>")
 			newbox.update_icon()
 			update_icon()
