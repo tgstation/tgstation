@@ -59690,7 +59690,6 @@
 "cjz" = (
 /obj/structure/chair,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -67729,7 +67728,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -70360,7 +70358,6 @@
 "cDH" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whitegreen,
@@ -71392,7 +71389,6 @@
 /obj/item/weapon/hand_labeler,
 /obj/item/device/radio/headset/headset_med,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -78371,7 +78367,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -83048,7 +83043,6 @@
 /area/science/xenobiology)
 "dcb" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/camera{

@@ -20032,7 +20032,6 @@
 /area/security/vacantoffice)
 "aUP" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/wood,
@@ -28452,7 +28451,6 @@
 /area/security/checkpoint/medical)
 "bol" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/structure/disposalpipe/segment{
@@ -29122,7 +29120,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -30004,7 +30001,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/folder/white,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/item/device/radio/off,
@@ -30350,7 +30346,6 @@
 	c_tag = "Teleporter"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -33482,7 +33477,6 @@
 "bza" = (
 /obj/structure/chair,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black,
@@ -34752,7 +34746,6 @@
 "bBO" = (
 /obj/machinery/computer/med_data,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/barber,
@@ -35512,7 +35505,6 @@
 /area/storage/tech)
 "bDz" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -35589,7 +35581,6 @@
 "bDH" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
@@ -39694,7 +39685,6 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -40304,7 +40294,6 @@
 /area/quartermaster/office)
 "bNL" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -40517,7 +40506,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -45618,7 +45606,6 @@
 /area/maintenance/aft)
 "bZR" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/item/weapon/wrench,
@@ -55985,7 +55972,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cwg" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/structure/chair{
