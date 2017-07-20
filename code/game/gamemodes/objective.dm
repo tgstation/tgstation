@@ -122,7 +122,7 @@
 
 /datum/objective/mutiny/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
+		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.client)
 			return 1
 		var/turf/T = get_turf(target.current)
 		if(T && (T.z > ZLEVEL_STATION) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
