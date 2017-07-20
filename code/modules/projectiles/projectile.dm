@@ -203,7 +203,7 @@
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
 		return
-	if(setAngle)
+	if(isnum(setAngle))
 		Angle = setAngle
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
