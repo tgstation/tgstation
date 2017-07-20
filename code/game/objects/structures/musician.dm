@@ -67,7 +67,7 @@
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		hearers = list()
 		for(var/mob/M in get_hearers_in_view(15, source))
-			if(!M.client || !(M.clients.prefs.toggles & SOUND_INSTRUMENTS))
+			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 				continue
 			hearers[M] = TRUE
 		last_hearcheck = world.time
