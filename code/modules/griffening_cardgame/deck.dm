@@ -18,8 +18,14 @@
 /obj/item/weapon/storage/backpack/deckgriffening/handle_item_insertion(obj/item/W, FALSE, mob/user) //False is the prevent_warning var, which is for hidin stuff
 	..() //I wanna call the parent proc or else this all breaks
 	if(istype(W, /obj/item/griffening_single))
-		user.visible_message("<span class='notice'>[user.name] puts the [W.name] back into their deck.</span>")
+		user.visible_message("<span class='notice'>[user.name] puts the [W.name] into the [src.name].</span>")
 		return
+	if(istype(W, /obj/item/weapon/storage/backpack/deckgriffening/discardpile))
+		..()
+	if(istype(W, /obj/item/weapon/storage/backpack/deckgriffening/gibbedpile))
+		..()
+	if(istype(W, /obj/item/weapon/storage/backpack/deckgriffening/starterpack))
+		..()
 	if(!W) //Empty hand or non existing item
 		return
 	if(!istype(W, /obj/item/griffening_single))
