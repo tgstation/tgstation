@@ -287,8 +287,6 @@
 
 
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
-	if(!istype(O))
-		return FALSE
 	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
@@ -317,7 +315,8 @@
 		. = 1
 		check_heat(M)
 		for(var/obj/item/I in M.held_items)
-			wash_obj(I)
+			if(I)
+				wash_obj(I)
 		if(M.back)
 			if(wash_obj(M.back))
 				M.update_inv_back(0)
