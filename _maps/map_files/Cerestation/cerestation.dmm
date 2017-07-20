@@ -8087,6 +8087,11 @@
 /area/security/warden)
 "aqy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -14202,6 +14207,11 @@
 /area/security/main)
 "aCK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
 	dir = 1;
@@ -15701,6 +15711,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -50810,6 +50825,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64622,7 +64642,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/asteroid/aft/science)
+/area/hallway/primary/aft)
 "cqM" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -66349,7 +66369,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/asteroid/aft/science)
+/area/science/lab)
 "ctR" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -92240,6 +92260,15 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Warden's Office APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92481,6 +92510,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92704,6 +92738,15 @@
 "dvG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Brig APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/orange{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -94644,6 +94687,53 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ai_monitored/storage/eva)
+"dzi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/brig)
+"dzj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/red/side{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/brig)
+"dzk" = (
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Starboard Asteroid Maintenace APC";
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/end{
+	icon_state = "warn_end";
+	dir = 1
+	},
+/obj/structure/cable/orange,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/asteroid/starboard)
 
 (1,1,1) = {"
 aaa
@@ -106787,7 +106877,7 @@ dtJ
 dtJ
 dvh
 dvG
-aDP
+dzi
 aFl
 cLB
 dwO
@@ -108329,8 +108419,8 @@ duk
 aqy
 dvk
 aCK
-aGP
-aFq
+cHc
+dzj
 dwv
 dwT
 dxn
@@ -148503,7 +148593,7 @@ bMO
 bNM
 bOR
 bPZ
-cQi
+dzk
 beH
 aZM
 aZM

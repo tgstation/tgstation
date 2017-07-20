@@ -22943,7 +22943,7 @@
 "bbI" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office A APC";
+	name = "Vacant Office APC";
 	pixel_x = -24
 	},
 /obj/structure/cable{
@@ -22951,7 +22951,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice/a)
+/area/security/vacantoffice)
 "bbJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -79679,13 +79679,13 @@ ayl
 ayl
 ayl
 aSf
-aTq
-aTq
-aTq
-aTq
-aTq
-aTq
-aTq
+czK
+czK
+czK
+czK
+czK
+czK
+czK
 aPz
 aPz
 bdB

@@ -52975,6 +52975,111 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"cnH" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"cnI" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Brig Maintenance APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"cnJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Auxiliary Closet Construction APC";
+	pixel_x = -25;
+	pixel_y = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/effect/turf_decal/stripes/end{
+	icon_state = "warn_end";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base/closet)
+"cnK" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Science Maintenance APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"cnL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine/atmos)
+"cnM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Atmospherics Maintenance APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -70273,8 +70378,8 @@ agv
 agv
 agv
 agv
-alM
-ahy
+cnH
+cnI
 agv
 anz
 aol
@@ -76493,7 +76598,7 @@ bWQ
 bev
 bfI
 bgL
-bgL
+cnJ
 biK
 bgL
 bgL
@@ -87045,8 +87150,8 @@ bvk
 bwp
 bxw
 bte
-bzw
-bAt
+cnL
+cnM
 bBv
 bCw
 bDt
@@ -98864,7 +98969,7 @@ bsF
 bfy
 bfy
 bed
-bwX
+cnK
 brM
 aaa
 aaa
