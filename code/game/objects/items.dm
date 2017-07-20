@@ -204,6 +204,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		msg += "*--------*"
 		to_chat(user, msg)
 
+/obj/item/proc/speechModification(message)			//for message modding by mask slot.
+	return message
 
 /obj/item/attack_self(mob/user)
 	interact(user)
