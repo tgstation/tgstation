@@ -115,14 +115,14 @@
 
 /obj/machinery/airalarm/engine
 	name = "engine air alarm"
-	locked = 0
+	locked = FALSE
 	req_access = null
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE)
 
 /obj/machinery/airalarm/all_access
 	name = "all-access air alarm"
 	desc = "This particular atmos control unit appears to have no access restrictions."
-	locked = 0
+	locked = FALSE
 	req_access = null
 	req_one_access = null
 
