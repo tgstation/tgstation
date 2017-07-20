@@ -1383,14 +1383,9 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/reagent_containers/dropper,
-/obj/machinery/airalarm{
-	desc = "This particular atmos control unit appears to have no access restrictions.";
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	locked = 0;
-	name = "all-access air alarm";
-	pixel_x = -24;
-	req_access = "0";
-	req_one_access = "0"
+	pixel_x = -24
 	},
 /obj/machinery/button/ignition{
 	id = "executionburn";
@@ -63005,13 +63000,9 @@
 	dir = 8;
 	network = list("SS13","Engine")
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/engine{
 	dir = 8;
-	locked = 0;
-	name = "Engine Air Alarm";
-	pixel_x = 24;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 8
@@ -68299,14 +68290,9 @@
 	},
 /area/science/mixing)
 "czH" = (
-/obj/machinery/airalarm{
-	desc = "This particular atmos control unit appears to have no access restrictions.";
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	name = "all-access air alarm";
-	pixel_x = 24;
-	req_access = "0";
-	req_one_access = "0"
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/chair/stool{

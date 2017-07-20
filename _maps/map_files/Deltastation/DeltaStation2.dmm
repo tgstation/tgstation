@@ -12837,12 +12837,8 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
-	locked = 0;
-	name = "Engine Air Alarm";
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+/obj/machinery/airalarm/engine{
+	pixel_y = 23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
