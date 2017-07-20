@@ -41,7 +41,7 @@
 
 /obj/item/organ/butt/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
-	inv = new(src)
+	inv = new(H)
 	inv.max_w_class = max_w_class
 	inv.storage_slots = storage_slots
 	inv.max_combined_w_class = max_combined_w_class
