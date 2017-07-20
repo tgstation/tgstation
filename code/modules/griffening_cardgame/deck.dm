@@ -43,3 +43,21 @@
 			return //>Edge case
 	else
 		return
+
+/obj/item/weapon/storage/backpack/deckgriffening/discardpile //Types paths so you can put cards in somewhere if it's discarded or gibbed
+	name = "Griffening Discard Pile"
+	desc = "A storage container for cards sent to the discard pile"
+
+/obj/item/weapon/storage/backpack/deckgriffening/gibbedpile
+	name = "Griffening Gibbed Pile"
+	desc = "A storage container for cards sent to the gibbed pile"
+
+/obj/item/weapon/storage/backpack/deckgriffening/starterpack //A storage container for holding the gibbed, discard and deck piles when walking around
+	name = "Griffening game holder"
+	desc = "A storage container for holding everything you need to play Griffening."
+
+/obj/item/weapon/storage/backpack/deckgriffening/starterpack/PopulateContents()
+	new /obj/item/griffening_boosterpack/deck40(src)
+	new /obj/item/weapon/storage/backpack/griffeningholder(src)
+	new /obj/item/weapon/storage/backpack/deckgriffening/discardpile(src)
+	new /obj/item/weapon/storage/backpack/deckgriffening/gibbedpile(src)
