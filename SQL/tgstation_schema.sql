@@ -263,7 +263,7 @@ DROP TABLE IF EXISTS `role_time`;
 
 CREATE TABLE `role_time` 
 ( `ckey` VARCHAR(32) NOT NULL ,
- `job` VARCHAR(128) NOT NULL ,
+ `job` VARCHAR(32) NOT NULL ,
  `minutes` INT UNSIGNED NOT NULL,
  PRIMARY KEY (`ckey`, `job`) 
  ) ENGINE = InnoDB;
@@ -283,7 +283,7 @@ CREATE TABLE `player` (
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
-  `flags` int(11) NOT NULL,
+  `flags` unsigned smallint(5) NOT NULL,
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)

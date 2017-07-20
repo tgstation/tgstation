@@ -181,7 +181,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return
 
 	var/playerflags = null
-	while(flag_read.NextRow())
+	if(flag_read.NextRow())
 		playerflags = text2num(flag_read.item[1])
 
 	if((playerflags & newflag) && !state)
@@ -281,6 +281,6 @@ GLOBAL_PROTECT(exp_to_update)
 		message_admins("SQL ERROR during player flags read. Error : \[[err]\]\n")
 		return FALSE
 
-	while(flags_read.NextRow())
+	if(flags_read.NextRow())
 		prefs.db_flags = text2num(flags_read.item[1])
 	return TRUE
