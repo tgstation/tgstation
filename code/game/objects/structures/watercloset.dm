@@ -287,6 +287,8 @@
 
 
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
+	if(!istype(O))
+		return FALSE
 	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
