@@ -72,7 +72,8 @@
 		disgust = max(disgust+amount, 0)
 
 /mob/living/carbon/set_disgust(amount)
-	disgust = amount
+	if(amount >= 0)
+		disgust = amount
 
 /mob/living/carbon/cure_blind()
 	if(disabilities & BLIND)

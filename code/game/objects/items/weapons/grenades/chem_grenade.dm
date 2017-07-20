@@ -553,7 +553,7 @@
 	desc = "Filled with some of the most rancid stuff ever, will probably make anyone within a mile of it dry heave."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/pukonium/New()
+/obj/item/weapon/grenade/chem_grenade/pukonium/Initialize()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)

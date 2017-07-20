@@ -103,24 +103,24 @@
 			if(M.satiety > -200)
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			var/fraction = min(bitesize / reagents.total_volume, 1)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(foodtype & H.dna.species.toxic_food)
-					to_chat(M,"<span class='warning'>What the hell was that thing?!</span>")
-					M.adjust_disgust(25 + 30 * fraction)
-				else if(foodtype & H.dna.species.disliked_food)
-					to_chat(M,"<span class='notice'>That didn't taste very good...</span>")
-					M.adjust_disgust(11 + 15 * fraction)
-				else if(foodtype & H.dna.species.liked_food)
-					to_chat(M,"<span class='notice'>I love this taste!</span>")
-					M.adjust_disgust(-5 + -2.5 * fraction)
 			if(reagents.total_volume)
+				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
 				bitecount++
 				On_Consume()
-			return 1
+				if(iscarbon(M))
+					var/mob/living/carbon/human/H = M
+					if(foodtype & H.dna.species.toxic_food)
+						to_chat(M,"<span class='warning'>What the hell was that thing?!</span>")
+						M.adjust_disgust(25 + 30 * fraction)
+					else if(foodtype & H.dna.species.disliked_food)
+						to_chat(M,"<span class='notice'>That didn't taste very good...</span>")
+						M.adjust_disgust(11 + 15 * fraction)
+					else if(foodtype & H.dna.species.liked_food)
+						to_chat(M,"<span class='notice'>I love this taste!</span>")
+						M.adjust_disgust(-5 + -2.5 * fraction)
+				return 1
 
 	return 0
 

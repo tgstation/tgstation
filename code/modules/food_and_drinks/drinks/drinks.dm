@@ -47,7 +47,7 @@
 		add_logs(user, M, "fed", reagentlist(src))
 
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	if(ishuman(M))
+	if(iscarbon(M))
 		var/mob/living/carbon/human/H = M
 		if(foodtype & H.dna.species.toxic_food)
 			to_chat(M,"<span class='warning'>What the hell is this?!</span>")

@@ -46,7 +46,6 @@
 	var/cultslurring = 0	//Carbon
 	var/real_name = null
 	var/druggy = 0			//Carbon
-	var/disgust = 0 		//Carbon
 	var/confused = 0		//Carbon
 	var/resting = 0			//Carbon
 	var/lying = 0
