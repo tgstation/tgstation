@@ -1,12 +1,16 @@
-#define NO_REACTION	0
-#define REACTING	1
-
 
 /datum/gas_reaction/hippie_fusion
 	exclude = FALSE
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "plasmafusion"
+
+/datum/gas_reaction/hippie_fusion/init_reqs()
+	min_requirements = list(
+		"ENER" = PLASMA_BINDING_ENERGY,
+		"plasma" = MINIMUM_HEAT_CAPACITY,
+		"co2" = MINIMUM_HEAT_CAPACITY
+	)
 
 /datum/gas_reaction/hippie_fusion/react(datum/gas_mixture/air, atom/location)
 	var/list/cached_gases = air.gases
@@ -15,7 +19,7 @@
 
 	if((cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD_HIPPIE || reaction_energy < PLASMA_BINDING_ENERGY_HIPPIE)
 		//Fusion wont occur if the level of impurities is too high.
-		return NO_REACTION
+		return FALSE
 
 	else
 		//to_chat(world, "pre [temperature, [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
@@ -40,12 +44,11 @@
 			if(air.heat_capacity() > MINIMUM_HEAT_CAPACITY)
 				air.temperature = temperature + max(energy_released / air.heat_capacity(), TCMB)// energy released is thermal energy so we convert back to kelvin via division
 				//Prevents whatever mechanism is causing it to hit negative temperatures.
-			//to_chat(world, "PLASMA [cached_gases["plasma"][MOLES]], CO2 [cached_gases["co2"][MOLES]], FUSED [plasma_fused], ENERGY [energy_released], MASS FUSED [mass_fused], MASS CREATED [oxygen_added + nitrogen_added] REACTING")
 			if(!isnull(location))
 				location.set_light(4, 30)
 				location.light_color = LIGHT_COLOR_GREEN
 				radiation_pulse(location, 8, 15, 5)//set to an arbitrary value for now because radiation scaling with reaction energy is insane
 				addtimer(CALLBACK(location, .atom/proc/set_light, 0, 0), 30)
-			return REACTING
+			return TRUE
 
-		return NO_REACTION
+		return FALSE
