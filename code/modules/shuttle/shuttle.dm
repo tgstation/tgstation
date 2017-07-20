@@ -401,18 +401,13 @@
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
-	var/i
-	for(i in 1 to old_turfs.len)
+	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		if(!oldT)
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
 		oldT.change_area(old_area, underlying_area)
-	for(i in 1 to old_turfs.len)
-		var/turf/oldT = old_turfs[i]
-		if(!oldT)
-			continue
 		oldT.empty(turf_type, baseturf_type)
 
 	qdel(src, force=TRUE)
@@ -573,6 +568,7 @@
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
 
+	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
 
