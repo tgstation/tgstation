@@ -392,6 +392,16 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/weapon/tank/internals/oxygen
 
+/datum/outfit/syndicate_agent
+	name = "Syndicate Agent"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/officer
+	shoes = /obj/item/clothing/shoes/combat/swat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset/syndicate/alt
+
+
+
 
 
 
