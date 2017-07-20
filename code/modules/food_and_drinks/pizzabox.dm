@@ -152,8 +152,7 @@
 			var/list/add = list()
 			add += newbox
 			add += newbox.boxes
-
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(add, src))
 				return
 			boxes += add
 			newbox.boxes.Cut()
