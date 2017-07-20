@@ -36,7 +36,7 @@ Assistant
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
-	l_pocket = /obj/item/griffening_boosterpack/deck40 //A full deck!
+	l_pocket = /obj/item/weapon/storage/backpack/deckgriffening/starterpack //A storage container that holds everything you need to play a game
 	if (config.grey_assistants)
 		uniform = /obj/item/clothing/under/color/grey
 	else
