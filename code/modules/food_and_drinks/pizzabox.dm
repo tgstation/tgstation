@@ -85,7 +85,7 @@
 /obj/item/pizzabox/worn_overlays(isinhands, icon_file)
 	. = list()
 	var/current_offset = 2
-	if(isinhands && boxes.len)
+	if(isinhands)
 		for(var/V in boxes) //add EXTRA BOX per box
 			var/mutable_appearance/M = mutable_appearance(icon_file, item_state)
 			M.pixel_y = current_offset
@@ -157,7 +157,7 @@
 				return
 			boxes += add
 			newbox.boxes.Cut()
-			newbox.loc = src
+			newbox.forceMove(src)
 			to_chat(user, "<span class='notice'>You put [newbox] on top of [src]!</span>")
 			newbox.update_icon()
 			update_icon()
@@ -174,7 +174,7 @@
 	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza))
 		if(open)
 			if(pizza)
-				to_chat(user, "<span class='warning'>[src] already has a [pizza.name]!</span>")
+				to_chat(user, "<span class='warning'>[src] already has \a [pizza.name]!</span>")
 				return
 			if(!user.drop_item())
 				return
