@@ -10232,11 +10232,6 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
 "awq" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "Port Solar Access";
 	req_access_txt = "10"
@@ -86720,7 +86715,7 @@ cnC
 cjZ
 cjZ
 cjZ
-cnD
+cnC
 cks
 cka
 aaa

@@ -8943,11 +8943,6 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -9476,11 +9471,6 @@
 	pixel_y = -3
 	},
 /obj/structure/window/reinforced,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21041,6 +21031,11 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4;
@@ -68707,11 +68702,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/orange{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	icon_state = "ast_warn";
 	dir = 1
@@ -90069,11 +90059,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -90246,11 +90231,6 @@
 /obj/item/weapon/shield/riot{
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90436,11 +90416,6 @@
 	layer = 3.00001;
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -121354,7 +121329,7 @@ djY
 cxE
 djV
 cSA
-czT
+djz
 dka
 djV
 dkb

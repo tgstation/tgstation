@@ -9519,10 +9519,6 @@
 /area/crew_quarters/fitness)
 "avB" = (
 /obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable{
 	d2 = 8;
@@ -86422,7 +86418,7 @@ bLv
 bUs
 bLv
 aaf
-cAj
+cjJ
 cjJ
 cjJ
 cjJ
