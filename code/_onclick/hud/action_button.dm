@@ -50,8 +50,8 @@
 			var/datum/action/A = V
 			var/obj/screen/movable/action_button/B = A.button
 			B.moved = FALSE
-			B.locked = FALSE
-		locked = FALSE
+			B.locked = usr.client.prefs.buttons_locked
+		locked = usr.client.prefs.buttons_locked
 		moved = FALSE
 		usr.update_action_buttons(TRUE)
 		to_chat(usr, "<span class='notice'>Action button positions have been reset.</span>")
