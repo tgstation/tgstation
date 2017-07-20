@@ -72,7 +72,7 @@ Contents:
 	ninjadatum.equip_space_ninja()
 
 	Ninja.internal = Ninja.s_store
-	Ninja.update_internals_hud_icon(1)
+	Ninja.update_action_buttons_icon()
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")

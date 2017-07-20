@@ -213,8 +213,8 @@
 	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
 	if(toggle_off && internal && !getorganslot("breathing_tube"))
-		update_internals_hud_icon(0)
 		internal = null
+		update_action_buttons_icon()
 	if(C.flags_inv & HIDEEYES)
 		update_inv_glasses()
 	sec_hud_set_security_status()
