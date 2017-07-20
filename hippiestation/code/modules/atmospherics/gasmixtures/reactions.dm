@@ -22,7 +22,6 @@
 		return FALSE
 
 	else
-		//to_chat(world, "pre [temperature, [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 		var/moles_impurities = (cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/air.total_moles()//more plasma+carbon = higher chance of collision regardless of actual thermal energy
 		var/carbon_plasma_ratio = min(cached_gases["co2"][MOLES]/cached_gases["plasma"][MOLES],MAX_CARBON_EFFICENCY_HIPPIE)//more carbon = more fusion
 		var/plasma_fused = max((PLASMA_FUSED_COEFFICENT_HIPPIE*(reaction_energy/PLASMA_BINDING_ENERGY_HIPPIE) * moles_impurities * carbon_plasma_ratio), 0)
