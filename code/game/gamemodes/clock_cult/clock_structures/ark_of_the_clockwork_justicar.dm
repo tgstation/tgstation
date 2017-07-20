@@ -200,6 +200,11 @@
 		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
 		if(dist < convert_dist)
 			T.ratvar_act(FALSE, TRUE, 3)
+	for(var/obj/O in orange(1, src))
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
+			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
+				O.take_damage(50, BURN, "bomb")
+			O.update_icon()
 	if(still_needs_components())
 		if(!first_sound_played)
 			priority_announce("Massive energy anomaly detected on short-range scanners. Attempting to triangulate location...", "Anomaly Alert")
@@ -219,11 +224,6 @@
 			update_slab_info()
 		if(still_needs_components())
 			return
-	for(var/obj/O in orange(1, src))
-		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
-			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
-				O.take_damage(50, BURN, "bomb")
-			O.update_icon()
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)

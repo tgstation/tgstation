@@ -241,6 +241,10 @@
 	var/dynamic_hair_suffix = "" //if this is non-null, and hair+suffix matches an iconstate, then we render that hair instead
 	var/dynamic_fhair_suffix = ""
 
+	//for augmented heads
+	if(HD.status == BODYPART_ROBOTIC)
+		return
+
 	//we check if our hat or helmet hides our facial hair.
 	if(H.head)
 		var/obj/item/I = H.head
@@ -1327,6 +1331,8 @@
 			H.adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			H.adjustStaminaLoss(damage * hit_percent)
+		if(BRAIN)
+			H.adjustBrainLoss(damage * hit_percent)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)

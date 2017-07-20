@@ -138,7 +138,7 @@
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj,/obj/machinery/camera))
+				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
 			var/area/template = locate(/area/tdome/arena_source)
@@ -149,8 +149,9 @@
 			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 			if(choice == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
-				for(var/datum/disease/D in SSdisease.processing)
-					D.cure(D)
+				for(var/thing in SSdisease.active_diseases)
+					var/datum/disease/D = thing
+					D.cure(0)
 		if("set_name")
 			if(!check_rights(R_ADMIN))
 				return
@@ -537,17 +538,17 @@
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (GLOB.access_maint_tunnels in M.req_access)
-					M.req_access = list(GLOB.access_brig)
+				if (ACCESS_MAINT_TUNNELS in M.req_access)
+					M.req_access = list(ACCESS_BRIG)
 			message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (GLOB.access_maint_tunnels in M.req_access)
+				if (ACCESS_MAINT_TUNNELS in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(GLOB.access_brig,GLOB.access_engine)
+					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
 			message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 		if("infinite_sec")
 			if(!check_rights(R_DEBUG))

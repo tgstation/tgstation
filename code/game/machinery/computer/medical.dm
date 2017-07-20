@@ -5,7 +5,7 @@
 	desc = "This can be used to check medical records."
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
-	req_one_access = list(GLOB.access_medical, GLOB.access_forensics_lockers)
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/weapon/circuitboard/computer/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null

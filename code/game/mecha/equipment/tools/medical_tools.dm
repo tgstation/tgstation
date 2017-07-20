@@ -121,7 +121,7 @@
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(filter.get("inject"))
-		inject_reagent(filter.getType("inject",/datum/reagent),filter.getObj("source"))
+		inject_reagent(filter.getType("inject", /datum/reagent),filter.getObj("source"))
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
@@ -296,9 +296,9 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(atom/movable/target)
 	if(!action_checks(target))
 		return
-	if(istype(target,/obj/item/weapon/reagent_containers/syringe))
+	if(istype(target, /obj/item/weapon/reagent_containers/syringe))
 		return load_syringe(target)
-	if(istype(target,/obj/item/weapon/storage))//Loads syringes from boxes
+	if(istype(target, /obj/item/weapon/storage))//Loads syringes from boxes
 		for(var/obj/item/weapon/reagent_containers/syringe/S in target.contents)
 			load_syringe(S)
 		return

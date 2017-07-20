@@ -8,7 +8,7 @@
 	anchored = FALSE
 	verb_say = "states"
 	density = TRUE
-	req_access = list(GLOB.access_engine)
+	req_access = list(ACCESS_ENGINE)
 	var/active = FALSE
 	var/list/rangers = list()
 	var/charge = 35

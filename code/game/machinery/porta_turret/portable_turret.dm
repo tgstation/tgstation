@@ -15,7 +15,7 @@
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(GLOB.access_security)
+	req_access = list(ACCESS_SECURITY)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -274,7 +274,7 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I,/obj/item/device/multitool) && !locked)
+	else if(istype(I, /obj/item/device/multitool) && !locked)
 		var/obj/item/device/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
@@ -282,15 +282,16 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-		visible_message("[src] hums oddly...")
-		emagged = TRUE
-		controllock = 1
-		on = FALSE //turns off the turret temporarily
-		update_icon()
-		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-		on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	if(emagged)
+		return
+	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
+	visible_message("[src] hums oddly...")
+	emagged = TRUE
+	controllock = 1
+	on = FALSE //turns off the turret temporarily
+	update_icon()
+	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -552,7 +553,7 @@
 	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
-	req_access = list(GLOB.access_syndicate)
+	req_access = list(ACCESS_SYNDICATE)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
@@ -650,7 +651,7 @@
 	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	req_access = list(GLOB.access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -688,9 +689,9 @@
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN) return
 
-	if (istype(I,/obj/item/device/multitool))
+	if (istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I
-		if(M.buffer && istype(M.buffer,/obj/machinery/porta_turret))
+		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
 			to_chat(user, "You link \the [M.buffer] with \the [src]")
 			return
@@ -717,12 +718,13 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-		emagged = TRUE
-		locked = FALSE
-		if(user && user.machine == src)
-			attack_hand(user)
+	if(emagged)
+		return
+	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
+	emagged = TRUE
+	locked = FALSE
+	if(user && user.machine == src)
+		attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))
@@ -860,7 +862,7 @@
 	. = ..()
 
 /obj/machinery/porta_turret/lasertag
-	req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
+	req_access = list(ACCESS_MAINT_TUNNELS, ACCESS_THEATRE)
 	check_records = 0
 	criminals = 0
 	auth_weapons = 1

@@ -11,7 +11,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/askDelay = 600 //one minute
 	var/searching = FALSE
 	brainmob = null
-	req_access = list(GLOB.access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 	var/autoping = TRUE //if it pings on creation immediately

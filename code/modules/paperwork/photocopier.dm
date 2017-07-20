@@ -149,7 +149,7 @@
 					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>" )
 					break
 				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
-					if(isalienadult(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
 						if(ass.gender == MALE)
@@ -256,7 +256,7 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			if(istype(O,/obj/item/weapon/paper/contract/infernal))
+			if(istype(O, /obj/item/weapon/paper/contract/infernal))
 				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
 				resistance_flags |= FLAMMABLE
 				fire_act()

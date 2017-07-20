@@ -37,10 +37,10 @@
 	..()
 	move_update_air(T)
 
-/obj/structure/mineral_door/Bumped(atom/user)
+/obj/structure/mineral_door/CollidedWith(atom/movable/AM)
 	..()
 	if(!state)
-		return TryToSwitchState(user)
+		return TryToSwitchState(AM)
 
 /obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
 	if(isAI(user)) //so the AI can't open it
@@ -122,7 +122,7 @@
 		icon_state = initial_state
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
 		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)

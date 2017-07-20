@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "The tachyon-doppler array's rotation now has messages, sprites, and examine text."

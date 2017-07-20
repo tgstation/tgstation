@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/ore/glass))
+	if(istype(W, /obj/item/weapon/ore/glass))
 		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		qdel(src)
@@ -312,7 +312,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	origin_tech = "materials=1"
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
-	new/datum/stack_recipe("Snow Wall",/turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snow Wall", /turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
 	))

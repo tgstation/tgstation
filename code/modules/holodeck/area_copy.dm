@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
-			else if(istype(original.vars[V],/datum))
+			else if(istype(original.vars[V], /datum))
 				continue	// this would reference the original's object, that will break when it is used or deleted.
 			else
 				O.vars[V] = original.vars[V]
@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			I.damtype = STAMINA // thou shalt not
 
 		N.update_icon()
-		if(istype(O,/obj/machinery))
+		if(istype(O, /obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
 

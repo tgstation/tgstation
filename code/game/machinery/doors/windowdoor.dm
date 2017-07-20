@@ -58,7 +58,7 @@
 		sleep(20)
 	close()
 
-/obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
+/obj/machinery/door/window/CollidedWith(atom/movable/AM)
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
@@ -206,13 +206,14 @@
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !emagged)
+		emagged = TRUE
 		operating = TRUE
 		flick("[src.base_state]spark", src)
+		playsound(src, "sparks", 75, 1)
 		sleep(6)
 		operating = FALSE
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		open()
-		emagged = TRUE
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/living/user, params)
 
@@ -307,6 +308,15 @@
 	max_integrity = 300 //Stronger doors for prison (regular window door health is 200)
 	reinf = 1
 	explosion_block = 1
+
+/obj/machinery/door/window/brigdoor/security/cell
+	name = "cell door"
+	desc = "For keeping in criminal scum."
+	req_access = list(ACCESS_BRIG)
+
+/obj/machinery/door/window/brigdoor/security/holding
+	name = "holding cell door"
+	req_access = list(ACCESS_SEC_DOORS, ACCESS_LAWYER) //love for the lawyer
 
 /obj/machinery/door/window/clockwork
 	name = "brass windoor"
@@ -419,6 +429,70 @@
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/southright
+	dir = SOUTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/northleft
+	dir = NORTH
+
+/obj/machinery/door/window/brigdoor/security/cell/eastleft
+	dir = EAST
+
+/obj/machinery/door/window/brigdoor/security/cell/westleft
+	dir = WEST
+
+/obj/machinery/door/window/brigdoor/security/cell/southleft
+	dir = SOUTH
+
+/obj/machinery/door/window/brigdoor/security/cell/northright
+	dir = NORTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/eastright
+	dir = EAST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/westright
+	dir = WEST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/cell/southright
+	dir = SOUTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/northleft
+	dir = NORTH
+
+/obj/machinery/door/window/brigdoor/security/holding/eastleft
+	dir = EAST
+
+/obj/machinery/door/window/brigdoor/security/holding/westleft
+	dir = WEST
+
+/obj/machinery/door/window/brigdoor/security/holding/southleft
+	dir = SOUTH
+
+/obj/machinery/door/window/brigdoor/security/holding/northright
+	dir = NORTH
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/eastright
+	dir = EAST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/westright
+	dir = WEST
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/security/holding/southright
 	dir = SOUTH
 	icon_state = "rightsecure"
 	base_state = "rightsecure"

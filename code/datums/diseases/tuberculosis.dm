@@ -1,4 +1,5 @@
 /datum/disease/tuberculosis
+	form = "Disease"
 	name = "Fungal tuberculosis"
 	max_stages = 5
 	spread_text = "Airborne"
@@ -8,8 +9,9 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 5//like hell are you getting out of hell
 	desc = "A rare highly transmittable virulent virus. Few samples exist, rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. Causes fever, blood vomiting, lung damage, weight loss, and fatigue."
-	required_organs = list(/obj/item/bodypart/head)
+	required_organs = list(/obj/item/organ/lungs)
 	severity = DANGEROUS
+	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
 
 /datum/disease/tuberculosis/stage_act() //it begins
 	..()

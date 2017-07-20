@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	wait = 1
 	priority = 500
 	init_order = INIT_ORDER_OVERLAY
-	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP 
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP
 
 	stat_tag = "Ov"
 	currentrun = null

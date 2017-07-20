@@ -2,29 +2,27 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (notransform)
+	if(notransform)
 		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
 
+	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
+
 	if(..()) //not dead
 		handle_blood()
 
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			O.on_life()
+		handle_liver()
+
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
-
-	if(stat != DEAD)
-		handle_liver()
-
 
 	if(stat != DEAD)
 		return 1
@@ -112,7 +110,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
 
 	var/safe_oxy_min = 16
@@ -143,14 +141,14 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
-		clear_alert("oxy")
+		clear_alert("not_enough_oxy")
 
 	breath_gases["o2"][MOLES] -= oxygen_used
 	breath_gases["co2"][MOLES] += oxygen_used
@@ -173,11 +171,10 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
-		if(reagents)
-			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
-		clear_alert("tox_in_air")
+		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
 	if(breath_gases["n2o"])
@@ -223,6 +220,20 @@
 
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/proc/handle_organs()
+	for(var/V in internal_organs)
+		var/obj/item/organ/O = V
+		O.on_life()
+
+/mob/living/carbon/handle_diseases()
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(prob(D.infectivity))
+			D.spread()
+
+		if(stat != DEAD)
+			D.stage_act()
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)

@@ -73,7 +73,6 @@
 	permeability_mod = 1
 	cure_chance = 1
 	disease_flags = CAN_CARRY|CAN_RESIST
-	longevity = 30
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = BIOHAZARD
 	stage_prob = 4

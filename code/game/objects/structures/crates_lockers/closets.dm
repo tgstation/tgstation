@@ -415,7 +415,7 @@
 		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
 						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 						"<span class='italics'>You hear a faint electrical spark.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+		playsound(src, "sparks", 50, 1)
 		broken = 1
 		locked = FALSE
 		update_icon()

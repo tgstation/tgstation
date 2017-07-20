@@ -95,14 +95,6 @@
 		else
 			devour(L)
 
-/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
-	var/turf/oldloc = loc
-	. = ..()
-	if(!.)
-		return
-	var/turf/newloc = loc
-	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
-
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return

@@ -13,7 +13,8 @@
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
-		for(var/datum/disease/D in data["viruses"])
+		for(var/thing in data["viruses"])
+			var/datum/disease/D = thing
 
 			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 				continue
@@ -73,11 +74,6 @@
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
-	for(var/datum/disease/D in data["viruses"])
-		var/datum/disease/newVirus = D.Copy(1)
-		B.viruses += newVirus
-		newVirus.holder = B
-
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
@@ -96,7 +92,8 @@
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/datum/disease/D in M.viruses)
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
 		M.resistances |= data
@@ -151,12 +148,12 @@
 	O.extinguish()
 	O.acid_level = 0
 	// Monkey cube
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
-	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
+	else if(istype(O, /obj/item/toy/carpplushie/dehy_carp))
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
@@ -932,7 +929,7 @@
 	taste_description = "sourness"
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/effect/decal/cleanable))
+	if(istype(O, /obj/effect/decal/cleanable))
 		qdel(O)
 	else
 		if(O)

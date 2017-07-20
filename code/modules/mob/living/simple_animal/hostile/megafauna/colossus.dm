@@ -437,7 +437,7 @@ Difficulty: Very Hard
 	playsound(user, activation_sound, 100, 1)
 	return TRUE
 
-/obj/machinery/anomalous_crystal/Bumped(atom/AM as mob|obj)
+/obj/machinery/anomalous_crystal/CollidedWith(atom/movable/AM)
 	..()
 	if(ismob(AM))
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)
@@ -699,7 +699,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!W.admin_spawned)
+				if(!W.admin_spawned && !HAS_SECONDARY_FLAG(W, HOLOGRAM) && !(W.flags & ABSTRACT))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)
