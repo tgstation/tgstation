@@ -190,7 +190,7 @@ Difficulty: Very Hard
 	var/angle_to_target = Get_Angle(own_turf, target_turf)
 	if(isnum(set_angle))
 		angle_to_target = set_angle
-	var/static/list/colossus_shotgun_shot_angles = list(12, 6, 0, -6, -12)
+	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
 	for(var/i in colossus_shotgun_shot_angles)
 		shoot_projectile(null, angle_to_target + i)
 
