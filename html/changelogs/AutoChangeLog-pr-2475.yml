@@ -1,4 +1,0 @@
-author: "Carbonhell/GuyonBroadway"
-delete-after: True
-changes: 
-  - bugfix: "fixed the bug where swapping load-outs would cause you to spawn with twice your load-out gear."
