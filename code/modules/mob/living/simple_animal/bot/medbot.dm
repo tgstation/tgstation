@@ -76,6 +76,9 @@
 	treatment_tox = "sodium_thiopental"
 
 /mob/living/simple_animal/bot/medbot/update_icon()
+	cut_overlays()
+	if(skin)
+		add_overlay("medskin_[skin]")
 	if(!on)
 		icon_state = "medibot0"
 		return
@@ -92,15 +95,11 @@
 
 /mob/living/simple_animal/bot/medbot/Initialize()
 	..()
-	update_icon()
-
-	if(skin)
-		add_overlay("medskin_[skin]")
-
 	var/datum/job/doctor/J = new /datum/job/doctor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 	qdel(J)
+	addtimer(CALLBACK(src, .proc/update_icon), 1)
 
 /mob/living/simple_animal/bot/medbot/update_canmove()
 	. = ..()
