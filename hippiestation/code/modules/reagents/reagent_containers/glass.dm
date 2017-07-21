@@ -21,7 +21,7 @@
 			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 		else if(!target.is_open_container())
-			to_chat(user, "<span class='warning'>Unscrew the cap before tyring to put stuff in [target] dummy!</span>")
+			to_chat(user, "<span class='warning'>Unscrew the cap before trying to put stuff in [target] dummy!</span>")
 			return
 
 		else if(!target.reagents.total_volume)
