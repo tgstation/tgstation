@@ -71,12 +71,6 @@
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
 				SSblackbox.add_details("pick_used_mining","[P.type]")
-				if(!istype(P, /obj/item/weapon/pickaxe/drill/cyborg))
-					P.pickdurability = P.pickdurability - 1
-				if(P.pickdurability == 0)
-					qdel(P)
-					to_chat(user, "<span='notice'>Your pick has broken in the process!")
-					playsound(src, 'sound/items/trayhit2.ogg', 50, 1)
 	else
 		return attack_hand(user)
 

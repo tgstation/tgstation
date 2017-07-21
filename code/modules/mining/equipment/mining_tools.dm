@@ -14,7 +14,6 @@
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	var/pickdurability = 100
 
 /obj/item/weapon/pickaxe/mini
 	name = "compact pickaxe"
@@ -37,17 +36,15 @@
 	origin_tech = "materials=3;engineering=4"
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
-	pickdurability = 200
 
 /obj/item/weapon/pickaxe/gold
 	name = "gold-tipped pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	digspeed = 10 //fast, but breaks quickly
+	digspeed = 17
 	origin_tech = "materials=4;engineering=4"
 	desc = "A pickaxe with a golden pick head."
 	force = 16
-	pickdurability = 75
 
 /obj/item/weapon/pickaxe/uranium
 	name = "uranium-tipped pickaxe"
@@ -57,7 +54,6 @@
 	origin_tech = "materials=4;engineering=4;"
 	desc = "A pickaxe with a uranium pick head. It's a bit slower, but it hits harder!"
 	force = 20
-	pickdurability = 300
 
 /obj/item/weapon/pickaxe/plasma
 	name = "plasma-tipped pickaxe"
@@ -67,7 +63,6 @@
 	origin_tech = "materials=2;engineering=3;plasmatech=2"
 	desc = "A pickaxe with a solidified plasma pick head."
 	force = 17
-	pickdurability = 250
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
@@ -77,7 +72,6 @@
 	origin_tech = "materials=5;engineering=4"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
-	pickdurability = 400
 
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill"
@@ -89,7 +83,6 @@
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=2;engineering=3"
 	desc = "An electric mining drill for the especially scrawny."
-	pickdurability = 400
 
 /obj/item/weapon/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
@@ -102,7 +95,6 @@
 	digspeed = 7
 	origin_tech = "materials=6;powerstorage=4;engineering=4"
 	desc = "Yours is the drill that will pierce the heavens!"
-	pickdurability = 700
 
 /obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP flag, and easier to change borg specific drill mechanics.
@@ -118,7 +110,6 @@
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
-	pickdurability = 1000
 
 /obj/item/weapon/shovel
 	name = "shovel"
