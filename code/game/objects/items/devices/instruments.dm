@@ -141,10 +141,9 @@
 	actions_types = list(/datum/action/item_action/instrument)
 
 /obj/item/device/instrument/harmonica/speechModification(message)
-	if(song.playing)
-		if(ismob(loc))
-			to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
-			song.playing = FALSE
+	if(song.playing && ismob(loc))
+		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
+		song.playing = FALSE
 	return message
 
 /obj/item/device/instrument/bikehorn
