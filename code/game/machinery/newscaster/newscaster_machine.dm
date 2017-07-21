@@ -535,6 +535,7 @@
 				FC.generate_md5()
 				FC.messagemd5 = FM.md5
 				FM.comments += FC
+				autoRelayNewscasterDatum(FC)
 				log_comment("[usr]/([usr.ckey]) as [scanned_user] commented on message [FM.returnBody(-1)] -- [FC.body]")
 			updateUsrDialog()
 		else if(href_list["del_comment"])

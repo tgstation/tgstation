@@ -149,6 +149,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newChannel.is_admin_channel = adminChannel
 	newChannel.generate_md5()
 	network_channels += newChannel
+	autoRelayNewscasterDatum(newChannel)
 
 /datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, obj/item/weapon/photo/photo, adminMessage = FALSE, allow_comments = TRUE)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
@@ -170,6 +171,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		NEWSCASTER.newsAlert(channel_name)
 	lastAction ++
 	newMsg.creationTime = lastAction
+	autoRelayNewscasterDatum(newMsg)
 
 /datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, obj/item/weapon/photo/photo, adminMsg = FALSE, newMessage = FALSE)
 	wanted_issue.active = TRUE
