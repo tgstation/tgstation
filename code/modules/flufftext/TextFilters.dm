@@ -65,7 +65,7 @@
 	var/questionwords = list("what", "when", "why", "where", "how", "who", "which")
 
 	var/list/words = splittext(original_msg, " ")
-	var/list/letters = splittext(original_msg)
+	var/list/letters = splittext(original_msg,"")
 	var/list/new_words = words
 
 	if(letters[letters.len] == "?" || letters[letters.len] == ".")
@@ -78,6 +78,6 @@
 			QM = "?"
 
 	var/new_msg = jointext(new_words, " ")
-	new_msg = jointext(list(new_msg, QM))
+	new_msg = jointext(list(new_msg, QM),"")
 
 	return new_msg
