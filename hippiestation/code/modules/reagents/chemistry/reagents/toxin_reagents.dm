@@ -27,3 +27,22 @@
 		M.updateappearance()
 		M.domutcheck()
 	return TRUE
+
+/datum/reagent/toxin/bone_hurting_juice
+	name = "Bone Hurting Juice"
+	id =  "bone_hurting_juice"
+	description = "A corrupted form of calcium that reacts horribly with more calcium."
+	reagent_state = LIQUID
+	color = "#DEDEDE" // a horrible shade of off-white grey, also FUG!!!
+	toxpwr = 0 //It only hurts your bones
+
+/datum/reagent/toxin/bone_hurting_juice/on_mob_life(mob/living/M)
+	if (prob(20))
+		M.say(pick("Oof!", "OUCH!!", "Owie!"))
+
+	if  (prob(10))
+		to_chat(M, "<span class='danger'> Your bones ache!")
+
+	if (prob(3))
+		M.adjustBruteLoss(rand(1,5), 0)//we wanna hurt them, not kill them.
+		to_chat(M, "<span class='userdanger'> Your bones really hurt!")
