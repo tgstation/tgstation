@@ -12504,8 +12504,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	name = "Service Hallway Maintenance Hatch";
+	req_access_txt = "0";
+	req_one_access_txt = "12;25;28;46"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -84394,7 +84395,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dgD" = (
 /turf/closed/wall,
 /area/medical/genetics/cloning)
@@ -84981,25 +84982,35 @@
 	icon_state = "bluecorner";
 	dir = 1
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dhN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/corner{
 	icon_state = "bluecorner";
 	dir = 1
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dhO" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Medical Maintenance APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dhP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dhQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -85008,7 +85019,7 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dhR" = (
 /obj/machinery/clonepod,
 /obj/structure/window/reinforced{
@@ -85984,14 +85995,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "djN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "djO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -86000,20 +86011,25 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "djP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "djQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "djR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -86022,7 +86038,7 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "djS" = (
 /obj/machinery/door/window/eastleft,
 /obj/structure/mirror{
@@ -86921,26 +86937,31 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dlA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/plating,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dlB" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dlC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dlD" = (
 /obj/structure/rack,
 /obj/item/device/healthanalyzer,
@@ -86948,7 +86969,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dlE" = (
 /obj/machinery/door/window/eastright,
 /obj/machinery/ai_status_display{
@@ -87476,19 +87497,24 @@
 	icon_state = "bluecorner";
 	dir = 8
 	},
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dmS" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dmT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/blue/corner,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dmU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/corner,
-/area/hallway/primary/aft)
+/area/maintenance/department/medical)
 "dmV" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -88013,12 +88039,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
-/area/medical/genetics)
+/area/maintenance/department/medical)
 "doc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
-/area/medical/genetics)
+/area/maintenance/department/medical)
 "dod" = (
 /turf/closed/wall/r_wall,
 /area/medical/genetics)
@@ -88752,6 +88783,11 @@
 	},
 /area/medical/genetics)
 "dpE" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
 	},
@@ -89642,6 +89678,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/genetics)
@@ -113238,6 +113279,46 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
+"eqg" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqh" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqi" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqj" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqk" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eql" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqm" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqn" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqo" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"eqp" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqq" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqr" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"eqs" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
 
 (1,1,1) = {"
 aaa
@@ -152728,12 +152809,12 @@ daj
 dbI
 dda
 deO
-dgB
-dgB
+eqg
+eql
 djM
-dgB
-dgB
-doa
+eqm
+eqn
+eqp
 doa
 dre
 doa
@@ -152985,12 +153066,12 @@ cXz
 dbJ
 ddb
 cVL
-dgB
+eqh
 dhM
 djN
 dlz
 dmR
-doa
+eqq
 dpC
 drf
 doa
@@ -153242,12 +153323,12 @@ dak
 dbK
 ddc
 deP
-dgB
+eqi
 dhN
 djO
 dlA
-dhO
-doa
+eqo
+eqr
 dpD
 drg
 dsG
@@ -153499,7 +153580,7 @@ cZb
 dbL
 ddd
 deQ
-dgB
+eqj
 dhO
 djP
 dlB
@@ -154013,12 +154094,12 @@ dam
 dbN
 cZb
 deS
-dgB
+eqk
 dhQ
 djR
 dlD
 dmU
-doa
+eqs
 dpG
 drj
 dsJ
