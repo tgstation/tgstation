@@ -68,7 +68,7 @@
 	var/list/letters = splittext(original_msg)
 	var/list/new_words = words
 
-	if(letters[letters.len] == "?" || letters[letters.len)
+	if(letters[letters.len] == "?" || letters[letters.len] == ".")
 		return original_msg
 
 	var/QM
