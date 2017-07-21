@@ -23,6 +23,7 @@
 	..()
 
 /obj/item/weapon/ore/Crossed(atom/movable/AM)
+	set waitfor = FALSE
 	var/show_message = TRUE
 	for(var/obj/item/weapon/ore/O in loc)
 		if(O != src)
@@ -48,7 +49,14 @@
 					break
 		if(OB)
 			var/obj/structure/ore_box/box
-			OB.handle_item_insertion(src, TRUE, AM)
+			if(!OB.can_be_inserted(src, TRUE, AM))
+				if(!OB.spam_protection)
+					to_chat(AM, "<span class='warning'>Your [OB.name] is full and can't hold any more ore!</span>")
+					OB.spam_protection = TRUE
+					sleep(1)
+					OB.spam_protection = FALSE
+			else
+				OB.handle_item_insertion(src, TRUE, AM)
 			// Then, if the user is dragging an ore box, empty the satchel
 			// into the box.
 			var/mob/living/L = AM
