@@ -59,18 +59,18 @@
 	name = "plasma-tipped pickaxe"
 	icon_state = "ppickaxe"
 	item_state = "ppickaxe"
-	digspeed = 15
+	digspeed = 14
 	origin_tech = "materials=2;engineering=3;plasmatech=2"
-	desc = "A pickaxe with a solidified plasma pick head."
+	desc = "A pickaxe with a solidified plasma pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 17
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 14
+	digspeed = 11
 	origin_tech = "materials=5;engineering=4"
-	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
+	desc = "A pickaxe with a diamond pick head. You feel like an iron man swinging it!"
 	force = 19
 
 /obj/item/weapon/pickaxe/drill
