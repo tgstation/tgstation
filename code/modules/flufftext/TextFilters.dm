@@ -75,7 +75,7 @@
 
 	for(var/Q in questionwords)
 		if(Q == words[1])
-			 QM = "?"
+			QM = "?"
 
 	var/new_msg = jointext(new_words, " ")
 	new_msg = jointext(list(new_msg, QM))
