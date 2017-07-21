@@ -16,6 +16,10 @@
 			var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
+		if(!target.is_open_container() && target.reagents.total_volume != 0)
+			var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
+
 		else if(!target.is_open_container())
 			to_chat(user, "<span class='warning'>Unscrew the cap before tyring to put stuff in [target] dummy!</span>")
 			return
@@ -27,10 +31,6 @@
 		else if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='notice'>[src] is full.</span>")
 			return
-
-		if(!target.is_open_container() && target.reagents.total_volume != 0)
-			var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
