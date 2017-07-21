@@ -78,6 +78,6 @@
 			 QM = "?"
 
 	var/new_msg = jointext(new_words, " ")
-	var/new_msg = jointext(list(new_msg, QM))
+	new_msg = jointext(list(new_msg, QM))
 
 	return new_msg
