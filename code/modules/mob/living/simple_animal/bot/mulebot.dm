@@ -83,7 +83,7 @@
 		..()
 		if(open)
 			on = FALSE
-	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+	else if(istype(I, /obj/item/weapon/stock_parts/cell) && open && !cell)
 		if(!user.drop_item())
 			return
 		var/obj/item/weapon/stock_parts/cell/C = I
@@ -343,7 +343,7 @@
 		return
 
 	var/obj/structure/closet/crate/CRATE
-	if(istype(AM,/obj/structure/closet/crate))
+	if(istype(AM, /obj/structure/closet/crate))
 		CRATE = AM
 	else
 		if(!wires.is_cut(WIRE_LOADCHECK))

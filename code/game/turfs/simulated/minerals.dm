@@ -82,7 +82,7 @@
 			SSblackbox.add_details("ore_mined",mineralType)
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
-	ChangeTurf(turf_type, defer_change)
+	ChangeTurf(turf_type, FALSE, defer_change)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 
@@ -108,12 +108,12 @@
 		return
 	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active,/obj/item/weapon/pickaxe))
+		if(istype(R.module_active, /obj/item/weapon/pickaxe))
 			src.attackby(R.module_active,R)
 			return
-/*	else if(istype(AM,/obj/mecha))
+/*	else if(istype(AM, /obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
+		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
 			src.attackby(M.selected,M)
 			return*/
 //Aparantly mechs are just TOO COOL to call Collide())
@@ -156,7 +156,7 @@
 	..()
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
-		var/turf/T = ChangeTurf(path,FALSE,TRUE)
+		var/turf/T = ChangeTurf(path,FALSE,FALSE,TRUE)
 
 		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
@@ -469,7 +469,7 @@
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
 
-	ChangeTurf(turf_type, defer_change)
+	ChangeTurf(turf_type, FALSE, defer_change)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 
 

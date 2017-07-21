@@ -124,7 +124,7 @@
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
-	else if(istype(W,/obj/item/device/multitool))
+	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/clonepod))

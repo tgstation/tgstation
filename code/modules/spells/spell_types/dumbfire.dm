@@ -44,7 +44,7 @@
 	if(istext(proj_type))
 		var/projectile_type = text2path(proj_type)
 		projectile = new projectile_type(user)
-	else if(istype(proj_type,/obj/effect/proc_holder/spell))
+	else if(istype(proj_type, /obj/effect/proc_holder/spell))
 		projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
 		var/obj/effect/proc_holder/spell/targeted/trigger/T = projectile
 		T.linked_spells += proj_type

@@ -149,7 +149,7 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 
 
-	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O,/obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
+	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
 		if (contents.len>=max_n_of_items)
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
@@ -271,7 +271,7 @@
 /obj/machinery/microwave/proc/has_extra_item()
 	for (var/obj/O in contents)
 		if ( \
-				!istype(O,/obj/item/weapon/reagent_containers/food) && \
+				!istype(O, /obj/item/weapon/reagent_containers/food) && \
 				!istype(O, /obj/item/weapon/grown) \
 			)
 			return 1

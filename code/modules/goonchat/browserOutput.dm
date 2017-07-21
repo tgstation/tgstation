@@ -142,7 +142,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			var/list/found = new()
 			for(var/i in connectionHistory.len to 1 step -1)
 				var/list/row = src.connectionHistory[i]
-				if (!row || row.len < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
+				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
 				if (world.IsBanned(row["ckey"], row["compid"], row["ip"]))
 					found = row

@@ -74,7 +74,7 @@
 
 /obj/item/weapon/paper/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
-		if(istype(WM.color_source,/obj/item/toy/crayon))
+		if(istype(WM.color_source, /obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
 			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
@@ -211,7 +211,7 @@
 			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
-		if(istype(W,/obj/item/toy/crayon) || istype(W,/obj/item/weapon/stamp))
+		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/weapon/stamp))
 			color_source = W
 		update_icon()
 

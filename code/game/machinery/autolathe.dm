@@ -152,7 +152,7 @@
 	busy = TRUE
 	var/inserted = materials.insert_item(O)
 	if(inserted)
-		if(istype(O,/obj/item/stack))
+		if(istype(O, /obj/item/stack))
 			if (O.materials[MAT_METAL])
 				flick("autolathe_o",src)//plays metal insertion animation
 			if (O.materials[MAT_GLASS])
@@ -361,7 +361,7 @@
 	if(D.make_reagents.len)
 		return 0
 
-	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
+	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
 		return 0
@@ -370,7 +370,7 @@
 	return 1
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
-	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
+	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
 	if(D.materials[MAT_METAL])
 		dat += "[D.materials[MAT_METAL] * coeff] metal "

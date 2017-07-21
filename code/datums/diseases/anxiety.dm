@@ -7,7 +7,7 @@
 	cure_text = "Ethanol"
 	cures = list("ethanol")
 	agent = "Excess Lepidopticides"
-	viable_mobtypes = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated subject will regurgitate butterflies."
 	severity = MEDIUM
 

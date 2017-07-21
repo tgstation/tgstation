@@ -188,7 +188,7 @@
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)
-		var/mob/living/mob = get(tool.loc,/mob/living)
+		var/mob/living/mob = get(tool.loc, /mob/living)
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
 				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>[bicon(tool)] [message]</span>")

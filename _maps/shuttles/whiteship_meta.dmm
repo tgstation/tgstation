@@ -370,7 +370,6 @@
 "aI" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/centcom,
-/obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -378,6 +377,12 @@
 	},
 /obj/structure/light_construct/small{
 	dir = 4
+	},
+/obj/effect/decal/cleanable/ash{
+	desc = "They look like human remains, and have clearly been gnawed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	name = "remains"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -2053,7 +2058,7 @@ ac
 "}
 (15,1,1) = {"
 ac
-av
+ac
 aM
 ac
 ac
