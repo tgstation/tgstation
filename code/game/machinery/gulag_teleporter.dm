@@ -179,3 +179,4 @@ The console is located at computer/gulag_teleporter.dm
 	desc = "A recieving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
+	resistance_flags = INDESTRUCTIBLE
