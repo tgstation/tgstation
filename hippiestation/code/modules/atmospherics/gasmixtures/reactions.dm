@@ -22,15 +22,15 @@
 		return FALSE
 
 	else
-		var/moles_impurities = (cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/air.total_moles()//more plasma+carbon = higher chance of collision regardless of actual thermal energy
-		var/carbon_plasma_ratio = min(cached_gases["co2"][MOLES]/cached_gases["plasma"][MOLES],MAX_CARBON_EFFICENCY_HIPPIE)//more carbon = more fusion
-		var/plasma_fused = max((PLASMA_FUSED_COEFFICENT_HIPPIE*(reaction_energy/PLASMA_BINDING_ENERGY_HIPPIE) * moles_impurities * carbon_plasma_ratio), 0)
-		var/carbon_catalyzed = max(plasma_fused*CARBON_CATALYST_COEFFICENT_HIPPIE, 0)
+		var/moles_impurities = (cached_gases["plasma"][MOLES] + cached_gases["co2"][MOLES]) / air.total_moles()//more plasma+carbon = higher chance of collision regardless of actual thermal energy
+		var/carbon_plasma_ratio = min(cached_gases["co2"][MOLES] / cached_gases["plasma"][MOLES], MAX_CARBON_EFFICENCY_HIPPIE)//more carbon = more fusion
+		var/plasma_fused = max((PLASMA_FUSED_COEFFICENT_HIPPIE * (reaction_energy / PLASMA_BINDING_ENERGY_HIPPIE) * moles_impurities * carbon_plasma_ratio), 0)
+		var/carbon_catalyzed = max(plasma_fused * CARBON_CATALYST_COEFFICENT_HIPPIE, 0)
 		var/oxygen_added = carbon_catalyzed
 		var/nitrogen_added = carbon_catalyzed + oxygen_added
 		var/mass_fused = carbon_catalyzed + plasma_fused
 		var/mass_created = oxygen_added + nitrogen_added
-		var/energy_released = (mass_fused - mass_created)*PLASMA_FUSION_ENERGY_HIPPIE
+		var/energy_released = (mass_fused - mass_created) * PLASMA_FUSION_ENERGY_HIPPIE
 
 		air.assert_gases("o2", "n2", "co2", "plasma")
 
