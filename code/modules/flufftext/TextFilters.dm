@@ -62,7 +62,7 @@
 	return new_msg
 
 /proc/Autoquestion(original_msg)//automatically applies a ? to easily detected questions
-	var/questionwords = list("what", "when", "why", "where", "how", "who", "which")
+	var/questionwords = list("what", "when", "why", "where", "how", "who", "which", "what's", "when's", "why's", "where's", "how's", "who's")
 
 	var/list/words = splittext(original_msg, " ")
 	var/list/letters = splittext(original_msg,"")
