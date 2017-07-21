@@ -51,7 +51,7 @@
 	icon_state = "upickaxe"
 	item_state = "upickaxe"
 	digspeed = 30
-	origin_tech = "materials=5;engineering=4;"
+	origin_tech = "materials=4;engineering=4;"
 	desc = "A pickaxe with a uranium pick head. It's a bit slower, but it hits harder!"
 	force = 20
 
@@ -69,7 +69,7 @@
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	digspeed = 14
-	origin_tech = "materials=6;engineering=4"
+	origin_tech = "materials=5;engineering=4"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
