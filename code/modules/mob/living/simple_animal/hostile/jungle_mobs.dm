@@ -610,6 +610,7 @@
 	pixel_y = -14
 	minimum_distance = 3
 	move_to_delay = 20
+	vision_range = 9
 	aggro_vision_range = 15
 	ranged = TRUE
 	ranged_cooldown_time = 10
@@ -642,8 +643,13 @@
 			return FALSE
 	return ..()
 
-/obj/effect/ebeam/solarbeam
+/obj/effect/temp_visual/solarbeam_killsat
 	name = "beam of solar energy"
+	icon_state = "solar_beam"
+	icon = 'icons/effects/beam.dmi'
+	layer = LIGHTING_LAYER
+	duration = 5
+	randomdir = FALSE
 
 /datum/status_effect/seedling_beam_indicator
 	id = "seedling beam indicator"
@@ -651,9 +657,9 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 	tick_interval = 1
-	var/mutable_appearance/beam_overlay
+	var/obj/screen/seedling/seedling_screen_object
 	var/atom/target
-	var/angle = 0
+
 
 /datum/status_effect/seedling_beam_indicator/on_creation(mob/living/new_owner, target_plant)
 	. = ..()
@@ -662,30 +668,28 @@
 		tick()
 
 /datum/status_effect/seedling_beam_indicator/on_apply()
-	beam_overlay = mutable_appearance('icons/mob/jungle/arachnid.dmi', "seedling_beam_indicator")
-	beam_overlay.pixel_x = -16 -owner.pixel_x
-	beam_overlay.pixel_y = -16 -owner.pixel_y
+	if(owner.client)
+		seedling_screen_object = new /obj/screen/seedling()
+		owner.client.screen += seedling_screen_object
 	tick()
 	return ..()
 
 /datum/status_effect/seedling_beam_indicator/Destroy()
 	if(owner)
-		owner.cut_overlay(beam_overlay)
-	QDEL_NULL(beam_overlay)
+		if(owner.client)
+			owner.client.screen -= seedling_screen_object
 	return ..()
 
 /datum/status_effect/seedling_beam_indicator/tick()
 	var/target_angle = Get_Angle(owner, target)
-	owner.cut_overlay(beam_overlay)
-	angle = target_angle
 	var/matrix/final = matrix()
 	final.Turn(target_angle)
-	beam_overlay.transform = final
-	owner.add_overlay(beam_overlay)
+	seedling_screen_object.transform = final
 
-/datum/status_effect/seedling_beam_indicator/be_replaced()
-	owner.cut_overlay(beam_overlay)
-	..()
+/obj/screen/seedling
+	icon = 'icons/mob/jungle/arachnid.dmi'
+	icon_state = "seedling_beam_indicator"
+	screen_loc = "CENTER:-16,CENTER:-16"
 
 /mob/living/simple_animal/hostile/jungle/seedling/Goto()
 	if(combatant_state != SEEDLING_STATE_NEUTRAL)
@@ -733,8 +737,16 @@
 	if(combatant_state == SEEDLING_STATE_ACTIVE && living_target && beam_id == solar_beam_identifier)
 		if(living_target.z == z)
 			update_icons()
-			var/atom/A = get_turf(src)
-			A.Beam(get_turf(living_target),"solar_beam",time=5, maxdistance=INFINITY,beam_type=/obj/effect/ebeam/solarbeam,beam_sleep_time = 0.5)
+			var/obj/effect/temp_visual/solarbeam_killsat/S = new (get_turf(src))
+			var/matrix/starting = matrix()
+			starting.Scale(1,32)
+			starting.Translate(0,520)
+			S.transform = starting
+			var/obj/effect/temp_visual/solarbeam_killsat/K = new (get_turf(living_target))
+			var/matrix/final = matrix()
+			final.Scale(1,32)
+			final.Translate(0,512)
+			K.transform = final
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
 			living_target.IgniteMob()
