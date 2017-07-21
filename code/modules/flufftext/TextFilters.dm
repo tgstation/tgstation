@@ -60,3 +60,24 @@
 	new_msg = jointext(new_words," ")
 
 	return new_msg
+
+/proc/Autoquestion(original_msg)//automatically applies a ? to easily detected questions
+	var/questionwords = list("what", "when", "why", "where", "how", "who", "which", "what's", "when's", "why's", "where's", "how's", "who's")
+
+	var/list/words = splittext(original_msg, " ")
+	var/list/letters = splittext(original_msg,"")
+	var/list/new_words = words
+
+	if(letters[letters.len] == "?" || letters[letters.len] == ".")
+		return original_msg
+
+	var/QM
+
+	for(var/Q in questionwords)
+		if(Q == words[1])
+			QM = "?"
+
+	var/new_msg = jointext(new_words, " ")
+	new_msg = jointext(list(new_msg, QM),"")
+
+	return new_msg
