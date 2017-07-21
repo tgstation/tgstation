@@ -378,7 +378,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(cultslurring)
 		message = cultslur(message)
 
-	message = Autoquestion(message)//Apply automatic questionmark/period
+	message = Autoquestion(message)//Apply automatic questionmark
 
 	message = capitalize(message)
 
