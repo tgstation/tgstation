@@ -589,6 +589,20 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/mecha/combat/gygax/dark/loaded
 	cost = 80
 
+/datum/uplink_item/support/augmenter
+	name = "Experimental Augmentation"
+	desc = "An advanced medical chamber similar to a sleeper, this device is equipped with the tools and supplies \
+			to turn a single subject into a highly sophisticated combat cyborg. Enhancements include a sub-dermal \
+			armor plating that provides exceptional protection from direct energy fire (as well as raging infernos), \
+			while also providing excellent protection from kinetic impacts as well. Leg and arm implants \
+			provide exceptional strength and running speed from cutting edge servos. Limbs are secured to subdermal \
+			armor and are virtually impossible to dismember. Additionally, top secret alloys have been included in \
+			the subdermal armor that result in notable radioimmunity as well as protection from viral pathogens. \
+			Nanotrasen never stood a chance."
+	item = /obj/machinery/implantchair/augment
+	cant_discount = TRUE
+	cost = 90
+
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring, \

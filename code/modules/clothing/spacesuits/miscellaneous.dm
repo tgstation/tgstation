@@ -67,19 +67,19 @@ Contains:
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
 	desc = "An armored, space-proof jacket used in special operations."
-	icon_state = "detective"
-	item_state = "det_suit"
+	icon_state = "hos"
+	item_state = "greatcoat"
 	blood_overlay_type = "coat"
 	slowdown = 0
 	flags_inv = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals)
-	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list(melee = 30, bullet = 40, laser = 10, energy = 10, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	//NASA Voidsuit
+	//NASA Voidsuita
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"
 	desc = "An old, NASA Centcom branch designed, dark red space suit helmet."

@@ -187,3 +187,38 @@
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
 
+/obj/machinery/implantchair/augment
+	name = "Augmentation Pod"
+	desc = "A disturbing piece of mad science, developed by Cyber-Hive GmbH. A subject placed inside will have their limbs replaced by experimental combat augmentations and their id, ego and superego entirely subsumed into an uncaring, unfeeling automaton. Luckily for you, the thing that moves in their place is a terrifying engine of destruction."
+	special = TRUE
+	special_name = "Augment"
+	auto_replenish = FALSE
+	max_implants = 1
+	ready_implants = 1
+
+/obj/machinery/implantchair/augment/implant_action(mob/living/carbon/human/H,mob/user)
+	if(!istype(H) || !H.mind)
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+		return 0
+	var/mob/living/carbon/human/human = H
+	if(human.dna && human.dna.species.id == "human")
+		if(H.abiotic(1))//gotta get naked to have surgery done
+			visible_message("<span_class='warning'>The machine buzzes. It will only operate on a naked human.</span>")
+			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+			return 0
+		else
+			visible_message("<span class='warning'>A horrible screech and a bright flash of light eminate from the [src]. In the aftermath, cold fog flows from the chamber, pooling from the floor.</span>")
+			playsound(get_turf(src), 'sound/effects/screech.ogg', 50, 1)
+			to_chat(H, "<span class='heavy_alloy'>Your body is twisted in terrible trauma as robotic arms amputate appendages and restore them with resplendent replacements. You feel a sharp pain in your head and your mind shatters as you lose your concept of self. The agony leaves you as soon as it came and you feel much lighter without your humanity weighing you down.</span>")
+			to_chat(H, "<span class='heavy_alloy'>You feel leather and cloth wrap around your body, armor fit for your new form.</span>")
+			H.equipOutfit(/datum/outfit/syndicate_agent)//Gives them a space suit + gloves + headset + boots. no helmet though.
+			human.set_species(/datum/species/corporate)
+			return 1
+	else if(human.dna && human.dna.species.id == "corporate")//if war ops manage to buy 2 somehow this is so they dont waste 2 augmentations on 1 guy
+		visible_message("<span class='warning'>The machine buzzes. It won't augment a person twice.</span>")
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+		return 0
+	else//nobody even likes the furry races
+		visible_message("<span class='warning'>The machine buzzes. It wasn't designed to operate on inferior species.</span>")
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+		return 0
