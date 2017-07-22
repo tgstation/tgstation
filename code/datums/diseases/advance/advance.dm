@@ -294,6 +294,8 @@
 		var/list/L = list()
 		for(var/datum/symptom/S in symptoms)
 			L += S.id
+			if(S.neutered)
+				L += "N"
 		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
 		var/result = jointext(L, ":")
 		id = result
@@ -324,7 +326,6 @@
 	if(!S.neutered)
 		S.neutered = TRUE
 		S.name += " (neutered)"
-		S.id += "N" //new disease is unique
 
 /*
 
