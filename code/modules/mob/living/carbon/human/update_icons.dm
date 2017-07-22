@@ -97,7 +97,7 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-/mob/living/carbon/human/update_inv_w_uniform(invdrop = TRUE)
+/mob/living/carbon/human/update_inv_w_uniform()
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
@@ -135,11 +135,6 @@ There are several things that need to be remembered:
 			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
 
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
-
-	else if(!(dna && dna.species.nojumpsuit) && invdrop)
-		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
-		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
-			dropItemToGround(thing)
 
 	apply_overlay(UNIFORM_LAYER)
 	update_mutant_bodyparts()
@@ -324,9 +319,6 @@ There are several things that need to be remembered:
 		update_observer_view(wear_suit,1)
 
 		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
-
-		if(wear_suit.breakouttime) //suit is restraining
-			drop_all_held_items()
 
 	update_hair()
 	update_mutant_bodyparts()
