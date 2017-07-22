@@ -46,10 +46,11 @@
 		var/list/this = list()
 		this["name"] = D.name
 		if(istype(D, /datum/disease/advance))
-			var/datum/disease/advance/A = SSdisease.archive_diseases[D.GetDiseaseID()]
-			if(A.name == "Unknown")
+			var/datum/disease/advance/A = D
+			var/datum/disease/advance/archived = SSdisease.archive_diseases[D.GetDiseaseID()]
+			if(archived.name == "Unknown")
 				this["can_rename"] = TRUE
-			this["name"] = A.name
+			this["name"] = archived.name
 			this["is_adv"] = TRUE
 			this["resistance"] = A.totalResistance()
 			this["stealth"] = A.totalStealth()
