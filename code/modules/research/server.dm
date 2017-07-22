@@ -14,7 +14,7 @@
 	var/temp_tolerance_low = 0
 	var/temp_tolerance_high = T20C
 	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
-	req_access = list(GLOB.access_rd) //Only the R&D can change server settings.
+	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
 /obj/item/weapon/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"

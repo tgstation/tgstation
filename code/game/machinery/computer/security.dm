@@ -3,7 +3,7 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
-	req_one_access = list(GLOB.access_security, GLOB.access_forensics_lockers)
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/weapon/circuitboard/computer/secure_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
@@ -576,13 +576,13 @@ What a mess.*/
 							if(istype(active2, /datum/data/record))
 								active2.fields["name"] = t1
 					if("id")
-						if(istype(active2,/datum/data/record) || istype(active1,/datum/data/record))
+						if(istype(active2, /datum/data/record) || istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
-							if(istype(active1,/datum/data/record))
+							if(istype(active1, /datum/data/record))
 								active1.fields["id"] = t1
-							if(istype(active2,/datum/data/record))
+							if(istype(active2, /datum/data/record))
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))

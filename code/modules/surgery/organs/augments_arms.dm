@@ -189,7 +189,7 @@
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
-	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight)
+	contents = newlist(/obj/item/weapon/melee/transforming/energy/blade/hardlight)
 
 /obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
@@ -215,7 +215,7 @@
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
-	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	contents = newlist(/obj/item/weapon/melee/transforming/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/combat/Initialize()
 	. = ..()

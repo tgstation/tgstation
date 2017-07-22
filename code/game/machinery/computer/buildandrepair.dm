@@ -285,7 +285,7 @@
 	build_path = /obj/machinery/computer/rdconsole/core
 
 /obj/item/weapon/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "R&D Console - Robotics (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
@@ -317,13 +317,13 @@
 	var/emagged = FALSE
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/device/multitool))
+	if(istype(I, /obj/item/device/multitool))
 		if(!emagged)
 			contraband = !contraband
 			to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
 		else
 			to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
-	else if(istype(I,/obj/item/weapon/card/emag))
+	else if(istype(I, /obj/item/weapon/card/emag))
 		if(!emagged)
 			contraband = TRUE
 			emagged = TRUE
@@ -407,7 +407,7 @@
 	build_path = /obj/machinery/computer/libraryconsole
 
 /obj/item/weapon/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole

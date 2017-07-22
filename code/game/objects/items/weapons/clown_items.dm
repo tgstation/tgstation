@@ -60,7 +60,7 @@
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
-	else if(istype(target,/obj/effect/decal/cleanable))
+	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")

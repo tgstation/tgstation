@@ -259,7 +259,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
 /datum/clockwork_scripture/ranged_ability
-	var/slab_icon = "dread_ipad"
+	var/slab_overlay
 	var/ranged_type = /obj/effect/proc_holder/slab
 	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
 	var/timeout_time = 0
@@ -271,7 +271,10 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	return ..()
 
 /datum/clockwork_scripture/ranged_ability/scripture_effects()
-	slab.icon_state = slab_icon
+	if(slab_overlay)
+		slab.add_overlay(slab_overlay)
+		slab.item_state = "clockwork_slab"
+		slab.inhand_overlay = slab_overlay
 	slab.slab_ability = new ranged_type(slab)
 	slab.slab_ability.slab = slab
 	slab.slab_ability.add_ranged_ability(invoker, ranged_message)
@@ -294,7 +297,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			successful = slab.slab_ability.successful
 			if(!slab.slab_ability.finished)
 				slab.slab_ability.remove_ranged_ability()
-		slab.icon_state = "dread_ipad"
+		slab.cut_overlays()
+		slab.item_state = initial(slab.item_state)
+		slab.inhand_overlay = null
 		if(invoker)
 			invoker.update_inv_hands()
 	return successful //slab doesn't look like a word now.

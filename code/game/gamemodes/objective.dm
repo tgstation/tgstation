@@ -240,11 +240,8 @@
 		return FALSE
 	if(issilicon(owner.current))
 		return FALSE
-
-	var/area/A = get_area(owner.current)
-	if(SSshuttle.emergency.areaInstance != A)
+	if(!SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
 		return FALSE
-
 	return SSshuttle.emergency.is_hijacked()
 
 
@@ -259,36 +256,27 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
+	var/in_shuttle = FALSE
 	for(var/mob/living/player in GLOB.player_list) //Make sure nobody else is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
+		if(SSshuttle.emergency.shuttle_areas[get_area(player)])
+			if(player.mind && player.mind != owner)
+				if(player.stat != DEAD)
+					if(issilicon(player)) //Borgs are technically dead anyways
+						continue
+					if(isanimal(player)) //animals don't count
+						continue
+					if(isbrain(player)) //also technically dead
+						continue
 					var/location = get_turf(player.mind.current)
-					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(istype(location, /turf/open/floor/plasteel/shuttle/red))
+						continue
+					if(istype(location, /turf/open/floor/mineral/plastitanium/brig))
+						continue
+					if(player.real_name != owner.current.real_name)
 						return FALSE
-
-	for(var/mob/living/player in GLOB.player_list) //Make sure at least one of you is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
-					var/location = get_turf(player.mind.current)
-					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return TRUE
-	return FALSE
+					else
+						in_shuttle = TRUE
+	return in_shuttle
 
 /datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
@@ -301,14 +289,12 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return TRUE
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
 	for(var/mob/living/player in GLOB.player_list)
 		if(issilicon(player))
 			continue
 		if(player.mind)
 			if(player.stat != DEAD)
-				if(get_area(player) == A)
+				if(get_area(player) in SSshuttle.emergency.shuttle_areas)
 					return FALSE
 
 	return TRUE
@@ -323,10 +309,8 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return TRUE
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
 	for(var/mob/living/player in GLOB.player_list)
-		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
+		if(get_area(player) in SSshuttle.emergency.shuttle_areas && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
 				return FALSE
@@ -615,7 +599,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
 	var/captured_amount = 0
-	var/area/centcom/holding/A = locate()
+	var/area/centcom/holding/A = locate() in GLOB.sortedAreas
 	for(var/mob/living/carbon/human/M in A)//Humans.
 		if(M.stat==2)//Dead folks are worth less.
 			captured_amount+=0.5

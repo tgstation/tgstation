@@ -322,7 +322,7 @@
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/living/user, params)
-	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker))
+	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O, /obj/item/weapon/reagent_containers/food/snacks/cracker))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -335,7 +335,7 @@
 				parrot_state |= PARROT_FLEE
 			icon_state = "parrot_fly"
 			drop_held_item(0)
-	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
 		qdel(O)
 		user.drop_item()
 		if(health < maxHealth)
@@ -763,7 +763,7 @@
 
 
 //parrots will eat crackers instead of dropping them
-	if(istype(held_item,/obj/item/weapon/reagent_containers/food/snacks/cracker) && (drop_gently))
+	if(istype(held_item, /obj/item/weapon/reagent_containers/food/snacks/cracker) && (drop_gently))
 		qdel(held_item)
 		held_item = null
 		if(health < maxHealth)

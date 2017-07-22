@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 			if (!R && replace)
 				user.put_in_hands(new_item)
 
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(amount != 1)
 			to_chat(user, "<span class='warning'>You must use a single rod!</span>")

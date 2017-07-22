@@ -237,7 +237,7 @@
 		w_class = WEIGHT_CLASS_SMALL
 	add_fingerprint(user)
 
-// Copied from /obj/item/weapon/melee/energy/sword/attackby
+// Copied from /obj/item/weapon/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
 		if((W.flags & NODROP) || (flags & NODROP))

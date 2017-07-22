@@ -4,7 +4,7 @@
 	desc = "A console used for high-priority announcements and emergencies."
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
-	req_access = list(GLOB.access_heads)
+	req_access = list(ACCESS_HEADS)
 	circuit = /obj/item/weapon/circuitboard/computer/communications
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
@@ -101,7 +101,7 @@
 				var/obj/item/device/pda/pda = I
 				I = pda.id
 			if (I && istype(I))
-				if(GLOB.access_captain in I.access)
+				if(ACCESS_CAPTAIN in I.access)
 					var/old_level = GLOB.security_level
 					if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
 					if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN

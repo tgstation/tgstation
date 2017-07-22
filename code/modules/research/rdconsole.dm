@@ -29,7 +29,7 @@ doesn't have toxins access.
 	var/obj/machinery/rnd/protolathe/linked_lathe = null				//Linked Protolathe
 	var/obj/machinery/rnd/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
-	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
+	req_access = list(ACCESS_TOX)	//DATA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
 	var/category_lathe
 	var/category_imprinter

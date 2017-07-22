@@ -71,7 +71,7 @@
 				gets_dug()
 				SSblackbox.add_details("pick_used_mining","[W.type]")
 
-	if(istype(W,/obj/item/weapon/storage/bag/ore))
+	if(istype(W, /obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
 			for(var/obj/item/weapon/ore/O in src.contents)
@@ -83,7 +83,7 @@
 		if(!Z.use(1))
 			return
 		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
-		if(istype(Z,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = Z
 			var/turf/open/floor/light/F = T
 			F.state = L.state
@@ -248,7 +248,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,TRUE)
+				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,FALSE,TRUE)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
@@ -274,7 +274,7 @@
 	SpawnFlora(T)
 
 	SpawnMonster(T)
-	T.ChangeTurf(turf_type,FALSE,TRUE)
+	T.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))

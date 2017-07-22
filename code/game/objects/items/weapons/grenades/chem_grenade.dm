@@ -193,7 +193,7 @@
 	name = "large grenade"
 	desc = "A custom made large grenade. It affects a larger area."
 	icon_state = "large_grenade"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass,/obj/item/weapon/reagent_containers/food/condiment,
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/weapon/reagent_containers/food/condiment,
 								/obj/item/weapon/reagent_containers/food/drinks)
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.

@@ -260,9 +260,9 @@
 			if(prob(20))
 				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
 			if(prob(30))
-				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
+				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7, /obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
 			if(prob(10))
-				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
+				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7, /obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
 		if("Ashwalker")
 			mob_species = /datum/species/lizard/ashwalker
 			uniform = /obj/item/clothing/under/gladiator/ash_walker
@@ -273,7 +273,7 @@
 				suit = /obj/item/clothing/suit/armor/bone
 				gloves = /obj/item/clothing/gloves/bracer
 			if(prob(5))
-				back = pickweight(list(/obj/item/weapon/twohanded/bonespear = 3,/obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
+				back = pickweight(list(/obj/item/weapon/twohanded/bonespear = 3, /obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
 			if(prob(10))
 				belt = /obj/item/weapon/storage/belt/mining/primitive
 			if(prob(30))
@@ -286,7 +286,7 @@
 			belt = null
 			backpack_contents = list()
 			if(prob(70))
-				backpack_contents += pick(list(/obj/item/weapon/stamp/clown = 1, /obj/item/weapon/reagent_containers/spray/waterflower = 1,/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,/obj/item/weapon/pneumatic_cannon/pie = 1))
+				backpack_contents += pick(list(/obj/item/weapon/stamp/clown = 1, /obj/item/weapon/reagent_containers/spray/waterflower = 1, /obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/weapon/pneumatic_cannon/pie = 1))
 			if(prob(30))
 				backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
 			if(prob(10))
@@ -296,9 +296,9 @@
 		if("Golem")
 			mob_species = pick(list(/datum/species/golem/adamantine, /datum/species/golem/plasma, /datum/species/golem/diamond, /datum/species/golem/gold, /datum/species/golem/silver, /datum/species/golem/plasteel, /datum/species/golem/titanium, /datum/species/golem/plastitanium))
 			if(prob(30))
-				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 2, /obj/item/clothing/glasses/hud/health = 2,/obj/item/clothing/glasses/hud/diagnostic =2, /obj/item/clothing/glasses/science = 2, /obj/item/clothing/glasses/welding = 2, /obj/item/clothing/glasses/night = 1))
+				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 2, /obj/item/clothing/glasses/hud/health = 2, /obj/item/clothing/glasses/hud/diagnostic =2, /obj/item/clothing/glasses/science = 2, /obj/item/clothing/glasses/welding = 2, /obj/item/clothing/glasses/night = 1))
 			if(prob(10))
-				belt = pick(list(/obj/item/weapon/storage/belt/mining/vendor,/obj/item/weapon/storage/belt/utility/full))
+				belt = pick(list(/obj/item/weapon/storage/belt/mining/vendor, /obj/item/weapon/storage/belt/utility/full))
 			if(prob(50))
 				neck = /obj/item/weapon/bedsheet/rd/royal_cape
 			if(prob(10))
@@ -316,7 +316,7 @@
 			mask = /obj/item/clothing/mask/breath
 		if("Operative")
 			id_job = "Operative"
-			id_access_list = list(GLOB.access_syndicate)
+			id_access_list = list(ACCESS_SYNDICATE)
 			outfit = /datum/outfit/syndicatecommandocorpse
 		if("Shadow")
 			mob_species = /datum/species/shadow

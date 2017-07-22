@@ -390,7 +390,7 @@
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	id_access_list = list(GLOB.access_syndicate)
+	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicate_empty
 	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
 
@@ -442,7 +442,7 @@
 
 /datum/outfit/syndicate_empty/SBC/assault/captain
 	name = "Syndicate Battlecruiser Captain"
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber/red
+	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber/red
 	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/weapon/gun/ballistic/revolver/mateba

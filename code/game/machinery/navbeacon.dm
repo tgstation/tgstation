@@ -20,7 +20,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(GLOB.access_engine, GLOB.access_robotics)
+	req_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
 /obj/machinery/navbeacon/New()
 	..()

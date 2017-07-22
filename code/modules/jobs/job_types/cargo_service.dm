@@ -14,8 +14,8 @@ Quartermaster
 
 	outfit = /datum/outfit/job/quartermaster
 
-	access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
-	minimal_access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
@@ -44,8 +44,8 @@ Cargo Technician
 
 	outfit = /datum/outfit/job/cargo_tech
 
-	access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
-	minimal_access = list(GLOB.access_maint_tunnels, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_mailsorting, GLOB.access_mineral_storeroom)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
@@ -72,8 +72,8 @@ Shaft Miner
 
 	outfit = /datum/outfit/job/miner
 
-	access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
-	minimal_access = list(GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mailsorting, GLOB.access_mineral_storeroom)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner (Lavaland)"
@@ -150,8 +150,8 @@ Bartender
 
 	outfit = /datum/outfit/job/bartender
 
-	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue, GLOB.access_weapons)
-	minimal_access = list(GLOB.access_bar)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
+	minimal_access = list(ACCESS_BAR)
 
 
 /datum/outfit/job/bartender
@@ -183,8 +183,8 @@ Cook
 
 	outfit = /datum/outfit/job/cook
 
-	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue)
-	minimal_access = list(GLOB.access_kitchen, GLOB.access_morgue)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
+	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE)
 
 /datum/outfit/job/cook
 	name = "Cook"
@@ -230,8 +230,8 @@ Botanist
 
 	outfit = /datum/outfit/job/botanist
 
-	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue)
-	minimal_access = list(GLOB.access_hydroponics, GLOB.access_morgue)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE)
 	// Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS
 	// Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
 	// Given Morgue access because they have a viable means of cloning.
@@ -269,8 +269,8 @@ Janitor
 
 	outfit = /datum/outfit/job/janitor
 
-	access = list(GLOB.access_janitor, GLOB.access_maint_tunnels)
-	minimal_access = list(GLOB.access_janitor, GLOB.access_maint_tunnels)
+	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
 
 /datum/outfit/job/janitor
 	name = "Janitor"

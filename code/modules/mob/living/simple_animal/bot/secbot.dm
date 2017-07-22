@@ -191,7 +191,7 @@ Auto Patrol: []"},
 		icon_state = "secbot[on]"
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+	if(istype(Proj , /obj/item/projectile/beam)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)
@@ -432,4 +432,4 @@ Auto Patrol: []"},
 	..()
 
 /obj/machinery/bot_core/secbot
-	req_access = list(GLOB.access_security)
+	req_access = list(ACCESS_SECURITY)
