@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define DRAKE_SCORE "Drakes Killed"
 #define BIRD_SCORE "Hierophants Killed"
 #define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
-#define SEER_SCORE "Seers Killed"
+#define COLLECTOR_SCORE "Collectors Killed"
 #define BOSS_SCORE "Bosses Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
 

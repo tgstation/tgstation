@@ -3410,7 +3410,7 @@
 /area/lavaland/surface/outdoors)
 "hg" = (
 /obj/structure/stone_tile/slab/burnt,
-/mob/living/simple_animal/hostile/megafauna/seer,
+/mob/living/simple_animal/hostile/megafauna/collector,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/seer)
 "hh" = (
