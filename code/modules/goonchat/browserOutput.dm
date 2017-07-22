@@ -178,6 +178,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
 /proc/base64toicon(text, iconKey = "import")	//Kill me.
+	if(!text)
+		return FALSE
 	var/savefile/s = GLOB.iconCache
 	s.ImportText(iconKey, text)
 	var/icon/i

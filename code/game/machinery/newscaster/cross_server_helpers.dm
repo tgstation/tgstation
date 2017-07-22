@@ -165,6 +165,11 @@
 	md5 = md5("[ckey(author)][ckey(body)]")
 	return md5
 
+/proc/test_feedmessage_json(datum/newscaster/feed_message/tester)
+	tester.author = "TESTING"
+	tester.body = "[tester.body] + TEST + TEST + 123"
+	handleIncomingNewscasterRelay(tester.type, tester.to_json(TRUE, TRUE))
+
 /datum/newscaster/feed_message/to_json(include_comments = TRUE, bicon_image = TRUE)
 	var/list/L = list()
 	L["author"] = author
@@ -187,7 +192,7 @@
 	L["locked"] = locked
 	L["authorCensorTime"] = authorCensorTime
 	L["bodyCensorTime"] = bodyCensorTime
-	if(bicon_image)
+	if(bicon_image && img)
 		L["img"] = icon2base64(img, "CSN_json")
 	else
 		L["img"] = null

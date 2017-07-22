@@ -15,38 +15,36 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
+	anchored = TRUE
 	var/screen = 0
 	var/paper_remaining = 15
-	var/securityCaster = 0
+	var/securityCaster = FALSE
 	var/unit_no = 0
 	var/alert_delay = 500
 	var/alert = 0
 	var/scanned_user = "Unknown"
 	var/msg = ""
-	var/obj/item/weapon/photo/photo = null
+	var/obj/item/weapon/photo/photo
 	var/channel_name = ""
 	var/c_locked=0
-	var/datum/newscaster/feed_channel/viewing_channel = null
-	var/allow_comments = 1
-	anchored = 1
+	var/datum/newscaster/feed_channel/viewing_channel
+	var/allow_comments = TRUE
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
-	securityCaster = 1
+	securityCaster = TRUE
 
-/obj/machinery/newscaster/New(loc, ndir, building)
-	..()
+/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+	. = ..()
 	if(building)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+		pixel_x = (dir & (NORTH|SOUTH))? 0 : (dir == EAST ? -32 : 32)
+		pixel_y = (dir & (NORTH|SOUTH))? (dir == NORTH ? -32 : 32) : 0
 
 	GLOB.allCasters += src
-	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		unit_no++
+	unit_no = GLOB.allCasters.len
 	update_icon()
 
 /obj/machinery/newscaster/Destroy()
