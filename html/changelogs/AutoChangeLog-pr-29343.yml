@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "The Hierophant will now release a burst when melee attacking instead of actually hitting its target."
+  - bugfix: "The Hierophant Club's blasts will now properly aggro hostile mobs."
