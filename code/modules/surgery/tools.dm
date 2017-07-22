@@ -9,6 +9,18 @@
 	origin_tech = "materials=1;biotech=1"
 
 
+/obj/item/weapon/retractor/augment
+	name = "toolarm retractor"
+	desc = "Micro-mechanical manipulator for retracting stuff."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "retractor"
+	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	flags = CONDUCT
+	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
+	toolspeed = 0.5
+
+
 /obj/item/weapon/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
@@ -21,6 +33,19 @@
 	attack_verb = list("attacked", "pinched")
 
 
+/obj/item/weapon/hemostat/augment
+	name = "toolarm hemostat"
+	desc = "Tiny servos power a pair of pincers to stop bleeding."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "hemostat"
+	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
+	flags = CONDUCT
+	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
+	toolspeed = 0.5
+	attack_verb = list("attacked", "pinched")
+
+
 /obj/item/weapon/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
@@ -30,6 +55,19 @@
 	flags = CONDUCT
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("burnt")
+
+
+/obj/item/weapon/cautery/augment
+	name = "toolarm cautery"
+	desc = "A heated element that cauterizes wounds."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "cautery"
+	materials = list(MAT_METAL=2500, MAT_GLASS=750)
+	flags = CONDUCT
+	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
+	toolspeed = 0.5
 	attack_verb = list("burnt")
 
 
@@ -46,6 +84,22 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
+
+/obj/item/weapon/surgicaldrill/augment
+	name = "toolarm surgical drill"
+	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "drill"
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	flags = CONDUCT
+	force = 10
+	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "materials=1;biotech=1"
+	toolspeed = 0.5
+	attack_verb = list("drilled")
+
+
 /obj/item/weapon/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
@@ -60,6 +114,24 @@
 	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP_ACCURATE
+
+/obj/item/weapon/scalpel/augment
+	name = "toolarm scalpel"
+	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "scalpel"
+	flags = CONDUCT
+	force = 10
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 5
+	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
+	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
@@ -86,6 +158,25 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
+/obj/item/weapon/circular_saw/augment
+	name = "toolarm circular saw"
+	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "saw"
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	throwhitsound =  'sound/weapons/pierce.ogg'
+	flags = CONDUCT
+	force = 10
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 9
+	throw_speed = 2
+	throw_range = 5
+	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	origin_tech = "biotech=1;combat=1"
+	toolspeed = 0.5
+	attack_verb = list("attacked", "slashed", "sawed", "cut")
+	sharpness = IS_SHARP
+
 /obj/item/weapon/surgical_drapes
 	name = "surgical drapes"
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
@@ -98,7 +189,7 @@
 /obj/item/weapon/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
-		
+
 /obj/item/weapon/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"
 	desc = "A container for holding body parts."
@@ -114,7 +205,7 @@
 	if(!isorgan(I) && !isbodypart(I))
 		to_chat(user, "<span class='notice'>[src] can only hold body parts!</span>")
 		return
-		
+
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>")
 	icon_state = "evidence"
 	var/xx = I.pixel_x
@@ -141,4 +232,4 @@
 		desc = "A container for holding body parts."
 	else
 		to_chat(user, "[src] is empty.")
-	return
+return
