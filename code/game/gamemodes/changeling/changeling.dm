@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
 	required_enemies = 1
-	recommended_enemies = 4
+	recommended_enemies = 1
 	reroll_friendly = 1
 
 	announce_span = "green"
