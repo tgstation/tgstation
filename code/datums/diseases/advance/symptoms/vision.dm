@@ -25,8 +25,8 @@ Bonus
 	level = 5
 	severity = 4
 	base_message_chance = 50
-	symptom_delay_min = 25
-	symptom_delay_max = 80
+	symptom_delay_min = 14
+	symptom_delay_max = 48
 	var/remove_eyes = FALSE
 
 /datum/symptom/visionloss/Start(datum/disease/advance/A)

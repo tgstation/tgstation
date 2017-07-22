@@ -25,8 +25,8 @@ Bonus
 	level = 4
 	severity = 2
 	base_message_chance = 25
-	symptom_delay_min = 10
-	symptom_delay_max = 30
+	symptom_delay_min = 6
+	symptom_delay_max = 18
 	var/brain_damage = FALSE
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)

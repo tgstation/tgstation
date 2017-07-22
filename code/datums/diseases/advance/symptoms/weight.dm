@@ -25,8 +25,8 @@ Bonus
 	level = 4
 	severity = 1
 	base_message_chance = 100
-	symptom_delay_min = 15
-	symptom_delay_max = 45
+	symptom_delay_min = 8
+	symptom_delay_max = 25
 
 /datum/symptom/weight_gain/Start(datum/disease/advance/A)
 	..()
@@ -73,8 +73,8 @@ Bonus
 	level = 3
 	severity = 1
 	base_message_chance = 100
-	symptom_delay_min = 15
-	symptom_delay_max = 45
+	symptom_delay_min = 8
+	symptom_delay_max = 25
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
 	..()
@@ -121,8 +121,8 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 4
-	symptom_delay_min = 5
-	symptom_delay_max = 5
+	symptom_delay_min = 3
+	symptom_delay_max = 3
 
 /datum/symptom/weight_even/Activate(datum/disease/advance/A)
 	if(!..())

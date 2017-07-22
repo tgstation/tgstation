@@ -25,8 +25,8 @@ Bonus
 	level = 4
 	severity = 2
 	base_message_chance = 50
-	symptom_delay_min = 15
-	symptom_delay_max = 40
+	symptom_delay_min = 9
+	symptom_delay_max = 28
 
 /datum/symptom/dizzy/Start(datum/disease/advance/A)
 	..()

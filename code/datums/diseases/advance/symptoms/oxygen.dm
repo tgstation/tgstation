@@ -39,10 +39,10 @@ Bonus
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(4, 5)
-			M.adjustOxyLoss(-3, 0)
-			M.losebreath = max(0, M.losebreath - 2)
+			M.adjustOxyLoss(-7, 0)
+			M.losebreath = max(0, M.losebreath - 4)
 			if(regenerate_blood && M.blood_volume < BLOOD_VOLUME_NORMAL)
-				M.blood_volume += 1
+				M.blood_volume += 2
 		else
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")

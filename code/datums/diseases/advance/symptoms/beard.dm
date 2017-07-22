@@ -23,8 +23,8 @@ BONUS
 	transmittable = -1
 	level = 4
 	severity = 1
-	symptom_delay_min = 18
-	symptom_delay_max = 36
+	symptom_delay_min = 12
+	symptom_delay_max = 24
 
 /datum/symptom/beard/Activate(datum/disease/advance/A)
 	if(!..())

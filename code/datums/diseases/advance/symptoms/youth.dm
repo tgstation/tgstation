@@ -24,8 +24,8 @@ BONUS
 	transmittable = -4
 	level = 5
 	base_message_chance = 100
-	symptom_delay_min = 25
-	symptom_delay_max = 50
+	symptom_delay_min = 14
+	symptom_delay_max = 30
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)
 	if(!..())

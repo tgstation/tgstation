@@ -25,8 +25,8 @@ BONUS
 	level = 1
 	severity = 1
 	base_message_chance = 15
-	symptom_delay_min = 2
-	symptom_delay_max = 15
+	symptom_delay_min = 1
+	symptom_delay_max = 8
 	var/infective = FALSE
 
 /datum/symptom/cough/Start(datum/disease/advance/A)

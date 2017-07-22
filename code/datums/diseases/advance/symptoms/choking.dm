@@ -25,8 +25,8 @@ Bonus
 	level = 3
 	severity = 3
 	base_message_chance = 15
-	symptom_delay_min = 10
-	symptom_delay_max = 30
+	symptom_delay_min = 6
+	symptom_delay_max = 18
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
 	..()

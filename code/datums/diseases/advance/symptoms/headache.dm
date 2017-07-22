@@ -26,8 +26,8 @@ BONUS
 	level = 1
 	severity = 1
 	base_message_chance = 100
-	symptom_delay_min = 15
-	symptom_delay_max = 30
+	symptom_delay_min = 8
+	symptom_delay_max = 24
 
 /datum/symptom/headache/Start(datum/disease/advance/A)
 	..()

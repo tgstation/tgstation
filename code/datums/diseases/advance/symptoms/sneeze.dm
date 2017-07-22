@@ -24,8 +24,8 @@ Bonus
 	transmittable = 4
 	level = 1
 	severity = 1
-	symptom_delay_min = 5
-	symptom_delay_max = 35
+	symptom_delay_min = 3
+	symptom_delay_max = 22
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
 	..()
