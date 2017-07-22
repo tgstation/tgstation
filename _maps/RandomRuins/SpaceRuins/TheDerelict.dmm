@@ -3744,11 +3744,11 @@
 "kS" = (
 /obj/machinery/door/window,
 /turf/open/floor/plasteel/airless,
-/area/hallway/primary/port)
+/area/derelict/hallway/primary/port)
 "kT" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/plasteel/airless,
-/area/hallway/primary/port)
+/area/derelict/hallway/primary/port)
 "kU" = (
 /obj/item/weapon/cigbutt,
 /turf/template_noop,

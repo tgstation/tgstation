@@ -13,6 +13,10 @@
 	name = "Derelict Secondary Hallway"
 	icon_state = "hallS"
 
+/area/derelict/hallway/primary/port
+	name = "Derelict Port Hallway"
+	icon_state = "hallFP"
+
 /area/derelict/arrival
 	name = "Derelict Arrival Centre"
 	icon_state = "yellow"
