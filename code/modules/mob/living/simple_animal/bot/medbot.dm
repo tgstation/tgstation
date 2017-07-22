@@ -93,13 +93,14 @@
 	else
 		icon_state = "medibot1"
 
-/mob/living/simple_animal/bot/medbot/Initialize()
-	..()
+/mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
+	. = ..()
 	var/datum/job/doctor/J = new /datum/job/doctor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 	qdel(J)
-	addtimer(CALLBACK(src, .proc/update_icon), 1)
+	skin = new_skin
+	update_icon()
 
 /mob/living/simple_animal/bot/medbot/update_canmove()
 	. = ..()
