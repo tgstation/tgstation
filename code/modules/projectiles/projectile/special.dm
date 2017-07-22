@@ -69,6 +69,7 @@
 	desc = "Boom"
 	icon_state = "missile"
 	damage = 30
+	ricochets_max = 0 //it's a MISSILE
 
 /obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
 	..()
@@ -108,9 +109,7 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Bump(atom/A, yes)
-	if(!yes) //prevents multi bumps.
-		return
+/obj/item/projectile/meteor/Collide(atom/A)
 	if(A == firer)
 		loc = A.loc
 		return

@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Mining satchels no longer hold infinite amounts of ore."

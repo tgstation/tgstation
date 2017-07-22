@@ -169,24 +169,24 @@
 	connected_parts.Cut()
 
 	T = get_step(T,rdir)
-	if(!check_part(T,/obj/structure/particle_accelerator/fuel_chamber))
+	if(!check_part(T, /obj/structure/particle_accelerator/fuel_chamber))
 		return 0
 	T = get_step(T,odir)
-	if(!check_part(T,/obj/structure/particle_accelerator/end_cap))
+	if(!check_part(T, /obj/structure/particle_accelerator/end_cap))
 		return 0
 	T = get_step(T,dir)
 	T = get_step(T,dir)
-	if(!check_part(T,/obj/structure/particle_accelerator/power_box))
+	if(!check_part(T, /obj/structure/particle_accelerator/power_box))
 		return 0
 	T = get_step(T,dir)
-	if(!check_part(T,/obj/structure/particle_accelerator/particle_emitter/center))
+	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/center))
 		return 0
 	T = get_step(T,ldir)
-	if(!check_part(T,/obj/structure/particle_accelerator/particle_emitter/left))
+	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/left))
 		return 0
 	T = get_step(T,rdir)
 	T = get_step(T,rdir)
-	if(!check_part(T,/obj/structure/particle_accelerator/particle_emitter/right))
+	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/right))
 		return 0
 
 	assembled = 1

@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - spellcheck: "Picking up ores by walking over them now longer spams messages, instead showing one message per tile of ore picked up."

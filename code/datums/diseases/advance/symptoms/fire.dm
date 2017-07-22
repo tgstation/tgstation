@@ -63,14 +63,14 @@ Bonus
 	M.adjust_fire_stacks(1 * power)
 	M.adjustFireLoss(3 * power)
 	if(infective)
-		A.spread(A.holder, 2)
+		A.spread(2)
 	return 1
 
 /datum/symptom/fire/proc/Firestacks_stage_5(mob/living/M, datum/disease/advance/A)
 	M.adjust_fire_stacks(3 * power)
 	M.adjustFireLoss(5 * power)
 	if(infective)
-		A.spread(A.holder, 4)
+		A.spread(4)
 	return 1
 
 /*

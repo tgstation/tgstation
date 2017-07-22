@@ -60,7 +60,7 @@
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
-		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A,/area/arrival))
+		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A, /area/arrival))
 			A.power_light = TRUE
 			A.power_equip = TRUE
 			A.power_environ = TRUE

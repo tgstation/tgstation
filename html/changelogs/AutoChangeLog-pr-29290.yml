@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - balance: "Unwrenching clockwork structures no longer damages them."

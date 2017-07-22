@@ -63,12 +63,12 @@
 		riding_datum.handle_vehicle_offsets()
 
 
-/obj/vehicle/Bump(atom/movable/M)
+/obj/vehicle/Collide(atom/movable/M)
 	. = ..()
 	if(auto_door_open)
 		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
 			for(var/m in buckled_mobs)
-				M.Bumped(m)
+				M.CollidedWith(m)
 
 
 /obj/vehicle/Process_Spacemove(direction)

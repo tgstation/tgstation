@@ -148,7 +148,7 @@
 
 	. += config.slime_delay
 
-/mob/living/simple_animal/slime/ObjBump(obj/O)
+/mob/living/simple_animal/slime/ObjCollide(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
@@ -311,7 +311,7 @@
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
-	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
+	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
 		else

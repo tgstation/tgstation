@@ -41,8 +41,8 @@
 /obj/machinery/juicer/attackby(obj/item/O, mob/user, params)
 	if(default_unfasten_wrench(user, O))
 		return
-	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
-		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
+	if (istype(O, /obj/item/weapon/reagent_containers/glass) || \
+		istype(O, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
 			return 1
 		else

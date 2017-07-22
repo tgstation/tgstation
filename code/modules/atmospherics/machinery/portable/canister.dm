@@ -362,7 +362,7 @@
 		if("restricted")
 			restricted = !restricted
 			if(restricted)
-				req_access = list(GLOB.access_engine)
+				req_access = list(ACCESS_ENGINE)
 			else
 				req_access = list()
 				. = TRUE

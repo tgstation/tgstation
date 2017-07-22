@@ -119,7 +119,7 @@
 	..()
 	access_card = new /obj/item/weapon/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
-	access_card.access += GLOB.access_robotics
+	access_card.access += ACCESS_ROBOTICS
 	set_custom_texts()
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
@@ -169,7 +169,7 @@
 /mob/living/simple_animal/bot/emag_act(mob/user)
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = FALSE
-		emagged = TRUE
+		emagged = 1
 		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
@@ -719,7 +719,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else	// no path, so calculate new one
 		calc_summon_path()
 
-/mob/living/simple_animal/bot/Bump(M as mob|obj) //Leave no door unopened!
+/mob/living/simple_animal/bot/Collide(M as mob|obj) //Leave no door unopened!
 	. = ..()
 	if((istype(M, /obj/machinery/door/airlock) ||  istype(M, /obj/machinery/door/window)) && (!isnull(access_card)))
 		var/obj/machinery/door/D = M

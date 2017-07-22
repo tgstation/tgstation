@@ -62,7 +62,7 @@
 //process()
 	//return
 
-/obj/machinery/door/Bumped(atom/AM)
+/obj/machinery/door/CollidedWith(atom/movable/AM)
 	if(operating || emagged)
 		return
 	if(ismob(AM))
@@ -192,7 +192,7 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
-	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
+	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)

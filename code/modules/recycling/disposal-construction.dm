@@ -203,7 +203,7 @@
 		else
 			if(!is_pipe()) // Disposal or outlet
 				if(CP) // There's something there
-					if(!istype(CP,/obj/structure/disposalpipe/trunk))
+					if(!istype(CP, /obj/structure/disposalpipe/trunk))
 						to_chat(user, "<span class='warning'>The [nicetype] requires a trunk underneath it in order to work!</span>")
 						return
 				else // Nothing under, fuck.

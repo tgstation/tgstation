@@ -136,7 +136,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centerstation/CollidedWith(atom/movable/AM)
 	if(!active)
 		return
 	if(!detect())
@@ -161,7 +161,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		if(calibrated)
 			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return
@@ -212,7 +212,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return TRUE
 	return FALSE
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centeraway/CollidedWith(atom/movable/AM)
 	if(!detect())
 		return
 	if(!active)

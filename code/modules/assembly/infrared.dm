@@ -210,11 +210,11 @@
 			master.last = I
 			I.process()
 
-/obj/effect/beam/i_beam/Bump()
+/obj/effect/beam/i_beam/Collide()
 	qdel(src)
 	return
 
-/obj/effect/beam/i_beam/Bumped()
+/obj/effect/beam/i_beam/CollidedWith(atom/movable/AM)
 	hit()
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)

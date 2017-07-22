@@ -82,7 +82,7 @@
 			playsound(get_turf(src), I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I,/obj/item/weapon/weldingtool) && panel_open)
+		else if(istype(I, /obj/item/weapon/weldingtool) && panel_open)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
@@ -458,7 +458,7 @@
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
 	if(!AM.disposalEnterTry())
 		return
 	switch(dir)

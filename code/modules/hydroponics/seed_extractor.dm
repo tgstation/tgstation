@@ -84,7 +84,7 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if (istype(O,/obj/item/weapon/storage/bag/plants))
+	if (istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
 		for(var/obj/item/seeds/G in P.contents)
@@ -101,7 +101,7 @@
 	else if(seedify(O,-1, src, user))
 		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
 		return
-	else if (istype(O,/obj/item/seeds))
+	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
 			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 			updateUsrDialog()
@@ -195,7 +195,7 @@
 		var/mob/M = O.loc
 		if(!M.drop_item())
 			return 0
-	else if(istype(O.loc,/obj/item/weapon/storage))
+	else if(istype(O.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
 

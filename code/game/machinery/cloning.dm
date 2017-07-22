@@ -3,7 +3,7 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
-#define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
+#define CLONE_INITIAL_DAMAGE     150    //Clones in clonepods start with 150 cloneloss damage and 150 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
@@ -15,7 +15,7 @@
 	density = TRUE
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(GLOB.access_cloning) //For premature unlocking.
+	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
 	var/heal_level //The clone is released once its health reaches this level.
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -41,7 +41,7 @@
 	var/static/list/brine_types = list(
 		"salbutamol", // anti-oxyloss
 		"bicaridine", // NOBREATHE species take brute in crit
-		"corazone", // prevents cardiac arrest damage
+		"corazone", // prevents cardiac arrest and liver failure damage
 		"mimesbane") // stops them gasping from lack of air.
 
 /obj/machinery/clonepod/Initialize()
@@ -152,7 +152,7 @@
 		return FALSE
 	if(mess || attempting)
 		return FALSE
-	clonemind = locate(mindref)
+	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
@@ -304,7 +304,7 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/computer/cloning))
@@ -365,7 +365,7 @@
 			fl.forceMove(T)
 		unattached_flesh.Cut()
 		mess = FALSE
-		new /obj/effect/gibspawner/generic(loc)
+		new /obj/effect/gibspawner/generic(get_turf(src))
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return
@@ -474,7 +474,9 @@
 	// Clones are in a pickled bath of mild chemicals, keeping
 	// them alive, despite their lack of internal organs
 	for(var/bt in brine_types)
-		if(occupant.reagents.get_reagent_amount(bt) < 1)
+		if(bt == "corazone" && occupant.reagents.get_reagent_amount(bt) < 2)
+			occupant.reagents.add_reagent(bt, 2)//pump it full of extra corazone as a safety, you can't OD on corazone.
+		else if(occupant.reagents.get_reagent_amount(bt) < 1)
 			occupant.reagents.add_reagent(bt, 1)
 
 /*
