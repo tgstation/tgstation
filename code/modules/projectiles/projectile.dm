@@ -25,6 +25,7 @@
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
+	var/seeking_Angle_change = 0 //how much we adjust our angle to seek 'original'
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
@@ -63,6 +64,18 @@
 
 /obj/item/projectile/proc/Range()
 	range--
+	if(seeking_Angle_change && !QDELETED(original) && can_hit_target(original, permutated, TRUE))
+		Angle = SimplifyDegrees(Angle)
+		var/Angle_temp = Angle - 180
+		var/Angle_to_target = Get_Angle(src, original) - 180
+		var/Angle_difference = Angle_to_target - Angle_temp
+		if(SimplifyDegrees(Angle_temp) == SimplifyDegrees(Angle_to_target + 180) || SimplifyDegrees(Angle_temp + 180) == SimplifyDegrees(Angle_to_target)) //going directly opposite
+			Angle_difference = pick(seeking_Angle_change, -seeking_Angle_change)
+		else if(Angle_difference < -seeking_Angle_change)
+			Angle_difference = -seeking_Angle_change
+		else if(Angle_difference > seeking_Angle_change)
+			Angle_difference = seeking_Angle_change
+		Angle = SimplifyDegrees(Angle + Angle_difference)
 	if(range <= 0 && loc)
 		on_range()
 
@@ -203,7 +216,7 @@
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
 		return
-	if(setAngle)
+	if(isnum(setAngle))
 		Angle = setAngle
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
@@ -283,9 +296,9 @@
 			sleep(config.run_speed * 0.9)
 
 //Returns true if the target atom is on our current turf and above the right layer
-/obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
+/obj/item/projectile/proc/can_hit_target(atom/target, list/passthrough, no_loc_check)
 	if(target && (target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target))
-		if(loc == get_turf(target))
+		if(no_loc_check || loc == get_turf(target))
 			if(!(target in passthrough))
 				return TRUE
 	return FALSE
