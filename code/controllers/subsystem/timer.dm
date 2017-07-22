@@ -236,7 +236,7 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
-		SStimer.timer_id_dict["timerid[id]"] = src
+		SStimer.timer_id_dict["timerid"+num2text(id,8)] = src
 
 	if (callBack.object != GLOBAL_PROC)
 		LAZYADD(callBack.object.active_timers, src)
@@ -297,7 +297,7 @@ SUBSYSTEM_DEF(timer)
 	callBack = null
 
 	if (flags & TIMER_STOPPABLE)
-		SStimer.timer_id_dict -= "timerid[id]"
+		SStimer.timer_id_dict -= "timerid"+num2text(id,8)
 
 	if (flags & TIMER_CLIENT_TIME)
 		SStimer.clienttime_timers -= src
@@ -391,7 +391,7 @@ SUBSYSTEM_DEF(timer)
 		if (istype(id, /datum/timedevent))
 			qdel(id)
 			return TRUE
-	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[id]"]
+	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid"+num2text(id,8)]
 	if (timer && !timer.spent)
 		qdel(timer)
 		return TRUE
