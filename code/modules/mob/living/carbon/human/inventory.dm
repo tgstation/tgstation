@@ -152,11 +152,13 @@
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
+			drop_all_held_items() //suit is restraining
 			update_action_buttons_icon() //certain action buttons may be usable again.
 		wear_suit = null
-		if(I.flags_inv & HIDEJUMPSUIT)
-			update_inv_w_uniform()
-		update_inv_wear_suit()
+		if(!QDELETED(src)) //no need to update we're getting deleted anyway
+			if(I.flags_inv & HIDEJUMPSUIT)
+				update_inv_w_uniform()
+			update_inv_wear_suit()
 	else if(I == w_uniform)
 		if(invdrop)
 			if(r_store)
@@ -169,10 +171,12 @@
 				dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
-		update_inv_w_uniform(invdrop)
+		if(!QDELETED(src)) 
+			update_inv_w_uniform()
 	else if(I == gloves)
 		gloves = null
-		update_inv_gloves()
+		if(!QDELETED(src))
+			update_inv_gloves()
 	else if(I == glasses)
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
@@ -185,29 +189,37 @@
 				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
-		update_inv_glasses()
+		if(!QDELETED(src))
+			update_inv_glasses()
 	else if(I == ears)
 		ears = null
-		update_inv_ears()
+		if(!QDELETED(src))
+			update_inv_ears()
 	else if(I == shoes)
 		shoes = null
-		update_inv_shoes()
+		if(!QDELETED(src))
+			update_inv_shoes()
 	else if(I == belt)
 		belt = null
-		update_inv_belt()
+		if(!QDELETED(src))
+			update_inv_belt()
 	else if(I == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
-		update_inv_wear_id()
+		if(!QDELETED(src))
+			update_inv_wear_id()
 	else if(I == r_store)
 		r_store = null
-		update_inv_pockets()
+		if(!QDELETED(src))
+			update_inv_pockets()
 	else if(I == l_store)
 		l_store = null
-		update_inv_pockets()
+		if(!QDELETED(src))
+			update_inv_pockets()
 	else if(I == s_store)
 		s_store = null
-		update_inv_s_store()
+		if(!QDELETED(src))
+			update_inv_s_store()
 
 /mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
 	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
