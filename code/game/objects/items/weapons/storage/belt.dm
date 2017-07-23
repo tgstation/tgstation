@@ -481,6 +481,7 @@
 	icon_state = "sheath"
 	item_state = "sheath"
 	storage_slots = 1
+	rustle_jimmies = FALSE
 	w_class = WEIGHT_CLASS_BULKY
 	max_w_class = WEIGHT_CLASS_BULKY
 	can_hold = list(
