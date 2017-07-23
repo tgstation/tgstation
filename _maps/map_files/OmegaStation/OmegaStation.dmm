@@ -11615,7 +11615,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
 	filter_type = "n2";
-	name = "nitogren filter";
+	name = "nitrogen filter";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -15265,7 +15265,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Central Starborad Maintenance APC";
+	name = "Central Starboard Maintenance APC";
 	pixel_y = 25
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -23306,7 +23306,7 @@
 "aML" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	name = "Telecoms Control Room";
+	name = "Telecomms Control Room";
 	req_access = null;
 	req_access_txt = "19; 61"
 	},
@@ -25229,7 +25229,7 @@
 "aPH" = (
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -25789,7 +25789,7 @@
 	},
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -26013,7 +26013,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Privacy Shutters"
+	name = "Chemistry Privacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -26026,7 +26026,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Privacy Shutters"
+	name = "Chemistry Privacy Shutters"
 	},
 /obj/machinery/door/window/southleft{
 	name = "Chemistry Desk";
@@ -26042,7 +26042,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemisttop";
-	name = "Chemisty Lobby Shutters"
+	name = "Chemistry Lobby Shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -26823,7 +26823,7 @@
 "aSM" = (
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -27148,7 +27148,7 @@
 /obj/item/weapon/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Privacy Shutters"
+	name = "Chemistry Privacy Shutters"
 	},
 /obj/machinery/door/window/southleft{
 	dir = 8;
@@ -33629,7 +33629,7 @@
 "bfw" = (
 /obj/structure/bonfire,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice{
-	desc = "For the weary spacemen on their quest to rekindle the first plasmafire.";
+	desc = "For the weary spacemen on their quest to rekindle the first plasma fire.";
 	name = "Carton of Estus"
 	},
 /obj/item/weapon/nullrod/claymore/glowing{
@@ -39638,7 +39638,7 @@
 /obj/machinery/telecomms/bus/preset_one/birdstation,
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Telecoms Server Room APC";
+	name = "Telecomms Server Room APC";
 	pixel_x = -26
 	},
 /obj/structure/cable{

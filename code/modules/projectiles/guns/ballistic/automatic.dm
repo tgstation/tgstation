@@ -412,7 +412,7 @@
 
 /obj/item/weapon/gun/ballistic/automatic/laser
 	name = "laser rifle"
-	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargable ammunition has given Nanotrasen a decisive edge over many a foe."
+	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargeable ammunition has given Nanotrasen a decisive edge over many a foe."
 	icon_state = "oldrifle"
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge

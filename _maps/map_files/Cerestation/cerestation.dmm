@@ -700,7 +700,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Northen External Waste Belt APC";
+	name = "Northern External Waste Belt APC";
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -1634,7 +1634,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Telecoms Server APC";
+	name = "Telecomms Server APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -2386,7 +2386,7 @@
 	},
 /obj/machinery/ntnet_relay,
 /obj/machinery/camera{
-	c_tag = "Telecoms Server Room";
+	c_tag = "Telecomms Server Room";
 	dir = 4;
 	network = list("SS13")
 	},
@@ -3888,7 +3888,7 @@
 "aif" = (
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Telecoms Control Room APC";
+	name = "Telecomms Control Room APC";
 	pixel_y = -24
 	},
 /obj/structure/cable,
@@ -20287,7 +20287,7 @@
 "aNC" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Fore Asteroid Maintenace APC";
+	name = "Fore Asteroid Maintenance APC";
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/end,
@@ -27365,7 +27365,7 @@
 "bae" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Port Asteroid Maintence APC";
+	name = "Port Asteroid Maintenance APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -28478,7 +28478,7 @@
 /area/maintenance/asteroid/port/west)
 "bcl" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Serivce SMES Access";
+	name = "Service SMES Access";
 	req_access_txt = "10;11;12"
 	},
 /obj/structure/cable/orange{
@@ -38716,7 +38716,7 @@
 /area/awaymission/research/interior/gateway)
 "bur" = (
 /obj/item/weapon/paper{
-	info = "<center><b>Nanotrasen Exploration and Colonization Program</b></center><br><br><center><i>Due to recent shutdowns of the Exploration and Colonization department shortly after this gateway was delievered on-site during station construction, this room has been condemmed and an engineering team will be on-site within the next few months to recollect the gate. Thank you for your cooperation.</i>";
+	info = "<center><b>Nanotrasen Exploration and Colonization Program</b></center><br><br><center><i>Due to recent shutdowns of the Exploration and Colonization department shortly after this gateway was delivered on-site during station construction, this room has been condemmed and an engineering team will be on-site within the next few months to recollect the gate. Thank you for your cooperation.</i>";
 	name = "NOTICE - GATEWAY STATUS"
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -40970,7 +40970,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Hydroponics Delievery Chute";
+	name = "Hydroponics Delivery Chute";
 	opacity = 1;
 	req_access_txt = "33"
 	},
@@ -51141,7 +51141,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Engineering Delievery Chute";
+	name = "Engineering Delivery Chute";
 	opacity = 1;
 	req_access_txt = "10"
 	},
@@ -70434,7 +70434,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Research Delievery Chute";
+	name = "Research Delivery Chute";
 	opacity = 1;
 	req_access_txt = "55"
 	},
@@ -73556,7 +73556,7 @@
 "cHq" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
-	desc = "A chute for big and small crimnals alike!";
+	desc = "A chute for big and small criminals alike!";
 	dir = 1;
 	name = "Criminal Delivery Chute"
 	},
@@ -74970,7 +74970,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal/deliveryChute{
-	desc = "A chute for big and small crimnals alike!";
+	desc = "A chute for big and small criminals alike!";
 	dir = 1;
 	name = "Criminal Delivery Chute"
 	},
@@ -76173,7 +76173,7 @@
 "cMw" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Port Asteroid Maintence APC";
+	name = "Port Asteroid Maintenance APC";
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -84428,7 +84428,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
 	filter_type = "n2";
-	name = "nitogren filter";
+	name = "nitrogen filter";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -94667,7 +94667,7 @@
 "dzo" = (
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Starboard Asteroid Maintenace APC";
+	name = "Starboard Asteroid Maintenance APC";
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/end{
