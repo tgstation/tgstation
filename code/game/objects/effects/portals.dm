@@ -23,6 +23,7 @@
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 	var/atmos_link = FALSE			//Link source/destination atmos.
+	var/allow_anchored = FALSE		//allow anchored things through
 	var/turf/open/atmos_source		//Atmos link source
 	var/turf/open/atmos_destination	//Atmos link destination
 
@@ -129,6 +130,8 @@
 
 /obj/effect/portal/proc/teleport(atom/movable/M)
 	if(!istype(M) || istype(M, /obj/effect) || (istype(M, /obj/mecha) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
+		return
+	if(M.anchored && !istype(M, /obj/mecha) && !allow_anchored)
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
