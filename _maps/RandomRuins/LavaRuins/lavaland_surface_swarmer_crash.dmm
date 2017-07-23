@@ -7,12 +7,12 @@
 /area/template_noop)
 "c" = (
 /turf/closed/wall/mineral/plastitanium{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/unpowered)
 "d" = (
 /turf/open/floor/mineral/plastitanium{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "e" = (
@@ -24,7 +24,7 @@
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
 /turf/open/floor/mineral/plastitanium{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 

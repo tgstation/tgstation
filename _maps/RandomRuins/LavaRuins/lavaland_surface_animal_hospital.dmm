@@ -7,51 +7,51 @@
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "ad" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "ae" = (
 /turf/closed/wall/mineral/titanium/nodiagonal{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/animal_hospital)
 "af" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ag" = (
 /turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ah" = (
 /obj/structure/toilet,
 /turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ai" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aj" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ak" = (
@@ -59,20 +59,20 @@
 /obj/item/device/taperecorder,
 /obj/item/weapon/pen/blue,
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "al" = (
 /obj/structure/table/wood,
 /obj/item/toy/carpplushie,
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "am" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "an" = (
@@ -83,12 +83,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ao" = (
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ap" = (
@@ -98,7 +98,7 @@
 	pixel_y = 12
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aq" = (
@@ -108,7 +108,7 @@
 	},
 /obj/item/weapon/surgicaldrill,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ar" = (
@@ -116,12 +116,12 @@
 /obj/item/weapon/surgical_drapes,
 /obj/item/weapon/razor,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "as" = (
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "at" = (
@@ -129,7 +129,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "au" = (
@@ -137,14 +137,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "av" = (
 /obj/item/weapon/reagent_containers/glass/rag,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered/animal_hospital)
@@ -154,7 +154,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ax" = (
@@ -165,7 +165,7 @@
 /obj/item/bodybag,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -179,7 +179,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "az" = (
@@ -192,25 +192,25 @@
 	name = "Important Notice - Mrs. Henderson"
 	},
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aA" = (
 /obj/structure/closet/secure_closet/medical2,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aB" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aC" = (
 /obj/structure/table/optable,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aD" = (
@@ -218,12 +218,12 @@
 /obj/item/weapon/retractor,
 /obj/item/weapon/hemostat,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "aF" = (
@@ -231,19 +231,19 @@
 	name = "Restroom"
 	},
 /turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aG" = (
 /obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/titanium/nodiagonal{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/animal_hospital)
 "aH" = (
 /obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/titanium/nodiagonal{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "aI" = (
@@ -251,25 +251,25 @@
 /area/ruin/powered)
 "aJ" = (
 /turf/open/floor/plasteel/grimy{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "aK" = (
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aL" = (
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
 "aM" = (
 /obj/effect/mob_spawn/human/doctor/alive/lavaland,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
@@ -283,38 +283,38 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
 "aO" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
 "aP" = (
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 0
 	},
 /area/ruin/powered/animal_hospital)
 "aQ" = (
 /turf/open/floor/plasteel/blue/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered/animal_hospital)
 "aR" = (
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/ruin/powered/animal_hospital)
 "aS" = (
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered/animal_hospital)
@@ -332,18 +332,18 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aU" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aV" = (
 /obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aW" = (
@@ -351,25 +351,25 @@
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aX" = (
 /obj/item/stack/cable_coil/random,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aY" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "aZ" = (
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ba" = (
@@ -377,7 +377,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker,
 /obj/item/weapon/storage/backpack/duffelbag/med,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bb" = (
@@ -387,14 +387,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bc" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bd" = (
@@ -408,14 +408,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "be" = (
 /obj/effect/decal/cleanable/oil,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bf" = (
@@ -423,39 +423,39 @@
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 /obj/item/weapon/storage/box/matches,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bg" = (
 /mob/living/simple_animal/cockroach,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bh" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/brute,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bi" = (
 /obj/item/toy/cattoy,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bj" = (
 /obj/structure/table/glass,
 /obj/item/weapon/lazarus_injector,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bk" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bl" = (
@@ -482,7 +482,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
@@ -491,7 +491,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
@@ -501,7 +501,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bo" = (
@@ -509,7 +509,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bp" = (
@@ -518,33 +518,33 @@
 /obj/item/weapon/lipstick/random,
 /obj/item/seeds/apple,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered/animal_hospital)
 "bq" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "br" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bs" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/phone,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bt" = (
 /obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bu" = (
@@ -552,7 +552,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/ruin/powered/animal_hospital)
@@ -563,13 +563,13 @@
 	mob_name = "Stallman Jr."
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bx" = (
@@ -578,14 +578,14 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/item/device/flashlight/lamp,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered/animal_hospital)
@@ -593,7 +593,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/regular,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bA" = (
@@ -601,14 +601,14 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen/fourcolor,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bB" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/hug,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bC" = (
@@ -616,7 +616,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bD" = (
@@ -627,19 +627,19 @@
 	},
 /obj/item/weapon/reagent_containers/syringe,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bE" = (
 /obj/structure/closet/crate/critter,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered/animal_hospital)
 "bF" = (
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 10
 	},
 /area/ruin/powered/animal_hospital)
@@ -648,7 +648,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 6
 	},
 /area/ruin/powered/animal_hospital)
@@ -657,7 +657,7 @@
 /obj/item/weapon/tank/internals/oxygen,
 /obj/item/weapon/tank/internals/oxygen,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered/animal_hospital)
@@ -666,7 +666,7 @@
 	name = "animal hospital"
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/animal_hospital)
 "bJ" = (
@@ -675,7 +675,7 @@
 	},
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bK" = (
@@ -685,7 +685,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bL" = (
@@ -693,14 +693,14 @@
 	dir = 4
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "bM" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -711,13 +711,13 @@
 	mob_name = "Flossie"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bO" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -727,7 +727,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bQ" = (
@@ -735,7 +735,7 @@
 /obj/item/clothing/neck/petcollar,
 /obj/item/weapon/pen/blue,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bR" = (
@@ -747,7 +747,7 @@
 	},
 /obj/item/weapon/stock_parts/cell/high,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 10
 	},
 /area/ruin/powered/animal_hospital)
@@ -757,7 +757,7 @@
 /obj/item/weapon/storage/belt/medical,
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 6
 	},
 /area/ruin/powered/animal_hospital)
@@ -777,7 +777,7 @@
 "bW" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "bX" = (
@@ -785,7 +785,7 @@
 	dir = 6
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -794,7 +794,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -803,7 +803,7 @@
 	dir = 10
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -812,21 +812,21 @@
 	dir = 4
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "cb" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "cc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/mineral/titanium/nodiagonal{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/animal_hospital)
 "cd" = (
@@ -835,7 +835,7 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ce" = (
@@ -844,13 +844,13 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cf" = (
 /obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cg" = (
@@ -858,7 +858,7 @@
 	name = "Break Room"
 	},
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ch" = (
@@ -866,7 +866,7 @@
 	name = "Emergency Care"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ci" = (
@@ -876,7 +876,7 @@
 	},
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cj" = (
@@ -884,7 +884,7 @@
 	name = "Morgue"
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ck" = (
@@ -892,7 +892,7 @@
 	name = "Medical Supplies"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cl" = (
@@ -900,7 +900,7 @@
 	name = "Safety Supplies"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cm" = (
@@ -908,20 +908,20 @@
 	name = "Tool Storage"
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cn" = (
 /obj/machinery/light,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "co" = (
 /obj/machinery/light,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -936,7 +936,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cr" = (
@@ -944,7 +944,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "cs" = (
@@ -952,7 +952,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/cmo{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered/animal_hospital)
 "ct" = (
@@ -961,7 +961,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
@@ -971,7 +971,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
@@ -980,14 +980,14 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
 "cw" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 0
 	},
 /area/ruin/powered/animal_hospital)
@@ -996,7 +996,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -1005,7 +1005,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/ruin/powered/animal_hospital)
@@ -1014,7 +1014,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
@@ -1023,7 +1023,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/ruin/powered/animal_hospital)
@@ -1032,7 +1032,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/ruin/powered/animal_hospital)
@@ -1041,7 +1041,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -1051,7 +1051,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
