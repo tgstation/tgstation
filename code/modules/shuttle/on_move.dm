@@ -55,7 +55,7 @@ All ShuttleMove procs go here
 		new_open.copy_air_with_tile(src)
 
 	//Source turf changes
-	ChangeTurf(turf_type, FALSE, TRUE, baseturf_type)
+	ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
 
 	return TRUE
 

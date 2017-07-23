@@ -7,12 +7,19 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
+	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/weapon/storage/belt/update_icon()
 	cut_overlays()
-	for(var/obj/item/I in contents)
-		add_overlay("[I.name]")
+	if(content_overlays)
+		for(var/obj/item/I in contents)
+			var/mutable_appearance/M = I.get_belt_overlay()
+			add_overlay(M)
 	..()
+
+/obj/item/weapon/storage/belt/Initialize()
+	. = ..()
+	update_icon()
 
 /obj/item/weapon/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
@@ -34,10 +41,11 @@
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves
 		)
+	content_overlays = TRUE
 
 /obj/item/weapon/storage/belt/utility/chief
-	name = "Chief Engineer's toolbelt"
-	desc = "Holds tools, looks snazzy"
+	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
+	desc = "Holds tools, looks snazzy."
 	icon_state = "utilitybelt_ce"
 	item_state = "utility_ce"
 
@@ -157,6 +165,7 @@
 		/obj/item/clothing/gloves/,
 		/obj/item/weapon/restraints/legcuffs/bola
 		)
+	content_overlays = TRUE
 
 /obj/item/weapon/storage/belt/security/full/PopulateContents()
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)

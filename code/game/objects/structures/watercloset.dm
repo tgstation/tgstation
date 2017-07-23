@@ -312,7 +312,7 @@
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
-		. = 1
+		. = TRUE
 		check_heat(M)
 		for(var/obj/item/I in M.held_items)
 			wash_obj(I)
@@ -321,11 +321,11 @@
 				M.update_inv_back(0)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/washgloves = 1
-			var/washshoes = 1
-			var/washmask = 1
-			var/washears = 1
-			var/washglasses = 1
+			var/washgloves = TRUE
+			var/washshoes = TRUE
+			var/washmask = TRUE
+			var/washears = TRUE
+			var/washglasses = TRUE
 
 			if(H.wear_suit)
 				washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)
@@ -342,40 +342,30 @@
 				if (washglasses)
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
 
-			if(H.head)
-				if(wash_obj(H.head))
-					H.update_inv_head()
-			if(wash_obj(H.wear_suit))
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
-			else if(wash_obj(H.w_uniform))
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
+			if(H.head && wash_obj(H.head))
+				H.update_inv_head()
+			if(H.wear_suit && wash_obj(H.wear_suit))
+				H.update_inv_wear_suit()
+			else if(H.w_uniform && wash_obj(H.w_uniform))
+				H.update_inv_w_uniform()
 			if(washgloves)
 				H.clean_blood()
-			if(H.shoes && washshoes)
-				if(wash_obj(H.shoes))
-					H.update_inv_shoes()
-			if(H.wear_mask)
-				if(washmask)
-					if(wash_obj(H.wear_mask))
-						H.update_inv_wear_mask()
+			if(H.shoes && washshoes && wash_obj(H.shoes))
+				H.update_inv_shoes()
+			if(H.wear_mask && washmask && wash_obj(H.wear_mask))
+				H.update_inv_wear_mask()
 			else
 				H.lip_style = null
 				H.update_body()
-			if(H.glasses && washglasses)
-				if(wash_obj(H.glasses))
-					H.update_inv_glasses()
-			if(H.ears && washears)
-				if(wash_obj(H.ears))
-					H.update_inv_ears()
-			if(H.belt)
-				if(wash_obj(H.belt))
-					H.update_inv_belt()
+			if(H.glasses && washglasses && wash_obj(H.glasses))
+				H.update_inv_glasses()
+			if(H.ears && washears && wash_obj(H.ears))
+				H.update_inv_ears()
+			if(H.belt && wash_obj(H.belt))
+				H.update_inv_belt()
 		else
-			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
-				if(wash_obj(M.wear_mask))
-					M.update_inv_wear_mask(0)
+			if(M.wear_mask && wash_obj(M.wear_mask))
+				M.update_inv_wear_mask(0)
 			M.clean_blood()
 	else
 		L.clean_blood()
