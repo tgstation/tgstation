@@ -37,6 +37,9 @@
 
 	return sanitize(jointext(split_phrase," "))
 
+/proc/CapitalizeI(phrase)
+	return replacetext(phrase, regex(" i( |$|\.|\?|!|-|:)", "g"), " I$1")
+
 /proc/Stagger(mob/M,d) //Technically not a filter, but it relates to drunkenness.
 	step(M, pick(d,turn(d,90),turn(d,-90)))
 
