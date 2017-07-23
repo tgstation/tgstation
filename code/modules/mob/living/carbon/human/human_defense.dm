@@ -158,8 +158,7 @@
 
 	var/obj/item/bodypart/affecting
 	if(user == src)
-		to_chat(user, "stab!")
-		affecting = get_bodypart(user.zone_selected) //stabbing yourself always hits the right target
+		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
 	else
 		affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
