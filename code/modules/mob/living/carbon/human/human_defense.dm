@@ -156,8 +156,14 @@
 	if(!I || !user)
 		return 0
 
-	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected)) //what we're actually ending up trying to hit.
+	var/obj/item/bodypart/affecting
+	if(user == src)
+		to_chat(user, "stab!")
+		affecting = get_bodypart(user.zone_selected) //stabbing yourself always hits the right target
+	else
+		affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
+
 	SSblackbox.add_details("item_used_for_combat","[I.type]|[I.force]")
 	SSblackbox.add_details("zone_targeted","[target_area]")
 
