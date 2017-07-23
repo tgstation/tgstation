@@ -107,7 +107,7 @@
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "ar" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/ancientstation/hivebot)
 "as" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1155,7 +1155,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/ancient,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/airless/white/side{
 	dir = 5
 	},
 /area/template_noop)
@@ -1322,7 +1322,7 @@
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/roller,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/airless/white/side{
 	dir = 4
 	},
 /area/template_noop)
@@ -1740,7 +1740,7 @@
 /area/template_noop)
 "eH" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/airless/white/side{
 	dir = 4
 	},
 /area/template_noop)
@@ -4948,9 +4948,7 @@
 "lv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/stock_parts/console_screen,
-/turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (EAST)";
-	icon_state = "whitehall";
+/turf/open/floor/plasteel/airless/white/side{
 	dir = 4
 	},
 /area/template_noop)
@@ -5300,7 +5298,7 @@ aa
 aa
 br
 bf
-jA
+bq
 br
 br
 kn
