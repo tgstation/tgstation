@@ -7,7 +7,7 @@ CREATE TABLE `role_time` ( `ckey` VARCHAR(32) NOT NULL , `job` VARCHAR(128) NOT 
 
 ALTER TABLE `player` ADD `flags` INT NOT NULL AFTER `accountjoindate`;
 
-UPDATE `schema_revision` (`major`, `minor`) VALUES (3, 1);
+UPDATE `schema_revision` SET minor = 1;
 
 Remember to add a prefix to the table name if you use them.
 
