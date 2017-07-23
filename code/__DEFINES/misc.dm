@@ -164,8 +164,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define GAME_STATE_FINISHED		4
 //SOUND:
 #define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS	1
-#define SURROUND_CAP	7
+#define FALLOFF_SOUNDS 0.5
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).
