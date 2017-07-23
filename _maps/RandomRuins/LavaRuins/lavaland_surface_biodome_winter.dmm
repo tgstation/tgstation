@@ -4,7 +4,7 @@
 /area/template_noop)
 "ab" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "ac" = (
@@ -12,7 +12,7 @@
 /obj/structure/table,
 /obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ad" = (
@@ -23,18 +23,18 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ae" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "af" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ag" = (
@@ -43,19 +43,19 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ah" = (
 /obj/item/weapon/reagent_containers/food/drinks/mug,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ai" = (
 /obj/machinery/shower,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aj" = (
@@ -64,25 +64,25 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ak" = (
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "al" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "am" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "an" = (
@@ -90,7 +90,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ao" = (
@@ -101,7 +101,7 @@
 "ap" = (
 /obj/structure/flora/rock/icy,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -111,7 +111,7 @@
 "ar" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "as" = (
@@ -120,33 +120,33 @@
 /area/ruin/powered/snow_biodome)
 "at" = (
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "au" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "av" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aw" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ax" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/beans,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ay" = (
@@ -154,14 +154,14 @@
 /obj/item/trash/semki,
 /obj/item/trash/candy,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "az" = (
 /obj/structure/flora/tree/pine,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -170,27 +170,27 @@
 	dir = 4
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aB" = (
 /obj/structure/flora/rock/pile/icy,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "aC" = (
 /obj/structure/flora/tree/dead,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "aD" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aE" = (
@@ -201,7 +201,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/mug/coco,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aG" = (
@@ -209,49 +209,49 @@
 	dir = 8
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aH" = (
 /mob/living/simple_animal/hostile/skeleton/eskimo,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aI" = (
 /obj/structure/flora/bush,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "aJ" = (
 /obj/vehicle/atv,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "aK" = (
 /turf/closed/wall/mineral/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aL" = (
 /obj/structure/displaycase/captain,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aM" = (
 /turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aN" = (
 /obj/structure/bed/dogbed,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aO" = (
@@ -266,14 +266,14 @@
 "aQ" = (
 /obj/structure/flora/grass/both,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "aR" = (
 /obj/structure/flora/tree/pine/xmas,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -288,7 +288,7 @@
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "aU" = (
@@ -323,7 +323,7 @@
 /obj/machinery/door/airlock/silver,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "bc" = (
@@ -371,7 +371,7 @@
 /area/ruin/powered)
 "bl" = (
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180";
 	name = "bridge"
 	},
@@ -435,7 +435,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "bx" = (
@@ -443,7 +443,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "by" = (
@@ -451,20 +451,20 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "bz" = (
 /obj/machinery/light,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "bA" = (
 /obj/machinery/light,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "bB" = (
@@ -472,7 +472,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -481,7 +481,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -490,7 +490,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -499,7 +499,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -508,7 +508,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -537,7 +537,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -546,7 +546,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -555,14 +555,14 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "bM" = (
 /obj/machinery/light,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -575,14 +575,14 @@
 "bO" = (
 /obj/machinery/light,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
 "bP" = (
 /obj/machinery/light,
 /turf/open/floor/plating/asteroid/snow{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)

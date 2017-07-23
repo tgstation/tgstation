@@ -4,7 +4,7 @@
 /area/template_noop)
 "ab" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "ac" = (
@@ -19,7 +19,7 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/stack/cable_coil,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "af" = (
@@ -29,25 +29,25 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "ag" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "ah" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "ai" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "aj" = (
@@ -59,7 +59,7 @@
 /obj/structure/toilet,
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "al" = (
@@ -67,7 +67,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "am" = (
@@ -76,7 +76,7 @@
 	},
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "an" = (
@@ -85,7 +85,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "ao" = (
@@ -98,7 +98,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "ap" = (
@@ -114,25 +114,25 @@
 /area/ruin/powered/beach)
 "as" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "at" = (
 /obj/item/weapon/tank/internals/oxygen,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "au" = (
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "av" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "aw" = (
@@ -149,7 +149,7 @@
 /obj/machinery/door/airlock/hatch,
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "az" = (
@@ -411,7 +411,7 @@
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "bq" = (
@@ -441,13 +441,13 @@
 /area/ruin/powered)
 "bu" = (
 /turf/open/floor/pod/light{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "bv" = (
 /obj/effect/decal/sandeffect,
 /turf/open/floor/pod/light{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "bw" = (
@@ -560,7 +560,7 @@
 	},
 /obj/effect/decal/fakelattice,
 /turf/open/floor/pod/light{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	density = 1
 	},
 /area/ruin/powered/beach)
@@ -602,37 +602,37 @@
 /area/ruin/powered/beach)
 "bW" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "bX" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "bY" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "bZ" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "ca" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "cb" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "cc" = (
 /turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/beach)
 "cd" = (

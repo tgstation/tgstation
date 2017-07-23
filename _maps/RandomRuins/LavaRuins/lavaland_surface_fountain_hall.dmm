@@ -4,42 +4,42 @@
 /area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "c" = (
 /obj/structure/healingfountain,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "d" = (
 /obj/structure/fluff/divine/conduit,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/sacrificealtar,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "f" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "g" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "h" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 
