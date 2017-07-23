@@ -6,11 +6,11 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "e" = (
@@ -23,7 +23,7 @@
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "f" = (
@@ -34,7 +34,7 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
@@ -47,24 +47,24 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "h" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "i" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "j" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "k" = (
@@ -75,7 +75,7 @@
 	},
 /obj/item/weapon/kitchen/knife/envy,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "l" = (
@@ -86,7 +86,7 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "m" = (
@@ -97,12 +97,12 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 "n" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	broken = 1;
 	icon_state = "platingdmg2"
 	},
@@ -115,7 +115,7 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
@@ -123,7 +123,7 @@
 "p" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/unpowered)
 

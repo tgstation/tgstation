@@ -6,86 +6,86 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/indestructible/riveted/uranium{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "e" = (
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/powered/gluttony)
 "f" = (
 /obj/item/weapon/reagent_containers/syringe/gluttony,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "g" = (
 /obj/effect/gluttony,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "h" = (
 /obj/item/weapon/veilrender/vealrender,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "i" = (
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "j" = (
 /obj/item/trash/plate,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "k" = (
 /obj/machinery/door/airlock/uranium,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "l" = (
 /obj/item/trash/candy,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "m" = (
 /obj/item/trash/raisins,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "n" = (
 /obj/item/trash/pistachios,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "o" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "p" = (
 /obj/item/trash/semki,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "q" = (
 /obj/item/trash/syndi_cakes,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "r" = (
@@ -94,7 +94,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "s" = (
@@ -103,7 +103,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "t" = (
@@ -111,7 +111,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "u" = (
@@ -120,31 +120,31 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "v" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "w" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "x" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "y" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "z" = (
@@ -153,7 +153,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 "A" = (
@@ -161,7 +161,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/gluttony)
 

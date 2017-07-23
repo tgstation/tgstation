@@ -6,11 +6,11 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/wall/mineral/diamond{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "e" = (
@@ -18,7 +18,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "f" = (
@@ -26,24 +26,24 @@
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "g" = (
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "h" = (
 /obj/structure/mirror/magic/pride,
 /turf/closed/wall/mineral/diamond{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered)
 "i" = (
 /obj/machinery/door/airlock/diamond,
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	blocks_air = 1
 	},
 /area/ruin/powered)
@@ -55,7 +55,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "k" = (
@@ -66,7 +66,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "l" = (
@@ -78,7 +78,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "m" = (
@@ -89,7 +89,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "n" = (
@@ -101,7 +101,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "o" = (
@@ -112,7 +112,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "p" = (
@@ -124,7 +124,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "q" = (
@@ -135,19 +135,19 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "r" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 "s" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/ruin/powered/pride)
 

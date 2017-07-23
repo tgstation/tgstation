@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -1444,7 +1444,7 @@
 /obj/structure/sign/securearea{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "dv" = (
 /turf/closed/wall/mineral/plastitanium,
