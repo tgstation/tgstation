@@ -2352,7 +2352,7 @@
 	dir = 5
 	},
 /obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'WARNING: Do Not Enter When Red Light Shows', detailing the penalties that any NanoTrasen employee or silicon will suffer if violating this rule.";
+	desc = "A warning sign which reads 'WARNING: Do Not Enter When Red Light Shows', detailing the penalties that any Nanotrasen employee or silicon will suffer if violating this rule.";
 	name = "WARNING: Do Not Enter When Red Light Shows";
 	pixel_y = 32
 	},
@@ -3266,7 +3266,7 @@
 /area/crew_quarters/heads/hos)
 "agj" = (
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -3692,7 +3692,7 @@
 "aha" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/retaliate/bat{
-	desc = "A fierce companion for any person of power, this spider has been carefully trained by NanoTrasen specialists. Its beady, staring eyes send shivers down your spine.";
+	desc = "A fierce companion for any person of power, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine.";
 	emote_hear = list("chitters");
 	faction = list("spiders");
 	harm_intent_damage = 3;
@@ -9011,7 +9011,7 @@
 /area/security/main)
 "arx" = (
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -48009,7 +48009,7 @@
 /area/bridge/showroom/corporate)
 "bNc" = (
 /obj/structure/showcase{
-	desc = "A stand with an empty old NanoTrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees.";
+	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees.";
 	icon = 'icons/mecha/mecha.dmi';
 	icon_state = "marauder";
 	name = "combat mech exhibit"
@@ -48038,7 +48038,7 @@
 "bNe" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -48104,7 +48104,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/showcase{
-	desc = "Signs describe how cloning pods like these ensure that every NanoTrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one.";
+	desc = "Signs describe how cloning pods like these ensure that every Nanotrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one.";
 	icon = 'icons/obj/cloning.dmi';
 	icon_state = "pod_0";
 	layer = 4;
@@ -48120,7 +48120,7 @@
 	name = "'Perfect Man' employee exhibit"
 	},
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, explaining how recent developments in loyalty implant and cloning technologies by NanoTrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
+	desc = "A guide to the exhibit, explaining how recent developments in loyalty implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Man' sign";
 	pixel_y = 32
@@ -48137,11 +48137,11 @@
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/showcase{
-	desc = "A flimsy model of a standard NanoTrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
+	desc = "A flimsy model of a standard Nanotrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
 	icon = 'icons/obj/machines/implantchair.dmi';
 	icon_state = "implantchair";
 	layer = 2.7;
-	name = "NanoTrasen automated loyalty implanter exhibit";
+	name = "Nanotrasen automated loyalty implanter exhibit";
 	pixel_y = 4
 	},
 /turf/open/floor/carpet,
@@ -49588,7 +49588,7 @@
 "bQj" = (
 /obj/machinery/cell_charger,
 /obj/item/weapon/stock_parts/cell/crap{
-	name = "\improper NanoTrasen-brand rechargable AA battery"
+	name = "\improper Nanotrasen-brand rechargable AA battery"
 	},
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
@@ -49602,7 +49602,7 @@
 /obj/structure/table/wood,
 /obj/item/toy/carpplushie{
 	color = "red";
-	name = "NanoTrasen wildlife department space carp plushie"
+	name = "Nanotrasen wildlife department space carp plushie"
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -50155,8 +50155,8 @@
 "bRx" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/secure/briefcase{
-	desc = "A large briefcase with a digital locking system, and the NanoTrasen logo emblazoned on the sides.";
-	name = "NanoTrasen-brand secure briefcase exhibit";
+	desc = "A large briefcase with a digital locking system, and the Nanotrasen logo emblazoned on the sides.";
+	name = "Nanotrasen-brand secure briefcase exhibit";
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
@@ -50167,11 +50167,11 @@
 /area/bridge/showroom/corporate)
 "bRz" = (
 /obj/structure/showcase{
-	desc = "The famous NanoTrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box.";
+	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box.";
 	dir = 1;
 	icon = 'icons/obj/kitchen.dmi';
 	icon_state = "mw";
-	name = "NanoTrasen-brand microwave";
+	name = "Nanotrasen-brand microwave";
 	pixel_y = 2
 	},
 /obj/structure/table/wood,
@@ -50186,7 +50186,7 @@
 /obj/item/toy/beach_ball{
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen";
 	item_state = "beachball";
-	name = "NanoTrasen-brand beach ball";
+	name = "Nanotrasen-brand beach ball";
 	pixel_y = 7
 	},
 /obj/structure/table/wood,
@@ -50204,10 +50204,10 @@
 	icon_state = "4-8"
 	},
 /obj/structure/reagent_dispensers/beerkeg{
-	desc = "One of the more successful achievements of the NanoTrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every NanoTrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
+	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
 	icon = 'icons/obj/machines/nuke.dmi';
 	icon_state = "nuclearbomb_base";
-	name = "NanoTrasen-brand nuclear fission explosive";
+	name = "Nanotrasen-brand nuclear fission explosive";
 	pixel_x = 2;
 	pixel_y = 6
 	},
@@ -50256,7 +50256,7 @@
 	dir = 1;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "television";
-	name = "NanoTrasen corporate newsfeed";
+	name = "Nanotrasen corporate newsfeed";
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -50299,7 +50299,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/toy/talking/AI{
-	name = "NanoTrasen-brand toy AI";
+	name = "Nanotrasen-brand toy AI";
 	pixel_y = 6
 	},
 /turf/open/floor/carpet,
@@ -56624,7 +56624,7 @@
 	},
 /mob/living/simple_animal/bot/medbot{
 	auto_patrol = 1;
-	desc = "A little medical robot, officially part of the NanoTrasen medical inspectorate. He looks somewhat underwhelmed.";
+	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
 	name = "Inspector Johnson"
 	},
 /turf/open/floor/plasteel/white,
@@ -85764,8 +85764,8 @@
 /obj/item/weapon/poster/random_official,
 /obj/item/weapon/poster/random_official,
 /obj/item/device/paicard{
-	desc = "A real NanoTrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "NanoTrasen-brand personal AI device exhibit"
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "Nanotrasen-brand personal AI device exhibit"
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
