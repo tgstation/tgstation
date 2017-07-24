@@ -16,7 +16,7 @@
 		H.dna.species.handle_digestion(H)
 		handle_disgust(H)
 
-/obj/item/organ/proc/handle_disgust(mob/living/carbon/human/H)
+/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
 		var/pukeprob = 5 + 0.05 * H.disgust
 		if(H.disgust >= DISGUST_LEVEL_GROSS)
