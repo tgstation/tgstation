@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1169,17 +1169,6 @@
 /obj/effect/baseturf_helper,
 /turf/closed/indestructible/riveted/boss,
 /area/ruin/unpowered/ash_walkers)
-"cV" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/effect/baseturf_helper,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"cW" = (
-/obj/effect/baseturf_helper,
-/turf/closed/indestructible/riveted/boss,
-/area/ruin/unpowered/ash_walkers)
 
 (1,1,1) = {"
 aa
@@ -1436,7 +1425,7 @@ cU
 ak
 bP
 bL
-cV
+bX
 bM
 bY
 bM
@@ -1505,7 +1494,7 @@ ce
 bM
 bN
 ak
-cW
+cU
 as
 ak
 ak
