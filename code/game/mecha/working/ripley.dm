@@ -104,7 +104,7 @@
 			D.attach(src)
 
 	else //Add plasma cutter if no drill
-		var /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/P = new
+		var/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/P = new
 		P.attach(src)
 
 	//Add ore box to cargo
