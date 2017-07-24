@@ -43,7 +43,7 @@
 		if(in_progress || ..())
 			var/mob/living/L = target
 			if(!pulled_binding)
-				if(target == binding || (isliving(target) && L.buckled == binding)
+				if(target == binding || (isliving(target) && L.buckled == binding))
 					pulled_binding = binding
 					ranged_ability_user.start_pulling(binding)
 					remove_mousepointer(ranged_ability_user.client)
@@ -89,8 +89,8 @@
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
 					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the binding immediately
-				if(target.buckled)
-					target.buckled.unbuckle_mob(target, TRUE)
+				if(L.buckled)
+					L.buckled.unbuckle_mob(target, TRUE)
 				binding = new(get_turf(target))
 				binding.setDir(target.dir)
 				binding.buckle_mob(target, TRUE)
