@@ -237,7 +237,7 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
-		while(SStimer.timer_id_dict["timerid" + num2text(nextid)] || nextid >= TIMER_ID_MAX)
+		while(SStimer.timer_id_dict["timerid" + num2text(nextid, 8)] || nextid >= TIMER_ID_MAX)
 			nextid++
 			if (nextid >= TIMER_ID_MAX)
 				nextid = 1
