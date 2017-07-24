@@ -7,10 +7,6 @@
 	hub = "Exadv1.spacestation13"
 	name = "/tg/ Station 13"
 	fps = 20
-<<<<<<< HEAD
-	visibility = 1
-=======
->>>>>>> d243740577... Merge pull request #29446 from monster860/fixhub
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
