@@ -375,3 +375,6 @@ Just becuase something isn't on this list doesn't mean that it's acceptable. Use
 Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.
 
 Therefore, EOF settings of main repo are forbidden territory one must avoid wandering into, at risk of losing body and/or mind to the Git gods.
+
+## A word on Kite
+Kite are watching you.
