@@ -1,0 +1,4 @@
+author: "Tortellini Tony"
+delete-after: True
+changes: 
+  - bugfix: "You can now remove items from butts, and they drop items when removed or destroyed."
