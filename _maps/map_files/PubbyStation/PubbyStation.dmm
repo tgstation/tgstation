@@ -10232,11 +10232,6 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
 "awq" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "Port Solar Access";
 	req_access_txt = "10"
@@ -25434,8 +25429,6 @@
 	dir = 6
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black,
@@ -27840,7 +27833,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
@@ -27851,13 +27844,13 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
@@ -34965,6 +34958,9 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
 /turf/open/floor/plasteel,
 /area/science/mineral_storeroom)
 "bwT" = (
@@ -35239,6 +35235,10 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "bxv" = (
@@ -45726,8 +45726,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/red/side{
@@ -45984,8 +45982,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -46023,8 +46019,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -48325,8 +48319,6 @@
 /area/chapel/office)
 "cby" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/carpet,
@@ -52980,6 +52972,111 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"cnH" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"cnI" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Brig Maintenance APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"cnJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Auxiliary Closet Construction APC";
+	pixel_x = -25;
+	pixel_y = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/effect/turf_decal/stripes/end{
+	icon_state = "warn_end";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base/closet)
+"cnK" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Science Maintenance APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"cnL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine/atmos)
+"cnM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Atmospherics Maintenance APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -70278,8 +70375,8 @@ agv
 agv
 agv
 agv
-alM
-ahy
+cnH
+cnI
 agv
 anz
 aol
@@ -76498,7 +76595,7 @@ bWQ
 bev
 bfI
 bgL
-bgL
+cnJ
 biK
 bgL
 bgL
@@ -80611,7 +80708,7 @@ beG
 bfU
 bgP
 bfT
-biY
+biU
 bcE
 blM
 bni
@@ -80868,7 +80965,7 @@ bcE
 bcE
 bcE
 bcE
-biZ
+biT
 bcE
 blH
 bnd
@@ -86720,7 +86817,7 @@ cnC
 cjZ
 cjZ
 cjZ
-cnD
+cnC
 cks
 cka
 aaa
@@ -87050,8 +87147,8 @@ bvk
 bwp
 bxw
 bte
-bzw
-bAt
+cnL
+cnM
 bBv
 bCw
 bDt
@@ -98869,7 +98966,7 @@ bsF
 bfy
 bfy
 bed
-bwX
+cnK
 brM
 aaa
 aaa

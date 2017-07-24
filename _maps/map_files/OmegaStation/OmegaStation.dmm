@@ -247,6 +247,9 @@
 /area/bridge)
 "aaz" = (
 /obj/machinery/computer/card,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/darkred/side{
 	icon_state = "darkred";
 	dir = 9
@@ -386,6 +389,9 @@
 /area/bridge)
 "aaL" = (
 /obj/machinery/computer/monitor,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	icon_state = "darkyellow";
 	dir = 5
@@ -407,6 +413,9 @@
 	c_tag = "Bridge - Fore Port";
 	dir = 4;
 	name = "command camera"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -500,6 +509,9 @@
 	dir = 8;
 	name = "command camera"
 	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -528,6 +540,9 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -696,6 +711,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -1080,7 +1098,6 @@
 	id = "detectivewindows";
 	name = "Detective Privacy Blast door"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "abV" = (
@@ -1781,6 +1798,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "ade" = (
@@ -2394,11 +2414,6 @@
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "cargounload"
-	},
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor{
 	id = "cargounload";
@@ -4532,6 +4547,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahE" = (
@@ -4986,7 +5006,6 @@
 	id = "detectivewindows";
 	name = "Detective Privacy Blast door"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "aiv" = (
@@ -6020,11 +6039,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /obj/structure/cable/white{
 	d1 = 4;
@@ -7927,11 +7941,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /obj/structure/cable/white{
 	d1 = 4;
@@ -11044,6 +11053,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "arH" = (
@@ -12947,6 +12966,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/landmark/revenantspawn,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -13271,6 +13291,9 @@
 "avm" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -13549,7 +13572,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central{
@@ -13762,10 +13785,6 @@
 	pixel_y = 3
 	},
 /obj/item/stack/cable_coil/white,
-/obj/structure/cable/white{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster{
 	pixel_x = 32
@@ -14307,7 +14326,6 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/machinery/light,
-/obj/structure/cable/white,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/bar)
 "axd" = (
@@ -19713,9 +19731,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/central)
 "aGJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/white{
 	d1 = 4;
 	d2 = 8;
@@ -19727,6 +19742,9 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/central)
 "aGK" = (
@@ -19983,6 +20001,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -20262,6 +20283,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aHz" = (
@@ -20887,6 +20909,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIw" = (
@@ -21311,12 +21334,12 @@
 	},
 /area/engine/gravity_generator)
 "aJj" = (
-/obj/structure/cable/white{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "aJk" = (
@@ -21861,7 +21884,6 @@
 /area/crew_quarters/kitchen)
 "aKf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
@@ -21876,6 +21898,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -21971,16 +21996,6 @@
 /area/engine/gravity_generator)
 "aKs" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/door/airlock/glass_command{
 	name = "Gravity Generator Chamber";
 	req_access_txt = "19; 61"
@@ -21988,6 +22003,16 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -21999,6 +22024,11 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -22017,6 +22047,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/gravity_generator)
@@ -22702,12 +22737,12 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aLG" = (
-/obj/structure/cable/white,
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "aLH" = (
@@ -25669,8 +25704,8 @@
 	pixel_y = -32
 	},
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -29641,17 +29676,22 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/science/research)
 "aYs" = (
-/obj/structure/cable/white{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/computer/rdservercontrol,
 /obj/machinery/light,
+/obj/structure/cable/white{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -33830,21 +33870,6 @@
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
 "bfQ" = (
-/obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "rdxeno";
 	name = "Xenobiology Containment Door"
@@ -34834,6 +34859,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side,
 /area/hallway/secondary/entry)
 "bhG" = (
@@ -35257,14 +35283,12 @@
 	},
 /area/hallway/secondary/entry)
 "biv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
@@ -35464,9 +35488,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -36776,6 +36798,9 @@
 	c_tag = "Research Division Access";
 	dir = 2;
 	network = list("SS13")
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -40449,6 +40474,26 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/caution,
+/area/engine/engineering)
+"bxv" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 
 (1,1,1) = {"
@@ -70639,7 +70684,7 @@ aIg
 aJq
 bxb
 aLN
-aMP
+bxv
 aNZ
 aMP
 aPJ
@@ -77091,7 +77136,7 @@ bfT
 bgD
 bhq
 bie
-biK
+biG
 bjk
 bjA
 bjL
@@ -85806,8 +85851,8 @@ aNF
 ank
 aPw
 aQz
-aRw
-aRw
+aVA
+aVA
 aTO
 aUH
 aVA
@@ -88850,10 +88895,10 @@ aaa
 aaa
 ado
 aeh
-aeY
-afJ
-aeY
-ahs
+aeW
+ado
+aeW
+ahq
 ado
 aaa
 aaa
@@ -91196,7 +91241,7 @@ aGc
 azb
 azb
 aDi
-aKl
+aCn
 aDi
 azb
 azb
