@@ -3,7 +3,7 @@
 	name = "glowing ring"
 	desc = "A flickering, glowing purple ring around a target."
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
-	max_integrity = 20
+	max_integrity = 25
 	light_range = 2
 	light_power = 0.8
 	light_color = "#AF0AAF"
@@ -102,10 +102,10 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/L = m
 		if(L)
-			L.Stun(100, 1, 1)
+			L.Stun(130, 1, 1) //basically here to act as a mute for borgs
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				C.silent += 6
+				C.silent += 7
 	visible_message("<span class='sevtug'>[src] flares brightly!</span>")
 	var/obj/effect/temp_visual/ratvar/geis_binding/G1 = new /obj/effect/temp_visual/ratvar/geis_binding(loc)
 	var/obj/effect/temp_visual/ratvar/geis_binding/G2 = new /obj/effect/temp_visual/ratvar/geis_binding(loc)
