@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -25,10 +25,6 @@
 /obj/effect/baseturf_helper,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
-"h" = (
-/obj/effect/baseturf_helper,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -213,7 +209,7 @@ d
 d
 d
 g
-h
+b
 b
 a
 "}

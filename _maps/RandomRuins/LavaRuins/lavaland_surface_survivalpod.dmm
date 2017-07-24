@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -172,10 +172,6 @@
 /obj/effect/baseturf_helper,
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/ruin/powered)
-"C" = (
-/obj/effect/baseturf_helper,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -296,7 +292,7 @@ a
 b
 b
 i
-C
+b
 i
 u
 A

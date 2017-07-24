@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -198,10 +198,6 @@
 	icon_state = "alien5"
 	},
 /area/lavaland/surface/outdoors)
-"H" = (
-/obj/effect/baseturf_helper,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -377,7 +373,7 @@ a
 b
 b
 b
-H
+b
 b
 b
 a

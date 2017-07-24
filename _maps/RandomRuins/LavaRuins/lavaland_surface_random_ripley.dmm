@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/template_noop,
 /area/lavaland/surface/outdoors)
@@ -16,10 +16,6 @@
 /obj/item/clothing/shoes/workboots/mining,
 /obj/item/clothing/under/rank/miner/lavaland,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"f" = (
-/obj/effect/baseturf_helper,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
@@ -62,7 +58,7 @@ a
 (5,1,1) = {"
 a
 b
-f
+c
 c
 b
 b

@@ -8,9 +8,6 @@
 "c" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"d" = (
-/turf/closed/indestructible/riveted/uranium,
-/area/ruin/powered)
 "e" = (
 /turf/open/lava/smooth,
 /area/ruin/powered/gluttony)
@@ -33,11 +30,6 @@
 /obj/item/trash/plate,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
-"k" = (
-/obj/machinery/door/airlock/uranium,
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered)
 "l" = (
 /obj/item/trash/candy,
 /turf/open/floor/plasteel/freezer,
@@ -92,12 +84,16 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
-"B" = (
-/obj/effect/baseturf_helper,
-/turf/closed/indestructible/riveted/uranium,
-/area/ruin/powered)
 "D" = (
 /obj/effect/baseturf_helper,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/gluttony)
+"R" = (
+/turf/closed/indestructible/riveted/uranium,
+/area/ruin/powered/gluttony)
+"S" = (
+/obj/machinery/door/airlock/uranium,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 
@@ -176,11 +172,11 @@ b
 b
 b
 c
-d
-B
-k
-d
-d
+R
+R
+S
+R
+R
 c
 b
 a
@@ -198,11 +194,11 @@ a
 b
 b
 c
-d
+R
 h
 i
 o
-d
+R
 c
 b
 a
@@ -220,11 +216,11 @@ a
 b
 b
 c
-d
+R
 i
 D
 v
-d
+R
 c
 b
 b
@@ -242,11 +238,11 @@ b
 b
 b
 c
-d
+R
 i
 l
 i
-d
+R
 c
 b
 b
@@ -264,11 +260,11 @@ c
 c
 c
 c
-d
+R
 t
 i
 m
-d
+R
 c
 c
 c
@@ -281,21 +277,21 @@ b
 b
 b
 c
-d
-d
-d
-d
-d
-d
+R
+R
+R
+R
+R
+R
 g
 m
 v
-d
-d
-d
-d
-d
-d
+R
+R
+R
+R
+R
+R
 c
 b
 "}
@@ -303,9 +299,9 @@ b
 a
 b
 c
-d
+R
 e
-d
+R
 r
 g
 g
@@ -317,7 +313,7 @@ i
 z
 l
 i
-d
+R
 c
 b
 "}
@@ -325,7 +321,7 @@ b
 a
 b
 c
-d
+R
 f
 g
 g
@@ -339,7 +335,7 @@ i
 i
 i
 i
-k
+S
 b
 b
 "}
@@ -347,9 +343,9 @@ b
 a
 b
 c
-d
+R
 e
-d
+R
 r
 g
 g
@@ -361,7 +357,7 @@ l
 A
 i
 q
-d
+R
 c
 b
 "}
@@ -369,21 +365,21 @@ b
 a
 b
 c
-d
-d
-d
-d
-d
-d
+R
+R
+R
+R
+R
+R
 g
 i
 v
-d
-d
-d
-d
-d
-d
+R
+R
+R
+R
+R
+R
 c
 b
 "}
@@ -396,11 +392,11 @@ c
 c
 c
 c
-d
+R
 r
 i
 i
-d
+R
 c
 c
 c
@@ -418,11 +414,11 @@ b
 b
 b
 c
-d
+R
 i
 g
 i
-d
+R
 c
 b
 b
@@ -440,11 +436,11 @@ b
 b
 b
 c
-d
+R
 j
 i
 v
-d
+R
 c
 b
 b
@@ -462,11 +458,11 @@ b
 b
 b
 c
-d
+R
 i
 n
 i
-d
+R
 c
 b
 b
@@ -484,11 +480,11 @@ b
 b
 b
 c
-d
-d
-k
-d
-d
+R
+R
+S
+R
+R
 c
 b
 b

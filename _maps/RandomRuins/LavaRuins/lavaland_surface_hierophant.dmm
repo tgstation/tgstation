@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/closed/indestructible/riveted/hierophant,
 /area/ruin/unpowered/hierophant)
@@ -24,10 +24,6 @@
 	set_cap = 3;
 	set_luminosity = 5
 	},
-/turf/open/indestructible/hierophant/two,
-/area/ruin/unpowered/hierophant)
-"g" = (
-/obj/effect/baseturf_helper,
 /turf/open/indestructible/hierophant/two,
 /area/ruin/unpowered/hierophant)
 
@@ -269,7 +265,7 @@ e
 e
 e
 e
-g
+e
 e
 e
 a
