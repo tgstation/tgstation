@@ -223,7 +223,18 @@ The following different coding styles are not only not enforced, but it is gener
 
 Math operators like +, -, /, *, etc are up in the air, just choose which version looks more readable.
 
-### Dream Maker Quirks/Tricks:
+#### Use
+* Bitwise AND - '&'
+	* Should be written as ```bitfield & bitflag``` NEVER ```bitflag & bitfield```, both are valid, but the latter is confusing and nonstandard.
+* Associated lists declarations must have their key value quoted if it's a string
+	* WRONG: list(a = "b")
+	* RIGHT: list("a" = "b")
+* Do not define new variables as `null`. Instead, leave it blank because the default value is null. Variables already defined on a parent object must have `= null`, though.
+	* WRONG: `var/variable = null`
+	* RIGHT: `var/variable`
+	
+
+### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
 * In-To for loops: ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family) however DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```, if you want ```<``` then you should write it as ```1 to some_value-1```).
@@ -233,7 +244,7 @@ HOWEVER, if either ```some_value``` or ```i``` changes within the body of the fo
 * Istypeless for loops: a name for a differing syntax for writing for-each style loops in DM, however it is NOT DM's standard syntax hence why this is considered a quirk. Take a look at this:
 ```
 var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_items)
 	if(!best_sword || S.damage > best_sword.damage)
     		best_sword = S
@@ -241,7 +252,7 @@ for(var/obj/item/sword/S in bag_of_items)
 The above is a simple proc for checking all swords in a container and returning the one with the highest damage, it uses DM's standard syntax for a for loop, it does this by specifying a type in the variable of the for header which byond interprets as a type to filter by, it performs this filter using ```istype()``` (or some internal-magic similar to ```istype()```, I wouldn't put it past byond), the above example is fine with the data currently contained in ```bag_of_items```, however if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient, for example:
 ```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
     		best_sword = S
@@ -250,7 +261,7 @@ specifies a type for DM to filter by, with the previous example that's perfectly
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
 ```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/s in bag_of_swords)
 	var/obj/item/sword/S = s
 	if(!best_sword || S.damage > best_sword.damage)
