@@ -1,4 +1,4 @@
-/obj/item/organ/butt //nvm i need to make it internal for surgery fuck
+/obj/item/organ/butt
 	name = "butt"
 	desc = "extremely treasured body part"
 	alternate_worn_icon = 'hippiestation/icons/mob/head.dmi'
@@ -39,17 +39,21 @@
 	max_w_class = 3
 	storage_slots = 4
 
-/obj/item/organ/butt/Initialize()
-	. = ..()
-	inv = new(src)
+/obj/item/organ/butt/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+	..()
+	inv = new(H)
 	inv.max_w_class = max_w_class
 	inv.storage_slots = storage_slots
 	inv.max_combined_w_class = max_combined_w_class
 
 /obj/item/organ/butt/Remove(mob/living/carbon/M, special = 0)
-	..()
+	var/turf/T = get_turf(M)
 	if(inv)
-		inv.close_all()
+		for(var/i in inv.contents)
+			var/obj/item/I = i
+			inv.remove_from_storage(I, T)
+	QDEL_NULL(inv)
+	..()
 
 /obj/item/organ/butt/on_life()
 	if(owner && inv)
@@ -58,12 +62,12 @@
 				owner.bleed(4)
 
 /obj/item/organ/butt/Destroy()
-	if(inv)
-		if(LAZYLEN(inv.contents))
-			for(var/i in inv.contents)
-				var/obj/item/I = i
-				inv.remove_from_storage(I, get_turf(src))
-		qdel(inv)
+	if(inv && owner)
+		var/turf/T = get_turf(owner)
+		for(var/i in inv.contents)
+			var/obj/item/I = i
+			inv.remove_from_storage(I, T)
+	QDEL_NULL(inv)
 	..()
 	
 /obj/item/organ/butt/attackby(var/obj/item/W, mob/user as mob, params) // copypasting bot manufucturing process, im a lazy fuck
@@ -86,34 +90,13 @@
 
 /obj/item/organ/butt/throw_impact(atom/hit_atom)
 	..()
-	var/mob/living/carbon/M = hit_atom
 	playsound(src, 'hippiestation/sound/effects/fart.ogg', 50, 1, 5)
-	if((ishuman(hit_atom)))
-		M.apply_damage(5, STAMINA)
-		if(prob(5))
-			M.Knockdown(60)
-			visible_message("<span class='danger'>The [src.name] smacks [M] right in the face!</span>", 3)
 
-/proc/buttificate(phrase)
-	var/params = replacetext(phrase, " ", "&")
-	var/list/buttphrase = params2list(params)
-	var/finalphrase = ""
-	for(var/p in buttphrase)
-		if(prob(20))
-			p="butt"
-		finalphrase = finalphrase+p+" "
-	finalphrase = replacetext(finalphrase, " #39 ","'")
-	finalphrase = replacetext(finalphrase, " s "," ") //this is really dumb and hacky, gets rid of trailing 's' character on the off chance that '#39' gets swapped
-	if(findtext(finalphrase,"butt"))
-		return finalphrase
-	return
-
-/datum/design/bluebutt
-	name = "Butt Of Holding"
-	desc = "This butt has bluespace properties, letting you store more items in it. Four tiny items, or two small ones, or one normal one can fit."
-	id = "bluebutt"
-	req_tech = list("bluespace" = 5, "biotech" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 500, MAT_SILVER = 500) //quite cheap, for more convenience
-	build_path = /obj/item/organ/butt/bluebutt
-	category = list("Bluespace Designs")
+/mob/living/carbon/proc/regeneratebutt()
+	if(!getorganslot("butt"))
+		if(ishuman(src) || ismonkey(src))
+			var/obj/item/organ/butt/B = new()
+			B.Insert(src)
+		if(isalien(src))
+			var/obj/item/organ/butt/xeno/X = new()
+			X.Insert(src)

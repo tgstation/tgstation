@@ -1,4 +1,3 @@
-
 /datum/design/implant_adrenalin //This should overwrite the adrenal implant in the Protolathe
 	name = "Combat Stimulant Implant"
 	desc = "A glass case containing an implant."

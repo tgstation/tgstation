@@ -27,7 +27,7 @@
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
-	loc = M
+	loc = null
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
