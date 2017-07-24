@@ -274,7 +274,9 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 #### Use
 * Bitwise AND - '&'
 	* Should be written as ```bitfield & bitflag``` NEVER ```bitflag & bitfield```, both are valid, but the latter is confusing and nonstandard.
-
+* Associated lists declarations must have their key value quoted if it's a string
+	* WRONG: list(a = "b")
+	* RIGHT: list("a" = "b")
 
 ### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
@@ -289,7 +291,7 @@ HOWEVER, if either ```some_value``` or ```i``` changes within the body of the fo
 A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
 ```DM
 var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_items)
 	if(!best_sword || S.damage > best_sword.damage)
     		best_sword = S
@@ -297,7 +299,7 @@ for(var/obj/item/sword/S in bag_of_items)
 The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using ```istype()``` (or some internal-magic similar to ```istype()``` - this is BYOND, after all). This is fine in its current state for ```bag_of_items```, but if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
 ```DM
 var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
     		best_sword = S
@@ -308,7 +310,7 @@ With the previous example that's perfectly fine, we only want swords, but here t
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
 ```DM
 var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/s in bag_of_swords)
 	var/obj/item/sword/S = s
 	if(!best_sword || S.damage > best_sword.damage)
