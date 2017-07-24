@@ -87,6 +87,11 @@
 	else
 		footstep++
 
+/obj/item/clothing/shoes/clown_shoes/jester
+	name = "jester shoes"
+	desc = "A court jesters shoes, updated with modern squeaking technology."
+	icon_state = "jester_shoes"
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."

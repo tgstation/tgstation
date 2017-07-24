@@ -282,3 +282,29 @@
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the land."
 	icon_state = "fancycrown"
+
+/obj/item/clothing/head/scarecrow_mask
+	name = "sack mask"
+	desc = "A burlap sack with eyeholes."
+	icon_state = "scarecrow_mask"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/head/scarecrow_hat
+	name = "scarecrow hat"
+	desc = "A simple straw hat."
+	icon_state = "scarecrow_hat"
+
+/obj/item/clothing/head/mummy
+	name = "mummy mask"
+	desc = "Ancient bandages."
+	icon_state = "mummy_mask"
+
+/obj/item/clothing/head/pharoah
+	name = "pharoah hat"
+	desc = "Walk like an Egyptian."
+	icon_state = "pharoah_hat"
+
+/obj/item/clothing/head/jester/alt
+	name = "jester hat"
+	desc = "A hat with bells, to add some merryness to the suit."
+	icon_state = "jester_hat2"
