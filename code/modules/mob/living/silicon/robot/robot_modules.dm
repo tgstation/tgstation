@@ -389,6 +389,7 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/weapon/storage/bag/trash/cyborg,
+		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/mop/cyborg,
 		/obj/item/device/lightreplacer/cyborg,
 		/obj/item/weapon/holosign_creator,
