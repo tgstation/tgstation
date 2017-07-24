@@ -143,7 +143,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
-    access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
 /obj/item/weapon/card/id/syndicate/Initialize()
