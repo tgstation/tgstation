@@ -2,13 +2,13 @@
 
 	var/name = ""
 	var/desc = ""
-	var/ATK = 0
-	var/DEF = 0
-	var/LVL = 0
-	var/BOOSTATK = 0
-	var/BOOSTDEF = 0
-	var/REMOVEATK = 0
-	var/REMOVEDEF = 0
+	var/atk = 0
+	var/def = 0
+	var/lvl = 0
+	var/boostatk = 0
+	var/boostdef = 0
+	var/removeatk = 0
+	var/removedef = 0
 	var/summonsound = null //Same thing for if you use an effect
 	var/attacksound = null //also hologram hype
 	var/deathsound = null
@@ -23,260 +23,260 @@
 
 /datum/griffeningcard/effect
 	card_type = EFFECT_CARD
-	LVL = 0
-	ATK = 0
-	DEF = 0
+	lvl = 0
+	atk = 0
+	def = 0
 
 /datum/griffeningcard/equipment
 	card_type = EQUIPMENT_CARD
-	LVL = 0
-	ATK = 0
-	DEF = 0
+	lvl = 0
+	atk = 0
+	def = 0
 /datum/griffeningcard/area
 	card_type = AREA_CARD
 
 /datum/griffeningcard/creature/captain
 	name = "Captain"
 	desc = "Captain cannot be played if there's a nuclear operative or captain in play. Requires the bridge area to be played. If this card is summoned, get a energy gun card from your hand, discard pile or deck and attach it to this card. You may also immediately search your deck for a card that's a head and if you do, summon it. The card cannot be a captain."
-	LVL = 7
-	ATK = 60
-	DEF = 60
+	lvl = 7
+	atk = 60
+	def = 60
 	Attributes = list("Human", "Non antag", "Unconvertable", "Head", "Captain")
 
 /datum/griffeningcard/creature/HeadOfPersonnel
 	name = "Head Of Personnel"
 	desc = "If you control this card, then you may sacrifice a assistant, if you do then immediately summon any level 3 or below non antagonist human from your deck."
-	LVL = 7
-	ATK = 20
-	DEF = 65
+	lvl = 7
+	atk = 20
+	def = 65
 	Attributes = list("Human", "Non antag", "Unconvertable", "Head")
 
 /datum/griffeningcard/creature/Assistant
 	name = "Assistant"
 	desc = "A regular assistant, while not powerful, with the right people the combined power would had been to great for many."
-	LVL = 2
-	ATK = 10
-	DEF = 5
+	lvl = 2
+	atk = 10
+	def = 5
 	Attributes = list("Human", "Non antag", "Assistant")
 
 /datum/griffeningcard/creature/HeadOfSecurity
 
 	name = "Head Of Security"
-	desc = "Requires a security officer to be sacrificed to play this card. If you control a Head Of Personnel then you may sacrifice a assistant to instead immiediately summon a security officer. Increase all security officers ATK by 20."
-	LVL = 7
-	ATK = 50
-	DEF = 35
+	desc = "Requires a security officer to be sacrificed to play this card. If you control a Head Of Personnel then you may sacrifice a assistant to instead immiediately summon a security officer. Increase all security officers atk by 20."
+	lvl = 7
+	atk = 50
+	def = 35
 	Attributes = list("Human", "Non antag", "Unconvertable", "Head", "Security", "Summon condition")
 
 /datum/griffeningcard/creature/SecurityOfficer
 
 	name = "Security Officer"
-	desc = "Security officer cannot kill a non antagonist human unless 'head of security' is in play. Instead, if the non antagonist human has a DEF lower than this card's attack, the human will become incapacited for one turn. The duration is doubled if security officer has a 'taser' equipped. This effect is optional on antagonist humans."
-	LVL = 5
-	ATK = 30
-	DEF = 25
+	desc = "Security officer cannot kill a non antagonist human unless 'head of security' is in play. Instead, if the non antagonist human has a def lower than this card's attack, the human will become incapacited for one turn. The duration is doubled if security officer has a 'taser' equipped. This effect is optional on antagonist humans."
+	lvl = 5
+	atk = 30
+	def = 25
 	Attributes = list("Human", "Non antag", "Unconvertable", "Security Officer")
 
 /datum/griffeningcard/creature/Warden
 
 	name = "Warden"
 	desc = "Requires a security officer to be sacrificed to play this card. Cannot be attacked if you control a Security Officer or Head Of Security. When played, you may grab as many 'taser' cards from your deck or discard pile and put it in your hand."
-	LVL = 7
-	ATK = 15
-	DEF = 15
+	lvl = 7
+	atk = 15
+	def = 15
 	Attributes = list("Human", "Non antag", "Unconvertable", "Security")
 
 /datum/griffeningcard/creature/Lawyer
 
 	name = "Lawyer"
 	desc = "While lawyer is in play, any antagonists on the owner's side of the field cannot be attacked or effected by a card effect. Any 'security officer' on the same field of the owner of this card cannot attack but can still incapacitate."
-	LVL = 3
-	ATK = 10
-	DEF = 10
+	lvl = 3
+	atk = 10
+	def = 10
 	Attributes = list("Human", "Non antag")
 
 /datum/griffeningcard/creature/Clown
 	name = "Clown"
 	desc = "May redirect a enemy creature attack to this card instead. If this card is discarded as a result of a creature attack, that creature will be incapacitated for one turn."
-	LVL = 2
-	ATK = 10
-	DEF = 25
+	lvl = 2
+	atk = 10
+	def = 25
 	Attributes = list("Human", "Non antag", "Can redirect attacks")
 
 /datum/griffeningcard/creature/ResearchDirector
 
 	name = "Research Director"
-	desc = "This card can only be summoned by sacrificing a scientist. If this card is in play, increase the ATK of all scientist cards you own by 10. Once per turn at any point, all the ATK and DEF of one 'scientist' is transferred to any other card on the field. At the end of the opponents turn, this effect is reversed. "
-	LVL = 6
-	ATK = 45
-	DEF = 45
+	desc = "This card can only be summoned by sacrificing a scientist. If this card is in play, increase the atk of all scientist cards you own by 10. Once per turn at any point, all the atk and def of one 'scientist' is transferred to any other card on the field. At the end of the opponents turn, this effect is reversed. "
+	lvl = 6
+	atk = 45
+	def = 45
 	Attributes = list("Human", "Non antag", "Head", "Unconvertable", "Summon condition")
 
 /datum/griffeningcard/creature/Scientist
 
 	name = "Scientist"
-	desc = "At the beginning of the owner of this card's turn, if there's another scientist on the field you control, increase the ATK and DEF of this card by 5. Stacks and is lost if that scientist dies."
-	LVL = 3
-	ATK = 25
-	DEF = 25
+	desc = "At the beginning of the owner of this card's turn, if there's another scientist on the field you control, increase the atk and def of this card by 5. Stacks and is lost if that scientist dies."
+	lvl = 3
+	atk = 25
+	def = 25
 	Attributes = list("Human", "Non antag", "Scientist")
 
 /datum/griffeningcard/creature/Roboticist
 
 	name = "Roboticist"
 	desc = "If a cyborg you control is destroyed, you may summon it as soon as your turn begins. Only works on one cyborg."
-	LVL = 3
-	ATK = 15
-	DEF = 15
+	lvl = 3
+	atk = 15
+	def = 15
 	Attributes = list("Human", "Non antag", "Cyborg revival")
 
 /datum/griffeningcard/creature/ChiefEngineer
 	name = "Chief Engineer"
 	desc = "You must sacrifice a engineer to play this card. At the start of your turn, if this card is not incapacitated then you may remove the opponent's current area card. While this card is in play and the engineering area active, your area card cannot be destroyed or replaced."
-	LVL = 6
-	ATK = 40
-	DEF = 50
+	lvl = 6
+	atk = 40
+	def = 50
 	Attributes = list("Human", "Non antag", "Head", "Unconvertable", "Summon condition", "Protects and destroys areas")
 
 /datum/griffeningcard/creature/Engineer
 
 	name = "Engineer"
 	desc = "At the beginning of your turn, if this card has a equipment card attached to itself, then you may search the deck for the same equipment card and put it into your hand."
-	LVL = 5
-	ATK = 25
-	DEF = 45
+	lvl = 5
+	atk = 25
+	def = 45
 	Attributes = list("Human", "Non antag", "Engineer")
 
 /datum/griffeningcard/creature/Janitor
 
 	name = "Janitor"
 	desc = "When this card is played, get a wet floor effect card from your deck and either put it on the field facedown or in your hand."
-	LVL = 2
-	ATK = 15
-	DEF = 20
+	lvl = 2
+	atk = 15
+	def = 20
 	Attributes = list("Human", "Non antag", "Wet floor refresher")
 	
 /datum/griffeningcard/creature/Barman
 
 	name = "Barman"
 	desc = "As long as this card remains on the field, all non antag humans you control are immune to incapacitation."
-	LVL = 2
-	ATK = 15
-	DEF = 10
+	lvl = 2
+	atk = 15
+	def = 10
 	Attributes = list("Human", "Non antag", "Provides incapacitation immunity")
 
 /datum/griffeningcard/creature/CMO
 
 	name = "Chief Medical Officer"
-	desc = "This card can only be played if you sacrifice a medical doctor. If this card is in play, increase all DEF of all humans you control by 20. This effect gives 20 more DEF per medical doctor you control."
-	LVL = 7
-	ATK = 30
-	DEF = 20
+	desc = "This card can only be played if you sacrifice a medical doctor. If this card is in play, increase all def of all humans you control by 20. This effect gives 20 more def per medical doctor you control."
+	lvl = 7
+	atk = 30
+	def = 20
 	Attributes = list("human", "Non antag", "Head", "Unconvertable", "Summon condition")
 
 /datum/griffeningcard/creature/MedicalDoctor
 
 	name = "Medical Doctor"
 	desc = "A medical doctor that well, heals people somehow."
-	LVL = 2
-	ATK = 10
-	DEF = 20
+	lvl = 2
+	atk = 10
+	def = 20
 	Attributes = list("Human", "Non antag", "Medical Doctor")
 	
 /datum/griffeningcard/creature/Geneticist
 
 	name = "Geneticist"
 	desc = "A person that deals with genetics, as it says on the tin. "
-	LVL = 3
-	ATK = 15
-	DEF = 10
+	lvl = 3
+	atk = 15
+	def = 10
 	Attributes = list("Human", "Non antag")
 	
 /datum/griffeningcard/creature/Cyborg
 
 	name = "Cyborg"
 	desc = "Cannot attack humans unless a law card states so. The starting law is NoHarm. When this card is played, you may get a door bolts card from your deck or discard pile and place it in your hand."
-	LVL = 3
-	ATK = 30
-	DEF = 20
+	lvl = 3
+	atk = 30
+	def = 20
 	Attributes = list("Cyborg", "Non antag", "Effected by laws")
 
 /datum/griffeningcard/creature/AI
 	
 	name = "AI"
 	desc = "This card can only be played if you sacrifice a cyborg. This card cannot attack. If a Human that's a head is on either side when this card is played, you may search your deck for a law card."
-	LVL = 6
-	ATK = 0
-	DEF = 40
+	lvl = 6
+	atk = 0
+	def = 40
 	Attributes = list("Cyborg", "Non antag", "Effected by laws") //Oh hey no unconvertable tag, you know what this means
 
 /datum/griffeningcard/creature/AtmosphericTech
 
 	name = "Atmospheric Tech"
 	desc = "A human meant to supervise the atmos of the station... most of the time."
-	LVL = 1
-	ATK = 15
-	DEF = 10
+	lvl = 1
+	atk = 15
+	def = 10
 	Attributes = list("Human", "No antag")
 
 /datum/griffeningcard/creature/Wizard
 
 	name = "Wizard"
 	desc = "If this card has a magical robe and magical hat equipped, when the opponent starts their turn, you may use one of the following effects, 1. Incapacitate all enemies for one turn. This stacks in duration. 2. Kill any opponent human card. 3. For the rest of the opponent's turn, this card cannot be effected by anything. If this card also has a magical staff, you can instead do two effects per turn."
-	LVL = 7
-	ATK = 25
-	DEF = 20
+	lvl = 7
+	atk = 25
+	def = 20
 	Attributes = list("Human", "Antag", "WIZARD FEDERATION")
 
 /datum/griffeningcard/creature/Changeling
 
 	name = "Changeling"
-	desc = "At the start of your turn, you may choose any human card in either player's discard pile, if you do, copy the ATK and DEF of said card and send the card to the 'gibbed pile'. If the opponent successfully uses the 'flamethrower', 'Incendiary Grenade' or 'Plasma Fire', immediately discard this card. This card is considered a non human."
-	LVL = 1
-	ATK = 5
-	DEF = 5
+	desc = "At the start of your turn, you may choose any human card in either player's discard pile, if you do, copy the atk and def of said card and send the card to the 'gibbed pile'. If the opponent successfully uses the 'flamethrower', 'Incendiary Grenade' or 'Plasma Fire', immediately discard this card. This card is considered a non human."
+	lvl = 1
+	atk = 5
+	def = 5
 	Attributes = list("Human", "Antag")
 
 /datum/griffeningcard/creature/Abomination
 
-	desc = "Abomination cannot be destroyed by humans without a ATK boosting equipment card. At the start of the opponents turn, incapacitate one of their creatures. If the opponent successfully uses the 'flamethrower', 'Incendiary Grenade' or 'Plasma Fire', the DEF of this card becomes 50%. This is considered a non human."
-	LVL = 9
-	ATK = 90
-	DEF = 90
-	Attributes = list("Definately not a human", "Antag")
+	desc = "Abomination cannot be destroyed by humans without a atk boosting equipment card. At the start of the opponents turn, incapacitate one of their creatures. If the opponent successfully uses the 'flamethrower', 'Incendiary Grenade' or 'Plasma Fire', the def of this card becomes 50%. This is considered a non human."
+	lvl = 9
+	atk = 90
+	def = 90
+	Attributes = list("definately not a human", "Antag")
 
 /datum/griffeningcard/creature/NuclearOperative
 
 	name = "Nuclear Operative"
 	desc = "You cannot play this card if you also control a captain. If this card is destroyed as a result of a creature, that creature is incapacitated for two turns and this card is sent to the gibbed pile."
-	LVL = 7
-	ATK = 6
-	DEF = 40
+	lvl = 7
+	atk = 6
+	def = 40
 	Attributes = list("Human", "Antag", "Nuclear Operative")
 
 /datum/griffeningcard/creature/Quartermaster
 
 	name = "Quarter Master"
 	desc = "This card can only be played if you sacrifice a cargo tech."
-	LVL = 5
-	ATK = 35
-	DEF = 50
+	lvl = 5
+	atk = 35
+	def = 50
 	Attributes = list("Human", "Non antag", "Not a head", "Summon condition") //Should the QM be considered a head? no one knows
 
 /datum/griffeningcard/creature/CargoTech
 
 	name = "Cargo Tech"
 	desc = "A person responsible for hauling crates."
-	LVL = 3
-	ATK = 10
-	DEF = 25
+	lvl = 3
+	atk = 10
+	def = 25
 	Attributes = list("Human", "Non antag", "Cargo Tech")
 
 /datum/griffeningcard/effect/HullBreach
 
 	name = "Hull Breach"
 	desc = "This card can only be played if you control a antag human or cyborg. While this card is in play, reduce the def of all humans on the field by 40 unless they have a space suit equipped. By the end of the turn, if either you or your opponent have a engineer or chief engineer in play, this card is discarded."
-	REMOVEDEF = 40
+	removedef = 40
 	Attributes = list("Effect", "Continuous")
 
 /datum/griffeningcard/effect/Disarm
@@ -294,8 +294,8 @@
 /datum/griffeningcard/equipment/Stimpack
 
 	name = "Stimpack"
-	desc = "Antag only. The equipped creature gains 30 DEF and can no longer be incapacitated as long as this is equipped. The DEF bonus is lost upon denquipping."
-	BOOSTDEF = 30
+	desc = "Antag only. The equipped creature gains 30 def and can no longer be incapacitated as long as this is equipped. The def bonus is lost upon denquipping."
+	boostdef = 30
 	Attributes = list("Equipment", "Incapacitation immunity")
 
 /datum/griffeningcard/equipment/Injector
@@ -331,9 +331,9 @@
 /datum/griffeningcard/effect/empstorm
 
 	name = "EMP storm"
-	desc = "All law modules currently active are destroyed. Cyborgs or AIs loose 20 ATK and DEF."
-	REMOVEATK = 20
-	REMOVEDEF = 20
+	desc = "All law modules currently active are destroyed. Cyborgs or AIs loose 20 atk and def."
+	removeatk = 20
+	removedef = 20
 	Attributes = list("Effect", "Effects cyborgs and AI only")
 
 /datum/griffeningcard/effect/lawnohuman
@@ -369,7 +369,7 @@
 /datum/griffeningcard/equipment/energygun
 
 	name = "Energy Gun"
-	desc = "Gives 30 ATK and 15 DEF."
+	desc = "Gives 30 atk and 15 def."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/effect/robotframe
@@ -393,8 +393,8 @@
 /datum/griffeningcard/equipment/esword
 
 	name = "Energy Sword"
-	desc = "Only an antag or 'syndicate operative' can use this. Boosts ATK by 40. If you were to attack and the defending creature has a DEF or ATK boosting weapon, nullify the effects. Same applies with defending an attack."
-	BOOSTATK = 40
+	desc = "Only an antag or 'syndicate operative' can use this. Boosts atk by 40. If you were to attack and the defending creature has a def or atk boosting weapon, nullify the effects. Same applies with defending an attack."
+	boostatk = 40
 	Attributes = list("Equipment", "Antag only", "Nullifies any equipped item of attacker or defender")
 
 /datum/griffeningcard/equipment/fake357
@@ -406,13 +406,13 @@
 /datum/griffeningcard/equipment/toolbox
 
 	name = "Toolbox"
-	desc = "Increase the equipped creature ATK by 10. If it's an assistant, the ATK is instead increased by 25."
+	desc = "Increase the equipped creature atk by 10. If it's an assistant, the atk is instead increased by 25."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/fireextinguisher
 
 	name = "Fire Extinguisher"
-	desc = "Increases the equipped creature ATK by 20. If the creature is attacked or effected by plasma fire, incendiary grenade or flamethrower, you may choose to negate the effect and if you do, destroy the negated card and destroy this card as well."
+	desc = "Increases the equipped creature atk by 20. If the creature is attacked or effected by plasma fire, incendiary grenade or flamethrower, you may choose to negate the effect and if you do, destroy the negated card and destroy this card as well."
 	Attributes = list("Equipment", "Rekts fire")
 
 /datum/griffeningcard/effect/wetfloor
@@ -424,7 +424,7 @@
 /datum/griffeningcard/equipment/wrestlingbelt
 
 	name = "Wrestling Belt"
-	desc = "Can only be used by an antag or a syndicate operative and only humans, increases the ATK and DEF by 20 and if the equipped human is to be attacked, negate any ATK bonuses the attacker if it has any."
+	desc = "Can only be used by an antag or a syndicate operative and only humans, increases the atk and def by 20 and if the equipped human is to be attacked, negate any atk bonuses the attacker if it has any."
 	Attributes = list("Equipment", "Antag only", "Nullifies attacker equipment")
 
 /datum/griffeningcard/effect/supplyshuttle
@@ -478,8 +478,8 @@
 /datum/griffeningcard/equipment/incendiarygrenade
 
 	name = "Incendiary Grenade"
-	desc = "If the creature this card is equipped to attacks, any opponent creature that has less than 20 DEF is destroyed. All other opponent creatures that have 20 or higher DEF will instead have DEF lowered by 20 until the end of your turn. If this effect has concluded, destroy this card."
-	REMOVEDEF = 20
+	desc = "If the creature this card is equipped to attacks, any opponent creature that has less than 20 def is destroyed. All other opponent creatures that have 20 or higher def will instead have def lowered by 20 until the end of your turn. If this effect has concluded, destroy this card."
+	removedef = 20
 	Attributes = list("Equipment", "Discard on use")
 
 /datum/griffeningcard/effect/firefightinggrenade
@@ -491,8 +491,8 @@
 /datum/griffeningcard/equipment/plasmafire
 
 	name = "Plasma Fire"
-	desc = "This card can only be played if there's a atmospheric tech in play. When this card is played, instantly reduce the DEF of all opponent humans by 10. While this card is active, all opponent humans lose 20 DEF at the start of the opponent's turn. If a creature reaches 0 DEF due to the effects of this card, the creature is killed. If any area cards are played while Plasma Fire is active, discard Plasma Fire."
-	REMOVEDEF = 10
+	desc = "This card can only be played if there's a atmospheric tech in play. When this card is played, instantly reduce the def of all opponent humans by 10. While this card is active, all opponent humans lose 20 def at the start of the opponent's turn. If a creature reaches 0 def due to the effects of this card, the creature is killed. If any area cards are played while Plasma Fire is active, discard Plasma Fire."
+	removedef = 10
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/effect/authenticationdisk
@@ -516,7 +516,7 @@
 /datum/griffeningcard/equipment/spacesuit
 
 	name = "Space Suit"
-	desc = "Can only be equipped to humans, any human equipped with this is immune to 'hull breach', 'flamethrower', 'plasma fire' or 'incendiary grenade' as well as increase DEF by 10."
+	desc = "Can only be equipped to humans, any human equipped with this is immune to 'hull breach', 'flamethrower', 'plasma fire' or 'incendiary grenade' as well as increase def by 10."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/effect/dnaabsorbtion
@@ -534,13 +534,13 @@
 /datum/griffeningcard/equipment/flamethrower
 
 	name = "Flamethrower"
-	desc = "When attacking a human using 'Flamethrower', reduce their DEF by 30 before attacking. If target humanoid is 'changeling', immediately destroy the 'changeling;. If the target is 'Abomination', reduce their DEF by half instead."
+	desc = "When attacking a human using 'Flamethrower', reduce their def by 30 before attacking. If target humanoid is 'changeling', immediately destroy the 'changeling;. If the target is 'Abomination', reduce their def by half instead."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/energyaxe
 
 	name = "Energy Axe"
-	desc = "Can only be equipped if you sacrifice a creature and if you do, you may equip this card to a creature. Raises the ATK by 40 and DEF by 20 of the equipped creature."
+	desc = "Can only be equipped if you sacrifice a creature and if you do, you may equip this card to a creature. Raises the atk by 40 and def by 20 of the equipped creature."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/riotlauncher
@@ -558,7 +558,7 @@
 /datum/griffeningcard/equipment/basketball
 
 	name = "Basketball"
-	desc = "If the equipped creature attacks a creature that has a ATK or DEF boosting card equipped, destroy the card. If the creature doesn't have one, change the ownership of this item to the opponent and equip it to the defending creature."
+	desc = "If the equipped creature attacks a creature that has a atk or def boosting card equipped, destroy the card. If the creature doesn't have one, change the ownership of this item to the opponent and equip it to the defending creature."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/effect/chaosdunk
@@ -570,13 +570,13 @@
 /datum/griffeningcard/equipment/grenade
 
 	name = "Grenade"
-	desc = "If a creature equipped with this kills a creature, that creature is sent to the gibbed pile. If this creature is killed by any means, it is also gibbed. If grenade is removed it is sent to the gibbed pile. The ATK of the equipped creature is increased by 10, while the DEF is decreased by 10."
+	desc = "If a creature equipped with this kills a creature, that creature is sent to the gibbed pile. If this creature is killed by any means, it is also gibbed. If grenade is removed it is sent to the gibbed pile. The atk of the equipped creature is increased by 10, while the def is decreased by 10."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/artistictoolbox
 
 	name = "Artistic Toolbox"
-	desc = "You must sacrifice a human before using this card, if you do you may equip this card to a human. The equipped human cannot be incapacitated while this is equipped. Anytime the equipped human kills another human, that human is sent to the gibbed pile. Artistic toolbox gives the equipped human 10 ATK and DEF for each human in the opponents gibbed pile. At the end of every two turns, you must sacrifice a human, if you cannot this card is sent to the gibbed pile."
+	desc = "You must sacrifice a human before using this card, if you do you may equip this card to a human. The equipped human cannot be incapacitated while this is equipped. Anytime the equipped human kills another human, that human is sent to the gibbed pile. Artistic toolbox gives the equipped human 10 atk and def for each human in the opponents gibbed pile. At the end of every two turns, you must sacrifice a human, if you cannot this card is sent to the gibbed pile."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/effect/greyide
@@ -594,31 +594,31 @@
 /datum/griffeningcard/equipment/wizardhat
 
 	name = "Wizard Hat"
-	desc = "If the equipped creature is a 'wizard' and has the robe equipped as well, 'wizard' gains 20 ATK and DEF."
+	desc = "If the equipped creature is a 'wizard' and has the robe equipped as well, 'wizard' gains 20 atk and def."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/wizardrobe
 
 	name = "Wizard Robe"
-	desc = "If the equipped creature is a 'wizard' and has the robe equipped as well, 'wizard' gains 20 ATK and DEF."
+	desc = "If the equipped creature is a 'wizard' and has the robe equipped as well, 'wizard' gains 20 atk and def."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/wizardstaff
 
 	name = "Wizard Staff"
-	desc = "The equipped creature gains 10 ATK and DEF."
+	desc = "The equipped creature gains 10 atk and def."
 	Attributes = list("Equipment")
 
 /datum/griffeningcard/equipment/reinforcedsteel
 
 	name = "Reinforced Steel"
-	desc = "Cannot stack with 'heavy steel' and can only be used on cyborgs or AI. Increases ATK by 10 and DEF by 20."
+	desc = "Cannot stack with 'heavy steel' and can only be used on cyborgs or AI. Increases atk by 10 and def by 20."
 	Attributes = list("Equipment", "Cyborg and AI only")
 
 /datum/griffeningcard/equipment/heavysteel
 
 	name = "Heavy Steel"
-	desc = "Cannot stack with 'reinforced steel' and can only be used on cyborgs or AI. Increases ATK by 20 and DEF by 40."
+	desc = "Cannot stack with 'reinforced steel' and can only be used on cyborgs or AI. Increases atk by 20 and def by 40."
 	Attributes = list("Equipment", "Cyborg and AI only")
 
 /datum/griffeningcard/equipment/speedupgrade
@@ -630,19 +630,19 @@
 /datum/griffeningcard/equipment/cyborgmodule
 
 	name = "Cyborg Module"
-	desc = "Only usable on cyborg, when equipped it can change its class and be able to change it once per turn during your turn.. Available classes are 'medical doctor', 'engineer', 'clown' or the'scientist'. It's class will give the effect corrasponding with the chosen class but not the ATK, DEF or LVL."
+	desc = "Only usable on cyborg, when equipped it can change its class and be able to change it once per turn during your turn.. Available classes are 'medical doctor', 'engineer', 'clown' or the'scientist'. It's class will give the effect corrasponding with the chosen class but not the atk, def or lvl."
 	Attributes = list("Equipment", "Cyborg only")
 
 /datum/griffeningcard/area/engineering
 
 	name = "Engineering Area"
-	desc = "All 'engineer' and 'chief engineer' on the field gain 15 ATK and DEF. The bonus is lost once this card is destroyed."
+	desc = "All 'engineer' and 'chief engineer' on the field gain 15 atk and def. The bonus is lost once this card is destroyed."
 	Attributes = list("Area")
 
 /datum/griffeningcard/area/medbay
 
 	name = "Medbay"
-	desc = "All humans on your side of the field have it's DEF increased by 25. If a human you control is killed but not gibbed and you have a 'medical doctor', you can instead make the human incapacitated until the end of your next turn. A 'medical doctor' that has been chosen for this effect cannot do it again until the next turn and incapacitated crew cannot save anyone."
+	desc = "All humans on your side of the field have it's def increased by 25. If a human you control is killed but not gibbed and you have a 'medical doctor', you can instead make the human incapacitated until the end of your next turn. A 'medical doctor' that has been chosen for this effect cannot do it again until the next turn and incapacitated crew cannot save anyone."
 	Attributes = list("Area")
 	
 /datum/griffeningcard/area/genetics
@@ -653,13 +653,13 @@
 
 /datum/griffeningcard/area/robotics
 	name = "Robotics Area"
-	desc = "All robots you control have their ATK raised by 20 and DEF increased by 10. Any human that is killed which includes your opponent's human, you may choose to get a cyborg from your discard pile or deck and add it to your hand."
+	desc = "All robots you control have their atk raised by 20 and def increased by 10. Any human that is killed which includes your opponent's human, you may choose to get a cyborg from your discard pile or deck and add it to your hand."
 	Attributes = list("Area")
 
 /datum/griffeningcard/area/thevoidarea
 
 	name = "The Void Area"
-	desc = "While the void is in play, all newly played humans lose half their ATK and DEF. Each player loses 10 HP at the beginning of their turn."
+	desc = "While the void is in play, all newly played humans lose half their atk and def. Each player loses 10 HP at the beginning of their turn."
 	Attributes = list("Area")
 
 /datum/griffeningcard/area/syndicateshuttlearea
@@ -671,13 +671,13 @@
 /datum/griffeningcard/area/aiupload
 
 	name = "Ai Upload Area"
-	desc = "While AI Upload and an AI is in play, no human or robot may attack if the AI is not on their side of the field. While this card is active, the AI gains 120 DEF. If a law card is played while the AI is on the field, move the AI to the player's side of the field. If the AI is killed, this card destroyed."
+	desc = "While AI Upload and an AI is in play, no human or robot may attack if the AI is not on their side of the field. While this card is active, the AI gains 120 def. If a law card is played while the AI is on the field, move the AI to the player's side of the field. If the AI is killed, this card destroyed."
 	Attributes = list("Area")
 
 /datum/griffeningcard/area/securityarea
 
 	name = "Security Area"
-	desc = "While Security is in play, Security Officers and Head of Security can incapacitate foes with higher DEF than their ATK when attacking them, preventing them from attacking. This card cannot be played while Lawyer is in play. If Lawyer enters play, destroy this card."
+	desc = "While Security is in play, Security Officers and Head of Security can incapacitate foes with higher def than their atk when attacking them, preventing them from attacking. This card cannot be played while Lawyer is in play. If Lawyer enters play, destroy this card."
 	Attributes = list("Area")
 
 /datum/griffeningcard/area/cargobay
@@ -695,5 +695,5 @@
 /datum/griffeningcard/area/bridge
 
 	name = "Bridge"
-	desc = "While Bridge is in play, heads of staff can only be attacked by other heads of staff, unless the AI is on the attacker's side of the field. All heads of staff gain 15 ATK, 15 DEF."
+	desc = "While Bridge is in play, heads of staff can only be attacked by other heads of staff, unless the AI is on the attacker's side of the field. All heads of staff gain 15 atk, 15 def."
 	Attributes = list("Area")
