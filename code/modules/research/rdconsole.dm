@@ -383,7 +383,7 @@ doesn't have toxins access.
 	data["tdisk_update"] = tdisk_update
 	data["ddisk_update"] = ddisk_update
 	data["alldesigns"] = list()
-	for(var/v in stored_research.researched_designs)
+	for(var/v in matching_designs_protolathe)
 		var/datum/design/D = matching_designs_protolathe[v]
 		data["alldesigns"] += list(list("name" = D.name, "id" = D.id))
 	if(d_disk)
