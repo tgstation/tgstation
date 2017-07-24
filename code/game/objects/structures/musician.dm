@@ -65,15 +65,15 @@
 	// and play
 	var/turf/source = get_turf(instrumentObj)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
-		hearers = list()
+		LAZYCLEARLIST(hearers)
 		for(var/mob/M in get_hearers_in_view(15, source))
 			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 				continue
-			LAZYSET(hearers, M, TRUE)
+			LAZYADD(hearers, M)
 		last_hearcheck = world.time
 	if(LAZYLEN(hearers))
 		for(var/i in hearers)
-			var/mob/M = hearers[i]
+			var/mob/M = i
 			M.playsound_local(source, soundfile, 100, falloff = 5)
 
 /datum/song/proc/updateDialog(mob/user)
