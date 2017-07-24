@@ -116,10 +116,13 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 //adv proc call this, ya nerds
 /world/proc/WrapAdminProcCall(target, procname, list/arguments)
-	if(target == GLOBAL_PROC)
-		return call(procname)(arglist(arguments))
-	else
-		return call(target, procname)(arglist(arguments))
+	try
+		if(target == GLOBAL_PROC)
+			return call(procname)(arglist(arguments))
+		else
+			return call(target, procname)(arglist(arguments))
+	catch
+		return "ERROR: PROCCALL RUNTIMED, CHECK RUNTIME LOGS."
 
 /proc/IsAdminAdvancedProcCall()
 #ifdef TESTING
