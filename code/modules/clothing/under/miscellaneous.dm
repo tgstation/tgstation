@@ -585,6 +585,9 @@
 	item_color = "jester"
 	can_adjust = 0
 
+/obj/item/clothing/under/jester/alt
+	icon_state = "jester2"
+
 /obj/item/clothing/under/geisha
 	name = "geisha suit"
 	desc = "Cute space ninja senpai not included."
@@ -667,3 +670,36 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/mummy
+	name = "mummy wrapping"
+	desc = "Return the slab or suffer my stale references."
+	icon_state = "mummy"
+	item_state = "mummy"
+	item_color = "mummy"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = 0
+	resistance_flags = 0
+
+/obj/item/clothing/under/scarecrow
+	name = "scarecrow clothes"
+	desc = "Perfect camouflage for hiding in botany."
+	icon_state = "scarecrow"
+	item_state = "scarecrow"
+	item_color = "scarecrow"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = 0
+	resistance_flags = 0
+
+/obj/item/clothing/under/skeleton
+	name = "skeleton jumpsuit"
+	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
+	icon_state = "skeleton"
+	item_state = "skeleton"
+	item_color = "skeleton"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = 0
+	resistance_flags = 0
