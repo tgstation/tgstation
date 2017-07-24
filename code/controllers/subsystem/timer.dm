@@ -225,7 +225,7 @@ SUBSYSTEM_DEF(timer)
 	var/static/nextid = 1
 
 /datum/timedevent/New(datum/callback/callBack, timeToRun, flags, hash)
-	id = nextid++
+	id = TIMER_ID_NULL
 	src.callBack = callBack
 	src.timeToRun = timeToRun
 	src.flags = flags
@@ -236,7 +236,9 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
-		SStimer.timer_id_dict["timerid[id]"] = src
+		if(nextid >= 1000000)
+			nextid = 1
+		SStimer.timer_id_dict["timerid[id = nextid++]"] = src
 
 	if (callBack.object != GLOBAL_PROC)
 		LAZYADD(callBack.object.active_timers, src)
