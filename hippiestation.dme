@@ -2321,6 +2321,7 @@
 #include "hippiestation\code\modules\reagents\chemistry\reagents\pyrotechnic_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\toxin_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\recipes\pyrotechnics.dm"
+#include "hippiestation\code\modules\reagents\chemistry\recipes\toxins.dm"
 #include "hippiestation\code\modules\reagents\reagent_containers\bottle.dm"
 #include "hippiestation\code\modules\reagents\reagent_containers\glass.dm"
 #include "hippiestation\code\modules\reagents\reagent_containers\patch.dm"
