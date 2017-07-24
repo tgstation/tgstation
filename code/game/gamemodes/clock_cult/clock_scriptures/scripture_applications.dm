@@ -2,28 +2,6 @@
 // APPLICATIONS //
 //////////////////
 
-//Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
-/datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Trap, Permanent Conversion"
-	name = "Sigil of Accession"
-	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
-	It will penetrate mindshield implants once before disappearing."
-	invocations = list("Divinity, enslave...", "...all who trespass here!")
-	channel_time = 70
-	consumed_components = list(BELLIGERENT_EYE = 4, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 2)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission/accession
-	prevent_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. All non-servants to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "It will remain after converting a target, unless that target has a mindshield implant, which it will break to convert them, but consume itself in the process."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 1
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Accession, which can convert a mindshielded non-Servant that remains on it."
-
-
 //Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
 /datum/clockwork_scripture/fellowship_armory
 	descname = "Area Servant Armor"

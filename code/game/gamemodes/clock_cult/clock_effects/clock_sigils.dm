@@ -81,7 +81,7 @@
 /obj/effect/clockwork/sigil/submission
 	name = "ominous sigil"
 	desc = "A luminous golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for seven seconds."
+	clockwork_desc = "A sigil that will enslave any non-Servant that remains on it for 8 seconds. Cannot penetrate mindshield implants."
 	icon_state = "sigilsubmission"
 	layer = LOW_SIGIL_LAYER
 	alpha = 125
@@ -91,17 +91,15 @@
 	light_color = "#FAE48C"
 	stat_affected = UNCONSCIOUS
 	resist_string = "glows faintly yellow"
-	var/convert_time = 70
+	var/convert_time = 80
 	var/delete_on_finish = TRUE
 	sigil_name = "Sigil of Submission"
-	var/glow_type
-
-/obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
+	var/glow_type = /obj/effect/temp_visual/ratvar/sigil/submission
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	var/oldcolor = color
-	animate(src, color = "#AF0AAF", time = convert_time)
+	animate(src, color = "#AF0AAF", time = convert_time, flags = ANIMATION_END_NOW)
 	var/obj/effect/temp_visual/ratvar/sigil/glow
 	if(glow_type)
 		glow = new glow_type(get_turf(src))
@@ -113,16 +111,15 @@
 	if(get_turf(L) != get_turf(src))
 		if(glow)
 			qdel(glow)
-		animate(src, color = oldcolor, time = 20)
+		animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return
-	post_channel(L)
 	if(is_eligible_servant(L))
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 	if(add_servant_of_ratvar(L))
 		L.log_message("<font color=#BE8700>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
-	L.Knockdown(60) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
+	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
@@ -136,39 +133,9 @@
 				to_chat(M, "<span class='heavy_brass'>[message] you!</span>")
 			else
 				to_chat(M, "<span class='heavy_brass'>[message] [L.real_name]!</span>")
-	if(delete_on_finish)
-		qdel(src)
-	else
-		animate(src, color = oldcolor, time = 20)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
-		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
-
-
-//Sigil of Accession: After a short time, converts any non-servant standing on it though implants. Knocks down and silences them for five seconds afterwards.
-/obj/effect/clockwork/sigil/submission/accession
-	name = "terrifying sigil"
-	desc = "A luminous brassy sigil. Something about it makes you want to flee."
-	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for seven seconds. \n\
-	It can convert a mindshielded target once before disppearing, but can convert any number of non-implanted targets."
-	icon_state = "sigiltransgression"
-	alpha = 200
-	color = "#A97F1B"
-	light_range = 3 //bright light
-	light_power = 1
-	light_color = "#A97F1B"
-	delete_on_finish = FALSE
-	sigil_name = "Sigil of Accession"
-	glow_type = /obj/effect/temp_visual/ratvar/sigil/accession
-	resist_string = "glows bright orange"
-
-/obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
-	if(L.isloyal())
-		L.log_message("<font color=#BE8700>Had their mindshield implant broken by a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
-		delete_on_finish = TRUE
-		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
-		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")
-		for(var/obj/item/weapon/implant/mindshield/M in L.implants)
-			qdel(M)
+	animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
+	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 
 
 //Sigil of Transmission: Stores power for clockwork machinery, serving as a battery.

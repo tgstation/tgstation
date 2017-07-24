@@ -221,6 +221,6 @@
 /obj/effect/temp_visual/ratvar/sigil/accession
 	color = "#AF0AAF"
 	layer = ABOVE_MOB_LAYER
-	duration = 70
+	duration = 80
 	icon_state = "sigilactiveoverlay"
 	alpha = 0

@@ -3,10 +3,11 @@
 	name = "glowing ring"
 	desc = "A flickering, glowing purple ring around a target."
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
-	max_integrity = 25
+	max_integrity = 20
 	light_range = 2
-	light_power = 0.5
+	light_power = 0.8
 	light_color = "#AF0AAF"
+	anchored = FALSE
 	density = FALSE
 	immune_to_servant_attacks = TRUE
 	icon = 'icons/effects/clockwork_effects.dmi'
@@ -16,15 +17,36 @@
 	debris = list()
 	can_buckle = TRUE
 	buckle_lying = 0
-	buckle_prevents_pull = TRUE
 	var/resisting = FALSE
-	var/can_resist = FALSE
 	var/mob_layer = MOB_LAYER
+
+/obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, obj/item/clockwork/slab/the_slab)
+	. = ..()
+	START_PROCESSING(SSprocessing, src)
+
+/obj/structure/destructible/clockwork/geis_binding/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
 /obj/structure/destructible/clockwork/geis_binding/examine(mob/user)
 	icon_state = "geisbinding_full"
 	..()
 	icon_state = "geisbinding"
+
+/obj/structure/destructible/clockwork/geis_binding/process()
+	if(!resisting)
+		return
+	if(LAZYLEN(buckled_mobs))
+		for(var/V in buckled_mobs)
+			var/mob/living/L = V
+			if(is_servant_of_ratvar(L)) //servants are freed automatically
+				take_damage(obj_integrity)
+				return
+	var/tick_damage = 1
+	if(!is_servant_of_ratvar(pulledby))
+		tick_damage++
+	take_damage(tick_damage, sound_effect = FALSE)
+	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 20, TRUE)
 
 /obj/structure/destructible/clockwork/geis_binding/attack_hand(mob/living/user)
 	return
@@ -48,10 +70,8 @@
 			var/obj/item/geis_binding/B = new(M)
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
-		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", \
-		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":""]")
-		if(!can_resist)
-			repair_and_interrupt()
+		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", "<span class='warning'>A [name] appears around you!</span>")
+		repair_and_interrupt()
 	else
 		var/obj/effect/temp_visual/ratvar/geis_binding/G = new /obj/effect/temp_visual/ratvar/geis_binding(M.loc)
 		var/obj/effect/temp_visual/ratvar/geis_binding/T = new /obj/effect/temp_visual/ratvar/geis_binding/top(M.loc)
@@ -65,11 +85,6 @@
 		for(var/obj/item/geis_binding/GB in M.held_items)
 			M.dropItemToGround(GB, TRUE)
 
-/obj/structure/destructible/clockwork/geis_binding/relaymove(mob/user, direction)
-	if(isliving(user) && can_resist)
-		var/mob/living/L = user
-		L.resist()
-
 /obj/structure/destructible/clockwork/geis_binding/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
 
@@ -79,7 +94,7 @@
 		update_icon()
 
 /obj/structure/destructible/clockwork/geis_binding/update_icon()
-	alpha = min(initial(alpha) + ((obj_integrity - max_integrity) * 5), 255)
+	alpha = min(255 * ((obj_integrity/max_integrity) + 0.2) , 255)
 
 /obj/structure/destructible/clockwork/geis_binding/proc/repair_and_interrupt()
 	obj_integrity = max_integrity
@@ -87,10 +102,10 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/L = m
 		if(L)
-			L.Stun(20, 1, 1)
+			L.Stun(100, 1, 1)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				C.silent += 4
+				C.silent += 6
 	visible_message("<span class='sevtug'>[src] flares brightly!</span>")
 	var/obj/effect/temp_visual/ratvar/geis_binding/G1 = new /obj/effect/temp_visual/ratvar/geis_binding(loc)
 	var/obj/effect/temp_visual/ratvar/geis_binding/G2 = new /obj/effect/temp_visual/ratvar/geis_binding(loc)
@@ -105,21 +120,6 @@
 	animate(T1, pixel_y = pixel_y + 9, alpha = 0, time = 8, easing = EASE_IN)
 	animate(T2, pixel_y = pixel_y - 9, alpha = 0, time = 8, easing = EASE_IN)
 
-/obj/structure/destructible/clockwork/geis_binding/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
-	if(buckled_mob == user)
-		if(!resisting && can_resist)
-			resisting = TRUE
-			user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of [src]...</span>")
-			while(do_after(user, 10, target = src) && resisting && obj_integrity)
-				if(obj_integrity - 5 <= 0)
-					user.visible_message("<span class='warning'>[user] breaks [src]!</span>", "<span class='userdanger'>You break [src]!</span>")
-					take_damage(5)
-					return user
-				take_damage(5)
-			resisting = FALSE
-	else
-		return ..()
-
 /obj/item/geis_binding
 	name = "glowing ring"
 	desc = "A flickering ring preventing you from holding items."
@@ -128,5 +128,4 @@
 	flags = NODROP|ABSTRACT|DROPDEL
 
 /obj/item/geis_binding/pre_attackby(atom/target, mob/living/user, params)
-	user.resist()
 	return FALSE
