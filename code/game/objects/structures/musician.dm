@@ -298,7 +298,7 @@
 
 	else if(href_list["stop"])
 		playing = FALSE
-		hearers = null
+		hearing_mobs = null
 
 	updateDialog(usr)
 	return
