@@ -924,38 +924,6 @@
 		else
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
-/datum/species/proc/handle_disgust(mob/living/carbon/human/H, var/metabolism_rate)
-	if(H.disgust)
-		var/pukeprob = 5 + 0.05 * H.disgust
-		if(H.disgust >= DISGUST_LEVEL_GROSS)
-			if(prob(10))
-				H.stuttering += 1
-				H.confused += 2
-			if(prob(10) && !H.stat)
-				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
-			H.jitteriness = max(H.jitteriness - 3, 0)
-		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
-			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
-				H.confused += 2.5
-				H.stuttering += 1
-				H.vomit(10, 0, 1, 0, 1, 0)
-			H.Dizzy(5)
-		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
-			if(prob(25))
-				H.blur_eyes(3) //We need to add more shit down here
-
-		H.adjust_disgust(-0.5 * metabolism_rate)
-
-	switch(H.disgust)
-		if(0 to DISGUST_LEVEL_GROSS)
-			H.clear_alert("disgust")
-		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-			H.throw_alert("disgust", /obj/screen/alert/gross)
-		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-			H.throw_alert("disgust", /obj/screen/alert/verygross)
-		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-			H.throw_alert("disgust", /obj/screen/alert/disgusted)
-
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
 

@@ -7,14 +7,46 @@
 	slot = "stomach"
 	attack_verb = list("gored", "squished", "slapped", "digested")
 	desc = "Onaka ga suite imasu."
-	var/disgustmetabolism = 1
+	var/disgust_metabolism = 1
 
 /obj/item/organ/stomach/on_life()
 	var/mob/living/carbon/human/H = owner
 
 	if(istype(H))
 		H.dna.species.handle_digestion(H)
-		H.dna.species.handle_disgust(H, disgustmetabolism)
+		handle_disgust(H)
+
+/obj/item/organ/proc/handle_disgust(mob/living/carbon/human/H)
+	if(H.disgust)
+		var/pukeprob = 5 + 0.05 * H.disgust
+		if(H.disgust >= DISGUST_LEVEL_GROSS)
+			if(prob(10))
+				H.stuttering += 1
+				H.confused += 2
+			if(prob(10) && !H.stat)
+				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
+			H.jitteriness = max(H.jitteriness - 3, 0)
+		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
+			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
+				H.confused += 2.5
+				H.stuttering += 1
+				H.vomit(10, 0, 1, 0, 1, 0)
+			H.Dizzy(5)
+		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
+			if(prob(25))
+				H.blur_eyes(3) //We need to add more shit down here
+
+		H.adjust_disgust(-0.5 * disgust_metabolism)
+
+	switch(H.disgust)
+		if(0 to DISGUST_LEVEL_GROSS)
+			H.clear_alert("disgust")
+		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
+			H.throw_alert("disgust", /obj/screen/alert/gross)
+		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
+			H.throw_alert("disgust", /obj/screen/alert/verygross)
+		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
+			H.throw_alert("disgust", /obj/screen/alert/disgusted)
 
 /obj/item/organ/stomach/Remove()
 	..()
