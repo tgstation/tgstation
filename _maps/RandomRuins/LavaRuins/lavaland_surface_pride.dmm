@@ -9,41 +9,30 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
-/turf/closed/wall/mineral/diamond{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/closed/wall/mineral/diamond,
 /area/ruin/powered)
 "e" = (
 /obj/structure/mirror{
 	pixel_x = -32
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "f" = (
 /obj/structure/mirror{
 	pixel_x = 32
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "g" = (
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "h" = (
 /obj/structure/mirror/magic/pride,
-/turf/closed/wall/mineral/diamond{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/closed/wall/mineral/diamond,
 /area/ruin/powered)
 "i" = (
 /obj/machinery/door/airlock/diamond,
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth;
 	blocks_air = 1
 	},
 /area/ruin/powered)
@@ -54,9 +43,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "k" = (
 /obj/structure/mirror{
@@ -65,9 +52,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "l" = (
 /obj/structure/mirror{
@@ -77,9 +62,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "m" = (
 /obj/structure/mirror{
@@ -88,9 +71,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "n" = (
 /obj/structure/mirror{
@@ -100,9 +81,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "o" = (
 /obj/structure/mirror{
@@ -111,9 +90,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "p" = (
 /obj/structure/mirror{
@@ -123,9 +100,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "q" = (
 /obj/structure/mirror{
@@ -134,21 +109,23 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "r" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "s" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"t" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"u" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 
 (1,1,1) = {"
@@ -164,7 +141,7 @@ a
 a
 a
 a
-a
+t
 a
 a
 a
@@ -229,10 +206,10 @@ e
 l
 e
 e
-n
+l
 e
 e
-p
+l
 e
 e
 d
@@ -274,7 +251,7 @@ g
 g
 g
 g
-g
+u
 g
 g
 g
@@ -300,7 +277,7 @@ g
 g
 g
 g
-s
+r
 d
 c
 a
@@ -317,10 +294,10 @@ f
 m
 f
 f
-o
+m
 f
 f
-q
+m
 f
 f
 d

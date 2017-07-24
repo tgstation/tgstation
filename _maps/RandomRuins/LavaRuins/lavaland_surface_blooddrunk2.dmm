@@ -101,6 +101,7 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
+/obj/effect/baseturf_helper,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "s" = (

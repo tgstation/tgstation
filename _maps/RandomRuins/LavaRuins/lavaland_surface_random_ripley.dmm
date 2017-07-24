@@ -18,6 +18,10 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"f" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -58,7 +62,7 @@ a
 (5,1,1) = {"
 a
 b
-c
+f
 c
 b
 b

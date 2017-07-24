@@ -2035,6 +2035,14 @@
 /obj/structure/sign/securearea,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered)
+"go" = (
+/obj/effect/baseturf_helper,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered)
+"gp" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -2588,8 +2596,8 @@ cG
 cG
 cG
 cG
-dv
-ac
+go
+gp
 ab
 ab
 ab
@@ -2950,7 +2958,7 @@ dv
 dv
 dv
 dv
-gn
+gm
 ab
 ab
 ab
@@ -3264,7 +3272,7 @@ aq
 cJ
 cQ
 ad
-dc
+aq
 di
 di
 dv
@@ -3344,7 +3352,7 @@ ct
 cK
 cS
 ad
-dc
+aq
 gi
 di
 dv

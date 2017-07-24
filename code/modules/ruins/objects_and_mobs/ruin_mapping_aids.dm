@@ -5,6 +5,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	var/baseturf = /turf/open/lava/smooth/lava_land_surface
+	layer = POINT_LAYER
 
 /obj/effect/baseturf_helper/Initialize()
 	. = ..()

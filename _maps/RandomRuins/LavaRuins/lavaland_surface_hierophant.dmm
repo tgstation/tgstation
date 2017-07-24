@@ -26,6 +26,10 @@
 	},
 /turf/open/indestructible/hierophant/two,
 /area/ruin/unpowered/hierophant)
+"g" = (
+/obj/effect/baseturf_helper,
+/turf/open/indestructible/hierophant/two,
+/area/ruin/unpowered/hierophant)
 
 (1,1,1) = {"
 a
@@ -265,7 +269,7 @@ e
 e
 e
 e
-e
+g
 e
 e
 a

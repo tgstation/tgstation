@@ -16,6 +16,10 @@
 /obj/machinery/wish_granter,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"f" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -390,7 +394,7 @@ c
 b
 c
 b
-b
+f
 b
 b
 b
