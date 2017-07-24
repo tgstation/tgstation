@@ -198,12 +198,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/list/combine = output + res + boosted
 			var/strout = combine.Join("<br>")
 			to_chat(user, strout)
-    
-    if(materials.len)
-        var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
-        for(var/mat in materials)
-            msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
-        else
+
+	if(materials.len)
+		var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
+		for(var/mat in materials)
+			msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
+		else
 			msg += "<span class='danger'>No extractable materials detected.</span>"
 		msg += "*--------*"
 		to_chat(user, msg.Join("<br>"))
