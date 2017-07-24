@@ -7069,7 +7069,7 @@
 /area/maintenance/fore/secondary)
 "apv" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Fitness Maitenance";
+	name = "Fitness Maintenance";
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -11151,7 +11151,7 @@
 /area/crew_quarters/fitness)
 "azi" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Garden Maintenace";
+	name = "Garden Maintenance";
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -39118,7 +39118,7 @@
 /area/science/xenobiology)
 "bKY" = (
 /obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Moniter";
+	name = "Test Chamber Monitor";
 	network = list("Xeno");
 	pixel_y = 2
 	},
@@ -40514,7 +40514,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
@@ -42244,7 +42244,7 @@
 "bSt" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
-	c_tag = "Telecoms Monitoring";
+	c_tag = "Telecomms Monitoring";
 	dir = 8;
 	network = list("SS13")
 	},
@@ -42634,7 +42634,7 @@
 /obj/item/weapon/wrench,
 /obj/item/weapon/crowbar,
 /obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Moniter";
+	name = "Test Chamber Monitor";
 	network = list("Test");
 	pixel_y = -30
 	},
@@ -43017,9 +43017,9 @@
 "bUc" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecoms Admin";
+	department = "Telecomms Admin";
 	departmentType = 5;
-	name = "Telecoms RC";
+	name = "Telecomms RC";
 	pixel_x = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -43292,7 +43292,7 @@
 "bUB" = (
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Telecoms Monitoring APC";
+	name = "Telecomms Monitoring APC";
 	pixel_y = -24
 	},
 /obj/structure/cable{
@@ -44141,7 +44141,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Telecoms Server APC";
+	name = "Telecomms Server APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -46333,7 +46333,7 @@
 /area/maintenance/port/aft)
 "cbl" = (
 /obj/machinery/camera{
-	c_tag = "Telecoms Server Room";
+	c_tag = "Telecomms Server Room";
 	dir = 4;
 	network = list("SS13")
 	},
@@ -57835,7 +57835,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -62989,7 +62989,7 @@
 "cNS" = (
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Starboard Maintenace APC";
+	name = "Starboard Maintenance APC";
 	pixel_x = 26
 	},
 /obj/structure/cable{

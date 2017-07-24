@@ -95,7 +95,7 @@
 		if("vr_connect")
 			var/mob/living/carbon/human/human_occupant = occupant
 			if(human_occupant && human_occupant.mind)
-				to_chat(occupant, "<span class='warning'>Transfering to virtual reality...</span>")
+				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
 				if(vr_human)
 					vr_human.revert_to_reality(FALSE, FALSE)
 					human_occupant.mind.transfer_to(vr_human)
