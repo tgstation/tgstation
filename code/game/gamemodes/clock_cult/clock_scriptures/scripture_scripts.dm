@@ -162,26 +162,6 @@
 	return TRUE
 
 
-//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
-/datum/clockwork_scripture/create_object/sigil_of_submission
-	descname = "Trap, Conversion"
-	name = "Sigil of Submission"
-	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
-	invocations = list("Divinity, enlighten...", "...those who trespass here!")
-	channel_time = 60
-	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 2)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "This is not a primary conversion method - use Geis for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
-	tier = SCRIPTURE_SCRIPT
-	one_per_tile = TRUE
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 5
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
-
-
 //Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.
 /datum/clockwork_scripture/create_object/replica_fabricator
 	descname = "Replaces Objects with Ratvarian Versions"
