@@ -82,6 +82,20 @@
 	prereq_ids = list("basic_biotech", "adv_data")
 	design_ids = list("mmi")
 
+/datum/techweb_node/weapons/firearm
+	id = "firearm"
+	display_name = "Firearm Research"
+	description = "How guns work."
+	prereq_ids = list("adv_data", "advancedmaterials")
+	design_ids = list("pin_testing")
+
+/datum/techweb_node/weapons/grenades
+	id = "grenades"
+	display_name = "Grenade Casings"
+	description = "Fire in the hole!"
+	prereq_ids = list("firearm", "advancedmaterials")
+	design_ids = list("large_grenade", "pyro_grenade", "adv_grenade")
+
 /*
 /datum/techweb_node
 	var/id
