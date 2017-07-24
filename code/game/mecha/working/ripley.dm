@@ -103,9 +103,15 @@
 			var/obj/item/mecha_parts/mecha_equipment/drill/D = new
 			D.attach(src)
 
+<<<<<<< HEAD
 	else //Add possible plasma cutter if no drill
 		var/obj/item/mecha_parts/mecha_equipment/M = new
 		M.attach(src)
+=======
+	else //Add plasma cutter if no drill
+		var/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/P = new
+		P.attach(src)
+>>>>>>> f78b4bba3c... Update ripley.dm
 
 	//Add ore box to cargo
 	cargo.Add(new /obj/structure/ore_box(src))
