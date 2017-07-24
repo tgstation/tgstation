@@ -17,7 +17,7 @@
 	maxHealth = 250
 	max_mobs = 3
 	spawn_time = 300 //30 seconds default
-	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -28,10 +28,10 @@
 	var/obj/effect/light_emitter/tendril/emitted_light
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
-	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
 
 /mob/living/simple_animal/hostile/spawner/lavaland/legion
-	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion{fromtendril = 1}
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
 	. = ..()
@@ -39,7 +39,7 @@
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ChangeTurf(M.turf_type,FALSE,TRUE)
+			M.ChangeTurf(M.turf_type,FALSE,FALSE,TRUE)
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()

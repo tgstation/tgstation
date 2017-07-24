@@ -10,8 +10,8 @@ ARCD
 
 obj/item/weapon/construction
 	opacity = 0
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	flags = CONDUCT | NOBLUDGEON
 	force = 0
 	throwforce = 10
@@ -78,7 +78,7 @@ obj/item/weapon/construction
 	return 0
 
 /obj/item/weapon/construction/proc/activate()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 /obj/item/weapon/construction/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -125,8 +125,8 @@ obj/item/weapon/construction
 	var/canRturf = 0
 	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
+	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
 	var/window_type = /obj/structure/window/fulltile
-
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
@@ -266,8 +266,10 @@ obj/item/weapon/construction
 						airlock_type = /obj/machinery/door/airlock/external
 					if("High Security")
 						airlock_type = /obj/machinery/door/airlock/highsecurity
+				airlock_glass = FALSE
 			else
 				airlock_type = /obj/machinery/door/airlock
+				airlock_glass = FALSE
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
@@ -289,10 +291,13 @@ obj/item/weapon/construction
 						airlock_type = /obj/machinery/door/airlock/glass_research
 					if("Mining")
 						airlock_type = /obj/machinery/door/airlock/glass_mining
+				airlock_glass = TRUE
 			else
 				airlock_type = /obj/machinery/door/airlock/glass
+				airlock_glass = TRUE
 		else
 			airlock_type = /obj/machinery/door/airlock
+			airlock_glass = FALSE
 
 
 /obj/item/weapon/construction/rcd/proc/rcd_create(atom/A, mob/user)
@@ -529,7 +534,7 @@ obj/item/weapon/construction
 						var/list/candidates = list()
 						var/turf/open/winner = null
 						var/winning_dist = null
-						for(var/direction in GLOB.cardinal)
+						for(var/direction in GLOB.cardinals)
 							var/turf/C = get_step(W, direction)
 							var/list/dupes = checkdupes(C)
 							if(start.CanAtmosPass(C) && !dupes.len)

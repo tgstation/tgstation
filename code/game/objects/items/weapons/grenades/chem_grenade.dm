@@ -103,7 +103,7 @@
 			to_chat(user, "<span class='warning'>You need one length of coil to wire the assembly!</span>")
 			return
 
-	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
+	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters) && !active)
 		stage_change(WIRED)
 		to_chat(user, "<span class='notice'>You unlock the [initial(name)] assembly.</span>")
 
@@ -164,7 +164,7 @@
 		reactants += G.reagents
 
 	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale) && !no_splash)
-		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.loc = get_turf(src)
@@ -193,7 +193,7 @@
 	name = "large grenade"
 	desc = "A custom made large grenade. It affects a larger area."
 	icon_state = "large_grenade"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass,/obj/item/weapon/reagent_containers/food/condiment,
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/weapon/reagent_containers/food/condiment,
 								/obj/item/weapon/reagent_containers/food/drinks)
 	origin_tech = "combat=3;engineering=3"
 	affected_area = 5

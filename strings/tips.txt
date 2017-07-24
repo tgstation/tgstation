@@ -150,34 +150,31 @@ As a Revolutionary, cargo can be your best friend or your worst nightmare. In th
 As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before security can arm up.
 As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
 As a Changeling, you can absorb someone by strangling them and using the Absorb verb; this gives you the ability to rechoose your powers, the DNA of whoever you absorbed, the memory of the absorbed, and some samples of things the absorbed said.
-As a Cultist, invest in taking over xenobio, an adamantine golem army can quickly be converted into cultists and constructs.
 As a Cultist, do not cause too much chaos before your objective is completed. If the shuttle gets called too soon, you may not have enough time to win.
 As a Cultist, your team starts off very weak, but if necessary can quickly convert everything they have into raw power. Make sure you have the numbers and equipment to support going loud, or the cult will fall flat on its face.
 As a Cultist, the Blood Boil rune will deal massive amounts of brute damage to non-cultists, stamina damage to Ratvarian scum, and some damage to fellow cultists of Nar-Sie nearby, but will create a fire where the rune stands on use.
 As a Cultist, you can create an army of manifested goons using a combination of the Manifest rune, which creates homunculi from ghosts, and the Blood Drain rune, which drains life from anyone standing on any blood drain rune.
+As a Cultist or Servant, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
 As a Servant, your Clockwork Slab fits in pockets and does not need to be held to communicate with other Servants.
 As a Servant, remember that while the selection of scripture and tools Servant cyborgs get is limited, it is still extremely useful, and some of it is unique; for example, engineering and janitor cyborgs get a proselytizer that can use their own power in addition to its own.
 As a Servant, the Judicial Visor is an effective defensive combat tool in small spaces, as it stuns and mutes anyone still on it after 3 seconds. It is also useful for stunning already-stunned enemies for long enough to convert them or finish them off.
 As a Servant, making, and protecting, Tinkerer's Caches is extremely important, as caches are required to unlock scripture and share components.
-As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-servant that can see them and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
+As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-Servant that can see them and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
 As a Servant, Clockwork Structures that require power will draw power from the APC if they cannot find a different source of power, and most power-using Structures will rapidly drain the APC.
-As a Servant, you can repair Servant cyborgs, Clockwork Constructs, and Clockwork Structures with a Clockwork Proselytizer at a rate of 25W power to 1 health.
+As a Servant, you can repair Servant cyborgs and Clockwork Structures with a Replica Fabricator at a rate of 25W power to 1 health. Damaged Clockwork Structures are less efficient, so don't forget to repair them!
 As a Servant, securing a reliable source of component generation is high-priority, as simply handing out slabs will slowly become inefficient. Try placing Tinkerer's Caches near clockwork walls or creating and powering Tinkerer's Daemons.
-As a Servant, only a single held Clockwork Slab will generate components, no matter how many you're holding. In addition, slabs will generate components slower with large amounts of servants; you can see the exact time with Recollection.
+As a Servant, only a single held Clockwork Slab will generate components, no matter how many you're holding. In addition, slabs will generate components slower with large amounts of Servants; you can see the exact time with Recollection.
 As a Servant, you can use Geis to easily convert single targets, as it binds them in place, preventing escape unless they react quickly enough. Having another Servant apply Geis to someone already bound will prevent their escape and mute them, even if they reacted quickly.
 As a Servant, placing components in a slab or cache places those components in a globally-accessable storage that slabs will draw from to invoke scripture.
 As a Servant, you can stack different types of Sigils on the same turf; try stacking a Sigil of Transgression and a Sigil of Submission for a subtle conversion trap.
-As a Servant, you can deconstruct a Clockwork Wall with a Clockwork Proselytizer to regain 1000W power. You can also construct Clockwork Walls on Clockwork Floors for a cost of 1000W power.
-As a Servant, Volt Void will drain power from nearby Sigils of Transmission to up to double the damage of each volt ray. It'll even use your own power if you happen to be a cyborg!
+As a Servant, you can deconstruct a Clockwork Wall with a Replica Fabricator to regain 1000W power. You can also construct Clockwork Walls on Clockwork Floors for a cost of 1000W power.
 As a Servant, Fellowship Armory invokes much faster for each nearby servant and attempts to provide each affected servant with powerful armor against melee, bullet, and bomb attacks. The gauntlets provided are also immune to elecricity.
 As a Servant, Spatial Gateway can teleport to any living Servant or Clockwork Obelisk, and gains additional uses and duration for each Servant assisting in the invocation.
 As a Servant, creating and activating the Gateway to the Celestial Derelict is your ultimate goal, and you must defend it with all the tools you have available.
-As a Servant, once Ratvar has arrived, all of your tools gain a massive boost in power and will, in general, have no cost and work at double speed.
 As a Servant, you can impale human targets with a Ratvarian Spear by pulling them, then attacking them. This does massive damage and stuns them, and should effectively win the fight.
 As a Servant, Sentinel's Compromise can instantly return you or another Servant to a fighting state by converting half of all their brute, burn, and oxygen damage to toxin, effectively halving the damage they have. Clockwork Floors will also rapidly heal toxin damage in Servants, allowing the Compromise more effectiveness.
 As a Servant, Belligerent and Taunting Tirade are extremely powerful for disabling and disrupting large groups of enemies, though they render you somewhat vulnerable, as Belligerent requires that you stand still, and Taunting Tirade makes you extremely obvious.
-As a Servant, Soul Vessels can be placed in cyborg shells, mecha, Cogscarab shells, and Anima Fragment shells.
-As a Servant, you can unwrench Clockwork Structures, but doing so will damage them, severely weakening them until repaired with a Proselytizer or Mending Mantra. Damage from other sources will also similarly weaken structures.
+As a Servant, you can unwrench Clockwork Structures to move them around.
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
 As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.

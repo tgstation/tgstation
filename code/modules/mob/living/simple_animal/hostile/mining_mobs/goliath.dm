@@ -49,7 +49,7 @@
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	anchored = 0
+	anchored = FALSE
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
@@ -91,6 +91,9 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
+	fromtendril = TRUE
+
 //tentacles
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
@@ -111,10 +114,9 @@
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
-	var/list/directions = GLOB.cardinal.Copy()
+	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in 1 to 3)
-		var/spawndir = pick(directions)
-		directions -= spawndir
+		var/spawndir = pick_n_take(directions)
 		var/turf/T = get_step(src,spawndir)
 		if(T)
 			new /obj/effect/goliath_tentacle(T)
@@ -122,7 +124,7 @@
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
-		M.Stun(5)
+		M.Stun(100)
 		M.adjustBruteLoss(rand(10,15))
 		latched = TRUE
 	if(!latched)

@@ -5,8 +5,8 @@
 #define MAX_TIMER 9000
 
 #define PRESET_SHORT 1200
-#define PRESET_MEDIUM 3000
-#define PRESET_LONG 6000
+#define PRESET_MEDIUM 1800
+#define PRESET_LONG 3000
 
 
 
@@ -23,9 +23,9 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	desc = "A remote control for a door."
-	req_access = list(GLOB.access_security)
-	anchored = 1
-	density = 0
+	req_access = list(ACCESS_SECURITY)
+	anchored = TRUE
+	density = FALSE
 	var/id = null // id of linked machinery/lockers
 
 	var/activation_time = 0
@@ -101,7 +101,7 @@
 			continue
 		if(C.opened && !C.close())
 			continue
-		C.locked = 1
+		C.locked = TRUE
 		C.update_icon()
 	return 1
 
@@ -130,7 +130,7 @@
 			continue
 		if(C.opened)
 			continue
-		C.locked = 0
+		C.locked = FALSE
 		C.update_icon()
 
 	return 1
@@ -146,7 +146,7 @@
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 
-/obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -212,7 +212,7 @@
 	if(..())
 		return
 	. = TRUE
-	
+
 	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE

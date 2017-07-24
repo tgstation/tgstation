@@ -53,7 +53,7 @@
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
 	for(var/mob/living/L in orange(1, invoker))
-		if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+		if(can_recite_scripture(L))
 			channel_time = max(channel_time - 10, 0)
 	return ..()
 
@@ -124,8 +124,7 @@
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
 		invoker.notransform = FALSE
-		invoker.Stun(5)
-		invoker.Weaken(5)
+		invoker.Knockdown(100)
 		invoker.apply_damage(10, BRUTE, "head")
 		slab.busy = null
 		return FALSE
@@ -150,26 +149,6 @@
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 	"<span class='sevtug'>[M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
 	return TRUE
-
-
-//Anima Fragment: Creates an empty anima fragment, which produces an anima fragment that moves at extreme speed and does high damage.
-/datum/clockwork_scripture/create_object/anima_fragment
-	descname = "Fast Soul Vessel Shell"
-	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health and slight regeneration, notable melee power, \
-	and exceptional speed, though taking damage will temporarily slow it down."
-	invocations = list("Call forth...", "...the soldiers of Armorer.")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 4)
-	object_path = /obj/structure/destructible/clockwork/shell/fragment
-	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
-	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
-	usage_tip = "Useless without a soul vessel and should not be created without one."
-	tier = SCRIPTURE_APPLICATION
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 4
-	quickbind = TRUE
-	quickbind_desc = "Creates a Fragment Shell, which produces an Anima Fragment when filled with a Soul Vessel."
 
 
 //Sigil of Transmission: Creates a sigil of transmission that can store power for clockwork structures.
@@ -214,6 +193,38 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
+//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
+/datum/clockwork_scripture/create_object/prolonging_prism
+	descname = "Powered Structure, Delay Emergency Shuttles"
+	name = "Prolonging Prism"
+	desc = "Creates a mechanized prism which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
+	invocations = list("May this prism...", "...grant us time to enact his will!")
+	channel_time = 80
+	consumed_components = list(VANGUARD_COGWHEEL = 5, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2)
+	object_path = /obj/structure/destructible/clockwork/powered/prolonging_prism
+	creator_message = "<span class='brass'>You form a prolonging prism, which will delay the arrival of an emergency shuttle at a massive power cost.</span>"
+	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "The power cost to delay a shuttle increases based on CV and the number of times activated."
+	tier = SCRIPTURE_APPLICATION
+	one_per_tile = TRUE
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 7
+	quickbind = TRUE
+	quickbind_desc = "Creates a Prolonging Prism, which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
+
+/datum/clockwork_scripture/create_object/prolonging_prism/check_special_requirements()
+	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
+		return FALSE
+	var/turf/T = get_turf(invoker)
+	if(!T || T.z != ZLEVEL_STATION)
+		to_chat(invoker, "<span class='inathneq'>\"You must be on the station to construct one of these, champion.\"</span>")
+		return FALSE
+	return ..()
+
+
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
 	descname = "Powered Structure, Area Denial"
@@ -240,7 +251,7 @@
 /datum/clockwork_scripture/create_object/tinkerers_daemon
 	descname = "Powered Structure, Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by Servants by a ratio of 5:1, \
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, active daemons are outnumbered by Servants by a ratio of 5:1, \
 	and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
@@ -256,19 +267,6 @@
 	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
-
-/datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
-	var/servants = 0
-	for(var/mob/living/L in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(L))
-			servants++
-	if(servants * 0.2 < GLOB.clockwork_daemons)
-		to_chat(invoker, "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>")
-		return FALSE
-	if(servants * 0.2 < GLOB.clockwork_daemons+1)
-		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
-		return FALSE
-	return ..()
 
 
 //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.

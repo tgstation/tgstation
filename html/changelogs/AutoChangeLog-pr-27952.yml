@@ -1,4 +1,0 @@
-author: "Penguaro"
-delete-after: True
-changes: 
-  - bugfix: "[Box] Removes extra/unattached vent from Xeno Lab"

@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,27)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -28,7 +28,7 @@
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
-			new /obj/item/borg/upgrade/modkit/resonator_blasts(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/resonator_blast(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
@@ -38,7 +38,7 @@
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/borg/upgrade/modkit/cooldown/repeater(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
@@ -46,7 +46,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -69,11 +69,73 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/weapon/bedsheet/cult(src)
+		if(28)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/bounty(src)
 
+//KA modkit design discs
+/obj/item/weapon/disk/design_disk/modkit_disc
+	name = "KA Mod Disk"
+	desc = "A design disc containing the design for a unique kinetic accelerator modkit."
+	icon_state = "datadisk1"
+	var/modkit_design = /datum/design/unique_modkit
 
+/obj/item/weapon/disk/design_disk/modkit_disc/Initialize()
+	. = ..()
+	blueprints[1] = new modkit_design
+
+/obj/item/weapon/disk/design_disk/modkit_disc/mob_and_turf_aoe
+	name = "Offensive Mining Explosion Mod Disk"
+	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+
+/obj/item/weapon/disk/design_disk/modkit_disc/rapid_repeater
+	name = "Rapid Repeater Mod Disk"
+	modkit_design = /datum/design/unique_modkit/rapid_repeater
+
+/obj/item/weapon/disk/design_disk/modkit_disc/resonator_blast
+	name = "Resonator Blast Mod Disk"
+	modkit_design = /datum/design/unique_modkit/resonator_blast
+
+/obj/item/weapon/disk/design_disk/modkit_disc/bounty
+	name = "Death Syphon Mod Disk"
+	modkit_design = /datum/design/unique_modkit/bounty
+
+/datum/design/unique_modkit
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+	req_tech = list("materials" = 12) //can't be normally obtained
+	build_type = PROTOLATHE | MECHFAB
+
+/datum/design/unique_modkit/offensive_turf_aoe
+	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
+	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
+	id = "hyperaoemod"
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_GOLD = 3000, MAT_DIAMOND = 4000)
+	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
+
+/datum/design/unique_modkit/rapid_repeater
+	name = "Kinetic Accelerator Rapid Repeater Mod"
+	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
+	id = "repeatermod"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_URANIUM = 8000, MAT_BLUESPACE = 2000)
+	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
+
+/datum/design/unique_modkit/resonator_blast
+	name = "Kinetic Accelerator Resonator Blast Mod"
+	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
+	id = "resonatormod"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
+	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
+
+/datum/design/unique_modkit/bounty
+	name = "Kinetic Accelerator Death Syphon Mod"
+	desc = "A device which causes kinetic accelerators to permenantly gain damage against creature types killed with it."
+	id = "bountymod"
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
+	reagents_list = list("blood" = 40)
+	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
 
+//Wisp Lantern
 /obj/item/device/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
@@ -119,7 +181,6 @@
 			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
 	..()
 
-//Wisp Lantern
 /obj/effect/wisp
 	name = "friendly wisp"
 	desc = "Happy to light your way."
@@ -128,29 +189,54 @@
 	luminosity = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
+//Red/Blue Cubes
 /obj/item/device/warp_cube
 	name = "blue cube"
 	desc = "A mysterious blue cube."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blue_cube"
+	var/teleport_color = "#3FBAFD"
 	var/obj/item/device/warp_cube/linked
-
-
-//Red/Blue Cubes
+	var/teleporting = FALSE
 
 /obj/item/device/warp_cube/attack_self(mob/user)
 	if(!linked)
 		to_chat(user, "[src] fizzles uselessly.")
 		return
-	new /obj/effect/particle_effect/smoke(user.loc)
-	user.forceMove(get_turf(linked))
+	if(teleporting)
+		return
+	teleporting = TRUE
+	linked.teleporting = TRUE
+	var/turf/T = get_turf(src)
+	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
 	SSblackbox.add_details("warp_cube","[src.type]")
-	new /obj/effect/particle_effect/smoke(user.loc)
+	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
+	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
+	user.forceMove(link_holder) //mess around with loc so the user can't wander around
+	sleep(2.5)
+	if(QDELETED(user))
+		qdel(link_holder)
+		return
+	if(QDELETED(linked))
+		user.forceMove(get_turf(link_holder))
+		qdel(link_holder)
+		return
+	link_holder.forceMove(get_turf(linked))
+	sleep(2.5)
+	if(QDELETED(user))
+		qdel(link_holder)
+		return
+	teleporting = FALSE
+	if(!QDELETED(linked))
+		linked.teleporting = FALSE
+	user.forceMove(get_turf(link_holder))
+	qdel(link_holder)
 
 /obj/item/device/warp_cube/red
 	name = "red cube"
 	desc = "A mysterious red cube."
 	icon_state = "red_cube"
+	teleport_color = "#FD3F48"
 
 /obj/item/device/warp_cube/red/Initialize()
 	..()
@@ -158,6 +244,12 @@
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
+
+/obj/effect/warp_cube
+	mouse_opacity = 0
+
+/obj/effect/warp_cube/ex_act(severity, target)
+	return
 
 //Meat Hook
 /obj/item/weapon/gun/magic/hook
@@ -187,7 +279,7 @@
 	armour_penetration = 100
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	weaken = 3
+	knockdown = 30
 	var/chain
 
 /obj/item/projectile/hook/fire(setAngle)
@@ -198,7 +290,7 @@
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(istype(target, /atom/movable))
+	if(ismovableatom(target))
 		var/atom/movable/A = target
 		if(A.anchored)
 			return
@@ -333,7 +425,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc,/obj/mecha))
+		if (istype(usr.loc, /obj/mecha))
 			return
 
 		if(!M.incapacitated())
@@ -413,7 +505,7 @@
 
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
 	to_chat(user, "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
-	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 	new /obj/vehicle/lavaboat/dragon(get_turf(src))
 	qdel(src)
 
@@ -468,8 +560,98 @@
 
 ///Bosses
 
+//Miniboss Miner
 
+/obj/item/weapon/melee/transforming/cleaving_saw
+	name = "cleaving saw"
+	desc = "This saw, effective at drawing the blood of beasts, transforms into a long cleaver that makes use of centrifugal force."
+	force = 12
+	force_on = 20 //force when active
+	throwforce = 20
+	throwforce_on = 20
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	icon_state = "cleaving_saw"
+	icon_state_on = "cleaving_saw_open"
+	slot_flags = SLOT_BELT
+	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound_on = 'sound/weapons/bladeslice.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	sharpness = IS_SHARP
+	faction_bonus_force = 30
+	nemesis_factions = list("mining", "boss")
+	var/transform_cooldown
+	var/swiping = FALSE
 
+/obj/item/weapon/melee/transforming/cleaving_saw/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].<br>\
+	Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.<br>\
+	Transforming it immediately after an attack causes the next attack to come out faster.</span>")
+
+/obj/item/weapon/melee/transforming/cleaving_saw/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	transform_cooldown = 0
+	transform_weapon(user, TRUE)
+	return BRUTELOSS
+
+/obj/item/weapon/melee/transforming/cleaving_saw/transform_weapon(mob/living/user, supress_message_text)
+	if(transform_cooldown > world.time)
+		return FALSE
+	. = ..()
+	if(.)
+		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
+		user.changeNext_move(CLICK_CD_MELEE * 0.25)
+
+/obj/item/weapon/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
+	if(!supress_message_text)
+		if(active)
+			to_chat(user, "<span class='notice'>You open [src]. It will now cleave enemies in a wide arc.</span>")
+		else
+			to_chat(user, "<span class='notice'>You close [src]. It will now attack rapidly and cause beastly enemies to bleed.</span>")
+	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
+
+/obj/item/weapon/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
+	if(user.disabilities & CLUMSY && prob(50))
+		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
+		user.take_bodypart_damage(10)
+
+/obj/item/weapon/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
+	..()
+	if(!active)
+		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
+
+/obj/item/weapon/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
+	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(!B)
+		if(!active) //This isn't in the above if-check so that the else doesn't care about active
+			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+	else
+		B.add_bleed(B.bleed_buildup)
+
+/obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
+	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
+		if(!active)
+			faction_bonus_force = 0
+		..()
+		if(!active)
+			faction_bonus_force = initial(faction_bonus_force)
+	else
+		var/turf/user_turf = get_turf(user)
+		var/dir_to_target = get_dir(user_turf, get_turf(target))
+		swiping = TRUE
+		var/static/list/cleaving_saw_cleave_angles = list(0, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
+		for(var/i in cleaving_saw_cleave_angles)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
+			for(var/mob/living/L in T)
+				if(user.Adjacent(L) && L.density)
+					melee_attack_chain(user, L)
+		swiping = FALSE
 
 //Dragon
 
@@ -580,7 +762,7 @@
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 
-/obj/item/weapon/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/ghost_counter = ghost_check()
 	final_block_chance += Clamp((ghost_counter * 5), 0, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
@@ -693,7 +875,7 @@
 					message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
 					log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
 					timer = world.time + create_cooldown
-					playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+					playsound(T,'sound/magic/fireball.ogg', 200, 1)
 			else
 				timer = world.time
 			qdel(L)
@@ -702,7 +884,7 @@
 			if(T.TerraformTurf(reset_turf_type))
 				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
 				timer = world.time + reset_cooldown
-				playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+				playsound(T,'sound/magic/fireball.ogg', 200, 1)
 
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
@@ -740,7 +922,7 @@
 		var/obj/effect/mine/pickup/bloodbath/B = new(H)
 		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
-	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 	qdel(src)
 
 /obj/item/blood_contract
@@ -774,6 +956,7 @@
 		var/datum/objective/survive/survive = new
 		survive.owner = L.mind
 		L.mind.objectives += survive
+		add_logs(user, L, "took out a blood contract on", src)
 		to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
 		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		var/obj/effect/mine/pickup/bloodbath/B = new(L)
@@ -908,7 +1091,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
-				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
+				playsound(T,'sound/magic/blind.ogg', 200, 1, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
@@ -951,8 +1134,8 @@
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
-		playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
-		playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
+		playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
+		playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
@@ -1026,7 +1209,7 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
 /obj/item/weapon/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long

@@ -14,7 +14,7 @@
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
-		user.Weaken(5)
+		user.Knockdown(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
@@ -69,7 +69,7 @@
 	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	breakouttime = 45
-	weaken = 1
+	knockdown = 10
 
 
 /obj/item/clothing/head/culthood
@@ -90,7 +90,7 @@
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -133,7 +133,7 @@
 	icon_state = "magusred"
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -152,7 +152,7 @@
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_SMALL
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
+	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade, /obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
@@ -172,7 +172,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
 	var/current_charges = 3
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 
@@ -192,7 +192,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Weaken(5)
+			user.Knockdown(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The armor squeezes at your body!</span>")
@@ -200,7 +200,7 @@
 			user.adjustBruteLoss(25)
 			user.dropItemToGround(src, TRUE)
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
@@ -222,7 +222,7 @@
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
 	flags_inv = HIDEJUMPSUIT
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 	slowdown = -1
@@ -244,7 +244,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Weaken(5)
+			user.Knockdown(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The robes squeeze at your body!</span>")
@@ -260,13 +260,13 @@
 	darkness_view = 8
 	flash_protect = 1
 
-/obj/item/clothing/glasses/night/cultblind/equipped(mob/user, slot)
+/obj/item/clothing/glasses/night/cultblind/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
 		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
-		user.Weaken(5)
+		user.Knockdown(100)
 		user.blind_eyes(30)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
@@ -283,10 +283,10 @@
 	icon_state ="shuttlecurse"
 	var/global/curselimit = 0
 
-/obj/item/device/shuttle_curse/attack_self(mob/user)
+/obj/item/device/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
-		user.Weaken(5)
+		user.Knockdown(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
 		return
 	if(curselimit > 1)
@@ -301,7 +301,7 @@
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
 		SSshuttle.emergency.setTimer(timer)
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
-		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, 1)
 		qdel(src)
 		sleep(20)
 		var/global/list/curses
@@ -380,8 +380,8 @@
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
-	on = 1
-	var/charges = 3
+	on = TRUE
+	var/charges = 5
 
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
@@ -407,6 +407,9 @@
 		if(!iscultist(cultist_to_receive))
 			to_chat(user, "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
 			log_game("Void torch failed - target was deconverted")
+			return
+		if(A in user.GetAllContents())
+			to_chat(user, "<span class='cultitalic'>[A] must be on a surface in order to teleport it!</span>")
 			return
 		to_chat(user, "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
 		cultist_to_receive.put_in_hands(A)

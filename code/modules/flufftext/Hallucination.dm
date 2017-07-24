@@ -11,11 +11,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
-#define SCREWYHUD_NONE 0
-#define SCREWYHUD_CRIT 1
-#define SCREWYHUD_DEAD 2
-#define SCREWYHUD_HEALTHY 3
-
 /mob/living/carbon
 	var/image/halimage
 	var/image/halbody
@@ -32,7 +27,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//Something's wrong here
 	var/list/medium = list("fake_alert"=15,"items"=10,"items_other"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15,"self_delusion"=10)
 	//AAAAH
-	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20,"koolaid"=10)
+	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"delusion"=20,"koolaid"=10)
 
 	handling_hal = 1
 	while(hallucination > 20)
@@ -148,7 +143,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/fake_flood/proc/Expand()
 	for(var/turf/FT in flood_turfs)
-		for(var/dir in GLOB.cardinal)
+		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
@@ -179,7 +174,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
 	if(A == target && target.stat!=DEAD)
-		target.Weaken(5)
+		target.Knockdown(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
 /obj/effect/hallucination/xeno_attack
@@ -222,39 +217,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/clown/scary
 	image_state = "scary_clown"
 
-/obj/effect/hallucination/simple/borer
-	image_icon = 'icons/mob/animal.dmi'
-	image_state = "brainslug"
-
-/obj/effect/hallucination/borer
-	//A borer paralyzes you and crawls in your ear
-	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
-	var/obj/effect/hallucination/simple/borer/borer = null
-
-/obj/effect/hallucination/borer/Initialize(mapload, var/mob/living/carbon/T)
-	..()
-	target = T
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
-		if(!U.welded)
-			pump = U
-			break
-	if(pump)
-		borer = new(pump.loc,target)
-		for(var/i=0, i<11, i++)
-			walk_to(borer, get_step(borer, get_cardinal_dir(borer, T)))
-			if(borer.Adjacent(T))
-				to_chat(T, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-				T.Stun(4)
-				sleep(50)
-				qdel(borer)
-				sleep(rand(60, 90))
-				to_chat(T, "<span class='changeling'><i>Primary [rand(1000,9999)] states:</i> [pick("Hello","Hi","You're my slave now!","Don't try to get rid of me...")]</span>")
-				break
-			sleep(4)
-		if(!QDELETED(borer))
-			qdel(borer)
-	qdel(src)
-
 /obj/effect/hallucination/simple/bubblegum
 	name = "Bubblegum"
 	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
@@ -262,51 +224,57 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	px = -32
 
 /obj/effect/hallucination/oh_yeah
-	var/turf/closed/wall/wall
-	var/obj/effect/hallucination/simple/bubblegum/bubblegum = null
+	var/obj/effect/hallucination/simple/bubblegum/bubblegum
 	var/image/fakebroken
 	var/image/fakerune
 
 /obj/effect/hallucination/oh_yeah/Initialize(mapload, var/mob/living/carbon/T)
-	..()
+	. = ..()
 	target = T
+	var/turf/closed/wall/wall
 	for(var/turf/closed/wall/W in range(7,target))
 		wall = W
 		break
-	if(wall)
-		fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
-		var/turf/landing = get_turf(target)
-		var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
-		fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
-		fakebroken.override = TRUE
-		if(target.client)
-			target.client.images |= fakebroken
-			target.client.images |= fakerune
-		target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
-		bubblegum = new(wall, target)
-		sleep(10) //ominous wait
-		var/charged = FALSE //only get hit once
-		while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
-			bubblegum.forceMove(get_step_towards(bubblegum, landing))
-			bubblegum.setDir(get_dir(bubblegum, landing))
-			target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
-			shake_camera(target, 2, 1)
-			if(bubblegum.Adjacent(target) && !charged)
-				charged = TRUE
-				target.Weaken(4)
-				target.staminaloss += 40
-				step_away(target, bubblegum)
-				shake_camera(target, 4, 3)
-				target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
-			sleep(2)
-		sleep(30)
-		qdel(bubblegum)
+	if(!wall)
+		return INITIALIZE_HINT_QDEL
+
+	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
+	var/turf/landing = get_turf(target)
+	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
+	fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+	fakebroken.override = TRUE
+	if(target.client)
+		target.client.images |= fakebroken
+		target.client.images |= fakerune
+	target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
+	bubblegum = new(wall, target)
+	addtimer(CALLBACK(src, .proc/bubble_attack, landing), 10)
+
+/obj/effect/hallucination/oh_yeah/proc/bubble_attack(turf/landing)
+	var/charged = FALSE //only get hit once
+	while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
+		bubblegum.forceMove(get_step_towards(bubblegum, landing))
+		bubblegum.setDir(get_dir(bubblegum, landing))
+		target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
+		shake_camera(target, 2, 1)
+		if(bubblegum.Adjacent(target) && !charged)
+			charged = TRUE
+			target.Knockdown(80)
+			target.adjustStaminaLoss(40)
+			step_away(target, bubblegum)
+			shake_camera(target, 4, 3)
+			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
+		sleep(2)
+	sleep(30)
 	qdel(src)
 
 /obj/effect/hallucination/oh_yeah/Destroy()
 	if(target.client)
 		target.client.images.Remove(fakebroken)
 		target.client.images.Remove(fakerune)
+	QDEL_NULL(fakebroken)
+	QDEL_NULL(fakerune)
+	QDEL_NULL(bubblegum)
 	return ..()
 
 /obj/effect/hallucination/singularity_scare
@@ -342,7 +310,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = SCREWYHUD_CRIT
-		target.SetSleeping(8, no_alert = TRUE)
+		target.SetUnconscious(160)
 		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
 /obj/effect/hallucination/battle
@@ -354,7 +322,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	switch(rand(1,5))
 		if(1) //Laser fight
 			for(var/i=0,i<hits,i++)
-				target.playsound_local(null, 'sound/weapons/Laser.ogg', 25, 1)
+				target.playsound_local(null, 'sound/weapons/laser.ogg', 25, 1)
 				if(prob(75))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/sear.ogg', 25, 1), rand(10,20))
 				else
@@ -378,7 +346,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 		if(4) //Stunprod + cablecuff
-			target.playsound_local(null, 'sound/weapons/Egloves.ogg', 40, 1)
+			target.playsound_local(null, 'sound/weapons/egloves.ogg', 40, 1)
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 			sleep(20)
 			target.playsound_local(null, 'sound/weapons/cablecuff.ogg', 15, 1)
@@ -437,7 +405,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/list/image/delusions = list()
 
 /obj/effect/hallucination/delusion/Initialize(mapload, mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
-	..()
+	. = ..()
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
@@ -502,7 +470,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	A.override = 1
 	if(target.client)
 		to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
-		target.playsound_local(target,'sound/magic/Staff_Change.ogg', 50, 1, -1)
+		target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1, -1)
 		delusion = A
 		target.client.images |= A
 	QDEL_IN(src, duration)
@@ -528,9 +496,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		return
 
 	var/static/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
-	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
+	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/transforming/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
-	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
+	/obj/item/weapon/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,	/obj/item/weapon/grenade/plastic/x4,\
@@ -544,7 +512,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(get_turf(target),target)
-	
+
 	for(var/obj/item/I in clone.held_items)
 		if(!(locate(I) in non_fakeattack_weapons))
 			clone_weapon = I.name
@@ -567,8 +535,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	icon_state = null
 	name = ""
 	desc = ""
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
@@ -584,7 +552,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/collapse
 	var/image/down
 
-	obj_integrity = 100
+	max_integrity = 100
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
 	step_away(src,my_target,2)
@@ -625,7 +593,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	else if(src.dir == WEST)
 		del src.currentimage
 		src.currentimage = new /image(left,src)
-	to_chat(my_target, currentimage)
+	SEND_IMAGE(my_target, currentimage)
 
 
 /obj/effect/fake_attacker/proc/attack_loop()
@@ -669,7 +637,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	to_chat(target, I)
+	SEND_IMAGE(target, I)
 	QDEL_IN(O, 300)
 
 
@@ -689,13 +657,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		doors += I
 		if(target.client)
 			target.client.images |= I
-			target.playsound_local(get_turf(A), 'sound/machines/BoltsDown.ogg',30,0,3)
+			target.playsound_local(get_turf(A), 'sound/machines/boltsdown.ogg',30,0,3)
 		sleep(rand(6,12))
 	sleep(100)
 	for(var/image/B in doors)
 		if(target.client)
 			target.client.images.Remove(B)
-			target.playsound_local(get_turf(B), 'sound/machines/BoltsUp.ogg',30,0,3)
+			target.playsound_local(get_turf(B), 'sound/machines/boltsup.ogg',30,0,3)
 		sleep(rand(6,12))
 	qdel(src)
 
@@ -758,8 +726,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	switch(hal_type)
 		if("xeno")
 			new /obj/effect/hallucination/xeno_attack(src.loc,src)
-		if("borer")
-			new /obj/effect/hallucination/borer(src.loc,src)
 		if("singulo")
 			new /obj/effect/hallucination/singularity_scare(src.loc,src)
 		if("koolaid")
@@ -786,42 +752,41 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			new /obj/effect/hallucination/items_other(src.loc,src)
 		if("sounds")
 			//Strange audio
-			//to_chat(src, "Strange Audio")
 			switch(rand(1,20))
 				if(1) playsound_local(null,'sound/machines/airlock.ogg', 15, 1)
 				if(2)
-					if(prob(50)) playsound_local(null,'sound/effects/Explosion1.ogg', 50, 1)
-					else playsound_local(null, 'sound/effects/Explosion2.ogg', 50, 1)
+					if(prob(50)) playsound_local(null,'sound/effects/explosion1.ogg', 50, 1)
+					else playsound_local(null, 'sound/effects/explosion2.ogg', 50, 1)
 				if(3) playsound_local(null, 'sound/effects/explosionfar.ogg', 50, 1)
-				if(4) playsound_local(null, pick('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg'), 50, 1)
+				if(4) playsound_local(null, pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg'), 50, 1)
 				if(5)
 					playsound_local(null, 'sound/weapons/ring.ogg', 35)
 					sleep(15)
 					playsound_local(null, 'sound/weapons/ring.ogg', 35)
 					sleep(15)
 					playsound_local(null, 'sound/weapons/ring.ogg', 35)
-				if(6) playsound_local(null, 'sound/magic/Summon_guns.ogg', 50, 1)
-				if(7) playsound_local(null, 'sound/machines/Alarm.ogg', 100, 0)
+				if(6) playsound_local(null, 'sound/magic/summon_guns.ogg', 50, 1)
+				if(7) playsound_local(null, 'sound/machines/alarm.ogg', 100, 0)
 				if(8) playsound_local(null, 'sound/voice/bfreeze.ogg', 35, 0)
 				if(9)
 					//To make it more realistic, I added two gunshots (enough to kill)
-					playsound_local(null, 'sound/weapons/Gunshot.ogg', 25, 1)
+					playsound_local(null, 'sound/weapons/gunshot.ogg', 25, 1)
 					spawn(rand(10,30))
-						playsound_local(null, 'sound/weapons/Gunshot.ogg', 25, 1)
+						playsound_local(null, 'sound/weapons/gunshot.ogg', 25, 1)
 						sleep(rand(5,10))
 						playsound_local(null, sound(get_sfx("bodyfall"), 25), 25, 1)
 				if(10) playsound_local(null, 'sound/effects/pray_chaplain.ogg', 50)
 				if(11)
 					//Same as above, but with tasers.
-					playsound_local(null, 'sound/weapons/Taser.ogg', 25, 1)
+					playsound_local(null, 'sound/weapons/taser.ogg', 25, 1)
 					spawn(rand(10,30))
-						playsound_local(null, 'sound/weapons/Taser.ogg', 25, 1)
+						playsound_local(null, 'sound/weapons/taser.ogg', 25, 1)
 						sleep(rand(5,10))
 						playsound_local(null, sound(get_sfx("bodyfall"), 25), 25, 1)
 			//Rare audio
 				if(12)
 			//These sounds are (mostly) taken from Hidden: Source
-					var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
+					var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/heart_beat.ogg', 'sound/effects/screech.ogg',\
 						'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
 						'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
 						'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
@@ -834,17 +799,17 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if(14)
 					to_chat(src, "<h1 class='alert'>Priority Announcement</h1>")
 					to_chat(src, "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
-					playsound_local(null, 'sound/AI/shuttledock.ogg', 100)
+					playsound_local(null, 'sound/ai/shuttledock.ogg', 100)
 				//Deconstructing a wall
 				if(15)
-					playsound_local(null, 'sound/items/Welder.ogg', 15, 1)
+					playsound_local(null, 'sound/items/welder.ogg', 15, 1)
 					sleep(105)
-					playsound_local(null, 'sound/items/Welder2.ogg', 15, 1)
+					playsound_local(null, 'sound/items/welder2.ogg', 15, 1)
 					sleep(15)
-					playsound_local(null, 'sound/items/Ratchet.ogg', 15, 1)
+					playsound_local(null, 'sound/items/ratchet.ogg', 15, 1)
 				//Hacking a door
 				if(16)
-					playsound_local(null, 'sound/items/Screwdriver.ogg', 15, 1)
+					playsound_local(null, 'sound/items/screwdriver.ogg', 15, 1)
 					sleep(rand(10,30))
 					for(var/i = rand(1,3), i>0, i--)
 						playsound_local(null, 'sound/weapons/empty.ogg', 15, 1)
@@ -855,7 +820,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if(18)
 					to_chat(src, "<h1 class='alert'>Biohazard Alert</h1>")
 					to_chat(src, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>")
-					playsound_local(null, 'sound/AI/outbreak5.ogg')
+					playsound_local(null, 'sound/ai/outbreak5.ogg')
 				if(19) //Tesla loose!
 					playsound_local(null, 'sound/magic/lightningbolt.ogg', 35, 1)
 					sleep(20)
@@ -865,7 +830,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if(20) //AI is doomsdaying!
 					to_chat(src, "<h1 class='alert'>Anomaly Alert</h1>")
 					to_chat(src, "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>")
-					playsound_local(null, 'sound/AI/aimalf.ogg', 100)
+					playsound_local(null, 'sound/ai/aimalf.ogg', 100)
 		if("hudscrew")
 			//Screwy HUD
 			//to_chat(src, "Screwy HUD")
@@ -874,12 +839,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			hal_screwyhud = 0
 
 		if("fake_alert")
-			var/alert_type = pick("oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","tox_in_air","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
+			var/alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","weightless","fire","locked","hacked","temp","pressure")
 			if(specific)
 				alert_type = specific
 			switch(alert_type)
-				if("oxy")
-					throw_alert("oxy", /obj/screen/alert/oxy, override = TRUE)
+				if("not_enough_oxy")
+					throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy, override = TRUE)
 				if("not_enough_tox")
 					throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox, override = TRUE)
 				if("not_enough_co2")
@@ -888,8 +853,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy, override = TRUE)
 				if("too_much_co2")
 					throw_alert("too_much_co2", /obj/screen/alert/too_much_co2, override = TRUE)
-				if("tox_in_air")
-					throw_alert("tox_in_air", /obj/screen/alert/tox_in_air, override = TRUE)
+				if("too_much_tox")
+					throw_alert("too_much_tox", /obj/screen/alert/too_much_tox, override = TRUE)
 				if("nutrition")
 					if(prob(50))
 						throw_alert("nutrition", /obj/screen/alert/fat, override = TRUE)
@@ -917,7 +882,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if("hacked")
 					throw_alert("hacked", /obj/screen/alert/hacked, override = TRUE)
 				if("charge")
-					throw_alert("charge",/obj/screen/alert/emptycell, override = TRUE)
+					throw_alert("charge", /obj/screen/alert/emptycell, override = TRUE)
 			sleep(rand(100,200))
 			clear_alert(alert_type, clear_override = TRUE)
 
@@ -1003,7 +968,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if("death")
 			//Fake death
 			hal_screwyhud = SCREWYHUD_DEAD
-			SetSleeping(20, no_alert = TRUE)
+			SetUnconscious(400)
 			var/area/area = get_area(src)
 			to_chat(src, "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>")
 			if(prob(50))

@@ -23,7 +23,7 @@
 					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
 				add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
-				Stun(2)
+				Stun(40)
 				step(src,get_dir(M,src))
 				add_logs(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
@@ -80,9 +80,9 @@
 /mob/living/silicon/robot/emp_act(severity)
 	switch(severity)
 		if(1)
-			Stun(8)
+			Stun(160)
 		if(2)
-			Stun(3)
+			Stun(60)
 	..()
 
 
@@ -92,7 +92,7 @@
 	if(!opened)//Cover is closed
 		if(locked)
 			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
-			locked = 0
+			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
 		else
@@ -135,7 +135,7 @@
 		return
 
 	SetEmagged(1)
-	SetStunned(3) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
 	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")

@@ -30,7 +30,7 @@
 /obj/item/weapon/inducer/emp_act(severity)
 	..()
 	if(cell)
-		cell.emp_act()
+		cell.emp_act(severity)
 
 /obj/item/weapon/inducer/attack_obj(obj/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
@@ -60,7 +60,7 @@
 
 
 /obj/item/weapon/inducer/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src, W.usesound, 50, 1)
 		if(!opened)
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
@@ -72,7 +72,7 @@
 			opened = FALSE
 			update_icon()
 			return
-	if(istype(W,/obj/item/weapon/stock_parts/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(opened)
 			if(!cell)
 				if(!user.transferItemToLoc(W, src))
@@ -128,6 +128,7 @@
 		user.visible_message("[user] recharged \the [A]!","<span class='notice'>You recharged \the [A]!</span>")
 		recharging = FALSE
 		return TRUE
+	recharging = FALSE
 
 
 /obj/item/weapon/inducer/attack(mob/M, mob/user)

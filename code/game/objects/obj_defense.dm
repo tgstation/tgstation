@@ -35,7 +35,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/hitby(atom/movable/AM)
 	..()
@@ -132,7 +132,7 @@
 			if(BRUTE)
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
-				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				playsound(src, 'sound/effects/spray2.ogg', 50, 1)
 				return 0
@@ -142,7 +142,7 @@
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
-	ex_act(1)
+	ex_act(EXPLODE_DEVASTATE)
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
@@ -172,7 +172,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 			if(armour_value != "acid" && armour_value != "fire")
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
-			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
+			playsound(loc, 'sound/items/welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
@@ -214,13 +214,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 
 /obj/proc/tesla_act(var/power)
-	being_shocked = 1
+	being_shocked = TRUE
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 /obj/proc/reset_shocked()
-	being_shocked = 0
+	being_shocked = FALSE
 
 //the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
@@ -259,3 +259,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		obj_break(damage_type)
 		return TRUE
 	return FALSE
+
+//returns how much the object blocks an explosion
+/obj/proc/GetExplosionBlock()
+	CRASH("Unimplemented GetExplosionBlock()")

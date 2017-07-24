@@ -4,48 +4,300 @@
 /area/template_noop)
 "ab" = (
 /turf/closed/mineral/random/low_chance,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav)
 "ac" = (
-/turf/closed/wall/mineral/iron,
-/area/ruin/deepstorage)
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
 "ad" = (
-/obj/structure/closet/cardboard,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/gold,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/gold,
-/obj/item/stack/sheet/mineral/gold,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
+/turf/closed/mineral/random/low_chance,
+/area/asteroid/cave{
+	name = "Asteroid - Space"
+	})
 "ae" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/asteroid/cave{
+	name = "Asteroid - Space"
+	})
+"af" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"ag" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"ah" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"ai" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aj" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"ak" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"al" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "bunkerrecycle"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"am" = (
+/obj/machinery/recycler/deathtrap,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"an" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "bunkerrecycle";
+	movedir = 2
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"ao" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"ap" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"ar" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"as" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/emergency,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"at" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"au" = (
+/obj/machinery/conveyor_switch{
+	id = "bunkerrecycle"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"av" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "bunkerrecycle";
+	movedir = 2
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aw" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"ax" = (
+/obj/machinery/processor{
+	name = "processor"
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"ay" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"az" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aA" = (
+/obj/machinery/gibber,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aB" = (
+/obj/structure/table,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aC" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aD" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aE" = (
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Recycling APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aF" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "bunkerrecycle";
+	movedir = 2
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aG" = (
+/obj/structure/closet/cardboard,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/deepstorage/storage)
+"aH" = (
 /obj/structure/closet/cardboard,
 /obj/item/weapon/storage/box/monkeycubes,
 /obj/item/weapon/storage/box/monkeycubes,
 /obj/item/weapon/storage/box/monkeycubes,
 /obj/item/weapon/storage/toolbox/drone,
 /obj/item/weapon/storage/toolbox/drone,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"af" = (
+/area/ruin/deepstorage/storage)
+"aI" = (
 /obj/structure/closet/cardboard,
 /obj/item/stack/sheet/cardboard,
 /obj/item/stack/cable_coil,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/packageWrap,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"ag" = (
+/area/ruin/deepstorage/storage)
+"aJ" = (
 /obj/structure/closet/cardboard,
 /obj/item/weapon/storage/box/mousetraps,
 /obj/item/weapon/storage/box/mousetraps,
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/item/weapon/storage/box/zipties,
 /obj/item/weapon/switchblade,
+/obj/effect/turf_decal/delivery,
+/obj/item/device/gps{
+	gpstag = "DEEP"
+	},
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"ah" = (
+/area/ruin/deepstorage/storage)
+"aK" = (
 /obj/structure/closet/cardboard,
 /obj/item/stack/sheet/metal{
 	amount = 50;
@@ -79,9 +331,10 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"ai" = (
+/area/ruin/deepstorage/storage)
+"aL" = (
 /obj/structure/closet/cardboard,
 /obj/item/stack/sheet/glass{
 	amount = 50
@@ -109,14 +362,57 @@
 	},
 /obj/item/clothing/shoes/combat,
 /obj/item/clothing/shoes/combat,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"aj" = (
-/obj/structure/closet/cardboard,
+/obj/effect/turf_decal/delivery,
 /obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
+	dir = 1
 	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/deepstorage/storage)
+"aM" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock{
+	name = "Freezer"
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aO" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Recycling Room";
+	req_access_txt = "200"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aP" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Recycling Room";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"aQ" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"aR" = (
+/obj/structure/closet/cardboard,
 /obj/item/device/flashlight/flare,
 /obj/item/device/flashlight/flare,
 /obj/item/device/flashlight/flare,
@@ -130,9 +426,10 @@
 /obj/item/weapon/pickaxe/drill,
 /obj/item/weapon/pickaxe/drill,
 /obj/item/weapon/pickaxe/drill,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"ak" = (
+/area/ruin/deepstorage/storage)
+"aS" = (
 /obj/structure/closet/cardboard,
 /obj/item/device/flashlight/lantern,
 /obj/item/device/flashlight/lantern,
@@ -145,9 +442,10 @@
 /obj/item/weapon/extinguisher,
 /obj/item/clothing/glasses/night,
 /obj/item/clothing/glasses/night,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"al" = (
+/area/ruin/deepstorage/storage)
+"aT" = (
 /obj/structure/closet/cardboard,
 /obj/item/weapon/storage/box/syringes,
 /obj/item/weapon/storage/box/syringes,
@@ -157,135 +455,1358 @@
 /obj/item/weapon/storage/box/bodybags,
 /obj/item/clothing/glasses/meson/engine,
 /obj/item/clothing/glasses/meson/engine,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"am" = (
+/area/ruin/deepstorage/storage)
+"aU" = (
 /obj/structure/closet/cardboard,
 /obj/item/weapon/kitchen/knife,
 /obj/item/weapon/kitchen/knife,
 /obj/item/weapon/cultivator,
 /obj/item/weapon/hatchet,
 /obj/item/weapon/kitchen/rollingpin,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"an" = (
+/area/ruin/deepstorage/storage)
+"aV" = (
 /obj/structure/closet/cardboard,
 /obj/item/weapon/defibrillator,
 /obj/item/weapon/storage/box/medipens,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"ao" = (
+/area/ruin/deepstorage/storage)
+"aW" = (
 /obj/structure/closet/cardboard,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/deepstorage/storage)
+"aX" = (
+/obj/structure/table,
 /obj/machinery/light{
+	dir = 1
+	},
+/obj/item/weapon/storage/box/cups,
+/obj/item/weapon/reagent_containers/glass/beaker,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aY" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/obj/item/weapon/reagent_containers/food/condiment/soysauce{
+	pixel_x = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 6
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"aZ" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"ba" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 9
+	},
+/obj/item/weapon/kitchen/knife,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bc" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bd" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"be" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"bf" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"bg" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bh" = (
+/obj/structure/table,
+/obj/item/weapon/storage/bag/plants/portaseeder,
+/obj/item/weapon/storage/bag/plants,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bi" = (
+/obj/machinery/vending/hydronutrients,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bj" = (
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bk" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/light{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bl" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 10
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/light{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bm" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bp" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bq" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"br" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bs" = (
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	req_access = null
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/weapon/storage/box/drinkingglasses,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bt" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bu" = (
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bw" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bx" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/structure/extinguisher_cabinet{
 	dir = 4;
-	icon_state = "tube1"
+	pixel_x = 24
 	},
-/obj/item/ammo_box/c9mm,
-/obj/item/ammo_box/c9mm,
-/obj/item/ammo_box/c9mm,
-/obj/item/ammo_box/c9mm,
-/obj/item/ammo_box/c9mm,
-/obj/item/ammo_box/c9mm,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"by" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"ap" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/turf/open/floor/plasteel/floorgrime,
+"bz" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aq" = (
-/obj/machinery/iv_drip,
-/turf/open/floor/plasteel/floorgrime,
+"bA" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bB" = (
+/obj/structure/table,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/hatchet,
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bC" = (
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bF" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bG" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bH" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bI" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/weapon/storage/box/ingredients/wildcard,
+/obj/item/weapon/storage/box/ingredients/wildcard,
+/obj/item/weapon/storage/box/ingredients/wildcard,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bJ" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bL" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bN" = (
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Kitchen APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bO" = (
+/obj/machinery/light,
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bP" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"ar" = (
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"as" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"at" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"au" = (
+"bQ" = (
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics"
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bR" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bS" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/light{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"bT" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate{
+	name = "food crate"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bU" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate{
+	name = "food crate"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/weapon/reagent_containers/food/snacks/beans,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bX" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Bunker"
+	name = "General Storage";
+	req_access_txt = "200"
 	},
-/turf/open/floor/plasteel,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"bY" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Kitchen"
+	},
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"bZ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/smartfridge,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/kitchen)
+"ca" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"av" = (
+"cb" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cc" = (
+/obj/structure/grille,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cd" = (
+/obj/structure/table,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"ce" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cf" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cg" = (
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 4;
+	name = "Hydroponics APC";
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"ch" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"ci" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cj" = (
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/obj/item/weapon/paper{
+	info = "To whoever keeps it up with the long, hot showers: you're going on the next ice-mining trip. If you feel the need to use up all the damn water during your 'relaxation' time, you sure as hell are gonna work for all that water!";
+	name = "water concerns"
+	},
+/obj/item/weapon/paper{
+	info = "Hydroponics is our life and blood here, if it dies then so do we. Keep the damn plants watered!";
+	name = "hydroponics notice"
+	},
+/obj/item/weapon/paper{
+	info = "Please make sure to throw all excess waste into the crusher in the back! It's amazing what you can get out of what others consider 'garbage' if you run it through a giant crusher enough times.";
+	name = "recycling notice"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"ck" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cl" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cm" = (
+/obj/structure/table,
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"co" = (
+/obj/structure/closet/crate/bin,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cp" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cq" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/item/weapon/soap,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cr" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cs" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"ct" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cu" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cv" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cw" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light,
+/obj/item/weapon/reagent_containers/glass/bucket{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cx" = (
+/obj/machinery/seed_extractor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cy" = (
+/obj/machinery/biogenerator,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/weapon/reagent_containers/glass/beaker/large,
+/turf/open/floor/plasteel/hydrofloor{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cz" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/light{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cA" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/light{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"cB" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate{
+	name = "food crate"
+	},
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"cC" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 5
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"cD" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Provisions Storage";
+	req_access_txt = "200"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"cE" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cF" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cG" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cH" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cI" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cJ" = (
+/obj/structure/table,
+/obj/item/weapon/kitchen/fork,
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cK" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cL" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cM" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/structure/window/plasma/reinforced,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cN" = (
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cO" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/structure/mirror{
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cQ" = (
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 4;
+	name = "Storage APC";
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"cR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cS" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cT" = (
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cU" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cV" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/vending/cigarette,
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cX" = (
 /obj/structure/toilet{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/deepstorage)
-"aw" = (
-/obj/structure/mirror{
-	pixel_x = 30
+/obj/structure/curtain,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/obj/structure/sink{
+/area/ruin/deepstorage)
+"cY" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"cZ" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"da" = (
+/obj/structure/grille,
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"db" = (
+/obj/structure/table,
+/obj/item/device/mass_spectrometer/adv,
+/obj/item/device/mass_spectrometer/adv,
+/obj/item/device/healthanalyzer,
+/obj/item/device/healthanalyzer,
+/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/gauze,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dc" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dd" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/brute{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/brute,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"de" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"df" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"dg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"dh" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"di" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dj" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dl" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dm" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dn" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"do" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 24
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"ax" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/drone,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/turf/open/floor/plasteel,
+"dp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"ay" = (
-/obj/structure/table,
-/obj/item/weapon/gun/ballistic/automatic/wt550{
-	pixel_x = -3;
-	pixel_y = 6
+"dq" = (
+/obj/machinery/door/airlock{
+	name = "Showers"
 	},
-/obj/item/weapon/gun/ballistic/automatic/wt550{
-	pixel_x = 2;
-	pixel_y = 0
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel/floorgrime,
 /area/ruin/deepstorage)
-"az" = (
-/obj/structure/table,
-/obj/item/weapon/storage/backpack/dufflebag/sec{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical);
-	desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
-	name = "dufflebag";
-	pixel_y = 5
+"dr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aA" = (
-/obj/structure/table,
-/obj/item/device/radio{
-	pixel_x = -4
+"ds" = (
+/obj/structure/grille,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/item/device/radio,
-/obj/item/device/radio{
-	pixel_x = 4
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aB" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dt" = (
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"du" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dv" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
 	amount = 50;
@@ -297,87 +1818,851 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aC" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/brute,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aD" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/regular,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aE" = (
-/obj/structure/closet/crate/radiation,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aF" = (
-/obj/structure/closet/cardboard,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"aG" = (
-/obj/structure/closet/cardboard,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/machinery/light{
+/obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "tube1"
+	pixel_x = 24
 	},
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dw" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate{
+	name = "food crate"
+	},
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/weapon/vending_refill/coffee,
+/obj/item/weapon/vending_refill/cigarette,
+/obj/item/weapon/vending_refill/cigarette,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"dx" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate{
+	name = "food crate"
+	},
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/vending_refill/coffee,
+/obj/item/weapon/vending_refill/cigarette,
+/obj/item/weapon/vending_refill/cigarette,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"dy" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"dz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/storage)
+"dA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"dB" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"dC" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aH" = (
-/obj/structure/closet/cardboard,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/turf/open/floor/plasteel,
+"dD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aI" = (
-/obj/machinery/vending/clothing,
-/turf/open/floor/wood,
+"dE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aJ" = (
+"dF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dH" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dJ" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dL" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dM" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Secure Storage";
+	req_access_txt = "200"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dP" = (
+/obj/structure/table,
+/obj/item/device/radio{
+	pixel_x = -4
+	},
+/obj/item/device/radio,
+/obj/item/device/radio{
+	pixel_x = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"dQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"dR" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 6
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"dS" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Dorms"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"dT" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dU" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dV" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Main Area APC";
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dW" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dX" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dY" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"dZ" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"ea" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"eb" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"ec" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"ed" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"ee" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Secure Storage";
+	req_access_txt = "200"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"ef" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 10
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"eg" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"eh" = (
+/obj/structure/table,
+/obj/item/weapon/storage/backpack/duffelbag/sec/surgery{
+	pixel_y = 5
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 4;
+	name = "Armory APC";
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"ei" = (
+/obj/structure/dresser,
 /turf/open/floor/wood{
-	icon_state = "wood-broken3"
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"ej" = (
+/obj/structure/table/wood,
+/obj/item/device/flashlight/lamp,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"ek" = (
+/obj/structure/bed,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/weapon/bedsheet,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"el" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"em" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"en" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Canister Storage";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage)
-"aK" = (
-/obj/structure/bed,
-/turf/open/floor/wood,
+"eo" = (
+/obj/machinery/door/poddoor{
+	id = "bunkerinterior"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aL" = (
-/turf/open/floor/plasteel/freezer,
+"ep" = (
+/obj/machinery/door/poddoor{
+	id = "bunkerinterior"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aM" = (
+"eq" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"er" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Airlock Control";
+	req_access_txt = "200"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"es" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"et" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"eu" = (
+/obj/structure/grille,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"ev" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"ew" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"ex" = (
+/obj/structure/table,
+/obj/item/weapon/gun/ballistic/automatic/wt550{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/ballistic/automatic/wt550{
+	pixel_x = 2
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"ey" = (
+/obj/structure/closet/cabinet,
+/obj/item/weapon/card/id/away{
+	desc = "A specialized ID meant for accessing some sort of specific door.";
+	icon_state = "centcom";
+	name = "bunker access ID"
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"ez" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"eA" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"eB" = (
+/obj/machinery/door/airlock{
+	name = "Personal Dorm"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"eC" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"eD" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"eE" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"aN" = (
+"eF" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"eG" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"eH" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eI" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "bunkerexterior";
+	name = "exterior blastdoor access";
+	pixel_x = -24;
+	pixel_y = -8;
+	req_access_txt = "200"
+	},
+/obj/machinery/button/door{
+	id = "bunkerinterior";
+	name = "interior blastdoor access";
+	pixel_x = -24;
+	req_access_txt = "200"
+	},
+/obj/machinery/button/door{
+	id = "bunkershutter";
+	name = "hallway shutter toggle";
+	pixel_x = -24;
+	pixel_y = 8;
+	req_access_txt = "200"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	dir = 1;
+	name = "Bunker Entrance";
+	network = list("Bunker1");
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eJ" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eK" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eL" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 10
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Airlock Control APC";
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eM" = (
+/obj/structure/grille,
+/obj/structure/cable/yellow,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"eN" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/pill_bottle/charcoal,
+/obj/machinery/light,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"eO" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/combat{
 	pixel_x = -3;
@@ -390,494 +2675,1385 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"aO" = (
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aP" = (
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"eP" = (
 /obj/structure/table,
-/obj/item/device/mass_spectrometer/adv,
-/obj/item/device/mass_spectrometer/adv,
-/obj/item/device/healthanalyzer,
-/obj/item/device/healthanalyzer,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/gauze,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"aQ" = (
-/obj/structure/closet/radiation,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aR" = (
-/obj/structure/closet/cardboard,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aS" = (
-/obj/structure/closet/cardboard,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"aT" = (
-/obj/structure/closet/wardrobe/pink,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
-/area/ruin/deepstorage)
-"aU" = (
-/turf/open/floor/wood,
-/area/ruin/deepstorage)
-"aV" = (
-/obj/structure/bed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/ruin/deepstorage)
-"aW" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/deepstorage)
-"aX" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/deepstorage)
-"aY" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/pill_bottle/charcoal,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"aZ" = (
-/obj/structure/table,
+/obj/item/weapon/storage/toolbox/drone,
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
 /obj/item/device/flashlight/flare,
 /obj/item/device/flashlight/flare,
 /obj/item/device/flashlight/flare,
 /obj/item/device/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare,
-/obj/item/weapon/crowbar/red,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"ba" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bb" = (
-/obj/structure/closet/wardrobe/pjs,
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/device/flashlight/flare{
+	pixel_y = 6
 	},
-/turf/open/floor/wood,
-/area/ruin/deepstorage)
-"bc" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken4"
+/obj/item/device/flashlight/flare{
+	pixel_y = 6
 	},
-/area/ruin/deepstorage)
-"bd" = (
-/obj/structure/bed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken3"
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ruin/deepstorage)
-"be" = (
-/obj/machinery/shower{
-	dir = 4
+/area/ruin/deepstorage/armory)
+"eQ" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/item/weapon/soap,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/deepstorage)
-"bf" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/ruin/deepstorage)
-"bg" = (
-/obj/structure/closet/cardboard,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bh" = (
-/obj/structure/closet/cardboard,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bi" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Bunker"
-	},
-/turf/open/floor/wood,
-/area/ruin/deepstorage)
-"bj" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Bunker"
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/deepstorage)
-"bk" = (
-/obj/structure/fireaxecabinet{
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bl" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bm" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bn" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bo" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
-	dir = 4
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bp" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Bunker"
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bq" = (
-/obj/machinery/processor{
-	name = "processor"
-	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"br" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/matches,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bs" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bt" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bu" = (
 /obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"eR" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"eS" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/light,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"bv" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/light,
+"eT" = (
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "bunkershutter"
+	},
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eU" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eV" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eX" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	name = "Hall Siphon to Port"
+	},
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"eY" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Atmospherics and Power Storage";
+	req_access_txt = "200"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"eZ" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Atmospherics and Power Storage";
+	req_access_txt = "200"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fa" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 6
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"fb" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/armory)
+"fc" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fd" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8
+	},
+/turf/open/floor/plating/airless/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fe" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"ff" = (
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"bw" = (
-/obj/machinery/blackbox_recorder,
-/turf/open/floor/plasteel,
+"fg" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"bx" = (
-/obj/structure/cable{
-	icon_state = "0-4";
+"fh" = (
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "bunkershutter"
+	},
+/obj/structure/cable/yellow,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fi" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fk" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fm" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fn" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fo" = (
+/obj/machinery/suit_storage_unit/syndicate,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fp" = (
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fq" = (
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fr" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 5
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fs" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"ft" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fu" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fv" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4;
+	name = "Port To Hall"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fw" = (
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/item/weapon/wrench,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/airlock)
+"fx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Power and Atmospherics APC";
+	pixel_x = -25;
+	pixel_y = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fy" = (
+/obj/machinery/atmospherics/components/trinary/mixer{
+	dir = 1;
+	icon_state = "mixer_off";
+	node1_concentration = 0.2;
+	node2_concentration = 0.8;
+	on = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fz" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fA" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fB" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 8;
+	frequency = 1441;
+	id_tag = "o2_out_bunker";
+	name = "oxygen out"
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fD" = (
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fE" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 4;
+	name = "Dormory APC";
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"fF" = (
+/obj/machinery/door/poddoor{
+	id = "bunkerexterior"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fG" = (
+/obj/machinery/door/poddoor{
+	id = "bunkerexterior"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fH" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fI" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fJ" = (
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "o2_in_bunker";
+	name = "Oxygen Supply Control";
+	output_tag = "o2_out_bunker";
+	sensors = list("o2_sensor_bunker" = "Tank")
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fK" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fL" = (
+/obj/machinery/air_sensor{
+	frequency = 1441;
+	id_tag = "o2_sensor_bunker"
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fM" = (
+/obj/machinery/atmospherics/miner/oxygen,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fN" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"fO" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"fP" = (
+/obj/structure/closet/wardrobe/pjs,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"fQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fR" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/sign/securearea{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fS" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fT" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fU" = (
+/obj/machinery/camera{
+	network = list("Bunker1")
+	},
+/obj/structure/sign/securearea{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fV" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"fW" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fX" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/sign/electricshock{
+	pixel_y = 32
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fY" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"fZ" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"ga" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 1;
+	filter_type = "o2";
+	on = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gb" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gc" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gd" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8;
+	frequency = 1441;
+	id = "n2_in_bunker"
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"ge" = (
+/obj/machinery/door/airlock{
+	name = "Personal Dorm"
+	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gf" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gg" = (
+/obj/machinery/washing_machine,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gh" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
 	d2 = 4
 	},
-/obj/machinery/power/port_gen/pacman,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"by" = (
-/obj/machinery/power/smes/magical{
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
-	name = "power storage unit"
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/obj/structure/cable{
+/area/ruin/deepstorage/power)
+"gi" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bz" = (
-/obj/machinery/telecomms/relay/preset/telecomms,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bA" = (
-/obj/machinery/light/small{
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gm" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/crate/bin{
+	name = "laundry bin"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gn" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"bB" = (
-/obj/machinery/biogenerator,
-/turf/open/floor/plasteel,
+"go" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"bC" = (
-/obj/machinery/light,
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/light,
+"gp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gq" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gr" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/sign/electricshock{
+	pixel_y = -32
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gu" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 8;
+	frequency = 1441;
+	id_tag = "n2_out_bunker";
+	name = "nitrogen out"
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gw" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gx" = (
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gy" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gz" = (
+/obj/machinery/door/airlock/highsecurity{
+	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
+	name = "Inconspicuous Airlock";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"bD" = (
-/obj/machinery/autolathe,
-/turf/open/floor/plasteel,
+"gA" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gC" = (
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "n2_in_bunker";
+	name = "Nitrogen Supply Control";
+	output_tag = "n2_out_bunker";
+	sensors = list("n2_sensor_bunker" = "Tank")
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gD" = (
+/obj/machinery/air_sensor{
+	frequency = 1441;
+	id_tag = "n2_sensor_bunker"
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gE" = (
+/obj/machinery/atmospherics/miner/nitrogen,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gF" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gG" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"gH" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"bE" = (
+"gI" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"gJ" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gK" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gL" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "RTG Observation";
+	req_access_txt = "200"
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gN" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gO" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 1;
+	filter_type = "n2o";
+	on = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gP" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8;
+	frequency = 1441;
+	id = "o2_in_bunker"
+	},
+/turf/open/floor/plating/airless{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gQ" = (
+/obj/machinery/door/airlock/highsecurity{
+	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
+	name = "Inconspicuous Airlock";
+	req_access_txt = "200"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"gR" = (
+/obj/structure/grille,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gS" = (
+/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/power/terminal{
-	icon_state = "term";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bF" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bG" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bH" = (
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bI" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bJ" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bK" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bL" = (
-/obj/machinery/seed_extractor,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bM" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Bunker APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bN" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bO" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
+	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bP" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bQ" = (
-/obj/structure/table,
-/obj/item/weapon/kitchen/knife,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bR" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bS" = (
-/obj/structure/table,
-/obj/item/weapon/kitchen/fork,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bT" = (
-/obj/machinery/vending/hydronutrients,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bU" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"bV" = (
-/obj/structure/chair/office/dark{
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 5
+	},
+/obj/machinery/autolathe,
+/obj/structure/sign/radiation{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bW" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"bX" = (
-/obj/machinery/smartfridge,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bY" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 9
+	},
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/toolbox/electrical,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gW" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gX" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gY" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Telecomms";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"gZ" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable/yellow,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"ha" = (
+/obj/machinery/power/rtg/advanced,
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/bar,
-/area/ruin/deepstorage)
-"bZ" = (
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
+/obj/structure/cable/yellow,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"ca" = (
-/obj/machinery/light/small{
-	dir = 8
+/area/ruin/deepstorage/power)
+"hb" = (
+/obj/machinery/blackbox_recorder,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"cb" = (
-/obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"cc" = (
-/obj/structure/frame/computer,
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"cd" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	dir = 1;
-	name = "Bunker Entrance";
-	network = list("Bunker1");
-	pixel_x = 0;
-	pixel_y = 2
+/area/ruin/deepstorage/power)
+"hc" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/turf/open/floor/plasteel,
-/area/ruin/deepstorage)
-"ce" = (
-/obj/structure/table/reinforced,
-/obj/machinery/button/door{
-	id = "bunker1";
-	name = "Inner Doors";
-	pixel_y = 6
+/area/ruin/deepstorage/power)
+"hd" = (
+/obj/machinery/telecomms/relay/preset/telecomms,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/obj/machinery/button/door{
-	id = "bunker2";
-	name = "Outer Doors";
-	pixel_y = -4
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/deepstorage)
-"cf" = (
-/obj/machinery/door/poddoor{
-	id = "bunker1";
-	name = "Bunker Door";
-	tag = "inner"
-	},
-/turf/open/floor/plating,
-/area/ruin/deepstorage)
-"cg" = (
-/turf/open/floor/plating,
-/area/ruin/deepstorage)
-"ch" = (
-/obj/machinery/camera{
-	network = list("Bunker1")
-	},
-/turf/open/floor/plating,
-/area/ruin/deepstorage)
-"ci" = (
-/obj/machinery/light/small{
+/area/ruin/deepstorage/power)
+"he" = (
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/ruin/deepstorage)
-"cj" = (
-/obj/machinery/door/poddoor{
-	id = "bunker2";
-	name = "Bunker Door";
-	tag = "outer"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/crusher)
+"hf" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/turf/open/floor/light{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/hydroponics)
+"hg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
-"ck" = (
-/turf/open/floor/plating/asteroid/airless,
+"hh" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/ruin/deepstorage)
+"hi" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"hj" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/dorm)
+"hk" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"hl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"hm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"hn" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage)
+"ho" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"hp" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
+"hq" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ruin/deepstorage/power)
 
 (1,1,1) = {"
 aa
 aa
 aa
+ab
 aa
 aa
 aa
@@ -885,6 +4061,14 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
 aa
 aa
 aa
@@ -912,39 +4096,14 @@ aa
 aa
 ab
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
 aa
 aa
 "}
 (2,1,1) = {"
 aa
+ab
 aa
 aa
 aa
@@ -955,12 +4114,17 @@ aa
 aa
 aa
 aa
+ab
 aa
+ab
+ac
+ab
+ab
+ab
+ab
+ab
 aa
-aa
-aa
-aa
-aa
+ab
 aa
 aa
 ab
@@ -975,80 +4139,23 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ac
+ac
+ac
+ab
+ab
 aa
 aa
 "}
 (3,1,1) = {"
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ab
 ab
 ab
@@ -1061,29 +4168,54 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ab
+ac
+ac
+ab
+aa
+aa
+aa
+ab
+ab
+ab
 aa
 aa
 aa
 aa
 aa
+ab
+ab
 aa
 aa
 aa
+ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ac
+ac
+ab
+ab
 aa
 aa
 "}
 (4,1,1) = {"
 aa
 aa
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+ab
 aa
 aa
 aa
@@ -1091,35 +4223,13 @@ aa
 aa
 aa
 aa
+ab
+ac
+ac
+ac
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ab
 ab
 ab
@@ -1129,21 +4239,18 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -1160,36 +4267,19 @@ aa
 aa
 aa
 aa
+ab
+ab
 aa
 aa
 aa
+ab
 aa
 aa
+ab
+ac
+ac
+ac
 aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ab
 ab
 ab
@@ -1199,11 +4289,11 @@ ab
 aa
 aa
 aa
+ab
 aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
 aa
 aa
 aa
@@ -1222,15 +4312,7 @@ aa
 (6,1,1) = {"
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
 aa
 aa
 aa
@@ -1238,28 +4320,18 @@ aa
 aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ac
+ac
+ac
+aa
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -1281,9 +4353,10 @@ aa
 aa
 aa
 aa
+ab
 aa
 aa
-aa
+ab
 aa
 aa
 aa
@@ -1291,6 +4364,33 @@ aa
 (7,1,1) = {"
 aa
 aa
+ab
+aa
+aa
+ab
+ab
+aa
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -1299,51 +4399,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-ab
-ab
-ab
-aa
-aa
 aa
 aa
 aa
@@ -1364,54 +4420,37 @@ aa
 aa
 aa
 aa
+ab
+aa
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
@@ -1433,59 +4472,42 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ab
 ab
 aa
@@ -1502,64 +4524,47 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+ab
+ab
+ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
@@ -1568,17 +4573,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
 ab
 ab
 ab
@@ -1593,32 +4587,23 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+dB
+dB
+dB
+dB
+dB
+dB
+dB
+dB
+dB
+dB
 ab
 ab
 ab
@@ -1630,6 +4615,9 @@ ab
 ab
 ab
 aa
+aa
+aa
+ab
 aa
 aa
 "}
@@ -1651,6 +4639,23 @@ ab
 ab
 ab
 ab
+aw
+bT
+bU
+cB
+cB
+cB
+dw
+dB
+ei
+ey
+dB
+ei
+ey
+dB
+ei
+ey
+dB
 ab
 ab
 ab
@@ -1661,43 +4666,9 @@ ab
 ab
 ab
 ab
+aa
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 ab
 aa
 aa
@@ -1706,60 +4677,37 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+ab
+ac
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aw
+aw
+aw
+aw
+aw
+bU
+bU
+cB
+cB
+cB
+dx
+dB
+ej
+ez
+dB
+ej
+ez
+dB
+ej
+ez
+dB
 ab
 ab
 ab
@@ -1770,68 +4718,51 @@ ab
 ab
 ab
 aa
+aa
+aa
+aa
+ab
+ab
+ab
 "}
 (14,1,1) = {"
 aa
 aa
+ab
+aa
+aa
 aa
 ab
+ac
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aw
+aG
+aR
+bm
+aw
+bV
+ch
+cC
+cQ
+df
+dy
+dB
+ek
+eA
+dB
+ek
+eA
+dB
+ek
+eA
+dB
+dB
+dB
+dB
 ab
 ab
 ab
@@ -1839,68 +4770,51 @@ ab
 ab
 ab
 aa
+aa
+ab
+ac
+ac
+ab
+ab
 "}
 (15,1,1) = {"
 aa
+ab
+ab
+ab
 aa
+aa
+aa
+ac
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aw
+aH
+aS
+bn
+aw
+aw
+aw
+cD
+aw
+dg
+dz
+dQ
+el
+eB
+dQ
+el
+eB
+dQ
+fN
+ge
+dB
+gw
+gw
+dB
 ab
 ab
 ab
@@ -1908,137 +4822,103 @@ ab
 ab
 ab
 aa
+aa
+ab
+ac
+ac
+ac
+ab
 "}
 (16,1,1) = {"
 aa
+ab
+ac
+ab
 aa
+aa
+aa
+ac
 ab
 ab
 ab
 ab
 ab
+aw
+aI
+aT
+bo
+bE
+bW
+ci
+cE
+cR
+dh
+dA
+dR
+em
+hj
+eQ
+fe
+eC
+fE
+fO
+gf
+gl
+gx
+gF
+dB
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+ac
+ac
+ac
+aa
 aa
 "}
 (17,1,1) = {"
+ab
+ab
+ab
+ac
+ac
 aa
+aa
+ac
+ac
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aw
+aJ
+aU
+bp
+bF
+bX
+bz
+cF
+cS
+di
+dB
+dS
+cp
+cp
+cp
+cp
+cp
+cp
+fP
+gg
+gm
+gy
+gG
+dB
 ab
 ab
 ab
@@ -2046,457 +4926,361 @@ ab
 ab
 ab
 aa
+aa
+ac
+ac
+ac
+ab
+ab
 "}
 (18,1,1) = {"
+aa
 ab
+ac
+ac
 ab
+aa
+aa
+ac
+ac
 ab
 ab
 ab
 ab
+aw
+aK
+aV
+bq
+bG
+aw
+cj
+cG
+bz
+dj
+dC
+dT
+en
+eD
+eD
+eD
+eD
+cp
+dB
+dB
+dB
+dB
+dB
+dB
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+ac
+ac
+ac
 ab
 ab
 "}
 (19,1,1) = {"
+aa
+ac
+ac
+ac
+ab
+aa
+aa
+ac
+ac
+ab
+ab
+ab
+ab
+aw
+aL
+aW
+br
+bH
+aw
+ck
+cH
+cT
+dk
+dD
+dU
+cp
+eE
+eR
+ff
+fq
+cp
+fQ
+fV
+fV
+cp
+ab
+ab
+ab
+ac
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
 ab
 ab
 ab
 ab
 "}
 (20,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+ab
+ab
+aa
+aa
+aa
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+aw
+af
+af
+af
+af
+af
+cl
+cI
+cT
+dl
+dE
+dV
+cp
+cp
+cp
+cp
+cp
+cp
+fR
+fT
+fT
+cp
+cp
+cp
+ab
+ac
+ac
+ac
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (21,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+ab
+ab
+aa
+aa
+aa
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+af
+aX
+bs
+bI
+af
+cm
+cJ
+cU
+dm
+dF
+hh
+eo
+eF
+bz
+bz
+hk
+fF
+fS
+fT
+fT
+gz
+gH
+gQ
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 "}
 (22,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+af
+af
+af
+af
+af
+aY
+bt
+bJ
+bY
+cn
+cK
+cV
+dn
+dG
+dW
+ep
+eG
+eS
+fg
+fr
+fG
+hm
+fT
+fT
+gz
+gI
+gQ
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 "}
 (23,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ck
-ck
-ck
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+af
+ah
+ao
+ax
+af
+aZ
+bu
+bK
+bZ
+co
+cL
+cW
+ci
+dH
+hi
+eq
+eH
+eT
+fh
+fs
+eq
+fU
+fT
+gn
+cp
+cp
+cp
+ab
+ab
+ac
+ac
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 "}
 (24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+af
+ai
+ap
+ay
+aM
+ba
+bv
+bL
+af
+cp
+cp
+cp
+cp
+dI
+dX
+eq
+eI
+eU
+fi
+ft
+eq
+hn
+fV
+fT
+cp
 ab
 ab
 ab
@@ -2505,722 +5289,541 @@ ab
 ab
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ab
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
 ab
 ab
-ab
+aa
+aa
+aa
+aa
+aa
 "}
 (25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-bl
-bo
-ac
+af
+ai
+aq
+az
+aN
+bb
 bw
-bD
 bM
-bU
-ca
-ar
-cf
-cg
-cg
+af
+cq
+cM
+cX
+cp
+hg
+dY
+er
+eJ
+eV
+fi
+fu
+eq
+ho
+fp
+fp
+fp
+fp
+fp
+fp
+fp
+fp
+ab
 ac
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
+ac
 ab
 ab
+aa
+aa
+aa
+aa
+aa
 "}
 (26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
+af
+ah
 ar
-ar
-ac
-bx
-ar
+aA
+af
+bc
+bu
 bN
-ar
-aO
-ar
-cf
-cg
-cg
+af
+cr
+cN
+cY
+dp
+dJ
+dZ
+es
+eK
+eW
+fj
+fv
+eq
+fW
+gh
+gq
+fp
+gJ
+gR
+gX
+gZ
+fp
+ab
 ac
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 "}
 (27,1,1) = {"
+aa
+aa
+ab
+aa
+aa
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ac
-ac
-ac
-ac
-ac
-bp
-ac
-by
-bE
+ag
+ag
+ag
+ag
+ag
+bd
+bx
 bO
-aO
-ar
-aO
+af
+cs
+cO
+cZ
+dq
+cu
+ea
+eq
+eL
+eX
+fk
+fw
+eq
+fX
+hp
+gr
+fp
+gK
+gR
+gX
+ha
+fp
+ab
 ac
-cg
-cg
 ac
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
-ck
+ac
+ab
+aa
+aa
+aa
+aa
+aa
 "}
 (28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ag
+ag
+as
+aB
+ag
+af
+af
+af
+af
+cp
+cp
+cp
+cp
+dK
+eb
+eq
+eq
+eq
+eq
+eq
+eq
+fY
+gi
+gi
+fp
+gL
+fp
+fp
+fp
+fp
 ab
 ab
 ac
-aI
-aT
-bb
 ac
-ar
-aO
-ac
-bz
-aO
-aO
-ar
-aO
-cd
-ac
-ch
-cg
-cj
-ck
-ck
-ck
-ck
 ab
-ab
-ab
-ck
-ck
-ck
-ck
-ck
+aa
+aa
+aa
+aa
+aa
 "}
 (29,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 ab
 ac
-aJ
-aU
-bc
-bi
-ar
-ar
-ac
+ab
+aa
+aa
+ab
+ab
+ab
+ab
+ag
+ak
+at
+aC
 aO
-ar
-aO
-ar
-cb
-cc
+be
+by
+bP
+ca
+ct
+cP
+cP
+dr
+dL
+ec
+et
+cP
+eY
+fl
+fx
+hl
+fZ
+gj
+gt
+gA
+gM
+gT
+fp
+hb
+fp
+ab
+ab
+ab
 ac
-ci
-cg
-cj
-ck
-ck
-ck
-ck
-ab
-ab
-ab
-ab
-ck
-ck
-ck
-ck
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (30,1,1) = {"
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ac
-aK
-aV
-bd
 ac
-ar
-aO
+ac
+aa
+aa
+ab
+ab
+ab
+ag
+al
 au
-ar
-ar
-aO
-bV
-aO
-ce
+aD
+aP
+bf
+bz
+bz
+cb
+cu
+bz
+bz
+cb
+cu
+ed
+cb
+bz
+eZ
+fm
+fy
+fH
+fH
+fH
+gu
+gB
+gN
+gU
+gY
+hc
+fp
+ab
+ab
+ab
 ac
-ac
-ac
-ac
-ck
-ck
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ck
-ck
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (31,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 ab
 ab
 ac
 ac
-ac
-ac
-ac
-ac
-bm
-aO
-ac
+aa
+aa
+ab
+ab
+ab
+ag
+am
+he
+aE
+aQ
+bg
 bA
-bF
-bP
-bW
+bQ
 cc
-bW
+cv
+aQ
+da
+ds
+dM
+ee
+eu
+eM
+fa
+fn
+fz
+fI
+ga
+fI
+fz
+fI
+gO
+gV
+fp
+hd
+fp
+ab
+ab
+ab
 ac
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 "}
 (32,1,1) = {"
+aa
+ab
+ab
+ac
+ac
+aa
+aa
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ag
+an
+an
+an
+aQ
+bh
+bB
+bC
+cd
+cw
+aQ
+db
+dt
+dN
+ef
+ev
+eN
+fb
+fo
+fA
+fJ
+gb
+gk
+fA
+gC
+gb
+gW
+fp
+fp
+fp
 ab
 ab
 ab
 ac
-av
-aL
-aW
-be
-ac
-aO
-aO
-ac
-ac
-ac
-ac
-ac
-ac
-ac
 ac
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
 "}
 (33,1,1) = {"
+aa
+aa
 ab
 ab
+aa
+aa
+aa
+aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ag
+ag
+ag
+ag
+aQ
+bi
+bC
+bC
+ce
+cx
+aQ
+dc
+du
+dO
+eg
+ew
+eO
+fb
+fp
+fB
+fK
+hq
+fp
+fB
+fK
+gc
+fp
+fp
 ab
 ab
 ab
 ab
 ab
 ac
-aw
-aM
-aX
-aX
-bj
-aO
-aO
-ar
-ar
-bG
-bQ
-bX
 ac
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
 aa
 "}
 (34,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ac
-ac
-ac
-ac
-ac
-aO
-aO
-aO
-ar
-bH
-bH
-bY
-ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
 ab
 ab
 aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+aQ
+bj
+bC
+bR
+ce
+cy
+aQ
+dd
+dv
+dP
+eh
+ex
+eP
+fb
+fp
+fC
+fL
+gd
+fp
+gv
+gD
+gP
+fp
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ab
+aa
+aa
+aa
+aa
 "}
 (35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -3229,28 +5832,29 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aQ
+hf
+bC
+bS
+ce
+cz
+aQ
+de
+de
+de
+de
+de
+de
+fb
+fp
+fD
+fM
+fD
+fp
+fD
+gE
+fD
+fp
 ab
 ab
 ab
@@ -3258,39 +5862,20 @@ ab
 ab
 ab
 ac
-ax
-aN
-aY
 ac
-bk
-ar
-bq
 ac
-ar
-bI
-bR
-bH
-ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
 aa
 "}
 (36,1,1) = {"
 aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -3299,67 +5884,50 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ay
-ar
-ar
-bf
-ar
-ar
-br
-ac
-aO
-bJ
+aQ
+bk
+bC
 bS
-bH
+cf
+cA
+aQ
+ab
+ab
+ab
+ab
+ab
+ab
+fc
+fp
+fp
+fp
+fp
+fp
+fp
+fp
+fp
+fp
+ab
+ab
+ab
+aa
+ab
+ab
+ab
 ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ac
+aa
+aa
+aa
 aa
 "}
 (37,1,1) = {"
 aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -3368,47 +5936,20 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aQ
+bl
+bD
+bS
+cg
+bS
+aQ
 ab
 ab
 ab
 ab
 ac
-az
-aO
-aO
-bf
-aO
-ar
-bs
 ac
-aO
-bK
-bK
-bH
-ac
+fd
 ab
 ab
 ab
@@ -3421,63 +5962,44 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 "}
 (38,1,1) = {"
 aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
 ab
 ab
 ab
 ab
 ac
-aA
-ar
-aO
-au
-aO
-aO
-bt
-ac
-ar
-ar
-ar
-ar
-ac
 ab
 ab
 ab
@@ -3490,37 +6012,30 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 "}
 (39,1,1) = {"
 aa
+aa
+aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -3534,18 +6049,8 @@ ab
 ab
 ab
 ac
-aB
-ar
-aO
-bf
-aO
-aO
-aO
-aO
-aO
-ar
-ar
-aO
+ac
+ac
 ac
 ab
 ab
@@ -3559,39 +6064,32 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 "}
 (40,1,1) = {"
 aa
+aa
+aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -3603,19 +6101,6 @@ ab
 ab
 ab
 ac
-aC
-aO
-ar
-bf
-aO
-bn
-aO
-aO
-bB
-bL
-bT
-bZ
-ac
 ab
 ab
 ab
@@ -3631,56 +6116,44 @@ ab
 ab
 ab
 ab
+ab
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+ab
+aa
 aa
 aa
 "}
 (41,1,1) = {"
 aa
+aa
+aa
+ac
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
 ab
 ac
+ab
 ac
 ac
-ac
-ac
-aD
-aP
-aZ
-ac
-au
-ac
-ac
-au
-ac
+ab
 ac
 ac
 ac
@@ -3694,39 +6167,49 @@ ab
 ab
 ab
 ab
+ac
+ac
+aa
+aa
+aa
 ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 "}
 (42,1,1) = {"
 aa
+aa
+aa
+ac
+ac
+ac
+ac
+aa
+aa
+ab
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+ac
+ac
+ac
 ab
 ab
 ab
@@ -3737,177 +6220,121 @@ ab
 ab
 ab
 ac
-ad
-aj
-ap
+ac
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
-ac
-ac
-ac
-aO
-ac
-bu
-aO
-bC
-ac
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 aa
 "}
 (43,1,1) = {"
 aa
+ab
+ab
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ac
-ae
-ak
-aq
 ac
-aE
-aQ
-ba
-ba
-aO
+ab
+aa
+aa
+aa
+aa
 ac
-bv
-aO
-bv
+ac
+ac
+ac
+ac
 ac
 ab
 ab
 ab
+aa
 ab
 ab
+ac
+ac
+aa
+aa
 ab
+ac
+ac
+ac
+ac
+ac
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 aa
 "}
 (44,1,1) = {"
 aa
+ab
+ab
+ab
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+ab
+ab
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ab
 aa
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
 ab
 ab
 ac
-af
-al
-ar
-au
-ar
-ar
-aO
-aO
-ar
 ac
-bv
-aO
-bv
 ac
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 aa
 "}
 (45,1,1) = {"
@@ -3915,2660 +6342,219 @@ aa
 aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ac
-ag
-am
-ar
-ac
-aF
-aR
-aR
-bg
-bg
-ac
-bu
-aO
-bC
 ac
 ab
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 aa
 "}
 (46,1,1) = {"
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ah
-an
-as
-ac
-aG
-aR
-aR
-bh
-bh
-ac
-ac
-ac
+aa
+aa
 ac
 ac
 ab
+aa
+aa
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
 ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
 aa
 "}
 (47,1,1) = {"
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
+aa
+aa
+aa
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ai
-ao
-at
-ac
-aH
-aS
-aH
-aH
-aH
-ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 "}
 (48,1,1) = {"
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
+aa
+aa
+aa
+aa
 ab
+aa
+aa
+aa
 ab
+aa
+aa
 ab
+aa
+aa
+aa
+aa
+aa
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ac
-ac
-ac
-ac
-aH
-aH
-aH
-aH
-aH
-ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
 aa
 "}
 (49,1,1) = {"
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-"}
-(50,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-"}
-(51,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-"}
-(52,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-"}
-(53,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-"}
-(54,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-"}
-(55,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-"}
-(56,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-"}
-(57,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-"}
-(58,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-"}
-(59,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-"}
-(60,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-"}
-(61,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-"}
-(62,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-"}
-(63,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-"}
-(64,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-"}
-(65,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-"}
-(66,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-"}
-(67,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-"}
-(68,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(69,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(70,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(71,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(72,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(73,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(74,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(75,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(76,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-"}
-(77,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(78,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(79,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(80,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(81,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(82,1,1) = {"
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
 aa
 aa
 aa
 aa
 aa
-aa
-"}
-(83,1,1) = {"
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -6576,20 +6562,6 @@ aa
 aa
 aa
 aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
@@ -6600,63 +6572,18 @@ aa
 aa
 aa
 aa
-"}
-(84,1,1) = {"
 aa
 aa
-ab
-ab
-ab
 aa
 aa
-ab
-ab
 aa
-ab
-ab
-ab
-ab
-ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
@@ -6670,11 +6597,7 @@ aa
 aa
 aa
 "}
-(85,1,1) = {"
-aa
-aa
-ab
-ab
+(50,1,1) = {"
 aa
 aa
 aa
@@ -6684,21 +6607,8 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
-aa
-aa
-aa
-ab
-ab
-ab
 aa
 aa
 aa

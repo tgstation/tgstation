@@ -73,7 +73,7 @@ def setup_irc_socket():
 
 def setup_nudge_socket():
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.bind(("", nudge_port))  # localhost:nudge_port
+	s.bind(("", 45678))  # localhost:nudge_port
 	s.listen(5)
 	logger.info("Nudge socket up and listening")
 	return s

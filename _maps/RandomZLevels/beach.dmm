@@ -54,8 +54,6 @@
 /area/awaymission/beach)
 "al" = (
 /obj/structure/toilet{
-	tag = "icon-toilet00 (EAST)";
-	icon_state = "toilet00";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -97,8 +95,6 @@
 /area/awaymission/beach)
 "as" = (
 /obj/structure/toilet{
-	tag = "icon-toilet00 (WEST)";
-	icon_state = "toilet00";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -110,15 +106,12 @@
 /area/awaymission/beach)
 "au" = (
 /obj/structure/toilet{
-	tag = "icon-toilet00 (EAST)";
-	icon_state = "toilet00";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/beach)
 "av" = (
 /obj/machinery/shower{
-	tag = "icon-shower (NORTH)";
 	icon_state = "shower";
 	dir = 1
 	},
@@ -131,7 +124,6 @@
 /area/awaymission/beach)
 "ax" = (
 /obj/machinery/shower{
-	tag = "icon-shower (NORTH)";
 	icon_state = "shower";
 	dir = 1
 	},
@@ -266,7 +258,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/sandeffect/warning{
-	tag = "icon-warningsandeffect (NORTHWEST)";
 	dir = 9
 	},
 /area/awaymission/beach)
@@ -276,7 +267,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/sandeffect/warning{
-	tag = "icon-warningsandeffect (NORTH)";
 	dir = 1
 	},
 /area/awaymission/beach)
@@ -286,7 +276,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/sandeffect/warning{
-	tag = "icon-warningsandeffect (NORTHEAST)";
 	dir = 5
 	},
 /area/awaymission/beach)
@@ -304,7 +293,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/sandeffect/warning{
-	tag = "icon-warningsandeffect (WEST)";
 	dir = 8
 	},
 /area/awaymission/beach)
@@ -319,7 +307,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/sandeffect/warning{
-	tag = "icon-warningsandeffect (EAST)";
 	dir = 4
 	},
 /area/awaymission/beach)
@@ -329,14 +316,12 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/sandeffect/warning{
-	tag = "icon-warningsandeffect (SOUTHWEST)";
 	dir = 10
 	},
 /area/awaymission/beach)
 "be" = (
 /turf/open/floor/plating/beach/sand,
 /turf/open/floor/plasteel/sandeffect/warning/corner{
-	tag = "icon-warningsandeffectcorners (NORTH)";
 	dir = 1
 	},
 /obj/machinery/gateway,
@@ -348,7 +333,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/sandeffect/warning{
-	tag = "icon-warningsandeffect (SOUTHEAST)";
 	dir = 6
 	},
 /area/awaymission/beach)

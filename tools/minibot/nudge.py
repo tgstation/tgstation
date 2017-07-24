@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from config import *
 import sys
 import pickle
 import socket
@@ -17,7 +16,7 @@ def pack():
 
 def nudge(data):
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect(("localhost", nudge_port))
+	s.connect(("localhost", 45678))
 	s.send(data)
 	s.close()
 

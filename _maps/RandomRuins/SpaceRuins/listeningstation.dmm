@@ -236,7 +236,6 @@
 /area/awaymission/listeningpost)
 "J" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,

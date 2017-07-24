@@ -206,7 +206,7 @@
 	icon_state = "airlock_control_standby"
 
 	name = "airlock console"
-	density = 0
+	density = FALSE
 
 	frequency = 1449
 	power_channel = ENVIRON

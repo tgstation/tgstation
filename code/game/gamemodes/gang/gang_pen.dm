@@ -35,7 +35,7 @@
 							cooldown(G)
 						if(2)
 							new /obj/item/device/gangtool/soldier(M)
-							M.Paralyse(5)
+							M.Unconscious(100)
 							cooldown(G)
 						if(1)
 							to_chat(user, "<span class='warning'>This mind is resistant to recruitment!</span>")
@@ -66,4 +66,4 @@
 	cooldown = 0
 	icon_state = "pen"
 	var/mob/M = get(src, /mob)
-	to_chat(M, "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")
+	to_chat(M, "<span class='notice'>[bicon(src)] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")

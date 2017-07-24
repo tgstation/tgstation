@@ -12,7 +12,7 @@
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 10
-	req_access = list(GLOB.access_rd) //Only the R&D can change server settings.
+	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
 /obj/machinery/r_n_d/server/Initialize()
 	. = ..()
@@ -316,10 +316,11 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
+	if(emagged)
+		return
+	playsound(src, "sparks", 75, 1)
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

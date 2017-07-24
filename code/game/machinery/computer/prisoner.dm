@@ -3,7 +3,7 @@
 	desc = "Used to manage tracking implants placed inside criminals."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(GLOB.access_brig)
+	req_access = list(ACCESS_BRIG)
 	var/id = 0
 	var/temp = null
 	var/status = 0
@@ -138,7 +138,7 @@
 			if(I && istype(I) && I.imp_in)
 				var/mob/living/R = I.imp_in
 				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
-				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")
+				log_talk(usr,"[key_name(usr)] sent an implant message to [R]/[R.ckey]: '[warning]'",LOGSAY)
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()

@@ -24,13 +24,15 @@
 	var/datum/lighting_corner/C
 	var/thing
 	for (thing in corners)
+		if(!thing)
+			continue
 		C = thing
 		C.update_active()
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
 	if (lighting_object)
-		return
+		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
 
 	var/area/A = loc
 	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
@@ -45,6 +47,8 @@
 	var/datum/lighting_corner/C
 	var/datum/light_source/S
 	for (thing in corners)
+		if(!thing)
+			continue
 		C = thing
 		if (!C.active) // We would activate the corner, calculate the lighting for it.
 			for (thing in C.affecting)
@@ -61,6 +65,8 @@
 	var/thing
 	var/datum/lighting_corner/L
 	for (thing in corners)
+		if(!thing)
+			continue
 		L = thing
 		totallums += L.lum_r + L.lum_b + L.lum_g
 

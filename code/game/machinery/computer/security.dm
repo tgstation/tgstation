@@ -3,7 +3,7 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
-	req_one_access = list(GLOB.access_security, GLOB.access_forensics_lockers)
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/weapon/circuitboard/computer/secure_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
@@ -22,6 +22,9 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/secure_data/syndie
+	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/secure_data/laptop
 	name = "security laptop"
@@ -573,13 +576,13 @@ What a mess.*/
 							if(istype(active2, /datum/data/record))
 								active2.fields["name"] = t1
 					if("id")
-						if(istype(active2,/datum/data/record) || istype(active1,/datum/data/record))
+						if(istype(active2, /datum/data/record) || istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
-							if(istype(active1,/datum/data/record))
+							if(istype(active1, /datum/data/record))
 								active1.fields["id"] = t1
-							if(istype(active2,/datum/data/record))
+							if(istype(active2, /datum/data/record))
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
@@ -628,7 +631,7 @@ What a mess.*/
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)
+							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -642,7 +645,7 @@ What a mess.*/
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)
+							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())

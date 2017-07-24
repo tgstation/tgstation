@@ -12,9 +12,9 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	name = "subspace broadcaster"
 	icon_state = "broadcaster"
 	desc = "A dish-shaped machine used to broadcast processed subspace signals."
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 25
 	machinetype = 5
 	/*heatgen = 0

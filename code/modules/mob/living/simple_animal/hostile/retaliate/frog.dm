@@ -16,10 +16,10 @@
 	response_help  = "pets"
 	response_disarm = "pokes"
 	response_harm   = "splats"
-	density = 0
+	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("hostile")
-	attack_sound = 'sound/effects/Reee.ogg'
+	attack_sound = 'sound/effects/reee.ogg'
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/nugget = 1)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -39,4 +39,4 @@
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)
-			playsound(src, 'sound/effects/Huuu.ogg', 50, 1)
+			playsound(src, 'sound/effects/huuu.ogg', 50, 1)

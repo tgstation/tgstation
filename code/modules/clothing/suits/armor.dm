@@ -1,13 +1,12 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/weapon/kitchen/knife/combat,/obj/item/weapon/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun/energy, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/device/flashlight/seclite, /obj/item/weapon/melee/classic_baton/telescopic, /obj/item/weapon/kitchen/knife/combat, /obj/item/weapon/tank/internals/emergency_oxygen)
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
-	put_on_delay = 40
-	obj_integrity = 250
+	equip_delay_other = 40
 	max_integrity = 250
 	resistance_flags = 0
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -24,6 +23,13 @@
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
+
+/obj/item/clothing/suit/armor/vest/old
+	name = "degrading armor vest"
+	desc = "Older generation Type 1 armored vest. Due to degradation over time the vest is far less maneuverable to move in."
+	icon_state = "armor"
+	item_state = "armor"
+	slowdown = 1
 
 /obj/item/clothing/suit/armor/vest/blueshirt
 	icon_state = "blueshift"
@@ -105,9 +111,8 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
-	flags_inv = HIDEJUMPSUIT
 	strip_delay = 80
-	put_on_delay = 60
+	equip_delay_other = 60
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
@@ -126,7 +131,7 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 15, bullet = 60, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 70
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
@@ -148,7 +153,7 @@
 	name = "detective's armor vest"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton)
+	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/weapon/gun/energy, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/storage/fancy/cigarettes, /obj/item/weapon/lighter, /obj/item/device/detective_scanner, /obj/item/device/taperecorder, /obj/item/weapon/melee/classic_baton)
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
@@ -197,7 +202,7 @@
 	var/rad_amount= 15
 	reactivearmor_cooldown_duration = 100
 
-/obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
@@ -230,7 +235,7 @@
 	name = "reactive incendiary armor"
 	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
 
-/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, attack_text)
+/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
@@ -252,7 +257,7 @@
 	name = "reactive stealth armor"
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 
-/obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, attack_text)
+/obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
@@ -279,7 +284,7 @@
 	var/tesla_boom = FALSE
 	var/tesla_stun = FALSE
 
-/obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, attack_text)
+/obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
@@ -299,7 +304,7 @@
 	desc = "If you can't beat the memes, embrace them."
 	var/tele_range = 10
 
-/obj/item/clothing/suit/armor/reactive/table/hit_reaction(mob/living/carbon/human/owner, attack_text)
+/obj/item/clothing/suit/armor/reactive/table/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
@@ -309,7 +314,7 @@
 			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
-		owner.Weaken(2)
+		owner.Knockdown(40)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -342,7 +347,7 @@
 	item_state = "centcom"
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals/emergency_oxygen)
 	flags = THICKMATERIAL
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS

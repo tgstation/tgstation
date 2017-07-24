@@ -34,7 +34,7 @@ Contains:
 	desc = "A prototype designed to replace the ageing MK.II SWAT suit. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with plasteel, allowing superior armor against most threats. There's room for some kind of energy projection device on the back."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals, /obj/item/weapon/kitchen/knife/combat)
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -48,7 +48,7 @@ Contains:
 	desc = "A tactical space suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 20XX for military space operations. A tried and true workhorse, it is very difficult to move in but offers robust protection against all threats!"
 	icon_state = "heavy"
 	item_state = "swat_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals, /obj/item/weapon/kitchen/knife/combat)
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 100, acid = 100)
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -73,36 +73,11 @@ Contains:
 	slowdown = 0
 	flags_inv = 0
 	w_class = WEIGHT_CLASS_NORMAL
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals)
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-
-	//Marine Armour
-/obj/item/clothing/head/helmet/space/hardsuit/ueg
-	name = "Iron Hawk Marine Helmet"
-	desc = "An armoured, pressurised, military helmet used as standard issue among Iron Hawk Marines."
-	icon_state = "ueghelm"
-	item_state = "ueghelm"
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 70, fire = 100, acid = 100)
-	strip_delay = 120
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	actions_types = list()
-
-/obj/item/clothing/head/helmet/space/hardsuit/ueg/attack_self(mob/user)
-	return
-
-/obj/item/clothing/suit/space/hardsuit/ueg
-	name = "Iron Hawk Marine Armour"
-	desc = "Modified MK.II SWAT Armour. Used by Iron Hawk Marines in ship to ship action. This model appears to have lost some of its armour plating during the crash."
-	icon_state = "uegarmor"
-	item_state = "uegarmor"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 100, fire = 100, acid = 100)
-	strip_delay = 130
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ueg
 
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
@@ -116,8 +91,21 @@ Contains:
 	icon_state = "void"
 	item_state = "void"
 	desc = "An old, NASA Centcom branch designed, dark red space suit."
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/multitool)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/device/multitool)
 
+/obj/item/clothing/head/helmet/space/nasavoid/old
+	name = "Engineering Void Helmet"
+	desc = "A Centcom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
+	icon_state = "void"
+	item_state = "void"
+
+/obj/item/clothing/suit/space/nasavoid/old
+	name = "Engineering Voidsuit"
+	icon_state = "void"
+	item_state = "void"
+	desc = "A Centcom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
+	slowdown = 4
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/device/multitool)
 
 	//Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
@@ -148,7 +136,7 @@ Contains:
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	flags = STOPSPRESSUREDMAGE
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/suit/space/pirate
@@ -158,11 +146,11 @@ Contains:
 	item_state = "pirate"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = 0
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals, /obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals, /obj/item/weapon/melee/transforming/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 	slowdown = 0
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 
 	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
@@ -182,7 +170,7 @@ Contains:
 	icon_state = "ert_command"
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals)
 	armor = list(melee = 30, bullet = 50, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 0, acid = 95)
 	slowdown = 0
 	strip_delay = 130
@@ -250,18 +238,19 @@ Contains:
 	armor = list(melee = 20, bullet = 40, laser = 30, energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = ACID_PROOF | FIRE_PROOF
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"
 	desc = "An advanced, light suit, fabricated from a mixture of synthetic feathers and space-resistant material. A gun holster appears to be intergrated into the suit and the wings appear to be stuck in 'freedom' mode."
 	icon_state = "freedom"
 	item_state = "freedom"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals)
 	armor = list(melee = 20, bullet = 40, laser = 30,energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = ACID_PROOF | FIRE_PROOF
+	slowdown = 0
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp
@@ -351,7 +340,7 @@ Contains:
 	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
 	strip_delay = 65
 
-/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
 		src.flags -= STOPSPRESSUREDMAGE

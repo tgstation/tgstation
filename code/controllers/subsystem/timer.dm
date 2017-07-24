@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(timer)
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	var/lit = last_invoke_tick
 	var/last_check = world.time - TIMER_NO_INVOKE_WARNING
-
+	var/list/bucket_list = src.bucket_list
 	if(!bucket_count)
 		last_invoke_tick = world.time
 
@@ -43,26 +43,25 @@ SUBSYSTEM_DEF(timer)
 		WARNING(msg)
 		if(bucket_auto_reset)
 			bucket_resolution = 0
-		
-		log_world("Active timers at tick [world.time]:")
+
+		log_world("Timer bucket reset. world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+		for (var/i in 1 to length(bucket_list))
+			var/datum/timedevent/bucket_head = bucket_list[i]
+			if (!bucket_head)
+				continue
+				
+			log_world("Active timers at index [i]:")
+			
+			var/datum/timedevent/bucket_node = bucket_head
+			var/anti_loop_check = 1000
+			do
+				log_world(get_timer_debug_string(bucket_node))
+				bucket_node = bucket_node.next
+				anti_loop_check--
+			while(bucket_node && bucket_node != bucket_head && anti_loop_check)
+		log_world("Active timers in the processing queue:")
 		for(var/I in processing)
-			var/datum/timedevent/TE = I
-			msg = "Timer: [TE.id]: TTR: [TE.timeToRun], Flags: [TE.flags], "
-			if(TE.spent)
-				msg += "SPENT"
-			else
-				var/datum/callback/CB = TE.callBack
-				msg += "callBack: "
-				if(CB.object == GLOBAL_PROC)
-					msg += "GP: [CB.delegate]"
-				else
-					msg += "[!QDELETED(CB.object) ? CB.object : "SRC DELETED"]: [CB.delegate]("
-					var/first = TRUE
-					for(var/J in CB.arguments)
-						msg += "[first ? "" : ", "][J]"
-						first = FALSE
-					msg += ")"
-			log_world(msg)
+			log_world(get_timer_debug_string(I))
 
 	while(length(clienttime_timers))
 		var/datum/timedevent/ctime_timer = clienttime_timers[clienttime_timers.len]
@@ -81,16 +80,15 @@ SUBSYSTEM_DEF(timer)
 	var/static/datum/timedevent/timer
 	var/static/datum/timedevent/head
 
-	if (practical_offset > BUCKET_LEN || (!resumed  && length(src.bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution))
+	if (practical_offset > BUCKET_LEN || (!resumed  && length(bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution))
 		shift_buckets()
+		bucket_list = src.bucket_list
 		resumed = FALSE
 
 
 	if (!resumed)
 		timer = null
 		head = null
-
-	var/list/bucket_list = src.bucket_list
 
 	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time && !MC_TICK_CHECK)
 		if (!timer || !head || timer == head)
@@ -106,7 +104,7 @@ SUBSYSTEM_DEF(timer)
 			if (!callBack)
 				qdel(timer)
 				bucket_resolution = null //force bucket recreation
-				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
+				CRASH("Invalid timer: [timer] timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
 
 			if (!timer.spent)
 				spent += timer
@@ -131,6 +129,14 @@ SUBSYSTEM_DEF(timer)
 
 	spent.len = 0
 
+//formated this way to be runtime resistant
+/datum/controller/subsystem/timer/proc/get_timer_debug_string(datum/timedevent/TE)
+	. = "Timer: [TE]"
+	. += "Prev: [TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
+	if(TE.spent)
+		. += ", SPENT"
+	if(QDELETED(TE))
+		. += ", QDELETED"
 
 /datum/controller/subsystem/timer/proc/shift_buckets()
 	var/list/bucket_list = src.bucket_list
@@ -211,7 +217,7 @@ SUBSYSTEM_DEF(timer)
 	var/hash
 	var/list/flags
 	var/spent = FALSE //set to true right before running.
-
+	var/name //for easy debugging.
 	//cicular doublely linked list
 	var/datum/timedevent/next
 	var/datum/timedevent/prev
@@ -224,7 +230,9 @@ SUBSYSTEM_DEF(timer)
 	src.timeToRun = timeToRun
 	src.flags = flags
 	src.hash = hash
-
+	
+	name = "Timer: [id]: TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
+	
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
@@ -326,6 +334,13 @@ SUBSYSTEM_DEF(timer)
 	prev = null
 	return QDEL_HINT_IWILLGC
 
+/datum/timedevent/proc/getcallingtype()
+	. = "ERROR"
+	if (callBack.object == GLOBAL_PROC)
+		. = "GLOBAL_PROC"
+	else
+		. = "[callBack.object.type]"
+
 /proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
@@ -365,10 +380,13 @@ SUBSYSTEM_DEF(timer)
 	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
 	if (flags & TIMER_STOPPABLE)
 		return timer.id
+	return TIMER_ID_NULL
 
 /proc/deltimer(id)
 	if (!id)
 		return FALSE
+	if (id == TIMER_ID_NULL)
+		CRASH("Tried to delete a null timerid. Use TIMER_STOPPABLE flag")
 	if (!istext(id))
 		if (istype(id, /datum/timedevent))
 			qdel(id)

@@ -19,17 +19,17 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/owner = null
 	var/admin = 0
 
-	var/clothinfo = null
-	var/reaginfo = null
-	var/objinfo = null
+	var/static/clothinfo = null
+	var/static/reaginfo = null
+	var/static/objinfo = null
 	var/canisterinfo = null
 	var/hsbinfo = null
 	//items that shouldn't spawn on the floor because they would bug or act weird
 	var/global/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
-		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
+		/obj/item/assembly, /obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
 		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/projectile,
-		/obj/item/borg/sight,/obj/item/borg/stun,/obj/item/weapon/robot_module)
+		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/weapon/robot_module)
 
 /datum/hSB/proc/update()
 	var/global/list/hrefs = list(
@@ -128,10 +128,10 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!admin) return
 				if(config.sandbox_autoclose)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
-					config.sandbox_autoclose = 0
+					config.sandbox_autoclose = FALSE
 				else
 					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
-					config.sandbox_autoclose = 1
+					config.sandbox_autoclose = TRUE
 				return
 			//
 			// Spacesuit with full air jetpack set as internals

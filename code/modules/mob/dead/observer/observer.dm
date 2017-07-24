@@ -10,9 +10,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	icon_state = "ghost"
 	layer = GHOST_LAYER
 	stat = DEAD
-	density = 0
+	density = FALSE
 	canmove = 0
-	anchored = 1	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
@@ -119,7 +119,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	GLOB.dead_mob_list += src
 
-	..()
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
+
+	. = ..()
 
 	grant_all_languages()
 
@@ -145,7 +151,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 	return ..()
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
+/mob/dead/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 /*
@@ -243,6 +249,7 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(can_reenter_corpse = 1)
 	if(key)
 		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
+			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
@@ -310,7 +317,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Re-enter Corpse"
 	if(!client)
 		return
-	if(!(mind && mind.current))
+	if(!mind || QDELETED(mind.current))
 		to_chat(src, "<span class='warning'>You have no body.</span>")
 		return
 	if(!can_reenter_corpse)
@@ -319,7 +326,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
-	client.view = world.view
+	client.change_view(world.view)
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
@@ -461,16 +468,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.view = Clamp(new_view, 1, max_view)
+			client.change_view(Clamp(new_view, 1, max_view))
 	else
-		client.view = world.view
+		client.change_view(world.view)
 
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
 	set hidden = TRUE
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.view = Clamp(client.view + input, 1, max_view)
+		client.change_view(Clamp(client.view + input, 1, max_view))
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
@@ -773,7 +780,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	register_pai()
 
 /mob/dead/observer/proc/register_pai()
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(SSpai)
 			SSpai.recruitWindow(src)
 	else

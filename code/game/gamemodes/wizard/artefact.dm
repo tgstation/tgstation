@@ -33,8 +33,8 @@
 	desc = "You should run now."
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
@@ -243,7 +243,7 @@
 			if(!is_gangster(user))
 				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
 				SSticker.mode.gangs += G
-				G.bosses += user.mind
+				G.bosses[user.mind] = 0
 				G.add_gang_hud(user.mind)
 				user.mind.gang_datum = G
 				to_chat(user, "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>")
@@ -437,7 +437,7 @@
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
-	W.access += GLOB.access_maint_tunnels
+	W.access += ACCESS_MAINT_TUNNELS
 	W.assignment = "Multiverse Traveller"
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
@@ -455,7 +455,6 @@
 	var/obj/item/link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
-	obj_integrity = 10
 	max_integrity = 10
 	resistance_flags = FLAMMABLE
 
@@ -467,11 +466,11 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Weaken(2)
+			target.Knockdown(40)
 			GiveHint(target)
-		else if(istype(I,/obj/item/weapon/bikehorn))
+		else if(istype(I, /obj/item/weapon/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
-			target << 'sound/items/AirHorn.ogg'
+			target << 'sound/items/airhorn.ogg'
 			target.adjustEarDamage(0,3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
@@ -518,7 +517,7 @@
 					user.unset_machine()
 			if("r_leg","l_leg")
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(GLOB.cardinal))
+				var/turf/T = get_step(target,pick(GLOB.cardinals))
 				target.Move(T)
 			if("r_arm","l_arm")
 				target.click_random_mob()
@@ -583,7 +582,7 @@
 	on_cooldown = TRUE
 	last_user = user
 	var/turf/T = get_turf(user)
-	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
+	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
 	user.canmove = 0
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)

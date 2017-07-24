@@ -17,7 +17,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
-	density = 0
+	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -56,7 +56,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, "<span class='notice'>\icon[src] Squeek!</span>")
+			to_chat(M, "<span class='notice'>[bicon(src)] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
 

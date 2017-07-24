@@ -12,6 +12,7 @@
 	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
+	novariants = TRUE
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()

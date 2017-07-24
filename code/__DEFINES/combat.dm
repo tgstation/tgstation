@@ -9,6 +9,7 @@
 #define OXY			"oxy"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
+#define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 1
@@ -18,8 +19,8 @@
 #define SHAME 16
 
 #define STUN		"stun"
-#define WEAKEN		"weaken"
-#define PARALYZE	"paralize"
+#define KNOCKDOWN		"knockdown"
+#define UNCONSCIOUS	"unconscious"
 #define IRRADIATE	"irradiate"
 #define STUTTER		"stutter"
 #define SLUR 		"slur"
@@ -29,8 +30,8 @@
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
-#define CANWEAKEN	2
-#define CANPARALYSE	4
+#define CANKNOCKDOWN	2
+#define CANUNCONSCIOUS	4
 #define CANPUSH		8
 #define IGNORESLOWDOWN	16
 #define GOTTAGOFAST	32
@@ -138,3 +139,11 @@
 #define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, He falls asleep and resets.
 
 #define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
+
+#define EXPLODE_NONE 0				//Don't even ask me why we need this.
+#define EXPLODE_DEVASTATE 1
+#define EXPLODE_HEAVY 2
+#define EXPLODE_LIGHT 3
+
+#define EMP_HEAVY 1
+#define EMP_LIGHT 2

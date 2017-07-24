@@ -6,13 +6,15 @@
 	var/date
 
 /datum/getrev/New()
-	if(fexists(SERVICE_PR_TEST_JSON))
+	if(world.RunningService() && fexists(SERVICE_PR_TEST_JSON))
 		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
+#ifdef SERVERTOOLS
 	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
 			if(I)
 				testmerge |= I
+#endif
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
 	if(logs)
@@ -71,13 +73,13 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/cm = testmerge[line]["commit"]
 		var/details 
 		if(world.RunningService())
+			var/cm = testmerge[line]["commit"]
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
 		else if(has_pr_details)	//tgs2 support
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
-		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br>"
+		. += "<a href=\"[config.githuburl]/pull/[line]\">#[line][details]</a><br>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"
@@ -91,7 +93,7 @@
 			to_chat(src, GLOB.revdata.GetTestMergeInfo())
 			prefix = "Based off origin/master commit: "
 		var/pc = GLOB.revdata.originmastercommit
-		to_chat(src, "[prefix]<a href='[config.githuburl]/commit/[pc]'>[copytext(pc, 1, min(length(pc), 7))]</a>")
+		to_chat(src, "[prefix]<a href=\"[config.githuburl]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
 	to_chat(src, "<b>Current Infomational Settings:</b>")

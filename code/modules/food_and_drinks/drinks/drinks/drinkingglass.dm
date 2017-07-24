@@ -7,7 +7,6 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	materials = list(MAT_GLASS=500)
-	obj_integrity = 20
 	max_integrity = 20
 	spillable = 1
 	resistance_flags = ACID_PROOF
@@ -92,7 +91,7 @@
 	list_reagents = list("nuka_cola" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)

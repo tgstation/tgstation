@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			E = new
 		E.set_up(epicenter)
 		E.start()
-	
+
 	EX_PREPROCESS_CHECK_TICK
 
 	//flash mobs
@@ -165,20 +165,20 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/throw_dist = dist
 
 		if(dist < devastation_range)
-			dist = 1
+			dist = EXPLODE_DEVASTATE
 		else if(dist < heavy_impact_range)
-			dist = 2
+			dist = EXPLODE_HEAVY
 		else if(dist < light_impact_range)
-			dist = 3
+			dist = EXPLODE_LIGHT
 		else
-			dist = 0
+			dist = EXPLODE_NONE
 
 		//------- EX_ACT AND TURF FIRES -------
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
 
-		if(dist > 0)
+		if(dist > EXPLODE_NONE)
 			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 			T.explosion_id = id
 			T.ex_act(dist)
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(explosions)
 				var/throw_range = rand(throw_dist, max_range)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = EXPLOSION_THROW_SPEED //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
-				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)		
+				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
 
 		//wait for the lists to repop
 		var/break_condition
@@ -208,7 +208,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 			if(!running)
 				break
-			
+
 			//update the trackers
 			affTurfLen = affected_turfs.len
 			expBlockLen = cached_exp_block.len
@@ -274,27 +274,20 @@ GLOBAL_LIST_EMPTY(explosions)
 	. = list()
 	var/processed = 0
 	while(!stopped && running)
-		var/I 
+		var/I
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]
 			var/current_exp_block = T.density ? T.explosion_block : 0
 
-			for(var/obj/machinery/door/D in T)
-				if(D.density)
-					current_exp_block += D.explosion_block
+			for(var/obj/O in T)
+				var/the_block = O.explosion_block
+				current_exp_block += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
 
-			for(var/obj/structure/window/W in T)
-				if(W.reinf && W.fulltile)
-					current_exp_block += W.explosion_block
-
-			for(var/obj/structure/blob/B in T)
-				current_exp_block += B.explosion_block
-			
 			.[T] = current_exp_block
 
 			if(TICK_CHECK)
 				break
-		
+
 		processed = I
 		stoplag()
 
@@ -351,19 +344,12 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/turf/TT = T
 			while(TT != epicenter)
 				TT = get_step_towards(TT,epicenter)
-				if(TT.density && TT.explosion_block)
+				if(TT.density)
 					dist += TT.explosion_block
 
-				for(var/obj/machinery/door/D in TT)
-					if(D.density && D.explosion_block)
-						dist += D.explosion_block
-
-				for(var/obj/structure/window/W in TT)
-					if(W.explosion_block && W.fulltile)
-						dist += W.explosion_block
-
-				for(var/obj/structure/blob/B in T)
-					dist += B.explosion_block
+				for(var/obj/O in T)
+					var/the_block = O.explosion_block
+					dist += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
 
 		if(dist < dev)
 			T.color = "red"

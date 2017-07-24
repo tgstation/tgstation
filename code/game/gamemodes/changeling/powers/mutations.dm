@@ -307,12 +307,12 @@
 				playsound(get_turf(H),I.hitsound,75,1)
 				return
 
-/obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
 	var/mob/living/carbon/human/H = firer
 	H.dropItemToGround(source.gun, TRUE) //Unequip thus delete the tentacle on hit
 	if(blocked >= 100)
 		return 0
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		if(!I.anchored)
 			to_chat(firer, "<span class='notice'>You pull [I] towards yourself.</span>")
@@ -403,7 +403,7 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/weapon/shield/changeling/hit_reaction()
+/obj/item/weapon/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc

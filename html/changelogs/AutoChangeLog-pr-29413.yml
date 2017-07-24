@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Medibots now properly render the overlays of the medkits they are made from."

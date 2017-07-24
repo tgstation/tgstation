@@ -5,11 +5,11 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/broken = 0
-	var/processing = 0
-	use_power = 1
+	var/processing = FALSE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
 	var/rating_speed = 1
@@ -33,7 +33,7 @@
 	build_path = /obj/machinery/processor
 
 /obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
@@ -126,8 +126,6 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
 	output = /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
 
-
-
 /* mobs */
 /datum/food_processor_process/mob/process_food(loc, what, processor)
 	..()
@@ -164,7 +162,8 @@
 	//set reagent data
 	B.data["donor"] = O
 
-	for(var/datum/disease/D in O.viruses)
+	for(var/thing in O.viruses)
+		var/datum/disease/D = thing
 		if(!(D.spread_flags & SPECIAL))
 			B.data["viruses"] += D.Copy()
 	if(O.has_dna())
@@ -253,7 +252,7 @@
 	if(src.contents.len == 0)
 		to_chat(user, "<span class='warning'>The processor is empty!</span>")
 		return 1
-	src.processing = 1
+	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
 		"<span class='italics'>You hear a food processor.</span>")
@@ -276,7 +275,7 @@
 			continue
 		P.process_food(src.loc, O, src)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
-	src.processing = 0
+	processing = FALSE
 	src.visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
@@ -299,7 +298,7 @@
 
 /obj/machinery/processor/slime
 	name = "Slime processor"
-	desc = "An industrial grinder with a sSSticker saying appropriated for science department. Keep hands clear of intake area while operating."
+	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
 /obj/machinery/processor/slime/New()
 	..()

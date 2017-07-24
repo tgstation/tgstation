@@ -18,7 +18,7 @@
 					new /obj/item/weapon/coin/gold(user.loc),
 					new /obj/item/weapon/coin/diamond(user.loc),
 					new /obj/item/weapon/coin/silver(user.loc),
-					new /obj/item/clothing/tie/medal/gold(user.loc),
+					new /obj/item/clothing/accessory/medal/gold(user.loc),
 					new /obj/item/stack/sheet/mineral/gold(user.loc),
 					new /obj/item/stack/sheet/mineral/silver(user.loc),
 					new /obj/item/stack/sheet/mineral/diamond(user.loc),

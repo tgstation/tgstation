@@ -1,11 +1,11 @@
 /obj/item/weapon/electronics/airlock
 	name = "airlock electronics"
-	req_access = list(GLOB.access_maint_tunnels)
+	req_access = list(ACCESS_MAINT_TUNNELS)
 
 	var/list/accesses = list()
 	var/one_access = 0
 
-/obj/item/weapon/electronics/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/item/weapon/electronics/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

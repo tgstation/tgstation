@@ -1,19 +1,20 @@
 /mob/living/silicon/robot/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 	if(desc)
 		msg += "[desc]\n"
 
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
-		msg += "It is holding \icon[act_module] \a [act_module].\n"
+		msg += "It is holding [bicon(act_module)] \a [act_module].\n"
 	msg += "<span class='warning'>"
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < maxHealth*0.5)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
-	if (src.getFireLoss())
-		if (src.getFireLoss() < maxHealth*0.5)
+	if (getFireLoss() || getToxLoss())
+		var/overall_fireloss = getFireLoss() + getToxLoss()
+		if (overall_fireloss < maxHealth * 0.5)
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
@@ -33,7 +34,7 @@
 	if(cell && cell.charge <= 0)
 		msg += "<span class='warning'>Its battery indicator is blinking red!</span>\n"
 
-	if(is_servant_of_ratvar(src) && user.Adjacent(src) && !stat) //To counter pseudo-stealth by using headlamps
+	if(is_servant_of_ratvar(src) && get_dist(user, src) <= 1 && !stat) //To counter pseudo-stealth by using headlamps
 		msg += "<span class='warning'>Its eyes are glowing a blazing yellow!</span>\n"
 
 	switch(stat)

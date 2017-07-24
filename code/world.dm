@@ -5,10 +5,8 @@
 	view = "15x15"
 	cache_lifespan = 7
 	hub = "Exadv1.spacestation13"
-	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
 	fps = 20
-	visibility = 0
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
@@ -24,16 +22,17 @@
 
 	config = new
 
+	CheckSchemaVersion()
 	SetRoundID()
 
 	SetupLogs()
 
 	if(!RunningService())	//tgs2 support
-		GLOB.revdata.DownloadPRDetails() 
+		GLOB.revdata.DownloadPRDetails()
 
 	load_motd()
 	load_admins()
-	load_menu()
+	LoadVerbs(/datum/verbs/menu)
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -56,18 +55,32 @@
 			external_rsc_urls.Cut(i,i+1)
 #endif
 
-/world/proc/SetRoundID()
+/world/proc/CheckSchemaVersion()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), COALESCE(INET_ATON('[world.internet_address]'), 0), '[world.port]')")
+			var/datum/DBQuery/db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_version")]")
+			db_version.Execute()
+			if(db_version.NextRow())
+				var/db_major = db_version.item[1]
+				var/db_minor = db_version.item[2]
+				if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
+					message_admins("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+			else
+				message_admins("Could not get schema version from db")
+		else
+			log_world("Your server failed to establish a connection with the database.")
+
+/world/proc/SetRoundID()
+	if(config.sql_enabled)
+		if(SSdbcore.Connect())
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
 			if(query_round_last_id.NextRow())
 				GLOB.round_id = query_round_last_id.item[1]
-		else
-			log_world("Your server failed to establish a connection with the database.")
 
 /world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
@@ -91,21 +104,25 @@
 		log_game("Round ID: [GLOB.round_id]")
 
 /world/Topic(T, addr, master, key)
-	if(config && config.log_world_topic)
+	var/list/input = params2list(T)
+	
+	var/pinging = ("ping" in input)
+	var/playing = ("players" in input)
+	
+	if(!pinging && !playing && config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
-	var/list/input = params2list(T)
 	if(input[SERVICE_CMD_PARAM_KEY])
 		return ServiceCommand(input)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
 
-	if("ping" in input)
+	if(pinging)
 		var/x = 1
 		for (var/client/C in GLOB.clients)
 			x++
 		return x
 
-	else if("players" in input)
+	else if(playing)
 		var/n = 0
 		for(var/mob/M in GLOB.player_list)
 			if(M.client)
@@ -245,7 +262,6 @@
 	s += "<b>[station_name()]</b>";
 	s += " ("
 	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
 	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
@@ -286,3 +302,12 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
+/world/proc/update_hub_visibility(new_visibility)
+	if(new_visibility == GLOB.hub_visibility)
+		return
+	GLOB.hub_visibility = new_visibility
+	if(GLOB.hub_visibility)
+		hub_password = "kMZy3U5jJHSiBQjr"
+	else
+		hub_password = "SORRYNOPASSWORD"

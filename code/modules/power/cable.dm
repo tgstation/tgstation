@@ -33,7 +33,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
+	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
@@ -301,7 +301,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	//first let's add turf cables to our powernet
 	//then we'll connect machines on turf with a node cable is present
 	for(var/AM in loc)
-		if(istype(AM,/obj/structure/cable))
+		if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
 			if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) //only connected if they have a common direction
 				if(C.powernet == powernet)
@@ -311,7 +311,7 @@ By design, d1 is the smallest direction and d2 is the highest
 				else
 					powernet.add_cable(C) //the cable was powernetless, let's just add it to our powernet
 
-		else if(istype(AM,/obj/machinery/power/apc))
+		else if(istype(AM, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM
 			if(!N.terminal)
 				continue // APC are connected through their terminal
@@ -321,7 +321,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			to_connect += N.terminal //we'll connect the machines after all cables are merged
 
-		else if(istype(AM,/obj/machinery/power)) //other power machines
+		else if(istype(AM, /obj/machinery/power)) //other power machines
 			var/obj/machinery/power/M = AM
 
 			if(M.powernet == powernet)
@@ -390,7 +390,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			qdel(PN)
 
 // cut the cable's powernet at this cable and updates the powergrid
-/obj/structure/cable/proc/cut_cable_from_powernet()
+/obj/structure/cable/proc/cut_cable_from_powernet(remove=TRUE)
 	var/turf/T1 = loc
 	var/list/P_list
 	if(!T1)
@@ -412,7 +412,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/obj/O = P_list[1]
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
-	loc = null
+	if(remove)
+		loc = null
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
 	spawn(0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
@@ -425,43 +426,6 @@ By design, d1 is the smallest direction and d2 is the highest
 		for(var/obj/machinery/power/P in T1)
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
-
-// Ugly procs that ensure proper separation and reconnection of wires on shuttle movement/rotation
-/obj/structure/cable/beforeShuttleMove(turf/T1, rotation)
-	var/on_edge = FALSE
-	var/A = get_area(src)
-
-	for(var/D in GLOB.alldirs)
-		if(A != get_area(get_step(src, D)))
-			on_edge = TRUE
-			break
-
-	if(on_edge && powernet)
-		var/tmp_loc = loc
-		cut_cable_from_powernet()
-		loc = tmp_loc
-
-/obj/structure/cable/afterShuttleMove()
-	var/on_edge = FALSE
-	var/A = get_area(src)
-
-	for(var/D in GLOB.alldirs)
-		if(A != get_area(get_step(src, D)))
-			on_edge = TRUE
-			break
-
-	if(on_edge)
-		var/datum/powernet/PN = new()
-		PN.add_cable(src)
-
-		mergeConnectedNetworks(d1) //merge the powernet with adjacents powernets
-		mergeConnectedNetworks(d2)
-		mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
-
-		if(d1 & (d1 - 1))// if the cable is layed diagonally, check the others 2 possible directions
-			mergeDiagonalsNetworks(d1)
-		if(d2 & (d2 - 1))
-			mergeDiagonalsNetworks(d2)
 
 /obj/structure/cable/shuttleRotate(rotation)
 	//..() is not called because wires are not supposed to have a non-default direction
@@ -509,6 +473,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
+	full_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1

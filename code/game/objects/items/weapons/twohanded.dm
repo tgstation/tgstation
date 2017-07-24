@@ -84,21 +84,17 @@
 	return
 
 /obj/item/weapon/twohanded/dropped(mob/user)
-	..()
+	. = ..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(!wielded)
 		return
-	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
-		if(istype(O))
-			O.unwield(user, FALSE)
 	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	..()
+	. = ..()
 	if(wielded) //Trying to unwield it
 		unwield(user)
 	else //Trying to wield it
@@ -181,16 +177,21 @@
 	else
 		unwield(user)
 
+/obj/item/weapon/twohanded/required/dropped(mob/living/user, show_message = TRUE)
+	unwield(user, show_message)
+	..()
+
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
 		user.dropItemToGround(src)
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+	if(!wielded)
+		return
 	if(show_message)
 		to_chat(user, "<span class='notice'>You drop [src].</span>")
 	..(user, FALSE)
-	user.dropItemToGround(src)
 
 /*
  * Fireaxe
@@ -208,7 +209,6 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
@@ -225,10 +225,10 @@
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window))
+		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
-		else if(istype(A,/obj/structure/grille))
+		else if(istype(A, /obj/structure/grille))
 			var/obj/structure/grille/G = A
 			G.take_damage(40, BRUTE, "melee", 0)
 
@@ -257,11 +257,10 @@
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
-	var/hacked = 0
+	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
@@ -317,7 +316,7 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		return ..()
 	return 0
@@ -361,7 +360,7 @@
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
-	// same as /obj/item/weapon/melee/energy, mostly
+	// same as /obj/item/weapon/melee/transforming/energy, mostly
 	if(!wielded)
 		return ""
 	var/in_mouth = ""
@@ -389,8 +388,8 @@
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		if(hacked == 0)
-			hacked = 1
+		if(!hacked)
+			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			update_icon()
@@ -417,7 +416,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/obj/item/weapon/grenade/explosive = null
@@ -492,7 +490,7 @@
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
-	var/on = 0
+	var/on = FALSE
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
@@ -522,7 +520,7 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
@@ -567,7 +565,6 @@
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
@@ -622,10 +619,10 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !wielded)
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		var/turf/closed/wall/W = target
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
-		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
 		return 1
 	..()
@@ -648,7 +645,7 @@
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(wielded || attack_type != PROJECTILE_ATTACK)

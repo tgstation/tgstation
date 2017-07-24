@@ -1,5 +1,5 @@
 /*********************Mining Hammer****************/
-/obj/item/weapon/twohanded/required/mining_hammer
+/obj/item/weapon/twohanded/required/kinetic_crusher
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_hammer1"
 	item_state = "mining_hammer1"
@@ -13,7 +13,8 @@
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
-	luminosity = 4
+	light_range = 5
+	light_power = 1
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -23,21 +24,19 @@
 	var/charged = TRUE
 	var/charge_time = 15
 
-/obj/item/weapon/twohanded/required/mining_hammer/Destroy()
-	for(var/a in trophies)
-		qdel(a)
-	trophies = null
+/obj/item/weapon/twohanded/required/kinetic_crusher/Destroy()
+	QDEL_LIST(trophies)
 	return ..()
 
-/obj/item/weapon/twohanded/required/mining_hammer/examine(mob/living/user)
+/obj/item/weapon/twohanded/required/kinetic_crusher/examine(mob/living/user)
 	..()
 	to_chat(user, "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>50</b> damage.</span>")
 	to_chat(user, "<span class='notice'>Does <b>80</b> damage if the target is backstabbed, instead of <b>50</b>.</span>")
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
-		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
+		to_chat(user, "<span class='notice'>It has \a [T] attached, which cause [T.effect_desc()].</span>")
 
-/obj/item/weapon/twohanded/required/mining_hammer/attackby(obj/item/A, mob/living/user)
+/obj/item/weapon/twohanded/required/kinetic_crusher/attackby(obj/item/A, mob/living/user)
 	if(istype(A, /obj/item/weapon/crowbar))
 		if(LAZYLEN(trophies))
 			to_chat(user, "<span class='notice'>You remove [src]'s trophies.</span>")
@@ -53,7 +52,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/required/mining_hammer/attack(mob/living/target, mob/living/carbon/user)
+/obj/item/weapon/twohanded/required/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	var/target_health = target.health
 	..()
@@ -64,7 +63,7 @@
 	if(!QDELETED(C) && !QDELETED(target))
 		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 
-/obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/living/user, proximity_flag)
+/obj/item/weapon/twohanded/required/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
@@ -102,13 +101,13 @@
 				if(!QDELETED(C))
 					C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
 				L.apply_damage(80, BRUTE, blocked = def_check)
-				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else
 				if(!QDELETED(C))
 					C.total_damage += 50
 				L.apply_damage(50, BRUTE, blocked = def_check)
 
-/obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
+/obj/item/weapon/twohanded/required/kinetic_crusher/proc/Recharge()
 	if(!charged)
 		charged = TRUE
 		icon_state = "mining_hammer1"
@@ -124,19 +123,18 @@
 	flag = "bomb"
 	range = 6
 	log_override = TRUE
-	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+	var/obj/item/weapon/twohanded/required/kinetic_crusher/hammer_synced
 
 /obj/item/projectile/destabilizer/Destroy()
 	hammer_synced = null
 	return ..()
 
-/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
 		var/had_effect = (L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)) //used as a boolean
-		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK, hammer_synced)
 		if(hammer_synced)
-			CM.hammer_synced = hammer_synced
 			for(var/t in hammer_synced.trophies)
 				var/obj/item/crusher_trophy/T = t
 				T.on_mark_application(target, CM, had_effect)
@@ -164,23 +162,24 @@
 	return "errors"
 
 /obj/item/crusher_trophy/attackby(obj/item/A, mob/living/user)
-	if(istype(A, /obj/item/weapon/twohanded/required/mining_hammer))
+	if(istype(A, /obj/item/weapon/twohanded/required/kinetic_crusher))
 		add_to(A, user)
 	else
 		..()
 
-/obj/item/crusher_trophy/proc/add_to(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+/obj/item/crusher_trophy/proc/add_to(obj/item/weapon/twohanded/required/kinetic_crusher/H, mob/living/user)
 	for(var/t in H.trophies)
 		var/obj/item/crusher_trophy/T = t
 		if(istype(T, denied_type) || istype(src, T.denied_type))
 			to_chat(user, "<span class='warning'>You can't seem to attach [src] to [H]. Maybe remove a few trophies?</span>")
 			return FALSE
+	if(!user.transferItemToLoc(src, H))
+		return
 	H.trophies += src
-	forceMove(H)
 	to_chat(user, "<span class='notice'>You attach [src] to [H].</span>")
 	return TRUE
 
-/obj/item/crusher_trophy/proc/remove_from(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+/obj/item/crusher_trophy/proc/remove_from(obj/item/weapon/twohanded/required/kinetic_crusher/H, mob/living/user)
 	forceMove(get_turf(H))
 	H.trophies -= src
 	return TRUE
@@ -241,15 +240,28 @@
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second[bonus_value*0.1 == 1 ? "":"s"] faster"
 
-/obj/item/crusher_trophy/legion_skull/add_to(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/add_to(obj/item/weapon/twohanded/required/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.charge_time -= bonus_value
 
-/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/weapon/twohanded/required/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.charge_time += bonus_value
+
+//blood-drunk hunter
+/obj/item/crusher_trophy/miner_eye
+	name = "eye of a blood-drunk hunter"
+	desc = "Its pupil is collapsed and turned to mush. Suitable as a trophy for a kinetic crusher."
+	icon_state = "hunter_eye"
+	denied_type = /obj/item/crusher_trophy/miner_eye
+
+/obj/item/crusher_trophy/miner_eye/effect_desc()
+	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
+
+/obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(STATUS_EFFECT_BLOODDRUNK)
 
 //ash drake
 /obj/item/crusher_trophy/tail_spike
@@ -264,7 +276,7 @@
 	for(var/mob/living/L in oview(2, user))
 		if(L.stat == DEAD)
 			continue
-		playsound(L, 'sound/magic/Fireball.ogg', 20, 1)
+		playsound(L, 'sound/magic/fireball.ogg', 20, 1)
 		new /obj/effect/temp_visual/fire(L.loc)
 		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
 		L.adjustBruteLoss(bonus_value)
@@ -286,14 +298,14 @@
 /obj/item/crusher_trophy/demon_claws/effect_desc()
 	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>; this effect is increased by <b>500%</b> during mark detonation"
 
-/obj/item/crusher_trophy/demon_claws/add_to(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/add_to(obj/item/weapon/twohanded/required/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.force += bonus_value * 0.2
 		H.force_unwielded += bonus_value * 0.2
 		H.force_wielded += bonus_value * 0.2
 
-/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/weapon/twohanded/required/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.force -= bonus_value * 0.2

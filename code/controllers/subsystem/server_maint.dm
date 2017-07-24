@@ -11,13 +11,13 @@ SUBSYSTEM_DEF(server_maint)
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)
-		world.visibility = 1
+		world.update_hub_visibility(TRUE)
 	..()
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)
 		src.currentrun = GLOB.clients.Copy()
-	
+
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()
 
@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(server_maint)
 		if(round_started && config.kick_inactive)
 			if(C.is_afk(config.afk_period))
 				var/cmob = C.mob
-				if(!(istype(cmob, /mob/dead/observer) || (istype(cmob, /mob/dead) && C.holder)))
+				if(!(isobserver(cmob) || (isdead(cmob) && C.holder)))
 					log_access("AFK: [key_name(C)]")
 					to_chat(C, "<span class='danger'>You have been inactive for more than [config.afk_period / 600] minutes and have been disconnected.</span>")
 					qdel(C)

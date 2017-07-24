@@ -8,7 +8,7 @@
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
-	var/on = 1
+	var/on = TRUE
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
@@ -78,14 +78,14 @@
 					on = !( on )
 					icon_state = "electropack[on]"
 		if(!( master ))
-			if(istype(loc, /mob))
+			if(ismob(loc))
 				attack_self(loc)
 			else
 				for(var/mob/M in viewers(1, src))
 					if(M.client)
 						attack_self(M)
 		else
-			if(istype(master.loc, /mob))
+			if(ismob(master.loc))
 				attack_self(master.loc)
 			else
 				for(var/mob/M in viewers(1, master))
@@ -100,21 +100,21 @@
 	if(!signal || signal.encryption != code)
 		return
 
-	if(ismob(loc) && on)
+	if(isliving(loc) && on)
 		if(shock_cooldown != 0)
 			return
 		shock_cooldown = 1
 		spawn(100)
 			shock_cooldown = 0
-		var/mob/M = loc
-		step(M, pick(GLOB.cardinal))
+		var/mob/living/L = loc
+		step(L, pick(GLOB.cardinals))
 
-		to_chat(M, "<span class='danger'>You feel a sharp shock!</span>")
+		to_chat(L, "<span class='danger'>You feel a sharp shock!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(3, 1, M)
+		s.set_up(3, 1, L)
 		s.start()
 
-		M.Weaken(5)
+		L.Knockdown(100)
 
 	if(master)
 		master.receive_signal()

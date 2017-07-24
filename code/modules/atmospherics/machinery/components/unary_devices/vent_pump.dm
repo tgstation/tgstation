@@ -9,13 +9,14 @@
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "vent_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	can_unwrench = 1
-	welded = 0
+	welded = FALSE
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = 0
+	var/on = FALSE
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND
@@ -31,15 +32,18 @@
 	var/radio_filter_in
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
-	on = 1
-	icon_state = "vent_out"
+	on = TRUE
+	icon_state = "vent_map_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = SIPHONING
+	pressure_checks = INT_BOUND
+	internal_pressure_bound = 4000
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
-	on = 1
-	icon_state = "vent_in"
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
@@ -55,12 +59,25 @@
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
 	radio_connection = null
-
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = EQUIP
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
+	on = TRUE
+	icon_state = "vent_map_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
+	pump_direction = SIPHONING
+	pressure_checks = INT_BOUND
+	internal_pressure_bound = 2000
+	external_pressure_bound = 0
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
@@ -90,7 +107,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!NODE1)
-		on = 0
+		on = FALSE
 	if(!on || welded)
 		return 0
 
@@ -251,13 +268,13 @@
 			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn()) return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = 1
+					welded = TRUE
 				else
 					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = 0
+					welded = FALSE
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 				pipe_vision_img.plane = ABOVE_HUD_PLANE
@@ -288,7 +305,7 @@
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
-	welded = 0
+	welded = FALSE
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE

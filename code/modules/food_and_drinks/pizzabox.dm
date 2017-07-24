@@ -10,10 +10,10 @@
 	name = "pizza box"
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "pizzabox1"
+	icon_state = "pizzabox"
 	item_state = "pizzabox"
 
-	var/open = 0
+	var/open = FALSE
 	var/boxtag = ""
 	var/list/boxes = list()
 
@@ -68,19 +68,36 @@
 			bomb_overlay.pixel_y = 5
 			add_overlay(bomb_overlay)
 	else
-		icon_state = "pizzabox[boxes.len + 1]"
+		icon_state = "pizzabox"
+		var/current_offset = 3
+		for(var/V in boxes)
+			var/obj/item/pizzabox/P = V
+			var/mutable_appearance/box_overlay = mutable_appearance(P.icon, P.icon_state)
+			box_overlay.pixel_y = current_offset
+			add_overlay(box_overlay)
+			current_offset += 3
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(box.boxtag != "")
 			var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
 			tag_overlay.pixel_y = boxes.len * 3
 			add_overlay(tag_overlay)
 
+/obj/item/pizzabox/worn_overlays(isinhands, icon_file)
+	. = list()
+	var/current_offset = 2
+	if(isinhands)
+		for(var/V in boxes) //add EXTRA BOX per box
+			var/mutable_appearance/M = mutable_appearance(icon_file, item_state)
+			M.pixel_y = current_offset
+			current_offset += 2
+			. += M
+
 /obj/item/pizzabox/attack_self(mob/user)
 	if(boxes.len > 0)
 		return
 	open = !open
 	if(open && !bomb_defused)
-		audible_message("<span class='warning'>\icon[src] *beep*</span>")
+		audible_message("<span class='warning'>[bicon(src)] *beep*</span>")
 		bomb_active = TRUE
 		START_PROCESSING(SSobj, src)
 	update_icon()
@@ -124,6 +141,7 @@
 		to_chat(user, "<span class='notice'>You remove the topmost [name] from the stack.</span>")
 		topbox.update_icon()
 		update_icon()
+		user.regenerate_icons()
 		return
 	..()
 
@@ -134,23 +152,28 @@
 			var/list/add = list()
 			add += newbox
 			add += newbox.boxes
-
-			if((boxes.len + 1) + add.len <= 5)
-				if(!user.drop_item())
-					return
-				boxes += add
-				newbox.boxes.Cut()
-				newbox.loc = src
-				to_chat(user, "<span class='notice'>You put [newbox] on top of [src]!</span>")
-				newbox.update_icon()
-				update_icon()
+			if(!user.transferItemToLoc(add, src))
 				return
-			else
-				to_chat(user, "<span class='notice'>The stack is dangerously high!</span>")
+			boxes += add
+			newbox.boxes.Cut()
+			to_chat(user, "<span class='notice'>You put [newbox] on top of [src]!</span>")
+			newbox.update_icon()
+			update_icon()
+			user.regenerate_icons()
+			if(boxes.len >= 5)
+				if(prob(10 * boxes.len))
+					to_chat(user, "<span class='danger'>You can't keep holding the stack!</span>")
+					disperse_pizzas()
+				else
+					to_chat(user, "<span class='warning'>The stack is getting a little high...</span>")
+			return
 		else
 			to_chat(user, "<span class='notice'>Close [open ? src : newbox] first!</span>")
 	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza))
 		if(open)
+			if(pizza)
+				to_chat(user, "<span class='warning'>[src] already has \a [pizza.name]!</span>")
+				return
 			if(!user.drop_item())
 				return
 			pizza = I
@@ -181,7 +204,7 @@
 		if(wires && bomb)
 			wires.interact(user)
 	else if(istype(I, /obj/item/weapon/reagent_containers/food))
-		to_chat(user, "<span class='notice'>That's not a pizza!</span>")
+		to_chat(user, "<span class='warning'>That's not a pizza!</span>")
 	..()
 
 /obj/item/pizzabox/process()
@@ -199,6 +222,34 @@
 			bomb_active = FALSE
 			unprocess()
 	return
+
+/obj/item/pizzabox/attack(mob/living/target, mob/living/user, def_zone)
+	. = ..()
+	if(boxes.len >= 3 && prob(25 * boxes.len))
+		disperse_pizzas()
+
+/obj/item/pizzabox/throw_impact(atom/movable/AM)
+	if(boxes.len >= 2 && prob(20 * boxes.len))
+		disperse_pizzas()
+
+/obj/item/pizzabox/proc/disperse_pizzas()
+	visible_message("<span class='warning'>The pizzas fall everywhere!</span>")
+	for(var/V in boxes)
+		var/obj/item/pizzabox/P = V
+		var/fall_dir = pick(GLOB.alldirs)
+		step(P, fall_dir)
+		if(P.pizza && prob(50)) //rip pizza
+			P.open = TRUE
+			P.pizza.forceMove(get_turf(P))
+			fall_dir = pick(GLOB.alldirs)
+			step(P.pizza, fall_dir)
+			P.pizza = null
+			P.update_icon()
+		boxes -= P
+	update_icon()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		L.regenerate_icons()
 
 /obj/item/pizzabox/proc/unprocess()
 	STOP_PROCESSING(SSobj, src)

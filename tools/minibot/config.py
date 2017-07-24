@@ -1,7 +1,6 @@
 # Configuration for the minibot.py bot starts here
 server = "irc.rizon.net"
 port = 6667
-nudge_port = 45678
 
 channels = ["#asdfgbus", "#botbus"]
 defaultchannel = "#asdfgbus"

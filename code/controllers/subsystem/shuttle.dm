@@ -1,4 +1,5 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
+#define MAX_TRANSIT_REQUEST_RETRIES 10
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
@@ -13,6 +14,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/turf/transit_turfs = list()
 	var/list/transit_requesters = list()
+	var/list/transit_request_failures = list()
 	var/clear_transit = FALSE
 
 		//emergency shuttle stuff
@@ -73,12 +75,9 @@ SUBSYSTEM_DEF(shuttle)
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(GLOB.transit_markers.len == 0)
-		WARNING("No /obj/effect/landmark/transit placed on the map!")
-		return
 	// transit zone
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -87,11 +86,8 @@ SUBSYSTEM_DEF(shuttle)
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	if(GLOB.transit_markers.len == 0)
-		WARNING("No /obj/effect/landmark/transit placed on the map!")
-		return
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -145,7 +141,12 @@ SUBSYSTEM_DEF(shuttle)
 		var/requester = popleft(transit_requesters)
 		var/success = generate_transit_dock(requester)
 		if(!success) // BACK OF THE QUEUE
-			transit_requesters += requester
+			transit_request_failures[requester]++
+			if(transit_request_failures[requester] < MAX_TRANSIT_REQUEST_RETRIES)
+				transit_requesters += requester
+			else
+				var/obj/docking_port/mobile/M = requester
+				M.transit_failure()
 		if(MC_TICK_CHECK)
 			return
 
@@ -221,7 +222,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
 		return
-	emergency.cancel(/area/centcom)
+	emergency.cancel()
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)
@@ -322,7 +323,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/AI/shuttledock.ogg', "Priority")
+			null, 'sound/ai/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -530,9 +531,13 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
 	var/area/current = get_area(A)
-	if(istype(current, /area/shuttle) && !istype(current,/area/shuttle/transit))
+	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
 		return TRUE
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
 
+/datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return M

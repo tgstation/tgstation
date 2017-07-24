@@ -216,7 +216,7 @@
 	R.anchored = TRUE
 	sleep(2)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg', 'sound/items/Ratchet.ogg'), 80, 1, -1)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 		sleep(12)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
@@ -246,11 +246,11 @@
 		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
-	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
+	emag_modules = list(/obj/item/weapon/melee/transforming/energy/sword/cyborg)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
 		/obj/item/clockwork/ratvarian_spear/cyborg,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
 	hat_offset = -3
@@ -314,7 +314,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	feedback_key = "cyborg_engineering"
@@ -384,6 +384,9 @@
 	name = "Janitor"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/screwdriver/cyborg,
+		/obj/item/weapon/crowbar/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/weapon/storage/bag/trash/cyborg,
 		/obj/item/weapon/mop/cyborg,
@@ -393,7 +396,7 @@
 	emag_modules = list(/obj/item/weapon/reagent_containers/spray/cyborg_lube)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/janitor,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"
@@ -507,7 +510,7 @@
 	name = "Syndicate Assault"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/weapon/melee/energy/sword/cyborg,
+		/obj/item/weapon/melee/transforming/energy/sword/cyborg,
 		/obj/item/weapon/gun/energy/printer,
 		/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/weapon/card/emag,
@@ -534,7 +537,7 @@
 		/obj/item/weapon/hemostat,
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/scalpel,
-		/obj/item/weapon/melee/energy/sword/cyborg/saw,
+		/obj/item/weapon/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
 		/obj/item/weapon/card/emag,
 		/obj/item/weapon/crowbar/cyborg,

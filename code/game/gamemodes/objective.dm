@@ -240,11 +240,8 @@
 		return 0
 	if(issilicon(owner.current))
 		return 0
-
-	var/area/A = get_area(owner.current)
-	if(SSshuttle.emergency.areaInstance != A)
+	if(!SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
 		return 0
-
 	return SSshuttle.emergency.is_hijacked()
 
 
@@ -255,40 +252,31 @@
 
 /datum/objective/hijackclone/check_completion()
 	if(!owner.current)
-		return 0
+		return FALSE
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 0
+		return FALSE
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
+	var/in_shuttle = FALSE
 	for(var/mob/living/player in GLOB.player_list) //Make sure nobody else is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
+		if(SSshuttle.emergency.shuttle_areas[get_area(player)])
+			if(player.mind && player.mind != owner)
+				if(player.stat != DEAD)
+					if(issilicon(player)) //Borgs are technically dead anyways
+						continue
+					if(isanimal(player)) //animals don't count
+						continue
+					if(isbrain(player)) //also technically dead
+						continue
 					var/location = get_turf(player.mind.current)
-					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return 0
-
-	for(var/mob/living/player in GLOB.player_list) //Make sure at least one of you is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
-					var/location = get_turf(player.mind.current)
-					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return 1
-	return 0
+					if(istype(location, /turf/open/floor/plasteel/shuttle/red))
+						continue
+					if(istype(location, /turf/open/floor/mineral/plastitanium/brig))
+						continue
+					if(player.real_name != owner.current.real_name)
+						return FALSE
+					else
+						in_shuttle = TRUE
+	return in_shuttle
 
 /datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
@@ -301,14 +289,12 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
 	for(var/mob/living/player in GLOB.player_list)
 		if(issilicon(player))
 			continue
 		if(player.mind)
 			if(player.stat != DEAD)
-				if(get_area(player) == A)
+				if(get_area(player) in SSshuttle.emergency.shuttle_areas)
 					return 0
 
 	return 1
@@ -323,10 +309,8 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
-	var/area/A = SSshuttle.emergency.areaInstance
-
 	for(var/mob/living/player in GLOB.player_list)
-		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
+		if(get_area(player) in SSshuttle.emergency.shuttle_areas && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
 				return 0
@@ -619,7 +603,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
 	var/captured_amount = 0
-	var/area/centcom/holding/A = locate()
+	var/area/centcom/holding/A = locate() in GLOB.sortedAreas
 	for(var/mob/living/carbon/human/M in A)//Humans.
 		if(M.stat==2)//Dead folks are worth less.
 			captured_amount+=0.5
@@ -658,7 +642,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/n_p = 1 //autowin
 		if (SSticker.current_state == GAME_STATE_SETTING_UP)
 			for(var/mob/dead/new_player/P in GLOB.player_list)
-				if(P.client && P.ready && P.mind!=owner)
+				if(P.client && P.ready == PLAYER_READY_TO_PLAY && P.mind!=owner)
 					n_p ++
 		else if (SSticker.IsRoundInProgress())
 			for(var/mob/living/carbon/human/P in GLOB.player_list)
@@ -701,7 +685,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
-	
+
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
 

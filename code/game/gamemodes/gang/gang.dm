@@ -3,7 +3,7 @@
 
 GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
 GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple", "white"))
-GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/obj/item/clothing/suit/jacket/leather/overcoat,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/jacket/miljacket,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/pirate,/obj/item/clothing/suit/poncho,/obj/item/clothing/suit/apron/overalls,/obj/item/clothing/suit/jacket/letterman))
+GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, /obj/item/clothing/suit/jacket/leather/overcoat, /obj/item/clothing/suit/jacket/puffer, /obj/item/clothing/suit/jacket/miljacket, /obj/item/clothing/suit/jacket/puffer, /obj/item/clothing/suit/pirate, /obj/item/clothing/suit/poncho, /obj/item/clothing/suit/apron/overalls, /obj/item/clothing/suit/jacket/letterman))
 
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		for(var/n in 1 to 3)
 			var/datum/mind/boss = pick(antag_candidates)
 			antag_candidates -= boss
-			G.bosses += boss
+			G.bosses[boss] = GANGSTER_BOSS_STARTING_INFLUENCE
 			boss.gang_datum = G
 			var/title
 			if(n == 1)
@@ -85,6 +85,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	sleep(rand(10,100))
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
+			G.bosses[boss_mind] = GANGSTER_BOSS_STARTING_INFLUENCE			//Force influence to be put on it.
 			G.add_gang_hud(boss_mind)
 			forge_gang_objectives(boss_mind)
 			greet_gang(boss_mind)
@@ -170,14 +171,14 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
-	G.gangsters += gangster_mind
+	G.gangsters[gangster_mind] = GANGSTER_SOLDIER_STARTING_INFLUENCE
 	gangster_mind.gang_datum = G
 	if(check)
 		if(iscarbon(gangster_mind.current))
 			var/mob/living/carbon/carbon_mob = gangster_mind.current
 			carbon_mob.silent = max(carbon_mob.silent, 5)
 			carbon_mob.flash_act(1, 1)
-		gangster_mind.current.Stun(5)
+		gangster_mind.current.Stun(100)
 	if(G.is_deconvertible)
 		to_chat(gangster_mind.current, "<FONT size=3 color=red><B>You are now a member of the [G.name] Gang!</B></FONT>")
 		to_chat(gangster_mind.current, "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>")
@@ -209,14 +210,23 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		if(!G.is_deconvertible && !remove_bosses)
 			return 0
 		if(gangster_mind in G.gangsters)
+			G.reclaim_points(G.gangsters[gangster_mind])
 			G.gangsters -= gangster_mind
 			removed = 1
 		if(remove_bosses && (gangster_mind in G.bosses))
+			G.reclaim_points(G.bosses[gangster_mind])
 			G.bosses -= gangster_mind
 			removed = 1
+		if(G.tags_by_mind[gangster_mind] && islist(G.tags_by_mind[gangster_mind]))
+			var/list/tags_cache = G.tags_by_mind[gangster_mind]
+			for(var/v in tags_cache)
+				var/obj/effect/decal/cleanable/crayon/gang/c = v
+				c.set_mind_owner(null)
+			G.tags_by_mind -= gangster_mind
 
 	if(!removed)
 		return 0
+
 
 	gangster_mind.special_role = null
 	gangster_mind.gang_datum = null
@@ -231,7 +241,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			message_admins("[ADMIN_LOOKUPFLW(gangster_mind.current)] has been borged while being a member of the [gang.name] Gang. They are no longer a gangster.")
 		else
 			if(!silent)
-				gangster_mind.current.Paralyse(5)
+				gangster_mind.current.Unconscious(100)
 				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
 			to_chat(gangster_mind.current, "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>")
 			gangster_mind.memory = ""

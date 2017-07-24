@@ -50,7 +50,7 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span class='cult'>*---------*\nThis is [bicon(src)] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
@@ -304,7 +304,7 @@
 	can_repair_constructs = TRUE
 
 
-/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
+/mob/living/simple_animal/hostile/construct/harvester/Collide(atom/AM)
 	. = ..()
 	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
 		var/atom/movable/stored_pulling = pulling
@@ -330,8 +330,8 @@
 		if(!LAZYLEN(parts))
 			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
 				return ..()
-			C.Weaken(30)
-			visible_message("<span class='danger'>[src] paralyzes [C]!</span>")
+			C.Knockdown(60)
+			visible_message("<span class='danger'>[src] knocks [C] down!</span>")
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE
 		do_attack_animation(C)

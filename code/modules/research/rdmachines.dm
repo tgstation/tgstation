@@ -6,13 +6,13 @@
 /obj/machinery/r_n_d
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
-	density = 1
-	anchored = 1
-	use_power = 1
-	var/busy = 0
-	var/hacked = 0
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	var/busy = FALSE
+	var/hacked = FALSE
 	var/disabled = 0
-	var/shocked = 0
+	var/shocked = FALSE
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 

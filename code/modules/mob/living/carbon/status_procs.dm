@@ -1,20 +1,26 @@
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stunned, weakened, paralysis, sleeping, resting, jitteriness, dizziness, ear damage,
+//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, BLIND disability, NEARSIGHT disability, and HUSK disability.
 
 /mob/living/carbon/damage_eyes(amount)
+	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	if (!eyes)
+		return 
 	if(amount>0)
-		eye_damage = amount
-		if(eye_damage > 20)
-			if(eye_damage > 30)
+		eyes.eye_damage = amount
+		if(eyes.eye_damage > 20)
+			if(eyes.eye_damage > 30)
 				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
 			else
 				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 
 /mob/living/carbon/set_eye_damage(amount)
-	eye_damage = max(amount,0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
+	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	if (!eyes)
+		return 
+	eyes.eye_damage = max(amount,0)
+	if(eyes.eye_damage > 20)
+		if(eyes.eye_damage > 30)
 			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
 		else
 			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
@@ -22,9 +28,12 @@
 		clear_fullscreen("eye_damage")
 
 /mob/living/carbon/adjust_eye_damage(amount)
-	eye_damage = max(eye_damage+amount, 0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
+	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	if (!eyes)
+		return
+	eyes.eye_damage = max(eyes.eye_damage+amount, 0)
+	if(eyes.eye_damage > 20)
+		if(eyes.eye_damage > 30)
 			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
 		else
 			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)

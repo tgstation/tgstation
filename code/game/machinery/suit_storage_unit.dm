@@ -4,9 +4,8 @@
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "close"
-	anchored = 1
-	density = 1
-	obj_integrity = 250
+	anchored = TRUE
+	density = TRUE
 	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
@@ -100,11 +99,6 @@
 /obj/machinery/suit_storage_unit/ert/medical
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
-
-/obj/machinery/suit_storage_unit/ueg
-	suit_type = /obj/item/clothing/suit/space/hardsuit/ueg
-	mask_type = /obj/item/clothing/mask/gas/sechailer/swat
 	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
@@ -246,7 +240,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
-			playsound(src, 'sound/machines/AirlockClose.ogg', 25, 1)
+			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
 				I.fingerprints = list()
@@ -326,7 +320,7 @@
 
 	return ..()
 
-/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

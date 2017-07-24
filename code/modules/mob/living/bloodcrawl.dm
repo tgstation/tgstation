@@ -3,8 +3,8 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -95,7 +95,7 @@
 		var/mob/living/simple_animal/slaughter/SD = src
 		sound = SD.feast_sound
 	else
-		sound = 'sound/magic/Demon_consume.ogg'
+		sound = 'sound/magic/demon_consume.ogg'
 
 	for(var/i in 1 to 3)
 		playsound(get_turf(src),sound, 100, 1)

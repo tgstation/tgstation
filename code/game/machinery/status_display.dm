@@ -15,9 +15,9 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = 1
-	density = 0
-	use_power = 1
+	anchored = TRUE
+	density = FALSE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/mode = 1	// 0 = Blank
 					// 1 = Emergency Shuttle timer
@@ -45,12 +45,14 @@
 	// register for radio system
 
 /obj/machinery/status_display/Initialize()
-	..()
+	. = ..()
+	GLOB.ai_status_displays.Add(src)
 	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
+	GLOB.ai_status_displays.Remove(src)
 	return ..()
 
 // timed process
@@ -200,8 +202,8 @@
 	desc = "A small screen which the AI can use to present itself."
 	icon_state = "frame"
 	name = "\improper AI display"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon
@@ -210,6 +212,14 @@
 	var/picture_state	// icon_state of ai picture
 
 	var/emotion = "Neutral"
+
+/obj/machinery/ai_status_display/Initialize()
+	. = ..()
+	GLOB.ai_status_displays.Add(src)
+
+/obj/machinery/ai_status_display/Destroy()
+	GLOB.ai_status_displays.Remove(src)
+	. = ..()
 
 /obj/machinery/ai_status_display/attack_ai(mob/living/silicon/ai/user)
 	if(isAI(user))

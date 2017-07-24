@@ -190,6 +190,17 @@
 	build_path = /obj/item/organ/eyes/robotic/shield
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_gloweyes
+	name = "Luminescent Eyes"
+	desc = "A pair of cybernetic eyes that can emit multicolored light"
+	id = "ci-gloweyes"
+	req_tech = list("materials" = 3, "biotech" = 3, "engineering" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(MAT_METAL = 600, MAT_GLASS = 1000)
+	build_path = /obj/item/organ/eyes/robotic/glow
+	category = list("Misc", "Medical Designs")
+
 /datum/design/cyberimp_breather
 	name = "Breathing Tube Implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
@@ -357,22 +368,22 @@
 	build_path = /obj/item/weapon/implantcase/sad_trombone
 	category = list("Medical Designs")
 
-/datum/design/implant_freedom
-	name = "Freedom Implant Case"
+/datum/design/implant_chem
+	name = "Chemical Implant Case"
 	desc = "A glass case containing an implant."
-	id = "implant_freedom"
-	req_tech = list("combat" = 6, "biotech" = 5, "magnets" = 3, "syndicate" = 3)
+	id = "implant_chem"
+	req_tech = list("materials" = 3, "biotech" = 5,)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 800, MAT_GLASS = 500, MAT_GOLD = 500)
-	build_path = /obj/item/weapon/implantcase/freedom
+	materials = list(MAT_GLASS = 700)
+	build_path = /obj/item/weapon/implantcase/chem
 	category = list("Medical Designs")
 
-/datum/design/implant_adrenalin
-	name = "Adrenalin Implant Case"
+/datum/design/implant_tracking
+	name = "Tracking Implant Case"
 	desc = "A glass case containing an implant."
-	id = "implant_adrenalin"
-	req_tech = list("biotech" = 6, "combat" = 6, "syndicate" = 6)
+	id = "implant_tracking"
+	req_tech = list("materials" = 2, "biotech" = 3, "magnets" = 3, "programming" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_GOLD = 500, MAT_URANIUM = 600, MAT_DIAMOND = 600)
-	build_path = /obj/item/weapon/implantcase/adrenaline
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/weapon/implantcase/track
 	category = list("Medical Designs")

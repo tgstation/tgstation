@@ -2,20 +2,24 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (notransform)
+	if(notransform)
 		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
 
+	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
+
 	if(..()) //not dead
 		handle_blood()
 
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			O.on_life()
+		handle_liver()
+
+	if(stat == DEAD)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -106,7 +110,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
 
 	var/safe_oxy_min = 16
@@ -137,14 +141,14 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
-		clear_alert("oxy")
+		clear_alert("not_enough_oxy")
 
 	breath_gases["o2"][MOLES] -= oxygen_used
 	breath_gases["co2"][MOLES] += oxygen_used
@@ -154,7 +158,7 @@
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if(world.time - co2overloadtime > 120)
-			Paralyse(3)
+			Unconscious(60)
 			adjustOxyLoss(3)
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
@@ -167,19 +171,18 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
-		if(reagents)
-			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
-		clear_alert("tox_in_air")
+		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
 	if(breath_gases["n2o"])
 		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
-			Paralyse(3)
+			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
-				Sleeping(max(sleeping+2, 10))
+				Sleeping(max(AmountSleeping() + 40, 200))
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
@@ -217,6 +220,20 @@
 
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/proc/handle_organs()
+	for(var/V in internal_organs)
+		var/obj/item/organ/O = V
+		O.on_life()
+
+/mob/living/carbon/handle_diseases()
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(prob(D.infectivity))
+			D.spread()
+
+		if(stat != DEAD)
+			D.stage_act()
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
@@ -275,10 +292,6 @@
 				radiation = max(radiation-3,0)
 				adjustToxLoss(3)
 
-/mob/living/carbon/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src)
-
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
@@ -286,7 +299,7 @@
 		if(M.loc != src)
 			stomach_contents.Remove(M)
 			continue
-		if(istype(M, /mob/living/carbon) && stat != DEAD)
+		if(iscarbon(M) && stat != DEAD)
 			if(M.stat == DEAD)
 				M.death(1)
 				stomach_contents.Remove(M)
@@ -297,21 +310,11 @@
 					M.adjustBruteLoss(5)
 				nutrition += 10
 
-//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-
 	if(staminaloss)
-		if(sleeping)
-			adjustStaminaLoss(-10)
-		else
-			adjustStaminaLoss(-3)
-
-	if(sleeping)
-		handle_dreams()
-		AdjustSleeping(-1)
-		if(prob(10) && health>HEALTH_THRESHOLD_CRIT)
-			emote("snore")
+		adjustStaminaLoss(-3)
 
 	var/restingpwr = 1 + 4 * resting
 
@@ -353,10 +356,10 @@
 		drowsyness = max(drowsyness - restingpwr, 0)
 		blur_eyes(2)
 		if(prob(5))
-			AdjustSleeping(1)
-			Paralyse(5)
+			AdjustSleeping(20)
+			Unconscious(100)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
@@ -393,3 +396,42 @@
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+/////////
+//LIVER//
+/////////
+
+/mob/living/carbon/proc/handle_liver()
+	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if(liver)
+		if(liver.damage >= 100)
+			liver.failing = TRUE
+			liver_failure()
+		else
+			liver.failing = FALSE
+
+	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)))
+		liver_failure()
+
+/mob/living/carbon/proc/undergoing_liver_failure()
+	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if(liver && liver.failing)
+		return TRUE
+
+/mob/living/carbon/proc/return_liver_damage()
+	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if(liver)
+		return liver.damage
+
+/mob/living/carbon/proc/applyLiverDamage(var/d)
+	var/obj/item/organ/liver/L = getorganslot("liver")
+	if(L)
+		L.damage += d
+
+/mob/living/carbon/proc/liver_failure()
+	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
+		reagents.remove_reagent("corazone", 0.4) //corazone slowly deletes itself.
+		return
+	adjustToxLoss(8)
+	if(prob(30))
+		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+

@@ -1,6 +1,6 @@
 // simple is_type and similar inline helpers
 
-#define islist(L) (istype(L,/list))
+#define islist(L) (istype(L, /list))
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
@@ -9,11 +9,15 @@
 //Turfs
 #define isopenturf(A) (istype(A, /turf/open))
 
+#define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))
+
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
 #define isclosedturf(A) (istype(A, /turf/closed))
+
+#define isindestructiblewall(A) (istype(A, /turf/closed/indestructible))
 
 #define iswallturf(A) (istype(A, /turf/closed/wall))
 
@@ -52,6 +56,14 @@
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+
+#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
+
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
+
 #define isdevil(A) (istype(A, /mob/living/carbon/true_devil))
 
 //Silicon mobs
@@ -67,8 +79,6 @@
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
 #define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
-
-#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
@@ -109,6 +119,8 @@
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
+#define isdead(A) (istype(A, /mob/dead))
+
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
@@ -116,7 +128,7 @@
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
-#define islimb(A) (istype(A, /obj/item/bodypart))
+#define isitem(A) (istype(A, /obj/item))
 
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 

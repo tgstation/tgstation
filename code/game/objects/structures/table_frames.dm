@@ -14,10 +14,9 @@
 	desc = "Four metal legs with four framing rods for a table. You could easily pass through this."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "table_frame"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	obj_integrity = 100
 	max_integrity = 100
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
@@ -27,7 +26,7 @@
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			deconstruct(TRUE)
 	else if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I

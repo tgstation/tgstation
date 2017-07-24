@@ -64,7 +64,7 @@
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				adjustOxyLoss(5)
 				if(prob(15))
-					Paralyse(rand(1,3))
+					Unconscious(rand(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(0 to BLOOD_VOLUME_SURVIVE)
 				death()
@@ -137,7 +137,8 @@
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
 			if(blood_id == "blood") //normal blood
 				if(blood_data["viruses"])
-					for(var/datum/disease/D in blood_data["viruses"])
+					for(var/thing in blood_data["viruses"])
+						var/datum/disease/D = thing
 						if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
@@ -162,7 +163,8 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		for(var/datum/disease/D in viruses)
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)

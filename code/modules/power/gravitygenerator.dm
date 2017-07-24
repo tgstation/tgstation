@@ -22,9 +22,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	name = "gravitational generator"
 	desc = "A device which produces a graviton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
-	anchored = 1
-	density = 1
-	use_power = 0
+	anchored = TRUE
+	density = TRUE
+	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Generator an admin can spawn
 //
 /obj/machinery/gravity_generator/main/station/admin
-	use_power = 0
+	use_power = NO_POWER_USE
 
 //
 // Main Generator with the main code
@@ -119,9 +119,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	active_power_usage = 3000
 	power_channel = ENVIRON
 	sprite_number = 8
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	interact_offline = 1
-	var/on = 1
+	var/on = TRUE
 	var/breaker = 1
 	var/list/parts = list()
 	var/obj/middle = null
@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
-	on = 0
+	on = FALSE
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(count == 5) // Middle
 			middle = part
 		if(count <= 3) // Their sprite is the top part of the generator
-			part.density = 0
+			part.density = FALSE
 			part.layer = WALL_OBJ_LAYER
 		part.sprite_number = count
 		part.main_part = src
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.remove_fuel(1, user))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 					broken_state++
 					update_icon()
 				else if(WT.isOn())
@@ -300,9 +300,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/proc/set_state(new_state)
 	charging_state = POWER_IDLE
 	on = new_state
-	use_power = on ? 2 : 1
+	use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 	// Sound the alert if gravity was just enabled or disabled.
-	var/alert = 0
+	var/alert = FALSE
 	var/area/A = get_area(src)
 	if(SSticker.IsRoundInProgress())
 		if(on) // If we turned on and the game is live.
@@ -339,7 +339,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
+				playsound(src.loc, 'sound/effects/empulse.ogg', 100, 1)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm." spam.

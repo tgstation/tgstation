@@ -4,16 +4,17 @@
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "portgen0"
-	density = 1
-	anchored = 0
-	use_power = 0
+	icon_state = "portgen0_0"
+	density = TRUE
+	anchored = FALSE
+	use_power = NO_POWER_USE
 
 	var/active = 0
 	var/power_gen = 5000
 	var/recent_fault = 0
 	var/power_output = 1
 	var/consumption = 0
+	var/base_icon = "portgen0"
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
@@ -27,6 +28,9 @@
 /obj/machinery/power/port_gen/proc/handleInactive()
 	return
 
+/obj/machinery/power/port_gen/update_icon()
+	icon_state = "[base_icon]_[active]"
+
 /obj/machinery/power/port_gen/process()
 	if(active && HasFuel() && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
@@ -35,8 +39,8 @@
 
 	else
 		active = 0
-		icon_state = initial(icon_state)
 		handleInactive()
+		update_icon()
 
 /obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())
@@ -121,7 +125,7 @@
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
-		var/fail_safe = 0
+		var/fail_safe = FALSE
 		while(sheets > 0 && fail_safe < 100)
 			fail_safe += 1
 			var/obj/item/stack/sheet/S = new sheet_path(loc)
@@ -191,13 +195,13 @@
 			if(!anchored && !isinspace())
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
-				anchored = 1
+				anchored = TRUE
 			else if(anchored)
 				disconnect_from_network()
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
-				anchored = 0
+				anchored = FALSE
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			return
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open
@@ -212,9 +216,10 @@
 	return ..()
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		emp_act(1)
+	if(emagged)
+		return
+	emagged = TRUE
+	emp_act(EMP_HEAVY)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
 	..()
@@ -262,13 +267,13 @@
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
 				active = 1
-				icon_state = "portgen1"
 				src.updateUsrDialog()
+				update_icon()
 		if(href_list["action"] == "disable")
 			if (active)
 				active = 0
-				icon_state = "portgen0"
 				src.updateUsrDialog()
+				update_icon()
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
@@ -287,7 +292,8 @@
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
-	icon_state = "portgen1"
+	icon_state = "portgen1_0"
+	base_icon = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 85
@@ -298,7 +304,8 @@
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
-	icon_state = "portgen2"
+	base_icon = "portgen2"
+	icon_state = "portgen2_0"
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80

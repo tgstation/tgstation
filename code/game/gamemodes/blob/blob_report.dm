@@ -14,7 +14,7 @@
 			intercepttext += " 3. Avoid damage to the capital infrastructure of the station.<BR>"
 			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, <b>Biohazard Response Procedure 5-12</b> may be issued.<BR>"
 			print_command_report(text=intercepttext,title="Level 5-6 Biohazard Response Procedures",announce=FALSE)
-			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
+			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
 		if(2)
 			var/nukecode = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)

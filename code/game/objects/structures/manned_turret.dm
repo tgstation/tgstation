@@ -8,7 +8,6 @@
 	can_buckle = TRUE
 	density = TRUE
 	max_integrity = 100
-	obj_integrity = 100
 	buckle_lying = FALSE
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
@@ -38,7 +37,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.reset_perspective()
+			buckled_mob.client.change_view(world.view)
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -47,7 +46,9 @@
 	if(user.incapacitated() || !istype(user))
 		return
 	M.forceMove(get_turf(src))
-	..()
+	. = ..()
+	if(!.)
+		return
 	for(var/V in M.held_items)
 		var/obj/item/I = V
 		if(istype(I))
@@ -62,8 +63,8 @@
 	setDir(SOUTH)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
 	anchored = TRUE
-	if(user.client)
-		user.client.change_view(view_range)
+	if(M.client)
+		M.client.change_view(view_range)
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
@@ -84,6 +85,8 @@
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, C.mouseParams)
 
 /obj/machinery/manned_turret/proc/direction_track(mob/user, atom/targeted)
+	if(user.stat != CONSCIOUS)
+		return
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
 	switch(dir)
@@ -149,7 +152,7 @@
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
-	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
+	playsound(src, 'sound/weapons/gunshot_smg.ogg', 75, 1)
 	P.xo = target.x - targets_from.x
 	P.yo = target.y - targets_from.y
 	P.Angle = calculated_projectile_vars[1] + rand(-9, 9)
@@ -174,7 +177,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP | NOBLUDGEON
+	flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 

@@ -64,7 +64,7 @@
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		location.ex_act(2, target)
-	if(istype(target, /mob))
+	if(ismob(target))
 		var/mob/M = target
 		M.gib()
 	qdel(src)
@@ -228,7 +228,7 @@
 		return
 	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
 		return
-	if((istype(AM,/obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))
+	if((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))
 		var/obj/item/weapon/storage/secure/S = AM
 		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
 			return

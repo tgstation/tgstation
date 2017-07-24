@@ -11,7 +11,6 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
@@ -56,7 +55,6 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -185,7 +183,7 @@
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
-	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 
 /obj/item/weapon/katana
 	name = "katana"
@@ -201,7 +199,6 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -280,7 +277,7 @@
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	origin_tech = "engineering=3;combat=2"
-	hitsound = 'sound/weapons/Genhit.ogg'
+	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
 	var/extended = 0
@@ -302,7 +299,7 @@
 		throwforce = 5
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
-		hitsound = 'sound/weapons/Genhit.ogg'
+		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
@@ -440,6 +437,11 @@
 	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
+/obj/item/weapon/melee/chainofcommand/tailwhip/kitty
+	name = "cat o' nine tails"
+	desc = "A whip fashioned from the severed tails of cats."
+	icon_state = "catwhip"
+
 /obj/item/weapon/melee/skateboard
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
@@ -493,8 +495,8 @@
 	if(homerun_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
 		target.throw_at(throw_target, rand(8,10), 14, user)
-		target.ex_act(2)
-		playsound(get_turf(src), 'sound/weapons/HOMERUN.ogg', 100, 1)
+		target.ex_act(EXPLODE_HEAVY)
+		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, 1)
 		homerun_ready = 0
 		return
 	else if(!target.anchored)
@@ -551,3 +553,12 @@
 				bug.death(1)
 			else
 				qdel(target)
+
+/obj/item/weapon/circlegame
+	name = "circled hand"
+	desc = "If somebody looks at this while it's below your waist, you get to bop them."
+	icon_state = "madeyoulook"
+	force = 0
+	throwforce = 0
+	flags = DROPDEL | ABSTRACT
+	attack_verb = list("bopped")

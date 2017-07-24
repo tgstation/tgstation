@@ -4,7 +4,7 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
 	pixel_y = -85
-	density = 0
+	density = FALSE
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
@@ -30,7 +30,7 @@
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
-	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
+	sound_to_playing_players("im_here")
 
 	var/area/A = get_area(src)
 	if(A)
@@ -77,7 +77,7 @@
 	sleep(1150)
 	if(resolved == FALSE)
 		resolved = TRUE
-		world << sound('sound/machines/Alarm.ogg')
+		world << sound('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 
@@ -114,7 +114,7 @@
 	return clashing
 
 
-/obj/singularity/narsie/Bump(atom/A)
+/obj/singularity/narsie/Collide(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie
@@ -126,7 +126,7 @@
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
-				M.apply_effect(3, STUN)
+				M.apply_effect(60, STUN)
 
 
 /obj/singularity/narsie/consume(atom/A)
@@ -197,7 +197,7 @@
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
 	for(var/atom/X in urange(consume_range,src,1))
-		if(isturf(X) || istype(X, /atom/movable))
+		if(isturf(X) || ismovableatom(X))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 0
