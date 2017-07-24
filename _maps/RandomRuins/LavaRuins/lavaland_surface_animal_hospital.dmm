@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -169,9 +169,6 @@
 /obj/item/weapon/hemostat,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
-"aE" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ruin/powered)
 "aF" = (
 /obj/machinery/door/unpowered/shuttle{
 	name = "Restroom"
@@ -182,13 +179,6 @@
 /obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/animal_hospital)
-"aH" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ruin/powered)
-"aI" = (
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered)
 "aJ" = (
 /turf/open/floor/plasteel/grimy{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -727,12 +717,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
-"co" = (
-/obj/machinery/light,
-/turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/lavaland/surface/outdoors)
 "cp" = (
 /obj/machinery/light{
 	dir = 4
@@ -758,15 +742,6 @@
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "ct" = (
-/obj/effect/mob_spawn/human/doctor/alive/lavaland,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/blue/side{
-	dir = 1
-	},
-/area/ruin/powered/animal_hospital)
-"cu" = (
 /obj/effect/mob_spawn/human/doctor/alive/lavaland,
 /obj/machinery/light/small{
 	dir = 1
@@ -813,22 +788,6 @@
 	dir = 1
 	},
 /area/ruin/powered/animal_hospital)
-"cA" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/blue/side{
-	dir = 4
-	},
-/area/ruin/powered/animal_hospital)
-"cB" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/blue/side{
-	dir = 4
-	},
-/area/ruin/powered/animal_hospital)
 "cC" = (
 /obj/machinery/light{
 	dir = 1
@@ -856,10 +815,6 @@
 /obj/effect/baseturf_helper,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/animal_hospital)
-"cG" = (
-/obj/effect/baseturf_helper,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -1004,7 +959,7 @@ ae
 ae
 ae
 ac
-cG
+ab
 ab
 ab
 ab

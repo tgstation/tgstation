@@ -1048,11 +1048,6 @@
 /obj/item/device/flashlight/lantern,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
-"cE" = (
-/obj/structure/stone_tile/surrounding/cracked,
-/obj/effect/baseturf_helper,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
 "cF" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -1161,13 +1156,13 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"cT" = (
-/obj/effect/baseturf_helper,
-/turf/closed/wall/mineral/wood,
-/area/ruin/unpowered/ash_walkers)
 "cU" = (
 /obj/effect/baseturf_helper,
 /turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"kB" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 
 (1,1,1) = {"
@@ -1355,7 +1350,7 @@ as
 ak
 as
 as
-cT
+as
 ak
 ak
 ca
@@ -1494,7 +1489,7 @@ ce
 bM
 bN
 ak
-cU
+ak
 as
 ak
 ak
@@ -1539,7 +1534,7 @@ ck
 cb
 cv
 cA
-cE
+kB
 cM
 as
 ah

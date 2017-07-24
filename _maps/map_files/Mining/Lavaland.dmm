@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/closed/indestructible/riveted/boss,
 /area/lavaland/surface/outdoors)
@@ -276,14 +276,6 @@
 	id = "Labor"
 	},
 /turf/closed/wall,
-/area/mine/laborcamp)
-"aV" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	icon_state = "sink_alt";
-	pixel_x = -13
-	},
-/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aW" = (
 /obj/machinery/conveyor{
@@ -3410,18 +3402,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"Wq" = (
-/obj/effect/baseturf_helper,
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors/unexplored/danger)
-"Wr" = (
-/obj/effect/baseturf_helper,
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors/unexplored)
-"Ws" = (
-/obj/effect/baseturf_helper,
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors)
 "Wt" = (
 /obj/effect/baseturf_helper,
 /turf/closed/wall,
@@ -3430,10 +3410,6 @@
 /obj/effect/baseturf_helper,
 /turf/closed/wall,
 /area/mine/laborcamp)
-"Wv" = (
-/obj/effect/baseturf_helper,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "Ww" = (
 /obj/effect/baseturf_helper,
 /turf/open/floor/plasteel,
@@ -10350,7 +10326,7 @@ ab
 ad
 ai
 ab
-Wv
+ab
 ab
 ai
 ab
@@ -19315,8 +19291,7 @@ ak
 ak
 ak
 ak
-Wq
-Wr
+ak
 am
 am
 am
@@ -19326,7 +19301,8 @@ am
 am
 am
 am
-Ws
+am
+ai
 aj
 aj
 ai
