@@ -168,6 +168,7 @@
 	T.sliver.forceMove(src)
 	sliver = T.sliver
 	T.sliver = null
+	T.icon_state = "supermatter_tongs"
 	icon_state = "core_container_loaded"
 	to_chat(user, "<span class='warning'>Container is sealing...</span>")
 	addtimer(CALLBACK(src, .proc/seal), 50)
@@ -213,7 +214,7 @@
 /obj/item/weapon/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	if(!sliver)
 		return
-	if(ismovableatom(O))
+	if(ismovableatom(O) && O != sliver)
 		Consume(O)
 		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
 		QDEL_NULL(sliver)
