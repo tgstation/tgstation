@@ -25,8 +25,8 @@ Bonus
 	level = 6
 	severity = 2
 	base_message_chance = 100
-	symptom_delay_min = 60
-	symptom_delay_max = 120
+	symptom_delay_min = 25
+	symptom_delay_max = 80
 	var/scramble_language = FALSE
 	var/datum/language/current_language
 	var/datum/language_holder/original_language

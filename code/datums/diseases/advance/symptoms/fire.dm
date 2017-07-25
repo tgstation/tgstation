@@ -25,8 +25,8 @@ Bonus
 	level = 6
 	severity = 5
 	base_message_chance = 20
-	symptom_delay_min = 20
-	symptom_delay_max = 75
+	symptom_delay_min = 12
+	symptom_delay_max = 42
 	var/infective = FALSE
 
 /datum/symptom/fire/Start(datum/disease/advance/A)

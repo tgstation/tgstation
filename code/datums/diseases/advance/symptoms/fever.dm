@@ -25,8 +25,8 @@ Bonus
 	level = 2
 	severity = 2
 	base_message_chance = 20
-	symptom_delay_min = 10
-	symptom_delay_max = 30
+	symptom_delay_min = 6
+	symptom_delay_max = 18
 	var/unsafe = FALSE //over the heat threshold
 
 /datum/symptom/fever/Start(datum/disease/advance/A)

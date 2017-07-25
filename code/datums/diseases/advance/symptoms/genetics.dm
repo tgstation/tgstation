@@ -27,8 +27,8 @@ Bonus
 	var/list/possible_mutations
 	var/archived_dna = null
 	base_message_chance = 50
-	symptom_delay_min = 60
-	symptom_delay_max = 120
+	symptom_delay_min = 36
+	symptom_delay_max = 80
 	var/no_reset = FALSE
 
 /datum/symptom/genetic_mutation/Activate(datum/disease/advance/A)

@@ -19,8 +19,8 @@ Bonus
 	stage_speed = -3
 	transmittable = -4
 	level = 6
-	symptom_delay_min = 15
-	symptom_delay_max = 80
+	symptom_delay_min = 8
+	symptom_delay_max = 48
 	severity = 5
 	var/sleep_level = 0
 	var/sleepy_ticks = 0

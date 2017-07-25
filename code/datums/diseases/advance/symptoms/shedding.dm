@@ -24,8 +24,8 @@ BONUS
 	level = 4
 	severity = 1
 	base_message_chance = 50
-	symptom_delay_min = 45
-	symptom_delay_max = 90
+	symptom_delay_min = 25
+	symptom_delay_max = 50
 
 /datum/symptom/shedding/Activate(datum/disease/advance/A)
 	if(!..())

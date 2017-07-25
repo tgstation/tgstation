@@ -23,8 +23,8 @@ BONUS
 	transmittable = -2
 	level = 5
 	severity = 1
-	symptom_delay_min = 25
-	symptom_delay_max = 75
+	symptom_delay_min = 14
+	symptom_delay_max = 45
 
 /datum/symptom/vitiligo/Activate(datum/disease/advance/A)
 	if(!..())

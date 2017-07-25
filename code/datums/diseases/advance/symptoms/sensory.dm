@@ -23,8 +23,8 @@ Bonus
 	transmittable = -3
 	level = 5
 	severity = 0
-	symptom_delay_min = 5
-	symptom_delay_max = 10
+	symptom_delay_min = 3
+	symptom_delay_max = 7
 	var/purge_alcohol = FALSE
 	var/brain_heal = FALSE
 

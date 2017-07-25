@@ -25,8 +25,8 @@ Bonus
 	level = 5
 	severity = 3
 	base_message_chance = 25
-	symptom_delay_min = 25
-	symptom_delay_max = 90
+	symptom_delay_min = 15
+	symptom_delay_max = 30
 	var/fake_healthy = FALSE
 
 /datum/symptom/hallucigen/Start(datum/disease/advance/A)

@@ -29,8 +29,8 @@ Bonus
 	level = 3
 	severity = 4
 	base_message_chance = 100
-	symptom_delay_min = 25
-	symptom_delay_max = 80
+	symptom_delay_min = 15
+	symptom_delay_max = 50
 	var/vomit_blood = FALSE
 	var/proj_vomit = 0
 
