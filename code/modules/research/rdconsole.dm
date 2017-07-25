@@ -420,12 +420,13 @@ doesn't have toxins access.
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 		if("Resync")
 			to_chat(usr, "<span class='boldnotice'>[bicon(src)]: Resynced with nearby machinery.</span>")
+			SyncRDevices()
 		if("textSearch")
-			var/text = params["latheType"]
+			var/text = params["inputText"]
 			var/compare
-			if(text == "proto")
+			if(params["latheType"] == "proto")
 				compare = PROTOLATHE
-			else if(text == "imprinter")
+			else if(params["latheType"] == "imprinter")
 				compare = IMPRINTER
 			var/list/operating = compare == PROTOLATHE? matching_designs_protolathe : matching_designs_imprinter
 			operating.Cut()
@@ -436,20 +437,20 @@ doesn't have toxins access.
 				if(findtext(D.name, text))
 					operating[D.id] = D
 		if("switchcat")
-			if(type == "proto")
+			if(params["type"] == "proto")
 				category_lathe = params["cat"]
-			else if(type == "imprinter")
+			else if(params["type"] == "imprinter")
 				category_imprinter = params["cat"]
 			rescan_category_views()
 		if("releasemats")
-			if(type == "proto")
+			if(params["latheType"])
 				linked_lathe.materials.retrieve_sheets(text2num(params["sheets"]), params["mat_id"])
-			else if(type == "imprinter")
+			else if(params["latheType"])
 				linked_imprinter.materials.retrieve_sheets(text2num(params["sheets"]), params["mat_id"])
 		if("purgechem")
-			if(type == "proto")
+			if(params["type"])
 				linked_lathe.reagents.del_reagent(params["id"])
-			else if(type == "imprinter")
+			else if(params["type"])
 				linked_lathe.reagents.del_reagent(params["id"])
 		if("disconnect")
 			switch(params["type"])
