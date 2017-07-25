@@ -18,7 +18,7 @@
 	//If the early warnings are suppressed or not
 	var/suppress_warning = FALSE
 	//Ticks between each activation
-	var/symptom_counter = 0
+	var/next_activation = 0
 	var/symptom_delay_min = 1
 	var/symptom_delay_max = 1
 	//Can be used to multiply virus effects
@@ -36,7 +36,7 @@
 
 // Called when processing of the advance disease, which holds this symptom, starts.
 /datum/symptom/proc/Start(datum/disease/advance/A)
-	symptom_counter = rand(symptom_delay_min, symptom_delay_max)
+	next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10) //so it doesn't instantly activate on infection
 	return
 
 // Called when the advance disease is going to be deleted or when the advance disease stops processing.
@@ -46,11 +46,10 @@
 /datum/symptom/proc/Activate(datum/disease/advance/A)
 	if(neutered)
 		return FALSE
-	if(symptom_counter)
-		symptom_counter--
+	if(world.time < next_activation)
 		return FALSE
 	else
-		symptom_counter = rand(symptom_delay_min, symptom_delay_max)
+		next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10)
 		return TRUE
 
 /datum/symptom/proc/Copy()
