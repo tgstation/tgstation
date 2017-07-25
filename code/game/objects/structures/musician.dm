@@ -71,10 +71,16 @@
 				continue
 			LAZYSET(hearers, M, TRUE)
 		last_hearcheck = world.time
+<<<<<<< HEAD
 	if(LAZYLEN(hearers))
 		for(var/i in hearers)
 			var/mob/M = hearers[i]
 			M.playsound_local(source, soundfile, 100, falloff = 5)
+=======
+	for(var/i in hearing_mobs)
+		var/mob/M = i
+		M.playsound_local(source, soundfile, 100, falloff = 5)
+>>>>>>> 75d9f8e3fc... Update musician.dm
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
