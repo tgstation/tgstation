@@ -44043,7 +44043,7 @@
 /area/engine/atmos)
 "bDT" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Atmospehrics Maintenance";
+	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
