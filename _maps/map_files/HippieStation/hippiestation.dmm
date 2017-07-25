@@ -33523,7 +33523,6 @@
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8;
-	step_y = 0
 	},
 /obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/white,
