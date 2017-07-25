@@ -1,36 +1,38 @@
 "a" = (/turf/closed/indestructible/reebe,/area/reebe)
 "b" = (/turf/open/indestructible/reebe,/area/reebe)
-"c" = (/obj/effect/landmark/servant_of_ratvar,/turf/open/indestructible/reebe,/area/reebe)
-"d" = (/obj/structure/table/reinforced/brass,/turf/open/indestructible/reebe,/area/reebe)
-"e" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab/starter,/turf/open/indestructible/reebe,/area/reebe)
-"f" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/screwdriver/brass,/turf/open/indestructible/reebe,/area/reebe)
-"g" = (/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe,/turf/open/indestructible/reebe,/area/reebe)
-"h" = (/obj/structure/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 4},/turf/open/indestructible/reebe,/area/reebe)
-"i" = (/obj/machinery/computer/camera_advanced/ratvar,/turf/open/indestructible/reebe,/area/reebe)
-"j" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/storage/toolbox/brass,/turf/open/indestructible/reebe,/area/reebe)
-"k" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy,/turf/open/indestructible/reebe,/area/reebe)
-"l" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/crowbar/brass,/obj/item/weapon/wirecutters/brass,/turf/open/indestructible/reebe,/area/reebe)
-"m" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/weldingtool/experimental/brass,/turf/open/indestructible/reebe,/area/reebe)
+"c" = (/obj/structure/destructible/clockwork/massive/celestial_gateway,/turf/open/indestructible/reebe,/area/reebe)
+"d" = (/obj/structure/grille/ratvar,/obj/structure/window/reinforced/clockwork/fulltile,/turf/open/indestructible/reebe,/area/reebe)
+"e" = (/obj/effect/landmark/servant_of_ratvar,/turf/open/indestructible/reebe,/area/reebe)
+"f" = (/obj/structure/table/reinforced/brass,/turf/open/indestructible/reebe,/area/reebe)
+"g" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab/starter,/turf/open/indestructible/reebe,/area/reebe)
+"h" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/screwdriver/brass,/turf/open/indestructible/reebe,/area/reebe)
+"i" = (/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe,/turf/open/indestructible/reebe,/area/reebe)
+"j" = (/obj/structure/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 4},/turf/open/indestructible/reebe,/area/reebe)
+"k" = (/obj/machinery/computer/camera_advanced/ratvar,/turf/open/indestructible/reebe,/area/reebe)
+"l" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/storage/toolbox/brass,/turf/open/indestructible/reebe,/area/reebe)
+"m" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy,/turf/open/indestructible/reebe,/area/reebe)
+"n" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/crowbar/brass,/obj/item/weapon/wirecutters/brass,/turf/open/indestructible/reebe,/area/reebe)
+"o" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/weldingtool/experimental/brass,/turf/open/indestructible/reebe,/area/reebe)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaabbbbbaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaabbbbbaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaabbcbbaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaabbbbbaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaabbbbbaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaadddddaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbbbbcbcbcbddbbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbedbbbbbbbbfbbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbdbbcbgbcbhibbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbbbbbbbbbbhibbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbbjbcbcbcbhibbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbbjbbbbbbbbdbbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbbbbbbbbbbdkbbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbbbbdlbbbbbbbbbbbbbbbbbaaaaaaaa
-aaaaaaaabbbbbbbbbbbbbbmdbbbbbbbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbbbbebebebffbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbgfbbbbbbbbhbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbfbbebibebjkbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbbbbbbbbbbjkbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbblbebebebjkbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbblbbbbbbbbfbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbbbbbbbbbbfmbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbbbbfnbbbbbbbbbbbbbbbbbaaaaaaaa
+aaaaaaaabbbbbbbbbbbbbbofbbbbbbbbbbbbbbbbbaaaaaaaa
 aaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaa
 aaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaa
 aaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaa
