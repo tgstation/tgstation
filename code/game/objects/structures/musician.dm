@@ -71,10 +71,9 @@
 				continue
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
-	if(LAZYLEN(hearing_mobs))
-		for(var/i in hearing_mobs)
-			var/mob/M = i
-			M.playsound_local(source, soundfile, 100, falloff = 5)
+	for(var/i in hearing_mobs)
+		var/mob/M = i
+		M.playsound_local(source, soundfile, 100, falloff = 5)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
