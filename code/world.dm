@@ -105,10 +105,10 @@
 
 /world/Topic(T, addr, master, key)
 	var/list/input = params2list(T)
-	
+
 	var/pinging = ("ping" in input)
 	var/playing = ("players" in input)
-	
+
 	if(!pinging && !playing && config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
@@ -198,6 +198,8 @@
 					CM.overrideCooldown()
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
+			if(input["crossmessage"] == "Newscaster Relay")
+				handleIncomingNewscasterRelay(input["newsdatum_type"], input["newsdatum_json"])
 
 	else if("adminmsg" in input)	//tgs2 support
 		if(!key_valid)

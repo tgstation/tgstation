@@ -198,6 +198,9 @@ ALLOW_HOLIDAYS
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
+## Uncomment to turn on cross-server newscasters
+NEWS_CROSS_ALLOWED
+
 ## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
 ##This is currently a testing optimized setting. A good value for production would be 98.
 TICK_LIMIT_MC_INIT 500
@@ -210,6 +213,9 @@ TICKLAG 0.5
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
 #COMMS_KEY default_pwd
+
+## Same but for newscasters
+#NEWSCASTER_COMMS_KEY default_pwd
 
 ## World address and port for server recieving cross server messages
 #CROSS_SERVER_ADDRESS byond:\\address:port

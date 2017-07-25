@@ -247,6 +247,8 @@
 	var/cross_allowed = FALSE
 	var/showircname = 0
 
+	var/news_cross_allowed = FALSE
+
 	var/list/gamemode_cache = null
 
 	var/minutetopiclimit
@@ -290,6 +292,7 @@
 	load("config/config.txt")
 	load("config/game_options.txt","game_options")
 	load("config/policies.txt", "policies")
+	load_cross_news_list("config/newscaster_relay.txt")
 	loadsql("config/dbconfig.txt")
 	if (maprotation)
 		loadmaplist("config/maps.txt")
@@ -447,6 +450,8 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("newscaster_comms_key")
+					global.newscaster_comms_key = value
 				if("cross_server_address")
 					cross_address = value
 					if(value != "byond:\\address:port")
@@ -466,6 +471,8 @@
 					global.medal_pass = value
 				if("show_irc_name")
 					showircname = 1
+				if("news_cross_allowed")
+					news_cross_allowed = TRUE
 				if("see_own_notes")
 					see_own_notes = 1
 				if("soft_popcap")
