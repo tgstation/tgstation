@@ -58,9 +58,9 @@ SUBSYSTEM_DEF(card)
 		var/obj/item/griffening_single/physicalcard = new /obj/item/griffening_single //Var P is the card to be generated, it gets data
 		physicalcard.name = card_data.name
 		physicalcard.desc = card_data.desc
-		physicalcard.ATK = card_data.ATK
-		physicalcard.DEF = card_data.DEF
-		physicalcard.LVL = card_data.LVL
+		physicalcard.atk = card_data.atk
+		physicalcard.def = card_data.def
+		physicalcard.lvl = card_data.lvl
 		cards -= card_data //Removes itself so there can be another card at position one for when this loops around
 		var/obj/item/weapon/storage/backpack/deckgriffening/D = deck //The cardhand
 		D.contents += physicalcard
