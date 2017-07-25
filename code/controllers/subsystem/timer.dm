@@ -232,16 +232,17 @@ SUBSYSTEM_DEF(timer)
 	src.flags = flags
 	src.hash = hash
 	
-	name = "Timer: " + num2text(id, 8) + ", TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
-	
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
-		while(SStimer.timer_id_dict["timerid" + num2text(nextid, 8)] || nextid >= TIMER_ID_MAX)
-			nextid++
+		do
 			if (nextid >= TIMER_ID_MAX)
 				nextid = 1
-		SStimer.timer_id_dict["timerid" + num2text(id = nextid++, 8)] = src
+			id = nextid++
+		while(SStimer.timer_id_dict["timerid" + num2text(id, 8)])
+		SStimer.timer_id_dict["timerid" + num2text(id, 8)] = src
+
+	name = "Timer: " + num2text(id, 8) + ", TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
 
 	if (callBack.object != GLOBAL_PROC)
 		LAZYADD(callBack.object.active_timers, src)
