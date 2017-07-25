@@ -1,6 +1,6 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
-#define TIMER_ID_MAX 2**24 //max float with integer precision
+#define TIMER_ID_MAX (2**24) //max float with integer precision
 
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
