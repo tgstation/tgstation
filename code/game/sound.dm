@@ -1,13 +1,10 @@
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, is_global = FALSE)
-
-	soundin = get_sfx(soundin) // same sound for everyone
-
 	if(isarea(source))
 		throw EXCEPTION("playsound(): source is an area")
 		return
 
-	if(isnull(frequency))
-		frequency = get_rand_frequency() // Same frequency for everybody
+	soundin = get_sfx(soundin) // same sound for everyone
+
 	var/turf/turf_source = get_turf(source)
 
 	//allocate a channel if necessary now so its the same for everyone
@@ -37,9 +34,9 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
-	S.environment = -1
+	S.environment = SOUND_ENV_DEFAULT //Always reset the sound environment, or else it'll end up getting applied globally
 
-	if (vary)
+	if(vary)
 		if(frequency)
 			S.frequency = frequency
 		else
@@ -84,7 +81,7 @@
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	if(!is_global)
-		S.environment = 2
+		S.environment = SOUND_ENV_ROOM
 
 	src << S
 
@@ -154,6 +151,6 @@
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 	return soundin
 
-/proc/playsound_global(file, repeat=0, wait, channel, volume)
+/proc/playsound_global(file, repeat = 0, wait, channel, volume)
 	for(var/V in GLOB.clients)
 		V << sound(file, repeat, wait, channel, volume)
