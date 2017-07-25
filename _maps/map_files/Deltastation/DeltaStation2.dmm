@@ -6226,7 +6226,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15463,7 +15463,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "cargodeliver";
-	name = "delivery coveyor";
+	name = "delivery conveyor";
 	pixel_x = -12
 	},
 /turf/open/floor/plasteel/loadingarea,
@@ -24325,7 +24325,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Hydroponic's Maintenance";
+	name = "Hydroponics Maintenance";
 	req_access_txt = "35"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -28717,7 +28717,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
 	filter_type = "n2";
-	name = "nitogren filter";
+	name = "nitrogen filter";
 	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
@@ -33925,7 +33925,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/door/airlock/glass_security{
-	name = "Security Transfering Control";
+	name = "Security Transferring Control";
 	req_access_txt = "63"
 	},
 /obj/structure/disposalpipe/segment{
@@ -35432,7 +35432,7 @@
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Security Transfering APC";
+	name = "Security Transferring APC";
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/red/side,
@@ -36164,7 +36164,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/glass_security{
-	name = "Security Transfering Control";
+	name = "Security Transferring Control";
 	req_access_txt = "63"
 	},
 /obj/structure/disposalpipe/segment,
@@ -37211,7 +37211,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/bonfire,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice{
-	desc = "For the weary spacemen on their quest to rekindle the first plasmafire.";
+	desc = "For the weary spacemen on their quest to rekindle the first plasma fire.";
 	name = "Carton of Estus"
 	},
 /obj/item/weapon/nullrod/claymore/glowing{
@@ -37877,7 +37877,7 @@
 "bwk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	name = "Security Transfering Center";
+	name = "Security Transferring Center";
 	req_access_txt = "63"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -41214,7 +41214,7 @@
 	},
 /obj/machinery/door/airlock/glass_security{
 	id_tag = "gulagdoor";
-	name = "Security Transfering Center";
+	name = "Security Transferring Center";
 	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -43857,7 +43857,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	name = "Telecoms Control Room";
+	name = "Telecomms Control Room";
 	req_access = null;
 	req_access_txt = "19; 61"
 	},
@@ -44892,7 +44892,7 @@
 /obj/machinery/power/apc{
 	cell_type = 10000;
 	dir = 1;
-	name = "Telecoms Monitoring APC";
+	name = "Telecomms Monitoring APC";
 	pixel_y = 28
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
@@ -49228,7 +49228,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -51789,7 +51789,7 @@
 	},
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 1;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -54507,7 +54507,7 @@
 "bZV" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Telecoms Server Room APC";
+	name = "Telecomms Server Room APC";
 	pixel_x = -26
 	},
 /obj/structure/cable/white,
@@ -57369,7 +57369,7 @@
 	},
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -58778,7 +58778,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 1;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -61020,7 +61020,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 0;
-	name = "Telecoms Foyer";
+	name = "Telecomms Foyer";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -78266,7 +78266,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemisttop";
-	name = "Chemisty Lobby Shutters"
+	name = "Chemistry Lobby Shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/medbay/central)
@@ -78274,7 +78274,7 @@
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemisttop";
-	name = "Chemisty Lobby Shutters"
+	name = "Chemistry Lobby Shutters"
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -78284,7 +78284,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemisttop";
-	name = "Chemisty Lobby Shutters"
+	name = "Chemistry Lobby Shutters"
 	},
 /obj/machinery/door/window/southleft{
 	name = "Chemistry Desk";
@@ -79173,7 +79173,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Side Shutters"
+	name = "Chemistry Side Shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -82082,7 +82082,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Side Shutters"
+	name = "Chemistry Side Shutters"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -82666,7 +82666,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Side Shutters"
+	name = "Chemistry Side Shutters"
 	},
 /obj/machinery/door/window/southleft{
 	dir = 4;
@@ -109099,7 +109099,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
 	desc = "It looks really dirty.";
-	name = "maint microwave";
+	name = "maintenance microwave";
 	pixel_y = 5
 	},
 /obj/structure/sign/poster/official/help_others{
@@ -110559,7 +110559,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Starboard Quarter Maintenace APC";
+	name = "Starboard Quarter Maintenance APC";
 	pixel_x = 26
 	},
 /turf/open/floor/plating,

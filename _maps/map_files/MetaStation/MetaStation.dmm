@@ -4258,7 +4258,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -33817,7 +33817,7 @@
 /area/quartermaster/office)
 "bmj" = (
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Suuply department is.";
+	desc = "A direction sign, pointing out which way the Supply department is.";
 	dir = 1;
 	icon_state = "direction_supply";
 	name = "cargo department";
@@ -38093,7 +38093,7 @@
 /area/tcommsat/computer)
 "btN" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Telecoms Control Room";
+	name = "Telecomms Control Room";
 	req_one_access_txt = "19; 61"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -38975,7 +38975,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = 30
 	},
 /obj/structure/table/wood,
@@ -39924,7 +39924,7 @@
 "bxs" = (
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
-	name = "Telecoms Camera Monitor";
+	name = "Telecomms Camera Monitor";
 	network = list("tcomm");
 	pixel_x = 26
 	},
@@ -41017,7 +41017,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 4;
-	name = "Telecoms Control Room APC";
+	name = "Telecomms Control Room APC";
 	pixel_x = 26
 	},
 /obj/machinery/computer/telecomms/server{
@@ -41759,9 +41759,9 @@
 "bBa" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecoms Admin";
+	department = "Telecomms Admin";
 	departmentType = 5;
-	name = "Telecoms RC";
+	name = "Telecomms RC";
 	pixel_y = -30
 	},
 /obj/machinery/firealarm{
@@ -42557,7 +42557,7 @@
 /area/tcommsat/server)
 "bCF" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Telecoms Server Room"
+	name = "Telecomms Server Room"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -43293,7 +43293,7 @@
 "bEf" = (
 /obj/machinery/telecomms/processor/preset_one,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Fore-Port";
+	c_tag = "Telecomms - Server Room - Fore-Port";
 	dir = 2;
 	network = list("SS13","tcomm")
 	},
@@ -43343,7 +43343,7 @@
 "bEk" = (
 /obj/machinery/telecomms/processor/preset_three,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Fore-Starboard";
+	c_tag = "Telecomms - Server Room - Fore-Starboard";
 	dir = 2;
 	network = list("SS13","tcomm")
 	},
@@ -46000,7 +46000,7 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/folder,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Control Room";
+	c_tag = "Telecomms - Control Room";
 	dir = 1;
 	network = list("SS13","tcomm")
 	},
@@ -46635,7 +46635,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/engineering{
-	name = "Telecoms Storage";
+	name = "Telecomms Storage";
 	req_access_txt = "61"
 	},
 /obj/structure/cable/yellow{
@@ -47402,7 +47402,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Telecoms - Storage";
+	c_tag = "Telecomms - Storage";
 	dir = 4;
 	network = list("SS13")
 	},
@@ -47576,7 +47576,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Aft-Port";
+	c_tag = "Telecomms - Server Room - Aft-Port";
 	dir = 4;
 	network = list("SS13","tcomm")
 	},
@@ -47623,14 +47623,14 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 4;
-	name = "Telecoms Server Room APC";
+	name = "Telecomms Server Room APC";
 	pixel_x = 25
 	},
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Aft-Starboard";
+	c_tag = "Telecomms - Server Room - Aft-Starboard";
 	dir = 8;
 	network = list("SS13","tcomm")
 	},
@@ -47998,7 +47998,7 @@
 /area/bridge/showroom/corporate)
 "bNb" = (
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
+	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Drone' sign";
 	pixel_y = 32
@@ -48386,7 +48386,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Telecoms Storage APC";
+	name = "Telecomms Storage APC";
 	pixel_x = -28
 	},
 /obj/structure/cable/yellow{
@@ -48524,7 +48524,7 @@
 "bNZ" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Aft";
+	c_tag = "Telecomms - Server Room - Aft";
 	dir = 1;
 	network = list("SS13","tcomm")
 	},
@@ -49587,9 +49587,7 @@
 /area/bridge/showroom/corporate)
 "bQj" = (
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/crap{
-	name = "\improper Nanotrasen-brand rechargable AA battery"
-	},
+/obj/item/weapon/stock_parts/cell/crap,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -50239,9 +50237,7 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
-	name = "cohiba robusto cigar"
-	},
+/obj/item/clothing/mask/cigarette/cigar/cohiba,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -50252,7 +50248,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/showcase{
-	desc = "A slightly battered looking TV. Vaious Nanotrasen infomercials play on a loop, accompanied by a jaunty tune.";
+	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune.";
 	dir = 1;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "television";
