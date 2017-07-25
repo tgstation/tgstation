@@ -528,13 +528,13 @@ doesn't have toxins access.
 			return FALSE
 		for(var/M in all_materials)
 			. += " | "
-			. += " <span class='[linked_imprinter.check_mat(D, M)? "" : "bad"]'>[all_materials[M]/linked_lathe.efficiency_coeff] [CallMaterialName(M)]</span>"
+			. += " {{{<span class='[linked_imprinter.check_mat(D, M)? "" : "bad"]'>}}}[all_materials[M]/linked_lathe.efficiency_coeff] [CallMaterialName(M)]{{{</span>}}}"
 	else if(buildtype == PROTOLATHE)
 		if(!linked_lathe)
 			return FALSE
 		for(var/M in all_materials)
 			. += " | "
-			. += " <span class='[linked_lathe.check_mat(D, M)? "" : "bad"]'>[all_materials[M]/linked_lathe.efficiency_coeff] [CallMaterialName(M)]</span>"
+			. += " {{{<span class='[linked_lathe.check_mat(D, M)? "" : "bad"]'>}}}[all_materials[M]/linked_lathe.efficiency_coeff] [CallMaterialName(M)]{{{</span>}}}"
 
 /obj/machinery/computer/rdconsole/proc/check_canprint(datum/design/D, buildtype)
 	var/amount = 50
