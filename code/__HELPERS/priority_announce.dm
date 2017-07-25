@@ -51,10 +51,22 @@
 		return
 
 	for(var/mob/M in GLOB.player_list)
-		if(!isnewplayer(M) && M.can_hear())
+		var/turf/T = get_turf(M)
+		if(M.client.holder || istype(M, /mob/dead/observer) || (T && M.can_hear() && T.CanMinorAnnounce()))
 			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
 					M << sound('sound/misc/notice1.ogg')
 				else
 					M << sound('sound/misc/notice2.ogg')
+
+/turf/proc/CanMinorAnnounce()
+	if(onCentcom())
+		return TRUE
+	
+	var/area/A = loc
+	var/static/list/minor_announce_offstation_areas = typecacheof(subtypesof(/area/mine) - list(/area/mine/unexplored, /area/mine/explored))
+	if(z != ZLEVEL_STATION && !is_type_in_typecache(A, minor_announce_offstation_areas))
+		return FALSE
+	
+	return A.powered(ENVIRON)
