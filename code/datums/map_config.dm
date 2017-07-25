@@ -12,6 +12,7 @@
     var/minetype = "lavaland"
 
     var/list/transition_config = list(CENTCOMM = SELFLOOPING,
+    								CITY_OF_COGS = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
                                     EMPTY_AREA_1 = CROSSLINKED,
                                     EMPTY_AREA_2 = CROSSLINKED,
@@ -44,12 +45,12 @@
     if(!json)
         log_world("Could not open map_config: [filename]")
         return
-    
+
     json = file2text(json)
     if(!json)
         log_world("map_config is not text: [filename]")
         return
-    
+
     json = json_decode(json)
     if(!json)
         log_world("map_config is not json: [filename]")
@@ -58,7 +59,7 @@
     if(!ValidateJSON(json))
         log_world("map_config failed to validate for above reason: [filename]")
         return
-    
+
     config_filename = filename
 
     map_name = json["map_name"]
@@ -74,7 +75,7 @@
 
         for(var/I in jtcl)
             transition_config[TransitionStringToEnum(I)] = TransitionStringToEnum(jtcl[I])
-        
+
     defaulted = FALSE
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) { log_world(X + "missing from json!"); return; }
@@ -92,7 +93,7 @@
 
     if(json["transition_config"] != "default")
         if(!islist(json["transition_config"]))
-            log_world("transition_config is not a list!") 
+            log_world("transition_config is not a list!")
             return
 
         var/list/jtcl = json["transition_config"]
@@ -117,6 +118,8 @@
             return MAIN_STATION
         if("CENTCOMM")
             return CENTCOMM
+        if("CITY_OF_COGS")
+            return CITY_OF_COGS
         if("MINING")
             return MINING
         if("EMPTY_AREA_1")

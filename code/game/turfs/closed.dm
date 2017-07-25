@@ -46,6 +46,20 @@
 			if("icon")
 				SStitle.icon = icon
 
+/turf/closed/indestructible/reebe
+	name = "void"
+	icon_state = "reebe"
+	opacity = FALSE
+
+/turf/closed/indestructible/reebe/ratvar_act()
+	return
+
+/turf/closed/indestructible/reebe/narsie_act()
+	return
+
+/turf/closed/indestructible/reebe/CollidedWith(atom/movable/AM)
+	playsound(src, 'sound/effects/bamf.ogg', 30, TRUE)
+
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"

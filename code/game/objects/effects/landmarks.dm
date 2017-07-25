@@ -304,6 +304,15 @@
 	GLOB.tdomeadmin += loc
 	qdel(src)
 
+//Servant spawn locations
+/obj/effect/landmark/servant_of_ratvar
+	name = "servant of ratvar spawn"
+
+/obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
+	..()
+	GLOB.servant_spawns += loc
+	qdel(src)
+
 //generic event spawns
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"

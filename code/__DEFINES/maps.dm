@@ -17,6 +17,7 @@ Last space-z level = empty
 
 #define MAIN_STATION "Main Station"
 #define CENTCOMM "CentComm"
+#define CITY_OF_COGS "City of Cogs"
 #define EMPTY_AREA_1 "Empty Area 1"
 #define EMPTY_AREA_2 "Empty Area 2"
 #define MINING "Mining Asteroid"
@@ -38,6 +39,7 @@ Last space-z level = empty
 #define ZLEVEL_STATION 2
 #define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
+#define ZLEVLE_CITYOFCOGS 6
 #define ZLEVEL_EMPTY_SPACE 12
 #define ZLEVEL_TRANSIT 11
 

@@ -16,6 +16,30 @@
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
 
+/obj/machinery/computer/camera_advanced/ratvar
+	name = "ratvarian camera observer"
+	desc = "A console used to snoop on the station's goings-on. A jet of steam occasionally whooshes out from slats on its sides."
+	use_power = FALSE
+
+/obj/machinery/computer/camera_advanced/ratvar/Initialize()
+	. = ..()
+	ratvar_act()
+
+/obj/machinery/computer/camera_advanced/ratvar/attack_hand(mob/living/user)
+	if(!is_servant_of_ratvar(user))
+		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
+		return
+	. = ..()
+
+/obj/machinery/computer/camera_advanced/ratvar/process()
+	. = ..()
+	if(!stat && prob(1))
+		playsound(src, 'sound/effects/servostep.ogg', 50, TRUE)
+		sleep(5)
+		visible_message("<span class='notice'>Air whooshes as steam vents out of [src].</span>",,"<span class='italics'>You hear whooshing.</span>")
+		playsound(src, 'sound/effects/space_wind.ogg', 100, FALSE)
+		new/obj/effect/temp_visual/steam_release(get_turf(src))
+
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
 	eyeobj.origin = src
