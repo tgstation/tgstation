@@ -2,9 +2,9 @@ Any time you make a change to the schema files, remember to increment the databa
 
 The latest database version is 3.1; The query to update the schema revision table is:
 
-UPDATE `schema_revision` SET major = 3, minor = 1;
+UPDATE `schema_revision` SET major = 3, minor = 1 LIMIT 1;
 or
-UPDATE `SS13_schema_revision` SET major = 3, minor = 1;
+UPDATE `SS13_schema_revision` SET major = 3, minor = 1 LIMIT 1;
 
 ----------------------------------------------------
 
