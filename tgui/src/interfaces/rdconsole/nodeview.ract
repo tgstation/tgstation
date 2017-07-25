@@ -1,8 +1,8 @@
 {{#if data.node_selected}}
 	<ui-display title='{{data.snode_name}}'>
-		<ui-section title='Description'>{{data.snode_desc}}</ui-section>
-		<ui-section title='Point Cost'>{{data.snode_cost}}</ui-section>
-		<ui-section title='Export Price'>{{data.snode_export}}</ui-section>
+		<ui-section title='Description'>Description: {{data.snode_desc}}</ui-section>
+		<ui-section title='Point Cost'>Point Cost: {{data.snode_cost}}</ui-section>
+		<ui-section title='Export Price'>Export Price: {{data.snode_export}}</ui-section>
 		<ui-button action='research_node' params='{"id"="{{id}}"}' state='{{data.snode_researched? "disabled" : null}}'>{{data.snode_researched? "Researched" : "Research Node"}}</ui-button>
 	</ui-display>
 	<ui-display title='Prerequisites'>

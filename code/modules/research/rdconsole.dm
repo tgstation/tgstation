@@ -310,13 +310,15 @@ doesn't have toxins access.
 		data["sdesign_buildtype"] = selected_design.build_type
 		data["sdesign_mats"] = list()
 		for(var/M in selected_design.materials)
-			data["sdesign_mats"]["[CallMaterialName(M)]"] = selected_design.materials[M]
+			var/mname = CallMaterialName(M)
+			data["sdesign_mats"] += list(list("matname" = mname, "matamt" = selected_design.materials[M]))
 	//Both Lathes
 	data["lathe_tabs"] = list("Category List", "Selected Category", "Search Results", "Materials", "Chemicals")
 	//Protolathe
 	if(linked_lathe)
 		data["protobusy"] = linked_lathe.busy? TRUE : FALSE
 		data["protocats"] = list()
+		data["protocat"] = category_lathe
 		for(var/v in linked_lathe.categories)
 			data["protocats"] += list(list("name" = v))
 		data["protomats"] = "[linked_lathe.materials.total_amount]"
@@ -343,6 +345,7 @@ doesn't have toxins access.
 	if(linked_imprinter)
 		data["circuitbusy"] = linked_imprinter.busy? TRUE : FALSE
 		data["circuitcats"] = list()
+		data["circuitcat"] = category_imprinter
 		for(var/v in linked_lathe.categories)
 			data["circuitcats"] += list(list("name" = v))
 		data["circuitmats"] = "[linked_imprinter.materials.total_amount]"

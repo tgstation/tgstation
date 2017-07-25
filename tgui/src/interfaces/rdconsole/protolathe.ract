@@ -14,7 +14,7 @@
 		<ui-tabs tabs='{{data.lathe_tabs}}'>
 			<tab name='Category List'>
 				{{#each data.protocats}}
-					<ui-button action='switchcat' params='{"type" : "proto", "cat" : {{name}}}'>{{name}}</ui-button>
+					<ui-button action='switchcat' state='{{data.protocat == name? "selected" : null}} params='{"type" : "proto", "cat" : {{name}}}'>{{name}}</ui-button>
 				{{/each}}
 			</tab>
 			<tab name='Selected Category'>

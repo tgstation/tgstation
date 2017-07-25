@@ -148,6 +148,7 @@ Note: Must be placed west/left of and R&D console to function.
 		return 0
 
 /obj/machinery/rnd/protolathe/proc/user_try_print_id(id, amount)
+	to_chat(world, "<span class='boldnotice'>DEBUG: Protolathe print triggering for id [id] amount [amount]</span>")
 	if(!istype(linked_console) || !id)
 		return FALSE
 	if(isnull(amount))
