@@ -61,30 +61,6 @@
 	maxHealth = 80
 	ranged = 1
 
-/mob/living/simple_animal/hostile/hivebot/engineer
-	name = "engineer hivebot"
-	desc = "A little robot with a tiny welder on its arm."
-	icon_state = "EngBot"
-	health = 25
-	maxHealth = 25
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	ranged = 1
-	retreat_distance = 2
-	minimum_distance = 2
-
-/mob/living/simple_animal/hostile/hivebot/engineer/handle_automated_action()
-	..()
-	for(var/obj/machinery/hivebot_swarm_core/C in view(5, src))
-		if(C.obj_integrity < C.max_integrity)
-			if(!Adjacent(C))
-				Goto(C, 5)
-			else
-				visible_message("<span class='warning'>[src] welds some of the dents on [C]!</span>")
-				playsound(C, 'sound/items/Welder.ogg', 50, 1)
-				C.obj_integrity = min(C.obj_integrity + 20, C.max_integrity)
-			break
-
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
 	do_sparks(3, TRUE, src)
 	..(1)
