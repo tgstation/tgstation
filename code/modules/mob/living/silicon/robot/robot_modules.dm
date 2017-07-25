@@ -432,6 +432,7 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 		/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 		/obj/item/weapon/pen,
