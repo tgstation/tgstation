@@ -18,7 +18,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/device/warp_cube,
 		/obj/machinery/r_n_d/protolathe, //print tracking beacons, send shuttle
+<<<<<<< HEAD
 		/obj/machinery/autolathe //same
+=======
+		/obj/machinery/autolathe, //same
+		/obj/item/projectile/beam/wormhole,
+		/obj/effect/portal,
+		/obj/item/device/shared_storage
+>>>>>>> cbfdc9ca3c... cease cleverness
 	)))
 
 /obj/docking_port/mobile/supply
