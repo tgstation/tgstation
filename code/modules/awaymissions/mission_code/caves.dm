@@ -1,5 +1,8 @@
 //caves papers
 
+/obj/item/weapon/paper/crumpled/awaymissions/caves/unsafe_area
+	info = "<center><b>WARNING</center></b><br><br><center>Majority of this area is consitered 'unsafe' past this point. Theres an outpost directly south of here where you can get your bearing and travel further down if needed. Traveling in groups is HIGHLY advised, the shit out there can be extremely deadly if you're alone.</center>"
+
 /obj/item/weapon/paper/fluff/awaymissions/caves/omega
 	name = "Subject Omega Notes"
 	info = "<b><center>Testing Notes</b></center><br><br><center>Subject appears unresponsive to most interactions, refusing to move away from the corners or face any scientists. Subject appears to move between the two back corners every observation. A strange humming can be heard from inside the cell, appears to be originating from the subject itself, further testing is necessary to confirm or deny this.</center>"
@@ -17,7 +20,7 @@
 
 /obj/item/weapon/paper/fluff/awaymissions/caves/saftey_notice
 	name = "safety notice"
-	info = "<center>Some of the miners have gone to laying some mine traps among the lower levels of the mine to keep the monsters at bay.  This probably isn't the smartest idea in a cavern like this but the boys seem to get a chuckle out of every distant blast they hear go off, so I guess it works </center>";
+	info = "<center>Some of the miners have gone to laying some mine traps among the lower levels of the mine to keep the monsters at bay.  This probably isn't the smartest idea in a cavern like this but the boys seem to get a chuckle out of every distant blast they hear go off, so I guess it works </center>"
 
 /obj/item/weapon/paper/fluff/awaymissions/caves/shipment_receipt
 	name = "Shipment Receipt"

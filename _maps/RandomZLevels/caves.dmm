@@ -942,9 +942,7 @@
 	})
 "bX" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled{
-	info = "<center><b>WARNING</center></b><br><br><center>Majority of this area is consitered 'unsafe' past this point. Theres an outpost directly south of here where you can get your bearing and travel further down if needed. Traveling in groups is HIGHLY advised, the shit out there can be extremely deadly if you're alone.</center>"
-	},
+/obj/item/weapon/paper/crumpled/awaymissions/caves/unsafe_area,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
