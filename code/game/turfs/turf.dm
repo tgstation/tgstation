@@ -88,7 +88,7 @@
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
-				LC.fuckcodestandards(C, user)
+				LC.handlecable(C, user)
 				return
 		C.loaded.place_turf(src, user)
 		C.is_empty(user)
