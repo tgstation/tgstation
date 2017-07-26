@@ -10011,8 +10011,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "avQ" = (
-/obj/structure/table/wood,
-/obj/item/weapon/storage/book/bible,
+/obj/structure/dresser,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "avR" = (
@@ -86720,7 +86719,7 @@ cnC
 cjZ
 cjZ
 cjZ
-cnD
+cnC
 cks
 cka
 aaa
