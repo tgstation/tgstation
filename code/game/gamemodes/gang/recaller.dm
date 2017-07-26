@@ -135,7 +135,7 @@
 		for(var/mob/M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [ping]")
-		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
+		log_talk(user,"GANG: [key_name(user)] Messaged [gang.name] Gang: [message].",LOGSAY)
 
 
 /obj/item/device/gangtool/proc/register_device(mob/user)
@@ -226,7 +226,7 @@
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
 	if(!istype(user))
 		return 0
-	if(user.restrained() || user.lying || user.stat || user.stunned || user.weakened)
+	if(user.incapacitated())
 		return 0
 	if(!(src in user.contents))
 		return 0

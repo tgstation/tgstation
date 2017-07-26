@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Pizza box stacks can now fall over"
+  - imageadd: "Pizza box inhands now stacks depending on how many you're holding."

@@ -1,0 +1,4 @@
+author: "Y0SH1_M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "Romerol zombies count as dead for assassinate and maroon objectives."

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -6,27 +6,24 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/template_noop)
 "c" = (
-/turf/closed/wall/mineral/plastitanium{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
 "d" = (
-/turf/open/floor/mineral/plastitanium{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion"
+	dir = 4
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
-/turf/open/floor/mineral/plastitanium{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"g" = (
+/obj/effect/baseturf_helper,
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -211,7 +208,7 @@ d
 d
 d
 d
-c
+g
 b
 b
 a

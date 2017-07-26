@@ -9,7 +9,7 @@
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/weapon/gun/ballistic/automatic/proto
-	name = "\improper NanoTrasen Saber SMG"
+	name = "\improper Nanotrasen Saber SMG"
 	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
 	icon_state = "saber"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
@@ -285,7 +285,7 @@
 	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	var/cover_open = 0
+	var/cover_open = FALSE
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
@@ -412,7 +412,7 @@
 
 /obj/item/weapon/gun/ballistic/automatic/laser
 	name = "laser rifle"
-	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargable ammunition has given Nanotrasen a decisive edge over many a foe."
+	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargeable ammunition has given Nanotrasen a decisive edge over many a foe."
 	icon_state = "oldrifle"
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge

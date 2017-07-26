@@ -6,7 +6,7 @@
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
 
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 

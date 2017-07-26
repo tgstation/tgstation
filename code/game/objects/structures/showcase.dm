@@ -7,8 +7,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/deconstruction_state = SHOWCASE_CONSTRUCTED
 
 /obj/structure/showcase/fakeid
@@ -38,6 +38,17 @@
 	desc = "Some sort of pod filled with blood and viscera. You swear you can see it moving..."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_g"
+
+/obj/structure/showcase/oldpod
+	name = "damaged cyrogenic pod"
+	desc = "A damaged cyrogenic pod long since lost to time, including its former occupant..."
+	icon = 'icons/obj/cryogenic2.dmi'
+	icon_state = "sleeper-open"
+
+/obj/structure/showcase/oldpod/used
+	name = "opened cyrogenic pod"
+	desc = "Cyrogenic pod that has recently discharged its occupand. The pod appears non-functional."
+
 
 //Deconstructing
 //Showcases can be any sprite, so it makes sense that they can't be constructed.

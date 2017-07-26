@@ -76,7 +76,7 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = locate()
+	var/area/wizard_station/A = locate() in GLOB.sortedAreas
 	if(!(user in A.contents))
 		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
@@ -838,10 +838,10 @@
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 
-/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
+/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(2)
+	user.Stun(40, ignore_canstun = TRUE)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
@@ -850,10 +850,10 @@
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
 
-/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
+/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Weaken(20)
+	user.Knockdown(40)
 
 /obj/item/weapon/spellbook/oneuse/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
@@ -899,7 +899,7 @@
 
 /obj/item/weapon/spellbook/oneuse/random/Initialize()
 	..()
-	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade,/obj/item/weapon/spellbook/oneuse/mimery_guns)
+	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade, /obj/item/weapon/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
 	qdel(src)

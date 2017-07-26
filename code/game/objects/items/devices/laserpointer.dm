@@ -15,7 +15,7 @@
 	var/max_energy = 5
 	var/effectchance = 33
 	var/recharging = 0
-	var/recharge_locked = 0
+	var/recharge_locked = FALSE
 	var/obj/item/weapon/stock_parts/micro_laser/diode //used for upgrading!
 
 
@@ -108,7 +108,7 @@
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
-			S.Weaken(rand(5,10))
+			S.Knockdown(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
 			add_logs(user, S, "shone in the sensors", src)
@@ -119,7 +119,7 @@
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target
 		if(prob(effectchance * diode.rating))
-			C.emp_act(1)
+			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", src)
 		else
@@ -150,7 +150,7 @@
 			START_PROCESSING(SSobj, src)
 		if(energy <= 0)
 			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
-			recharge_locked = 1
+			recharge_locked = TRUE
 
 	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
@@ -161,5 +161,5 @@
 		if(energy >= max_energy)
 			energy = max_energy
 			recharging = 0
-			recharge_locked = 0
+			recharge_locked = FALSE
 			..()

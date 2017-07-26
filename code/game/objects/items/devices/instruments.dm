@@ -2,16 +2,15 @@
 /obj/item/device/instrument
 	name = "generic instrument"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
 	max_integrity = 100
+	icon = 'icons/obj/musician.dmi'
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
-	var/instrumentExt = "ogg"
+	var/instrumentExt = "mid"
 
-/obj/item/device/instrument/New()
-	song = new(instrumentId, src)
-	song.instrumentExt = instrumentExt
-	..()
+/obj/item/device/instrument/Initialize()
+	. = ..()
+	song = new(instrumentId, src, instrumentExt)
 
 /obj/item/device/instrument/Destroy()
 	qdel(song)
@@ -46,7 +45,6 @@
 /obj/item/device/instrument/violin
 	name = "space violin"
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
-	icon = 'icons/obj/musician.dmi'
 	icon_state = "violin"
 	item_state = "violin"
 	force = 10
@@ -60,12 +58,26 @@
 	item_state = "golden_violin"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/device/instrument/piano_synth
+	name = "synthesizer"
+	desc = "An advanced electronic synthesizer that can be used as various instruments."
+	icon_state = "synth"
+	item_state = "synth"
+	instrumentId = "piano"
+	instrumentExt = "ogg"
+	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
+	actions_types = list(/datum/action/item_action/synthswitch)
+
+/obj/item/device/instrument/piano_synth/proc/changeInstrument(name = "piano")
+	song.instrumentDir = name
+	song.instrumentExt = insTypes[name]
+
 /obj/item/device/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."
-	icon = 'icons/obj/musician.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"
+	instrumentExt = "ogg"
 	force = 10
 	attack_verb = list("played metal on", "serenaded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
@@ -74,10 +86,77 @@
 /obj/item/device/instrument/eguitar
 	name = "electric guitar"
 	desc = "Makes all your shredding needs possible."
-	icon = 'icons/obj/musician.dmi'
 	icon_state = "eguitar"
 	item_state = "eguitar"
 	force = 12
 	attack_verb = list("played metal on", "shredded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	instrumentId = "eguitar"
+	instrumentExt = "ogg"
+
+/obj/item/device/instrument/glockenspiel
+	name = "glockenspiel"
+	desc = "Smooth metal bars perfect for any marching band."
+	icon_state = "glockenspiel"
+	item_state = "glockenspiel"
+	instrumentId = "glockenspiel"
+
+/obj/item/device/instrument/accordion
+	name = "accordion"
+	desc = "Pun-Pun not included."
+	icon_state = "accordion"
+	item_state = "accordion"
+	instrumentId = "accordion"
+
+/obj/item/device/instrument/saxophone
+	name = "saxophone"
+	desc = "This soothing sound will be sure to leave your audience in tears."
+	icon_state = "saxophone"
+	item_state = "saxophone"
+	instrumentId = "saxophone"
+
+/obj/item/device/instrument/trombone
+	name = "trombone"
+	desc = "How can any pool table ever hope to compete?"
+	icon_state = "trombone"
+	item_state = "trombone"
+	instrumentId = "trombone"
+
+/obj/item/device/instrument/recorder
+	name = "recorder"
+	desc = "Just like in school, playing ability and all."
+	icon_state = "recorder"
+	item_state = "recorder"
+	instrumentId = "recorder"
+
+/obj/item/device/instrument/harmonica
+	name = "harmonica"
+	desc = "For when you get a bad case of the space blues."
+	icon_state = "harmonica"
+	item_state = "harmonica"
+	instrumentId = "harmonica"
+	slot_flags = SLOT_MASK
+	force = 5
+	w_class = WEIGHT_CLASS_SMALL
+	actions_types = list(/datum/action/item_action/instrument)
+
+/obj/item/device/instrument/harmonica/speechModification(message)
+	if(song.playing && ismob(loc))
+		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
+		song.playing = FALSE
+	return message
+
+/obj/item/device/instrument/bikehorn
+	name = "gilded bike horn"
+	desc = "An exquisitely decorated bike horn, capable of honking in a variety of notes."
+	icon_state = "bike_horn"
+	item_state = "bike_horn"
+	attack_verb = list("beautifully honks")
+	instrumentId = "bikehorn"
+	instrumentExt = "ogg"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	throw_speed = 3
+	throw_range = 15
+	hitsound = 'sound/items/bikehorn.ogg'
+

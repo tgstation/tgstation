@@ -50,9 +50,9 @@
 	var/obj/old_headgear = target
 	var/obj/new_headgear
 
-	if(istype(old_headgear,/obj/item/clothing/head/chameleon/drone))
+	if(istype(old_headgear, /obj/item/clothing/head/chameleon/drone))
 		new_headgear = new /obj/item/clothing/mask/chameleon/drone()
-	else if(istype(old_headgear,/obj/item/clothing/mask/chameleon/drone))
+	else if(istype(old_headgear, /obj/item/clothing/mask/chameleon/drone))
 		new_headgear = new /obj/item/clothing/head/chameleon/drone()
 	else
 		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>")
@@ -133,7 +133,7 @@
 	target.name = initial(picked_item.name)
 	target.desc = initial(picked_item.desc)
 	target.icon_state = initial(picked_item.icon_state)
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
 		I.item_color = initial(picked_item.item_color)

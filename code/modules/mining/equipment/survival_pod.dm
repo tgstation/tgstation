@@ -208,9 +208,7 @@
 	..(mapload, TRUE)
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(istype(O, /obj/item))
-		return 1
-	return 0
+	return isitem(O)
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload, empty)
 	. = ..()
@@ -309,7 +307,7 @@
 						/obj/item/weapon/melee/supermatter_sword,
 						/obj/item/weapon/shield/changeling,
 						/obj/item/weapon/lava_staff,
-						/obj/item/weapon/katana/energy,
+						/obj/item/weapon/dash/energy_katana,
 						/obj/item/weapon/hierophant_club,
 						/obj/item/weapon/his_grace,
 						/obj/item/weapon/gun/ballistic/minigun,
@@ -321,7 +319,6 @@
 						/obj/item/stack/telecrystal/twenty,
 						/obj/item/nuke_core,
 						/obj/item/phylactery,
-						/obj/item/riding_offhand,
 						/obj/item/weapon/banhammer)
 
 /obj/item/fakeartefact/Initialize()

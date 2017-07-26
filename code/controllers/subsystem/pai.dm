@@ -10,11 +10,11 @@ SUBSYSTEM_DEF(pai)
 
 /datum/controller/subsystem/pai/Topic(href, href_list[])
 	if(href_list["download"])
-		var/datum/paiCandidate/candidate = locate(href_list["candidate"])
-		var/obj/item/device/paicard/card = locate(href_list["device"])
+		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates
+		var/obj/item/device/paicard/card = locate(href_list["device"]) in pai_card_list
 		if(card.pai)
 			return
-		if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+		if(istype(card, /obj/item/device/paicard) && istype(candidate, /datum/paiCandidate))
 			if(check_ready(candidate) != candidate)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(pai)
 			usr << browse(null, "window=findPai")
 
 	if(href_list["new"])
-		var/datum/paiCandidate/candidate = locate(href_list["candidate"])
+		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates
 		var/option = href_list["option"]
 		var/t = ""
 

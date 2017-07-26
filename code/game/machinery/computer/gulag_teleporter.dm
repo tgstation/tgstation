@@ -4,7 +4,7 @@
 	desc = "Used to send criminals to the Labor Camp"
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(GLOB.access_armory)
+	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
 	var/obj/item/weapon/card/id/prisoner/id = null
@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
 	return ..()
 
-/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -135,7 +135,7 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
-	for(dir in GLOB.cardinal)
+	for(dir in GLOB.cardinals)
 		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, dir))
 		if(teleporterf && teleporterf.is_operational())
 			return teleporterf
@@ -148,7 +148,7 @@
 	teleporter.handle_prisoner(id, temporary_record)
 	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
-	prisoner.Weaken(2) // small travel dizziness
+	prisoner.Knockdown(40) // small travel dizziness
 	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
 	new /obj/effect/particle_effect/sparks(prisoner.loc)
 	playsound(src.loc, "sparks", 50, 1)

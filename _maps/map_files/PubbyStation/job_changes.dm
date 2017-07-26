@@ -3,20 +3,20 @@
 /datum/job/hos/New()
 	..()
 	MAP_JOB_CHECK
-	access += GLOB.access_crematorium
-	minimal_access += GLOB.access_crematorium
+	access += ACCESS_CREMATORIUM
+	minimal_access += ACCESS_CREMATORIUM
 
 /datum/job/warden/New()
 	..()
 	MAP_JOB_CHECK
-	access += GLOB.access_crematorium
-	minimal_access += GLOB.access_crematorium
+	access += ACCESS_CREMATORIUM
+	minimal_access += ACCESS_CREMATORIUM
 
 /datum/job/officer/New()
 	..()
 	MAP_JOB_CHECK
-	access += GLOB.access_crematorium
-	minimal_access += GLOB.access_crematorium
+	access += ACCESS_CREMATORIUM
+	minimal_access += ACCESS_CREMATORIUM
 
 MAP_REMOVE_JOB(curator)
 MAP_REMOVE_JOB(lawyer)

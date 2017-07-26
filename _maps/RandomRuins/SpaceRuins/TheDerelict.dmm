@@ -298,7 +298,6 @@
 /area/derelict/solar_control)
 "aI" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -373,8 +372,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Starboard Solar APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable,
 /obj/structure/cable{
@@ -700,8 +698,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -740,8 +737,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/ai_upload)
@@ -783,8 +779,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/bridge/ai_upload)
@@ -832,8 +827,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/closed/wall,
 /area/derelict/bridge/access)
@@ -951,8 +945,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
@@ -1499,8 +1492,7 @@
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
 	icon_state = "radiation";
 	name = "RADIOACTIVE AREA";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
@@ -1517,8 +1509,7 @@
 /area/derelict/singularity_engine)
 "en" = (
 /obj/machinery/power/emitter{
-	dir = 1;
-	icon_state = "emitter"
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
@@ -1540,17 +1531,11 @@
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
 "er" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
 /area/derelict/bridge)
 "es" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
 "et" = (
@@ -1600,8 +1585,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
@@ -1645,8 +1629,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -1659,8 +1642,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge/access)
@@ -1671,8 +1653,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
@@ -1680,8 +1661,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
@@ -1729,8 +1709,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
@@ -2038,9 +2017,7 @@
 	},
 /area/derelict/singularity_engine)
 "fM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "fN" = (
@@ -2164,8 +2141,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/access)
@@ -2173,8 +2149,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
@@ -2270,19 +2245,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "gv" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "gw" = (
@@ -2681,8 +2648,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
@@ -2726,7 +2692,6 @@
 /area/derelict/medical/chapel)
 "hV" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/white,
@@ -2797,9 +2762,7 @@
 	},
 /area/derelict/medical/chapel)
 "ih" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
 "ii" = (
@@ -2899,22 +2862,15 @@
 	},
 /area/derelict/medical/chapel)
 "iy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
 "iz" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
 "iA" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/white,
@@ -3002,7 +2958,6 @@
 /area/derelict/medical)
 "iO" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -3101,8 +3056,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -3111,11 +3065,7 @@
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
 "je" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
 "jf" = (
@@ -3208,9 +3158,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "jr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -3250,8 +3198,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -3311,14 +3258,12 @@
 /area/ruin/unpowered/no_grav)
 "jH" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
 "jI" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -3559,17 +3504,11 @@
 	},
 /area/derelict/hallway/primary)
 "kn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "ko" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "kp" = (
@@ -3602,8 +3541,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
@@ -3611,8 +3549,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
@@ -3622,8 +3559,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -3636,8 +3572,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -3809,11 +3744,11 @@
 "kS" = (
 /obj/machinery/door/window,
 /turf/open/floor/plasteel/airless,
-/area/hallway/primary/port)
+/area/derelict/hallway/primary/port)
 "kT" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/plasteel/airless,
-/area/hallway/primary/port)
+/area/derelict/hallway/primary/port)
 "kU" = (
 /obj/item/weapon/cigbutt,
 /turf/template_noop,
@@ -3877,9 +3812,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "lf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -4061,7 +3994,6 @@
 /area/derelict/atmospherics)
 "lL" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -4082,7 +4014,6 @@
 /area/derelict/atmospherics)
 "lO" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
@@ -4134,7 +4065,6 @@
 /area/derelict/atmospherics)
 "lV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
@@ -4341,9 +4271,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
 "mE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
 "mF" = (
@@ -4376,11 +4304,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
 "mK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
 "mL" = (
@@ -4450,8 +4374,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
@@ -4478,16 +4401,13 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nc" = (
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Worn-out APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -4652,11 +4572,7 @@
 	},
 /area/derelict/hallway/secondary)
 "nw" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nx" = (
@@ -4749,8 +4665,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/se_solar)
@@ -4822,7 +4737,6 @@
 /area/template_noop)
 "nU" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -4836,9 +4750,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
 "nW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "nX" = (
@@ -4867,8 +4779,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
@@ -4939,11 +4850,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "oj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "ok" = (
@@ -4983,8 +4890,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
@@ -5064,8 +4970,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,

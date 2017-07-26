@@ -57,18 +57,12 @@
 	var/turf/target_turf = pick(L)
 	if(!target_turf)
 		return
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(target))
-	P.target = target_turf
-	P.creator = null
-	P.icon = 'icons/obj/objects.dmi'
-	P.icon_state = "anom"
-	P.name = "wormhole"
-	P.mech_sized = TRUE
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null
-	QDEL_IN(P, rand(150,300))
+	QDEL_LIST_IN(created, rand(150,300))
 	return 1
 
 

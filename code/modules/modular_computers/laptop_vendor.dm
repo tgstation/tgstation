@@ -6,8 +6,8 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "robotics"
 	layer = 2.9
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 	// The actual laptop/tablet
 	var/obj/item/device/modular_computer/laptop/fabricated_laptop = null
@@ -225,7 +225,7 @@
 /obj/machinery/lapvend/attack_hand(mob/user)
 	ui_interact(user)
 
-/obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
@@ -241,7 +241,7 @@
 
 
 /obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/stack/spacecash))
+	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/c = I
 
 		if(!user.drop_item(c))

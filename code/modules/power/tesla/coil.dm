@@ -3,8 +3,8 @@
 	desc = "For the union!"
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "coil0"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE
@@ -74,7 +74,7 @@
 
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	if(anchored && !panel_open)
-		being_shocked = 1
+		being_shocked = TRUE
 		//don't lose arc power when it's not connected to anything
 		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
@@ -102,8 +102,8 @@
 	desc = "Keep an area from being fried from Edison's Bane."
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 
 	can_buckle = TRUE
 	buckle_lying = FALSE

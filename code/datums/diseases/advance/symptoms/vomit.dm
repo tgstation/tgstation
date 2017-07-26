@@ -28,79 +28,31 @@ Bonus
 	transmittable = 1
 	level = 3
 	severity = 4
+	base_message_chance = 100
+	symptom_delay_min = 25
+	symptom_delay_max = 80
+	var/vomit_blood = FALSE
+	var/proj_vomit = 0
+
+/datum/symptom/vomit/Start(datum/disease/advance/A)
+	..()
+	if(A.properties["stealth"] >= 4)
+		suppress_warning = TRUE
+	if(A.properties["resistance"] >= 7) //blood vomit
+		vomit_blood = TRUE
+	if(A.properties["transmittable"] >= 7) //projectile vomit
+		proj_vomit = 5
 
 /datum/symptom/vomit/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB / 2))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(1, 2, 3, 4)
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
+		if(1, 2, 3, 4)
+			if(prob(base_message_chance) && !suppress_warning)
 				to_chat(M, "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>")
-			else
-				Vomit(M)
+		else
+			vomit(M)
 
-	return
-
-/datum/symptom/vomit/proc/Vomit(mob/living/carbon/M)
-	M.vomit(20)
-
-/*
-//////////////////////////////////////
-
-Vomiting Blood
-
-	Very Very Noticable.
-	Decreases resistance.
-	Decreases stage speed.
-	Little transmittable.
-	Intense level.
-
-Bonus
-	Forces the affected mob to vomit blood!
-	Meaning your disease can spread via
-	people walking on the blood.
-	Makes the affected mob lose health.
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/vomit/blood
-
-	name = "Blood Vomiting"
-	stealth = -2
-	resistance = -1
-	stage_speed = -1
-	transmittable = 1
-	level = 4
-	severity = 5
-
-/datum/symptom/vomit/blood/Vomit(mob/living/carbon/M)
-	M.vomit(0, 1)
-
-
-/*
-//////////////////////////////////////
-
-Projectile Vomiting
-
-	Very Very Noticable.
-	Decreases resistance.
-	Doesn't increase stage speed.
-	Little transmittable.
-	Medium Level.
-
-Bonus
-	As normal vomiting, except it will spread further,
-	likely causing more to walk across the vomit.
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/vomit/projectile
-
-	name = "Projectile Vomiting"
-	stealth = -2
-	level = 4
-
-/datum/symptom/vomit/projectile/Vomit(mob/living/carbon/M)
-	M.vomit(6,0,1,5,1)
+/datum/symptom/vomit/proc/vomit(mob/living/carbon/M)
+	M.vomit(20, vomit_blood, distance = proj_vomit)

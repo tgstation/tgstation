@@ -156,7 +156,7 @@
 		return 0
 	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
 		if(stun)
-			cult_mind.current.Paralyse(5)
+			cult_mind.current.Unconscious(100)
 		return 1
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
@@ -167,7 +167,7 @@
 		cult_datum.silent = silent
 		cult_datum.on_removal()
 		if(stun)
-			cult_mind.current.Paralyse(5)
+			cult_mind.current.Unconscious(100)
 		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)

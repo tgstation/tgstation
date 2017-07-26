@@ -1,3 +1,7 @@
+
+#define SOURCE_PORTAL 1
+#define DESTINATION_PORTAL 2
+
 /* Teleportation devices.
  * Contains:
  *		Locator
@@ -110,7 +114,7 @@ Frequency:
 			else
 				if (href_list["temp"])
 					src.temp = null
-		if (istype(src.loc, /mob))
+		if (ismob(src.loc))
 			attack_self(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
@@ -136,7 +140,19 @@ Frequency:
 	origin_tech = "magnets=3;bluespace=4"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/active_portals = 0
+	var/list/active_portal_pairs
+	var/max_portal_pairs = 3
+
+/obj/item/weapon/hand_tele/Initialize()
+	. = ..()
+	active_portal_pairs = list()
+
+/obj/item/weapon/hand_tele/afterattack(atom/target, mob/user, proximity, params)
+	if(is_parent_of_portal(target))
+		qdel(target)
+		to_chat(user, "<span class='notice'>You dispel [target] remotely with \the [src]!</span>")
+	return ..()
+
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
@@ -169,7 +185,7 @@ Frequency:
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") as null|anything in L
 	if (!t1 || user.get_active_held_item() != src || user.incapacitated())
 		return
-	if(active_portals >= 3)
+	if(active_portal_pairs.len >= max_portal_pairs)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/atom/T = L[t1]
@@ -178,7 +194,25 @@ Frequency:
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	user.show_message("<span class='notice'>Locked In.</span>", 2)
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(src), T, src)
-	try_move_adjacent(P)
-	active_portals++
+	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1)
+	if(!(LAZYLEN(created) == 2))
+		return
+	try_move_adjacent(created[1])
+	active_portal_pairs[created[1]] = created[2]
+	var/obj/effect/portal/c1 = created[1]
+	var/obj/effect/portal/c2 = created[2]
+	investigate_log("was used by [key_name(user)] at [COORD(user)] to create a portal pair with destinations [COORD(c1)] and [COORD(c2)].", INVESTIGATE_PORTAL)
 	add_fingerprint(user)
+
+/obj/item/weapon/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
+	active_portal_pairs -= P	//If this portal pair is made by us it'll be erased along with the other portal by the portal.
+
+/obj/item/weapon/hand_tele/proc/is_parent_of_portal(obj/effect/portal/P)
+	if(!istype(P))
+		return FALSE
+	if(active_portal_pairs[P])
+		return SOURCE_PORTAL
+	for(var/i in active_portal_pairs)
+		if(active_portal_pairs[i] == P)
+			return DESTINATION_PORTAL
+	return FALSE

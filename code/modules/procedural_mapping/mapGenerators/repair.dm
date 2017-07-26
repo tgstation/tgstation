@@ -6,7 +6,7 @@
 /datum/mapGeneratorModule/bottomLayer/repairFloorPlasteel/place(turf/T)
 	if(isclosedturf(T) && !ignore_wall)
 		return FALSE
-	return TRUE
+	return ..()
 
 /datum/mapGeneratorModule/bottomLayer/repairFloorPlasteel/flatten
 	ignore_wall = TRUE

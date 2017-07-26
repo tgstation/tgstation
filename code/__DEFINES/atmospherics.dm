@@ -67,8 +67,8 @@
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
-#define MIN_PLASMA_DAMAGE					1
-#define MAX_PLASMA_DAMAGE					10
+#define MIN_TOXIC_GAS_DAMAGE				1
+#define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
@@ -171,3 +171,6 @@
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+
+#define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
+#define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"

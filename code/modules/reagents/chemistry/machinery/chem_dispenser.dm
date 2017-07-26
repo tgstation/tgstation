@@ -1,11 +1,11 @@
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	interact_offline = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -79,7 +79,7 @@
 		return
 	to_chat(user, "<span class='notice'>You short out \the [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
-	emagged = 1
+	emagged = TRUE
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -96,7 +96,7 @@
 		beaker = null
 		cut_overlays()
 
-/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -315,7 +315,7 @@
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
 	amount = 10
@@ -353,7 +353,7 @@
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
 	dispensable_reagents = list(

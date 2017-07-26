@@ -155,7 +155,7 @@
 		cut_overlays()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M, /mob))
+	if(!ismob(M))
 		return
 	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(cig)
@@ -220,7 +220,7 @@
 
 /obj/item/weapon/storage/fancy/rollingpapers
 	name = "rolling paper pack"
-	desc = "A pack of NanoTrasen brand rolling papers."
+	desc = "A pack of Nanotrasen brand rolling papers."
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"

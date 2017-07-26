@@ -34,6 +34,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
+	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
+
 	var/triai = 0							//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?
@@ -246,7 +248,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
 	if(!HasRoundStarted())
@@ -469,15 +471,15 @@ SUBSYSTEM_DEF(ticker)
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
-					var/area/shuttle_area
+					var/list/area/shuttle_areas
 					if(SSshuttle && SSshuttle.emergency)
-						shuttle_area = SSshuttle.emergency.areaInstance
+						shuttle_areas = SSshuttle.emergency.shuttle_areas
 					if(!Player.onCentcom() && !Player.onSyndieBase())
 						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
 						num_escapees++
 						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
-						if(get_area(Player) == shuttle_area)
+						if(shuttle_areas[get_area(Player)])
 							num_shuttle_escapees++
 				else
 					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
@@ -590,7 +592,11 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	//Collects persistence features
-	SSpersistence.CollectData()
+	if(mode.allow_persistence_save)
+		SSpersistence.CollectData()
+
+	//stop collecting feedback during grifftime
+	SSblackbox.Seal()
 
 	sleep(50)
 	if(mode.station_was_nuked)

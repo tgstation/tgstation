@@ -83,7 +83,7 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction()
+/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	DeactivateStealth()
 	return 0
 
@@ -108,9 +108,9 @@
 			return
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
-		M.SetParalysis(0)
-		M.SetStunned(0)
-		M.SetWeakened(0)
+		M.SetUnconscious(0)
+		M.SetStun(0)
+		M.SetKnockdown(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
@@ -271,10 +271,10 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I, /obj/item/device/radio/))
 			var/obj/item/device/radio/r = I
 			r.listening = 0
-			if(!istype(I,/obj/item/device/radio/headset))
+			if(!istype(I, /obj/item/device/radio/headset))
 				r.broadcasting = 0 //goddamned headset hacks
 
 /obj/item/device/firing_pin/abductor
@@ -393,7 +393,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 			return 0
 
@@ -414,8 +414,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	user.lastattacked = L
 	L.lastattacker = user
 
-	L.Stun(7)
-	L.Weaken(7)
+	L.Knockdown(140)
 	L.apply_effect(STUTTER, 7)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
@@ -429,11 +428,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	add_logs(user, L, "stunned")
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	if(L.stunned || L.sleeping)
+	if(L.incapacitated(TRUE, TRUE))
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
-		L.Sleeping(60)
+		L.Sleeping(1200)
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
@@ -601,7 +600,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alien_frame"
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
-	density = 1
+	density = TRUE
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -695,7 +694,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	typetext = "abductor"
 	icontext = "abductor"
 	airlock_type = /obj/machinery/door/airlock/abductor
-	anchored = 1
+	anchored = TRUE
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)

@@ -4,19 +4,18 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
-	var/operating = 0 // Is it on?
+	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
 	var/efficiency = 0
 
-
-// see code/modules/food/recipes_microwave.dm for recipes
+//Microwaving doesn't use recipes, instead it calls the microwave_act of the objects. For food, this creates something based on the food's cooked_type
 
 /*******************
 *   Initialising
@@ -150,7 +149,7 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 
 
-	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O,/obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
+	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
 		if (contents.len>=max_n_of_items)
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
@@ -272,7 +271,7 @@
 /obj/machinery/microwave/proc/has_extra_item()
 	for (var/obj/O in contents)
 		if ( \
-				!istype(O,/obj/item/weapon/reagent_containers/food) && \
+				!istype(O, /obj/item/weapon/reagent_containers/food) && \
 				!istype(O, /obj/item/weapon/grown) \
 			)
 			return 1
@@ -280,12 +279,12 @@
 
 /obj/machinery/microwave/proc/start()
 	visible_message("The microwave turns on.", "<span class='italics'>You hear a microwave humming.</span>")
-	operating = 1
+	operating = TRUE
 	icon_state = "mw1"
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/abort()
-	operating = 0 // Turn it off again aferwards
+	operating = FALSE // Turn it off again aferwards
 	icon_state = "mw"
 	updateUsrDialog()
 
@@ -308,7 +307,7 @@
 	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too
-	operating = 0 // Turn it off again aferwards
+	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src)
 		if(prob(50))
@@ -323,7 +322,7 @@
 	visible_message("<span class='warning'>The microwave breaks!</span>") //Let them know they're stupid
 	broken = 2 // Make it broken so it can't be used util fixed
 	flags = null //So you can't add condiments
-	operating = 0 // Turn it off again aferwards
+	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 
 /obj/machinery/microwave/Topic(href, href_list)

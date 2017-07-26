@@ -3,7 +3,6 @@
 	name = "floodlight frame"
 	desc = "A bare metal frame looking vaguely like a floodlight. Requires wrenching down."
 	max_integrity = 100
-	obj_integrity = 100
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight_c1"
 	density = TRUE

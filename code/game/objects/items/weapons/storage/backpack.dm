@@ -20,12 +20,14 @@
 	max_combined_w_class = 21
 	storage_slots = 21
 	resistance_flags = 0
-	obj_integrity = 300
 	max_integrity = 300
 
 /*
  * Backpack Types
  */
+
+/obj/item/weapon/storage/backpack/old
+	max_combined_w_class = 12
 
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
@@ -41,10 +43,10 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
 
 
-/obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
+/obj/item/weapon/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 	user.drop_item()
-	user.Stun(5)
+	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
 	playsound(src, "rustle", 50, 1, -5)
 	qdel(user)
@@ -276,11 +278,11 @@
 /obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
 	if(intact)
 		invisibility = INVISIBILITY_MAXIMUM
-		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
 	else
 		invisibility = initial(invisibility)
-		anchored = 0
+		anchored = FALSE
 		icon_state = initial(icon_state)
 
 /obj/item/weapon/storage/backpack/satchel/flat/Initialize(mapload)
@@ -303,7 +305,7 @@
 /obj/item/weapon/storage/backpack/satchel/flat/secret/Initialize()
 	..()
 
-	if(isfloorturf(loc) && !istype(loc,/turf/open/floor/plating/))
+	if(isfloorturf(loc) && !istype(loc, /turf/open/floor/plating/))
 		hide(1)
 
 /obj/item/weapon/storage/backpack/satchel/flat/secret/hide(intact)
@@ -415,7 +417,7 @@
 	slowdown = 0
 
 /obj/item/weapon/storage/backpack/duffelbag/syndie/hitman
-	desc = "A large duffel bag for holding extra things. There is a NanoTrasen logo on the back."
+	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
 	icon_state = "duffel-syndieammo"
 	item_state = "duffel-syndieammo"
 

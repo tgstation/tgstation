@@ -2,8 +2,7 @@
 	name = "frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
-	density = 1
-	obj_integrity = 250
+	density = TRUE
 	max_integrity = 250
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1
@@ -221,7 +220,7 @@
 					replacer.play_rped_sound()
 				return
 
-			if(istype(P, /obj/item) && get_req_components_amt())
+			if(isitem(P) && get_req_components_amt())
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
 						if(istype(P, /obj/item/stack))

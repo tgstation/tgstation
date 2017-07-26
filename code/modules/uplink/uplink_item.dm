@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/weapon/melee/energy/sword/saber
+	item = /obj/item/weapon/melee/transforming/energy/sword/saber
 	cost = 8
 
 /datum/uplink_item/dangerous/doublesword
@@ -647,7 +647,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			falls asleep, they will be able to move and act."
 	item = /obj/item/weapon/pen/sleepy
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "F.R.A.M.E. PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
 			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked.  \
-			You will recieve the unlock code upon activating the virus, and the new uplink may be charged with \
+			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
 	item = /obj/item/weapon/cartridge/virus/frame
 	cost = 4
@@ -846,7 +846,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
 	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
-			fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit \
+			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
 			sightings, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4

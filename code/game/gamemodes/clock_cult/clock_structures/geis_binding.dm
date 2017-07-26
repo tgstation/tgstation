@@ -4,7 +4,6 @@
 	desc = "A flickering, glowing purple ring around a target."
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
 	max_integrity = 25
-	obj_integrity = 25
 	light_range = 2
 	light_power = 0.5
 	light_color = "#AF0AAF"
@@ -88,7 +87,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/L = m
 		if(L)
-			L.Stun(1, 1, 1)
+			L.Stun(20, 1, 1)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.silent += 4

@@ -18,7 +18,7 @@
 	if(!loaded)
 		return
 	if(isliving(target) && proximity_flag)
-		if(istype(target, /mob/living/simple_animal))
+		if(isanimal(target))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
 				to_chat(user, "<span class='info'>[src] does not work on this sort of creature.</span>")

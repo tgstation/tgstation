@@ -28,11 +28,15 @@
 
 /turf/open/floor/plasteel/white
 	icon_state = "white"
-/turf/open/floor/plasteel/airless/white
-	icon_state = "white"
 /turf/open/floor/plasteel/white/side
 	icon_state = "whitehall"
 /turf/open/floor/plasteel/white/corner
+	icon_state = "whitecorner"
+/turf/open/floor/plasteel/airless/white
+	icon_state = "white"
+/turf/open/floor/plasteel/airless/white/side
+	icon_state = "whitehall"
+/turf/open/floor/plasteel/airless/white/corner
 	icon_state = "whitecorner"
 
 

@@ -26,11 +26,6 @@
 		if(user_buckle_mob(M, user))
 			return 1
 
-//Cleanup
-/atom/movable/Destroy()
-	. = ..()
-	unbuckle_all_mobs(force=1)
-
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
 		return FALSE

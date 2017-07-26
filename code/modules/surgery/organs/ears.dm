@@ -49,6 +49,9 @@
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
 	deaf = max(deaf, value)
 
+/obj/item/organ/ears/invincible/adjustEarDamage(ddmg, ddeaf)
+	return
+
 
 /mob/proc/restoreEars()
 

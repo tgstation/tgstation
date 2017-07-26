@@ -124,8 +124,7 @@
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
 		invoker.notransform = FALSE
-		invoker.Stun(5)
-		invoker.Weaken(5)
+		invoker.Knockdown(100)
 		invoker.apply_damage(10, BRUTE, "head")
 		slab.busy = null
 		return FALSE
@@ -150,26 +149,6 @@
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 	"<span class='sevtug'>[M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
 	return TRUE
-
-
-//Anima Fragment: Creates an empty anima fragment, which produces an anima fragment that moves at extreme speed and does high damage.
-/datum/clockwork_scripture/create_object/anima_fragment
-	descname = "Fast Soul Vessel Shell"
-	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health and slight regeneration, notable melee power, \
-	and exceptional speed, though taking damage will temporarily slow it down."
-	invocations = list("Call forth...", "...the soldiers of Armorer.")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 4)
-	object_path = /obj/structure/destructible/clockwork/shell/fragment
-	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
-	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
-	usage_tip = "Useless without a soul vessel and should not be created without one."
-	tier = SCRIPTURE_APPLICATION
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 4
-	quickbind = TRUE
-	quickbind_desc = "Creates a Fragment Shell, which produces an Anima Fragment when filled with a Soul Vessel."
 
 
 //Sigil of Transmission: Creates a sigil of transmission that can store power for clockwork structures.

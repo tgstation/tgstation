@@ -5,8 +5,8 @@
 	desc = "High stakes, high rewards."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/win_prob = 5
 
 /obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
@@ -70,15 +70,13 @@
 /obj/effect/gluttony //Gluttony's wall: Used in the Gluttony ruin. Only lets the overweight through.
 	name = "gluttony's wall"
 	desc = "Only those who truly indulge may pass."
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	icon_state = "blob"
 	icon = 'icons/mob/blob.dmi'
 	color = rgb(145, 150, 0)
 
-/obj/effect/gluttony/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
-	if(height==0)
-		return 1
+/obj/effect/gluttony/CanPass(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
 	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)

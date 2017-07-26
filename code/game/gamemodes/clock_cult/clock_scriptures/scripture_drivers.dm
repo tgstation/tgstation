@@ -26,10 +26,9 @@
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
 /datum/clockwork_scripture/create_object/judicial_visor
-	descname = "Delayed Area Stun Glasses"
+	descname = "Delayed Area Knockdown Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging non-Servants. \
-	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, knocking down, muting, and damaging non-Servants."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
 	consumed_components = list(BELLIGERENT_EYE = 1)
@@ -42,14 +41,14 @@
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
 	quickbind = TRUE
-	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, stunning, muting, and damaging non-Servants after a delay."
+	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, knocking down, muting, and damaging non-Servants after a delay."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is stunned for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
@@ -91,7 +90,7 @@
 	sort_priority = 4
 	quickbind = TRUE
 	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
-	slab_icon = "compromise"
+	slab_overlay = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
 	<b>Left-click a fellow Servant or yourself to heal!\n\
@@ -112,7 +111,7 @@
 	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Allows you to bind and start converting an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
-	slab_icon = "geis"
+	slab_overlay = "geis"
 	ranged_type = /obj/effect/proc_holder/slab/geis
 	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
 	<b>Left-click a target within melee range to convert!\n\
@@ -122,8 +121,8 @@
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
 	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.all_clockwork_mobs)
-			if(ishuman(M) || issilicon(M))
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(can_recite_scripture(M, TRUE))
 				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
@@ -153,8 +152,8 @@
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
 	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.all_clockwork_mobs)
-			if(ishuman(M) || issilicon(M))
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(can_recite_scripture(M, TRUE))
 				servants++
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
@@ -171,14 +170,16 @@
 	return target && binding && target.buckled == binding && !is_servant_of_ratvar(target) && target.stat != DEAD
 
 /datum/clockwork_scripture/geis/scripture_effects()
-	return add_servant_of_ratvar(target)
+	. = add_servant_of_ratvar(target)
+	if(.)
+		add_logs(invoker, target, "Converted", object = "Geis")
 
 
 //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.
 /datum/clockwork_scripture/channeled/taunting_tirade
 	descname = "Channeled, Mobile Confusion Trail"
 	name = "Taunting Tirade"
-	desc = "Allows movement for five seconds, leaving a confusing and weakening trail. Chanted every second for up to thirty seconds."
+	desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down. Chanted every second for up to thirty seconds."
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
@@ -188,7 +189,7 @@
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Allows movement for five seconds, leaving a confusing and weakening trail.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar

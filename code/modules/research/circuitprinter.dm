@@ -5,7 +5,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
 /obj/machinery/r_n_d/circuit_imprinter
-	name = "Circuit Imprinter"
+	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
 	container_type = OPENCONTAINER
@@ -89,7 +89,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
 
-	if(istype(O,/obj/item/stack/sheet))
+	if(istype(O, /obj/item/stack/sheet))
 		. = 1
 		if(!is_insertion_ready(user))
 			return

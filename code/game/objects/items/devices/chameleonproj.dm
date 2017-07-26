@@ -34,7 +34,7 @@
 	if(!check_sprite(target))
 		return
 	if(!active_dummy)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>Scanned [target].</span>")
 			var/obj/temp = new/obj()
@@ -89,7 +89,7 @@
 /obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
-	density = 0
+	density = FALSE
 	var/can_move = 0
 	var/obj/item/device/chameleon/master = null
 

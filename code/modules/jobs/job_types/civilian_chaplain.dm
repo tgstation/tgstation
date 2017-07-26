@@ -15,8 +15,8 @@ Chaplain
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
-	minimal_access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
+	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	if(H.mind)
@@ -92,5 +92,6 @@ Chaplain
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
+	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
 	backpack = /obj/item/weapon/storage/backpack/cultpack
 	satchel = /obj/item/weapon/storage/backpack/cultpack

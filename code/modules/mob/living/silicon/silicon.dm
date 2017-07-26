@@ -321,7 +321,7 @@
 	return 0
 
 
-/mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
+/mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 
 /mob/living/silicon/proc/remove_med_sec_hud()

@@ -53,7 +53,7 @@
 
 	var/max_uses = 20
 	var/uses = 0
-	var/emagged = 0
+	var/emagged = FALSE
 	var/failmsg = ""
 	// How much to increase per each glass?
 	var/increment = 5
@@ -122,7 +122,7 @@
 		var/replaced_something = TRUE
 
 		for(var/obj/item/I in S.contents)
-			if(istype(I,/obj/item/weapon/light))
+			if(istype(I, /obj/item/weapon/light))
 				var/obj/item/weapon/light/L = I
 				found_lightbulbs = TRUE
 				if(src.uses >= max_uses)
@@ -148,8 +148,9 @@
 		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
 /obj/item/device/lightreplacer/emag_act()
-	if(!emagged)
-		Emag()
+	if(emagged)
+		return
+	Emag()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	to_chat(user, status_string())

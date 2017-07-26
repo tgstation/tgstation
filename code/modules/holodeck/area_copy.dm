@@ -13,25 +13,25 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 
 	if(perfectcopy && O && original)
 		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
-			if(istype(original.vars[V],/list))
+			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
-			else if(istype(original.vars[V],/datum))
+			else if(istype(original.vars[V], /datum))
 				continue	// this would reference the original's object, that will break when it is used or deleted.
 			else
 				O.vars[V] = original.vars[V]
 
-	if(istype(O, /obj))
+	if(isobj(O))
 		var/obj/N = O
 		if(holoitem)
 			N.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // holoitems do not burn
 
-		if(nerf && istype(O,/obj/item))
+		if(nerf && isitem(O))
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
 
 		N.update_icon()
-		if(istype(O,/obj/machinery))
+		if(istype(O, /obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
 
@@ -98,12 +98,12 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 
 		for(var/obj/O in T)
 			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = B, nerf=nerf_weapons, holoitem=TRUE)
-			if(!O2) 
+			if(!O2)
 				continue
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
-			if(istype(M, /mob/camera)) 
+			if(istype(M, /mob/camera))
 				continue // If we need to check for more mobs, I'll add a variable
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()

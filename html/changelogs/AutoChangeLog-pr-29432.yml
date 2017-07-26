@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Supermatter slivers can now be stolen properly."

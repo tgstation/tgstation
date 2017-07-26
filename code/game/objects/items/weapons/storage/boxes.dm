@@ -879,3 +879,11 @@
 /obj/item/weapon/storage/box/silver_sulf/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+
+
+/obj/item/weapon/storage/box/fountainpens
+	name = "box of fountain pens"
+
+/obj/item/weapon/storage/box/fountainpens/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/pen/fountain(src)
