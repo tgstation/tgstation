@@ -5,6 +5,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	origin_tech = "combat=3;materials=2"
 	casing_ejector = 0
+	fire_sound = 'hippiestation/sound/weapons/gunshot_magnum.ogg'
 
 /obj/item/weapon/gun/ballistic/revolver/Initialize()
 	. = ..()
