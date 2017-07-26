@@ -290,3 +290,6 @@
 	light_range = 2
 	light_power = 4
 	light_color = "#6A4D2F"
+
+/obj/effect/clockwork/overlay/gateway_glow/make_frozen_visual()
+	return
