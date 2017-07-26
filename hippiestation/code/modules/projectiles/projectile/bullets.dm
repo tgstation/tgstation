@@ -1,7 +1,3 @@
-/obj/item/projectile/bullet/magnum
-	damage = 45
-	speed = 0.8
-
 /obj/item/projectile/bullet/weakbullet2
 	knockdown = 0
 	stun = 0
