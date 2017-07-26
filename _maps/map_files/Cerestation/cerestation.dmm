@@ -57603,9 +57603,7 @@
 	},
 /area/shuttle/escape)
 "cdZ" = (
-/obj/structure/closet/secure_closet/miner{
-	locked = 0
-	},
+/obj/structure/closet/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
