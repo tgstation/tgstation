@@ -147,13 +147,6 @@
 			else
 				break
 
-/proc/SDQL_parse_exception(exception/E)
-	var/list/returning = list()
-	returning += "Runtime Error: [E.name]<BR>"
-	returning += "Occured at line [E.line] file [E.file]<BR>"
-	returning += "Description: [E.desc]<BR>"
-	return returning
-
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
 	var/list/querys = list()
