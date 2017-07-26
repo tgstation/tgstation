@@ -6523,7 +6523,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13"
 	},
 /area/hallway/primary/central{
@@ -8831,7 +8830,6 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/miningdock)
@@ -25663,7 +25661,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -37393,7 +37390,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnx" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -37426,7 +37422,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnF" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -37465,7 +37460,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnM" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -37839,7 +37833,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bpq" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -38568,7 +38561,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bsb" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -38589,7 +38581,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "bsf" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -38623,7 +38614,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bsl" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -38672,7 +38662,6 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bsu" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
