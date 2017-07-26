@@ -28,7 +28,7 @@
 	var/station_name = null				// station name (the name of the station in-game)
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
-	var/hub = 0
+	var/hub = 1
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
