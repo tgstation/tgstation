@@ -1121,6 +1121,11 @@
 #include "code\modules\awaymissions\mission_code\Cabin.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
+<<<<<<< HEAD
+=======
+#include "code\modules\awaymissions\mission_code\moonoutpost19.dm"
+#include "code\modules\awaymissions\mission_code\research.dm"
+>>>>>>> 27c1c0347d... Last ones.
 #include "code\modules\awaymissions\mission_code\snowdin.dm"
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
