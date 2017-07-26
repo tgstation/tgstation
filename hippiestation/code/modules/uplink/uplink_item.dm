@@ -52,6 +52,10 @@
 	desc = "An additional 14-round 9mm magazine; compatible with the Glock 17 pistol."
 	item = /obj/item/ammo_box/magazine/g17
 	cost = 1
+	
+/datum/uplink_item/dangerous/revolver
+	cost = 10
+	surplus = 45
 
 /* Sports */
 /datum/uplink_item/badass/sports
@@ -123,3 +127,6 @@
 /datum/uplink_item/ammo/pistol
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These \
 			are dirt cheap but aren't as effective as .357 rounds."
+
+/datum/uplink_item/ammo/revolver
+	cost = 2
