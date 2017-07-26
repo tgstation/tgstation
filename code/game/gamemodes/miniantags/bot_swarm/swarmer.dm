@@ -229,7 +229,7 @@
 /obj/structure/flora/swarmer_act()
 	return FALSE
 
-/turf/open/floor/plating/lava/swarmer_act()
+/turf/open/lava/swarmer_act()
 	if(!is_safe())
 		new /obj/structure/lattice/catwalk/swarmer_catwalk(src)
 	return FALSE

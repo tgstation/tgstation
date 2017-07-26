@@ -3,9 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/wall/mineral/titanium/nodiagonal{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/golem_ship)
 "c" = (
 /obj/structure/closet/crate,
@@ -17,9 +15,7 @@
 /obj/item/device/mining_scanner,
 /obj/item/device/flashlight/lantern,
 /obj/item/weapon/card/id/mining,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "d" = (
 /obj/structure/closet/crate,
@@ -30,26 +26,18 @@
 /obj/item/device/mining_scanner,
 /obj/item/device/flashlight/lantern,
 /obj/item/weapon/card/id/mining,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "e" = (
 /obj/item/weapon/storage/toolbox/mechanical,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "f" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "g" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "h" = (
 /obj/structure/shuttle/engine/heater{
@@ -59,7 +47,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/golem_ship)
@@ -68,50 +55,35 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/golem_ship)
 "j" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "k" = (
 /obj/machinery/computer/arcade/battle,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "l" = (
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "m" = (
 /obj/effect/mob_spawn/human/golem/adamantine,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "n" = (
 /obj/machinery/mineral/equipment_vendor/golem,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "o" = (
 /obj/item/weapon/resonator,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "p" = (
 /obj/machinery/mineral/ore_redemption,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "q" = (
 /obj/structure/statue/gold/rd,
@@ -122,29 +94,21 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "r" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "s" = (
 /obj/machinery/bluespace_beacon,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "t" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "u" = (
 /obj/structure/table/wood,
@@ -162,42 +126,30 @@
 	dir = 4;
 	name = "shrine of the liberator"
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "v" = (
 /obj/item/weapon/resonator/upgraded,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "w" = (
 /obj/machinery/autolathe,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "x" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "y" = (
 /obj/machinery/computer/arcade/orion_trail,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "A" = (
 /obj/structure/table/wood,
@@ -206,18 +158,14 @@
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "B" = (
 /obj/item/weapon/storage/firstaid/fire,
 /obj/structure/table/wood,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/machinery/light,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "C" = (
 /obj/item/weapon/storage/firstaid/brute,
@@ -227,30 +175,22 @@
 	desc = "Use to build new structures in the wastes.";
 	name = "land claim"
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "D" = (
 /obj/item/weapon/storage/firstaid/brute,
 /obj/structure/table/wood,
 /obj/item/weapon/storage/firstaid/brute,
 /obj/item/weapon/disk/design_disk/golem_shell,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "E" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "F" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "G" = (
 /turf/closed/wall/mineral/titanium,
@@ -258,125 +198,95 @@
 "H" = (
 /obj/machinery/door/airlock/titanium,
 /obj/structure/fans/tiny,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "I" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "J" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "K" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "L" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "M" = (
 /obj/effect/mob_spawn/human/golem/adamantine,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "N" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "O" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "P" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "Q" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "R" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "S" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "T" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "U" = (
 /obj/effect/mob_spawn/human/golem/adamantine,
 /obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/purple{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "V" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "W" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "X" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Y" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 
 (1,1,1) = {"
@@ -503,7 +413,7 @@ l
 Q
 G
 l
-T
+Q
 b
 b
 b
@@ -543,7 +453,7 @@ j
 l
 l
 b
-P
+L
 l
 G
 l
@@ -626,18 +536,18 @@ a
 a
 b
 c
-J
+I
 b
 l
 l
 O
 l
 l
-S
+O
 l
 z
 b
-W
+V
 F
 b
 a
@@ -697,7 +607,7 @@ b
 l
 l
 l
-l
+Y
 l
 l
 l
@@ -714,7 +624,7 @@ a
 a
 b
 e
-K
+I
 b
 N
 l
@@ -725,7 +635,7 @@ v
 l
 B
 b
-X
+V
 f
 b
 a
@@ -786,7 +696,7 @@ h
 h
 b
 t
-R
+Q
 b
 h
 h
