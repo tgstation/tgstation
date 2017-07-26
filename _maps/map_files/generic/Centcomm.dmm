@@ -4664,9 +4664,9 @@
 	},
 /area/centcom/control)
 "mQ" = (
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4941,9 +4941,9 @@
 /area/centcom/control)
 "ny" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -7592,9 +7592,9 @@
 /area/centcom/control)
 "tD" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -9487,9 +9487,9 @@
 /area/centcom/control)
 "yy" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -10142,7 +10142,7 @@
 "Af" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)

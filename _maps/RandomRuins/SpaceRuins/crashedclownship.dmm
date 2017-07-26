@@ -103,7 +103,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "s" = (
-/obj/item/weapon/paper/fluff/ruins/clownship/true_nation,
+/obj/item/weapon/paper/fluff/ruins/crashedclownship/true_nation,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "t" = (

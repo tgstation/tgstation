@@ -1988,7 +1988,7 @@
 /area/awaymission/centcomAway/general)
 "gt" = (
 /obj/machinery/photocopier,
-/obj/item/weapon/paper/fluff/awaymissions/centcom/ccaMemo,
+/obj/item/weapon/paper/fluff/awaymissions/centcom/gateway_memo,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -2151,7 +2151,7 @@
 /area/awaymission/centcomAway/hangar)
 "gU" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/awaymissions/centcom/ccaMemo,
+/obj/item/weapon/paper/fluff/awaymissions/centcom/gateway_memo,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "gV" = (
@@ -3131,7 +3131,7 @@
 /area/awaymission/centcomAway/general)
 "jQ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -3328,7 +3328,7 @@
 /area/awaymission/centcomAway/hangar)
 "kq" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},

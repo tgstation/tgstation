@@ -1679,7 +1679,7 @@
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
 "eN" = (
-/obj/item/weapon/paper/fluff/ruins/derelict/nukie_objectives,
+/obj/item/weapon/paper/fluff/ruins/thederelict/nukie_objectives,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
