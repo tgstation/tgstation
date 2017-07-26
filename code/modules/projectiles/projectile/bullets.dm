@@ -8,6 +8,10 @@
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
+/obj/item/projectile/bullet/magnum
+	damage = 45
+	speed = 0.8
+
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
 	stamina = 80
