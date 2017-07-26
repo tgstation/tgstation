@@ -11,8 +11,8 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "ad" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -45,8 +45,8 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "ah" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -101,7 +101,7 @@
 	})
 "ao" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -110,7 +110,7 @@
 "ap" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -127,7 +127,7 @@
 "ar" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -136,7 +136,7 @@
 "as" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -160,7 +160,7 @@
 /obj/item/clothing/mask/gas/clown_hat,
 /obj/item/organ/heart/demon,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -172,7 +172,7 @@
 	name = "shock rune"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -181,7 +181,7 @@
 "aw" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -189,11 +189,11 @@
 	})
 "ax" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /turf/closed/wall/mineral/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 4"
@@ -206,7 +206,7 @@
 	},
 /obj/item/weapon/coin/antagtoken,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -215,7 +215,7 @@
 "az" = (
 /obj/structure/constructshell,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -225,7 +225,7 @@
 /obj/structure/girder/cult,
 /obj/item/stack/sheet/runed_metal,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -234,7 +234,7 @@
 "aB" = (
 /mob/living/simple_animal/hostile/spawner/skeleton,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -244,7 +244,7 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/cult,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -253,7 +253,7 @@
 "aD" = (
 /obj/item/stack/sheet/runed_metal,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -269,7 +269,7 @@
 	name = "an extremely flamboyant book"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -283,7 +283,7 @@
 	name = "weak forcefield"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -292,7 +292,7 @@
 "aG" = (
 /obj/item/weapon/ectoplasm,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -383,7 +383,7 @@
 	name = "rusty ladder"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -400,7 +400,7 @@
 "aR" = (
 /obj/effect/forcefield/cult,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -409,7 +409,7 @@
 "aS" = (
 /obj/structure/girder/cult,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -440,8 +440,8 @@
 	})
 "aV" = (
 /obj/effect/forcefield/cult,
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -488,7 +488,7 @@
 	name = "flame rune"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -498,7 +498,7 @@
 /obj/structure/destructible/cult/talisman,
 /obj/item/weapon/plasma_fist_scroll,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -525,7 +525,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /turf/closed/wall/mineral/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 4"
@@ -541,7 +541,7 @@
 "bf" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -568,7 +568,7 @@
 	dir = 9
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -579,7 +579,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -590,7 +590,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -601,7 +601,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -612,7 +612,7 @@
 	calibrated = 0
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -623,7 +623,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -643,7 +643,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -652,7 +652,7 @@
 "bq" = (
 /obj/machinery/gateway,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -663,7 +663,7 @@
 	dir = 6
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -709,7 +709,7 @@
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/spawner/skeleton,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -736,7 +736,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -747,7 +747,7 @@
 /obj/item/device/necromantic_stone,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -763,7 +763,7 @@
 	})
 "bC" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -772,7 +772,7 @@
 "bD" = (
 /mob/living/simple_animal/hostile/skeleton,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -782,7 +782,7 @@
 /obj/structure/destructible/cult/pylon,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -796,7 +796,7 @@
 	name = "rusty ladder"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -843,8 +843,8 @@
 /turf/closed/mineral/volcanic,
 /area/awaymission/BMPship)
 "bM" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -857,8 +857,8 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "bO" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -1246,7 +1246,7 @@
 	})
 "cI" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -2611,7 +2611,7 @@
 "fW" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2645,7 +2645,7 @@
 /area/awaymission/BMPship)
 "fZ" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2669,7 +2669,7 @@
 "gc" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2703,14 +2703,14 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/donkpockets,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
 "gh" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2718,7 +2718,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2761,14 +2761,14 @@
 "go" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
 "gp" = (
 /obj/structure/table_frame,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
