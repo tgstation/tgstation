@@ -26,6 +26,7 @@
 	desc = "Warm brass plating. You can feel it gently vibrating, as if machinery is on the other side."
 	icon_state = "reebe"
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	baseturf = /turf/open/indestructible/reebe
 
 /turf/open/indestructible/reebe/ratvar_act()
 	return

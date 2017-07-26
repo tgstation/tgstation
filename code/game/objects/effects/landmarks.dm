@@ -313,6 +313,16 @@
 	GLOB.servant_spawns += loc
 	qdel(src)
 
+//City of Cogs entrances
+/obj/effect/landmark/city_of_cogs
+	name = "city of cogs entrance"
+	icon_state = "x4"
+
+/obj/effect/landmark/city_of_cogs/Initialize(mapload)
+	..()
+	GLOB.city_of_cogs_spawns += loc
+	qdel(src)
+
 //generic event spawns
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"

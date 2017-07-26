@@ -50,6 +50,7 @@
 	name = "void"
 	icon_state = "reebe"
 	opacity = FALSE
+	baseturf = /turf/closed/indestructible/reebe
 
 /turf/closed/indestructible/reebe/ratvar_act()
 	return
@@ -59,6 +60,10 @@
 
 /turf/closed/indestructible/reebe/CollidedWith(atom/movable/AM)
 	playsound(src, 'sound/effects/bamf.ogg', 30, TRUE)
+
+/turf/closed/indestructible/reebe/border
+	opacity = TRUE
+	baseturf = /turf/closed/indestructible/reebe/border
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
