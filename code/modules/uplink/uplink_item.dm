@@ -380,8 +380,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These \
-			are dirt cheap but aren't as effective as .357 rounds."
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \
+			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 
