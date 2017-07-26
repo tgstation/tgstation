@@ -20,7 +20,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/r_n_d/protolathe, //print tracking beacons, send shuttle
 		/obj/machinery/autolathe, //same
 		/obj/item/projectile/beam/wormhole,
-		/obj/effect/portal
+		/obj/effect/portal,
+		/obj/item/device/shared_storage
 	)))
 
 /obj/docking_port/mobile/supply
