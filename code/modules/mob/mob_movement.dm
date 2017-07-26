@@ -156,7 +156,6 @@
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
-
 	if(!mob.Process_Spacemove(direct))
 		return 0
 
