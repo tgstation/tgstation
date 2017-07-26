@@ -1,0 +1,9 @@
+author: "PopNotes"
+delete-after: True
+changes: 
+  - balance: "The .357 Revolver now does 45 damage per shot instead of the balls-nailed-to-the-wall 60."
+  - balance: ".357 bullets are now faster to encourage firing at fleeing targets instead of the 'glorified melee weapon' meta."
+  - balance: "The .357 Revolver now only costs 10tc. What a steal!"
+  - balance: ".357 speedloaders now only cost 2tc. Another steal!"
+  - balance: "You can no longer print .357 speedloaders from the autolathe. What a drag!"
+  - soundadd: "In light of weakening the Revolver, it now sounds way more powerful. Go figure."
