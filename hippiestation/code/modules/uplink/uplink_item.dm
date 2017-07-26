@@ -119,3 +119,7 @@
 	cost = 5
 	item = /obj/item/weapon/bikehorn/golden/retardhorn
 	restricted_roles = list("Clown")
+
+/datum/uplink_item/ammo/pistol
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These \
+			are dirt cheap but aren't as effective as .357 rounds."
