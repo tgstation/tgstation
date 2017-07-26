@@ -115,7 +115,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "[d1]-[d2]"
 
-/obj/structure/cable/proc/fuckcodestandards(obj/item/W, mob/user, params)
+/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
 	if(T.intact)
 		return
