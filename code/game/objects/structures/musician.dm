@@ -1,4 +1,5 @@
 
+
 #define MUSICIAN_HEARCHECK_MINDELAY 4
 #define MUSIC_MAXLINES 300
 #define MUSIC_MAXLINECHARS 50
@@ -18,7 +19,7 @@
 	var/instrumentExt = "ogg"		// the file extension
 	var/obj/instrumentObj = null	// the associated obj playing the sound
 	var/last_hearcheck = 0
-	var/list/hearers
+	var/list/hearing_mobs
 
 /datum/song/New(dir, obj, ext = "ogg")
 	tempo = sanitize_tempo(tempo)
@@ -65,16 +66,16 @@
 	// and play
 	var/turf/source = get_turf(instrumentObj)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
-		hearers = list()
+		LAZYCLEARLIST(hearing_mobs)
 		for(var/mob/M in get_hearers_in_view(15, source))
 			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 				continue
-			LAZYSET(hearers, M, TRUE)
+			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
 	for(var/i in hearing_mobs)
 		var/mob/M = i
 		M.playsound_local(source, soundfile, 100, falloff = 5)
-		
+
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
 
@@ -103,7 +104,7 @@
 					//to_chat(world, "note: [note]")
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
 						playing = FALSE
-						hearers = null
+						hearing_mobs = null
 						return
 					if(!lentext(note))
 						continue
@@ -135,7 +136,7 @@
 				else
 					sleep(tempo)
 		repeat--
-	hearers = null
+	hearing_mobs = null
 	playing = FALSE
 	repeat = 0
 	updateDialog(user)
@@ -297,7 +298,7 @@
 
 	else if(href_list["stop"])
 		playing = FALSE
-		hearers = null
+		hearing_mobs = null
 
 	updateDialog(usr)
 	return
