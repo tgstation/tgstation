@@ -1,4 +1,4 @@
-///////////	thederelict items
+///////////	djstation items
 
 /obj/item/weapon/paper/fluff/ruins/djstation
 	name = "paper - 'DJ Listening Outpost'"
