@@ -1,0 +1,5 @@
+author: "Tacolizard"
+delete-after: True
+changes: 
+  - rscadd: "Added cybernetic organs to RnD, they can be used to replace organic organs. Remember to administer corazone during implantation though!"
+  - rscadd: "Added the upgraded cybernetic liver. It is exceptionally robust against toxins and alcohol poisoning."
