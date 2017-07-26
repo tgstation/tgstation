@@ -18,7 +18,7 @@
 /obj/item/weapon/paper/fluff/ruins/listeningstation/reports/november
 	name = "november report"
 
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/july
+/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/june
 	name = "june report"
 	info = "Nanotrasen communications have been noticably less frequent recently.  The pirate radio station I found last month has been transmitting pro-Nanotrasen propaganda. I will continue to monitor it."
 
