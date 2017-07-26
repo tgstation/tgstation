@@ -247,7 +247,7 @@ var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
 var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_items)
 	if(!best_sword || S.damage > best_sword.damage)
-    		best_sword = S
+		best_sword = S
 ```
 The above is a simple proc for checking all swords in a container and returning the one with the highest damage, it uses DM's standard syntax for a for loop, it does this by specifying a type in the variable of the for header which byond interprets as a type to filter by, it performs this filter using ```istype()``` (or some internal-magic similar to ```istype()```, I wouldn't put it past byond), the above example is fine with the data currently contained in ```bag_of_items```, however if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient, for example:
 ```
@@ -255,7 +255,7 @@ var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
-    		best_sword = S
+		best_sword = S
 ```
 specifies a type for DM to filter by, with the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Whereever a list (or other container, such as an atom (in which case you're technically accessing their special contents list but I digress)) contains datums of the same datatype or subtypes of the datatype you require for your for body
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
@@ -265,7 +265,7 @@ var/obj/item/sword/best_sword
 for(var/s in bag_of_swords)
 	var/obj/item/sword/S = s
 	if(!best_sword || S.damage > best_sword.damage)
-    		best_sword = S
+		best_sword = S
 ```
 Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type! which will cause runtime errors.
 
@@ -275,8 +275,27 @@ eg:
 var/mob/living/carbon/human/H = YOU_THE_READER
 H.gib()
 ```
-however DM also has a dot variable, accessed just as ```.``` on it's own, defaulting to a value of null, now what's special about the dot operator is that it is automatically returned (as in the ```return``` statment) at the end of a proc, provided the proc does not already manually return (```return count``` for example). Why is this special? well the ```return``` statement should ideally be free from overhead (functionally free, of course nothing's free) but DM fails to fulfill this,  DM's return statement is actually fairly costly for what it does and for what it's used for.
-With ```.``` being everpresent in every proc can we use it as a temporary variable? Of course we can! However the ```.``` operator cannot replace a typecasted variable, it can hold data any other var in DM can, it just can't be accessed as one, however the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.``` (provided it's a list).
+However, DM also has a dot variable, accessed just as ```.``` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the ```return``` statement) at the end of a proc, provided the proc does not already manually return (```return count``` for example.) Why is this special? 
+
+Well, the ```return``` statement should ideally be free from overhead (functionally free, although of course nothing's free), but DM fails to fulfill this. DM's return statement is actually fairly costly for what it does and for what it's used for.
+
+With ```.``` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the ```.``` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.```, provided that it's a list.
+
+## Globals versus static
+
+DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
+
+```DM
+mob
+	var
+		global
+			thing = TRUE
+```
+This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
+
+Isn't that confusing? 
+
+There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
 ## Pull Request Process
 
