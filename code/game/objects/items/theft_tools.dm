@@ -86,7 +86,7 @@
 	toolspeed = 0.5
 	random_color = FALSE
 
-/obj/item/weapon/paper/nuke_instructions
+/obj/item/weapon/paper/guides/antag/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
 	<ul>\
 	<li>Use a screwdriver with a very thin tip (provided) to unscrew the terminal's front panel</li>\
@@ -99,7 +99,7 @@
 
 // STEALING SUPERMATTER
 
-/obj/item/weapon/paper/supermatter_sliver_instructions
+/obj/item/weapon/paper/guides/antag/supermatter_sliver
 	info = "How to safely extract a supermatter sliver:<br>\
 	<ul>\
 	<li>Approach an active supermatter crystal with proper protective gear. DO NOT MAKE PHYSICAL CONTACT.</li>\

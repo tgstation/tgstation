@@ -896,8 +896,8 @@
 	icon_state = "1-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "cG" = (

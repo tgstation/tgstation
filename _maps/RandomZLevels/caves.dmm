@@ -1091,10 +1091,7 @@
 	dir = 1
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper{
-	info = "<b><center>Testing Notes</b></center><br><br><center>Subject appears unresponsive to most interactions, refusing to move away from the corners or face any scientists. Subject appears to move between the two back corners every observation. A strange humming can be heard from inside the cell, appears to be originating from the subject itself, further testing is necessary to confirm or deny this.</center>";
-	name = "Subject Omega Notes"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/omega,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1487,9 +1484,7 @@
 	})
 "di" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	info = "<center> Mining is hell down here, you can feel the heat of the magma no matter how thick the suit is. Conditions are barely managble as is, restless nights and horrid work conditions. The ore maybe rich down here, but we've already lost a few men to the faults shifting, god knows how much longer till it all just collapses down and consumes everyone with it.</center>"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/magma,
 /obj/item/weapon/pen,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel{
@@ -2020,10 +2015,7 @@
 /area/awaymission/BMPship)
 "eA" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	info = "<center><b>Survival Info For Miners</b></center><br><br><center>The caves are an unforgiving place, the only thing you'll have to traverse is the supplies in your locker and your own wit. Travel in packs when mining and try to shut down the monster dens before they overwhelm you. The job is dangerous but the haul is good, so remember this infomation and hopefully we'll all go home alive.</center>";
-	name = "work notice"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/work_notice,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2196,7 +2188,7 @@
 /area/awaymission/listeningpost)
 "eX" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2219,14 +2211,8 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	info = "<center>We were suppose to get a shipment of these special laser rifles and a couple 'nades to help combat the wildlife down here, but its been weeks since we last heard from the caravan carrying the shit down here. At this point we can only assume they fell victim to one of the monster nests or the dumbasses managed to trip into the lava. So much for that shipment, I guess.</center>";
-	name = "shipment notice"
-	},
-/obj/item/weapon/paper{
-	info = "<center>Some of the miners have gone to laying some mine traps among the lower levels of the mine to keep the monsters at bay.  This probably isn't the smartest idea in a cavern like this but the boys seem to get a chuckle out of every distant blast they hear go off, so I guess it works </center>";
-	name = "safety notice"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/shipment_notice,
+/obj/item/weapon/paper/fluff/awaymissions/caves/saftey_notice,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2241,10 +2227,7 @@
 	})
 "fc" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/paper{
-	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll";
-	name = "Shipment Receipt"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/shipment_receipt,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/weapon/gun/energy/laser,
@@ -2338,10 +2321,7 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll";
-	name = "Shipment Receipt"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/shipment_receipt,
 /obj/item/organ/eyes/robotic/thermals,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/slimepotion/fireproof,
@@ -2891,10 +2871,7 @@
 "gH" = (
 /obj/structure/table,
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
-/obj/item/weapon/paper{
-	info = "<center><b>NOTICE!!</center></b><br><br><center>Although you may seem indestructible in a mech, remember, THIS SHIT ISN'T LAVA PROOF!! The boys have already had to deal with loosing the last two to salvage because the dumbass thought he could just wade through the lower lakes like it was nothing. The fact he even managed to get back without being fused with what was left of the mech is a miracle in itself. They're built to be resistant against extreme heat, not heat PROOF!</center><br><br><i>Robotics Team</i>";
-	name = "NOTICE!! paper"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/mech_notice,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},

@@ -216,6 +216,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/paper/trek_diploma
+/obj/item/weapon/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
 	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+
+/obj/item/weapon/paper/fluff/holodeck/disclaimer
+	name = "Holodeck Disclaimer"
+	info = "Brusies sustained in the holodeck can be healed simply by sleeping."

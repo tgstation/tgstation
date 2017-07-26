@@ -1397,7 +1397,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/trek_diploma = 1);
+	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1423,7 +1423,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/trek_diploma = 1);
+	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1438,7 +1438,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/trek_diploma = 1);
+	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1918,7 +1918,7 @@
 	},
 /area/holodeck/rec_center/firingrange)
 "ft" = (
-/obj/item/weapon/paper/range,
+/obj/item/weapon/paper/guides/jobs/security/range,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "fu" = (
@@ -4664,9 +4664,9 @@
 	},
 /area/centcom/control)
 "mQ" = (
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4941,9 +4941,9 @@
 /area/centcom/control)
 "ny" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -5804,10 +5804,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "pz" = (
-/obj/item/weapon/paper{
-	info = "GET DAT FUKKEN DISK";
-	name = "memo"
-	},
+/obj/item/weapon/paper/fluff/stations/centcom/disk_memo,
 /obj/structure/noticeboard{
 	pixel_x = -32
 	},
@@ -7595,9 +7592,9 @@
 /area/centcom/control)
 "tD" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -9490,9 +9487,9 @@
 /area/centcom/control)
 "yy" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -10145,7 +10142,7 @@
 "Af" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/ccaInfo,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
@@ -12146,9 +12143,7 @@
 /area/shuttle/escape)
 "Fp" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper{
-	info = "Due to circumstances beyond our control, your Emergency Evacuation Shuttle is out of service.<br><br>We apologise for the inconvinience this may cause you.<br><br>Please enjoy the use of this complementary book.<br><br>Sincerely,<br>Centcom Operations Demolitions Examination Retribution Bugfixing Underlining Services"
-	},
+/obj/item/weapon/paper/fluff/stations/centcom/broken_evac,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Fq" = (
@@ -12650,7 +12645,7 @@
 /area/abductor_ship)
 "GS" = (
 /obj/item/weapon/surgical_drapes,
-/obj/item/weapon/paper/abductor,
+/obj/item/weapon/paper/guides/antag/abductor,
 /obj/item/weapon/scalpel/alien,
 /obj/structure/table/abductor,
 /obj/item/weapon/cautery/alien,

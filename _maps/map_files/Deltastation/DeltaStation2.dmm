@@ -65682,9 +65682,9 @@
 	icon_state = "4-8"
 	},
 /obj/item/weapon/clipboard,
-/obj/item/weapon/paper/pamphlet,
-/obj/item/weapon/paper/pamphlet,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
+/obj/item/weapon/paper/pamphlet/gateway,
+/obj/item/weapon/paper/pamphlet/gateway,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -72294,11 +72294,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/folder,
-/obj/item/weapon/paper{
-	desc = "";
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping.";
-	name = "Holodeck Disclaimer"
-	},
+/obj/item/weapon/paper/fluff/holodeck/disclaimer,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},

@@ -23694,7 +23694,7 @@
 	},
 /obj/item/weapon/book/manual/hydroponics_pod_people,
 /obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/item/toy/figure/botanist,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
