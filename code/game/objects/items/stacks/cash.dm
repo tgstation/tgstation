@@ -19,7 +19,7 @@
 
 /obj/item/stack/spacecash/proc/update_desc()
 	var/total_worth = amount*value
-	desc = "It's worth [total_worth] credit[( value > 1 ) ? "s" : ""]"
+	desc = "It's worth [total_worth] credit[( total_worth > 1 ) ? "s" : ""]"
 
 
 /obj/item/stack/spacecash/merge(obj/item/stack/S)
