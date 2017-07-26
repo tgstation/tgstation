@@ -44,8 +44,8 @@
 						components_of_type.Insert(J, I)
 						inserted = TRUE
 						break
-					if(!inserted)
-						components_of_type += src
+				if(!inserted)
+					components_of_type += src
 			else	//indirect match, back of the line with ya
 				components_of_type += src
 		else	//only component of this type, no list
@@ -116,7 +116,7 @@
 	. = list()
 	while (current_type != /datum/component)
 		. += current_type
-		current_type = initial(current_type.parent_type)
+		current_type = type2parent(current_type)
 
 /datum/var/list/datum_components //special typecache of /datum/component
 
