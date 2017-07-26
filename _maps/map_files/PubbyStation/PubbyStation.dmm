@@ -42554,9 +42554,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/firealarm{
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	cell_type = 15000;
 	dir = 1;
-	pixel_y = 29
+	name = "Engineering APC";
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -43666,11 +43672,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bPR" = (
@@ -53077,6 +53078,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine/atmos)
+"cnN" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -86658,7 +86666,7 @@ bNt
 bOE
 bNt
 bNt
-cjQ
+bPE
 bMb
 bQy
 bMb
@@ -87166,7 +87174,7 @@ bJx
 bLH
 bMb
 bIV
-bNt
+cnN
 bNM
 bOg
 bOG
