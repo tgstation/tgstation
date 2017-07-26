@@ -248,11 +248,11 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aI" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aJ" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
@@ -263,7 +263,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aK" = (
 /obj/structure/stone_tile/block/cracked{
@@ -341,17 +341,17 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aU" = (
 /mob/living/simple_animal/hostile/spawner/lavaland/ash_walker,
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aV" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aW" = (
 /obj/structure/stone_tile/block{
@@ -432,13 +432,13 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "be" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "bf" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -451,7 +451,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "bg" = (
 /obj/structure/stone_tile/block{

@@ -3581,7 +3581,7 @@
 "ki" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -5137,7 +5137,7 @@
 "nX" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -8397,7 +8397,7 @@
 "vR" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -10668,7 +10668,7 @@
 	color = "#008000";
 	dir = 1
 	},
-/turf/open/floor/plating/lava,
+/turf/open/lava,
 /area/wizard_station)
 "BH" = (
 /obj/structure/rack,
@@ -10722,7 +10722,7 @@
 	color = "#008000";
 	dir = 1
 	},
-/turf/open/floor/plating/lava/airless,
+/turf/open/lava/airless,
 /area/wizard_station)
 "BP" = (
 /obj/structure/rack,
@@ -12187,7 +12187,7 @@
 "Fu" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},

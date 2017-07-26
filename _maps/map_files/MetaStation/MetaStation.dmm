@@ -2352,7 +2352,7 @@
 	dir = 5
 	},
 /obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'WARNING: Do Not Enter When Red Light Shows', detailing the penalties that any NanoTrasen employee or silicon will suffer if violating this rule.";
+	desc = "A warning sign which reads 'WARNING: Do Not Enter When Red Light Shows', detailing the penalties that any Nanotrasen employee or silicon will suffer if violating this rule.";
 	name = "WARNING: Do Not Enter When Red Light Shows";
 	pixel_y = 32
 	},
@@ -2967,6 +2967,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
@@ -3034,6 +3035,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
@@ -3266,7 +3268,7 @@
 /area/crew_quarters/heads/hos)
 "agj" = (
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -3692,7 +3694,7 @@
 "aha" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/retaliate/bat{
-	desc = "A fierce companion for any person of power, this spider has been carefully trained by NanoTrasen specialists. Its beady, staring eyes send shivers down your spine.";
+	desc = "A fierce companion for any person of power, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine.";
 	emote_hear = list("chitters");
 	faction = list("spiders");
 	harm_intent_damage = 3;
@@ -4258,7 +4260,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -6840,6 +6842,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "ane" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 8
 	},
@@ -9011,7 +9014,7 @@
 /area/security/main)
 "arx" = (
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -9438,6 +9441,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asl" = (
@@ -12218,6 +12222,7 @@
 	name = "Cell 2";
 	pixel_y = -32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "axg" = (
@@ -12342,6 +12347,7 @@
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/corner{
 	dir = 2
 	},
@@ -13565,6 +13571,7 @@
 /area/security/brig)
 "azO" = (
 /obj/structure/chair,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azP" = (
@@ -14473,6 +14480,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aBw" = (
@@ -16584,6 +16592,7 @@
 /area/crew_quarters/dorms)
 "aFn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aFo" = (
@@ -17355,6 +17364,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aGD" = (
@@ -18413,6 +18423,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
@@ -18944,6 +18955,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aJH" = (
@@ -20023,6 +20035,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aMe" = (
@@ -21020,6 +21033,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aOq" = (
@@ -22577,6 +22591,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/hydroponics/garden)
 "aRf" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 6
 	},
@@ -30309,6 +30324,7 @@
 	name = "Auxiliary Tool Storage";
 	req_access_txt = "12"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "bfJ" = (
@@ -30877,6 +30893,7 @@
 	d1 = 4;
 	d2 = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bgQ" = (
@@ -31793,6 +31810,7 @@
 	req_access = null;
 	req_access_txt = "1"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "biz" = (
@@ -33390,6 +33408,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "blq" = (
@@ -33817,7 +33836,7 @@
 /area/quartermaster/office)
 "bmj" = (
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Suuply department is.";
+	desc = "A direction sign, pointing out which way the Supply department is.";
 	dir = 1;
 	icon_state = "direction_supply";
 	name = "cargo department";
@@ -34335,6 +34354,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bnc" = (
@@ -36705,6 +36725,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -37949,6 +37970,7 @@
 /area/maintenance/starboard)
 "btx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -38093,7 +38115,7 @@
 /area/tcommsat/computer)
 "btN" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Telecoms Control Room";
+	name = "Telecomms Control Room";
 	req_one_access_txt = "19; 61"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -38975,7 +38997,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = 30
 	},
 /obj/structure/table/wood,
@@ -39924,7 +39946,7 @@
 "bxs" = (
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
-	name = "Telecoms Camera Monitor";
+	name = "Telecomms Camera Monitor";
 	network = list("tcomm");
 	pixel_x = 26
 	},
@@ -40070,6 +40092,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 10
 	},
@@ -41017,7 +41040,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 4;
-	name = "Telecoms Control Room APC";
+	name = "Telecomms Control Room APC";
 	pixel_x = 26
 	},
 /obj/machinery/computer/telecomms/server{
@@ -41207,6 +41230,7 @@
 	pixel_y = 21
 	},
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bzP" = (
@@ -41759,9 +41783,9 @@
 "bBa" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecoms Admin";
+	department = "Telecomms Admin";
 	departmentType = 5;
-	name = "Telecoms RC";
+	name = "Telecomms RC";
 	pixel_y = -30
 	},
 /obj/machinery/firealarm{
@@ -42294,6 +42318,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "bCb" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "bCc" = (
@@ -42557,7 +42582,7 @@
 /area/tcommsat/server)
 "bCF" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Telecoms Server Room"
+	name = "Telecomms Server Room"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -43213,6 +43238,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bDU" = (
@@ -43293,7 +43319,7 @@
 "bEf" = (
 /obj/machinery/telecomms/processor/preset_one,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Fore-Port";
+	c_tag = "Telecomms - Server Room - Fore-Port";
 	dir = 2;
 	network = list("SS13","tcomm")
 	},
@@ -43343,7 +43369,7 @@
 "bEk" = (
 /obj/machinery/telecomms/processor/preset_three,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Fore-Starboard";
+	c_tag = "Telecomms - Server Room - Fore-Starboard";
 	dir = 2;
 	network = list("SS13","tcomm")
 	},
@@ -43937,6 +43963,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
@@ -44783,6 +44810,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bGI" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bGJ" = (
@@ -46000,7 +46028,7 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/folder,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Control Room";
+	c_tag = "Telecomms - Control Room";
 	dir = 1;
 	network = list("SS13","tcomm")
 	},
@@ -46095,6 +46123,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bJs" = (
@@ -46635,7 +46664,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/engineering{
-	name = "Telecoms Storage";
+	name = "Telecomms Storage";
 	req_access_txt = "61"
 	},
 /obj/structure/cable/yellow{
@@ -47402,7 +47431,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Telecoms - Storage";
+	c_tag = "Telecomms - Storage";
 	dir = 4;
 	network = list("SS13")
 	},
@@ -47576,7 +47605,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Aft-Port";
+	c_tag = "Telecomms - Server Room - Aft-Port";
 	dir = 4;
 	network = list("SS13","tcomm")
 	},
@@ -47623,14 +47652,14 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 4;
-	name = "Telecoms Server Room APC";
+	name = "Telecomms Server Room APC";
 	pixel_x = 25
 	},
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Aft-Starboard";
+	c_tag = "Telecomms - Server Room - Aft-Starboard";
 	dir = 8;
 	network = list("SS13","tcomm")
 	},
@@ -47998,7 +48027,7 @@
 /area/bridge/showroom/corporate)
 "bNb" = (
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
+	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Drone' sign";
 	pixel_y = 32
@@ -48009,7 +48038,7 @@
 /area/bridge/showroom/corporate)
 "bNc" = (
 /obj/structure/showcase{
-	desc = "A stand with an empty old NanoTrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees.";
+	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees.";
 	icon = 'icons/mecha/mecha.dmi';
 	icon_state = "marauder";
 	name = "combat mech exhibit"
@@ -48038,7 +48067,7 @@
 "bNe" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -48104,7 +48133,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/showcase{
-	desc = "Signs describe how cloning pods like these ensure that every NanoTrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one.";
+	desc = "Signs describe how cloning pods like these ensure that every Nanotrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one.";
 	icon = 'icons/obj/cloning.dmi';
 	icon_state = "pod_0";
 	layer = 4;
@@ -48120,7 +48149,7 @@
 	name = "'Perfect Man' employee exhibit"
 	},
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, explaining how recent developments in loyalty implant and cloning technologies by NanoTrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
+	desc = "A guide to the exhibit, explaining how recent developments in loyalty implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Man' sign";
 	pixel_y = 32
@@ -48137,11 +48166,11 @@
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/showcase{
-	desc = "A flimsy model of a standard NanoTrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
+	desc = "A flimsy model of a standard Nanotrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
 	icon = 'icons/obj/machines/implantchair.dmi';
 	icon_state = "implantchair";
 	layer = 2.7;
-	name = "NanoTrasen automated loyalty implanter exhibit";
+	name = "Nanotrasen automated loyalty implanter exhibit";
 	pixel_y = 4
 	},
 /turf/open/floor/carpet,
@@ -48386,7 +48415,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Telecoms Storage APC";
+	name = "Telecomms Storage APC";
 	pixel_x = -28
 	},
 /obj/structure/cable/yellow{
@@ -48524,7 +48553,7 @@
 "bNZ" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
-	c_tag = "Telecoms - Server Room - Aft";
+	c_tag = "Telecomms - Server Room - Aft";
 	dir = 1;
 	network = list("SS13","tcomm")
 	},
@@ -48738,6 +48767,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "bOv" = (
@@ -48925,6 +48955,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/vault,
 /area/gateway)
 "bOM" = (
@@ -49587,9 +49618,7 @@
 /area/bridge/showroom/corporate)
 "bQj" = (
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/crap{
-	name = "\improper NanoTrasen-brand rechargable AA battery"
-	},
+/obj/item/weapon/stock_parts/cell/crap,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -49602,7 +49631,7 @@
 /obj/structure/table/wood,
 /obj/item/toy/carpplushie{
 	color = "red";
-	name = "NanoTrasen wildlife department space carp plushie"
+	name = "Nanotrasen wildlife department space carp plushie"
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -50155,8 +50184,8 @@
 "bRx" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/secure/briefcase{
-	desc = "A large briefcase with a digital locking system, and the NanoTrasen logo emblazoned on the sides.";
-	name = "NanoTrasen-brand secure briefcase exhibit";
+	desc = "A large briefcase with a digital locking system, and the Nanotrasen logo emblazoned on the sides.";
+	name = "Nanotrasen-brand secure briefcase exhibit";
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
@@ -50167,11 +50196,11 @@
 /area/bridge/showroom/corporate)
 "bRz" = (
 /obj/structure/showcase{
-	desc = "The famous NanoTrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box.";
+	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box.";
 	dir = 1;
 	icon = 'icons/obj/kitchen.dmi';
 	icon_state = "mw";
-	name = "NanoTrasen-brand microwave";
+	name = "Nanotrasen-brand microwave";
 	pixel_y = 2
 	},
 /obj/structure/table/wood,
@@ -50186,7 +50215,7 @@
 /obj/item/toy/beach_ball{
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen";
 	item_state = "beachball";
-	name = "NanoTrasen-brand beach ball";
+	name = "Nanotrasen-brand beach ball";
 	pixel_y = 7
 	},
 /obj/structure/table/wood,
@@ -50204,10 +50233,10 @@
 	icon_state = "4-8"
 	},
 /obj/structure/reagent_dispensers/beerkeg{
-	desc = "One of the more successful achievements of the NanoTrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every NanoTrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
+	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
 	icon = 'icons/obj/machines/nuke.dmi';
 	icon_state = "nuclearbomb_base";
-	name = "NanoTrasen-brand nuclear fission explosive";
+	name = "Nanotrasen-brand nuclear fission explosive";
 	pixel_x = 2;
 	pixel_y = 6
 	},
@@ -50239,9 +50268,7 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
-	name = "cohiba robusto cigar"
-	},
+/obj/item/clothing/mask/cigarette/cigar/cohiba,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -50252,11 +50279,11 @@
 	icon_state = "4-8"
 	},
 /obj/structure/showcase{
-	desc = "A slightly battered looking TV. Vaious Nanotrasen infomercials play on a loop, accompanied by a jaunty tune.";
+	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune.";
 	dir = 1;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "television";
-	name = "NanoTrasen corporate newsfeed";
+	name = "Nanotrasen corporate newsfeed";
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -50299,7 +50326,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/toy/talking/AI{
-	name = "NanoTrasen-brand toy AI";
+	name = "Nanotrasen-brand toy AI";
 	pixel_y = 6
 	},
 /turf/open/floor/carpet,
@@ -52236,6 +52263,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVe" = (
@@ -53523,6 +53551,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -53910,6 +53939,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bYt" = (
@@ -56556,6 +56586,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cdu" = (
@@ -56624,7 +56655,7 @@
 	},
 /mob/living/simple_animal/bot/medbot{
 	auto_patrol = 1;
-	desc = "A little medical robot, officially part of the NanoTrasen medical inspectorate. He looks somewhat underwhelmed.";
+	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
 	name = "Inspector Johnson"
 	},
 /turf/open/floor/plasteel/white,
@@ -57986,6 +58017,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -59014,6 +59046,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cig" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cih" = (
@@ -60560,6 +60593,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 2
 	},
@@ -60687,6 +60721,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "clA" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},
@@ -60761,6 +60796,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "clI" = (
@@ -61235,6 +61271,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "cmJ" = (
@@ -63064,6 +63101,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "cpZ" = (
@@ -63209,6 +63247,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cqk" = (
@@ -67102,6 +67141,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
 	},
@@ -68822,6 +68862,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAC" = (
@@ -71081,6 +71122,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "cEQ" = (
@@ -71673,6 +71715,7 @@
 /area/hallway/primary/aft)
 "cFZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -71889,6 +71932,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cGt" = (
@@ -72765,6 +72809,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cHL" = (
@@ -74174,6 +74219,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cKq" = (
@@ -74818,6 +74864,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -75602,6 +75649,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cMX" = (
@@ -76951,6 +76999,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
@@ -82627,6 +82676,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dbm" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "dbn" = (
@@ -85513,6 +85563,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "dhP" = (
@@ -85764,8 +85815,8 @@
 /obj/item/weapon/poster/random_official,
 /obj/item/weapon/poster/random_official,
 /obj/item/device/paicard{
-	desc = "A real NanoTrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "NanoTrasen-brand personal AI device exhibit"
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "Nanotrasen-brand personal AI device exhibit"
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -85824,6 +85875,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "diu" = (
@@ -85849,6 +85901,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "diw" = (
@@ -88996,6 +89049,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dwd" = (
@@ -89827,6 +89881,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dzS" = (
@@ -90423,6 +90478,705 @@
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/medical/virology)
+"dBX" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/security/armory)
+"dBY" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/crew_quarters/fitness/recreation)
+"dBZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/security/warden)
+"dCa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/security/warden)
+"dCb" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/red,
+/area/security/main)
+"dCc" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/crew_quarters/fitness/recreation)
+"dCd" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/red,
+/area/security/main)
+"dCe" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dCf" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/warden)
+"dCg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/security/brig)
+"dCh" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/warden)
+"dCi" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/fore)
+"dCj" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"dCk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"dCl" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dCm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"dCn" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningoffice)
+"dCo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"dCp" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/fore)
+"dCq" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/security/courtroom)
+"dCr" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"dCs" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"dCt" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"dCu" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"dCv" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/floorgrime,
+/area/crew_quarters/locker)
+"dCw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"dCx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/fore)
+"dCy" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/floorgrime,
+/area/crew_quarters/locker)
+"dCz" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/black,
+/area/security/courtroom)
+"dCA" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/crew_quarters/locker)
+"dCB" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"dCC" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"dCD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"dCE" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dCF" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dCG" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dCH" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dCI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
+"dCJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/yellow/corner{
+	dir = 1
+	},
+/area/hallway/primary/starboard)
+"dCK" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"dCL" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"dCM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8
+	},
+/area/hallway/primary/starboard)
+"dCN" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
+"dCO" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
+"dCP" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/captain/private)
+"dCQ" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dCR" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"dCS" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"dCT" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dCU" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"dCV" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
+"dCW" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/port)
+"dCX" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
+/area/library)
+"dCY" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dCZ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
+/area/library)
+"dDa" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/hallway/secondary/command)
+"dDb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"dDc" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"dDd" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dDe" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
+"dDf" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/bridge/showroom/corporate)
+"dDg" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/bridge/showroom/corporate)
+"dDh" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dDi" = (
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/library)
+"dDj" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dDk" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"dDl" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/hydroponics)
+"dDm" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dDn" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/hydroponics)
+"dDo" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"dDp" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/research)
+"dDq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"dDr" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"dDs" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
+"dDt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/barber{
+	dir = 8
+	},
+/area/crew_quarters/heads/cmo)
+"dDu" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"dDv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/blue/side{
+	dir = 8
+	},
+/area/hallway/primary/aft)
+"dDw" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dDx" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dDy" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/research)
+"dDz" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/circuit,
+/area/science/robotics/mechbay)
+"dDA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
+"dDB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dDC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/black,
+/area/medical/morgue)
+"dDD" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/research)
+"dDE" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
+"dDF" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"dDG" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
+"dDH" = (
+/obj/structure/chair{
+	pixel_y = -2
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/vault,
+/area/chapel/main)
+"dDI" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 
 (1,1,1) = {"
 aaa
@@ -107566,7 +108320,7 @@ cIr
 cJh
 cKg
 cKT
-dBW
+dBV
 cMu
 aaf
 aaa
@@ -107996,7 +108750,7 @@ ayk
 azo
 aAH
 aBW
-aBW
+dCn
 aEy
 aFI
 aHd
@@ -108266,7 +109020,7 @@ aMv
 aQj
 aMv
 aKS
-aMv
+dCB
 aMv
 aMv
 aYM
@@ -108584,7 +109338,7 @@ dux
 aaf
 aaf
 aaf
-dBP
+dBN
 cDG
 cEJ
 cFF
@@ -108800,7 +109554,7 @@ bvY
 bxT
 bzC
 bzC
-bzC
+dCW
 bOv
 alC
 bSw
@@ -108834,7 +109588,7 @@ csj
 cia
 cug
 dyg
-bXE
+dDw
 bXE
 cNg
 dux
@@ -109098,7 +109852,7 @@ dux
 aaa
 aaa
 aaa
-dBQ
+dBN
 cDI
 cEL
 cFH
@@ -109581,7 +110335,7 @@ bMH
 bue
 bPO
 bRg
-bSx
+dDi
 bTw
 bue
 bSr
@@ -109821,7 +110575,7 @@ biL
 bko
 bbN
 bnV
-bql
+dCN
 apA
 bue
 bwb
@@ -110307,7 +111061,7 @@ avT
 awV
 ayn
 ayn
-ayn
+dCl
 ayn
 ayn
 ayn
@@ -110600,7 +111354,7 @@ bwe
 bGv
 bHT
 bwc
-bEz
+dCZ
 bGs
 bHS
 bzE
@@ -111147,7 +111901,7 @@ cia
 cia
 cuj
 cbx
-bXE
+dDx
 bXE
 cxU
 cxU
@@ -111357,7 +112111,7 @@ dne
 baA
 bbX
 bds
-bbX
+dCI
 bgV
 biO
 bkt
@@ -111412,7 +112166,7 @@ czO
 cAS
 cBU
 cxU
-cDL
+dDB
 dzK
 cFN
 cGH
@@ -111429,7 +112183,7 @@ cOG
 cLa
 cPE
 cQb
-cQx
+dDH
 cQb
 cRI
 cPA
@@ -111605,7 +112359,7 @@ avT
 bfU
 aPl
 avT
-avM
+dCx
 aSY
 avT
 avT
@@ -111884,7 +112638,7 @@ bwf
 bxW
 bzH
 bzE
-bwc
+dCX
 bwc
 bzE
 cVb
@@ -112631,7 +113385,7 @@ aJQ
 aLh
 aMC
 aNU
-aMB
+dCt
 aMB
 aRP
 aTb
@@ -112908,7 +113662,7 @@ bok
 bqz
 bsL
 buk
-baG
+dCQ
 bdP
 baG
 baG
@@ -112917,7 +113671,7 @@ bEB
 baG
 bHW
 baG
-baG
+dDd
 baG
 bdP
 baG
@@ -113402,14 +114156,14 @@ aJN
 dhI
 aME
 aNW
-aMB
+dCu
 aQx
 aMB
 aTe
 aUs
 aJR
 aXy
-aYX
+dCE
 baI
 bcd
 bcd
@@ -113438,7 +114192,7 @@ bGy
 bGy
 bGy
 bTG
-aYX
+dDj
 bWk
 bXK
 bYV
@@ -114482,7 +115236,7 @@ clo
 cmw
 cnE
 coQ
-cqn
+dDt
 crA
 csz
 ctz
@@ -114705,7 +115459,7 @@ bcg
 bmr
 bkz
 bqE
-bsQ
+dCO
 bup
 bwm
 bkz
@@ -115182,7 +115936,7 @@ alQ
 anh
 aor
 apE
-anh
+dCg
 anh
 anh
 auU
@@ -115483,7 +116237,7 @@ bkz
 bzQ
 bzR
 bDa
-bEE
+dDa
 bGC
 bIf
 bJJ
@@ -115781,7 +116535,7 @@ cAd
 ctA
 dbr
 cCj
-cDY
+dDC
 cCj
 cFU
 cCe
@@ -116236,7 +116990,7 @@ aJS
 aUx
 aUx
 aXI
-aYX
+dCF
 baQ
 bci
 aaf
@@ -116309,7 +117063,7 @@ cLm
 cNM
 cOr
 cOU
-cLm
+dDG
 cPQ
 cQn
 cQK
@@ -116461,7 +117215,7 @@ afV
 agP
 ahB
 aiy
-ajr
+dBZ
 ajr
 alT
 anl
@@ -116474,11 +117228,11 @@ axR
 awe
 axe
 ayz
-azE
+dCj
 azE
 aCl
 aDx
-aEO
+dCo
 aGg
 aHx
 aaa
@@ -116528,7 +117282,7 @@ bXN
 bZa
 can
 cbY
-cca
+dDo
 ceI
 cfY
 chd
@@ -116981,7 +117735,7 @@ alV
 adY
 adY
 apL
-ard
+dCh
 ass
 adY
 auW
@@ -117271,7 +118025,7 @@ aaf
 bfv
 bhk
 bjc
-bjc
+dCK
 bmB
 bou
 bqL
@@ -117288,7 +118042,7 @@ bGH
 bJO
 bLw
 bTZ
-bOC
+dDf
 bQi
 bRz
 bLw
@@ -117491,7 +118245,7 @@ ahE
 aiA
 akD
 akD
-alU
+dCa
 ano
 apH
 apN
@@ -117570,7 +118324,7 @@ coZ
 crF
 csJ
 ctE
-cuA
+dDv
 cuA
 cwF
 cxz
@@ -117769,7 +118523,7 @@ aHA
 aIJ
 aJU
 aGk
-aHA
+dCr
 aHA
 aPz
 aJU
@@ -117791,7 +118545,7 @@ bov
 bqN
 bsX
 buA
-bjc
+dCR
 byg
 bzW
 bBJ
@@ -118316,7 +119070,7 @@ bGH
 bJP
 bLw
 bTZ
-bOB
+dDg
 bQg
 bRD
 bLw
@@ -118522,7 +119276,7 @@ akH
 amb
 ans
 amf
-ajz
+dCf
 ajz
 ajz
 atS
@@ -118556,7 +119310,7 @@ aaf
 bfw
 bhp
 bjb
-bjc
+dCL
 bmE
 boy
 bqP
@@ -118771,7 +119525,7 @@ aeq
 aeq
 afX
 agc
-agc
+dBX
 agc
 ajs
 ajz
@@ -119098,7 +119852,7 @@ bXV
 bZj
 cav
 ccf
-ccd
+dDp
 ceO
 cgd
 chk
@@ -119116,7 +119870,7 @@ cuD
 cvH
 cwI
 cxF
-cyr
+dDz
 czj
 cAn
 cBh
@@ -119300,7 +120054,7 @@ ahB
 ave
 awl
 axm
-dBE
+dBD
 azL
 aBf
 ajm
@@ -119639,7 +120393,7 @@ cDe
 cEm
 cFg
 cFg
-cFg
+dDE
 cHR
 cIM
 cJL
@@ -119824,13 +120578,13 @@ aGs
 aHE
 aIQ
 aKb
-aIR
+dCq
 aIR
 aOi
 aPB
 aQH
 aQH
-aIT
+dCz
 aUH
 aTk
 aXT
@@ -120120,7 +120874,7 @@ bQr
 bRJ
 bGM
 bTW
-aYX
+dDk
 bWA
 bXV
 bZk
@@ -120318,7 +121072,7 @@ ahK
 aiE
 ajE
 akO
-amh
+dCb
 amh
 aoD
 apT
@@ -120348,7 +121102,7 @@ aTp
 aIT
 aTk
 aXS
-aYX
+dCG
 baV
 bcj
 bdH
@@ -120577,7 +121331,7 @@ ajF
 akP
 ami
 anx
-amh
+dCd
 apU
 arp
 asF
@@ -120874,7 +121628,7 @@ bjg
 boF
 bqX
 bte
-bfA
+dCP
 bwD
 byr
 bAe
@@ -121115,7 +121869,7 @@ aOn
 aHG
 aQK
 aLK
-aLK
+dCA
 aLK
 aSe
 aXS
@@ -121170,7 +121924,7 @@ csW
 ctO
 cuJ
 cvN
-cwN
+dDy
 cwN
 cyw
 czp
@@ -121178,7 +121932,7 @@ cAu
 cBo
 crL
 cwN
-cwN
+dDD
 cFl
 cGh
 cHb
@@ -122182,7 +122936,7 @@ bYb
 cmZ
 diA
 crJ
-cJb
+dDq
 ceY
 cgm
 chr
@@ -122390,7 +123144,7 @@ ayJ
 ayJ
 ayJ
 ayJ
-aoR
+dCp
 aHG
 aHG
 aHG
@@ -122663,7 +123417,7 @@ aWq
 aXY
 aZr
 bba
-baG
+dCH
 bdP
 baG
 bhB
@@ -122676,7 +123430,7 @@ btk
 aWf
 bwI
 aWf
-aWf
+dCT
 bBR
 bDA
 bFh
@@ -122687,7 +123441,7 @@ aWf
 aWf
 aWf
 aWf
-aWf
+dDh
 aWf
 aWf
 bVo
@@ -122716,7 +123470,7 @@ cwS
 crQ
 cyC
 czv
-cAA
+dDA
 cBu
 cCv
 cyK
@@ -123170,7 +123924,7 @@ aMY
 aOu
 aOv
 aQR
-aOv
+dCy
 aTw
 aUM
 aWs
@@ -123242,7 +123996,7 @@ cIf
 cIZ
 cJW
 cIg
-dxQ
+dDF
 dvY
 cNj
 dwN
@@ -124175,7 +124929,7 @@ aje
 alc
 aje
 agq
-aoP
+dCe
 agq
 agq
 asQ
@@ -124221,7 +124975,7 @@ byz
 bAj
 bBU
 bDE
-bFm
+dDb
 bHb
 bMP
 bKg
@@ -124235,7 +124989,7 @@ bUh
 bVs
 bWN
 bWR
-bWR
+dDn
 caM
 ccu
 bST
@@ -124459,7 +125213,7 @@ aOv
 aTt
 aUP
 aUM
-aYe
+dCD
 aZt
 bbg
 bcr
@@ -124473,7 +125227,7 @@ boP
 brg
 bto
 buN
-bwO
+dCS
 bwO
 bAl
 bBT
@@ -124496,7 +125250,7 @@ bWT
 caN
 ccv
 bST
-ceZ
+dDr
 cgq
 chx
 chx
@@ -124740,7 +125494,7 @@ bwO
 bBT
 bKi
 bLN
-bLK
+dDe
 bOV
 bQE
 bRT
@@ -124797,7 +125551,7 @@ aaa
 cRi
 dcb
 cZa
-cSt
+dDI
 dcB
 dcJ
 cRa
@@ -125224,7 +125978,7 @@ axC
 aLQ
 aNc
 aOC
-aOv
+dCv
 aQY
 aOw
 aTt
@@ -125261,7 +126015,7 @@ bRU
 bSW
 bUh
 bVw
-bWR
+dDl
 bWR
 bZu
 caM
@@ -125495,7 +126249,7 @@ dnh
 dnh
 bhE
 bjp
-bkY
+dCM
 bmP
 boT
 brk
@@ -126230,7 +126984,7 @@ aiS
 ajT
 aiS
 amw
-agz
+dCc
 aoV
 aqf
 arB
@@ -126275,11 +127029,11 @@ bmP
 bwU
 byE
 bAq
-byC
+dCU
 byC
 bwX
 bHe
-byC
+dDc
 bKm
 bKe
 bNE
@@ -126562,7 +127316,7 @@ cIk
 cJa
 cpG
 cJa
-cJa
+dDu
 ctk
 cuc
 cvb
@@ -127323,7 +128077,7 @@ bST
 caT
 ccC
 bST
-bXa
+dDs
 apc
 apb
 dvY
@@ -127509,7 +128263,7 @@ acP
 acP
 afz
 agz
-ahl
+dBY
 ahl
 aiW
 aja
@@ -127541,7 +128295,7 @@ aNj
 aRf
 aSn
 aJh
-avB
+dCC
 aWv
 aYi
 aZx
@@ -127549,7 +128303,7 @@ bbm
 bcy
 bdZ
 aWv
-bhE
+dCJ
 bjp
 blc
 bmR
@@ -128820,7 +129574,7 @@ aHW
 dhH
 aCM
 aCM
-aCM
+dCs
 aCM
 aPT
 aRi
@@ -128845,7 +129599,7 @@ buX
 bwY
 bGp
 btw
-bwY
+dCV
 bwY
 bFB
 bHl
@@ -130097,7 +130851,7 @@ axQ
 ayR
 axY
 aBG
-aCP
+dCm
 aEk
 aFs
 aGT
@@ -130347,7 +131101,7 @@ dnS
 doh
 dnS
 dnS
-dpL
+dCi
 dnS
 dnS
 axO
@@ -130645,7 +131399,7 @@ bxd
 byS
 bAC
 dBJ
-bCi
+dCY
 bFH
 bHq
 bIJ
@@ -131135,7 +131889,7 @@ aKB
 aMd
 aNr
 aOP
-aNr
+dCw
 aRq
 aSw
 aTI
@@ -131159,7 +131913,7 @@ bxd
 byU
 bAE
 bCk
-dBL
+dBJ
 bFJ
 bHs
 bIL
@@ -131894,7 +132648,7 @@ avv
 axY
 axU
 ayS
-aCP
+dCk
 ddY
 deb
 deh
@@ -133485,7 +134239,7 @@ bCi
 bCi
 bUD
 bCi
-bXm
+dDm
 bIS
 bZK
 cbk

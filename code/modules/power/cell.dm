@@ -1,6 +1,6 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell."
+	desc = "A rechargeable electrochemical power cell."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
@@ -164,7 +164,7 @@
 
 /* Cell variants*/
 /obj/item/weapon/stock_parts/cell/crap
-	name = "\improper Nanotrasen brand rechargable AA battery"
+	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	maxcharge = 500
 	materials = list(MAT_GLASS=40)
@@ -175,7 +175,7 @@
 	charge = 0
 
 /obj/item/weapon/stock_parts/cell/secborg
-	name = "security borg rechargable D battery"
+	name = "security borg rechargeable D battery"
 	origin_tech = null
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	materials = list(MAT_GLASS=40)
@@ -247,7 +247,7 @@
 
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
-	desc = "A rechargable transdimensional power cell."
+	desc = "A rechargeable transdimensional power cell."
 	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
 	icon_state = "bscell"
 	maxcharge = 40000
@@ -287,7 +287,7 @@
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
-	desc = "A rechargable starch based power cell."
+	desc = "A rechargeable starch based power cell."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	origin_tech = "powerstorage=1;biotech=1"
