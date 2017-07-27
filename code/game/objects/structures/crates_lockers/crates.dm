@@ -13,13 +13,13 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
-	var/obj/item/weapon/paper/manifest/manifest
+	var/obj/item/weapon/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
 
-/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
 		if(locatedcrate) //you can walk on it like tables, if you're not in an open crate trying to move to a closed crate

@@ -3,7 +3,6 @@
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 
 /obj/structure/closet/acloset
@@ -53,7 +52,7 @@
 /obj/structure/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/closet/thunderdome/tdred
 	name = "red-team Thunderdome closet"
@@ -64,7 +63,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/red(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/melee/energy/sword/saber(src)
+		new /obj/item/weapon/melee/transforming/energy/sword/saber(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser(src)
 	for(var/i in 1 to 3)
@@ -83,7 +82,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/green(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/melee/energy/sword/saber(src)
+		new /obj/item/weapon/melee/transforming/energy/sword/saber(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser(src)
 	for(var/i in 1 to 3)

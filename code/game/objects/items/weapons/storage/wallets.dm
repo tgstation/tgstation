@@ -73,10 +73,10 @@
 		return ..()
 
 /obj/item/weapon/storage/wallet/random/PopulateContents()
-	var/item1_type = pick( /obj/item/stack/spacecash/c10,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c200,/obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
+	var/item1_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
 	var/item2_type
 	if(prob(50))
-		item2_type = pick( /obj/item/stack/spacecash/c10,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c200,/obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
+		item2_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
 	var/item3_type = pick( /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron )
 
 	spawn(2)

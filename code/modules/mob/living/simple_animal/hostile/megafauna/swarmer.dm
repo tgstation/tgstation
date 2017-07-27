@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	. = ..()
 	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
-	for(var/ddir in GLOB.cardinal)
+	for(var/ddir in GLOB.cardinals)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))
 		var/mob/living/simple_animal/hostile/swarmer/ai/resource/R = new(loc)
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
@@ -137,8 +137,8 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/Move(atom/newloc)
 	if(newloc)
 		if(newloc.z == z) //so these actions are Z-specific
-			if(istype(newloc, /turf/open/floor/plating/lava))
-				var/turf/open/floor/plating/lava/L = newloc
+			if(istype(newloc, /turf/open/lava))
+				var/turf/open/lava/L = newloc
 				if(!L.is_safe())
 					StartAction(20)
 					new /obj/structure/lattice/catwalk/swarmer_catwalk(newloc)

@@ -132,10 +132,10 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		..() // -> item/attackby()
 		return 0
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > WEIGHT_CLASS_SMALL)

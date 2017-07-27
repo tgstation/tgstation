@@ -46,7 +46,7 @@
 	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key
 
-/obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
+/obj/structure/destructible/clockwork/massive/ratvar/Collide(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(T, dir) //please don't run into a window like a bird, ratvar
@@ -64,7 +64,7 @@
 	for(var/I in circleviewturfs(src, round(convert_range * 0.5)))
 		var/turf/T = I
 		T.ratvar_act(TRUE)
-	var/dir_to_step_in = pick(GLOB.cardinal)
+	var/dir_to_step_in = pick(GLOB.cardinals)
 	var/list/meals = list()
 	for(var/mob/living/L in GLOB.living_mob_list) //we want to know who's alive so we don't lose and retarget a single person
 		if(L.z == z && !is_servant_of_ratvar(L) && L.mind)

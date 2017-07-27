@@ -3,12 +3,12 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/charging = null
-	var/static/list/allowed_devices = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer))
+	var/static/list/allowed_devices = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/ammo_box/magazine/recharge, /obj/item/device/modular_computer))
 	var/recharge_coeff = 1
 
 /obj/machinery/recharger/Initialize()

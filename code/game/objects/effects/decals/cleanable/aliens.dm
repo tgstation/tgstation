@@ -6,20 +6,14 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	var/list/viruses = list()
 	bloodiness = MAX_SHOE_BLOODINESS
 	blood_state = BLOOD_STATE_XENO
+	var/list/viruses = list()
 
-/obj/effect/decal/cleanable/xenoblood/Initialize(stuff)
-	. = ..(stuff)
+/obj/effect/decal/cleanable/xenoblood/Initialize(a)
+	. = ..(a)
 	forensics.blood = list("UNKNOWN DNA" = "X*")
-
-
-/obj/effect/decal/cleanable/xenoblood/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	viruses = null
-	return ..()
+	
 
 /obj/effect/decal/cleanable/xenoblood/xsplatter
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
@@ -38,13 +32,9 @@
 	var/direction = pick(directions)
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
-		if (i > 0)
-			var/obj/effect/decal/cleanable/xenoblood/b = new /obj/effect/decal/cleanable/xenoblood/xsplatter(src.loc)
-			for(var/datum/disease/D in src.viruses)
-				var/datum/disease/ND = D.Copy(1)
-				b.viruses += ND
-				ND.holder = b
-		if (!step_to(src, get_step(src, direction), 0))
+		if(i > 0)
+			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
+		if(!step_to(src, get_step(src, direction), 0))
 			break
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
@@ -78,7 +68,6 @@
 	icon_state = "xtracks"
 	random_icon_states = null
 
-/obj/effect/decal/cleanable/blood/xtracks/Initialize(stuff)
-	. = ..(stuff)
+/obj/effect/decal/cleanable/blood/xtracks/Initialize(a)
+	. = ..(a)
 	forensics.blood = list("UNKNOWN DNA" = "X*")
-

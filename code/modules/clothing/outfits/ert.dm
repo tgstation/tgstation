@@ -52,7 +52,7 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber
+	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber
 
 /datum/outfit/ert/security
 	name = "ERT Security"
@@ -187,7 +187,7 @@
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.icon_state = "centcom"
 	W.access = get_centcom_access("Centcom Official")
-	W.access += GLOB.access_weapons
+	W.access += ACCESS_WEAPONS
 	W.assignment = "Centcom Official"
 	W.registered_name = H.real_name
 	W.update_label()

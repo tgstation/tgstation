@@ -4,9 +4,9 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	var/icon_state_on = "emitter_+a"
-	anchored = 0
-	density = 1
-	req_access = list(GLOB.access_engine_equip)
+	anchored = FALSE
+	density = TRUE
+	req_access = list(ACCESS_ENGINE_EQUIP)
 
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
@@ -25,13 +25,26 @@
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 
 	var/datum/effect_system/spark_spread/sparks
+
+/obj/machinery/power/emitter/anchored
+	anchored = TRUE
+
+/obj/machinery/power/emitter/ctf
+	name = "Energy Cannon"
+	active = TRUE
+	active_power_usage = FALSE
+	idle_power_usage = FALSE
+	locked = TRUE
+	req_access_txt = "100"
+	state = 2
+	use_power = FALSE
 
 /obj/machinery/power/emitter/New()
 	..()
@@ -342,11 +355,12 @@
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(!emagged)
-		locked = 0
-		emagged = 1
-		if(user)
-			user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")
+	if(emagged)
+		return
+	locked = FALSE
+	emagged = TRUE
+	if(user)
+		user.visible_message("[user.name] emags the [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype

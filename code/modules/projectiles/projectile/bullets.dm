@@ -59,7 +59,7 @@
 	range = rand(1, 10)
 	..()
 
-/obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = FALSE)
  	..()
  	explosion(target, 0, 0, 2)
 
@@ -87,7 +87,7 @@
 	damage = 27
 	armour_penetration = 40
 
-/obj/item/projectile/bullet/midbullet3/fire/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/midbullet3/fire/on_hit(atom/target, blocked = FALSE)
 	if(..(target, blocked))
 		var/mob/living/M = target
 		M.adjust_fire_stacks(1)
@@ -110,7 +110,7 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 
-/obj/item/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/incendiary/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -160,7 +160,7 @@
 	..()
 	SpinAnimation()
 
-/obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ismovableatom(target))
 		var/atom/movable/M = target
@@ -175,7 +175,7 @@
 /obj/item/projectile/bullet/mime
 	damage = 20
 
-/obj/item/projectile/bullet/mime/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/mime/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -193,7 +193,7 @@
 	create_reagents(50)
 	reagents.set_reacting(FALSE)
 
-/obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
@@ -230,7 +230,7 @@
 	damage_type = TOX
 	knockdown = 100
 
-/obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = FALSE)
 	if(isalien(target))
 		knockdown = 0
 		nodamage = 1
@@ -243,7 +243,7 @@
 	damage = 5
 	hitsound_wall = "shatter"
 
-/obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100)
@@ -271,7 +271,7 @@
 	armour_penetration = 50
 	var/breakthings = TRUE
 
-/obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = FALSE)
 	if((blocked != 100) && (!ismob(target) && breakthings))
 		target.ex_act(rand(1,2))
 	return ..()
@@ -288,7 +288,7 @@
 	dismemberment = 0
 	breakthings = FALSE
 
-/obj/item/projectile/bullet/sniper/gang/sleeper/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/sniper/gang/sleeper/on_hit(atom/target, blocked = FALSE)
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.blur_eyes(8)
@@ -305,7 +305,7 @@
 	knockdown = 0
 	breakthings = FALSE
 
-/obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = FALSE)
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.Sleeping(400)
@@ -319,7 +319,7 @@
 	knockdown = 0
 	breakthings = FALSE
 
-/obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = FALSE)
 	if((blocked != 100) && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.bleed(100)
@@ -348,7 +348,7 @@
 	damage = 20
 	armour_penetration = 0
 
-/obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if((blocked != 100) && iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -373,7 +373,7 @@
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
 
-/obj/item/projectile/bullet/saw/incen/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/saw/incen/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target

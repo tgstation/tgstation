@@ -87,7 +87,7 @@
 /obj/structure/fluff/bus/passable
 	name = "bus"
 	icon_state = "frontwalltop"
-	density = 0
+	density = FALSE
 	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
 
 
@@ -126,8 +126,8 @@
 /obj/structure/fluff/divine
 	name = "Miracle"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/fluff/divine/nexus
 	name = "nexus"
@@ -143,7 +143,7 @@
 	name = "conversion altar"
 	desc = "An altar dedicated to a deity."
 	icon_state = "convertaltar"
-	density = 0
+	density = FALSE
 	can_buckle = 1
 
 /obj/structure/fluff/divine/powerpylon

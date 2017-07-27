@@ -317,11 +317,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/airless,
+/turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "bf" = (
 /obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/lava/smooth/airless,
+/turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/shuttle/engine/propulsion,

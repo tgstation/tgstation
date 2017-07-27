@@ -16,7 +16,7 @@
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
-	density = 1
+	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 90
@@ -83,7 +83,7 @@
 
 /obj/machinery/nuclearbomb/syndicate/Initialize()
 	. = ..()
-	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
+	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
 	if(existing)
 		qdel(src)
 		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
@@ -442,7 +442,7 @@
 			off_station = NUKE_MISS_STATION
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = NUKE_MISS_STATION
-	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+	else if(istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
 		off_station = NUKE_SYNDICATE_BASE
 	else
 		off_station = NUKE_NEAR_MISS
@@ -495,7 +495,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
-	obj_integrity = 250
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF

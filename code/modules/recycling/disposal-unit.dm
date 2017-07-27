@@ -5,11 +5,10 @@
 
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	on_blueprints = TRUE
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
-	obj_integrity = 200
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interact_open = TRUE
@@ -83,7 +82,7 @@
 			playsound(get_turf(src), I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I,/obj/item/weapon/weldingtool) && panel_open)
+		else if(istype(I, /obj/item/weapon/weldingtool) && panel_open)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
@@ -241,8 +240,8 @@
 		if(stored)
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
-			stored.anchored = 0
-			stored.density = 1
+			stored.anchored = FALSE
+			stored.density = TRUE
 			stored.update_icon()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
@@ -283,7 +282,7 @@
 
 // handle machine interaction
 
-/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & BROKEN)
 		return
@@ -333,7 +332,7 @@
 			eject()
 			. = TRUE
 
-/obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
@@ -346,7 +345,7 @@
 			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
 		return 0
 	else
-		return ..(mover, target, height)
+		return ..(mover, target)
 
 /obj/machinery/disposal/bin/flush()
 	..()
@@ -443,7 +442,7 @@
 /obj/machinery/disposal/deliveryChute
 	name = "delivery chute"
 	desc = "A chute for big and small packages alike!"
-	density = 1
+	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
@@ -459,7 +458,7 @@
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
 	if(!AM.disposalEnterTry())
 		return
 	switch(dir)

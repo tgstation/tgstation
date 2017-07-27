@@ -12,11 +12,10 @@
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
 	icon = 'icons/obj/objects.dmi'
-	anchored = 1
+	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 1
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
 	max_integrity = 100
 	integrity_failure = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -45,12 +44,12 @@
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
-	anchored = 0
+	anchored = FALSE
 	resistance_flags = 0
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/roller/robo))
+	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
 		if(R.loaded)
 			to_chat(user, "<span class='warning'>You already have a roller bed docked!</span>")
@@ -87,11 +86,11 @@
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	if(M in buckled_mobs)
-		density = 1
+		density = TRUE
 		icon_state = "up"
 		M.pixel_y = initial(M.pixel_y)
 	else
-		density = 0
+		density = FALSE
 		icon_state = "down"
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
@@ -158,10 +157,30 @@
 	name = "dog bed"
 	icon_state = "dogbed"
 	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
-	anchored = 0
+	anchored = FALSE
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
 	var/mob/living/owner = null
+
+/obj/structure/bed/dogbed/ian
+	desc = "Ian's bed! Looks comfy."
+	name = "Ian's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/cayenne
+	desc = "Seems kind of... fishy."
+	name = "Cayenne's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/renault
+	desc = "Renault's bed! Looks comfy. A foxy person needs a foxy pet."
+	name = "Renault's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/runtime
+	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."
+	name = "Runtime's bed"
+	anchored = TRUE
 
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
 	owner = M

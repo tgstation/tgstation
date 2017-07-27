@@ -2,7 +2,7 @@
 	name = "large crate"
 	desc = "A hefty wooden crate."
 	icon_state = "largecrate"
-	density = 1
+	density = TRUE
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	delivery_icon = "deliverybox"
 

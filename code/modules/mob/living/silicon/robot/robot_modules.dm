@@ -246,7 +246,7 @@
 		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
-	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
+	emag_modules = list(/obj/item/weapon/melee/transforming/energy/sword/cyborg)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
 		/obj/item/clockwork/ratvarian_spear/cyborg,
@@ -389,6 +389,7 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/weapon/storage/bag/trash/cyborg,
+		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/mop/cyborg,
 		/obj/item/device/lightreplacer/cyborg,
 		/obj/item/weapon/holosign_creator,
@@ -435,6 +436,7 @@
 		/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 		/obj/item/weapon/pen,
 		/obj/item/toy/crayon/spraycan/borg,
+		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/hand_labeler/borg,
 		/obj/item/weapon/razor,
 		/obj/item/device/instrument/violin,
@@ -510,7 +512,7 @@
 	name = "Syndicate Assault"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/weapon/melee/energy/sword/cyborg,
+		/obj/item/weapon/melee/transforming/energy/sword/cyborg,
 		/obj/item/weapon/gun/energy/printer,
 		/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/weapon/card/emag,
@@ -537,7 +539,7 @@
 		/obj/item/weapon/hemostat,
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/scalpel,
-		/obj/item/weapon/melee/energy/sword/cyborg/saw,
+		/obj/item/weapon/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
 		/obj/item/weapon/card/emag,
 		/obj/item/weapon/crowbar/cyborg,

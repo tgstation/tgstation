@@ -18,7 +18,7 @@
 /datum/surgery_step/sever_tail
 	name = "sever tail"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/circular_saw = 100,
-	/obj/item/weapon/melee/sabre = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100,
+	/obj/item/weapon/melee/sabre = 100, /obj/item/weapon/melee/transforming/energy/sword/cyborg/saw = 100,
 	/obj/item/weapon/melee/arm_blade = 80, /obj/item/weapon/twohanded/required/chainsaw = 80,
 	/obj/item/weapon/mounted_chainsaw = 80, /obj/item/weapon/twohanded/fireaxe = 50,
 	/obj/item/weapon/hatchet = 40, /obj/item = 30) // 30% success with any sharp item.

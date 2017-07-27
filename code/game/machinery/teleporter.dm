@@ -219,8 +219,8 @@
 /obj/machinery/teleport
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -272,11 +272,11 @@
 			break
 	return power_station
 
-/obj/machinery/teleport/hub/Bumped(M as mob|obj)
+/obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
 	if(z == ZLEVEL_CENTCOM)
-		to_chat(M, "You can't use this here.")
+		to_chat(AM, "You can't use this here.")
 	if(is_ready())
-		teleport(M)
+		teleport(AM)
 		use_power(5000)
 	return
 

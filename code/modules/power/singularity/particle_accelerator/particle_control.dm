@@ -3,8 +3,8 @@
 	desc = "This controls the density of the particles."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_box"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 500
 	active_power_usage = 10000
@@ -169,24 +169,24 @@
 	connected_parts.Cut()
 
 	T = get_step(T,rdir)
-	if(!check_part(T,/obj/structure/particle_accelerator/fuel_chamber))
+	if(!check_part(T, /obj/structure/particle_accelerator/fuel_chamber))
 		return 0
 	T = get_step(T,odir)
-	if(!check_part(T,/obj/structure/particle_accelerator/end_cap))
+	if(!check_part(T, /obj/structure/particle_accelerator/end_cap))
 		return 0
 	T = get_step(T,dir)
 	T = get_step(T,dir)
-	if(!check_part(T,/obj/structure/particle_accelerator/power_box))
+	if(!check_part(T, /obj/structure/particle_accelerator/power_box))
 		return 0
 	T = get_step(T,dir)
-	if(!check_part(T,/obj/structure/particle_accelerator/particle_emitter/center))
+	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/center))
 		return 0
 	T = get_step(T,ldir)
-	if(!check_part(T,/obj/structure/particle_accelerator/particle_emitter/left))
+	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/left))
 		return 0
 	T = get_step(T,rdir)
 	T = get_step(T,rdir)
-	if(!check_part(T,/obj/structure/particle_accelerator/particle_emitter/right))
+	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/right))
 		return 0
 
 	assembled = 1
@@ -272,7 +272,7 @@
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
 				playsound(loc, W.usesound, 75, 1)
-				anchored = 1
+				anchored = TRUE
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
 				construction_state = PA_CONSTRUCTION_UNWIRED
@@ -280,7 +280,7 @@
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(loc, W.usesound, 75, 1)
-				anchored = 0
+				anchored = FALSE
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")
 				construction_state = PA_CONSTRUCTION_UNSECURED

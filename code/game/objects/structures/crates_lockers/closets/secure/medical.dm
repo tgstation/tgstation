@@ -2,7 +2,7 @@
 	name = "medicine closet"
 	desc = "Filled to the brim with medical junk."
 	icon_state = "med"
-	req_access = list(GLOB.access_medical)
+	req_access = list(ACCESS_MEDICAL)
 
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	..()
@@ -24,7 +24,7 @@
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetic closet"
 	desc = "Used to knock people out."
-	req_access = list(GLOB.access_surgery)
+	req_access = list(ACCESS_SURGERY)
 
 /obj/structure/closet/secure_closet/medical2/PopulateContents()
 	..()
@@ -35,7 +35,7 @@
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
-	req_access = list(GLOB.access_surgery)
+	req_access = list(ACCESS_SURGERY)
 	icon_state = "med_secure"
 
 /obj/structure/closet/secure_closet/medical3/PopulateContents()
@@ -49,7 +49,7 @@
 
 /obj/structure/closet/secure_closet/CMO
 	name = "\proper chief medical officer's locker"
-	req_access = list(GLOB.access_cmo)
+	req_access = list(ACCESS_CMO)
 	icon_state = "cmo"
 
 /obj/structure/closet/secure_closet/CMO/PopulateContents()
@@ -74,7 +74,7 @@
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
-	req_access = list(GLOB.access_surgery)
+	req_access = list(ACCESS_SURGERY)
 
 /obj/structure/closet/secure_closet/animal/PopulateContents()
 	..()

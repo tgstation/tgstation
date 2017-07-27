@@ -16,7 +16,7 @@ Contents:
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/stock_parts/cell)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals, /obj/item/weapon/stock_parts/cell)
 	slowdown = 0
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
@@ -50,7 +50,7 @@ Contents:
 		//Support function variables.
 	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
 	var/s_active = 0//Stealth off.
-	var/s_busy = 0//Is the suit busy with a process? Like AI hacking. Used for safety functions.
+	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
 	var/s_bombs = 10//Number of starting ninja smoke bombs.

@@ -24,9 +24,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
-	obj_integrity = 200
 	max_integrity = 200
-
 
 	var/hitsound = null
 	var/usesound = null
@@ -70,7 +68,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
-	var/suittoggled = 0
+	var/suittoggled = FALSE
 	var/hooded = 0
 
 	var/mob/thrownby = null
@@ -206,6 +204,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		msg += "*--------*"
 		to_chat(user, msg)
 
+/obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
+	return message
 
 /obj/item/attack_self(mob/user)
 	interact(user)
@@ -314,7 +314,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
@@ -569,11 +569,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
 		return 0
-	if(istype(loc,/obj/item/weapon/storage))
+	if(istype(loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0
+
+/obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
 /obj/item/proc/is_hot()
 	return heat

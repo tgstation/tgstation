@@ -65,9 +65,9 @@
 	if (tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
 		viruses = list()
-		for(var/datum/disease/D in O.viruses)
+		for(var/thing in O.viruses)
+			var/datum/disease/D = thing
 			D.affected_mob = O
-			D.holder = O
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -219,9 +219,9 @@
 	if (tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
 		viruses = list()
-		for(var/datum/disease/D in O.viruses)
+		for(var/thing in O.viruses)
+			var/datum/disease/D = thing
 			D.affected_mob = O
-			D.holder = O
 		O.med_hud_set_status()
 
 	//keep damage?

@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
-		var/startSide = pick(GLOB.cardinal)
+		var/startSide = pick(GLOB.cardinals)
 		pickedstart = spaceDebrisStartLoc(startSide, ZLEVEL_STATION)
 		pickedgoal = spaceDebrisFinishLoc(startSide, ZLEVEL_STATION)
 		max_i--
@@ -88,8 +88,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	desc = "You should probably run instead of gawking at this."
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/hits = 4
 	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	SpinAnimation()
 	QDEL_IN(src, lifetime)
 
-/obj/effect/meteor/Bump(atom/A)
+/obj/effect/meteor/Collide(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
 		playsound(src.loc, meteorsound, 40, 1)
@@ -295,7 +295,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	if(!isspaceturf(T))
 		new /obj/effect/decal/cleanable/blood(T)
 
-/obj/effect/meteor/meaty/Bump(atom/A)
+/obj/effect/meteor/meaty/Collide(atom/A)
 	A.ex_act(hitpwr)
 	get_hit()
 
@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	..()
 	explosion(src.loc, 5, 10, 15, 20, 0)
 
-/obj/effect/meteor/tunguska/Bump()
+/obj/effect/meteor/tunguska/Collide()
 	..()
 	if(prob(20))
 		explosion(src.loc,2,4,6,8)

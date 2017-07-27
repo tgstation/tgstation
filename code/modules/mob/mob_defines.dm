@@ -1,5 +1,5 @@
 /mob
-	density = 1
+	density = TRUE
 	layer = MOB_LAYER
 	animate_movement = 2
 	flags = HEAR
@@ -104,6 +104,7 @@
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
 
+	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
@@ -112,7 +113,7 @@
 
 //List of active diseases
 
-	var/list/viruses = list() // replaces var/datum/disease/virus
+	var/list/viruses = list() // list of all diseases in a mob
 	var/list/resistances = list()
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -140,3 +141,5 @@
 
 	var/list/progressbars = null	//for stacking do_after bars
 	var/list/can_ride_typecache = list()
+
+	var/list/mousemove_intercept_objects

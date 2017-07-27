@@ -56,7 +56,7 @@
 	return TRUE
 
 /datum/round_event_control/proc/preRunEvent()
-	if(!ispath(typepath,/datum/round_event))
+	if(!ispath(typepath, /datum/round_event))
 		return EVENT_CANT_RUN
 
 	triggering = TRUE

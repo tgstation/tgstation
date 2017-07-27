@@ -15,8 +15,8 @@ Chaplain
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
-	minimal_access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
+	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	if(H.mind)

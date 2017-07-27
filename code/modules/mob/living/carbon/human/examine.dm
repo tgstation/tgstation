@@ -16,7 +16,7 @@
 	if(w_uniform && !(slot_w_uniform in obscured))
 		//accessory
 		var/accessory_msg
-		if(istype(w_uniform,/obj/item/clothing/under))
+		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
 			if(U.attached_accessory)
 				accessory_msg += " with [bicon(U.attached_accessory)] \a [U.attached_accessory]"
@@ -268,7 +268,7 @@
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 		if(getorgan(/obj/item/organ/brain))
-			if(istype(src,/mob/living/carbon/human/interactive))
+			if(istype(src, /mob/living/carbon/human/interactive))
 				var/mob/living/carbon/human/interactive/auto = src
 				if(auto.showexaminetext)
 					msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
@@ -295,7 +295,7 @@
 					msg += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]<br>"
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/medical))
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/medical))
 					var/cyberimp_detect
 					for(var/obj/item/organ/cyberimp/CI in internal_organs)
 						if(CI.status == ORGAN_ROBOTIC)
@@ -313,7 +313,7 @@
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
 
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/security))
 					if(!user.stat && user != src)
 					//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 						var/criminal = "None"

@@ -6,7 +6,6 @@
 	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
 	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
 	max_temperature = 20000
-	obj_integrity = 200
 	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
@@ -63,7 +62,6 @@
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
-	obj_integrity = 250
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
@@ -105,9 +103,9 @@
 			var/obj/item/mecha_parts/mecha_equipment/drill/D = new
 			D.attach(src)
 
-	else //Add possible plasma cutter if no drill
-		var/obj/item/mecha_parts/mecha_equipment/M = new
-		M.attach(src)
+	else //Add plasma cutter if no drill
+		var/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/P = new
+		P.attach(src)
 
 	//Add ore box to cargo
 	cargo.Add(new /obj/structure/ore_box(src))

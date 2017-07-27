@@ -97,7 +97,7 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-/mob/living/carbon/human/update_inv_w_uniform(invdrop = TRUE)
+/mob/living/carbon/human/update_inv_w_uniform()
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
@@ -135,11 +135,6 @@ There are several things that need to be remembered:
 			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
 
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
-
-	else if(!(dna && dna.species.nojumpsuit) && invdrop)
-		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
-		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
-			dropItemToGround(thing)
 
 	apply_overlay(UNIFORM_LAYER)
 	update_mutant_bodyparts()
@@ -325,9 +320,6 @@ There are several things that need to be remembered:
 
 		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 
-		if(wear_suit.breakouttime) //suit is restraining
-			drop_all_held_items()
-
 	update_hair()
 	update_mutant_bodyparts()
 
@@ -472,7 +464,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(isinhands)
+	var/list/worn_overlays = worn_overlays(isinhands, file2use)
 	if(worn_overlays && worn_overlays.len)
 		standing.overlays.Add(worn_overlays)
 
