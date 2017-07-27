@@ -1,0 +1,4 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - bugfix: "Crafting satchels from leather now makes a leather satchel rather than a regular satchel."
