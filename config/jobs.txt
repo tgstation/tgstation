@@ -42,5 +42,5 @@ Warden=1,1
 Detective=1,1
 Security Officer=5,5
 
-AI=0,1
-Cyborg=0,1
+AI=1,1
+Cyborg=1,1
