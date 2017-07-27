@@ -161,21 +161,3 @@
 	name = "shrine"
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
-
-/obj/structure/fluff/hivebot_swarm_core
-	name = "hivebot swarm core"
-	desc = "The dented, ruined husk of a powerful machine."
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "hivebot_swarm_core_dead"
-	pixel_x = -32
-	pixel_y = -16
-	density = 1
-
-/obj/structure/fluff/hivebot_swarm_core/examine(mob/user)
-	..()
-	to_chat(user, "<span class='warning'>It's gently vibrating...</span>") //Hint at the treasure inside
-
-/obj/structure/fluff/hivebot_swarm_core/Destroy()
-	visible_message("<span class='warning'>Something tumbles free of [src]!</span>")
-	new/obj/item/device/hivebot_crux(get_turf(src))
-	return ..()
