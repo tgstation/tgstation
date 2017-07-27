@@ -34,8 +34,9 @@
 
 
 /obj/item/weapon/melee/transforming/butterfly/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(check_target_facings(user, M) == FACING_SAME_DIR && active && user.a_intent != INTENT_HELP)
-		return backstab(M,user, backstabforce)
+	if(check_target_facings(user, M) == FACING_SAME_DIR && active && user.a_intent != INTENT_HELP && ishuman(M))
+		var/mob/living/carbon/human/U = M
+		return backstab(U,user,backstabforce)
 
 	if(user.zone_selected == "eyes" && active)
 		if(user.disabilities & CLUMSY && prob(50))
@@ -49,18 +50,13 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 
-/obj/item/weapon/melee/transforming/butterfly/proc/backstab(mob/living/carbon/M, mob/living/carbon/user, damage)
-	if(!ishuman(M))
-		to_chat(user, "<span class='notice'>You can only backstab humans!</span>")
-		return
-
-	var/mob/living/carbon/human/U = M
+/obj/item/weapon/melee/transforming/butterfly/proc/backstab(mob/living/carbon/human/U, mob/living/carbon/user, damage)
 	var/obj/item/bodypart/affecting = U.get_bodypart("chest")
 
 	if(!affecting || U == user || U.stat == DEAD) //no chest???!!!!
 		return
 
-	U.visible_message("<span class='danger'>[user] has backstabbed [M] with [src]!</span>", \
+	U.visible_message("<span class='danger'>[user] has backstabbed [U] with [src]!</span>", \
 						"<span class='userdanger'>[user] backstabs you with [src]!</span>")
 
 	src.add_fingerprint(user)
