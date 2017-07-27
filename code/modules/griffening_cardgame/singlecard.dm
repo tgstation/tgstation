@@ -43,9 +43,9 @@
 		lastflipper = null
 		name = lastname
 		desc = lastdesc
-		LVL = lastLVL
+		lvl = lastlvl
 		atk = lastatk
-		DEF = lastDEF
+		def = lastdef
 	else
 		to_chat(user, "You flip this card down, now only you can see what it is.")
 		icon_state = "singlecard_down_nanotrasen"
@@ -58,6 +58,6 @@
 		lastdef = def
 		name = "Facedown card"
 		desc = "A facedown card, your not sure what it is."
-		LVL = "?"
-		ATK = "?"
-		DEF = "?"
+		lvl = "?"
+		atk = "?"
+		def = "?"
