@@ -283,7 +283,7 @@ CREATE TABLE `SS13_player` (
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
-  `flags` unsigned smallint(5) NOT NULL,
+  `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
