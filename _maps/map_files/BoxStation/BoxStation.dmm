@@ -7234,10 +7234,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "apR" = (
-/obj/item/weapon/paper{
-	info = "01001001 00100000 01101000 01101111 01110000 01100101 00100000 01111001 01101111 01110101 00100000 01110011 01110100 01100001 01111001 00100000 01110011 01100001 01100110 01100101 00101110 00100000 01001100 01101111 01110110 01100101 00101100 00100000 01101101 01101111 01101101 00101110";
-	name = "Note from Beepsky's Mom"
-	},
+/obj/item/weapon/paper/fluff/jobs/security/beepsky_mom,
 /turf/open/floor/plating,
 /area/security/processing)
 "apS" = (
@@ -9987,11 +9984,7 @@
 /area/crew_quarters/fitness)
 "awC" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	desc = "";
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping.";
-	name = "Holodeck Disclaimer"
-	},
+/obj/item/weapon/paper/fluff/holodeck/disclaimer,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "awD" = (
@@ -13660,7 +13653,7 @@
 /area/ai_monitored/nuke_storage)
 "aEQ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel,
 /area/gateway)
 "aER" = (
@@ -15909,7 +15902,7 @@
 "aJN" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aJO" = (
@@ -27776,7 +27769,7 @@
 /area/quartermaster/office)
 "bmR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/morguereminder{
+/obj/item/weapon/paper/guides/jobs/medical/morgue{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -29495,7 +29488,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/gravity_gen{
+/obj/item/weapon/paper/guides/jobs/engi/gravity_gen{
 	layer = 3
 	},
 /obj/item/weapon/pen/blue,
@@ -44560,7 +44553,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/item/weapon/paper/range,
+/obj/item/weapon/paper/guides/jobs/security/range,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -50616,7 +50609,7 @@
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -50656,7 +50649,7 @@
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckK" = (

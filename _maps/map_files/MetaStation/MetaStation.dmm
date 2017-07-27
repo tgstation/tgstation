@@ -522,7 +522,7 @@
 "abk" = (
 /obj/structure/table,
 /obj/item/weapon/folder,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -5113,11 +5113,7 @@
 /area/crew_quarters/fitness/recreation)
 "ajX" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	desc = "";
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping.";
-	name = "Holodeck Disclaimer"
-	},
+/obj/item/weapon/paper/fluff/holodeck/disclaimer,
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = -3
@@ -9483,11 +9479,7 @@
 /obj/item/weapon/razor{
 	pixel_x = -6
 	},
-/obj/item/weapon/paper{
-	desc = "";
-	info = "<b>Labor Camp Facility Operation Guide</b><br><br>Hello there, proud operator of an NT-Sec Prisoner Rehabilitation Center.  A solution to rising crime rates and falling productivity, these facilities are specifically designed for the safe, productive imprisonment of your most dangerous criminals.  <br><br>To press a long-term prisoner into the service of the station, replace his equipment with prisoners' garb at one of the prison lockers, as per normal operating procedure.  Before assigning a prisoner his ID, insert the ID into a prisoner management console and assign the prisoner a quota, based on the severity of his crime.  <br>A single sheet of most materials produces five points for the prisoner, and points can be expected to be produced at a rate of about 100 per minute, though punishments as severe as forced labor should be reserved for serious crimes of sentences not less than five minutes long.<br>Once you have prepared the prisoner, place him in the secure northern half of the labor shuttle, and send him to the station.  Once he meets his quota by feeding sheets to the stacker, he will be allowed to return to the station, and will be able to open the secure door to the prisoner release area.<br><br>In the case of dangerous prisoners, surveilance may be needed. To that end, there is a prisoner monitoring room on the mining station, equipped with a remote flasher and a lockdown button.  The mine itself is patrolled by a securibot, so the nearby security records console can also be used to secure hostile prisoners on the mine.";
-	name = "Labor Camp Operating Guide"
-	},
+/obj/item/weapon/paper/guides/jobs/security/labor_camp,
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/black,
 /area/security/brig)
@@ -10065,7 +10057,7 @@
 	icon_state = "1-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/gravity_gen{
+/obj/item/weapon/paper/guides/jobs/engi/gravity_gen{
 	layer = 3
 	},
 /obj/item/weapon/pen/blue,
@@ -17571,7 +17563,7 @@
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -23068,7 +23060,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/item/weapon/coin/silver,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -36483,10 +36475,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/weapon/paper{
-	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research";
-	name = "Confidential Correspondence, Pg 1"
-	},
+/obj/item/weapon/paper/fluff/gateway,
 /obj/item/weapon/coin/plasma,
 /obj/item/weapon/melee/chainofcommand,
 /turf/open/floor/wood,
@@ -47244,7 +47233,7 @@
 /area/gateway)
 "bLB" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -53779,7 +53768,7 @@
 	network = list("SS13")
 	},
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/machinery/requests_console{
 	department = "Hydroponics";
 	departmentType = 2;
@@ -54918,7 +54907,7 @@
 /area/science/research)
 "cau" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -56041,7 +56030,7 @@
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
 /obj/machinery/light,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/machinery/camera{
 	c_tag = "Hydroponics - Foyer";
 	dir = 1;
@@ -68113,7 +68102,7 @@
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/weapon/paper/range{
+/obj/item/weapon/paper/guides/jobs/security/range{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -69629,7 +69618,7 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/item/weapon/paper/morguereminder{
+/obj/item/weapon/paper/guides/jobs/medical/morgue{
 	pixel_x = -4
 	},
 /obj/effect/landmark/revenantspawn,

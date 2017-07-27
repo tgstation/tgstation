@@ -145,10 +145,7 @@
 	dir = 1;
 	pixel_y = -27
 	},
-/obj/item/weapon/paper{
-	info = "Nothing of interest to report.";
-	name = "Important Notice - Mrs. Henderson"
-	},
+/obj/item/weapon/paper/fluff/stations/lavaland/surface/henderson_report,
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "aA" = (

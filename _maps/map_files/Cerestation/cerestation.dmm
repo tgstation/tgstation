@@ -19560,10 +19560,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -23384,10 +23381,7 @@
 	dir = 8;
 	pixel_x = 27
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -23527,10 +23521,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/weapon/paper{
-	info = "You got a big job ahead of you, pal. This is a big station, lots of floors and assholes to dirty said floors without any thought for you. It might not be a bad idea to check on the external waste belts every now and again to make sure some foriegn object hasn't clogged the disposal loop, either.";
-	name = "Janitor Notice"
-	},
+/obj/item/weapon/paper/fluff/stations/cere/janitor,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38715,10 +38706,7 @@
 	},
 /area/awaymission/research/interior/gateway)
 "bur" = (
-/obj/item/weapon/paper{
-	info = "<center><b>Nanotrasen Exploration and Colonization Program</b></center><br><br><center><i>Due to recent shutdowns of the Exploration and Colonization department shortly after this gateway was delivered on-site during station construction, this room has been condemmed and an engineering team will be on-site within the next few months to recollect the gate. Thank you for your cooperation.</i>";
-	name = "NOTICE - GATEWAY STATUS"
-	},
+/obj/item/weapon/paper/fluff/stations/cere/gateway,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	icon_state = "ast_warn";
 	dir = 8
@@ -40289,7 +40277,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -40858,7 +40846,7 @@
 /area/awaymission/research/interior/gateway)
 "byg" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /obj/item/weapon/coin/silver,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -43978,7 +43966,7 @@
 "bDQ" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/item/stack/packageWrap,
 /obj/item/device/destTagger,
 /turf/open/floor/plasteel/hydrofloor{
@@ -54746,11 +54734,7 @@
 	})
 "bYp" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	desc = "";
-	info = "Bruises sustained in the holodeck can be healed simply by sleeping.";
-	name = "Holodeck Disclaimer"
-	},
+/obj/item/weapon/paper/fluff/holodeck/disclaimer,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -57342,7 +57326,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -58653,10 +58637,7 @@
 "cgi" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/meson,
-/obj/item/weapon/paper{
-	info = "This station needs cleared out within the next few weeks, as construction is almost complete and NT expects most of the equipment off-site before then. Throw most of the shit in here for now and we'll come back later with a pod to haul the heavier stuff.  Shouldn't be too big of an issue.";
-	name = "Disclaimer Notice"
-	},
+/obj/item/weapon/paper/fluff/stations/cere/abandoned_dock,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61164,10 +61145,7 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61233,10 +61211,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -79592,15 +79567,9 @@
 	pixel_x = 32
 	},
 /obj/structure/closet/crate/bin,
-/obj/item/weapon/paper/crumpled{
-	info = "...SOMETHING IN THE ROCKS, IT WATCHES US ALL..."
-	},
-/obj/item/weapon/paper/crumpled{
-	info = "...THEY SENT US HERE FOR A REASON...TERRIBLE..."
-	},
-/obj/item/weapon/paper/crumpled{
-	info = "...EMPTY HALLS...USELESS SPACE..."
-	},
+/obj/item/weapon/paper/crumpled/stations/cere/rocks1,
+/obj/item/weapon/paper/crumpled/stations/cere/rocks2,
+/obj/item/weapon/paper/crumpled/stations/cere/rocks3,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -79614,17 +79583,9 @@
 	})
 "cTH" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/item/weapon/paper/crumpled{
-	info = "I can't be here for much longer, this station is too empty for its own good.  Something is wrong..."
-	},
-/obj/item/weapon/paper{
-	info = "<b><center>2XXX - 2nd Trimestor</center></b><br><br><center>I hide in here, away from the masses, not like it matters much considering how fucking huge this place is. ";
-	name = "Journal Log"
-	},
-/obj/item/weapon/paper{
-	info = "<b><center>2XXX - 3rd Trimestor</center></b><br><br><center>I hear strange whispers from the halls, longing for blood. Something isn't right here. Why did they transfer us here to work in the first place? ";
-	name = "Journal Log 2"
-	},
+/obj/item/weapon/paper/crumpled/stations/cere/empty_station,
+/obj/item/weapon/paper/fluff/stations/cere/journal/journal,
+/obj/item/weapon/paper/fluff/stations/cere/journal/journal_2,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -79632,9 +79593,7 @@
 	valid_territory = 0
 	})
 "cTI" = (
-/obj/item/weapon/paper/crumpled/bloody{
-	info = "...THE HOPLINE CALLS...IT THIRSTS FOR BLOOD...I MUST GO..."
-	},
+/obj/item/weapon/paper/crumpled/bloody/hop,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},

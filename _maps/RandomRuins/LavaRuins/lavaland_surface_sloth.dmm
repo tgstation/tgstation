@@ -6,10 +6,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered)
 "c" = (
-/obj/item/weapon/paper{
-	desc = "have not gotten around to finishing my cursed item yet sorry - sloth";
-	name = "note from sloth"
-	},
+/obj/item/weapon/paper/fluff/stations/lavaland/sloth/note,
 /turf/open/floor/sepia{
 	blocks_air = 0;
 	slowdown = 10
