@@ -14,7 +14,7 @@
 		<ui-tabs tabs='{{data.lathe_tabs}}'>
 			<tab name='Category List'>
 				{{#each data.protocats}}
-					<ui-button action='switchcat' state='{{data.protocat == name? "selected" : null}} params='{"type" : "proto", "cat" : {{name}}}'>{{name}}</ui-button>
+					<ui-button action='switchcat' state='{{data.protocat == name? "selected" : null}}' params='{"type" : "proto", "cat" : "{{name}}"}'>{{name}}</ui-button>
 				{{/each}}
 			</tab>
 			<tab name='Selected Category'>
@@ -23,7 +23,7 @@
 						{{#if canprint > 1}}
 							<input value={{number}} placeholder='1-{{canprint > 10? 10 : canprint}}' class="number"/>
 						{{/if}}
-						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : {{id}}, "amount" : {{number}}}'>Print</ui-button>
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : "{{id}}", "amount" : "{{number}}"}'>Print</ui-button>
 					</ui-section>
 				{{/each}}
 			</tab>
@@ -33,7 +33,7 @@
 						{{#if canprint > 1}}
 							<input value={{number}} placeholder='1-{{canprint > 10? 10 : canprint}}' class="number"/>
 						{{/if}}
-						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : {{id}}, "amount" : {{number}}}'>Print</ui-button>
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : "{{id}}", "amount" : "{{number}}"}'>Print</ui-button>
 					</ui-section>
 				{{/each}}
 			</tab>

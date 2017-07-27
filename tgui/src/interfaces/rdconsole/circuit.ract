@@ -14,20 +14,20 @@
 		<ui-tabs tabs='{{data.lathe_tabs}}'>
 			<tab name='Category List'>
 				{{#each data.circuitcats}}
-					<ui-button action='switchcat' state='{{data.circuitcat == name? "selected" : null}} params='{"type" : "circuit", "cat" : {{name}}}'>{{name}}</ui-button>
+					<ui-button action='switchcat' state='{{data.circuitcat == "{{name}}"? "selected" : null}}' params='{"type" : "circuit", "cat" : "{{name}}"}'>{{name}}</ui-button>
 				{{/each}}
 			</tab>
 			<tab name='Selected Category'>
 				{{#each data.circuitdes}}
 					<ui-section>{{name}}{{matstring}}
-						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "circuit", "id" : {{id}}}'>Print</ui-button>
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "circuit", "id" : "{{id}}"}'>Print</ui-button>
 					</ui-section>
 				{{/each}}
 			</tab>
 			<tab name='Search Results'>
 				{{#each data.circuitmatch}}
 					<ui-section>{{name}}{{matstring}}
-						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "circuit", "id" : {{id}}}'>Print</ui-button>
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "circuit", "id" : "{{id}}"}'>Print</ui-button>
 					</ui-section>
 				{{/each}}
 			</tab>
