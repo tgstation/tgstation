@@ -67,7 +67,7 @@
 /turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
+	if(istype(C, /obj/item/weapon/light/bulb)) //only for light tiles
 		if(state && user.drop_item())
 			qdel(C)
 			state = 0 //fixing it by bashing it with a light bulb, fun eh?

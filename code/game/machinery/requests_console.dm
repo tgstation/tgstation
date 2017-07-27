@@ -514,7 +514,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			if (GLOB.access_RC_announce in ID.access)
+			if (ACCESS_RC_ANNOUNCE in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0

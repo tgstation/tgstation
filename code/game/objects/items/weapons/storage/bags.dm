@@ -88,6 +88,7 @@
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
 	can_hold = list(/obj/item/weapon/ore)
+	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 
 /obj/item/weapon/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
@@ -112,7 +113,7 @@
 	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
 	w_class = WEIGHT_CLASS_TINY
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown,/obj/item/weapon/reagent_containers/honeycomb)
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/grown, /obj/item/weapon/reagent_containers/honeycomb)
 	resistance_flags = FLAMMABLE
 
 ////////
@@ -152,7 +153,7 @@
 	allow_quick_empty = 1 // this function is superceded
 
 /obj/item/weapon/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W, stop_messages = 0)
-	if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/mineral/wood))
+	if(!istype(W, /obj/item/stack/sheet) || istype(W, /obj/item/stack/sheet/mineral/sandstone) || istype(W, /obj/item/stack/sheet/mineral/wood))
 		if(!stop_messages)
 			to_chat(usr, "The snatcher does not accept [W].")
 		return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu

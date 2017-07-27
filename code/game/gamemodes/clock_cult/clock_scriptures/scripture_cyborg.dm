@@ -9,7 +9,7 @@
 	channel_time = 30
 	primary_component = VANGUARD_COGWHEEL
 	quickbind_desc = "Allows you to grant a Servant and yourself stun immunity, as the Vanguard scripture.<br><b>Click your slab to disable.</b>"
-	slab_icon = "vanguard"
+	slab_overlay = "vanguard"
 	ranged_type = /obj/effect/proc_holder/slab/vanguard
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with defensive strength.</i>\n\
 	<b>Left-click a fellow Servant or yourself to grant Vanguard!\n\
@@ -38,7 +38,7 @@
 	channel_time = 30
 	primary_component = BELLIGERENT_EYE
 	quickbind_desc = "Allows you to place a Judicial Marker to knock down and damage non-Servants in an area.<br><b>Click your slab to disable.</b>"
-	slab_icon = "judicial"
+	slab_overlay = "judicial"
 	ranged_type = /obj/effect/proc_holder/slab/judicial
 	ranged_message = "<span class='neovgre_small'><i>You charge the clockwork slab with judicial force.</i>\n\
 	<b>Left-click a target to place a Judicial Marker!\n\

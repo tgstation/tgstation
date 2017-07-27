@@ -4,7 +4,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/weapon/circuitboard/computer/cloning
-	req_access = list(GLOB.access_heads) //Only used for record deletion right now.
+	req_access = list(ACCESS_HEADS) //ONLY USED FOR RECORD DELETION RIGHT NOW.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
@@ -124,7 +124,7 @@
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
-	else if(istype(W,/obj/item/device/multitool))
+	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/clonepod))

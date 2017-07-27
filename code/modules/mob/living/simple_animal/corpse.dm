@@ -11,7 +11,7 @@
 /obj/effect/mob_spawn/human/corpse/syndicatesoldier
 	name = "Syndicate Operative"
 	id_job = "Operative"
-	id_access_list = list(GLOB.access_syndicate)
+	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicatesoldiercorpse
 
 /datum/outfit/syndicatesoldiercorpse
@@ -30,7 +30,7 @@
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
 	id_job = "Operative"
-	id_access_list = list(GLOB.access_syndicate)
+	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicatecommandocorpse
 
 /datum/outfit/syndicatecommandocorpse
@@ -49,7 +49,7 @@
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
 	id_job = "Operative"
-	id_access_list = list(GLOB.access_syndicate)
+	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicatestormtroopercorpse
 
 /datum/outfit/syndicatestormtroopercorpse

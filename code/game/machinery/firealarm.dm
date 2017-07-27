@@ -78,12 +78,13 @@
 	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		if(user)
-			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
-								"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+	if(emagged)
+		return
+	emagged = TRUE
+	if(user)
+		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
+							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
+	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(!emagged && detecting && !stat && (temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
@@ -261,39 +262,6 @@
 	name = "\improper PARTY BUTTON"
 	desc = "Cuban Pete is in the house!"
 
-/obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
-	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
-		return
-
-	if (buildstage != 2)
-		return
-
-	user.set_machine(src)
-	var/area/A = src.loc
-	var/d1
-	var/dat
-	if(ishuman(user) || user.has_unlimited_silicon_privilege)
-		A = A.loc
-
-		if (A.party)
-			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
-		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []</BODY></HTML>", d1)
-
-	else
-		A = A.loc
-		if (A.fire)
-			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
-		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []", stars("Party Button"), d1)
-
-	var/datum/browser/popup = new(user, "firealarm", "Party Alarm")
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
 
 /obj/machinery/firealarm/partyalarm/reset()
 	if (stat & (NOPOWER|BROKEN))
@@ -316,3 +284,8 @@
 	for(var/area/RA in A.related)
 		RA.partyalert()
 	return
+
+/obj/machinery/firealarm/partyalarm/ui_data(mob/user)
+	. = ..()
+	var/area/A = get_area(src)
+	.["alarm"] = A.party

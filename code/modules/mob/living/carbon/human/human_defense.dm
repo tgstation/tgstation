@@ -25,7 +25,7 @@
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
-		if(bp && istype(bp ,/obj/item/clothing))
+		if(bp && istype(bp , /obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
 				protection += C.armor[d_type]
@@ -156,8 +156,13 @@
 	if(!I || !user)
 		return 0
 
-	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected)) //what we're actually ending up trying to hit.
+	var/obj/item/bodypart/affecting
+	if(user == src)
+		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
+	else
+		affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
+
 	SSblackbox.add_details("item_used_for_combat","[I.type]|[I.force]")
 	SSblackbox.add_details("zone_targeted","[target_area]")
 

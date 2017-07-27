@@ -103,7 +103,7 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
-		req_access = list(GLOB.access_engine_equip)
+		req_access = list(ACCESS_ENGINE_EQUIP)
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
@@ -612,6 +612,7 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
+			playsound(src, "sparks", 75, 1)
 			emagged = TRUE
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")

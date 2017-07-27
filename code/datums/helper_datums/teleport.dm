@@ -206,8 +206,8 @@
 			continue
 
 		if(extended_safety_checks)
-			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
-				var/turf/open/floor/plating/lava/L = F
+			if(istype(F, /turf/open/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/lava/L = F
 				if(!L.is_safe())
 					continue
 

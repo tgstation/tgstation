@@ -32,16 +32,12 @@
 	return 25
 
 /obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
-	if(anchored)
-		if(obj_integrity <= max_integrity * 0.25)
-			if(!silent)
-				to_chat(user, "<span class='warning'>[src] is too damaged to unsecure!</span>")
-			return FAILED_UNFASTEN
-	else
+	if(!anchored)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
-			if(!silent)
-				to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
-			return FAILED_UNFASTEN
+			if(W.anchored)
+				if(!silent)
+					to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
+				return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
 /obj/structure/destructible/clockwork/ocular_warden/ratvar_act()
@@ -79,7 +75,7 @@
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
-			else if(istype(target,/obj/mecha))
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
@@ -94,7 +90,7 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
-			else if(istype(target,/obj/mecha))
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes

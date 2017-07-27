@@ -305,7 +305,7 @@
 /obj/item/weapon/storage/backpack/satchel/flat/secret/Initialize()
 	..()
 
-	if(isfloorturf(loc) && !istype(loc,/turf/open/floor/plating/))
+	if(isfloorturf(loc) && !istype(loc, /turf/open/floor/plating/))
 		hide(1)
 
 /obj/item/weapon/storage/backpack/satchel/flat/secret/hide(intact)
@@ -417,7 +417,7 @@
 	slowdown = 0
 
 /obj/item/weapon/storage/backpack/duffelbag/syndie/hitman
-	desc = "A large duffel bag for holding extra things. There is a NanoTrasen logo on the back."
+	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
 	icon_state = "duffel-syndieammo"
 	item_state = "duffel-syndieammo"
 

@@ -15,7 +15,7 @@
 	density = TRUE
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(GLOB.access_cloning) //For premature unlocking.
+	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
 	var/heal_level //The clone is released once its health reaches this level.
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -152,7 +152,7 @@
 		return FALSE
 	if(mess || attempting)
 		return FALSE
-	clonemind = locate(mindref)
+	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
@@ -304,7 +304,7 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/computer/cloning))
@@ -365,7 +365,7 @@
 			fl.forceMove(T)
 		unattached_flesh.Cut()
 		mess = FALSE
-		new /obj/effect/gibspawner/generic(loc)
+		new /obj/effect/gibspawner/generic(get_turf(src))
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return

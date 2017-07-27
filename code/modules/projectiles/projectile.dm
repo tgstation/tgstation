@@ -223,10 +223,10 @@
 				Angle=round(Get_Angle(src,current))
 			if(spread)
 				Angle += (rand() - 0.5) * spread
-			var/matrix/M = new
 			if(!nondirectional_sprite)
+				var/matrix/M = new
 				M.Turn(Angle)
-			transform = M
+				transform = M
 
 			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
 			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
@@ -264,11 +264,8 @@
 				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 			old_pixel_x = pixel_x_offset
 			old_pixel_y = pixel_y_offset
-
-			if(original && (original.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Collide(original)
+			if(can_hit_target(original, permutated))
+				Collide(original)
 			Range()
 			if (delay > 0)
 				sleep(delay)
@@ -280,12 +277,18 @@
 				if((!( current ) || loc == current))
 					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 				step_towards(src, current)
-				if(original && (original.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Collide(original)
+				if(can_hit_target(original, permutated))
+					Collide(original)
 				Range()
 			sleep(config.run_speed * 0.9)
+
+//Returns true if the target atom is on our current turf and above the right layer
+/obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
+	if(target && (target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target))
+		if(loc == get_turf(target))
+			if(!(target in passthrough))
+				return TRUE
+	return FALSE
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)

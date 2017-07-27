@@ -30,8 +30,7 @@
 		return
 
 	if(..()) //not dead
-		for(var/datum/mutation/human/HM in dna.mutations)
-			HM.on_life(src)
+		handle_active_genes()
 
 	if(stat != DEAD)
 		//heart attack stuff
@@ -99,15 +98,17 @@
 			var/datum/species/S = dna.species
 
 			if(S.breathid == "o2")
-				throw_alert("oxy", /obj/screen/alert/oxy)
+				throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 			else if(S.breathid == "tox")
 				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 			else if(S.breathid == "co2")
 				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			else if(S.breathid == "n2")
+				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 
 		return 0
 	else
-		if(istype(L,/obj/item/organ/lungs))
+		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
 
@@ -332,6 +333,9 @@
 
 	heart.beating = !status
 
+/mob/living/carbon/human/proc/handle_active_genes()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
 	if(!can_heartattack())

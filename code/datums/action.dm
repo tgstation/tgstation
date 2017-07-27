@@ -45,6 +45,7 @@
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
+			button.locked = M.client.prefs.buttons_locked
 		M.update_action_buttons()
 	else
 		Remove(owner)
@@ -57,6 +58,7 @@
 		M.update_action_buttons()
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
+	button.locked = FALSE
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -236,6 +238,19 @@
 			name = "Toggle Friendly Fire \[ON\]"
 	..()
 
+/datum/action/item_action/synthswitch
+	name = "Change Synthesizer Instrument"
+	desc = "Change the type of instrument your synthesizer is playing as."
+
+/datum/action/item_action/synthswitch/Trigger()
+	if(istype(target, /obj/item/device/instrument/piano_synth))
+		var/obj/item/device/instrument/piano_synth/synth = target
+		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
+		if(!synth.insTypes[chosen])
+			return
+		return synth.changeInstrument(chosen)
+	return ..()
+
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
 	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
@@ -366,6 +381,17 @@
 		owner.research_scanner--
 		active = FALSE
 	..()
+
+/datum/action/item_action/instrument
+	name = "Use Instrument"
+	desc = "Use the instrument specified"
+
+/datum/action/item_action/instrument/Trigger()
+	if(istype(target, /obj/item/device/instrument))
+		var/obj/item/device/instrument/I = target
+		I.interact(usr)
+		return
+	return ..()
 
 /datum/action/item_action/initialize_ninja_suit
 	name = "Toggle ninja suit"

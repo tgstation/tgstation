@@ -10,8 +10,8 @@
 	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
-	req_access = list(GLOB.access_mineral_storeroom)
-	var/req_access_reclaim = GLOB.access_mining_station
+	req_access = list(ACCESS_MINERAL_STOREROOM)
+	var/req_access_reclaim = ACCESS_MINING_STATION
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
@@ -173,7 +173,7 @@
 
 	if(!powered())
 		return
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())

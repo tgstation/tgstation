@@ -91,6 +91,11 @@
 	else
 		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
 
+/obj/item/weapon/gun/equipped(mob/living/user, slot)
+	. = ..()
+	if(zoomable && user.get_active_held_item() != src)
+		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands
+
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -482,11 +487,11 @@
 			if(WEST)
 				_x = -zoom_amt
 
-		user.client.view = zoom_out_amt
+		user.client.change_view(zoom_out_amt)
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
-		user.client.view = world.view
+		user.client.change_view(world.view)
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 	return zoomed

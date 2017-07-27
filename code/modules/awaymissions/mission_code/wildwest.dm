@@ -91,16 +91,19 @@
 	icon_state = "blobpod"
 	var/triggered = 0
 
-/obj/effect/meatgrinder/Crossed(AM)
-	Bumped(AM)
+/obj/effect/meatgrinder/Crossed(atom/movable/AM)
+	CollidedWith(AM)
 
-/obj/effect/meatgrinder/Bumped(mob/M)
+/obj/effect/meatgrinder/CollidedWith(atom/movable/AM)
 
 	if(triggered)
 		return
+	if(!ishuman(AM))
+		return
 
-	if(ishuman(M) && M.stat != DEAD && M.ckey)
-		for(var/mob/O in viewers(world.view, src.loc))
+	var/mob/living/carbon/human/M = AM
+
+	if(M.stat != DEAD && M.ckey)
 		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
 		triggered = 1
 

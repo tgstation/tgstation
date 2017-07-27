@@ -390,7 +390,7 @@
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	id_access_list = list(GLOB.access_syndicate)
+	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicate_empty
 	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
 
@@ -442,7 +442,7 @@
 
 /datum/outfit/syndicate_empty/SBC/assault/captain
 	name = "Syndicate Battlecruiser Captain"
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber/red
+	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber/red
 	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/weapon/gun/ballistic/revolver/mateba
@@ -462,7 +462,7 @@
 	death = FALSE
 	random = TRUE
 	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a security officer working for NanoTrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a security officer working for Nanotrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
 	cryogenics pod due to a oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/security
@@ -486,7 +486,7 @@
 	death = FALSE
 	random = TRUE
 	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a engineer working for NanoTrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a engineer working for Nanotrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
 	cryogenics pod due to a oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/engineer
@@ -510,7 +510,7 @@
 	death = FALSE
 	random = TRUE
 	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a scientist working for NanoTrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a scientist working for Nanotrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
 	cryogenics pod due to a oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/scientist

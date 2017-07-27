@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -6,13 +6,8 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"d" = (
-/turf/closed/wall/mineral/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
 "e" = (
 /obj/structure/table/wood/poker,
 /obj/item/weapon/gun/ballistic/revolver/russian/soul,
@@ -20,14 +15,12 @@
 	dir = 1
 	},
 /turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
 /area/ruin/powered/greed)
 "f" = (
 /obj/structure/cursed_slot_machine,
 /turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
 /area/ruin/powered/greed)
@@ -38,7 +31,6 @@
 	dir = 1
 	},
 /turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
 /area/ruin/powered/greed)
@@ -46,13 +38,11 @@
 /obj/structure/table/wood/poker,
 /obj/item/weapon/coin/diamond,
 /turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
 /area/ruin/powered/greed)
 "i" = (
 /turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
 /area/ruin/powered/greed)
@@ -60,7 +50,6 @@
 /obj/structure/table/wood/poker,
 /obj/item/weapon/coin/adamantine,
 /turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
 /area/ruin/powered/greed)
@@ -68,40 +57,28 @@
 /obj/machinery/computer/arcade/battle{
 	emagged = 1
 	},
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "l" = (
 /obj/item/weapon/coin/gold,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "m" = (
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "n" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c1000,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "o" = (
 /obj/item/weapon/storage/bag/money,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "p" = (
 /obj/structure/table/wood/poker,
 /obj/item/weapon/ore/gold,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "q" = (
 /obj/structure/table/wood/poker,
@@ -111,33 +88,20 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "r" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c500,
 /obj/item/stack/spacecash/c100,
 /obj/item/stack/spacecash/c1000,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "s" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c200,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
-"t" = (
-/obj/machinery/door/airlock/gold,
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
 "u" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c500,
@@ -146,23 +110,29 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "v" = (
 /obj/item/weapon/coin/gold,
 /obj/machinery/light/small,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "w" = (
 /obj/item/weapon/storage/bag/money,
 /obj/machinery/light/small,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/engine/cult,
+/area/ruin/powered/greed)
+"z" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/engine/cult,
+/area/ruin/powered/greed)
+"J" = (
+/obj/machinery/door/airlock/gold,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/engine/cult,
+/area/ruin/powered/greed)
+"W" = (
+/turf/closed/wall/mineral/cult,
 /area/ruin/powered/greed)
 
 (1,1,1) = {"
@@ -284,11 +254,11 @@ a
 a
 c
 c
-d
-d
-d
-d
-d
+W
+W
+W
+W
+W
 c
 a
 a
@@ -305,12 +275,12 @@ a
 c
 c
 c
-d
-d
+W
+W
 n
 q
 s
-d
+W
 c
 c
 c
@@ -325,17 +295,17 @@ a
 a
 a
 c
-d
-d
-d
+W
+W
+W
 k
 o
 l
 m
-d
-d
-d
-d
+W
+W
+W
+W
 c
 a
 a
@@ -347,18 +317,18 @@ a
 b
 a
 c
-d
+W
 e
 h
 l
 m
 m
-m
+z
 l
 m
 v
-d
-d
+W
+W
 a
 a
 a
@@ -369,7 +339,7 @@ b
 b
 a
 c
-d
+W
 f
 i
 m
@@ -380,7 +350,7 @@ m
 m
 m
 m
-t
+J
 a
 a
 a
@@ -391,7 +361,7 @@ a
 b
 a
 c
-d
+W
 g
 j
 l
@@ -401,8 +371,8 @@ l
 m
 l
 w
-d
-d
+W
+W
 a
 a
 a
@@ -413,17 +383,17 @@ a
 a
 a
 c
-d
-d
-d
+W
+W
+W
 k
 o
 m
 l
-d
-d
-d
-d
+W
+W
+W
+W
 c
 a
 a
@@ -437,12 +407,12 @@ a
 c
 c
 c
-d
-d
+W
+W
 p
 u
 r
-d
+W
 c
 c
 c
@@ -460,11 +430,11 @@ a
 a
 c
 c
-d
-d
-d
-d
-d
+W
+W
+W
+W
+W
 c
 a
 a

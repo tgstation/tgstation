@@ -7,7 +7,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 1000
-	req_access = list(GLOB.access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
 	var/recharge_speed
 	var/repairs
 	state_open = TRUE

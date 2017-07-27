@@ -96,6 +96,13 @@
 		if (typecache[A.type])
 			. += A
 
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	. = list()
+	for (var/thing in atoms)
+		var/atom/A = thing
+		if (!typecache[A.type])
+			. += A
+
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))

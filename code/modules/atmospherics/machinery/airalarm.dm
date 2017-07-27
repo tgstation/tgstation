@@ -54,7 +54,7 @@
 	idle_power_usage = 4
 	active_power_usage = 8
 	power_channel = ENVIRON
-	req_access = list(GLOB.access_atmospherics)
+	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 80
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
@@ -112,6 +112,19 @@
 		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
+
+/obj/machinery/airalarm/engine
+	name = "engine air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE)
+
+/obj/machinery/airalarm/all_access
+	name = "all-access air alarm"
+	desc = "This particular atmos control unit appears to have no access restrictions."
+	locked = FALSE
+	req_access = null
+	req_one_access = null
 
 //all air alarms in area are connected via magic
 /area
@@ -714,8 +727,8 @@
 	if(emagged)
 		return
 	emagged = TRUE
-	visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
-	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
+	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/airalarm/obj_break(damage_flag)
 	..()

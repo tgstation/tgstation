@@ -99,7 +99,7 @@
 		if(PushAM(AM))
 			return
 
-/mob/living/Bumped(atom/movable/AM)
+/mob/living/CollidedWith(atom/movable/AM)
 	..()
 	last_bumped = world.time
 
@@ -357,7 +357,7 @@
 		updatehealth() //then we check if the mob should wake up.
 		update_canmove()
 		update_sight()
-		clear_alert("oxy")
+		clear_alert("not_enough_oxy")
 		reload_fullscreen()
 		. = 1
 		if(mind)

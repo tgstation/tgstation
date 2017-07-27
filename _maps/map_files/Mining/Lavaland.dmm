@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/closed/indestructible/riveted/boss,
 /area/lavaland/surface/outdoors)
@@ -62,7 +62,7 @@
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors)
 "aj" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ak" = (
 /turf/closed/mineral/random/volcanic,
@@ -82,27 +82,19 @@
 /area/lavaland/surface/outdoors)
 "ap" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "aq" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/laborcamp)
 "ar" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "as" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "at" = (
 /obj/structure/bed,
@@ -112,9 +104,7 @@
 	dir = 8;
 	network = list("Labor")
 	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "au" = (
 /obj/structure/rack{
@@ -124,9 +114,7 @@
 /obj/item/weapon/pickaxe,
 /obj/item/device/flashlight,
 /obj/item/clothing/glasses/meson,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "av" = (
 /obj/structure/rack{
@@ -136,39 +124,29 @@
 /obj/item/device/flashlight,
 /obj/item/weapon/pickaxe,
 /obj/item/clothing/glasses/meson,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aw" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "ax" = (
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "ay" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "az" = (
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aA" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aB" = (
 /obj/machinery/door/airlock/glass_medical{
@@ -176,9 +154,7 @@
 	name = "Infirmary";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "aC" = (
 /obj/structure/closet/crate/internals,
@@ -190,9 +166,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aD" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -205,78 +179,59 @@
 	pixel_y = 24;
 	prison_radio = 1
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aF" = (
 /obj/machinery/door/airlock{
 	name = "Labor Camp Storage"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aG" = (
 /obj/structure/table,
 /obj/item/trash/plate,
 /obj/item/weapon/kitchen/fork,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aH" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aI" = (
 /obj/machinery/door/airlock{
 	name = "Labor Camp External Access"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aJ" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aK" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aL" = (
 /obj/machinery/door/airlock{
 	name = "Vending"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aM" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/loadingarea{
-	dir = 4;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	dir = 4
 	},
 /area/mine/laborcamp)
 "aN" = (
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aO" = (
 /obj/machinery/camera{
@@ -288,17 +243,13 @@
 /area/lavaland/surface/outdoors)
 "aP" = (
 /obj/machinery/vending/sustenance,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aQ" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aR" = (
 /obj/machinery/shower{
@@ -314,9 +265,7 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "aT" = (
 /obj/structure/ore_box,
@@ -326,28 +275,14 @@
 /obj/machinery/flasher{
 	id = "Labor"
 	},
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"aV" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	icon_state = "sink_alt";
-	pixel_x = -13
-	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/laborcamp)
 "aW" = (
 /obj/machinery/conveyor{
 	dir = 2;
 	id = "gulag"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "aX" = (
 /obj/structure/closet/crate,
@@ -358,9 +293,7 @@
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aZ" = (
 /obj/machinery/light/small{
@@ -372,76 +305,56 @@
 	pixel_y = 28;
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ba" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "Labor";
 	name = "labor camp blast door"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bb" = (
 /obj/machinery/camera{
 	c_tag = "Labor Camp Central";
 	network = list("Labor")
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bc" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "gulag"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bd" = (
 /obj/machinery/mineral/processing_unit_console{
 	dir = 2;
 	machinedir = 4
 	},
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/laborcamp)
 "be" = (
 /obj/machinery/mineral/processing_unit{
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "bf" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/eva)
 "bg" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
 /obj/machinery/computer/shuttle/labor/one_way,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bi" = (
 /obj/structure/gulag_beacon,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bj" = (
 /obj/machinery/status_display{
@@ -449,13 +362,10 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bk" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/laborcamp)
@@ -464,18 +374,14 @@
 	dir = 8;
 	id = "gulag"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "bm" = (
 /obj/machinery/conveyor{
 	dir = 10;
 	id = "gulag"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "bn" = (
 /obj/structure/table,
@@ -485,34 +391,27 @@
 /obj/item/device/gps/mining,
 /obj/item/device/gps/mining,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 9
 	},
 /area/mine/eva)
 "bo" = (
 /obj/machinery/suit_storage_unit/mining,
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/eva)
 "bp" = (
 /obj/machinery/suit_storage_unit/mining,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 5
 	},
 /area/mine/eva)
 "bq" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/production)
 "br" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "bs" = (
 /obj/machinery/camera{
@@ -533,21 +432,17 @@
 	pixel_y = -1
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/eva)
 "bt" = (
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "bu" = (
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/eva)
@@ -557,27 +452,12 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
-"bw" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_away";
-	name = "labor camp";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
-	width = 9
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
 "bx" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Labor Camp Shuttle Prisoner Airlock";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "by" = (
 /obj/structure/cable{
@@ -585,9 +465,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bz" = (
 /obj/structure/cable{
@@ -595,9 +473,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bA" = (
 /obj/machinery/door/airlock/glass_security{
@@ -609,9 +485,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bB" = (
 /obj/machinery/power/apc{
@@ -628,9 +502,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bC" = (
 /obj/machinery/airalarm{
@@ -641,7 +513,6 @@
 	req_access = "0"
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/production)
@@ -649,21 +520,16 @@
 /obj/structure/closet/crate,
 /obj/item/weapon/dice/d4,
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/production)
 "bE" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/corner,
 /area/mine/production)
 "bF" = (
 /obj/effect/spawner/structure/window,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/eva)
 "bG" = (
 /obj/structure/table,
@@ -672,28 +538,22 @@
 /obj/item/stack/packageWrap,
 /obj/item/weapon/hand_labeler,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/eva)
 "bH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "bI" = (
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/corner,
 /area/mine/eva)
 "bJ" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/eva)
@@ -705,9 +565,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/corner,
 /area/mine/eva)
 "bL" = (
 /obj/machinery/door/airlock/glass_security{
@@ -719,9 +577,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bM" = (
 /obj/machinery/door/airlock/maintenance{
@@ -733,9 +589,7 @@
 	d2 = 10;
 	icon_state = "1-10"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "bN" = (
 /obj/structure/sign/securearea{
@@ -743,21 +597,16 @@
 	name = "KEEP CLEAR: DOCKING AREA"
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "bO" = (
 /obj/item/device/radio/beacon,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
 "bP" = (
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "bQ" = (
 /obj/structure/cable{
@@ -768,9 +617,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "bR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -782,7 +629,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
@@ -799,9 +645,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "bT" = (
 /obj/structure/cable{
@@ -818,7 +662,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/eva)
@@ -831,21 +674,16 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "bV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "bW" = (
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/eva)
@@ -856,13 +694,10 @@
 	opacity = 0;
 	req_access_txt = "54"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "bY" = (
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/eva)
@@ -870,9 +705,7 @@
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/explored)
 "ca" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/laborcamp/security)
 "cb" = (
 /obj/structure/table,
@@ -880,9 +713,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cc" = (
 /obj/structure/chair/office/dark,
@@ -895,9 +726,7 @@
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cd" = (
 /obj/structure/table,
@@ -919,9 +748,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "ce" = (
 /obj/structure/cable{
@@ -934,9 +761,7 @@
 	d2 = 6;
 	icon_state = "5-6"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "cf" = (
 /obj/machinery/power/terminal,
@@ -944,36 +769,17 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "cg" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "ch" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
-"ci" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_away";
-	name = "lavaland mine";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
-	width = 7
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "cj" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -981,13 +787,10 @@
 	opacity = 0;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "ck" = (
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -995,9 +798,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "cm" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1008,13 +809,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "cn" = (
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
@@ -1028,40 +826,32 @@
 /obj/structure/cable,
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/eva)
 "cp" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/eva)
 "cq" = (
-/turf/open/floor/mech_bay_recharge_floor{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
 "cr" = (
 /obj/machinery/computer/mech_bay_power_console,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/eva)
 "cs" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/eva)
 "ct" = (
 /obj/structure/ore_box,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/eva)
@@ -1075,33 +865,25 @@
 /area/lavaland/surface/outdoors)
 "cw" = (
 /obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cx" = (
 /obj/machinery/computer/security{
 	name = "Labor Camp Monitoring";
 	network = list("Labor")
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cy" = (
 /obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cz" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "cA" = (
 /obj/machinery/power/smes{
@@ -1116,25 +898,18 @@
 	d2 = 9;
 	icon_state = "0-9"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "cB" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "cC" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "cD" = (
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/production)
@@ -1145,31 +920,24 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "cF" = (
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
 "cG" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "cH" = (
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
 "cI" = (
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
@@ -1178,28 +946,20 @@
 	name = "Closet";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "cK" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "cL" = (
 /obj/machinery/space_heater,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "cM" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/living_quarters)
 "cN" = (
 /obj/structure/sign/securearea{
@@ -1207,9 +967,7 @@
 	icon_state = "shock";
 	name = "HIGH VOLTAGE"
 	},
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/living_quarters)
 "cO" = (
 /obj/item/device/radio/intercom{
@@ -1218,7 +976,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -1227,20 +984,15 @@
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
 "cQ" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/maintenance)
 "cR" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "cS" = (
 /obj/machinery/power/smes{
@@ -1250,9 +1002,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "cT" = (
 /obj/structure/cable{
@@ -1264,9 +1014,7 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/secure/loot,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "cU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -1275,20 +1023,14 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "cV" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "cW" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "cX" = (
 /obj/machinery/power/apc{
@@ -1305,7 +1047,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -1321,14 +1062,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "cZ" = (
 /obj/machinery/mineral/equipment_vendor,
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 5
 	},
 /area/mine/production)
@@ -1336,16 +1074,13 @@
 /obj/machinery/mineral/mint{
 	input_dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "db" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -1356,9 +1091,7 @@
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dd" = (
 /obj/structure/extinguisher_cabinet{
@@ -1371,27 +1104,19 @@
 	info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the cargo office for smelting. PLEASE! <br><br>--The Research Staff";
 	name = "URGENT!"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "de" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "df" = (
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dg" = (
-/turf/open/floor/circuit{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/circuit,
 /area/mine/maintenance)
 "dh" = (
 /obj/structure/cable{
@@ -1405,9 +1130,7 @@
 	pixel_x = 1;
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/black,
 /area/mine/maintenance)
 "di" = (
 /obj/machinery/telecomms/relay/preset/mining,
@@ -1415,23 +1138,18 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/maintenance)
 "dj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/black,
 /area/mine/maintenance)
 "dk" = (
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/turf/open/floor/circuit{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/circuit,
 /area/mine/maintenance)
 "dl" = (
 /obj/machinery/light/small{
@@ -1443,13 +1161,11 @@
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
 "dm" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
@@ -1460,7 +1176,6 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 5
 	},
 /area/mine/living_quarters)
@@ -1472,9 +1187,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dp" = (
 /obj/structure/cable{
@@ -1485,26 +1198,20 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dq" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dr" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "ds" = (
 /obj/machinery/mineral/equipment_vendor,
@@ -1515,19 +1222,14 @@
 "dt" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "du" = (
-/turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/loadingarea,
 /area/mine/production)
 "dv" = (
 /turf/open/floor/plasteel/loadingarea{
-	dir = 4;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	dir = 4
 	},
 /area/mine/production)
 "dw" = (
@@ -1535,9 +1237,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dx" = (
 /obj/structure/cable{
@@ -1545,9 +1245,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/circuit{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/circuit,
 /area/mine/maintenance)
 "dy" = (
 /obj/structure/cable{
@@ -1558,9 +1256,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/black,
 /area/mine/maintenance)
 "dz" = (
 /obj/machinery/light_switch{
@@ -1569,9 +1265,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/circuit{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/circuit,
 /area/mine/maintenance)
 "dA" = (
 /obj/machinery/camera{
@@ -1579,9 +1273,7 @@
 	dir = 8;
 	network = list("MINE")
 	},
-/turf/open/floor/circuit{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/circuit,
 /area/mine/maintenance)
 "dB" = (
 /obj/structure/closet/crate/freezer,
@@ -1612,26 +1304,19 @@
 	dir = 1;
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dC" = (
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dE" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/living_quarters)
@@ -1645,9 +1330,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dG" = (
 /obj/machinery/power/port_gen/pacman{
@@ -1657,9 +1340,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dH" = (
 /obj/structure/cable{
@@ -1670,21 +1351,16 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dJ" = (
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -1702,7 +1378,6 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
@@ -1712,15 +1387,11 @@
 	opened = 1
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dN" = (
 /obj/machinery/camera{
@@ -1734,7 +1405,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
@@ -1748,9 +1418,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "dP" = (
 /obj/machinery/door/airlock/maintenance{
@@ -1763,15 +1431,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/maintenance)
 "dQ" = (
 /obj/effect/spawner/structure/window,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dR" = (
 /obj/machinery/door/airlock/glass_medical{
@@ -1780,9 +1444,7 @@
 	req_access_txt = "0"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dS" = (
 /obj/structure/cable{
@@ -1800,32 +1462,23 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/living_quarters)
 "dT" = (
 /turf/open/floor/plasteel/brown/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/production)
 "dU" = (
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/corner,
 /area/mine/production)
 "dV" = (
 /obj/effect/spawner/structure/window,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "dW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dX" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -1833,7 +1486,6 @@
 	name = "mining conveyor"
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
@@ -1845,18 +1497,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "dZ" = (
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ea" = (
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/living_quarters)
@@ -1868,13 +1515,11 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
 "ec" = (
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
@@ -1883,23 +1528,18 @@
 	c_tag = "Crew Area Hallway West";
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ee" = (
 /obj/machinery/airalarm{
 	frequency = 1439;
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ef" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
@@ -1915,18 +1555,14 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eh" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ei" = (
 /obj/structure/cable{
@@ -1936,7 +1572,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
@@ -1946,38 +1581,30 @@
 	network = list("MINE")
 	},
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
 "ek" = (
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/corner,
 /area/mine/living_quarters)
 "el" = (
 /obj/machinery/door/airlock/glass_mining{
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "em" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
 "en" = (
 /obj/machinery/mineral/processing_unit_console,
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/production)
 "eo" = (
 /obj/machinery/mineral/processing_unit{
@@ -1987,17 +1614,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "ep" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -2006,9 +1629,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "er" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2019,9 +1640,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "es" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -2030,9 +1649,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "et" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -2048,9 +1665,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eu" = (
 /obj/structure/cable{
@@ -2064,9 +1679,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ev" = (
 /obj/structure/cable{
@@ -2077,9 +1690,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ew" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2091,7 +1702,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/living_quarters)
@@ -2108,9 +1718,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ey" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2122,7 +1730,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/living_quarters)
@@ -2135,9 +1742,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eA" = (
 /obj/structure/cable{
@@ -2152,9 +1757,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eB" = (
 /obj/structure/cable{
@@ -2166,7 +1769,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -2177,24 +1779,19 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/production)
@@ -2206,16 +1803,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -2223,52 +1817,39 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/corner,
 /area/mine/production)
 "eI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/brown,
 /area/mine/production)
 "eJ" = (
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 6
 	},
 /area/mine/production)
 "eK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/brown,
 /area/mine/living_quarters)
 "eL" = (
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/living_quarters)
 "eM" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eO" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/living_quarters)
@@ -2276,9 +1857,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eQ" = (
 /obj/machinery/door/airlock/mining{
@@ -2286,9 +1865,7 @@
 	req_access_txt = "48"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -2297,9 +1874,7 @@
 	name = "Break Room";
 	opacity = 0
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eS" = (
 /obj/machinery/airalarm{
@@ -2310,9 +1885,7 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/side,
 /area/mine/production)
 "eT" = (
 /obj/structure/closet/crate{
@@ -2320,15 +1893,11 @@
 	opened = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/brown,
 /area/mine/production)
 "eU" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/side,
 /area/mine/production)
 "eV" = (
 /obj/structure/closet/crate{
@@ -2336,13 +1905,11 @@
 	opened = 1
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 6
 	},
 /area/mine/production)
 "eW" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/production)
@@ -2355,9 +1922,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "eY" = (
 /obj/machinery/conveyor{
@@ -2367,9 +1932,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "eZ" = (
 /obj/machinery/conveyor{
@@ -2382,15 +1945,12 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating,
 /area/mine/production)
 "fa" = (
 /obj/machinery/mineral/equipment_vendor,
 /turf/open/floor/plasteel/brown{
-	dir = 9;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	dir = 9
 	},
 /area/mine/living_quarters)
 "fb" = (
@@ -2402,7 +1962,6 @@
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/living_quarters)
@@ -2412,7 +1971,6 @@
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
@@ -2424,7 +1982,6 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 5
 	},
 /area/mine/living_quarters)
@@ -2435,17 +1992,13 @@
 	frequency = 1439;
 	pixel_y = 23
 	},
-/turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/carpet,
 /area/mine/living_quarters)
 "ff" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fg" = (
 /obj/machinery/door/airlock{
@@ -2455,16 +2008,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/living_quarters)
@@ -2472,49 +2022,36 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fj" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fk" = (
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fm" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fn" = (
 /obj/structure/table,
 /obj/machinery/microwave{
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fo" = (
 /obj/structure/ore_box,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/mine/living_quarters)
@@ -2522,9 +2059,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fq" = (
 /obj/item/device/radio/intercom{
@@ -2533,15 +2068,12 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/mine/living_quarters)
 "fr" = (
 /obj/structure/table,
-/turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fs" = (
 /obj/machinery/light/small{
@@ -2555,9 +2087,7 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
-/turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/carpet,
 /area/mine/living_quarters)
 "ft" = (
 /obj/machinery/camera{
@@ -2566,66 +2096,40 @@
 	network = list("MINE")
 	},
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/mine/living_quarters)
 "fu" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fv" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
-"fw" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 2;
-	dwidth = 11;
-	height = 22;
-	id = "whiteship_lavaland";
-	name = "lavaland wastes";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
-	width = 35
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "fx" = (
 /obj/structure/ore_box,
 /turf/open/floor/plasteel/brown{
-	dir = 10;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	dir = 10
 	},
 /area/mine/living_quarters)
 "fy" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/side,
 /area/mine/living_quarters)
 "fz" = (
 /obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/brown,
 /area/mine/living_quarters)
 "fA" = (
 /obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/purple/side,
 /area/mine/living_quarters)
 "fB" = (
 /obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 6
 	},
 /area/mine/living_quarters)
@@ -2633,9 +2137,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fD" = (
 /obj/structure/table,
@@ -2653,9 +2155,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/beer{
 	pixel_x = -8
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fE" = (
 /obj/structure/chair{
@@ -2664,24 +2164,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fG" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fH" = (
 /obj/machinery/door/airlock{
@@ -2691,9 +2185,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fI" = (
 /obj/item/device/radio/intercom{
@@ -2701,9 +2193,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fJ" = (
 /obj/machinery/camera{
@@ -2715,27 +2205,21 @@
 	pixel_y = -32
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fK" = (
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fL" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
 	},
-/turf/open/floor/plasteel/bar{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fM" = (
 /obj/machinery/light/small{
@@ -2749,18 +2233,14 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
-/turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fO" = (
 /obj/machinery/door/airlock{
@@ -2770,9 +2250,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fP" = (
 /obj/machinery/light/small{
@@ -2786,9 +2264,7 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
-/turf/open/floor/carpet{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fQ" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -2808,15 +2284,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"fU" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "fV" = (
 /turf/closed/indestructible/riveted/boss/see_through,
 /area/lavaland/surface/outdoors)
@@ -2824,142 +2291,6 @@
 /obj/structure/necropolis_gate/locked,
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
-"fX" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"fY" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fZ" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ga" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gb" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gc" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gd" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ge" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gf" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gg" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gh" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gi" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gj" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -2985,64 +2316,9 @@
 /obj/structure/stone_tile/center,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"gl" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gm" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gn" = (
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "go" = (
 /obj/structure/stone_tile/block,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gp" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gq" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gr" = (
 /obj/structure/stone_tile{
@@ -3070,52 +2346,6 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gt" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gu" = (
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gv" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gw" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gx" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "gy" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -3127,32 +2357,6 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gz" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gA" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gB" = (
@@ -3180,39 +2384,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"gD" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gE" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gF" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "gG" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -3226,95 +2397,21 @@
 /obj/structure/stone_tile/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gH" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gI" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gJ" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gK" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gL" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "gM" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gN" = (
-/mob/living/simple_animal/hostile/spawner/lavaland,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gO" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gP" = (
 /obj/structure/stone_tile/slab,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gQ" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gR" = (
 /obj/structure/stone_tile/block,
@@ -3323,377 +2420,37 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gS" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gT" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gU" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gV" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gW" = (
-/mob/living/simple_animal/hostile/spawner/lavaland,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gX" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "gY" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gZ" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ha" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
+	dir = 8;
+	dwidth = 2;
+	height = 5;
+	id = "laborcamp_away";
+	name = "labor camp";
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	width = 9
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hb" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hc" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hd" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"he" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hf" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/explored)
 "hg" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
 /mob/living/simple_animal/hostile/megafauna/legion,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"hh" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hi" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hj" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hk" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hl" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hm" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hn" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ho" = (
-/obj/structure/stone_tile/surrounding,
-/obj/structure/closet/crate/necropolis/tendril{
-	anchored = 1;
-	max_integrity = 500;
-	obj_integrity = 500
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hp" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hq" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hr" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "hs" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ht" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hu" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hv" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hw" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hx" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hy" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hz" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hA" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hB" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hC" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hD" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hE" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hF" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hG" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hH" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
 /obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hI" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
 /obj/structure/stone_tile{
 	dir = 8
 	},
@@ -3709,217 +2466,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"hK" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hL" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hM" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hN" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hO" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hP" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hQ" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hR" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hS" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hT" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hU" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hV" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hW" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hX" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hY" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hZ" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ia" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ib" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ic" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "id" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -3933,116 +2479,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"ie" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"if" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ig" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ih" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ii" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ij" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ik" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"il" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"im" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"in" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"io" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"ip" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"iq" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
 "ir" = (
 /obj/structure/stone_tile/slab/cracked{
 	dir = 5
@@ -4050,10 +2486,6 @@
 /obj/structure/stone_tile/slab/cracked{
 	dir = 10
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"is" = (
-/obj/structure/stone_tile/slab,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "it" = (
@@ -4064,10 +2496,6 @@
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iv" = (
-/obj/structure/stone_tile/block,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "iw" = (
@@ -4087,23 +2515,6 @@
 /obj/structure/stone_tile/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"iz" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iA" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iB" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "iC" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -4111,92 +2522,11 @@
 /obj/structure/stone_tile/block/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"iD" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iE" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"iF" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"iG" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"iH" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
-"iI" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iJ" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "iK" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iL" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iM" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iN" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iO" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iP" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iQ" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iR" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iS" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iT" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iU" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iV" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iW" = (
-/obj/structure/stone_tile/block/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "iX" = (
@@ -4216,10 +2546,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"iZ" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "ja" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -4228,40 +2554,6 @@
 /area/lavaland/surface/outdoors)
 "jb" = (
 /obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jc" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jd" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"je" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jf" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4276,45 +2568,6 @@
 	},
 /obj/structure/stone_tile{
 	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jh" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ji" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jj" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -4355,51 +2608,8 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"jn" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jo" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jp" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "jq" = (
 /obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jr" = (
-/obj/structure/stone_tile/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "js" = (
@@ -4408,98 +2618,10 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"jt" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ju" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jv" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jw" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "jx" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jy" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jz" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jA" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jB" = (
-/obj/structure/stone_tile/surrounding,
-/obj/structure/closet/crate/necropolis/tendril{
-	anchored = 1;
-	max_integrity = 500;
-	obj_integrity = 500
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jC" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jD" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jE" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jF" = (
@@ -4511,17 +2633,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jG" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jH" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -4532,42 +2644,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jI" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jJ" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jK" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jL" = (
 /obj/structure/stone_tile/surrounding_tile,
@@ -4578,17 +2655,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jM" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jN" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -4599,33 +2666,7 @@
 	},
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/center/cracked,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jO" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jP" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jQ" = (
 /obj/structure/stone_tile{
@@ -4645,135 +2686,8 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"jT" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jU" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jV" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jW" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jX" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jY" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"jZ" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ka" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kb" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kc" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kd" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ke" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kf" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "kg" = (
 /obj/structure/fluff/drake_statue,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kh" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ki" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kj" = (
@@ -4785,43 +2699,8 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"kk" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "kl" = (
 /obj/structure/fluff/drake_statue/falling,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"km" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kn" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ko" = (
@@ -4834,71 +2713,12 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"kp" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kq" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kr" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ks" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kt" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ku" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kv" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kw" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kx" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "ky" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
 	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kz" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kA" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -4911,17 +2731,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kC" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kD" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -4934,42 +2744,7 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/center,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kE" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kF" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kG" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kH" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -4980,17 +2755,7 @@
 	dir = 4
 	},
 /obj/structure/stone_tile/center/cracked,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kI" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kJ" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -5003,26 +2768,7 @@
 	dir = 1
 	},
 /obj/structure/stone_tile/center,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kK" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kL" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kM" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5036,146 +2782,8 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"kO" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kP" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kQ" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "kR" = (
 /obj/structure/stone_tile/slab/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kS" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kT" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kU" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kV" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kW" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kX" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kY" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kZ" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"la" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lb" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lc" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ld" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "le" = (
@@ -5188,47 +2796,11 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"lf" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "lg" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
 /obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lh" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"li" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5243,29 +2815,11 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"lk" = (
-/obj/structure/stone_tile/block,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "ll" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lm" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ln" = (
-/obj/structure/stone_tile/slab,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lo" = (
-/obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5300,19 +2854,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lt" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lu" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5331,21 +2873,17 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lw" = (
 /obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lx" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ly" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lz" = (
 /obj/structure/stone_tile/cracked{
@@ -5354,36 +2892,7 @@
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lA" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lB" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lC" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lD" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5392,7 +2901,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lE" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5401,7 +2910,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lF" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5413,7 +2922,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lG" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5422,65 +2931,11 @@
 /obj/structure/stone_tile/block,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"lH" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "lI" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lJ" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lK" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lL" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lM" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lN" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lO" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lP" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5495,7 +2950,7 @@
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 6
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lR" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5517,61 +2972,14 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lT" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lU" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lV" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lW" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lX" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lY" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lZ" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5580,7 +2988,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ma" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5599,70 +3007,7 @@
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mc" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"md" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"me" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mf" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mg" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mh" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mi" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mj" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mk" = (
 /obj/structure/stone_tile/block/cracked{
@@ -5678,39 +3023,13 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mm" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mn" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mo" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mp" = (
-/obj/structure/stone_tile/slab/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mq" = (
@@ -5766,7 +3085,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mw" = (
 /obj/structure/stone_tile{
@@ -5775,11 +3094,11 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mx" = (
 /obj/structure/stone_tile,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "my" = (
 /obj/structure/stone_tile/cracked{
@@ -5790,10 +3109,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mz" = (
-/obj/structure/stone_tile,
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mA" = (
 /obj/structure/stone_tile/cracked{
@@ -5816,7 +3131,7 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mD" = (
 /obj/structure/stone_tile,
@@ -5939,38 +3254,7 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"mR" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
 "mS" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
-"mT" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
-"mU" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
@@ -6040,18 +3324,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"na" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
 "nb" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -6066,19 +3338,6 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "nc" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
-"nd" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
@@ -6115,6 +3374,46 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"Uq" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
+	dir = 2;
+	dwidth = 11;
+	height = 22;
+	id = "whiteship_lavaland";
+	name = "lavaland wastes";
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	width = 35
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Wp" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "mining_away";
+	name = "lavaland mine";
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	width = 7
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Wt" = (
+/obj/effect/baseturf_helper,
+/turf/closed/wall,
+/area/mine/laborcamp/security)
+"Wu" = (
+/obj/effect/baseturf_helper,
+/turf/closed/wall,
+/area/mine/laborcamp)
+"Ww" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 
 (1,1,1) = {"
 aa
@@ -10240,7 +7539,7 @@ aa
 aa
 aa
 aa
-is
+gP
 ad
 ad
 ab
@@ -10446,7 +7745,7 @@ aD
 aD
 aD
 aD
-bw
+gY
 aD
 aD
 aD
@@ -11477,7 +8776,7 @@ az
 az
 aq
 ca
-ca
+Wt
 ca
 aj
 aj
@@ -12240,7 +9539,7 @@ aE
 az
 az
 az
-aV
+az
 az
 aQ
 bk
@@ -12505,7 +9804,7 @@ aq
 bA
 aq
 aq
-aq
+Wu
 aq
 aj
 aj
@@ -13541,7 +10840,7 @@ dg
 dg
 cQ
 dZ
-dZ
+Ww
 dZ
 cM
 fa
@@ -19957,7 +17256,7 @@ ab
 ab
 ab
 ab
-ci
+Wp
 ab
 ab
 ab
@@ -32049,7 +29348,7 @@ ab
 ab
 ab
 ab
-fw
+Uq
 ab
 ab
 ab
@@ -37482,7 +34781,7 @@ aa
 aa
 aa
 aa
-iD
+gR
 ag
 jF
 gM
@@ -37740,12 +35039,12 @@ aa
 aa
 aa
 aa
-ji
+gG
 go
 kg
 hs
 gr
-ia
+hH
 ab
 ab
 aj
@@ -37991,8 +35290,8 @@ aa
 mS
 mV
 mq
-na
-nd
+mV
+nc
 aa
 aa
 fV
@@ -38500,9 +35799,9 @@ aj
 "}
 (127,1,1) = {"
 mQ
-mR
+mQ
 fW
-mT
+mQ
 mW
 hg
 ac
@@ -38517,7 +35816,7 @@ kj
 fT
 fT
 lg
-is
+gP
 lq
 lu
 lq
@@ -38771,7 +36070,7 @@ fV
 jl
 gr
 ah
-ji
+gG
 gs
 gy
 aa
@@ -39016,7 +36315,7 @@ aj
 aa
 aa
 aa
-mU
+mS
 mY
 ms
 hJ
@@ -39030,7 +36329,7 @@ jL
 gM
 kH
 gr
-ia
+hH
 aa
 aa
 lw
@@ -39286,7 +36585,7 @@ gr
 go
 kl
 hs
-ji
+gG
 lj
 ab
 ab
@@ -39538,7 +36837,7 @@ aa
 aa
 aa
 aa
-iD
+gR
 ah
 jN
 gO
@@ -39795,12 +37094,12 @@ aa
 aa
 aa
 aa
-iD
+gR
 gr
 gr
 gr
 jm
-is
+gP
 ab
 ab
 ab
@@ -63696,7 +60995,7 @@ aa
 aa
 aa
 aa
-is
+gP
 ai
 ai
 ai
@@ -66780,7 +64079,7 @@ aa
 aa
 aa
 aa
-is
+gP
 js
 ab
 ad

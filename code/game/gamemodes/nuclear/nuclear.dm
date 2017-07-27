@@ -118,7 +118,7 @@
 	if(foundIDs.len)
 		for(var/obj/item/weapon/card/id/ID in foundIDs)
 			ID.name = "lead agent card"
-			ID.access += GLOB.access_syndicate_leader
+			ID.access += ACCESS_SYNDICATE_LEADER
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
@@ -275,7 +275,7 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
-	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (SSticker && istype(SSticker.mode, /datum/game_mode/nuclear)) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 		var/purchases = ""
 		var/TC_uses = 0

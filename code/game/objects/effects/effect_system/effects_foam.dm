@@ -21,7 +21,7 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(
 	/turf/open/space/transit,
 	/turf/open/chasm,
-	/turf/open/floor/plating/lava))
+	/turf/open/lava))
 
 
 /obj/effect/particle_effect/foam/metal

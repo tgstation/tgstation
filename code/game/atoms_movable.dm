@@ -228,7 +228,7 @@
 			. = 1
 			if(!A || QDELETED(A))
 				return
-		A.Bumped(src)
+		A.CollidedWith(src)
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
