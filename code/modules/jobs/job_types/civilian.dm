@@ -135,6 +135,7 @@ Curator
 	belt = /obj/item/device/pda/curator
 	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/weapon/storage/bag/books
+	r_hand = /obj/item/griffening_boosterpack/deck40 //Curator also get some neat cards
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
