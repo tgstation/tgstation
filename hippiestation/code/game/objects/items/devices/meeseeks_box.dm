@@ -2,6 +2,7 @@
 #define MEESEEKS_TICKS_STAGE_TWO	200
 #define MEESEEKS_TICKS_STAGE_THREE	300
 #define MEESEEKS_BOX_COOLDOWN		1800
+#define MEESEEKS_BOX_FAILURE_TIME	1600
 
 /obj/item/device/meeseeks_box
 	name = "\improper Mr. Meeseeks Box"
@@ -42,7 +43,7 @@
 	else if(next_summon < world.time)
 		next_summon = world.time + MEESEEKS_BOX_COOLDOWN
 		user.visible_message("<span class='notice'>[user] presses the button on [src]!</span>")
-		var/list/candidates = get_candidates("pai", null)
+		var/list/candidates = pollCandidates("Would you like to become a Mr. Meeseeks and fulfill a task?", CATBAN, poll_time = 50)
 		shuffle(candidates)
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/Z = pick(candidates)
@@ -75,10 +76,12 @@
 				M.mind.announce_objectives()
 				SM.objective = objective
 			summoned = TRUE
-			return
+		else
+			next_summon -= MEESEEKS_BOX_FAILURE_TIME
+			to_chat(user, "<span class='warning'>[src] failed to create a Mr. Meeseeks. Try again later!</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	else
 		to_chat(user, "<span class='warning'>[src] is silent. Try again in a few minutes.</span>")
-	return
 
 /obj/item/device/meeseeks_box/Destroy()
 	destroy_meeseeks(meeseeks, meeseeks.dna.species)
