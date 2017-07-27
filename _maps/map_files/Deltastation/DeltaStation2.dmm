@@ -114111,6 +114111,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit/departure_lounge)
+"esv" = (
+/obj/structure/closet/secure_closet/miner/unlocked,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 4
+	},
+/area/construction/mining/aux_base)
 
 (1,1,1) = {"
 aaa
@@ -134823,7 +134829,7 @@ czj
 bZf
 cAW
 bVT
-erL
+erJ
 duK
 cHJ
 efW
@@ -146358,7 +146364,7 @@ bAT
 bCC
 bEo
 bCC
-erh
+erd
 bKf
 bCF
 bAZ
@@ -147158,7 +147164,7 @@ cyh
 czN
 cBp
 cCQ
-erK
+erJ
 cFs
 cGK
 cId
@@ -148437,7 +148443,7 @@ cpm
 brO
 brO
 brO
-erC
+eri
 brO
 brO
 brO
@@ -150500,7 +150506,7 @@ czV
 cBv
 cCV
 cDM
-erM
+eqV
 boR
 cIi
 cJU
@@ -150960,7 +150966,7 @@ aGY
 aJA
 aRE
 aGY
-eqK
+eqF
 aGX
 aYu
 aZU
@@ -152095,7 +152101,7 @@ dQl
 dRc
 dRV
 dSP
-esu
+esq
 dQl
 dRc
 dRV
@@ -153020,7 +153026,7 @@ aUU
 axl
 aYz
 axl
-eqN
+eqB
 bcE
 beb
 bfX
@@ -153092,7 +153098,7 @@ cKe
 cKe
 dly
 cKe
-esg
+erV
 cKe
 drc
 dgz
@@ -154525,7 +154531,7 @@ aaa
 aaa
 aaD
 agv
-eqv
+equ
 ahL
 aiv
 ajy
@@ -155897,7 +155903,7 @@ cAl
 cBM
 cqS
 bkP
-erN
+eqV
 cGY
 cIs
 cKn
@@ -156562,7 +156568,7 @@ aaZ
 aaG
 abk
 abt
-abK
+esv
 epT
 acf
 aaG
@@ -157681,7 +157687,7 @@ brO
 brO
 bta
 boX
-ert
+eri
 brO
 bqv
 bBy
@@ -159510,7 +159516,7 @@ cRb
 cRb
 dat
 dcc
-esd
+esc
 deY
 cIs
 dib
@@ -159704,7 +159710,7 @@ aYO
 bar
 bbF
 bcX
-eqS
+eqO
 bgl
 bii
 aeX
@@ -160293,7 +160299,7 @@ dpX
 drE
 cXR
 cWe
-esi
+erZ
 dfi
 cXR
 cWe
@@ -161566,7 +161572,7 @@ cXT
 cZt
 cIs
 dbY
-ese
+esc
 dfe
 dgI
 dik
@@ -162554,7 +162560,7 @@ bKY
 bMZ
 bDi
 bQR
-ero
+ern
 bVh
 bWU
 bYL
@@ -163088,7 +163094,7 @@ csF
 cuo
 cvL
 cxp
-erG
+erA
 cAG
 cCa
 clx

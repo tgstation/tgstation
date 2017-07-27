@@ -7625,9 +7625,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqN" = (
-/obj/structure/closet/secure_closet/miner{
-	locked = 0
-	},
+/obj/structure/closet/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
