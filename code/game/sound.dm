@@ -1,9 +1,7 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, is_global = FALSE)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE)
 	if(isarea(source))
 		throw EXCEPTION("playsound(): source is an area")
 		return
-
-	soundin = get_sfx(soundin) // same sound for everyone
 
 	var/turf/turf_source = get_turf(source)
 
@@ -11,7 +9,7 @@
 	channel = channel || open_sound_channel()
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
-	var/sound/S = sound(soundin)
+	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = (world.view + extrarange) * 3
 	for(var/P in GLOB.player_list)
 		var/mob/M = P
@@ -21,10 +19,11 @@
 
 		if(distance <= maxdistance)
 			var/turf/T = get_turf(M)
-			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, is_global, S)
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, is_global = FALSE, sound/S)
+			if(T && T.z == turf_source.z)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
+
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
 	if(!client || !can_hear())
 		return
 
@@ -34,7 +33,6 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
-	S.environment = SOUND_ENV_DEFAULT //Always reset the sound environment, or else it'll end up getting applied globally
 
 	if(vary)
 		if(frequency)
@@ -80,9 +78,6 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	if(!is_global)
-		S.environment = SOUND_ENV_ROOM
-
 	src << S
 
 /proc/sound_to_playing_players(sound, volume = 100, vary)
@@ -90,7 +85,7 @@
 	for(var/M in GLOB.player_list)
 		if(ismob(M) && !isnewplayer(M))
 			var/mob/MO = M
-			MO.playsound_local(get_turf(MO), sound, volume, vary, pressure_affected = FALSE, is_global = TRUE)
+			MO.playsound_local(get_turf(MO), sound, volume, vary, pressure_affected = FALSE)
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
