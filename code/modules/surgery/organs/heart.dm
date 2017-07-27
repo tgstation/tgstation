@@ -146,7 +146,6 @@
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
 	icon_state = "heart-c"
-	origin_tech = "biotech=5"
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	Stop()
