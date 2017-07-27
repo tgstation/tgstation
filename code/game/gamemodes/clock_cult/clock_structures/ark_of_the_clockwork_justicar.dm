@@ -1,8 +1,9 @@
 //The gateway to Reebe, from which Ratvar emerges.
 /obj/structure/destructible/clockwork/massive/celestial_gateway
-	name = "ark of the Clockwork Justicar"
-	desc = "A massive, thrumming rip in spacetime."
-	clockwork_desc = "Nezbere's magnum opus: a tremendous clockwork machine capable of freeing Ratvar. Once active, your goal is to defend it until it completes its task."
+	name = "\improper Ark of the Clockwork Justicar"
+	desc = "A massive, hulking amalgamation of parts. It seems to be maintaining a very unstable bluespace anomaly."
+	clockwork_desc = "Nezbere's magnum opus: a hulking clockwork machine capable of combining bluespace and steam power to summon Ratvar. Once activated, \
+	its instability will cause one-way bluespace rifts to open across the station to the City of Cogs, so be prepared to defend it at all costs."
 	max_integrity = 500
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
@@ -39,7 +40,12 @@
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
 	not a drill.", \
 	"Central Command Higher Dimensional Affairs", 'sound/ambience/antag/new_clock.ogg')
-	send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 10))
+	set_security_level("delta")
+	for(var/V in GLOB.generic_event_spawns)
+		addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/open_portal(turf/T)
+	new/obj/effect/clockwork/city_of_cogs_rift(T)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
@@ -151,9 +157,12 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!first_sound_played || prob(7))
-		for(var/M in GLOB.player_list)
+		for(var/mob/M in GLOB.player_list)
 			if(M && !isnewplayer(M))
-				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
+				if(M.z == z)
+					to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
+				else
+					to_chat(M, "<span class='boldwarning'>You hear otherworldly sounds from all around you...</span>")
 	if(!obj_integrity)
 		return 0
 	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
