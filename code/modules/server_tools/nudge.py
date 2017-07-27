@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+#This method of service communication is deprecated, you should be using the interface dll method
 import sys
 import pickle
 import socket
