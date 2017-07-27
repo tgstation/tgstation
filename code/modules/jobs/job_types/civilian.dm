@@ -112,8 +112,8 @@ Mime
 /*
 Curator
 */
-/datum/job/curator
-	title = "Curator"
+/datum/job/Librarian
+	title = "Librarian"
 	flag = CURATOR
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
@@ -123,17 +123,17 @@ Curator
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	outfit = /datum/outfit/job/curator
+	outfit = /datum/outfit/job/Librarian
 
 	access = list(ACCESS_LIBRARY)
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION)
 
-/datum/outfit/job/curator
-	name = "Curator"
+/datum/outfit/job/Librarian
+	name = "Librarian"
 	jobtype = /datum/job/curator
 
-	belt = /obj/item/device/pda/curator
-	uniform = /obj/item/clothing/under/rank/curator
+	belt = /obj/item/device/pda/librarian
+	uniform = /obj/item/clothing/under/rank/librarian
 	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
