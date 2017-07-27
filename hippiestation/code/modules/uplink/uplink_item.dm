@@ -52,7 +52,7 @@
 	desc = "An additional 14-round 9mm magazine; compatible with the Glock 17 pistol."
 	item = /obj/item/ammo_box/magazine/g17
 	cost = 1
-	
+
 /datum/uplink_item/dangerous/revolver
 	cost = 10
 	surplus = 45
@@ -130,3 +130,10 @@
 
 /datum/uplink_item/ammo/revolver
 	cost = 2
+
+/datum/uplink_item/dangerous/butterfly
+	name = "Energy Butterfly Knife"
+	desc = "A highly lethal and concealable knife that causes critical backstab damage when used with harm intent."
+	cost = 12//80 backstab damage and armour pierce isn't a fucking joke
+	item = /obj/item/weapon/melee/transforming/butterfly/energy
+	surplus = 15
