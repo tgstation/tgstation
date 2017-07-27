@@ -33,7 +33,7 @@
 	build_path = /obj/machinery/processor
 
 /obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
@@ -162,7 +162,8 @@
 	//set reagent data
 	B.data["donor"] = O
 
-	for(var/datum/disease/D in O.viruses)
+	for(var/thing in O.viruses)
+		var/datum/disease/D = thing
 		if(!(D.spread_flags & SPECIAL))
 			B.data["viruses"] += D.Copy()
 	if(O.has_dna())

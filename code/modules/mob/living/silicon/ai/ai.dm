@@ -877,7 +877,7 @@
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
 		light_cameras()
-	if(istype(A,/obj/machinery/camera))
+	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
 		if(ismovableatom(A))

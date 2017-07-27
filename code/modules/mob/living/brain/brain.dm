@@ -66,7 +66,7 @@
 
 /mob/living/brain/ClickOn(atom/A, params)
 	..()
-	if(istype(loc,/obj/item/device/mmi))
+	if(istype(loc, /obj/item/device/mmi))
 		var/obj/item/device/mmi/MMI = loc
 		var/obj/mecha/M = MMI.mecha
 		if((src == MMI.brainmob) && istype(M))

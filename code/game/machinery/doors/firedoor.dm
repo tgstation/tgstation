@@ -67,7 +67,7 @@
 	affecting_areas.Cut()
 	return ..()
 
-/obj/machinery/door/firedoor/Bumped(atom/AM)
+/obj/machinery/door/firedoor/CollidedWith(atom/movable/AM)
 	if(panel_open || operating)
 		return
 	if(!density)
@@ -212,7 +212,7 @@
 	flags = ON_BORDER
 	CanAtmosPass = ATMOS_PASS_PROC
 
-/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border

@@ -69,7 +69,7 @@
 	name = "Easter Basket"
 	icon = 'icons/mob/easter.dmi'
 	icon_state = "basket"
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg,/obj/item/weapon/reagent_containers/food/snacks/chocolateegg,/obj/item/weapon/reagent_containers/food/snacks/boiledegg)
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg, /obj/item/weapon/reagent_containers/food/snacks/chocolateegg, /obj/item/weapon/reagent_containers/food/snacks/boiledegg)
 
 /obj/item/weapon/storage/bag/easterbasket/proc/countEggs()
 	cut_overlays()

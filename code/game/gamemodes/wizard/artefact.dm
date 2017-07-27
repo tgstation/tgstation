@@ -437,7 +437,7 @@
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
-	W.access += GLOB.access_maint_tunnels
+	W.access += ACCESS_MAINT_TUNNELS
 	W.assignment = "Multiverse Traveller"
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
@@ -468,7 +468,7 @@
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Knockdown(40)
 			GiveHint(target)
-		else if(istype(I,/obj/item/weapon/bikehorn))
+		else if(istype(I, /obj/item/weapon/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			target << 'sound/items/airhorn.ogg'
 			target.adjustEarDamage(0,3)

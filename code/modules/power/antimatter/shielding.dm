@@ -72,9 +72,7 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target)
 	return 0
 
 
@@ -240,7 +238,7 @@
 	materials = list(MAT_METAL=100)
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
+	if(istype(I, /obj/item/device/multitool) && istype(src.loc, /turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
 	else

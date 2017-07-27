@@ -279,7 +279,7 @@
 		to_chat(src, "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>")
 		return FALSE
 	for(var/obj/O in T)
-		if(O.density && !O.CanPass(src, T, 5))
+		if(O.density && !O.CanPass(src, T))
 			to_chat(src, "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>")
 			return FALSE
 	if(inhibited)
@@ -419,7 +419,6 @@
 
 //objectives
 /datum/objective/revenant
-	dangerrating = 10
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
@@ -439,7 +438,6 @@
 	return TRUE
 
 /datum/objective/revenantFluff
-	dangerrating = 0
 
 /datum/objective/revenantFluff/New()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \

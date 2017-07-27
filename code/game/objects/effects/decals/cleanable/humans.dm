@@ -4,16 +4,9 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	var/list/viruses = list()
 	blood_DNA = list()
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = MAX_SHOE_BLOODINESS
-
-/obj/effect/decal/cleanable/blood/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	viruses = null
-	return ..()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.blood_DNA)
@@ -70,15 +63,11 @@
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
-		if (i > 0)
-			var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
-			for(var/datum/disease/D in src.viruses)
-				var/datum/disease/ND = D.Copy(1)
-				b.viruses += ND
-				ND.holder = b
-		if (!step_to(src, get_step(src, direction), 0))
+		if(i > 0)
+			new /obj/effect/decal/cleanable/blood/splatter(loc)
+		if(!step_to(src, get_step(src, direction), 0))
 			break
 
 /obj/effect/decal/cleanable/blood/gibs/up

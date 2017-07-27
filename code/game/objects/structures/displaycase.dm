@@ -132,7 +132,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	else if(!alert && istype(W,/obj/item/weapon/crowbar) && openable) //Only applies to the lab cage and player made display cases
+	else if(!alert && istype(W, /obj/item/weapon/crowbar) && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")
@@ -239,13 +239,13 @@
 /obj/structure/displaycase/captain
 	alert = 1
 	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
-	req_access = list(GLOB.access_cent_specops)
+	req_access = list(ACCESS_CENT_SPECOPS)
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
-	req_access = list(GLOB.access_rd)
+	req_access = list(ACCESS_RD)
 
 
 

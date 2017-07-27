@@ -34,7 +34,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 			return
 
 		// this must come before the screen objects only block, dunno why it wasn't before

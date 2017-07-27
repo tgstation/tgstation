@@ -1,7 +1,7 @@
 /obj/structure/closet/secure_closet/personal
 	desc = "It's a secure locker for personnel. The first card swiped gains control."
 	name = "personal closet"
-	req_access = list(GLOB.access_all_personal_lockers)
+	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	var/registered_name = null
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
@@ -28,6 +28,7 @@
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )
+	new /obj/item/device/instrument/piano_synth(src)
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)

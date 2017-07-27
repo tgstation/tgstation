@@ -518,7 +518,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 
 /obj/item/weapon/pipe_dispenser/pre_attackby(atom/A, mob/user)
-	if(!user.IsAdvancedToolUser() || istype(A,/turf/open/space/transit))
+	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
 	//make sure what we're clicking is valid for the current mode
@@ -570,8 +570,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 				new /obj/item/pipe_meter(A)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
-			if(is_anchored_dense_turf(A))
-				to_chat(user, "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>")
+			if(isclosedturf(A))
+				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)

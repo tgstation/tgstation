@@ -73,13 +73,14 @@
 	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		if(safety_mode)
-			safety_mode = FALSE
-			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
-		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	if(safety_mode)
+		safety_mode = FALSE
+		update_icon()
+	playsound(src, "sparks", 75, 1, -1)
+	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src].</span>")
 
 /obj/machinery/recycler/update_icon()
 	..()
@@ -88,14 +89,7 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-// This is purely for admin possession !FUN!.
-/obj/machinery/recycler/Bump(atom/movable/AM)
-	..()
-	if(AM)
-		Bumped(AM)
-
-
-/obj/machinery/recycler/Bumped(atom/movable/AM)
+/obj/machinery/recycler/CollidedWith(atom/movable/AM)
 
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -204,7 +198,7 @@
 	crush_damage = 120
 	flags = NODECONSTRUCT
 
-/obj/item/weapon/paper/recycler
+/obj/item/weapon/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
 	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
 

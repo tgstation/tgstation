@@ -299,13 +299,13 @@
 		return
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
-	if(istype(src,/obj/item/weapon/storage/firstaid/fire))
+	if(istype(src, /obj/item/weapon/storage/firstaid/fire))
 		A.skin = "ointment"
-	else if(istype(src,/obj/item/weapon/storage/firstaid/toxin))
+	else if(istype(src, /obj/item/weapon/storage/firstaid/toxin))
 		A.skin = "tox"
-	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
+	else if(istype(src, /obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
-	else if(istype(src,/obj/item/weapon/storage/firstaid/brute))
+	else if(istype(src, /obj/item/weapon/storage/firstaid/brute))
 		A.skin = "brute"
 
 	qdel(S)
@@ -343,8 +343,7 @@
 					build_step++
 					to_chat(user, "<span class='notice'>You complete the Medibot. Beep boop!</span>")
 					var/turf/T = get_turf(src)
-					var/mob/living/simple_animal/bot/medbot/S = new /mob/living/simple_animal/bot/medbot(T)
-					S.skin = skin
+					var/mob/living/simple_animal/bot/medbot/S = new /mob/living/simple_animal/bot/medbot(T, skin)
 					S.name = created_name
 					qdel(src)
 

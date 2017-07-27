@@ -137,8 +137,8 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/Move(atom/newloc)
 	if(newloc)
 		if(newloc.z == z) //so these actions are Z-specific
-			if(istype(newloc, /turf/open/floor/plating/lava))
-				var/turf/open/floor/plating/lava/L = newloc
+			if(istype(newloc, /turf/open/lava))
+				var/turf/open/lava/L = newloc
 				if(!L.is_safe())
 					StartAction(20)
 					new /obj/structure/lattice/catwalk/swarmer_catwalk(newloc)

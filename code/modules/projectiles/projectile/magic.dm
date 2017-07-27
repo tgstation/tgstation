@@ -68,10 +68,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	var/list/door_types = list(/obj/structure/mineral_door/wood,/obj/structure/mineral_door/iron,/obj/structure/mineral_door/silver,\
-		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
-		/obj/structure/mineral_door/transparent/diamond)
-
+	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
@@ -89,7 +86,7 @@
 	D.Open()
 
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
-	if(istype(D,/obj/machinery/door/airlock))
+	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		A.locked = FALSE
 	D.open()
@@ -355,7 +352,7 @@
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer)
-				return Bump(L, TRUE)
+				return Collide(L)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning

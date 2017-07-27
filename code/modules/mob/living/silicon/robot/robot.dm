@@ -51,7 +51,7 @@
 
 	var/ident = 0
 	var/locked = TRUE
-	var/list/req_access = list(GLOB.access_robotics)
+	var/list/req_access = list(ACCESS_ROBOTICS)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
@@ -390,13 +390,14 @@
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
-		if (getFireLoss() > 0)
+		if (getFireLoss() > 0 || getToxLoss() > 0)
 			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
+				adjustToxLoss(-30)
 				updatehealth()
 				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
@@ -633,7 +634,7 @@
 		if(istype(module, /obj/item/weapon/robot_module/miner))
 			if(istype(loc, /turf/open/floor/plating/asteroid))
 				for(var/obj/item/I in held_items)
-					if(istype(I,/obj/item/weapon/storage/bag/ore))
+					if(istype(I, /obj/item/weapon/storage/bag/ore))
 						loc.attackby(I, src)
 #undef BORG_CAMERA_BUFFER
 
@@ -800,7 +801,7 @@
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
-	req_access = list(GLOB.access_syndicate)
+	req_access = list(ACCESS_SYNDICATE)
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE

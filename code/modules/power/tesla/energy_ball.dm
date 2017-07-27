@@ -138,11 +138,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 
-/obj/singularity/energy_ball/Bump(atom/A)
+/obj/singularity/energy_ball/Collide(atom/A)
 	dust_mobs(A)
 
-/obj/singularity/energy_ball/Bumped(atom/A)
-	dust_mobs(A)
+/obj/singularity/energy_ball/CollidedWith(atom/movable/AM)
+	dust_mobs(AM)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			if(stun_mobs)
-				S.emp_act(2)
+				S.emp_act(EMP_LIGHT)
 			tesla_zap(S, 7, power / 1.5, explosive, stun_mobs) // metallic folks bounce it further
 		else
 			tesla_zap(closest_mob, 5, power / 1.5, explosive, stun_mobs)

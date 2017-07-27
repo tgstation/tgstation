@@ -6,6 +6,7 @@
 	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
+	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
@@ -50,9 +51,8 @@
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/cogscarab, \
-	/datum/clockwork_scripture/create_object/soul_vessel, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
+/obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
@@ -105,6 +105,12 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
+/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file)
+	. = list()
+	if(isinhands && item_state && inhand_overlay)
+		var/mutable_appearance/M = mutable_appearance(icon_file, "slab_[inhand_overlay]")
+		. += M
+
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
 		slab_ability.remove_ranged_ability()
@@ -127,7 +133,7 @@
 	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
-	if(istype(L) && can_recite_scripture(L))
+	if(istype(L) && (no_cost || can_recite_scripture(L)))
 		var/component_to_generate = target_component_id
 		if(!component_to_generate)
 			component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
@@ -151,12 +157,12 @@
 		if(GLOB.clockwork_caches) //show components on examine
 			to_chat(user, "<b>Stored components (with global cache):</b>")
 			for(var/i in stored_components)
-				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
+				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
 				(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
 		else
 			to_chat(user, "<b>Stored components:</b>")
 			for(var/i in stored_components)
-				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
+				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
 
 //Component Transferal
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
@@ -258,7 +264,7 @@
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
 		return 0
-	if(!can_recite_scripture(user))
+	if(!no_cost && !can_recite_scripture(user))
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0
 	access_display(user)
@@ -278,7 +284,7 @@
 		ui.open()
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
-	if(!scripture || !user || !user.canUseTopic(src) || !can_recite_scripture(user))
+	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
@@ -395,11 +401,11 @@
 			dat += "<font color=#BE8700><b>Cache:</b></font> A <i>Tinkerer's Cache</i>, which is a structure that stores and creates components.<br>"
 			dat += "<font color=#BE8700><b>CV:</b></font> Construction Value. All clockwork structures, floors, and walls increase this number.<br>"
 			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into Servants of Ratvar.<br>"
-			dat += "<font color=#BE8700><b>BE [get_component_icon(BELLIGERENT_EYE)]:</b></font> Belligerent Eye, a component type used in offensive scriptures.<br>"
-			dat += "<font color=#BE8700><b>VG [get_component_icon(VANGUARD_COGWHEEL)]:</b></font> Vanguard Cogwheel, a component type used in defensive scriptures.<br>"
-			dat += "<font color=#BE8700><b>GC [get_component_icon(GEIS_CAPACITOR)]:</b></font> Geis Capacitor, a component type used in mind-related scriptures.<br>"
-			dat += "<font color=#BE8700><b>RA [get_component_icon(REPLICANT_ALLOY)]:</b></font> Replicant Alloy, a component type used in construction scriptures.<br>"
-			dat += "<font color=#BE8700><b>HA [get_component_icon(HIEROPHANT_ANSIBLE)]:</b></font> Hierophant Ansible, a component type used in energy scriptures.<br>"
+			dat += "<font color=#6E001A><b>[get_component_icon(BELLIGERENT_EYE)]BE:</b></font> Belligerent Eye, a component type used in offensive scriptures.<br>"
+			dat += "<font color=#1E8CE1><b>[get_component_icon(VANGUARD_COGWHEEL)]VC:</b></font> Vanguard Cogwheel, a component type used in defensive scriptures.<br>"
+			dat += "<font color=#AF0AAF><b>[get_component_icon(GEIS_CAPACITOR)]GC:</b></font> Geis Capacitor, a component type used in mind-related scriptures.<br>"
+			dat += "<font color=#5A6068><b>[get_component_icon(REPLICANT_ALLOY)]RA:</b></font> Replicant Alloy, a component type used in construction scriptures.<br>"
+			dat += "<font color=#DAAA18><b>[get_component_icon(HIEROPHANT_ANSIBLE)]HA:</b></font> Hierophant Ansible, a component type used in energy scriptures.<br>"
 			dat += "<font color=#BE8700><b>Ark:</b></font> The cult's win condition, a huge structure that needs to be defended.<br><br>"
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
 			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
@@ -408,10 +414,6 @@
 			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon.<br>"
 			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"
-			dat += "<font color=#BE8700><b>Vessel:</b></font> A soul vessel, a clockwork brain used to activate constructs.<br>"
-			dat += "<font color=#BE8700><b>Shell:</b></font> A construct shell of some type that can accept a soul vessel to activate.<br>"
-			dat += "<font color=#BE8700><b>Scarab:</b></font> A cogscarab construct, which is a drone that maintains the cult's bases.<br>"
-			dat += "<font color=#BE8700><b>Fragment:</b></font> An anim[prob(1) ? "e" : "a"] fragment, which is a fragile but powerful offensive construct.<br>"
 			dat += "<font color=#BE8700><b>Marauder:</b></font> A clockwork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
 			dat += "<font color=#BE8700 size=3>Structures (* = requires power)</font><br>"
 			dat += "<font color=#BE8700><b>Warden:</b></font> An ocular warden, which is a ranged turret that damages non-Servants that see it.<br>"
@@ -455,11 +457,11 @@
 			production_text = production_text.Join()
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
-			dat += "<font color=#6E001A>Belligerent Eyes [get_component_icon(BELLIGERENT_EYE)]</font> are aggressive and judgemental, and are used in offensive scripture;<br>"
-			dat += "<font color=#1E8CE1>Vanguard Cogwheels [get_component_icon(VANGUARD_COGWHEEL)]</font> are defensive and repairing, and are used in defensive scripture;<br>"
-			dat += "<font color=#AF0AAF>Geis Capacitors [get_component_icon(GEIS_CAPACITOR)]</font> are for conversion and control, and are used in mind-related scripture;<br>" //References the old name
-			dat += "<font color=#5A6068>Replicant Alloy [get_component_icon(REPLICANT_ALLOY)]</font> is a strong, malleable metal and is used for construction and creation;<br>"
-			dat += "<font color=#DAAA18>Hierophant Ansibles [get_component_icon(HIEROPHANT_ANSIBLE)]</font> are for transmission and power, and are used in power and teleportation scripture<br><br>"
+			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
+			dat += "<font color=#1E8CE1>[get_component_icon(VANGUARD_COGWHEEL)]VC</font> Vanguard Cogwheels are defensive and repairing, and are used in defensive scripture;<br>"
+			dat += "<font color=#AF0AAF>[get_component_icon(GEIS_CAPACITOR)]GC</font> Geis Capacitors are for conversion and control, and are used in mind-related scripture;<br>" //References the old name
+			dat += "<font color=#5A6068>[get_component_icon(REPLICANT_ALLOY)]RA</font> Replicant Alloy is a strong, malleable metal and is used for construction and creation;<br>"
+			dat += "<font color=#DAAA18>[get_component_icon(HIEROPHANT_ANSIBLE)]HA</font> Hierophant Ansibles are for transmission and power, and are used in power and teleportation scripture<br><br>"
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
@@ -725,7 +727,7 @@
 			var/list/temp_desc = list()
 			for(var/c in quickbind_slot.consumed_components) //show how much the bound scripture costs
 				if(quickbind_slot.consumed_components[c])
-					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_acronym(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
+					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_icon(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
 			if(LAZYLEN(temp_desc))
 				temp_desc += "<br>"
 			temp_desc += "[quickbind_slot.quickbind_desc]"

@@ -1,8 +1,8 @@
 ## /tg/station codebase
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)  
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
-<BR>[![forthebadge](http://forthebadge.com/images/badges/built-with-resentment.svg)](http://forthebadge.com)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue") ![Coverage](https://s3.amazonaws.com/assets.coveralls.io/badges/coveralls_0.svg)  
+[![forthebadge](http://forthebadge.com/images/badges/built-with-resentment.svg)](http://forthebadge.com)
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>

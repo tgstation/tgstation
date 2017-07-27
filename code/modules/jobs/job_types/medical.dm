@@ -17,12 +17,12 @@ Chief Medical Officer
 
 	outfit = /datum/outfit/job/cmo
 
-	access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_heads, GLOB.access_mineral_storeroom,
-			GLOB.access_chemistry, GLOB.access_virology, GLOB.access_cmo, GLOB.access_surgery, GLOB.access_RC_announce,
-			GLOB.access_keycard_auth, GLOB.access_sec_doors, GLOB.access_maint_tunnels)
-	minimal_access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_heads, GLOB.access_mineral_storeroom,
-			GLOB.access_chemistry, GLOB.access_virology, GLOB.access_cmo, GLOB.access_surgery, GLOB.access_RC_announce,
-			GLOB.access_keycard_auth, GLOB.access_sec_doors, GLOB.access_maint_tunnels)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE,
+			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE,
+			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
@@ -58,8 +58,8 @@ Medical Doctor
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_chemistry, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_mineral_storeroom)
-	minimal_access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_cloning)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -93,8 +93,8 @@ Chemist
 
 	outfit = /datum/outfit/job/chemist
 
-	access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_chemistry, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_mineral_storeroom)
-	minimal_access = list(GLOB.access_medical, GLOB.access_chemistry, GLOB.access_mineral_storeroom)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_CHEMISTRY, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/chemist
 	name = "Chemist"
@@ -127,8 +127,8 @@ Geneticist
 
 	outfit = /datum/outfit/job/geneticist
 
-	access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_chemistry, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_research, GLOB.access_xenobiology, GLOB.access_robotics, GLOB.access_mineral_storeroom, GLOB.access_tech_storage)
-	minimal_access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_research)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH)
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"
@@ -161,8 +161,8 @@ Virologist
 
 	outfit = /datum/outfit/job/virologist
 
-	access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_chemistry, GLOB.access_virology, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_mineral_storeroom)
-	minimal_access = list(GLOB.access_medical, GLOB.access_virology, GLOB.access_mineral_storeroom)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_VIROLOGY, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/virologist
 	name = "Virologist"

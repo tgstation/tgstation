@@ -73,11 +73,11 @@
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer)
-			if(istype(M.buffer,/obj/machinery/bsa/back))
+			if(istype(M.buffer, /obj/machinery/bsa/back))
 				back = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [back].</span>")
-			else if(istype(M.buffer,/obj/machinery/bsa/front))
+			else if(istype(M.buffer, /obj/machinery/bsa/front))
 				front = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
@@ -180,7 +180,7 @@
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	var/turf/point = get_front_turf()
 	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
-		T.ex_act(1)
+		T.ex_act(EXPLODE_DEVASTATE)
 	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
 
 	message_admins("[key_name_admin(user)] has launched an artillery strike.")
@@ -291,17 +291,17 @@
 
 
 /obj/machinery/computer/bsa_control/proc/get_target_name()
-	if(istype(target,/area))
+	if(istype(target, /area))
 		var/area/A = target
 		return A.name
-	else if(istype(target,/obj/item/device/gps))
+	else if(istype(target, /obj/item/device/gps))
 		var/obj/item/device/gps/G = target
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
-	if(istype(target,/area))
+	if(istype(target, /area))
 		return pick(get_area_turfs(target))
-	else if(istype(target,/obj/item/device/gps))
+	else if(istype(target, /obj/item/device/gps))
 		return get_turf(target)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)

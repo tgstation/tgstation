@@ -98,7 +98,7 @@
 	return attack_hand(user)
 
 
-/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target)
 	return !density
 
 
@@ -133,7 +133,7 @@
 		blacklisted_turfs = typecacheof(list(
 			/turf/open/space,
 			/turf/open/chasm,
-			/turf/open/floor/plating/lava))
+			/turf/open/lava))
 
 
 	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)

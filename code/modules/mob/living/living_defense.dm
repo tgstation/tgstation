@@ -67,7 +67,7 @@
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		if(istype(I,/obj/item/weapon)) //If the item is a weapon...
+		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
 			var/obj/item/weapon/W = I
 			dtype = W.damtype
 
@@ -312,7 +312,6 @@
 			reagents.add_reagent("heparin", 5)
 		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
-		GLOB.cult_narsie.resize(1.1)
 		GLOB.cult_narsie.souls_needed -= src
 		GLOB.cult_narsie.souls += 1
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))

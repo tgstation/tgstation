@@ -63,7 +63,7 @@
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(GLOB.access_engine,GLOB.access_robotics)//required access level to open cell compartment
+	var/list/internals_req_access = list(ACCESS_ENGINE,ACCESS_ROBOTICS)//REQUIRED ACCESS LEVEL TO OPEN CELL COMPARTMENT
 
 	var/wreckage
 
@@ -339,13 +339,13 @@
 				if(0.75 to INFINITY)
 					occupant.clear_alert("charge")
 				if(0.5 to 0.75)
-					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 1)
+					occupant.throw_alert("charge", /obj/screen/alert/lowcell, 1)
 				if(0.25 to 0.5)
-					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 2)
+					occupant.throw_alert("charge", /obj/screen/alert/lowcell, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 3)
+					occupant.throw_alert("charge", /obj/screen/alert/lowcell, 3)
 				else
-					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
+					occupant.throw_alert("charge", /obj/screen/alert/emptycell)
 
 		var/integrity = obj_integrity/max_integrity*100
 		switch(integrity)
@@ -539,7 +539,7 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle, yes)
+/obj/mecha/Collide(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		spawn()
 			if(can_move)
@@ -551,23 +551,22 @@
 				sleep(step_in*3)
 				can_move = 1
 	else
-		if(yes)
-			if(..()) //mech was thrown
-				return
-			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
-				if(nextsmash < world.time)
-					obstacle.mech_melee_attack(src)
-					if(!obstacle || !obstacle.density)
-						step(src,dir)
-					nextsmash = world.time + smashcooldown
-			if(isobj(obstacle))
-				var/obj/O = obstacle
-				if(!O.anchored)
-					step(obstacle, dir)
-			else if(ismob(obstacle))
-				var/mob/M = obstacle
-				if(!M.anchored)
-					step(obstacle, dir)
+		if(..()) //mech was thrown
+			return
+		if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
+			if(nextsmash < world.time)
+				obstacle.mech_melee_attack(src)
+				if(!obstacle || !obstacle.density)
+					step(src,dir)
+				nextsmash = world.time + smashcooldown
+		if(isobj(obstacle))
+			var/obj/O = obstacle
+			if(!O.anchored)
+				step(obstacle, dir)
+		else if(ismob(obstacle))
+			var/mob/M = obstacle
+			if(!M.anchored)
+				step(obstacle, dir)
 
 
 

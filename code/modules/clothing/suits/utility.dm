@@ -18,7 +18,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/extinguisher, /obj/item/weapon/crowbar)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/extinguisher, /obj/item/weapon/crowbar)
 	slowdown = 1
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
@@ -99,7 +99,7 @@
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
+	allowed = list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs)
 
 /*
  * Radiation protection
@@ -126,7 +126,7 @@
 	permeability_coefficient = 0.50
 	flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/geiger_counter)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/device/geiger_counter)
 	slowdown = 1.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100, fire = 30, acid = 30)
 	strip_delay = 60

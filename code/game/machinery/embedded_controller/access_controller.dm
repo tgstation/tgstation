@@ -27,12 +27,13 @@
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		req_access = list()
-		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
-		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	req_access = list()
+	req_one_access = list()
+	playsound(src, "sparks", 100, 1)
+	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
 

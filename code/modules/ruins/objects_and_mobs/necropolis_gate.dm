@@ -56,7 +56,7 @@
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
-/obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target)
 	if(get_dir(loc, target) == dir)
 		return !density
 	return 1
@@ -258,7 +258,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(falling || fallen)
 		return
 	var/turf/T = get_turf(src)
-	if(!istype(T, /turf/open/floor/plating/lava) && !istype(T, /turf/open/chasm)) //nothing to sink or fall into
+	if(!istype(T, /turf/open/lava) && !istype(T, /turf/open/chasm)) //nothing to sink or fall into
 		return
 	var/obj/item/I
 	if(istype(AM, /obj/item))

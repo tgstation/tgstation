@@ -109,16 +109,25 @@
 
 
 //Gas alerts
-/obj/screen/alert/oxy
+/obj/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
-	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
-The box in your backpack has an oxygen tank and breath mask in it."
-	icon_state = "oxy"
+	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
+	icon_state = "not_enough_oxy"
 
 /obj/screen/alert/too_much_oxy
 	name = "Choking (O2)"
 	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_oxy"
+
+/obj/screen/alert/not_enough_nitro
+	name = "Choking (No N2)"
+	desc = "You're not getting enough nitrogen. Find some good air before you pass out!"
+	icon_state = "not_enough_nitro"
+
+/obj/screen/alert/too_much_nitro
+	name = "Choking (N2)"
+	desc = "There's too much nitrogen in the air, and you're breathing it in! Find some good air before you pass out!"
+	icon_state = "too_much_nitro"
 
 /obj/screen/alert/not_enough_co2
 	name = "Choking (No CO2)"
@@ -135,11 +144,10 @@ The box in your backpack has an oxygen tank and breath mask in it."
 	desc = "You're not getting enough plasma. Find some good air before you pass out!"
 	icon_state = "not_enough_tox"
 
-/obj/screen/alert/tox_in_air
+/obj/screen/alert/too_much_tox
 	name = "Choking (Plasma)"
-	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
-The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = "tox_in_air"
+	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	icon_state = "too_much_tox"
 //End gas alerts
 
 
@@ -468,10 +476,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.still_needs_components())
-				textlist += "Ark Components required: "
+				textlist += "Ark Components required:<br>"
 				for(var/i in G.required_components)
 					if(G.required_components[i])
-						textlist += "<b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
+						textlist += "[get_component_icon(i)] <b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
 				textlist += "<br>"
 			else
 				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"

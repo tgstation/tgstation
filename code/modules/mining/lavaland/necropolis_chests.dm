@@ -425,7 +425,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc,/obj/mecha))
+		if (istype(usr.loc, /obj/mecha))
 			return
 
 		if(!M.incapacitated())
@@ -583,9 +583,10 @@
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP
+	faction_bonus_force = 30
+	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
-	var/beast_force_bonus = 30
 
 /obj/item/weapon/melee/transforming/cleaving_saw/examine(mob/user)
 	..()
@@ -625,34 +626,32 @@
 	if(!active)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
+/obj/item/weapon/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
+	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(!B)
+		if(!active) //This isn't in the above if-check so that the else doesn't care about active
+			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+	else
+		B.add_bleed(B.bleed_buildup)
+
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
-		var/beast_bonus_active = FALSE
-		var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
-		if(istype(target, /mob/living/simple_animal/hostile/asteroid) || ismegafauna(target))
-			if(!active)
-				if(!B)
-					target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
-				else
-					B.add_bleed(B.bleed_buildup)
-			else
-				force += beast_force_bonus //we do bonus damage against beastly creatures
-				beast_bonus_active = TRUE
+		if(!active)
+			faction_bonus_force = 0
 		..()
-		if(beast_bonus_active)
-			if(B)
-				B.add_bleed(B.bleed_buildup)
-			force -= beast_force_bonus
-		return
-	var/turf/user_turf = get_turf(user)
-	var/dir_to_target = get_dir(user_turf, get_turf(target))
-	swiping = TRUE
-	for(var/i in 1 to 3)
-		var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
-		for(var/mob/living/L in T)
-			if(user.Adjacent(L) && L.density)
-				melee_attack_chain(user, L)
-	swiping = FALSE
+		if(!active)
+			faction_bonus_force = initial(faction_bonus_force)
+	else
+		var/turf/user_turf = get_turf(user)
+		var/dir_to_target = get_dir(user_turf, get_turf(target))
+		swiping = TRUE
+		var/static/list/cleaving_saw_cleave_angles = list(0, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
+		for(var/i in cleaving_saw_cleave_angles)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
+			for(var/mob/living/L in T)
+				if(user.Adjacent(L) && L.density)
+					melee_attack_chain(user, L)
+		swiping = FALSE
 
 //Dragon
 
@@ -836,7 +835,7 @@
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
-	var/turf_type = /turf/open/floor/plating/lava/smooth
+	var/turf_type = /turf/open/lava/smooth
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
 	var/reset_string = "basalt"
@@ -957,6 +956,7 @@
 		var/datum/objective/survive/survive = new
 		survive.owner = L.mind
 		L.mind.objectives += survive
+		add_logs(user, L, "took out a blood contract on", src)
 		to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
 		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		var/obj/effect/mine/pickup/bloodbath/B = new(L)
