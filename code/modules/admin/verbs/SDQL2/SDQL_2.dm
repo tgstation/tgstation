@@ -90,6 +90,8 @@
 			if("call")
 				for(var/datum/d in objs)
 					world.SDQL_var(d, query_tree["call"][1], source = d)
+					CHECK_TICK
+					
 			if("delete")
 				for(var/datum/d in objs)
 					SDQL_qdel_datum(d)
@@ -123,11 +125,12 @@
 	text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
 	if(istype(t, /atom))
 		var/atom/a = t
-		if(a.x)
-			text += ": [t] at ([a.x], [a.y], [a.z])<br>"
-
-		else if(a.loc && a.loc.x)
-			text += ": [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
+		var/turf/T = a.loc
+		var/turf/actual = get_turf(a)
+		if(istype(T))
+			text += ": [t] at turf [T] [COORD(T)]<br>"
+		else if(a.loc && istype(actual))
+			text += ": [t] in [a.loc] at turf [actual] [COORD(actual)]<br>"
 		else
 			text += ": [t]<br>"
 	else
