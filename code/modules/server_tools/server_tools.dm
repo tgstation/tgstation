@@ -8,10 +8,8 @@ GLOBAL_PROTECT(reboot_mode)
 	if(!RunningService())
 		return FALSE
 	if(fexists(SERVICE_INTERFACE_DLL))
-		var/res = call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(command)
-		. = isnull(res)
-		if(!.)
-			log_world("ExportService error: [res]")
+		call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(command)	//trust no retval
+		return TRUE
 	else	//fallback to the legacy method
 		return shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
 
