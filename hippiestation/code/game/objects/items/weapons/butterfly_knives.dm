@@ -34,7 +34,7 @@
 
 
 /obj/item/weapon/melee/transforming/butterfly/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(check_target_facings(user, M) == FACING_SAME_DIR && active && user.a_intent == INTENT_HARM)
+	if(check_target_facings(user, M) == FACING_SAME_DIR && active && user.a_intent != INTENT_HELP)
 		return backstab(M,user, backstabforce)
 
 	if(user.zone_selected == "eyes" && active)
