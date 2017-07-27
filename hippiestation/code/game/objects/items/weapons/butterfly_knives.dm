@@ -10,7 +10,7 @@
 	icon = 'hippiestation/icons/obj/weapons.dmi'
 	icon_state = "butterflyknife0"
 	icon_state_on = "butterflyknife1"
-	hitsound_on = 'sound/weapons/bladeslice.ogg'
+	hitsound_on = 'hippiestation/sound/weapons/knife.ogg'
 	throwforce = 0
 	throwforce_on = 10
 	var/backstabforce = 30
@@ -60,7 +60,7 @@
 						"<span class='userdanger'>[user] backstabs you with [src]!</span>")
 
 	src.add_fingerprint(user)
-	playsound(loc, src.hitsound, 30, 1, -1)
+	playsound(loc,'hippiestation/sound/weapons/crit_hit.ogg', 40, 1, -1)
 	user.do_attack_animation(U)
 	U.apply_damage(damage, BRUTE, affecting, U.getarmor(affecting, "melee"))
 	U.drop_item()
@@ -74,7 +74,6 @@
 	force_on = 20
 	throwforce_on = 20
 	backstabforce = 80
-	hitsound_on = 'sound/weapons/blade1.ogg'
 	item_state = "pen"
 	item_state_on = "edagger"
 	icon = 'hippiestation/icons/obj/weapons.dmi'
