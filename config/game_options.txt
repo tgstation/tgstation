@@ -17,7 +17,7 @@ REVIVAL_BRAIN_LIFE -1
 ## RENAMING ###
 
 ## Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
-#RENAME_CYBORG
+RENAME_CYBORG
 
 ## OOC DURING ROUND ###
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
@@ -25,7 +25,7 @@ OOC_DURING_ROUND
 
 ## EMOJI ###
 ## Comment this out if you want to disable emojis
-EMOJIS
+#EMOJIS
 
 ## MOB MOVEMENT ###
 
@@ -51,19 +51,19 @@ ANIMAL_DELAY 1
 
 ## NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
-#HUMANS_NEED_SURNAMES
+HUMANS_NEED_SURNAMES
 
 ## If uncommented, this forces all players to use random names !and appearances!.
-#FORCE_RANDOM_NAMES
+FORCE_RANDOM_NAMES
 
 
 ## ALERT LEVELS ###
 ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
-ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
+ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible and random searches are permitted.
 ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
 ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
 ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders will be punished by death. This is not a drill.
 
 
 
@@ -77,15 +77,15 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 ## Set to 0 to disable that mode.
 
 PROBABILITY TRAITOR 5
-PROBABILITY TRAITORCHAN 4
-PROBABILITY INTERNAL_AFFAIRS 3
-PROBABILITY NUCLEAR 2
+PROBABILITY TRAITORCHAN 5
+PROBABILITY INTERNAL_AFFAIRS 2
+PROBABILITY NUCLEAR 1
 PROBABILITY REVOLUTION 2
 PROBABILITY GANG 2
 PROBABILITY CULT 2
-PROBABILITY CHANGELING 2
+PROBABILITY CHANGELING 3
 PROBABILITY WIZARD 4
-PROBABILITY MALFUNCTION 1
+PROBABILITY MALFUNCTION 2
 PROBABILITY BLOB 2
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
@@ -129,9 +129,9 @@ CONTINUOUS SECRET_EXTENDED
 MIDROUND_ANTAG TRAITOR
 MIDROUND_ANTAG TRAITORCHAN
 MIDROUND_ANTAG INTERNAL_AFFAIRS
-#MIDROUND_ANTAG  NUCLEAR
-#MIDROUND_ANTAG  REVOLUTION
-#MIDROUND_ANTAG  GANG
+MIDROUND_ANTAG  NUCLEAR
+MIDROUND_ANTAG  REVOLUTION
+MIDROUND_ANTAG  GANG
 MIDROUND_ANTAG CULT
 MIDROUND_ANTAG CLOCKWORK_CULT
 MIDROUND_ANTAG CHANGELING
@@ -139,7 +139,7 @@ MIDROUND_ANTAG WIZARD
 MIDROUND_ANTAG MALFUNCTION
 MIDROUND_ANTAG BLOB
 MIDROUND_ANTAG ABDUCTION
-#MIDROUND_ANTAG  MONKEY
+MIDROUND_ANTAG  MONKEY
 
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type. 
 ## If you set any of these occasionally check to see if you still need them as the modes
@@ -153,7 +153,7 @@ MIDROUND_ANTAG ABDUCTION
 #MIN_POP TRAITORCHAN 15
 #MAX_POP TRAITORCHAN -1
 
-#MIN_POP DOUBLE_AGENTS 25
+#MIN_POP DOUBLE_AGENTS 15
 #MAX_POP DOUBLE_AGENTS -1
 
 #MIN_POP NUCLEAR 0
@@ -165,25 +165,25 @@ MIDROUND_ANTAG ABDUCTION
 #MIN_POP GANG 20
 #MAX_POP GANG -1
 
-#MIN_POP CULT 24
+#MIN_POP CULT 12
 #MAX_POP CULT -1
 
 #MIN_POP CLOCKWORK_CULT 24
 #MAX_POP CLOCKWORK_CULT -1
 
-#MIN_POP CHANGELING 15
+#MIN_POP CHANGELING 8
 #MAX_POP CHANGELING -1
 
-#MIN_POP WIZARD 20
+#MIN_POP WIZARD 12
 #MAX_POP WIZARD -1
 
-#MIN_POP BLOB 25
+#MIN_POP BLOB 12
 #MAX_POP BLOB -1
 
-#MIN_POP MONKEY 20
+#MIN_POP MONKEY 12
 #MAX_POP MONKEY -1
 
-#MIN_POP METEOR 0
+#MIN_POP METEOR 12
 #MAX_POP METEOR -1
 
 #MIN_POP DEVIL 0
@@ -214,17 +214,17 @@ SECURITY_SCALING_COEFF 8
 
 ## The number of objectives traitors get.
 ## Not including escaping/hijacking.
-TRAITOR_OBJECTIVES_AMOUNT 2
+TRAITOR_OBJECTIVES_AMOUNT 3
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-#PROTECT_ROLES_FROM_ANTAGONIST
+PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
 ## If non-human species are barred from joining as a head of staff
-#ENFORCE_HUMAN_AUTHORITY
+ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -242,13 +242,13 @@ EVENTS_MIN_TIME_MUL 1
 
 ## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
 ## Set to 0 to make dangerous events avaliable for all populations.
-EVENTS_MIN_PLAYERS_MUL 1
+EVENTS_MIN_PLAYERS_MUL 0
 
 
 ## AI ###
 
 ## Allow the AI job to be picked.
-ALLOW_AI
+#ALLOW_AI
 
 ## Secborg ###
 ## Uncomment to prevent the security cyborg module from being chosen
@@ -256,13 +256,13 @@ ALLOW_AI
 
 ## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg module from being chosen
-#DISABLE_PEACEBORG
+DISABLE_PEACEBORG
 
 ## AWAY MISSIONS ###
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
-GATEWAY_DELAY 18000
+GATEWAY_DELAY 3000
 
 
 ## ACCESS ###
@@ -270,7 +270,7 @@ GATEWAY_DELAY 18000
 ## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
 ## This is useful for accomodating both low and high population rounds on the same server.
 ## Comment this out or set to 0 to disable this automatic toggle.
-MINIMAL_ACCESS_THRESHOLD 20
+MINIMAL_ACCESS_THRESHOLD 15
 
 ## Comment this out this if you wish to use the setup where jobs have more access.
 ## This is intended for servers with low populations - where there are not enough
@@ -288,12 +288,12 @@ MINIMAL_ACCESS_THRESHOLD 20
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
-SEC_START_BRIG
+#SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
@@ -313,7 +313,7 @@ SEC_START_BRIG
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
-DEFAULT_LAWS 0
+DEFAULT_LAWS 3
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -350,21 +350,21 @@ RANDOM_LAWS corporate
 
 ## Make sure there are no spaces between the law_id and the number.
 
-LAW_WEIGHT custom,0
+LAW_WEIGHT custom,32
 
 ## standard-ish laws. These are fairly ok to run
 LAW_WEIGHT asimov,32
-LAW_WEIGHT asimovpp,12
-LAW_WEIGHT paladin,12
-LAW_WEIGHT robocop,12
-LAW_WEIGHT corporate,12
+LAW_WEIGHT asimovpp,32
+LAW_WEIGHT paladin,32
+LAW_WEIGHT robocop,32
+LAW_WEIGHT corporate,32
 
 ## Quirky laws. Shouldn't cause too much harm
-LAW_WEIGHT hippocratic,3
-LAW_WEIGHT maintain,4
+LAW_WEIGHT hippocratic,32
+LAW_WEIGHT maintain,32
 LAW_WEIGHT drone,3
 LAW_WEIGHT liveandletlive,3
-LAW_WEIGHT peacekeeper,3
+LAW_WEIGHT peacekeeper,32
 LAW_WEIGHT reporter,4
 
 ## Bad idea laws. Probably shouldn't enable these
@@ -373,7 +373,7 @@ LAW_WEIGHT ninja,0
 LAW_WEIGHT antimov,0
 LAW_WEIGHT thermodynamic,0
 LAW_WEIGHT ratvar,0
-LAW_WEIGHT buildawall,0
+LAW_WEIGHT buildawall,32
 
 ##------------------------------------------------
 
@@ -395,7 +395,7 @@ ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
-#ROUNDSTART_RACES fly
+ROUNDSTART_RACES fly
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 
@@ -422,7 +422,7 @@ ROUNDSTART_RACES plasmaman
 ##-------------------------------------------------------------------------------------------
 
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
-#JOIN_WITH_MUTANT_HUMANS
+JOIN_WITH_MUTANT_HUMANS
 
 ## Assistant slot cap. Set to -1 for unlimited.
 ASSISTANT_CAP -1
@@ -432,15 +432,15 @@ ASSISTANT_CAP -1
 #STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+GREY_ASSISTANTS
 
 ## Midround Antag (aka Mulligan antag) config options ###
 
 ## A time, in minutes, after which the midround antag system stops attempting to run and continuous rounds end immediately upon completion.
-MIDROUND_ANTAG_TIME_CHECK 60
+MIDROUND_ANTAG_TIME_CHECK 30
 
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
-MIDROUND_ANTAG_LIFE_CHECK 0.7
+MIDROUND_ANTAG_LIFE_CHECK 0.9
 
 ##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
@@ -486,5 +486,4 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 ## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
-MICE_ROUNDSTART 10
-
+MICE_ROUNDSTART 0
