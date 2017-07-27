@@ -30,6 +30,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 	var/UI_style = "Midnight"
+	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
@@ -365,6 +366,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
+			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Yes" : "No"]</a><br>"
@@ -1156,7 +1158,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hotkeys")
 					hotkeys = !hotkeys
-
+				if("action_buttons")
+					buttons_locked = !buttons_locked
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
 				if("tgui_lock")

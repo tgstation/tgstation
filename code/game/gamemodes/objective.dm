@@ -89,11 +89,13 @@
 
 /datum/objective/assassinate/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+		var/mob/living/carbon/human/H
+		if(ishuman(target.current))
+			H = target.current
+		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || (H && H.dna.species.id == "memezombies")) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return TRUE
 		return FALSE
 	return TRUE
-
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -152,7 +154,10 @@
 
 /datum/objective/maroon/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+		var/mob/living/carbon/human/H
+		if(ishuman(target.current))
+			H = target.current
+		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || (H && H.dna.species.id == "memezombies")) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return TRUE
 		if(target.current.onCentcom() || target.current.onSyndieBase())
 			return FALSE

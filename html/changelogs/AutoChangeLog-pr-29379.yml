@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - tweak: "You can now control-click action buttons to lock them and prevent them from being moved. Alt-clicking the \"Show/Hide Actions\" button will unlock all buttons."
+  - tweak: "There is now a preference for if buttons should be locked by default or not."

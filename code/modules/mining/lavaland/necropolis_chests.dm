@@ -835,7 +835,7 @@
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
-	var/turf_type = /turf/open/floor/plating/lava/smooth
+	var/turf_type = /turf/open/lava/smooth
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
 	var/reset_string = "basalt"

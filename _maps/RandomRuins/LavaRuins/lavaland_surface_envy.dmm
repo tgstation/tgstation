@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -6,12 +6,10 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/closed/wall/rust,
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/mirror{
@@ -22,9 +20,7 @@
 	},
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "f" = (
 /obj/structure/mirror{
@@ -34,7 +30,6 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
@@ -46,26 +41,18 @@
 	pixel_x = -28;
 	broken = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "h" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "i" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "j" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/mirror{
@@ -74,9 +61,7 @@
 	broken = 1
 	},
 /obj/item/weapon/kitchen/knife/envy,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/mirror{
@@ -85,9 +70,7 @@
 	pixel_x = 28;
 	broken = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
 /obj/structure/mirror{
@@ -96,13 +79,10 @@
 	pixel_x = -28;
 	broken = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "n" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	broken = 1;
 	icon_state = "platingdmg2"
 	},
@@ -115,16 +95,17 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
 "p" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"r" = (
+/obj/effect/baseturf_helper,
+/turf/closed/wall/rust,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -181,7 +162,7 @@ d
 d
 d
 d
-d
+r
 d
 d
 d

@@ -59,16 +59,16 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_version")]")
-			db_version.Execute()
-			if(db_version.NextRow())
-				var/db_major = db_version.item[1]
-				var/db_minor = db_version.item[2]
+			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_version")] ORDER BY date DESC LIMIT 1")
+			query_db_version.Execute()
+			if(query_db_version.NextRow())
+				var/db_major = query_db_version.item[1]
+				var/db_minor = query_db_version.item[2]
 				if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
-					message_admins("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					message_admins("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 			else
-				message_admins("Could not get schema version from db")
+				message_admins("Could not get schema version from database")
 		else
 			log_world("Your server failed to establish a connection with the database.")
 
@@ -105,10 +105,10 @@
 
 /world/Topic(T, addr, master, key)
 	var/list/input = params2list(T)
-	
+
 	var/pinging = ("ping" in input)
 	var/playing = ("players" in input)
-	
+
 	if(!pinging && !playing && config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
