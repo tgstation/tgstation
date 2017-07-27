@@ -212,6 +212,6 @@
 /obj/item/clothing/mask/scarecrow
 	name = "sack mask"
 	desc = "A burlap sack with eyeholes."
-	icon_state = "scarecrow_mask"
-	item_state = "scarecrow_mask"
+	icon_state = "scarecrow_sack"
+	item_state = "scarecrow_sack"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
