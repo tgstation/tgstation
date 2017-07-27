@@ -43472,6 +43472,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -65360,6 +65361,8 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cuT" = (

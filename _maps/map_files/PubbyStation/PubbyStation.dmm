@@ -41250,6 +41250,7 @@
 	pixel_x = 26;
 	pixel_y = 26
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -42930,6 +42931,8 @@
 	icon_state = "1-2"
 	},
 /obj/item/stack/cable_coil,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bOg" = (

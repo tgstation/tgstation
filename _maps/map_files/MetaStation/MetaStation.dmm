@@ -17540,6 +17540,8 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -27010,6 +27012,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
