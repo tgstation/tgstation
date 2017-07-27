@@ -201,3 +201,17 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+/obj/item/clothing/mask/mummy
+	name = "mummy mask"
+	desc = "Ancient bandages."
+	icon_state = "mummy_mask"
+	item_state = "mummy_mask"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/mask/scarecrow
+	name = "sack mask"
+	desc = "A burlap sack with eyeholes."
+	icon_state = "scarecrow_mask"
+	item_state = "scarecrow_mask"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
