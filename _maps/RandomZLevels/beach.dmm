@@ -76,18 +76,18 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/beach)
 "ap" = (
-/turf/open/floor/plasteel/white,
 /obj/structure/mirror{
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/white,
 /area/awaymission/beach)
 "aq" = (
-/turf/open/floor/plasteel/white,
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/white,
 /area/awaymission/beach)
 "ar" = (
 /obj/effect/decal/cleanable/dirt,
@@ -119,8 +119,8 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/beach)
 "aw" = (
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel/white,
-/turf/open/floor/plasteel/sandeffect,
 /area/awaymission/beach)
 "ax" = (
 /obj/machinery/shower{
@@ -180,27 +180,27 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aF" = (
-/turf/open/floor/plating/beach/sand,
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aG" = (
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating/beach/sand,
-/turf/open/floor/plasteel/sandeffect,
 /area/awaymission/beach)
 "aH" = (
-/turf/open/floor/plasteel/white,
 /obj/machinery/door/airlock/sandstone,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/white,
 /area/awaymission/beach)
 "aI" = (
 /obj/structure/table,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aJ" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aK" = (
 /obj/structure/table/wood,
@@ -211,33 +211,30 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aM" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aN" = (
-/turf/open/floor/plating/beach/sand,
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aO" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aP" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aQ" = (
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/plating/beach/sand,
 /area/space)
 "aR" = (
-/turf/open/floor/plating/beach/sand{
-	density = 1;
-	opacity = 1
-	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aS" = (
 /obj/machinery/door/airlock/sandstone,
@@ -253,31 +250,31 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aV" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/sandeffect/warning{
+/obj/effect/turf_decal/sand/warning{
 	dir = 9
 	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aW" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/sandeffect/warning{
+/obj/effect/turf_decal/sand/warning{
 	dir = 1
 	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aX" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/sandeffect/warning{
+/obj/effect/turf_decal/sand/warning{
 	dir = 5
 	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aY" = (
 /obj/structure/sign/barsign,
@@ -288,66 +285,66 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "ba" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/sandeffect/warning{
+/obj/effect/turf_decal/sand/warning{
 	dir = 8
 	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bb" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway/centeraway,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bc" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/sandeffect/warning{
+/obj/effect/turf_decal/sand/warning{
 	dir = 4
 	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bd" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/sandeffect/warning{
+/obj/effect/turf_decal/sand/warning{
 	dir = 10
 	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "be" = (
-/turf/open/floor/plating/beach/sand,
-/turf/open/floor/plasteel/sandeffect/warning/corner{
+/obj/effect/turf_decal/sand/warning/corner{
 	dir = 1
 	},
 /obj/machinery/gateway,
-/turf/open/floor/plasteel/sandeffect/warning/corner,
+/obj/effect/turf_decal/sand/warning/corner,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bf" = (
-/turf/open/floor/plating/beach/sand,
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/sandeffect/warning{
+/obj/effect/turf_decal/sand/warning{
 	dir = 6
 	},
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bg" = (
-/turf/open/floor/plating/beach/sand,
 /obj/structure/closet/athletic_mixed,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bh" = (
-/turf/open/floor/plating/beach/sand,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/sandeffect,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bi" = (
 /obj/effect/overlay/palmtree_l,
