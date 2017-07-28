@@ -20,6 +20,10 @@
 			else
 				M.playsound_local(src, 'sound/magic/blink.ogg', 50, FALSE)
 
+/obj/effect/clockwork/city_of_cogs_rift/Destroy()
+	visible_message("<span class='warning'>[src] cracks as it destabilizes and breaks apart!</span>")
+	return ..()
+
 /obj/effect/clockwork/city_of_cogs_rift/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/nullrod))
 		to_chat(user, "<span class='warning'>Your [I.name] seems to have no effect on [src]!</span>")

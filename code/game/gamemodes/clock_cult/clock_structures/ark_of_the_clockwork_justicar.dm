@@ -174,8 +174,6 @@
 			if(iswallturf(T))
 				var/turf/closed/wall/W = T
 				W.dismantle_wall()
-			else if(t && (isclosedturf(T) || !is_blocked_turf(T)))
-				T.ChangeTurf(/turf/open/floor/clockwork)
 		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
 		if(dist < convert_dist)
 			T.ratvar_act(FALSE, TRUE, 3)
