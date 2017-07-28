@@ -1918,7 +1918,6 @@
 #include "code\modules\projectiles\guns\mounted.dm"
 #include "code\modules\projectiles\guns\syringe_gun.dm"
 #include "code\modules\projectiles\guns\ballistic\automatic.dm"
-#include "code\modules\projectiles\guns\ballistic\bow.dm"
 #include "code\modules\projectiles\guns\ballistic\laser_gatling.dm"
 #include "code\modules\projectiles\guns\ballistic\launchers.dm"
 #include "code\modules\projectiles\guns\ballistic\pistol.dm"
