@@ -435,6 +435,7 @@
 		/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 		/obj/item/weapon/pen,
 		/obj/item/toy/crayon/spraycan/borg,
+		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/hand_labeler/borg,
 		/obj/item/weapon/razor,
 		/obj/item/device/instrument/violin,
