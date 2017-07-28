@@ -679,8 +679,8 @@
 	item_color = "mummy"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
-	can_adjust = 0
-	resistance_flags = 0
+	can_adjust = FALSE
+	resistance_flags = NONE
 
 /obj/item/clothing/under/scarecrow
 	name = "scarecrow clothes"
@@ -690,8 +690,8 @@
 	item_color = "scarecrow"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
-	can_adjust = 0
-	resistance_flags = 0
+	can_adjust = FALSE
+	resistance_flags = NONE
 
 /obj/item/clothing/under/skeleton
 	name = "skeleton jumpsuit"
@@ -701,5 +701,5 @@
 	item_color = "skeleton"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
-	can_adjust = 0
-	resistance_flags = 0
+	can_adjust = FALSE
+	resistance_flags = NONE
