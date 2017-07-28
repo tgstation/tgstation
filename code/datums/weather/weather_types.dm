@@ -99,7 +99,7 @@
 		var/thermal_protection = H.get_thermal_protection()
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 			return TRUE
-	if(istype(L.loc, /mob) && L.loc != L) //Matryoshka check
+	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
 		return is_ash_immune(L.loc)
 	return FALSE //RIP you
 
