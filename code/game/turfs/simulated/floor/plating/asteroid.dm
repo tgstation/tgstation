@@ -118,7 +118,7 @@
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -145,7 +145,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 
 
 
