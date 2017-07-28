@@ -48,8 +48,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/B_monkey = 2048
 		var/B_gang = 4096
 		var/B_abductor = 16384
+		var/B_shadowling = 8192
 
-		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_abductor)
+		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_shadowling,B_abductor)
 
 		be_special = list()
 
@@ -83,6 +84,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						be_special += ROLE_MONKEY
 					if(4096)
 						be_special += ROLE_GANG
+					if(8192)
+						be_special += ROLE_SHADOWLING
 					if(16384)
 						be_special += ROLE_ABDUCTOR
 

@@ -19,7 +19,7 @@
 
 /obj/item/weapon/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
 	if(..())
-		if((target.mind in (SSticker.mode.head_revolutionaries | SSticker.mode.get_gang_bosses())))
+		if((target.mind in (SSticker.mode.head_revolutionaries | SSticker.mode.get_gang_bosses()) | is_shadow_or_thrall(target)))
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
