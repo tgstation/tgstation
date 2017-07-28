@@ -88,7 +88,7 @@
 					playsound(user, fartsound, 50, 1, 5)
 			else if(istype(O, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/J = O
-				if(J.welding == 1 && user.loc)
+				if(J.welding && user.loc)
 					new/obj/effect/hotspot(user.loc)
 					playsound(user, fartsound, 50, 1, 5)
 			else if(istype(O, /obj/item/weapon/bikehorn))
@@ -107,11 +107,12 @@
 		sleep(1)
 		if(lose_butt)
 			B.Remove(user)
+			B.forceMove(get_turf(user))
 			new bloodkind(user.loc)
-			user.nutrition -= rand(5, 20)
+			user.nutrition = max(user.nutrition - rand(5, 20), NUTRITION_LEVEL_STARVING)
 			user.visible_message("<span class='warning'><b>[user]</b> blows their ass off!</span>", "<span class='warning'>Holy shit, your butt flies off in an arc!</span>")
 		else
-			user.nutrition -= rand(2, 10)
+			user.nutrition = max(user.nutrition - rand(2, 10), NUTRITION_LEVEL_STARVING)
 		..()
 		if(!ishuman(user)) //nonhumans don't have the message appear for some reason
 			user.visible_message("<b>[user]</b> [message]")
@@ -131,7 +132,7 @@
 	if(B.loose)
 		to_chat(user, "<span class='danger'>Your butt's too loose to superfart!</span>")
 		return
-	B.loose = 1 // to avoid spamsuperfart
+	B.loose = TRUE // to avoid spamsuperfart
 	var/fart_type = 1 //Put this outside probability check just in case. There were cases where superfart did a normal fart.
 	if(prob(76)) // 76%     1: ASSBLAST  2:SUPERNOVA  3: FARTFLY
 		fart_type = 1
@@ -181,7 +182,8 @@
 				O.throw_at(target,range,O.throw_speed)
 		B.Remove(user)
 		B.forceMove(get_turf(user))
-		if(B.loose) B.loose = 0
+		if(B.loose)
+			B.loose = FALSE
 		new /obj/effect/decal/cleanable/blood(user.loc)
 		user.nutrition = max(user.nutrition - 500, NUTRITION_LEVEL_STARVING)
 		switch(fart_type)
@@ -195,7 +197,7 @@
 
 			if(2)
 				user.visible_message("<span class='warning'><b>[user]</b> rips their ass apart in a massive explosion!</span>", "<span class='warning'>Holy shit, your butt goes supernova!</span>")
-				explosion(user.loc, 0, 1, 3, adminlog = 0, flame_range = 3)
+				explosion(user.loc, 0, 1, 3, adminlog = FALSE, flame_range = 3)
 				user.gib()
 
 			if(3)
