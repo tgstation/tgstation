@@ -78,56 +78,6 @@
 	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 	animate(src, transform = M, time = duration, flags = ANIMATION_PARALLEL)
 
-/obj/effect/temp_visual/ratvar/volt_hit
-	name = "volt blast"
-	layer = ABOVE_MOB_LAYER
-	duration = 8
-	icon_state = "volt_hit"
-	light_range = 1.5
-	light_power = 2
-	light_color = LIGHT_COLOR_ORANGE
-	var/mob/user
-	var/damage = 25
-
-/obj/effect/temp_visual/ratvar/volt_hit/Initialize(mapload, caster)
-	. = ..()
-	user = caster
-	if(user)
-		var/matrix/M = new
-		M.Turn(Get_Angle(src, user))
-		transform = M
-	INVOKE_ASYNC(src, .proc/volthit)
-
-/obj/effect/temp_visual/ratvar/volt_hit/proc/volthit()
-	if(user)
-		Beam(get_turf(user), "volt_ray", time=duration, maxdistance=8, beam_type=/obj/effect/ebeam/volt_ray)
-	var/hit_amount = 0
-	var/turf/T = get_turf(src)
-	for(var/mob/living/L in T)
-		if(is_servant_of_ratvar(L))
-			continue
-		var/obj/item/I = L.null_rod_check()
-		if(I)
-			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
-			continue
-		L.visible_message("<span class='warning'>[L] is struck by a [name]!</span>", "<span class='userdanger'>You're struck by a [name]!</span>")
-		L.apply_damage(damage, BURN, "chest", L.run_armor_check("chest", "laser", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 0, "Your armor was penetrated by [src]!"))
-		add_logs(user, L, "struck with a volt blast")
-		hit_amount++
-	for(var/obj/mecha/M in T)
-		if(M.occupant)
-			if(is_servant_of_ratvar(M.occupant))
-				continue
-			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
-		M.visible_message("<span class='warning'>[M] is struck by a [name]!</span>")
-		M.take_damage(damage, BURN, 0, 0)
-		hit_amount++
-	if(hit_amount)
-		playsound(src, 'sound/machines/defib_zap.ogg', damage*hit_amount, 1, -1)
-	else
-		playsound(src, "sparks", 50, 1)
-
 /obj/effect/temp_visual/ratvar/ocular_warden
 	name = "warden's gaze"
 	layer = ABOVE_MOB_LAYER

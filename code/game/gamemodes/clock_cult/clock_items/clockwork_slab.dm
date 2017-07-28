@@ -58,13 +58,11 @@
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
 	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armory)
 
-/obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/channeled/volt_blaster)
+/obj/item/clockwork/slab/cyborg/security //three scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade)
 
-/obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/channeled/volt_blaster)
+/obj/item/clockwork/slab/cyborg/peacekeeper //three scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade)
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
@@ -74,8 +72,8 @@
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
-/obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster)
+/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
@@ -400,18 +398,19 @@
 			dat += "<font color=#BE8700><b>Servant:</b></font> A person or robot who serves Ratvar. You are one of these.<br>"
 			dat += "<font color=#BE8700><b>Cache:</b></font> A <i>Tinkerer's Cache</i>, which is a structure that stores and creates components.<br>"
 			dat += "<font color=#BE8700><b>CV:</b></font> Construction Value. All clockwork structures, floors, and walls increase this number.<br>"
+			dat += "<font color=#BE8700><b>Vitality:</b></font> Used for healing effects, produced by Ratvarian spear attacks and Vitality Matrices.<br>"
 			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into Servants of Ratvar.<br>"
 			dat += "<font color=#6E001A><b>[get_component_icon(BELLIGERENT_EYE)]BE:</b></font> Belligerent Eye, a component type used in offensive scriptures.<br>"
 			dat += "<font color=#1E8CE1><b>[get_component_icon(VANGUARD_COGWHEEL)]VC:</b></font> Vanguard Cogwheel, a component type used in defensive scriptures.<br>"
 			dat += "<font color=#AF0AAF><b>[get_component_icon(GEIS_CAPACITOR)]GC:</b></font> Geis Capacitor, a component type used in mind-related scriptures.<br>"
 			dat += "<font color=#5A6068><b>[get_component_icon(REPLICANT_ALLOY)]RA:</b></font> Replicant Alloy, a component type used in construction scriptures.<br>"
-			dat += "<font color=#DAAA18><b>[get_component_icon(HIEROPHANT_ANSIBLE)]HA:</b></font> Hierophant Ansible, a component type used in energy scriptures.<br>"
+			dat += "<font color=#DAAA18><b>[get_component_icon(HIEROPHANT_ANSIBLE)]HA:</b></font> Hierophant Ansible, a component type used in energy-related scriptures.<br>"
 			dat += "<font color=#BE8700><b>Ark:</b></font> The cult's win condition, a huge structure that needs to be defended.<br><br>"
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
 			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
-			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can stun everything in an area after a delay.<br>"
+			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can smite an area for a brief stun and delayed explosion.<br>"
 			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (x-ray, night vision) but damage the wearer's eyes.<br>"
-			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon.<br>"
+			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon that produces Vitality.<br>"
 			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"
 			dat += "<font color=#BE8700><b>Marauder:</b></font> A clockwork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
@@ -425,6 +424,7 @@
 			dat += "<i>Note: Sigils can be stacked on top of one another, making certain sigils very effective when paired!</i><br>"
 			dat += "<font color=#BE8700><b>Transgression:</b></font> Stuns the first non-Servant to cross it for ten seconds and blinds others nearby. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Submission:</b></font> Converts the first non-Servant to stand on the sigil for seven seconds. Disappears on use.<br>"
+			dat += "<font color=#BE8700><b>Matrix:</b></font> Drains health from non-Servants, producing Vitality. Can heal and revive Servants.<br>"
 			dat += "<font color=#BE8700><b>Accession:</b></font> Identical to the Sigil of Submission, but doesn't disappear on use. It can also convert a single mindshielded target, but will disappear after doing this.<br>"
 			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create additional power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
@@ -458,7 +458,7 @@
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
 			dat += "<font color=#1E8CE1>[get_component_icon(VANGUARD_COGWHEEL)]VC</font> Vanguard Cogwheels are defensive and repairing, and are used in defensive scripture;<br>"
-			dat += "<font color=#AF0AAF>[get_component_icon(GEIS_CAPACITOR)]GC</font> Geis Capacitors are for conversion and control, and are used in mind-related scripture;<br>" //References the old name
+			dat += "<font color=#AF0AAF>[get_component_icon(GEIS_CAPACITOR)]GC</font> Geis Capacitors are for conversion and control, and are used in mind-related scripture;<br>"
 			dat += "<font color=#5A6068>[get_component_icon(REPLICANT_ALLOY)]RA</font> Replicant Alloy is a strong, malleable metal and is used for construction and creation;<br>"
 			dat += "<font color=#DAAA18>[get_component_icon(HIEROPHANT_ANSIBLE)]HA</font> Hierophant Ansibles are for transmission and power, and are used in power and teleportation scripture<br><br>"
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \

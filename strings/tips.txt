@@ -157,7 +157,7 @@ As a Cultist, you can create an army of manifested goons using a combination of 
 As a Cultist or Servant, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
 As a Servant, your Clockwork Slab fits in pockets and does not need to be held to communicate with other Servants.
 As a Servant, remember that while the selection of scripture and tools Servant cyborgs get is limited, it is still extremely useful, and some of it is unique; for example, engineering and janitor cyborgs get a proselytizer that can use their own power in addition to its own.
-As a Servant, the Judicial Visor is an effective defensive combat tool in small spaces, as it stuns and mutes anyone still on it after 3 seconds. It is also useful for stunning already-stunned enemies for long enough to convert them or finish them off.
+As a Servant, the Judicial Visor is an effective defensive combat tool in small spaces, as it immediately slows and briefly knocks down enemies hit while giving them incentive to avoid staying in the hit area.
 As a Servant, making, and protecting, Tinkerer's Caches is extremely important, as caches are required to unlock scripture and share components.
 As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-Servant that can see them and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
 As a Servant, Clockwork Structures that require power will draw power from the APC if they cannot find a different source of power, and most power-using Structures will rapidly drain the APC.
@@ -171,7 +171,6 @@ As a Servant, you can deconstruct a Clockwork Wall with a Replica Fabricator to 
 As a Servant, Fellowship Armory invokes much faster for each nearby servant and attempts to provide each affected servant with powerful armor against melee, bullet, and bomb attacks. The gauntlets provided are also immune to elecricity.
 As a Servant, Spatial Gateway can teleport to any living Servant or Clockwork Obelisk, and gains additional uses and duration for each Servant assisting in the invocation.
 As a Servant, creating and activating the Gateway to the Celestial Derelict is your ultimate goal, and you must defend it with all the tools you have available.
-As a Servant, you can impale human targets with a Ratvarian Spear by pulling them, then attacking them. This does massive damage and stuns them, and should effectively win the fight.
 As a Servant, Sentinel's Compromise can instantly return you or another Servant to a fighting state by converting half of all their brute, burn, and oxygen damage to toxin, effectively halving the damage they have. Clockwork Floors will also rapidly heal toxin damage in Servants, allowing the Compromise more effectiveness.
 As a Servant, Belligerent and Taunting Tirade are extremely powerful for disabling and disrupting large groups of enemies, though they render you somewhat vulnerable, as Belligerent requires that you stand still, and Taunting Tirade makes you extremely obvious.
 As a Servant, you can unwrench Clockwork Structures to move them around.

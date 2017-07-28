@@ -326,8 +326,7 @@
 	stat_affected = DEAD
 	resist_string = "glows shimmering yellow"
 	sigil_name = "Vitality Matrix"
-	var/static/vitality = 0
-	var/base_revive_cost = 20
+	var/revive_cost = 150
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
@@ -335,11 +334,11 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='[vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>")
+		to_chat(user, "<span class='[GLOB.clockwork_vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":GLOB.clockwork_vitality]</b> units of vitality.</span>")
 		if(GLOB.ratvar_awakens)
 			to_chat(user, "<span class='inathneq_small'>It can revive Servants at no cost!</span>")
 		else
-			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[base_revive_cost]</b> vitality plus vitality equal to the non-oxygen damage they have, in addition to being destroyed in the process.</span>")
+			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[revive_cost]</b> vitality.</span>")
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
@@ -348,7 +347,7 @@
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || GLOB.clockwork_vitality))) && get_turf(L) == get_turf(src))
 		sigil_active = TRUE
 		if(animation_number >= 4)
 			new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
@@ -373,40 +372,37 @@
 				else
 					vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
-				vitality += vitality_drained
+				GLOB.clockwork_vitality += vitality_drained
 			else
 				break
 		else
 			if(L.stat == DEAD)
-				var/revival_cost = base_revive_cost + L.getCloneLoss() + L.getToxLoss() + L.getFireLoss() + L.getBruteLoss() //ignores oxygen damage
+				var/revival_cost = revive_cost
 				if(GLOB.ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
-				if(vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
+				if(GLOB.clockwork_vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
 					if(ghost)
 						ghost.reenter_corpse()
 					L.revive(1, 1)
 					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
 					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, [GLOB.ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \
-					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
-					vitality -= revival_cost
-					if(!GLOB.ratvar_awakens)
-						qdel(src)
+					L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] body dripping blue ichor!</span>", "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
+					GLOB.clockwork_vitality -= revival_cost
 				break
 			var/vitality_for_cycle = 3
 			if(!GLOB.ratvar_awakens)
 				if(L.stat == CONSCIOUS)
 					vitality_for_cycle = 2
-				vitality_for_cycle = min(vitality, vitality_for_cycle)
+				vitality_for_cycle = min(GLOB.clockwork_vitality, vitality_for_cycle)
 			var/vitality_used = L.heal_ordered_damage(vitality_for_cycle, damage_heal_order)
 
 			if(!vitality_used)
 				break
 
 			if(!GLOB.ratvar_awakens)
-				vitality -= vitality_used
+				GLOB.clockwork_vitality -= vitality_used
 
 		sleep(2)
 
