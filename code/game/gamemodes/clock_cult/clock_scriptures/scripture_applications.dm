@@ -151,46 +151,24 @@
 	return TRUE
 
 
-//Sigil of Transmission: Creates a sigil of transmission that can store power for clockwork structures.
+//Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
 /datum/clockwork_scripture/create_object/sigil_of_transmission
-	descname = "Structure Battery"
+	descname = "Structure Power Generator & Battery"
 	name = "Sigil of Transmission"
-	desc = "Places a sigil that stores energy to power clockwork structures."
+	desc = "Places a sigil that can drain and will store energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
 	consumed_components = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 4)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
-	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it.</span>"
+	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it and will drain power when activated.</span>"
 	usage_tip = "Cyborgs can charge from this sigil by remaining over it for 5 seconds."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transmission, which stores power for clockwork structures."
-
-
-//Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils of transmission.
-/datum/clockwork_scripture/create_object/interdiction_lens
-	descname = "Structure, Area Sabotage, Power Generator"
-	name = "Interdiction Lens"
-	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
-	invocations = list("May this totem...", "...shroud the false suns!")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 5, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
-	object_path = /obj/structure/destructible/clockwork/powered/interdiction_lens
-	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
-	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission or the area's APC and fails to disable even one thing, it will disable itself for two minutes."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 6
-	quickbind = TRUE
-	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
+	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
 
 //Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
