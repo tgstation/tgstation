@@ -5,6 +5,18 @@
 	{{#if data.ddisk_update}}
 		<ui-display title='Design Disk Updating'></ui-display>
 	{{else}}
-		
+		<ui-display title='Design Disk'>
+			<ui-section title='Disk Space'>Disk Capacity: {{data.ddisk_size}} blueprints.</ui-section>
+			<ui-section title='Disk IO'><ui-button action='ddisk_upall'>Upload all designs</ui-button></ui-section>
+			<ui-section title='Clear Disk'><ui-button action='clear_designdisk' style='danger'>WIPE ALL DATA</ui-button></ui-section>
+		</ui-display>
+		<ui-display title='Disk Contents'>
+			{{#each data.ddisk_designs}}
+				<ui-section title='Number'>#{{pos}}: 
+					<ui-button action='select_design' params='{"id": "{{id}}"}' state='{{id == "null"? "disabled" : "{{data.sdesign_id == id ? "selected" : null}}"}}'>{{name}}</ui-button>
+					<ui-button action='ddisk_erasepos' style='danger' params='{"id": "{{id}}"}' state='{{id == "null"? "disabled" : null}}'>Delete Slot</ui-button>
+				</ui-section>
+			{{/each}}
+		</ui-display>	
 	{{/if}}
 {{/if}}

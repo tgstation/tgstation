@@ -390,8 +390,14 @@ doesn't have toxins access.
 		var/datum/design/D = matching_designs_protolathe[v]
 		data["alldesigns"] += list(list("name" = D.name, "id" = D.id))
 	if(d_disk)
+		data["ddisk_size"] = d_disk.max_blueprints
 		data["ddisk_designs"] = list()
-
+		for(var/i in 1 to d_disk.max_blueprints)
+			var/datum/design/D = d_disk.blueprints[i]
+			if(istype(D))
+				data["ddisk_designs"] += list(list("pos" = "[i]", "name" = D.name, "id" = D.id))
+			else
+				data["ddisk_designs"] += list(list("pos" = "[i]", "name" = "Empty Slot", "id" = "null"))
 	if(t_disk)
 		data["tdisk_nodes"] = list()
 		for(var/v in t_disk.stored_research.researched_nodes)
@@ -494,6 +500,8 @@ doesn't have toxins access.
 				say("Uploading research from disk.")
 				tdisk_update = TRUE
 				addtimer(CALLBACK(src, .proc/tdisk_update_complete), 50)
+		if("ddisk_erasepos")
+
 	SStgui.try_update_ui(usr, src, "rdconsole")			//Force refresh.
 
 /obj/machinery/computer/rdconsole/proc/tdisk_update_complete()
