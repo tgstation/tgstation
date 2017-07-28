@@ -1,5 +1,0 @@
-author: "JStheguy"
-delete-after: True
-changes: 
-  - imageadd: "Resprited the tablet, including completely redone screen sprites."
-  - rscadd: "Tablets can now come spawn in one of 5 colors; red, green, yellow, blue, and black."

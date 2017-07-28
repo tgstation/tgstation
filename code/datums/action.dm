@@ -45,6 +45,7 @@
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
+			button.locked = M.client.prefs.buttons_locked
 		M.update_action_buttons()
 	else
 		Remove(owner)
@@ -57,6 +58,7 @@
 		M.update_action_buttons()
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
+	button.locked = FALSE
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -166,6 +168,10 @@
 
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
+	
+/datum/action/item_action/rcl
+	name = "Change Cable Color"
+	button_icon_state = "rcl_rainbow"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"

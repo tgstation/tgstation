@@ -394,11 +394,11 @@
 
 /obj/item/weapon/bombcore/chemical
 	name = "chemical payload"
-	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. It is able to hold up to four chemical containers, and must be loaded before use."
+	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. Properties of the core may vary with grenade casing type, and must be loaded before use."
 	origin_tech = "combat=4;materials=3"
 	icon_state = "chemcore"
 	var/list/beakers = list()
-	var/max_beakers = 1
+	var/max_beakers = 1 // Read on about grenade casing properties below
 	var/spread_range = 5
 	var/temp_boost = 50
 	var/time_release = 0

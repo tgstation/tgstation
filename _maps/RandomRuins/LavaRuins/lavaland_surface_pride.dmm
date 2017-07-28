@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -6,47 +6,23 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"d" = (
-/turf/closed/wall/mineral/diamond{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
 "e" = (
 /obj/structure/mirror{
 	pixel_x = -32
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "f" = (
 /obj/structure/mirror{
 	pixel_x = 32
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "g" = (
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
-"h" = (
-/obj/structure/mirror/magic/pride,
-/turf/closed/wall/mineral/diamond{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"i" = (
-/obj/machinery/door/airlock/diamond,
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	blocks_air = 1
-	},
-/area/ruin/powered)
 "j" = (
 /obj/structure/mirror{
 	pixel_x = -32
@@ -54,9 +30,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "k" = (
 /obj/structure/mirror{
@@ -65,9 +39,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "l" = (
 /obj/structure/mirror{
@@ -77,9 +49,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "m" = (
 /obj/structure/mirror{
@@ -88,66 +58,27 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"n" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"o" = (
-/obj/structure/mirror{
-	pixel_x = 32
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"p" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered/pride)
-"q" = (
-/obj/structure/mirror{
-	pixel_x = 32
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "r" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
-"s" = (
-/obj/machinery/light/small,
+"u" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"G" = (
+/turf/closed/wall/mineral/diamond,
+/area/ruin/powered/pride)
+"O" = (
+/obj/structure/mirror/magic/pride,
+/turf/closed/wall/mineral/diamond,
+/area/ruin/powered/pride)
+"Y" = (
+/obj/machinery/door/airlock/diamond,
 /turf/open/floor/mineral/silver{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	blocks_air = 1
 	},
 /area/ruin/powered/pride)
 
@@ -199,53 +130,53 @@ a
 b
 c
 c
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
 c
 a
 "}
 (4,1,1) = {"
 c
 c
-d
-d
-d
+G
+G
+G
 j
 e
 e
 l
 e
 e
-n
+l
 e
 e
-p
+l
 e
 e
-d
+G
 c
 a
 "}
 (5,1,1) = {"
 c
-d
-d
-d
-d
-d
+G
+G
+G
+G
+G
 g
 g
 g
@@ -257,39 +188,39 @@ g
 g
 g
 r
-d
+G
 a
 a
 "}
 (6,1,1) = {"
 c
-d
-d
-d
-d
-d
-h
+G
+G
+G
+G
+G
+O
 g
 g
 g
 g
 g
+u
 g
 g
 g
 g
-g
-i
+Y
 a
 a
 "}
 (7,1,1) = {"
 c
-d
-d
-d
-d
-d
+G
+G
+G
+G
+G
 g
 g
 g
@@ -300,30 +231,30 @@ g
 g
 g
 g
-s
-d
+r
+G
 c
 a
 "}
 (8,1,1) = {"
 c
 c
-d
-d
-d
+G
+G
+G
 k
 f
 f
 m
 f
 f
-o
+m
 f
 f
-q
+m
 f
 f
-d
+G
 c
 a
 "}
@@ -331,21 +262,21 @@ a
 b
 c
 c
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
 c
 a
 "}

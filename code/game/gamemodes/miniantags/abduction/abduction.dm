@@ -210,7 +210,6 @@
 
 // OBJECTIVES
 /datum/objective/experiment
-	dangerrating = 10
 	target_amount = 6
 	var/team
 
