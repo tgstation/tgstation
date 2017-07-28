@@ -146,6 +146,9 @@
 /obj/structure/destructible/clockwork/massive/singularity_pull(S, current_size)
 	return
 
+/obj/structure/destructible/clockwork/massive/make_frozen_visual()
+	return //ratvar cannot and should not be frozen thanks
+
 
 //the base clockwork machinery, which is not actually machines, but happens to use power
 /obj/structure/destructible/clockwork/powered
