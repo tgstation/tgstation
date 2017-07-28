@@ -1099,11 +1099,7 @@
 	pixel_y = 30
 	},
 /obj/structure/table,
-/obj/item/weapon/paper{
-	anchored = 0;
-	info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the cargo office for smelting. PLEASE! <br><br>--The Research Staff";
-	name = "URGENT!"
-	},
+/obj/item/weapon/paper/fluff/stations/lavaland/orm_notice,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "de" = (
