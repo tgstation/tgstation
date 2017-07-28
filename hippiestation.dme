@@ -1112,6 +1112,7 @@
 #include "code\modules\awaymissions\zlevel.dm"
 #include "code\modules\awaymissions\mission_code\Academy.dm"
 #include "code\modules\awaymissions\mission_code\Cabin.dm"
+#include "code\modules\awaymissions\mission_code\caves.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
 #include "code\modules\awaymissions\mission_code\moonoutpost19.dm"
