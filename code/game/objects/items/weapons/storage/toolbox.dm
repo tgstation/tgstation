@@ -150,6 +150,10 @@
 	new /obj/item/weapon/crowbar/brass(src)
 	new /obj/item/weapon/weldingtool/experimental/brass(src)
 
+/obj/item/weapon/storage/toolbox/brass/prefilled/servant
+	slot_flags = SLOT_BELT
+	fabricator_type = null
+
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
 	var/slab_type = /obj/item/clockwork/slab
 

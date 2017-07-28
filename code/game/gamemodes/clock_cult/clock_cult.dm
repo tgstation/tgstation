@@ -94,38 +94,41 @@ Credit where due:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 24
-	required_enemies = 3
+	required_players = 1 //24
+	required_enemies = 1 //3
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
 	announce_span = "brass"
 	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
-	<span class='brass'>Servants</span>: Take over the station and summon Ratvar.\n\
+	<span class='brass'>Servants</span>: Construct defenses to protect the Ark. Sabotage the station!\n\
 	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
 	var/servants_to_serve = list()
 	var/roundstart_player_count
+	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 20 + (number of players / 5)
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = 3 //Guaranteed three servants
-	var/number_players = num_players()
+	var/starter_servants = 1 //Guaranteed three servants
+	/*var/number_players = num_players()
 	roundstart_player_count = number_players
 	if(number_players > 30) //plus one servant for every additional 15 players
 		number_players -= 30
-		starter_servants += round(number_players/15)
+		starter_servants += round(number_players/15)*/
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
 		modePlayer += servant
+		servant.assigned_role = "Servant of Ratvar"
 		servant.special_role = "Servant of Ratvar"
-		servant.restricted_roles = restricted_jobs
 		starter_servants--
+	ark_time = 25 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
+	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
@@ -133,6 +136,9 @@ Credit where due:
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
+		var/turf/T = pick(GLOB.servant_spawns)
+		L.forceMove(T)
+		GLOB.servant_spawns -= T
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
@@ -142,16 +148,17 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
 		return 0
-	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
-	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
-	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
-	to_chat(M, greeting_text)
+	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")
+	to_chat(M, "<span class='brass'>You have approximately <b>[ark_time]</b> minutes until the Ark activates.</span>")
 	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
 	return 1
 
-/datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
-	if(!L || !istype(L))
+/datum/game_mode/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob, with one of each component
+	if(!M || !ishuman(M))
 		return FALSE
+	var/mob/living/carbon/human/L = M
+	L.set_species(/datum/species/human)
+	L.equipOutfit(/datum/outfit/servant_of_ratvar)
 	var/obj/item/clockwork/slab/starter/S = new/obj/item/clockwork/slab/starter(null) //start it off in null
 	var/slot = "At your feet"
 	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
@@ -164,10 +171,9 @@ Credit where due:
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
 	if(S && !QDELETED(S))
-		to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
-		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>")
-		to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>")
+		to_chat(L, "<span class='alloy'>[slot] is a clockwork slab, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
+		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
+		to_chat(L, "<span class='italics alloy'>Alternatively, check out the wiki page at <b>https://tgstation13.org/wiki/Clockwork_Cult</b>, which contains additional information.</span>")
 		return TRUE
 	return FALSE
 
@@ -225,3 +231,20 @@ Credit where due:
 	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]
 	A.leave_hud(M.current)
 	set_antag_hud(M.current, null)
+
+
+
+//Servant of Ratvar outfit
+/datum/outfit/servant_of_ratvar
+	name = "Servant of Ratvar"
+
+	uniform = /obj/item/clothing/under/color/yellow
+	shoes = /obj/item/clothing/shoes/sneakers/green
+	back = /obj/item/weapon/storage/backpack
+	ears = /obj/item/device/radio/headset
+	gloves = /obj/item/clothing/gloves/color/yellow
+	belt = /obj/item/weapon/storage/belt/utility/servant
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1)
+
+/datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H)
+	H.faction |= "ratvar"

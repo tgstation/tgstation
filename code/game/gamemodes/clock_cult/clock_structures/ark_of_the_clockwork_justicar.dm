@@ -25,9 +25,15 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
 	. = ..()
 	glow = new(get_turf(src))
+	if(!GLOB.ark_of_the_clockwork_justiciar)
+		GLOB.ark_of_the_clockwork_justiciar = src
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
+	if(GLOB.ark_of_the_clockwork_justiciar == src)
+		GLOB.ark_of_the_clockwork_justiciar = null
+	return ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
-	set waitfor = FALSE
 	hierophant_message("<span class='nezbere_large'>\"You have one minute until the Ark activates.\"</span>")
 	glow.icon_state = "clockwork_gateway_activating"
 	addtimer(CALLBACK(src, .proc/let_slip_the_dogs), 600)

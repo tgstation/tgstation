@@ -89,6 +89,15 @@
 	new /obj/item/weapon/extinguisher/mini(src)
 
 
+/obj/item/weapon/storage/belt/utility/servant/PopulateContents()
+	new /obj/item/weapon/screwdriver/brass(src)
+	new /obj/item/weapon/wirecutters/brass(src)
+	new /obj/item/weapon/wrench/brass(src)
+	new /obj/item/weapon/crowbar/brass(src)
+	new /obj/item/weapon/weldingtool/experimental/brass(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src, 30, "yellow")
+
 
 /obj/item/weapon/storage/belt/medical
 	name = "medical belt"
