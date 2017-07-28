@@ -1,0 +1,4 @@
+author: "ktccd"
+delete-after: True
+changes: 
+  - bugfix: "Ashstorms no longer pierces the protected people to kill anyone/anything in them."

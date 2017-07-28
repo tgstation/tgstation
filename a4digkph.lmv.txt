@@ -1,0 +1,216 @@
+﻿Merge https://github.com/tgstation/tgstation into upstream_merge
+
+# Conflicts:
+#	.github/CONTRIBUTING.md
+#	README.md
+#	_maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm
+#	_maps/RandomRuins/LavaRuins/lavaland_surface_animal_hospital.dmm
+#	_maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm
+#	_maps/RandomRuins/SpaceRuins/oldstation.dmm
+#	_maps/RandomRuins/SpaceRuins/vaporwave.dmm
+#	_maps/RandomZLevels/beach.dmm
+#	_maps/RandomZLevels/moonoutpost19.dmm
+#	_maps/map_files/BoxStation/BoxStation.dmm
+#	_maps/map_files/Cerestation/cerestation.dmm
+#	_maps/map_files/Deltastation/DeltaStation2.dmm
+#	_maps/map_files/MetaStation/MetaStation.dmm
+#	_maps/map_files/Mining/Lavaland.dmm
+#	_maps/map_files/OmegaStation/OmegaStation.dmm
+#	_maps/map_files/PubbyStation/PubbyStation.dmm
+#	code/__DEFINES/mobs.dm
+#	code/__DEFINES/sound.dm
+#	code/controllers/subsystem/disease.dm
+#	code/game/area/Space_Station_13_areas.dm
+#	code/game/area/areas/ruins.dm
+#	code/game/objects/empulse.dm
+#	code/modules/admin/admin_ranks.dm
+#	code/modules/admin/topic.dm
+#	code/modules/atmospherics/machinery/atmosmachinery.dm
+#	code/modules/awaymissions/gateway.dm
+#	code/modules/clothing/under/miscellaneous.dm
+#	code/modules/mining/mine_items.dm
+#	code/modules/mob/living/carbon/human/human_defense.dm
+#	code/modules/paperwork/paper.dm
+#	code/modules/shuttle/on_move.dm
+#	code/world.dm
+#	config/admin_ranks.txt
+#	config/admins.txt
+#	config/maps.txt
+#	html/changelogs/.all_changelog.yml
+#	icons/effects/96x96.dmi
+#	icons/mob/head.dmi
+#	icons/mob/hivebot.dmi
+#	icons/mob/uniform.dmi
+#	icons/obj/clothing/accessories.dmi
+#	icons/obj/clothing/hats.dmi
+#	icons/obj/clothing/uniforms.dmi
+#	strings/round_start_sounds.txt
+#	tgui/assets/tgui.js
+#	tools/tgstation-server
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch upstream_merge
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	deleted:    .gitmodules
+#	modified:   code/__DEFINES/flags.dm
+#	modified:   code/__DEFINES/misc.dm
+#	modified:   code/__DEFINES/mobs.dm
+#	modified:   code/__HELPERS/icons.dm
+#	modified:   code/datums/action.dm
+#	modified:   code/datums/mind.dm
+#	modified:   code/datums/weather/weather_types.dm
+#	modified:   code/game/area/Space_Station_13_areas.dm
+#	modified:   code/game/area/areas/derelict.dm
+#	modified:   code/game/gamemodes/clock_cult/clock_structure.dm
+#	modified:   code/game/gamemodes/clock_cult/clock_structures/ark_of_the_clockwork_justicar.dm
+#	modified:   code/game/gamemodes/miniantags/abduction/abduction_gear.dm
+#	modified:   code/game/gamemodes/wizard/spellbook.dm
+#	modified:   code/game/machinery/cloning.dm
+#	modified:   code/game/machinery/quantum_pad.dm
+#	modified:   code/game/machinery/recycler.dm
+#	modified:   code/game/objects/effects/decals/decal.dm
+#	modified:   code/game/objects/effects/decals/misc.dm
+#	modified:   code/game/objects/effects/effects.dm
+#	modified:   code/game/objects/effects/portals.dm
+#	modified:   code/game/objects/items/stacks/cash.dm
+#	modified:   code/game/objects/items/stacks/sheets/leather.dm
+#	modified:   code/game/objects/items/theft_tools.dm
+#	new file:   code/game/objects/items/weapons/RCL.dm
+#	modified:   code/game/objects/items/weapons/storage/uplink_kits.dm
+#	modified:   code/game/objects/structures/crates_lockers/closets/secure/security.dm
+#	modified:   code/game/objects/structures/crates_lockers/crates.dm
+#	modified:   code/game/objects/structures/morgue.dm
+#	modified:   code/game/turfs/open.dm
+#	modified:   code/game/turfs/simulated/floor/plasteel_floor.dm
+#	modified:   code/game/turfs/turf.dm
+#	modified:   code/modules/VR/vr_sleeper.dm
+#	modified:   code/modules/atmospherics/environmental/LINDA_fire.dm
+#	modified:   code/modules/atmospherics/machinery/airalarm.dm
+#	modified:   code/modules/atmospherics/machinery/portable/canister.dm
+#	modified:   code/modules/awaymissions/mission_code/Academy.dm
+#	modified:   code/modules/awaymissions/mission_code/centcomAway.dm
+#	modified:   code/modules/awaymissions/mission_code/snowdin.dm
+#	modified:   code/modules/awaymissions/mission_code/stationCollision.dm
+#	modified:   code/modules/awaymissions/mission_code/wildwest.dm
+#	modified:   code/modules/awaymissions/pamphlet.dm
+#	modified:   code/modules/cargo/exports/manifest.dm
+#	modified:   code/modules/cargo/order.dm
+#	modified:   code/modules/cargo/packs.dm
+#	modified:   code/modules/clothing/head/misc.dm
+#	modified:   code/modules/clothing/masks/miscellaneous.dm
+#	modified:   code/modules/clothing/shoes/miscellaneous.dm
+#	modified:   code/modules/clothing/under/miscellaneous.dm
+#	modified:   code/modules/crafting/recipes.dm
+#	modified:   code/modules/food_and_drinks/drinks/drinks.dm
+#	modified:   code/modules/holodeck/items.dm
+#	modified:   code/modules/hydroponics/plant_genes.dm
+#	modified:   code/modules/mining/mine_items.dm
+#	modified:   code/modules/mob/living/silicon/robot/robot_modules.dm
+#	modified:   code/modules/mob/living/simple_animal/guardian/guardian.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/megafauna/bubblegum.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/megafauna/colossus.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/megafauna/dragon.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/megafauna/megafauna.dm
+#	modified:   code/modules/paperwork/paper.dm
+#	copied:     code/modules/paperwork/paper.dm -> code/modules/paperwork/paper_premade.dm
+#	modified:   code/modules/power/cable.dm
+#	modified:   code/modules/power/cell.dm
+#	modified:   code/modules/power/gravitygenerator.dm
+#	modified:   code/modules/power/singularity/narsie.dm
+#	modified:   code/modules/power/solar.dm
+#	modified:   code/modules/power/supermatter/supermatter.dm
+#	modified:   code/modules/projectiles/ammunition/caseless.dm
+#	modified:   code/modules/projectiles/boxes_magazines/internal_mag.dm
+#	modified:   code/modules/projectiles/guns/ballistic/automatic.dm
+#	deleted:    code/modules/projectiles/guns/ballistic/bow.dm
+#	modified:   code/modules/projectiles/projectile/reusable.dm
+#	modified:   code/modules/recycling/conveyor2.dm
+#	new file:   code/modules/ruins/lavalandruin_code/sloth.dm
+#	new file:   code/modules/ruins/lavalandruin_code/surface.dm
+#	new file:   code/modules/ruins/spaceruin_code/DJstation.dm
+#	new file:   code/modules/ruins/spaceruin_code/TheDerelict.dm
+#	new file:   code/modules/ruins/spaceruin_code/asteroid4.dm
+#	new file:   code/modules/ruins/spaceruin_code/crashedclownship.dm
+#	new file:   code/modules/ruins/spaceruin_code/crashedship.dm
+#	new file:   code/modules/ruins/spaceruin_code/deepstorage.dm
+#	new file:   code/modules/ruins/spaceruin_code/listeningstation.dm
+#	new file:   code/modules/ruins/spaceruin_code/oldstation.dm
+#	new file:   code/modules/ruins/spaceruin_code/originalcontent.dm
+#	new file:   code/modules/ruins/spaceruin_code/spacehotel.dm
+#	modified:   code/modules/shuttle/on_move.dm
+#	modified:   code/modules/spells/spell_types/mind_transfer.dm
+#	modified:   code/modules/tgui/subsystem.dm
+#
+# Changes not staged for commit:
+#	modified:   _maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm
+#	modified:   _maps/RandomRuins/LavaRuins/lavaland_surface_animal_hospital.dmm
+#	modified:   _maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm
+#	modified:   _maps/RandomRuins/LavaRuins/lavaland_surface_sloth.dmm
+#	modified:   _maps/RandomRuins/LavaRuins/lavaland_surface_ufo_crash.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/DJstation.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/TheDerelict.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/asteroid4.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/bigderelict1.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/crashedclownship.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/crashedship.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/deepstorage.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/listeningstation.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/oldstation.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/originalcontent.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/spacehotel.dmm
+#	modified:   _maps/RandomRuins/SpaceRuins/vaporwave.dmm
+#	modified:   _maps/RandomZLevels/Academy.dmm
+#	modified:   _maps/RandomZLevels/beach.dmm
+#	modified:   _maps/RandomZLevels/beach2.dmm
+#	modified:   _maps/RandomZLevels/caves.dmm
+#	modified:   _maps/RandomZLevels/centcomAway.dmm
+#	modified:   _maps/RandomZLevels/challenge.dmm
+#	modified:   _maps/RandomZLevels/moonoutpost19.dmm
+#	modified:   _maps/RandomZLevels/research.dmm
+#	modified:   _maps/RandomZLevels/snowdin.dmm
+#	modified:   _maps/RandomZLevels/undergroundoutpost45.dmm
+#	modified:   _maps/RandomZLevels/wildwest.dmm
+#	modified:   _maps/map_files/BoxStation/BoxStation.dmm
+#	modified:   _maps/map_files/Cerestation/cerestation.dmm
+#	modified:   _maps/map_files/Deltastation/DeltaStation2.dmm
+#	modified:   _maps/map_files/MetaStation/MetaStation.dmm
+#	modified:   _maps/map_files/Mining/Lavaland.dmm
+#	modified:   _maps/map_files/OmegaStation/OmegaStation.dmm
+#	modified:   _maps/map_files/PubbyStation/PubbyStation.dmm
+#	modified:   _maps/map_files/generic/Centcomm.dmm
+#	modified:   _maps/map_files/generic/HippieCentcomm.dmm
+#	modified:   _maps/shuttles/emergency_imfedupwiththisworld.dmm
+#	modified:   hippiestation.dme
+#	modified:   hippiestation/code/game/gamemodes/wizard/spellbook.dm
+#	modified:   html/changelog.html
+#	modified:   icons/effects/96x96.dmi
+#	modified:   icons/mob/feet.dmi
+#	modified:   icons/mob/head.dmi
+#	modified:   icons/mob/hivebot.dmi
+#	modified:   icons/mob/mask.dmi
+#	modified:   icons/mob/uniform.dmi
+#	modified:   icons/obj/clothing/accessories.dmi
+#	modified:   icons/obj/clothing/hats.dmi
+#	modified:   icons/obj/clothing/masks.dmi
+#	modified:   icons/obj/clothing/shoes.dmi
+#	modified:   icons/obj/clothing/uniforms.dmi
+#	modified:   icons/turf/decals.dmi
+#	modified:   icons/turf/floors.dmi
+#	modified:   tgstation.dme
+#	deleted:    tools/tgstation-server
+#
+# Untracked files:
+#	html/changelogs/AutoChangeLog-pr-29119.yml
+#	html/changelogs/AutoChangeLog-pr-29455.yml
+#	html/changelogs/AutoChangeLog-pr-29536.yml
+#
+

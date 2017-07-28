@@ -2154,9 +2154,7 @@
 /area/security/prison)
 "aff" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	layer = 2.9
-	},
+/obj/item/weapon/paper,
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -5667,11 +5665,7 @@
 /obj/item/weapon/razor{
 	pixel_x = -6
 	},
-/obj/item/weapon/paper{
-	desc = "";
-	info = "<b>Labor Camp Facility Operation Guide</b><br><br>Hello there, proud operator of an NT-Sec Prisoner Rehabilitation Center.  A solution to rising crime rates and falling productivity, these facilities are specifically designed for the safe, productive imprisonment of your most dangerous criminals.  <br><br>To press a long-term prisoner into the service of the station, replace his equipment with prisoners' garb at one of the prison lockers, as per normal operating procedure.  Before assigning a prisoner his ID, insert the ID into a prisoner management console and assign the prisoner a quota, based on the severity of his crime.  <br>A single sheet of most materials produces five points for the prisoner, and points can be expected to be produced at a rate of about 100 per minute, though punishments as severe as forced labor should be reserved for serious crimes of sentences not less than five minutes long.<br>Once you have prepared the prisoner, place him in the secure northern half of the labor shuttle, and send him to the station.  Once he meets his quota by feeding sheets to the stacker, he will be allowed to return to the station, and will be able to open the secure door to the prisoner release area.<br><br>In the case of dangerous prisoners, surveilance may be needed. To that end, there is a prisoner monitoring room on the mining station, equipped with a remote flasher and a lockdown button.  The mine itself is patrolled by a securibot, so the nearby security records console can also be used to secure hostile prisoners on the mine.";
-	name = "Labor Camp Operating Guide"
-	},
+/obj/item/weapon/paper/guides/jobs/security/labor_camp,
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/black,
 /area/security/brig)
@@ -10011,8 +10005,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "avQ" = (
-/obj/structure/table/wood,
-/obj/item/weapon/storage/book/bible,
+/obj/structure/dresser,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "avR" = (
@@ -10105,11 +10098,7 @@
 /area/crew_quarters/fitness/recreation)
 "awd" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	desc = "";
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping.";
-	name = "Holodeck Disclaimer"
-	},
+/obj/item/weapon/paper/fluff/holodeck/disclaimer,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "awe" = (
@@ -10232,11 +10221,6 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
 "awq" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "Port Solar Access";
 	req_access_txt = "10"
@@ -10309,10 +10293,7 @@
 /obj/item/weapon/stock_parts/cell/potato{
 	name = "\improper Beepsky's emergency battery"
 	},
-/obj/item/weapon/paper{
-	info = "01001001 00100000 01101000 01101111 01110000 01100101 00100000 01111001 01101111 01110101 00100000 01110011 01110100 01100001 01111001 00100000 01110011 01100001 01100110 01100101 00101110 00100000 01001100 01101111 01110110 01100101 00101100 00100000 01101101 01101111 01101101 00101110";
-	name = "Note from Beepsky's Mom"
-	},
+/obj/item/weapon/paper/fluff/jobs/security/beepsky_mom,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "awy" = (
@@ -15799,7 +15780,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = 1;
 	id = "garbagestacked";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
@@ -17808,7 +17789,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -18275,7 +18256,7 @@
 "aNO" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/item/weapon/reagent_containers/dropper,
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen,
 /obj/item/weapon/reagent_containers/dropper,
@@ -25434,8 +25415,6 @@
 	dir = 6
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black,
@@ -26268,7 +26247,7 @@
 /area/science/explab)
 "bft" = (
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
+	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Drone' sign";
 	pixel_y = 32
@@ -27840,7 +27819,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
@@ -27851,13 +27830,13 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
@@ -29035,7 +29014,7 @@
 /area/science/xenobiology)
 "ble" = (
 /obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Moniter";
+	name = "Test Chamber Monitor";
 	network = list("Xeno");
 	pixel_y = 2
 	},
@@ -34752,7 +34731,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/red/side,
@@ -34964,6 +34943,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
+	},
+/obj/machinery/airalarm{
+	pixel_y = 22
 	},
 /turf/open/floor/plasteel,
 /area/science/mineral_storeroom)
@@ -35239,6 +35221,10 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "bxv" = (
@@ -35986,7 +35972,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -37929,7 +37915,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
@@ -40223,7 +40209,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/gravity_gen{
+/obj/item/weapon/paper/guides/jobs/engi/gravity_gen{
 	layer = 3
 	},
 /obj/item/weapon/pen/blue,
@@ -40347,7 +40333,7 @@
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Tech Storage APC";
@@ -41264,6 +41250,7 @@
 	pixel_x = 26;
 	pixel_y = 26
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -41789,9 +41776,9 @@
 /area/engine/atmos)
 "bLN" = (
 /obj/machinery/camera{
-	c_tag = "Telecoms External Fore";
+	c_tag = "Telecomms External Fore";
 	dir = 1;
-	network = list("SS13, Telecoms");
+	network = list("SS13, Telecomms");
 	start_active = 1
 	},
 /turf/open/space,
@@ -41985,9 +41972,9 @@
 /area/engine/atmos)
 "bMm" = (
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Access";
+	c_tag = "Telecomms External Access";
 	dir = 1;
-	network = list("SS13","Telecoms")
+	network = list("SS13","Telecomms")
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
@@ -42028,9 +42015,9 @@
 "bMs" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Port";
+	c_tag = "Telecomms External Port";
 	dir = 8;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)
@@ -42052,9 +42039,9 @@
 "bMv" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Starboard";
+	c_tag = "Telecomms External Starboard";
 	dir = 4;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)
@@ -42944,6 +42931,8 @@
 	icon_state = "1-2"
 	},
 /obj/item/stack/cable_coil,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bOg" = (
@@ -43968,7 +43957,7 @@
 /area/engine/engineering)
 "bQD" = (
 /obj/machinery/camera{
-	c_tag = "Engineering Telecoms Access";
+	c_tag = "Engineering Telecomms Access";
 	dir = 8;
 	network = list("Labor")
 	},
@@ -43976,11 +43965,11 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for watching telecoms.";
+	desc = "Used for watching telecomms.";
 	dir = 8;
 	layer = 4;
-	name = "Telecoms Telescreen";
-	network = list("Telecoms");
+	name = "Telecomms Telescreen";
+	network = list("Telecomms");
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel,
@@ -44057,18 +44046,18 @@
 "bQL" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Port Aft";
+	c_tag = "Telecomms External Port Aft";
 	dir = 2;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)
 "bQM" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Starboard Aft";
+	c_tag = "Telecomms External Starboard Aft";
 	dir = 2;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)
@@ -44908,9 +44897,9 @@
 "bSS" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecoms Admin";
+	department = "Telecomms Admin";
 	departmentType = 5;
-	name = "Telecoms RC";
+	name = "Telecomms RC";
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -44941,9 +44930,9 @@
 	pixel_y = 26
 	},
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms Monitoring";
+	c_tag = "Telecomms Monitoring";
 	dir = 2;
-	network = list("SS13","Telecoms")
+	network = list("SS13","Telecomms")
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -44969,7 +44958,7 @@
 "bSW" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Telecoms Monitoring APC";
+	name = "Telecomms Monitoring APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -45184,7 +45173,7 @@
 	cell_type = 5000;
 	dir = 1;
 	layer = 4;
-	name = "Telecoms Server APC";
+	name = "Telecomms Server APC";
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -45473,9 +45462,9 @@
 /area/tcommsat/server)
 "bUe" = (
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms Server Room";
+	c_tag = "Telecomms Server Room";
 	dir = 1;
-	network = list("SS13","Telecoms")
+	network = list("SS13","Telecomms")
 	},
 /turf/open/floor/plasteel/black{
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -45726,8 +45715,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/red/side{
@@ -45984,8 +45971,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -46023,8 +46008,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -48325,8 +48308,6 @@
 /area/chapel/office)
 "cby" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/carpet,
@@ -52401,7 +52382,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmv" = (
@@ -52980,6 +52961,111 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"cnH" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"cnI" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Brig Maintenance APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"cnJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Auxiliary Closet Construction APC";
+	pixel_x = -25;
+	pixel_y = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/effect/turf_decal/stripes/end{
+	icon_state = "warn_end";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base/closet)
+"cnK" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Science Maintenance APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"cnL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine/atmos)
+"cnM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Atmospherics Maintenance APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -70278,8 +70364,8 @@ agv
 agv
 agv
 agv
-alM
-ahy
+cnH
+cnI
 agv
 anz
 aol
@@ -76498,7 +76584,7 @@ bWQ
 bev
 bfI
 bgL
-bgL
+cnJ
 biK
 bgL
 bgL
@@ -80611,7 +80697,7 @@ beG
 bfU
 bgP
 bfT
-biY
+biU
 bcE
 blM
 bni
@@ -80868,7 +80954,7 @@ bcE
 bcE
 bcE
 bcE
-biZ
+biT
 bcE
 blH
 bnd
@@ -86720,7 +86806,7 @@ cnC
 cjZ
 cjZ
 cjZ
-cnD
+cnC
 cks
 cka
 aaa
@@ -87050,8 +87136,8 @@ bvk
 bwp
 bxw
 bte
-bzw
-bAt
+cnL
+cnM
 bBv
 bCw
 bDt
@@ -98869,7 +98955,7 @@ bsF
 bfy
 bfy
 bed
-bwX
+cnK
 brM
 aaa
 aaa

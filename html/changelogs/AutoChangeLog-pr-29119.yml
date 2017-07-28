@@ -1,0 +1,5 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has begun production of the Rapid Cable Layer, a tool that helps you lay down cables faster"
+  - rscadd: "You can now craft ghetto RCLs with metal, a screwdriver, welder, and wrench. They hold less cable, and may fall apart or jam!"

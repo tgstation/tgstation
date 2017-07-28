@@ -95,7 +95,7 @@
 "aq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westright,
-/obj/item/weapon/paper/crumpled/snowdin/keys,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/keys,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -123,7 +123,7 @@
 /area/awaymission/snowdin/base)
 "at" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/secnotice,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/secnotice,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -547,7 +547,7 @@
 "bt" = (
 /obj/structure/table,
 /obj/item/weapon/shovel,
-/obj/item/weapon/paper/crumpled/snowdin/shovel,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/shovel,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -982,7 +982,7 @@
 /area/awaymission/snowdin/base)
 "cv" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/crumpled/snowdin/snowdingatewaynotice,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/snowdingatewaynotice,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1067,7 +1067,7 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/snowdinlog,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/log,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1311,7 +1311,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dt" = (
-/obj/item/weapon/paper/crumpled/snowdin/lootstructures,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/lootstructures,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -1555,7 +1555,7 @@
 /area/awaymission/snowdin/post)
 "dZ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/snowdin/syndielava,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/syndielava,
 /obj/machinery/light/small{
 	active_power_usage = 0;
 	dir = 4;
@@ -2717,7 +2717,7 @@
 /area/awaymission/snowdin/post)
 "hn" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/secnotice,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/secnotice,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3666,7 +3666,7 @@
 /area/awaymission/snowdin)
 "jV" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/snowdin/misc1,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/misc1,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3889,10 +3889,7 @@
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/paper{
-	info = "YOU SEEN IVAN, WHEN YOU HOLD SAAW LIKE PEESTOL, YOU STRONGER THAN RECOIL FOR FEAR OF HITTING FACE!";
-	name = "SAW Usage"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/saw_usage,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3946,7 +3943,7 @@
 /area/awaymission/snowdin/sekret)
 "kE" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/snowdin/syndienotice,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/syndienotice,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4966,7 +4963,7 @@
 /area/awaymission/snowdin)
 "nc" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/snowdin/shovel,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/shovel,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -5171,7 +5168,7 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/snowdinlog2,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/log2,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},

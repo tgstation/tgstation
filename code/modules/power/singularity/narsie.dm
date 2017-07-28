@@ -44,17 +44,11 @@
 	var/souls = 0
 	var/resolved = FALSE
 
-/obj/singularity/narsie/large/cult/proc/resize(var/ratio)
-	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	ntransform.Scale(ratio)
-	animate(src, transform = ntransform, time = 40, easing = EASE_IN|EASE_OUT)
-
 /obj/singularity/narsie/large/cult/Initialize()
 	. = ..()
 	GLOB.cult_narsie = src
 	deltimer(GLOB.blood_target_reset_timer)
 	GLOB.blood_target = src
-	resize(0.6)
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
 		if(isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current

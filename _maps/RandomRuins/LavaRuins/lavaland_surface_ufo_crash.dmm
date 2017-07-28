@@ -132,7 +132,7 @@
 /area/ruin/unpowered)
 "w" = (
 /obj/item/weapon/retractor/alien,
-/obj/item/weapon/paper/abductor,
+/obj/item/weapon/paper/guides/antag/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
