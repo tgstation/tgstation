@@ -598,7 +598,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/weapon/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/paper/guardian
+/obj/item/weapon/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
@@ -622,10 +622,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
 "}
 
-/obj/item/weapon/paper/guardian/update_icon()
+/obj/item/weapon/paper/guides/antag/guardian/update_icon()
 	return
 
-/obj/item/weapon/paper/guardian/wizard
+/obj/item/weapon/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"
 	info = {"<b>A list of Guardian Types</b><br>
 
@@ -657,7 +657,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/weapon/storage/box/syndie_kit/guardian/Initialize()
 	..()
 	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
-	new /obj/item/weapon/paper/guardian(src)
+	new /obj/item/weapon/paper/guides/antag/guardian(src)
 	return
 
 /obj/item/weapon/guardiancreator/carp

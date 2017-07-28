@@ -105,8 +105,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 						 'sound/voice/lowHiss3.ogg',
 						 'sound/voice/lowHiss4.ogg')
 	valid_territory = FALSE
-
-
 //Departments
 
 /area/maintenance/department/chapel
@@ -1240,7 +1238,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = FALSE
 
 /area/storage/tcom
-	name = "Telecoms Storage"
+	name = "Telecomms Storage"
 	icon_state = "green"
 	valid_territory = FALSE
 
@@ -1416,7 +1414,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/entrance
-	name = "Telecoms Teleporter"
+	name = "Telecomms Teleporter"
 	icon_state = "tcomsatentrance"
 
 /area/tcommsat/chamber
@@ -1424,12 +1422,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "tcomsatcham"
 
 /area/ai_monitored/turret_protected/tcomsat
-	name = "Telecoms Satellite"
+	name = "Telecomms Satellite"
 	icon_state = "tcomsatlob"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/ai_monitored/turret_protected/tcomfoyer
-	name = "Telecoms Foyer"
+	name = "Telecomms Foyer"
 	icon_state = "tcomsatentrance"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
@@ -1444,11 +1442,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/computer
-	name = "Telecoms Control Room"
+	name = "Telecomms Control Room"
 	icon_state = "tcomsatcomp"
 
 /area/tcommsat/server
-	name = "Telecoms Server Room"
+	name = "Telecomms Server Room"
 	icon_state = "tcomsatcham"
 
 /area/tcommsat/lounge

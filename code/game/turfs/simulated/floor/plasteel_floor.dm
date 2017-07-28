@@ -244,11 +244,6 @@
 	icon_state = "blueyellow"
 
 
-/turf/open/floor/plasteel/warningline
-	icon_state = "warningline"
-/turf/open/floor/plasteel/warningline/corner
-	icon_state = "warninglinecorners"
-
 /turf/open/floor/plasteel/yellowsiding
 	icon_state = "yellowsiding"
 /turf/open/floor/plasteel/yellowsiding/corner
@@ -399,16 +394,3 @@
 
 /turf/open/floor/plasteel/sepia
 	icon_state = "sepia"
-
-/turf/open/floor/plasteel/sandy
-	icon_state = "sandy"
-	baseturf = /turf/open/floor/plating/beach/sand
-
-/turf/open/floor/plasteel/sandeffect
-	icon_state = "sandeffect"
-
-/turf/open/floor/plasteel/sandeffect/warning
-	icon_state = "warningsandeffect"
-
-/turf/open/floor/plasteel/sandeffect/warning/corner
-	icon_state = "warningsandeffectcorners"
