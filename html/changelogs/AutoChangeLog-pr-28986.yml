@@ -1,0 +1,6 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Badmins: Buildmode map generators have names in the list to select them, instead of paths."
+  - rscadd: "Also, a new map generator has been added, repair/reload station. Use it VERY sparingly, it deletes the block of the map and reloads it to roundstart. THIS CAN CAUSE ISSUES WITH MACHINES AND ATMOSPHERICS, SO DO NOT USE IT UNLESS YOU ABSOLUTELY HAVE TO!"
+  - experiment: "The reload station one tagged DO NOT USE shouldn't be used as it doesn't delete anything before loading, so if you use it you'll have two copies of things. That can result in a LOT of issues, so don't use it unless you're a codermin and know what you're doing/abusing!"
