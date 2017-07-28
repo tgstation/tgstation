@@ -49,7 +49,6 @@
 		/datum/gang_item/weapon/ammo/pistol_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
-		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
@@ -75,7 +74,6 @@
 		/datum/gang_item/clothing/mask,
 		/datum/gang_item/clothing/hands,
 		/datum/gang_item/clothing/belt,
-
 		/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
 		/datum/gang_item/weapon/improvised,
@@ -86,7 +84,6 @@
 		/datum/gang_item/weapon/ammo/pistol_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
-		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
