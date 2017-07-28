@@ -16,12 +16,14 @@
 	var/backstabforce = 30
 	armour_penetration = 20
 	attack_verb_on = list("poked", "slashed", "stabbed", "sliced", "torn", "pierced", "diced", "cut")
-	attack_verb = list("tapped", "prodded")
+	attack_verb_off = list("tapped", "prodded")
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_BLUNT
 	var/sharpness_on = IS_SHARP_ACCURATE
 	w_class_on = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=12000)
+	var/onsound
+	var/offsound
 
 /obj/item/weapon/melee/transforming/butterfly/transform_weapon(mob/living/user, supress_message_text)
 	..()
@@ -46,6 +48,7 @@
 		return ..()
 
 /obj/item/weapon/melee/transforming/butterfly/transform_messages(mob/living/user, supress_message_text)//no fucking esword on sound
+	playsound(user, active ? onsound  : offsound , 50, 1)
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
@@ -60,7 +63,7 @@
 						"<span class='userdanger'>[user] backstabs you with [src]!</span>")
 
 	src.add_fingerprint(user)
-	playsound(loc,'hippiestation/sound/weapons/crit_hit.ogg', 40, 1, -1)
+	playsound(loc,'hippiestation/sound/weapons/knifecrit.ogg', 40, 1, -1)
 	user.do_attack_animation(U)
 	U.apply_damage(damage, BRUTE, affecting, U.getarmor(affecting, "melee"))
 	U.drop_item()
@@ -79,7 +82,6 @@
 	icon = 'hippiestation/icons/obj/weapons.dmi'
 	icon_state = "butterflyknife0"
 	icon_state_on = "butterflyknife_syndie"
+	onsound = 'hippiestation/sound/weapons/knifeopen.ogg'
+	offsound = 'hippiestation/sound/weapons/knifeclose.ogg'
 
-/obj/item/weapon/melee/transforming/butterfly/energy/transform_messages(mob/living/user, supress_message_text)
-	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
-	return ..()
