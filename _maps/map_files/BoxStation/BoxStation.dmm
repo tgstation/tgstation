@@ -26950,7 +26950,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain)
+/area/maintenance/central/secondary)
 "ble" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
@@ -27648,7 +27648,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain)
+/area/maintenance/central/secondary)
 "bmE" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -29551,7 +29551,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "bqL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -64366,6 +64366,24 @@
 "cTC" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
+"cTD" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Central Maintenance APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/turf/open/floor/plating,
+/area/maintenance/central/secondary)
 
 (1,1,1) = {"
 aaa
@@ -96627,7 +96645,7 @@ bbw
 bjJ
 bld
 bmD
-bmD
+cTD
 bmD
 bqK
 bso
