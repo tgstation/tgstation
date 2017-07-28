@@ -142,8 +142,14 @@ Credit where due:
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
+	addtimer(CALLBACK(src, .proc/cry_havoc), ark_time * 600) //600 deciseconds in a minute * number of minutes
 	..()
 	return 1
+
+/datum/game_mode/clockwork_cult/proc/cry_havoc()
+	if(GLOB.ark_of_the_clockwork_justiciar)
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		G.cry_havoc()
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
