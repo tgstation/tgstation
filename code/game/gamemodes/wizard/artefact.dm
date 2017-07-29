@@ -127,6 +127,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "bluespace=4;materials=4"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
@@ -452,6 +454,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "voodoo"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
 	var/list/mob/living/carbon/human/possible = list()
 	var/obj/item/link = null

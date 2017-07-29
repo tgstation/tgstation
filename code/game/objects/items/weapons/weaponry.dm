@@ -342,6 +342,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -377,6 +379,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "stick"
 	item_state = "stick"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 3
 	throwforce = 5
 	throw_speed = 2
@@ -476,8 +480,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "baseball_bat"
 	item_state = "baseball_bat"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
@@ -541,8 +545,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "flyswatter"
 	item_state = "flyswatter"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
 	throwforce = 1
 	attack_verb = list("swatted", "smacked")
