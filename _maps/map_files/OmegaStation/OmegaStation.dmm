@@ -25798,10 +25798,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aQH" = (
@@ -26218,10 +26216,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "aRB" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aRC" = (
@@ -26241,10 +26237,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aRE" = (
@@ -26254,10 +26248,8 @@
 	on = 1;
 	target_temperature = 80
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aRF" = (
@@ -26858,10 +26850,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aSN" = (
@@ -27449,10 +27439,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aTY" = (
@@ -27464,10 +27452,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aTZ" = (
@@ -27477,10 +27463,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aUa" = (
@@ -27847,10 +27831,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aUP" = (
@@ -27860,10 +27842,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "aUQ" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -28202,15 +28181,11 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aVC" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/research)
 "aVD" = (
@@ -28225,10 +28200,7 @@
 	network = list("SS13","RD");
 	pixel_x = 22
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aVE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -28628,18 +28600,14 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aWt" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/research)
 "aWu" = (
@@ -28647,10 +28615,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aWv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -35691,10 +35656,7 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/xenobiology)
 "bje" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -35708,10 +35670,7 @@
 	name = "science camera";
 	network = list("SS13","RD")
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/xenobiology)
 "bjf" = (
 /obj/structure/dresser,
@@ -35870,18 +35829,16 @@
 /area/science/xenobiology)
 "bjw" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/xenobiology)
 "bjx" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/xenobiology)
 "bjy" = (
@@ -35967,10 +35924,7 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bjI" = (
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/xenobiology)
 "bjJ" = (
 /obj/machinery/photocopier,
@@ -36849,11 +36803,7 @@
 /area/hallway/primary/central)
 "blq" = (
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation,
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "blr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39650,10 +39600,8 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buH" = (
@@ -39667,51 +39615,36 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buI" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buJ" = (
 /obj/machinery/telecomms/server/presets/common/birdstation,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buL" = (
 /obj/machinery/telecomms/hub/preset,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buN" = (
@@ -39719,11 +39652,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "buO" = (
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
@@ -39731,52 +39660,36 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buP" = (
 /obj/machinery/message_server,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buQ" = (
 /obj/machinery/telecomms/processor/preset_one/birdstation,
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "buR" = (
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buS" = (
 /obj/machinery/ntnet_relay,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buT" = (
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buU" = (
@@ -39785,10 +39698,8 @@
 	dir = 8;
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buV" = (
