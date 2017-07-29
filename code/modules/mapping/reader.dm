@@ -29,21 +29,21 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	space_key = null
 	#ifdef TESTING
 	turfsSkipped = 0
 	#endif
-	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y)
 	#ifdef TESTING
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 	Master.StopLoadingMap()
 
-/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -60,6 +60,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	var/key_len = 0
 
 	var/stored_index = 1
+
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
 
@@ -81,7 +82,12 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 			if(!key_len)
 				throw EXCEPTION("Coords before model definition in DMM")
 
-			var/xcrdStart = text2num(dmmRegex.group[3]) + x_offset - 1
+			var/curr_x = text2num(dmmRegex.group[3])
+
+			if(curr_x < x_lower || curr_x > x_upper)
+				continue
+
+			var/xcrdStart = curr_x + x_offset - 1
 			//position of the currently processed square
 			var/xcrd
 			var/ycrd = text2num(dmmRegex.group[4]) + y_offset - 1
@@ -96,7 +102,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				if(!no_changeturf)
 					WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], Clamp(xcrdStart, x_lower, x_upper))
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
 			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
@@ -113,15 +119,15 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 			if(gridLines.len && gridLines[gridLines.len] == "")
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
-			bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], Clamp(ycrd, y_lower, y_upper))
 			ycrd += gridLines.len - 1 // Start at the top and work down
 
 			if(!cropMap && ycrd > world.maxy)
 				if(!measureOnly)
 					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], Clamp(ycrd, y_lower, y_upper))
 			else
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], min(ycrd, world.maxy))
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], Clamp(min(ycrd, world.maxy), y_lower, y_upper))
 
 			var/maxx = xcrdStart
 			if(measureOnly)
@@ -129,9 +135,15 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 					maxx = max(maxx, xcrdStart + length(line) / key_len - 1)
 			else
 				for(var/line in gridLines)
+					if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+						--ycrd
+						continue
 					if(ycrd <= world.maxy && ycrd >= 1)
 						xcrd = xcrdStart
 						for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+							if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+								++xcrd
+								continue								//X cropping.
 							if(xcrd > world.maxx)
 								if(cropMap)
 									break
@@ -154,7 +166,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 							++xcrd
 					--ycrd
 
-			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx)
+			bounds[MAP_MAXX] = Clamp(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 
 		CHECK_TICK
 
@@ -327,7 +339,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 	if(crds)
 		if(!no_changeturf && ispath(path, /turf))
-			. = crds.ChangeTurf(path, TRUE)
+			. = crds.ChangeTurf(path, FALSE, TRUE)
 		else
 			. = create_atom(path, crds)//first preloader pass
 
@@ -343,7 +355,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 /dmm_suite/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
-	
+
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(what as text,trim_quotes=0)

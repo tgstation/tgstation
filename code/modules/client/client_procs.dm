@@ -643,12 +643,6 @@ GLOBAL_LIST(external_rsc_urls)
 		if ("key")
 			return FALSE
 
-/client/proc/clear_click_catcher()
-	if(!LAZYLEN(click_catcher_tiles))
-		return
-	for(var/I in click_catcher_tiles)
-		screen -= I
-		qdel(I)
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -663,12 +657,8 @@ GLOBAL_LIST(external_rsc_urls)
 		screen += void
 
 /client/proc/apply_clickcatcher()
-	clear_click_catcher()
 	generate_clickcatcher()
-	click_catcher_tiles = void.UpdateGreed(view,view)
-	for(var/obj/screen/OS in click_catcher_tiles)
-		screen += OS
-
+	void.UpdateGreed(view,view)
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

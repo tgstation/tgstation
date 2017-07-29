@@ -343,8 +343,7 @@
 					build_step++
 					to_chat(user, "<span class='notice'>You complete the Medibot. Beep boop!</span>")
 					var/turf/T = get_turf(src)
-					var/mob/living/simple_animal/bot/medbot/S = new /mob/living/simple_animal/bot/medbot(T)
-					S.skin = skin
+					var/mob/living/simple_animal/bot/medbot/S = new /mob/living/simple_animal/bot/medbot(T, skin)
 					S.name = created_name
 					qdel(src)
 

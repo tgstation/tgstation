@@ -1,9 +1,9 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -1284,11 +1284,6 @@
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
-"dc" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ruin/powered/syndicate_lava_base)
 "dd" = (
 /obj/effect/baseturf_helper,
 /turf/open/floor/plasteel/vault{
@@ -1440,386 +1435,6 @@
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
-"du" = (
-/obj/structure/sign/securearea{
-	pixel_y = 32
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"dv" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dw" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dx" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dy" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dz" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dB" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dI" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dL" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dM" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dN" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dP" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dQ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dR" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dS" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dU" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dV" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dX" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dY" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dZ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ea" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eb" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ec" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ed" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ee" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ef" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eg" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eh" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ei" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ej" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ek" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"el" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"em" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"en" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eo" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ep" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eq" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"er" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"es" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"et" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eu" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ev" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ew" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ex" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ey" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ez" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eB" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eI" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eL" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eM" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eN" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eP" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eQ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eR" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eS" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eU" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eV" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eX" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eY" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eZ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fa" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fb" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fc" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fd" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fe" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ff" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fg" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fh" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fi" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fj" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fk" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fl" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fm" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fn" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fo" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fp" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fq" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fr" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fs" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ft" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fu" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fv" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fw" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fx" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fy" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fz" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fB" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Syndicate Recon Outpost";
-	req_access_txt = "150"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/ruin/powered)
-"fC" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Syndicate Recon Outpost";
-	req_access_txt = "150"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/ruin/powered)
-"fD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fI" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
 "fJ" = (
 /obj/machinery/light{
 	dir = 8
@@ -1850,12 +1465,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "fN" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ruin/powered/syndicate_lava_base)
-"fO" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -1917,21 +1526,7 @@
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
-"fW" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/ruin/powered/syndicate_lava_base)
 "fX" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/ruin/powered/syndicate_lava_base)
-"fY" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -1951,69 +1546,17 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/podhatch,
 /area/ruin/powered/syndicate_lava_base)
-"gb" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/podhatch,
-/area/ruin/powered/syndicate_lava_base)
-"gc" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
-	},
-/area/ruin/powered/syndicate_lava_base)
-"gd" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/ruin/powered/syndicate_lava_base)
 "ge" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/engine,
 /area/ruin/powered/syndicate_lava_base)
-"gf" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ruin/powered/syndicate_lava_base)
-"gg" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
-	},
-/area/ruin/powered/syndicate_lava_base)
-"gh" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/ruin/powered/syndicate_lava_base)
 "gi" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/circuit/green,
-/area/ruin/powered/syndicate_lava_base)
-"gj" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/engine,
 /area/ruin/powered/syndicate_lava_base)
 "gk" = (
 /obj/machinery/light/small{
@@ -2027,14 +1570,6 @@
 	},
 /turf/open/floor/circuit/red,
 /area/ruin/powered/syndicate_lava_base)
-"gm" = (
-/obj/structure/sign/securearea,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"gn" = (
-/obj/structure/sign/securearea,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
 
 (1,1,1) = {"
 aa
@@ -2340,15 +1875,15 @@ ac
 ab
 ab
 ac
-dv
-dv
-dv
-dv
-dv
-dv
-dz
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ae
+ad
+ad
 ac
 ab
 ab
@@ -2366,21 +1901,21 @@ ab
 ab
 ab
 ac
-dv
-dv
-dv
-dv
-dv
-dz
-dv
-dv
-dv
-dv
-dv
-dv
-dz
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ae
+ad
+ad
+ad
+ad
+ad
+ad
+ae
+ad
+ad
 cG
 ge
 cG
@@ -2388,7 +1923,7 @@ cW
 cG
 ge
 cG
-dv
+ad
 ac
 ab
 ab
@@ -2406,7 +1941,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 aq
 aq
 aq
@@ -2428,7 +1963,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ab
 ab
 ab
@@ -2446,7 +1981,7 @@ ac
 ab
 ab
 ab
-dv
+ad
 aq
 aQ
 aO
@@ -2468,7 +2003,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ab
 ab
 ab
@@ -2486,7 +2021,7 @@ ab
 ab
 ac
 ac
-dv
+ad
 aq
 fL
 aq
@@ -2508,7 +2043,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ab
 ab
 ab
@@ -2523,10 +2058,10 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -2548,7 +2083,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ac
 ab
 ab
@@ -2563,7 +2098,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ao
 aw
 aA
@@ -2588,7 +2123,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ac
 ab
 ab
@@ -2603,7 +2138,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ap
 aq
 ap
@@ -2628,7 +2163,7 @@ cG
 de
 cG
 cG
-dv
+ad
 ac
 ac
 ab
@@ -2643,7 +2178,7 @@ ab
 ab
 ab
 ac
-dv
+ad
 aq
 ap
 aq
@@ -2668,9 +2203,9 @@ cD
 ad
 dj
 ad
-dz
-dv
-dv
+ae
+ad
+ad
 ab
 ab
 ab
@@ -2683,7 +2218,7 @@ ab
 ab
 ab
 ac
-dv
+ad
 ar
 ax
 aB
@@ -2710,7 +2245,7 @@ aq
 cU
 bu
 dt
-dv
+ad
 ab
 ab
 ab
@@ -2722,8 +2257,8 @@ ab
 ab
 ab
 ab
-dv
-dv
+ad
+ad
 ad
 ad
 ad
@@ -2750,7 +2285,7 @@ aq
 aq
 dp
 aO
-dv
+ad
 ab
 ab
 ab
@@ -2762,7 +2297,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 af
 as
 fJ
@@ -2790,7 +2325,7 @@ dk
 aS
 bu
 dt
-dv
+ad
 ab
 ab
 ab
@@ -2802,7 +2337,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ag
 as
 as
@@ -2830,7 +2365,7 @@ ad
 ad
 ad
 ad
-gm
+cf
 ab
 ab
 ab
@@ -2842,7 +2377,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ah
 as
 as
@@ -2870,7 +2405,7 @@ cv
 dn
 dq
 aO
-fB
+dn
 ab
 ab
 ab
@@ -2882,7 +2417,7 @@ ab
 ab
 ab
 ab
-dz
+ae
 ad
 as
 as
@@ -2910,7 +2445,7 @@ cA
 dn
 dr
 aO
-fB
+dn
 ab
 ab
 ab
@@ -2922,7 +2457,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ai
 as
 as
@@ -2946,11 +2481,11 @@ ad
 ad
 ad
 ad
-dv
-dv
-dv
-dv
-gn
+ad
+ad
+ad
+ad
+cf
 ab
 ab
 ab
@@ -2962,7 +2497,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 aj
 as
 fK
@@ -2986,7 +2521,7 @@ aq
 cU
 cZ
 dh
-dz
+ae
 ac
 ac
 ac
@@ -3002,7 +2537,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ad
 ad
 ad
@@ -3026,7 +2561,7 @@ ap
 ap
 ap
 aq
-dv
+ad
 ac
 ac
 ab
@@ -3042,7 +2577,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ak
 at
 ay
@@ -3066,11 +2601,11 @@ cM
 cV
 da
 aq
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -3082,7 +2617,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 al
 au
 au
@@ -3110,7 +2645,7 @@ ad
 aq
 gk
 aq
-dv
+ad
 ab
 ab
 ab
@@ -3122,7 +2657,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ad
 ad
 ae
@@ -3150,7 +2685,7 @@ dl
 do
 ds
 do
-dv
+ad
 ab
 ab
 ab
@@ -3162,7 +2697,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 am
 au
 au
@@ -3190,7 +2725,7 @@ ad
 aq
 gl
 aq
-dv
+ad
 ab
 ab
 ab
@@ -3202,7 +2737,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 an
 av
 az
@@ -3227,10 +2762,10 @@ ad
 cF
 ad
 ad
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -3242,13 +2777,13 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 aW
 ad
 ad
@@ -3264,10 +2799,10 @@ aq
 cJ
 cQ
 ad
-dc
+aq
 di
 di
-dv
+ad
 ab
 ab
 ab
@@ -3288,7 +2823,7 @@ ac
 ac
 ab
 ac
-dv
+ad
 aX
 bf
 ad
@@ -3307,7 +2842,7 @@ ad
 dd
 di
 dm
-dv
+ad
 ab
 ab
 ab
@@ -3328,10 +2863,10 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
 fQ
 bI
 ap
@@ -3344,10 +2879,10 @@ ct
 cK
 cS
 ad
-dc
+aq
 gi
 di
-dv
+ad
 ac
 ab
 ab
@@ -3371,23 +2906,23 @@ ac
 ab
 ab
 ac
-dv
+ad
 by
 bx
 fR
 bx
 ce
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ac
 ab
 ab
@@ -3411,13 +2946,13 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab

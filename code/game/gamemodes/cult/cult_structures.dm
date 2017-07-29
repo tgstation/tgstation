@@ -175,7 +175,7 @@
 				/turf/closed,
 				/turf/open/floor/engine/cult,
 				/turf/open/space,
-				/turf/open/floor/plating/lava,
+				/turf/open/lava,
 				/turf/open/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue

@@ -331,11 +331,6 @@ BLIND     // can't see anything
 		var/mob/M = loc
 		M.update_inv_wear_mask()
 
-
-//Override this to modify speech like luchador masks.
-/obj/item/clothing/mask/proc/speechModification(message)
-	return message
-
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(mob/living/user)
 	if(user && user.incapacitated())

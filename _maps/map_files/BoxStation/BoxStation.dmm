@@ -7069,7 +7069,7 @@
 /area/maintenance/fore/secondary)
 "apv" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Fitness Maitenance";
+	name = "Fitness Maintenance";
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -7234,10 +7234,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "apR" = (
-/obj/item/weapon/paper{
-	info = "01001001 00100000 01101000 01101111 01110000 01100101 00100000 01111001 01101111 01110101 00100000 01110011 01110100 01100001 01111001 00100000 01110011 01100001 01100110 01100101 00101110 00100000 01001100 01101111 01110110 01100101 00101100 00100000 01101101 01101111 01101101 00101110";
-	name = "Note from Beepsky's Mom"
-	},
+/obj/item/weapon/paper/fluff/jobs/security/beepsky_mom,
 /turf/open/floor/plating,
 /area/security/processing)
 "apS" = (
@@ -7625,9 +7622,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqN" = (
-/obj/structure/closet/secure_closet/miner{
-	locked = 0
-	},
+/obj/structure/closet/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -7711,8 +7706,6 @@
 /area/security/detectives_office)
 "aqX" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/chair,
@@ -9519,10 +9512,6 @@
 /area/crew_quarters/fitness)
 "avB" = (
 /obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable{
 	d2 = 8;
@@ -9995,11 +9984,7 @@
 /area/crew_quarters/fitness)
 "awC" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	desc = "";
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping.";
-	name = "Holodeck Disclaimer"
-	},
+/obj/item/weapon/paper/fluff/holodeck/disclaimer,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "awD" = (
@@ -11157,7 +11142,7 @@
 /area/crew_quarters/fitness)
 "azi" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Garden Maintenace";
+	name = "Garden Maintenance";
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13159,6 +13144,9 @@
 /area/crew_quarters/toilet)
 "aDO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aDP" = (
@@ -13665,7 +13653,7 @@
 /area/ai_monitored/nuke_storage)
 "aEQ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel,
 /area/gateway)
 "aER" = (
@@ -15914,7 +15902,7 @@
 "aJN" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aJO" = (
@@ -20035,7 +20023,6 @@
 /area/security/vacantoffice)
 "aUP" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/wood,
@@ -22947,7 +22934,7 @@
 "bbI" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office A APC";
+	name = "Vacant Office APC";
 	pixel_x = -24
 	},
 /obj/structure/cable{
@@ -22955,7 +22942,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice/a)
+/area/security/vacantoffice)
 "bbJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -24932,7 +24919,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
@@ -26964,7 +26950,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain)
+/area/maintenance/central/secondary)
 "ble" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
@@ -27168,6 +27154,10 @@
 "blx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
@@ -27658,7 +27648,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain)
+/area/maintenance/central/secondary)
 "bmE" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -27779,7 +27769,7 @@
 /area/quartermaster/office)
 "bmR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/morguereminder{
+/obj/item/weapon/paper/guides/jobs/medical/morgue{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -28452,7 +28442,6 @@
 /area/security/checkpoint/medical)
 "bol" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/structure/disposalpipe/segment{
@@ -29122,7 +29111,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -29500,7 +29488,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/gravity_gen{
+/obj/item/weapon/paper/guides/jobs/engi/gravity_gen{
 	layer = 3
 	},
 /obj/item/weapon/pen/blue,
@@ -29563,7 +29551,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "bqL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -30004,7 +29992,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/folder/white,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/item/device/radio/off,
@@ -30350,7 +30337,6 @@
 	c_tag = "Teleporter"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -33482,7 +33468,6 @@
 "bza" = (
 /obj/structure/chair,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black,
@@ -34685,8 +34670,6 @@
 "bBF" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/firstaid/toxin,
@@ -34754,7 +34737,6 @@
 "bBO" = (
 /obj/machinery/computer/med_data,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/barber,
@@ -35514,7 +35496,6 @@
 /area/storage/tech)
 "bDz" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -35591,7 +35572,6 @@
 "bDH" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
@@ -39129,7 +39109,7 @@
 /area/science/xenobiology)
 "bKY" = (
 /obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Moniter";
+	name = "Test Chamber Monitor";
 	network = list("Xeno");
 	pixel_y = 2
 	},
@@ -39696,7 +39676,6 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -40306,7 +40285,6 @@
 /area/quartermaster/office)
 "bNL" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -40519,7 +40497,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -40528,7 +40505,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
@@ -40579,7 +40556,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
@@ -42259,7 +42235,7 @@
 "bSt" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
-	c_tag = "Telecoms Monitoring";
+	c_tag = "Telecomms Monitoring";
 	dir = 8;
 	network = list("SS13")
 	},
@@ -42649,7 +42625,7 @@
 /obj/item/weapon/wrench,
 /obj/item/weapon/crowbar,
 /obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Moniter";
+	name = "Test Chamber Monitor";
 	network = list("Test");
 	pixel_y = -30
 	},
@@ -43032,9 +43008,9 @@
 "bUc" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecoms Admin";
+	department = "Telecomms Admin";
 	departmentType = 5;
-	name = "Telecoms RC";
+	name = "Telecomms RC";
 	pixel_x = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -43307,7 +43283,7 @@
 "bUB" = (
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Telecoms Monitoring APC";
+	name = "Telecomms Monitoring APC";
 	pixel_y = -24
 	},
 /obj/structure/cable{
@@ -44123,31 +44099,19 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bWB" = (
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bWC" = (
 /obj/machinery/telecomms/bus/preset_four,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWD" = (
 /obj/machinery/telecomms/server/presets/engineering,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWE" = (
 /obj/machinery/telecomms/processor/preset_three,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWF" = (
 /obj/machinery/light{
@@ -44156,24 +44120,18 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Telecoms Server APC";
+	name = "Telecomms Server APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bWG" = (
 /obj/machinery/telecomms/server/presets/security,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWH" = (
 /obj/structure/table,
@@ -44577,7 +44535,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/item/weapon/paper/range,
+/obj/item/weapon/paper/guides/jobs/security/range,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -44640,24 +44598,15 @@
 /area/maintenance/port/aft)
 "bXz" = (
 /obj/machinery/telecomms/processor/preset_four,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXA" = (
 /obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXB" = (
 /obj/machinery/telecomms/bus/preset_three,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXC" = (
 /obj/structure/cable{
@@ -44665,17 +44614,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bXD" = (
 /obj/machinery/telecomms/server/presets/command,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXE" = (
 /obj/machinery/computer/message_monitor,
@@ -45074,31 +45017,19 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bYz" = (
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bYA" = (
 /obj/machinery/telecomms/broadcaster/preset_right,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bYB" = (
 /obj/machinery/blackbox_recorder,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bYC" = (
 /obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bYD" = (
 /obj/machinery/computer/telecomms/server{
@@ -45347,10 +45278,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bZo" = (
 /obj/structure/cable{
@@ -45358,10 +45286,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bZp" = (
 /obj/structure/cable{
@@ -45374,10 +45299,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bZq" = (
 /obj/structure/window/reinforced/fulltile,
@@ -45621,7 +45543,6 @@
 /area/maintenance/aft)
 "bZR" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/item/weapon/wrench,
@@ -45763,10 +45684,7 @@
 /area/maintenance/port/aft)
 "cag" = (
 /obj/machinery/ntnet_relay,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cah" = (
 /obj/structure/cable{
@@ -45774,10 +45692,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cai" = (
 /obj/machinery/power/smes{
@@ -45787,10 +45702,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "caj" = (
 /obj/structure/cable{
@@ -45798,17 +45710,12 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cak" = (
 /obj/machinery/telecomms/hub/preset,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms/mainframe{
+	dir = 8
 	},
 /area/tcommsat/server)
 "cal" = (
@@ -45832,10 +45739,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "can" = (
 /obj/machinery/door/airlock/glass_engineering{
@@ -46349,14 +46253,11 @@
 /area/maintenance/port/aft)
 "cbl" = (
 /obj/machinery/camera{
-	c_tag = "Telecoms Server Room";
+	c_tag = "Telecomms Server Room";
 	dir = 4;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cbm" = (
 /obj/structure/window/reinforced/fulltile,
@@ -46799,24 +46700,15 @@
 /area/construction)
 "ccf" = (
 /obj/machinery/telecomms/broadcaster/preset_left,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "ccg" = (
 /obj/machinery/message_server,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cch" = (
 /obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cci" = (
 /obj/structure/table,
@@ -47225,31 +47117,19 @@
 /area/maintenance/port/aft)
 "cdc" = (
 /obj/machinery/telecomms/bus/preset_two,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cdd" = (
 /obj/machinery/telecomms/server/presets/supply,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cde" = (
 /obj/machinery/telecomms/processor/preset_one,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cdf" = (
 /obj/machinery/telecomms/server/presets/medical,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cdg" = (
 /obj/machinery/computer/telecomms/monitor{
@@ -47661,41 +47541,26 @@
 /area/maintenance/port/aft)
 "cdZ" = (
 /obj/machinery/telecomms/processor/preset_two,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cea" = (
 /obj/machinery/telecomms/server/presets/service,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "ceb" = (
 /obj/machinery/telecomms/bus/preset_one,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cec" = (
 /obj/structure/sign/nosmoking_2{
 	pixel_y = -32
 	},
 /obj/machinery/light,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "ced" = (
 /obj/machinery/telecomms/server/presets/science,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cee" = (
 /obj/structure/table,
@@ -48040,7 +47905,6 @@
 	req_access_txt = "11";
 	req_one_access_txt = "0"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfa" = (
@@ -49058,14 +48922,9 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	desc = "This particular atmos control unit appears to have no access restrictions.";
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	name = "all-access air alarm";
-	pixel_x = 24;
-	req_access = "0";
-	req_one_access = "0"
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -49520,8 +49379,6 @@
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/cable{
@@ -50642,7 +50499,7 @@
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -50682,7 +50539,7 @@
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckK" = (
@@ -51944,6 +51801,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cnB" = (
@@ -53676,12 +53535,9 @@
 	dir = 1;
 	name = "Gas to Filter"
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/engine{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_x = -23
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -55999,7 +55855,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cwg" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/structure/chair{
@@ -57863,7 +57718,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -58360,6 +58215,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "cBN" = (
@@ -63017,7 +62873,7 @@
 "cNS" = (
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Starboard Maintenace APC";
+	name = "Starboard Maintenance APC";
 	pixel_x = 26
 	},
 /obj/structure/cable{
@@ -64045,19 +63901,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cSF" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cSG" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
@@ -64400,6 +64250,24 @@
 "cTC" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
+"cTD" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Central Maintenance APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/turf/open/floor/plating,
+/area/maintenance/central/secondary)
 
 (1,1,1) = {"
 aaa
@@ -79684,13 +79552,13 @@ ayl
 ayl
 ayl
 aSf
-aTq
-aTq
-aTq
-aTq
-aTq
-aTq
-aTq
+czK
+czK
+czK
+czK
+czK
+czK
+czK
 aPz
 aPz
 bdB
@@ -86423,7 +86291,7 @@ bLv
 bUs
 bLv
 aaf
-cAj
+cjJ
 cjJ
 cjJ
 cjJ
@@ -96661,7 +96529,7 @@ bbw
 bjJ
 bld
 bmD
-bmD
+cTD
 bmD
 bqK
 bso

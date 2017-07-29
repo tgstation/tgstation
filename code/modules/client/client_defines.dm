@@ -48,8 +48,7 @@
 
 	preload_rsc = PRELOAD_RSC
 
-	var/global/obj/screen/click_catcher/void
-	var/list/obj/screen/click_catcher/click_catcher_tiles
+	var/obj/screen/click_catcher/void
 
 	// Used by html_interface module.
 	var/hi_last_pos

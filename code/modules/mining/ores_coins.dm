@@ -23,9 +23,14 @@
 	..()
 
 /obj/item/weapon/ore/Crossed(atom/movable/AM)
+	set waitfor = FALSE
+	var/show_message = TRUE
+	for(var/obj/item/weapon/ore/O in loc)
+		if(O != src)
+			show_message = FALSE
+			break
 	var/obj/item/weapon/storage/bag/ore/OB
 	if(istype(loc, /turf/open/floor/plating/asteroid))
-		var/turf/open/floor/plating/asteroid/F = loc
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			for(var/thing in H.get_storage_slots())
@@ -43,13 +48,30 @@
 					OB = thing
 					break
 		if(OB)
-			F.attackby(OB, AM)
+			var/obj/structure/ore_box/box
+			if(!OB.can_be_inserted(src, TRUE, AM))
+				if(!OB.spam_protection)
+					to_chat(AM, "<span class='warning'>Your [OB.name] is full and can't hold any more ore!</span>")
+					OB.spam_protection = TRUE
+					sleep(1)
+					OB.spam_protection = FALSE
+			else
+				OB.handle_item_insertion(src, TRUE, AM)
 			// Then, if the user is dragging an ore box, empty the satchel
 			// into the box.
 			var/mob/living/L = AM
 			if(istype(L.pulling, /obj/structure/ore_box))
-				var/obj/structure/ore_box/box = L.pulling
-				box.attackby(OB, AM)
+				box = L.pulling
+				for(var/obj/item/weapon/ore/O in OB)
+					OB.remove_from_storage(src, box)
+			if(show_message)
+				playsound(L, "rustle", 50, TRUE)
+				if(box)
+					L.visible_message("<span class='notice'>[L] offloads the ores into [box].</span>", \
+					"<span class='notice'>You offload the ores beneath you into your [box.name].</span>")
+				else
+					L.visible_message("<span class='notice'>[L] scoops up the ores beneath them.</span>", \
+					"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
 	return ..()
 
 /obj/item/weapon/ore/uranium
@@ -269,7 +291,7 @@
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A][COORD(bombturf)]")
 		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
-	
+
 /obj/item/weapon/twohanded/required/gibtonite/proc/detonate(notify_admins)
 	if(primed)
 		switch(quality)
