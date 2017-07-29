@@ -247,13 +247,7 @@ SUBSYSTEM_DEF(garbage)
 		if (timer.spent)
 			continue
 		qdel(timer)
-	var/list/dc = datum_components
-	for(var/I in dc)
-		var/datum/component/C = I
-		C._RemoveNoSignal()
-		qdel(C)
-	if(dc)
-		dc.Cut()
+	QDEL_LIST(datum_components)
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.
