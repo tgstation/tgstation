@@ -5,12 +5,13 @@
 	flags = CONDUCT
 	force = 0
 	force_on = 10
-	item_state = "pen"
-	var/item_state_on = "knife"
 	icon = 'hippiestation/icons/obj/weapons.dmi'
 	icon_state = "butterflyknife0"
 	icon_state_on = "butterflyknife1"
 	hitsound_on = 'hippiestation/sound/weapons/knife.ogg'
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
+	var/item_state_on = "butterfly"
 	throwforce = 0
 	throwforce_on = 10
 	var/backstabforce = 30
@@ -77,9 +78,7 @@
 	force_on = 20
 	throwforce_on = 20
 	backstabforce = 80
-	item_state = "pen"
-	item_state_on = "edagger"
-	icon = 'hippiestation/icons/obj/weapons.dmi'
+	item_state_on = "balisong"
 	icon_state = "butterflyknife0"
 	icon_state_on = "butterflyknife_syndie"
 	onsound = 'hippiestation/sound/weapons/knifeopen.ogg'
