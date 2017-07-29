@@ -456,7 +456,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		targetinfo = item
 
 		steal_target = targetinfo.targetitem
-		explanation_text = "Steal [targetinfo.name]."
+		explanation_text = "Steal [targetinfo.name][targetinfo.ending_punctuation]"
 		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
