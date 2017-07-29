@@ -13,7 +13,7 @@
 			mind.transfer_to(new_mob)
 
 	-	You must not assign key= or ckey= after transfer_to() since the transfer_to transfers the client for you.
-		By setting key or ckey explicitly after transfering the mind with transfer_to you will cause bugs like DCing
+		By setting key or ckey explicitly after transferring the mind with transfer_to you will cause bugs like DCing
 		the player.
 
 	-	IMPORTANT NOTE 2, if you want a player to become a ghost, use mob.ghostize() It does all the hard work for you.
@@ -97,7 +97,7 @@
 		language_holder = mob_holder.copy(src)
 
 	if(key)
-		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
+		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
 			new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key

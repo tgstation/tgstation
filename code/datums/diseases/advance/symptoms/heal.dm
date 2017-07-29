@@ -58,7 +58,7 @@ Bonus
 	level = 6
 
 /datum/symptom/heal/toxin/Heal(mob/living/M, datum/disease/advance/A)
-	var/heal_amt = 0.5 * power
+	var/heal_amt = 1 * power
 	if(M.toxloss > 0 && prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#66FF99")
 	M.adjustToxLoss(-heal_amt)
@@ -89,7 +89,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/toxin/plus/Heal(mob/living/M, datum/disease/advance/A)
-	var/heal_amt = 1 * power
+	var/heal_amt = 2 * power
 	if(M.toxloss > 0 && prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#00FF00")
 	M.adjustToxLoss(-heal_amt)
@@ -122,7 +122,7 @@ Bonus
 	level = 6
 
 /datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 1 * power
+	var/heal_amt = 2 * power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -165,7 +165,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 2 * power
+	var/heal_amt = 4 * power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -214,7 +214,7 @@ Bonus
 	level = 6
 
 /datum/symptom/heal/burn/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 1 * power
+	var/heal_amt = 2 * power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -256,7 +256,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 2 * power
+	var/heal_amt = 4 * power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -306,7 +306,7 @@ Bonus
 	symptom_delay_max = 8
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/amt_healed = 1 * power
+	var/amt_healed = 2 * power
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]

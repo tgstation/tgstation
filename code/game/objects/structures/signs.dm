@@ -220,7 +220,7 @@
 	icon_state = "atmosplaque"
 
 /obj/structure/sign/nanotrasen
-	name = "\improper NanoTrasen Logo "
+	name = "\improper Nanotrasen Logo"
 	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 

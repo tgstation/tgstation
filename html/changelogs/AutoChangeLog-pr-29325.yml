@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - balance: "Prolonging Prisms have a higher cost to delay, but no longer increase in cost based off of CV."
+  - balance: "Base delay cost changed from 2500W to 3000W, cost increase per activation changed from 750W to 1250W, cost increase per 10 CV changed from 75W to 0W."

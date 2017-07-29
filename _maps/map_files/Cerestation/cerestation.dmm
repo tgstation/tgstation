@@ -700,7 +700,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Northen External Waste Belt APC";
+	name = "Northern External Waste Belt APC";
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -1533,8 +1533,6 @@
 /area/shuttle/syndicate)
 "ady" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/firealarm{
@@ -1636,7 +1634,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Telecoms Server APC";
+	name = "Telecomms Server APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -2388,7 +2386,7 @@
 	},
 /obj/machinery/ntnet_relay,
 /obj/machinery/camera{
-	c_tag = "Telecoms Server Room";
+	c_tag = "Telecomms Server Room";
 	dir = 4;
 	network = list("SS13")
 	},
@@ -2837,8 +2835,6 @@
 /area/security/prison)
 "age" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3892,7 +3888,7 @@
 "aif" = (
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Telecoms Control Room APC";
+	name = "Telecomms Control Room APC";
 	pixel_y = -24
 	},
 /obj/structure/cable,
@@ -6969,8 +6965,6 @@
 /area/crew_quarters/heads/captain)
 "aoi" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -7610,8 +7604,6 @@
 /area/security/prison)
 "apA" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/cable/orange{
@@ -8013,15 +8005,15 @@
 /obj/machinery/door/airlock/mining{
 	req_access_txt = "48"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/quartermaster/miningdock)
 "aqr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -8087,6 +8079,11 @@
 /area/security/warden)
 "aqy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -8637,8 +8634,6 @@
 /area/crew_quarters/locker)
 "arC" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -8802,8 +8797,6 @@
 "arU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -8943,12 +8936,6 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -9140,8 +9127,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/cmo,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/secure/safe{
@@ -9246,8 +9231,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/ce,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/sign/poster/contraband/power{
@@ -9477,11 +9460,6 @@
 	pixel_y = -3
 	},
 /obj/structure/window/reinforced,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -10324,8 +10302,6 @@
 	req_one_access_txt = "19;41"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/carpet{
@@ -10663,8 +10639,6 @@
 /area/maintenance/asteroid/fore/com_west)
 "avD" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/closet/wardrobe/red,
@@ -10745,8 +10719,6 @@
 /area/security/warden)
 "avL" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -11486,6 +11458,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -11905,8 +11880,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/hos,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/secure/safe{
@@ -12061,8 +12034,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/rd,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/sign/poster/contraband/lamarr{
@@ -13985,8 +13956,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -14137,8 +14106,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/camera{
@@ -14213,6 +14180,11 @@
 /area/security/main)
 "aCK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
 	dir = 1;
@@ -14272,8 +14244,6 @@
 /area/security/brig)
 "aCP" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14344,8 +14314,6 @@
 /area/security/courtroom)
 "aCV" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -15320,8 +15288,6 @@
 	c_tag = "Bridge Midway 1"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/darkblue/side{
@@ -15517,8 +15483,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/qm,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/secure/safe{
@@ -15712,6 +15676,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -17437,8 +17406,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/wood{
@@ -18959,8 +18926,6 @@
 /area/bridge)
 "aLg" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -19595,10 +19560,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -20322,7 +20284,7 @@
 "aNC" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Fore Asteroid Maintenace APC";
+	name = "Fore Asteroid Maintenance APC";
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/end,
@@ -21042,6 +21004,11 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4;
@@ -23414,10 +23381,7 @@
 	dir = 8;
 	pixel_x = 27
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -23514,6 +23478,9 @@
 	dir = 4
 	},
 /obj/vehicle/janicart,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23554,10 +23521,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/weapon/paper{
-	info = "You got a big job ahead of you, pal. This is a big station, lots of floors and assholes to dirty said floors without any thought for you. It might not be a bad idea to check on the external waste belts every now and again to make sure some foriegn object hasn't clogged the disposal loop, either.";
-	name = "Janitor Notice"
-	},
+/obj/item/weapon/paper/fluff/stations/cere/janitor,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27392,7 +27356,7 @@
 "bae" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Port Asteroid Maintence APC";
+	name = "Port Asteroid Maintenance APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -28102,6 +28066,9 @@
 	c_tag = "EVA Equipment";
 	dir = 6
 	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28502,7 +28469,7 @@
 /area/maintenance/asteroid/port/west)
 "bcl" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Serivce SMES Access";
+	name = "Service SMES Access";
 	req_access_txt = "10;11;12"
 	},
 /obj/structure/cable/orange{
@@ -29508,8 +29475,6 @@
 /area/hallway/primary/central)
 "bek" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -31240,6 +31205,10 @@
 	c_tag = "EVA Storage";
 	dir = 9
 	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/blue/side{
 	icon_state = "blue";
 	dir = 4;
@@ -32496,8 +32465,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -33757,7 +33724,6 @@
 	name = "Isolation A";
 	req_access_txt = "39"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35873,8 +35839,6 @@
 "bpt" = (
 /obj/structure/table,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/paper_bin{
@@ -36080,8 +36044,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -37263,9 +37225,7 @@
 	},
 /area/hallway/primary/port)
 "brN" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37277,6 +37237,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37284,6 +37247,9 @@
 /area/hallway/primary/port)
 "brP" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -38080,6 +38046,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38739,10 +38706,7 @@
 	},
 /area/awaymission/research/interior/gateway)
 "bur" = (
-/obj/item/weapon/paper{
-	info = "<center><b>Nanotrasen Exploration and Colonization Program</b></center><br><br><center><i>Due to recent shutdowns of the Exploration and Colonization department shortly after this gateway was delievered on-site during station construction, this room has been condemmed and an engineering team will be on-site within the next few months to recollect the gate. Thank you for your cooperation.</i>";
-	name = "NOTICE - GATEWAY STATUS"
-	},
+/obj/item/weapon/paper/fluff/stations/cere/gateway,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	icon_state = "ast_warn";
 	dir = 8
@@ -38878,9 +38842,6 @@
 	},
 /area/hydroponics)
 "buE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Hydroponics";
 	req_access_txt = "35"
@@ -38896,9 +38857,6 @@
 	},
 /area/hydroponics)
 "buF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -38906,6 +38864,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -40221,8 +40182,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -40318,7 +40277,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -40493,8 +40452,6 @@
 	dir = 6
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -40691,8 +40648,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -40891,7 +40846,7 @@
 /area/awaymission/research/interior/gateway)
 "byg" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /obj/item/weapon/coin/silver,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -40990,8 +40945,6 @@
 	c_tag = "Hydroponics North 2"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/darkgreen{
@@ -41005,7 +40958,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Hydroponics Delievery Chute";
+	name = "Hydroponics Delivery Chute";
 	opacity = 1;
 	req_access_txt = "33"
 	},
@@ -42341,9 +42294,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/engine{
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/manifold/green/visible,
@@ -43737,8 +43688,6 @@
 /area/medical/chemistry)
 "bDn" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
@@ -44017,7 +43966,7 @@
 "bDQ" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/item/stack/packageWrap,
 /obj/item/device/destTagger,
 /turf/open/floor/plasteel/hydrofloor{
@@ -44043,7 +43992,7 @@
 /area/engine/atmos)
 "bDT" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Atmospehrics Maintenance";
+	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -44439,8 +44388,6 @@
 /area/medical/genetics)
 "bEF" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -44659,8 +44606,6 @@
 /obj/item/weapon/grenade/chem_grenade/metalfoam,
 /obj/item/weapon/grenade/chem_grenade/metalfoam,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -44845,8 +44790,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
@@ -45430,8 +45373,6 @@
 /area/library)
 "bGw" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -45518,8 +45459,6 @@
 /obj/item/weapon/grown/log,
 /obj/item/weapon/grown/log,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/hatchet,
@@ -46095,8 +46034,6 @@
 	pixel_y = -3
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -46871,9 +46808,6 @@
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -47295,6 +47229,9 @@
 /area/engine/engineering)
 "bJS" = (
 /obj/structure/table,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -47801,8 +47738,6 @@
 /area/engine/gravity_generator)
 "bKQ" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -48926,9 +48861,6 @@
 	pixel_y = 2
 	},
 /obj/item/clothing/neck/stethoscope,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -50821,6 +50753,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -51195,7 +51132,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Engineering Delievery Chute";
+	name = "Engineering Delivery Chute";
 	opacity = 1;
 	req_access_txt = "10"
 	},
@@ -53365,8 +53302,6 @@
 /area/crew_quarters/fitness)
 "bVm" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black{
@@ -54802,11 +54737,7 @@
 	})
 "bYp" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	desc = "";
-	info = "Bruises sustained in the holodeck can be healed simply by sleeping.";
-	name = "Holodeck Disclaimer"
-	},
+/obj/item/weapon/paper/fluff/holodeck/disclaimer,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -55737,6 +55668,10 @@
 "cap" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -57394,7 +57329,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -57655,9 +57590,7 @@
 	},
 /area/shuttle/escape)
 "cdZ" = (
-/obj/structure/closet/secure_closet/miner{
-	locked = 0
-	},
+/obj/structure/closet/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -58707,10 +58640,7 @@
 "cgi" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/meson,
-/obj/item/weapon/paper{
-	info = "This station needs cleared out within the next few weeks, as construction is almost complete and NT expects most of the equipment off-site before then. Throw most of the shit in here for now and we'll come back later with a pod to haul the heavier stuff.  Shouldn't be too big of an issue.";
-	name = "Disclaimer Notice"
-	},
+/obj/item/weapon/paper/fluff/stations/cere/abandoned_dock,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60614,9 +60544,6 @@
 	},
 /area/hallway/primary/aft)
 "cjO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -60627,6 +60554,9 @@
 	req_access_txt = "24"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60687,8 +60617,6 @@
 /area/construction/mining/aux_base)
 "cjU" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -60859,10 +60787,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61223,10 +61148,7 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61292,10 +61214,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>";
-	name = "Quantum Pad For Dummies"
-	},
+/obj/item/weapon/paper/guides/quantumpad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61678,8 +61597,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -62031,8 +61948,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/red/side{
@@ -62824,8 +62739,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -64481,8 +64394,6 @@
 /area/science/robotics/lab)
 "cqz" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -64604,8 +64515,6 @@
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/clothing/glasses/welding,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -64633,7 +64542,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/asteroid/aft/science)
+/area/hallway/primary/aft)
 "cqM" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -66360,7 +66269,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/asteroid/aft/science)
+/area/science/lab)
 "ctR" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -66754,8 +66663,6 @@
 /area/science/research)
 "cuN" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -68186,8 +68093,6 @@
 /area/science/xenobiology)
 "cwO" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -68713,11 +68618,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/orange{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	icon_state = "ast_warn";
 	dir = 1
@@ -68779,8 +68679,6 @@
 /area/science/server)
 "cxT" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -69935,9 +69833,6 @@
 	name = "Kill Chamber";
 	req_access_txt = "55"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -70515,7 +70410,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Research Delievery Chute";
+	name = "Research Delivery Chute";
 	opacity = 1;
 	req_access_txt = "55"
 	},
@@ -72218,7 +72113,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -73638,7 +73532,7 @@
 "cHq" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
-	desc = "A chute for big and small crimnals alike!";
+	desc = "A chute for big and small criminals alike!";
 	dir = 1;
 	name = "Criminal Delivery Chute"
 	},
@@ -75052,7 +74946,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal/deliveryChute{
-	desc = "A chute for big and small crimnals alike!";
+	desc = "A chute for big and small criminals alike!";
 	dir = 1;
 	name = "Criminal Delivery Chute"
 	},
@@ -75182,8 +75076,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
@@ -75722,8 +75614,6 @@
 /area/crew_quarters/locker)
 "cLx" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/sign/map/left/ceres{
@@ -76259,7 +76149,7 @@
 "cMw" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Port Asteroid Maintence APC";
+	name = "Port Asteroid Maintenance APC";
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -76613,8 +76503,6 @@
 /area/crew_quarters/theatre)
 "cNb" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -76806,8 +76694,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/wood{
@@ -77255,8 +77141,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/barber{
@@ -78280,6 +78164,7 @@
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -79686,15 +79571,9 @@
 	pixel_x = 32
 	},
 /obj/structure/closet/crate/bin,
-/obj/item/weapon/paper/crumpled{
-	info = "...SOMETHING IN THE ROCKS, IT WATCHES US ALL..."
-	},
-/obj/item/weapon/paper/crumpled{
-	info = "...THEY SENT US HERE FOR A REASON...TERRIBLE..."
-	},
-/obj/item/weapon/paper/crumpled{
-	info = "...EMPTY HALLS...USELESS SPACE..."
-	},
+/obj/item/weapon/paper/crumpled/stations/cere/rocks1,
+/obj/item/weapon/paper/crumpled/stations/cere/rocks2,
+/obj/item/weapon/paper/crumpled/stations/cere/rocks3,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -79708,17 +79587,9 @@
 	})
 "cTH" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/item/weapon/paper/crumpled{
-	info = "I can't be here for much longer, this station is too empty for its own good.  Something is wrong..."
-	},
-/obj/item/weapon/paper{
-	info = "<b><center>2XXX - 2nd Trimestor</center></b><br><br><center>I hide in here, away from the masses, not like it matters much considering how fucking huge this place is. ";
-	name = "Journal Log"
-	},
-/obj/item/weapon/paper{
-	info = "<b><center>2XXX - 3rd Trimestor</center></b><br><br><center>I hear strange whispers from the halls, longing for blood. Something isn't right here. Why did they transfer us here to work in the first place? ";
-	name = "Journal Log 2"
-	},
+/obj/item/weapon/paper/crumpled/stations/cere/empty_station,
+/obj/item/weapon/paper/fluff/stations/cere/journal/journal,
+/obj/item/weapon/paper/fluff/stations/cere/journal/journal_2,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -79726,9 +79597,7 @@
 	valid_territory = 0
 	})
 "cTI" = (
-/obj/item/weapon/paper/crumpled/bloody{
-	info = "...THE HOPLINE CALLS...IT THIRSTS FOR BLOOD...I MUST GO..."
-	},
+/obj/item/weapon/paper/crumpled/bloody/hop,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -80314,14 +80183,9 @@
 	},
 /area/maintenance/disposal/incinerator)
 "cUO" = (
-/obj/machinery/airalarm{
-	desc = "This particular atmos control unit appears to have no access restrictions.";
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	name = "all-access air alarm";
-	pixel_x = 24;
-	req_access = "0";
-	req_one_access = "0"
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	name = "output gas connector port"
@@ -84525,7 +84389,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
 	filter_type = "n2";
-	name = "nitogren filter";
+	name = "nitrogen filter";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -85142,8 +85006,6 @@
 /area/security/armory)
 "dfc" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -87484,8 +87346,6 @@
 "dlg" = (
 /obj/machinery/computer/gulag_teleporter_computer,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -90078,12 +89938,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -90256,12 +90110,6 @@
 /obj/item/weapon/shield/riot{
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90447,12 +90295,6 @@
 	layer = 3.00001;
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91626,8 +91468,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/camera{
@@ -91677,8 +91517,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black{
@@ -91949,7 +91787,7 @@
 /area/crew_quarters/heads/hos)
 "dua" = (
 /mob/living/simple_animal/hostile/retaliate/bat{
-	desc = "A fierce companion for any person of power, this spider has been carefully trained by NanoTrasen specialists. Its beady, staring eyes send shivers down your spine.";
+	desc = "A fierce companion for any person of power, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine.";
 	emote_hear = list("chitters");
 	faction = list("spiders");
 	harm_intent_damage = 3;
@@ -92278,6 +92116,15 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Warden's Office APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92519,6 +92366,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92742,6 +92594,15 @@
 "dvG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Brig APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/orange{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -93916,8 +93777,6 @@
 /area/security/courtroom)
 "dxP" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/vault{
@@ -94654,6 +94513,184 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"dzg" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/bridges/cargo_ai)
+"dzh" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ai_monitored/storage/eva)
+"dzi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/brig)
+"dzj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/red/side{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/brig)
+"dzk" = (
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/nuke_storage)
+"dzl" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dzm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dzn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dzo" = (
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Starboard Asteroid Maintenance APC";
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/end{
+	icon_state = "warn_end";
+	dir = 1
+	},
+/obj/structure/cable/orange,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/asteroid/starboard)
+"dzp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard/aft)
+"dzq" = (
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/vacantoffice)
+"dzr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/aft)
+"dzs" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/aft)
 
 (1,1,1) = {"
 aaa
@@ -106797,7 +106834,7 @@ dtJ
 dtJ
 dvh
 dvG
-aDP
+dzi
 aFl
 cLB
 dwO
@@ -108339,8 +108376,8 @@ duk
 aqy
 dvk
 aCK
-aGP
-aFq
+cHc
+dzj
 dwv
 dwT
 dxn
@@ -109755,7 +109792,7 @@ civ
 cjc
 cjN
 cky
-cky
+dzr
 cky
 cmI
 cnO
@@ -118238,7 +118275,7 @@ cfA
 cfA
 cfA
 cfA
-cmJ
+dzs
 cfv
 coN
 cJC
@@ -121212,7 +121249,7 @@ cEY
 aUZ
 aUZ
 aUZ
-aVn
+dzk
 aSN
 abC
 aaa
@@ -121338,7 +121375,7 @@ djY
 cxE
 djV
 cSA
-czT
+djz
 dka
 djV
 dkb
@@ -128129,7 +128166,7 @@ dsW
 dvv
 aDs
 aEQ
-dwo
+dtX
 dvv
 arP
 arP
@@ -132035,7 +132072,7 @@ cIE
 cIF
 bfg
 bgk
-bfg
+dzh
 cIF
 cIH
 cIv
@@ -135080,7 +135117,7 @@ cXC
 cXH
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -136365,7 +136402,7 @@ cXC
 aqV
 aqV
 cXQ
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -137650,7 +137687,7 @@ cXD
 cXI
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -138653,7 +138690,7 @@ ako
 ako
 ako
 ako
-cXv
+dzg
 cXv
 cXv
 cXv
@@ -138678,7 +138715,7 @@ aOe
 cXJ
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -139963,7 +140000,7 @@ cXF
 cXL
 aqV
 cXQ
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -141248,7 +141285,7 @@ cXF
 cXK
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -141291,7 +141328,7 @@ bhm
 bhm
 bjG
 dyY
-bkG
+dzm
 blF
 bkG
 bnY
@@ -141825,7 +141862,7 @@ bEr
 bFF
 bEr
 bIK
-bEr
+dzn
 bEr
 bMy
 bNG
@@ -141867,7 +141904,7 @@ cXf
 cXg
 cdy
 djr
-djr
+dzp
 djr
 djr
 cfl
@@ -143931,7 +143968,7 @@ cdi
 cth
 cgW
 chI
-cim
+dzq
 cim
 cjE
 ckv
@@ -144198,7 +144235,7 @@ cmz
 cnH
 cnH
 chI
-cpZ
+cpX
 cnX
 crW
 csG
@@ -145398,7 +145435,7 @@ bcS
 bcS
 beD
 aZq
-bgw
+dzl
 bhp
 bic
 biP
@@ -148513,7 +148550,7 @@ bMO
 bNM
 bOR
 bPZ
-cQi
+dzo
 beH
 aZM
 aZM

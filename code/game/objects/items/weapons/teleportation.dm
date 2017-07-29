@@ -199,6 +199,9 @@ Frequency:
 		return
 	try_move_adjacent(created[1])
 	active_portal_pairs[created[1]] = created[2]
+	var/obj/effect/portal/c1 = created[1]
+	var/obj/effect/portal/c2 = created[2]
+	investigate_log("was used by [key_name(user)] at [COORD(user)] to create a portal pair with destinations [COORD(c1)] and [COORD(c2)].", INVESTIGATE_PORTAL)
 	add_fingerprint(user)
 
 /obj/item/weapon/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)

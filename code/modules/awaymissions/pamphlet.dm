@@ -1,6 +1,8 @@
 /obj/item/weapon/paper/pamphlet
 	name = "pamphlet"
 	icon_state = "pamphlet"
+
+/obj/item/weapon/paper/pamphlet/gateway
 	info = "<b>Welcome to the Nanotrasen Gateway project...</b><br>\
 			Congratulations! If you're reading this, you and your superiors have decided that you're \
 			ready to commit to a life spent colonising the rolling hills of far away worlds. You \

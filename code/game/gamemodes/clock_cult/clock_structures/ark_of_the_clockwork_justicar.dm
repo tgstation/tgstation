@@ -9,7 +9,7 @@
 	icon_state = "nothing"
 	density = FALSE
 	invisibility = INVISIBILITY_MAXIMUM
-	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE | FREEZE_PROOF
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over

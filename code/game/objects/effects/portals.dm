@@ -42,9 +42,6 @@
 	if(user && Adjacent(user))
 		teleport(user)
 
-/obj/effect/portal/make_frozen_visual()
-	return
-
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
 	if(get_turf(oldloc) == get_turf(linked))
 		return ..()
