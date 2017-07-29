@@ -78,7 +78,6 @@
 
 /datum/objective_item/steal/nuke_core
 	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core!"
-	ending_punctuation = "!"
 	targetitem = /obj/item/nuke_core
 	difficulty = 15
 
@@ -88,7 +87,6 @@
 
 /datum/objective_item/steal/supermatter
 	name = "a sliver of a supermatter crystal. Be sure to use the proper safety equipment when extracting the sliver!"
-	ending_punctuation = "!"
 	targetitem = /obj/item/nuke_core/supermatter_sliver
 	difficulty = 15
 
