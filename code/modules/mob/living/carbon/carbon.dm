@@ -234,6 +234,12 @@
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
+/mob/living/carbon/hallucinating()
+	if(hallucination)
+		return TRUE
+	else
+		return FALSE
+
 /mob/living/carbon/resist_buckle()
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)

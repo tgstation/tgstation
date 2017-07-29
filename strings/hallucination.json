@@ -198,4 +198,32 @@
 	"You have my permission. Do it."
     ]
 
+    "chemicals": [
+	"Ooze",
+	"Fire",
+	"Earth",
+	"Lightning",
+	"Air",
+	"Magic",
+	"Spiders",
+	"Button",
+	"Surprise",
+	"Happiness",
+	"Despair",
+	"Blood",
+	"Awesome",
+	"Infinity",
+	"Electronics",
+	"Time",
+	"Space",
+	"Pain",
+	"Guts",
+	"Life",
+	"Death",
+	"Phlebotinium",
+	"Mana",
+	"Energy",
+	"?????"
+    ]
+
 }

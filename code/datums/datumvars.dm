@@ -942,7 +942,7 @@
 			var/result = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in hallucinations
 			if(!usr)
 				return
-			if(!C)
+			if(QDELETED(C))
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
