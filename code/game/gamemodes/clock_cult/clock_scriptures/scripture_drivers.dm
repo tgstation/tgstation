@@ -28,20 +28,20 @@
 /datum/clockwork_scripture/create_object/judicial_visor
 	descname = "Delayed Area Knockdown Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, knocking down, muting, and damaging non-Servants."
+	desc = "Creates a visor that can smite an area, applying Belligerent and briefly stunning. The smote area will explode after 3 seconds."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
 	consumed_components = list(BELLIGERENT_EYE = 1)
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
-	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
-	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
+	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting a small area.</span>"
+	usage_tip = "The visor has a thirty-second cooldown once used."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
 	quickbind = TRUE
-	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, knocking down, muting, and damaging non-Servants after a delay."
+	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
