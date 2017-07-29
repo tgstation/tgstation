@@ -6,6 +6,8 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
+	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	force = 15 //Extra damage is dealt to targets in attack()
 	throwforce = 25
 	armour_penetration = 10

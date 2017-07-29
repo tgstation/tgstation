@@ -17,6 +17,8 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	item_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
 	strip_delay = 70
 	resistance_flags = 0
@@ -97,6 +99,8 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	item_color = "hosred"
 	strip_delay = 50
 	equip_delay_other = 50
@@ -122,6 +126,8 @@
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
 	icon_state = "workboots"
 	item_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	strip_delay = 40
 	equip_delay_other = 40
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes

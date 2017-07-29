@@ -146,6 +146,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 25
@@ -223,6 +225,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "tentacle"
 	item_state = "tentacle"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	flags = ABSTRACT | NODROP | DROPDEL | NOBLUDGEON
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
@@ -394,6 +398,8 @@
 	flags = ABSTRACT | NODROP | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	block_chance = 50
 
 	var/remaining_uses //Set by the changeling ability.

@@ -5,6 +5,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
 	origin_tech = "magnets=2;biotech=2"
@@ -42,6 +44,8 @@
 	name = "pest spray"
 	icon_state = "pestspray"
 	item_state = "plantbgone"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
 	container_type = OPENCONTAINER
 	slot_flags = SLOT_BELT
@@ -64,6 +68,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cultivator"
 	item_state = "cultivator"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	origin_tech = "engineering=2;biotech=2"
 	flags = CONDUCT
 	force = 5
@@ -78,6 +84,9 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
+	item_state = "hatchet"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags = CONDUCT
 	force = 12
 	w_class = WEIGHT_CLASS_TINY
@@ -97,6 +106,8 @@
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
 	force = 13

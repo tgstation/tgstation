@@ -127,6 +127,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "bluespace=4;materials=4"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
@@ -203,6 +205,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "multiverse"
 	item_state = "multiverse"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -450,6 +454,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "voodoo"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
 	var/list/mob/living/carbon/human/possible = list()
 	var/obj/item/link = null

@@ -13,6 +13,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banner"
 	item_state = "banner"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A banner with Nanotrasen's logo on it."
 	slowdown = 2
 	throw_speed = 0

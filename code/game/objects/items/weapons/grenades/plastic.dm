@@ -162,6 +162,8 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
+	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "syndicate=1"

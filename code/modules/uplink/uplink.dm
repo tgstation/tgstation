@@ -140,6 +140,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 /obj/item/device/radio/uplink/Initialize()
 	. = ..()
 	icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	hidden_uplink = new(src)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE

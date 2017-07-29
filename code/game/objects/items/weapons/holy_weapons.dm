@@ -3,6 +3,8 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 18
 	throw_speed = 3
 	throw_range = 4
@@ -60,6 +62,8 @@
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	name = "red holy staff"
 	desc = "It has a mysterious, protective aura."
 	w_class = WEIGHT_CLASS_HUGE
@@ -82,6 +86,8 @@
 /obj/item/weapon/nullrod/claymore
 	icon_state = "claymore"
 	item_state = "claymore"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
 	w_class = WEIGHT_CLASS_HUGE
@@ -163,6 +169,8 @@
 	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 4.13
 	throwforce = 1
@@ -172,6 +180,8 @@
 /obj/item/weapon/nullrod/scythe
 	icon_state = "scythe1"
 	item_state = "scythe1"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = WEIGHT_CLASS_BULKY
@@ -183,6 +193,8 @@
 /obj/item/weapon/nullrod/scythe/vibro
 	icon_state = "hfrequency0"
 	item_state = "hfrequency1"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
@@ -192,6 +204,8 @@
 /obj/item/weapon/nullrod/scythe/spellblade
 	icon_state = "spellblade"
 	item_state = "spellblade"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
 	name = "dormant spellblade"
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
@@ -200,6 +214,8 @@
 /obj/item/weapon/nullrod/scythe/talking
 	icon_state = "talking_sword"
 	item_state = "talking_sword"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	attack_verb = list("chopped", "sliced", "cut")
@@ -243,6 +259,8 @@
 /obj/item/weapon/nullrod/hammmer
 	icon_state = "hammeron"
 	item_state = "hammeron"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "relic war hammer"
 	desc = "This war hammer cost the chaplain forty thousand space dollars."
 	slot_flags = SLOT_BELT
@@ -254,6 +272,8 @@
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	flags = NODROP | ABSTRACT
 	sharpness = IS_SHARP
@@ -275,6 +295,8 @@
 	desc = "What a terrible night to be on Space Station 13."
 	icon_state = "chain"
 	item_state = "chain"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/chainhit.ogg'
@@ -333,10 +355,14 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
 	item_state = "bostaff0"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
 /obj/item/weapon/nullrod/tribal_knife
 	icon_state = "crysknife"
 	item_state = "crysknife"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "arrhythmic knife"
 	w_class = WEIGHT_CLASS_HUGE
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
@@ -363,6 +389,8 @@
 
 /obj/item/weapon/nullrod/pitchfork
 	icon_state = "pitchfork0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "unholy pitchfork"
 	w_class = WEIGHT_CLASS_NORMAL
 	desc = "Holding this makes you look absolutely devilish."

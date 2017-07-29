@@ -3,6 +3,8 @@
 	desc = null //Different examine for traitors
 	item_state = "electronic"
 	icon_state = "doorCharge"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 4
 	throw_speed = 1
