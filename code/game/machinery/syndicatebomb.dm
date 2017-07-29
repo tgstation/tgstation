@@ -275,6 +275,8 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)

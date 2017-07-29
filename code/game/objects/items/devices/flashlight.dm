@@ -194,6 +194,8 @@
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
 	item_state = "seclite"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
 	brightness_on = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
@@ -322,6 +324,8 @@
 	name = "lantern"
 	icon_state = "lantern"
 	item_state = "lantern"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 

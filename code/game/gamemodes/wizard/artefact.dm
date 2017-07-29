@@ -203,6 +203,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "multiverse"
 	item_state = "multiverse"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT

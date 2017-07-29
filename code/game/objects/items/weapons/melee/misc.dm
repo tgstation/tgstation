@@ -47,6 +47,8 @@
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
 	icon_state = "sabre"
 	item_state = "sabre"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	unique_rename = 1
 	force = 15
@@ -83,6 +85,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
@@ -190,6 +194,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "supermatter_sword"
 	item_state = "supermatter_sword"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001

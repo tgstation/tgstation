@@ -3,6 +3,8 @@
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7

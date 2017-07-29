@@ -94,6 +94,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	can_hold = list(/obj/item/weapon/photo)
 	resistance_flags = FLAMMABLE
 
