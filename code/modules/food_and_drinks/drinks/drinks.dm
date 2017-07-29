@@ -167,6 +167,7 @@
 	icon_state = "coffee"
 	list_reagents = list("coffee" = 30)
 	spillable = 1
+	resistance_flags = FREEZE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
@@ -197,6 +198,7 @@
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
+	resistance_flags = FREEZE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"

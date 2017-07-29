@@ -298,7 +298,7 @@
 	origin_tech = "combat=4;magnets=7;powerstorage=3;abductor=3"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
-/obj/item/weapon/paper/abductor
+/obj/item/weapon/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
 	info = {"<b>Dissection for Dummies</b><br>
@@ -320,10 +320,10 @@
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/weapon/paper/abductor/update_icon()
+/obj/item/weapon/paper/guides/antag/abductor/update_icon()
 	return
 
-/obj/item/weapon/paper/abductor/AltClick()
+/obj/item/weapon/paper/guides/antag/abductor/AltClick()
 	return
 
 #define BATON_STUN 0

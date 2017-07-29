@@ -225,7 +225,7 @@
  /**
   * private
   *
-  * Handle clients switching mobs, by transfering their UIs.
+  * Handle clients switching mobs, by transferring their UIs.
   *
   * required user source The client's original mob.
   * required user target The client's new mob.

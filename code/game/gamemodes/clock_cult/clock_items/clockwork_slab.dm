@@ -19,8 +19,8 @@
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
-	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis, /datum/clockwork_scripture/create_object/replicant, \
-	/datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
+	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/sigil_of_submission, \
+	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	var/recollection_category = "Default"
 	actions_types = list(/datum/action/item_action/clock/hierophant)
@@ -51,18 +51,18 @@
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
+/obj/item/clockwork/slab/cyborg/engineer //two scriptures, plus a fabricator
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
 	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armory)
 
-/obj/item/clockwork/slab/cyborg/security //three scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/volt_blaster)
+/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
-/obj/item/clockwork/slab/cyborg/peacekeeper //three scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/volt_blaster)
+/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
@@ -72,8 +72,8 @@
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
-/obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster)
+/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
@@ -398,34 +398,35 @@
 			dat += "<font color=#BE8700><b>Servant:</b></font> A person or robot who serves Ratvar. You are one of these.<br>"
 			dat += "<font color=#BE8700><b>Cache:</b></font> A <i>Tinkerer's Cache</i>, which is a structure that stores and creates components.<br>"
 			dat += "<font color=#BE8700><b>CV:</b></font> Construction Value. All clockwork structures, floors, and walls increase this number.<br>"
+			dat += "<font color=#BE8700><b>Vitality:</b></font> Used for healing effects, produced by Ratvarian spear attacks and Vitality Matrices.<br>"
 			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into Servants of Ratvar.<br>"
 			dat += "<font color=#6E001A><b>[get_component_icon(BELLIGERENT_EYE)]BE:</b></font> Belligerent Eye, a component type used in offensive scriptures.<br>"
 			dat += "<font color=#1E8CE1><b>[get_component_icon(VANGUARD_COGWHEEL)]VC:</b></font> Vanguard Cogwheel, a component type used in defensive scriptures.<br>"
 			dat += "<font color=#AF0AAF><b>[get_component_icon(GEIS_CAPACITOR)]GC:</b></font> Geis Capacitor, a component type used in mind-related scriptures.<br>"
 			dat += "<font color=#5A6068><b>[get_component_icon(REPLICANT_ALLOY)]RA:</b></font> Replicant Alloy, a component type used in construction scriptures.<br>"
-			dat += "<font color=#DAAA18><b>[get_component_icon(HIEROPHANT_ANSIBLE)]HA:</b></font> Hierophant Ansible, a component type used in energy scriptures.<br>"
+			dat += "<font color=#DAAA18><b>[get_component_icon(HIEROPHANT_ANSIBLE)]HA:</b></font> Hierophant Ansible, a component type used in energy-related scriptures.<br>"
 			dat += "<font color=#BE8700><b>Ark:</b></font> The cult's win condition, a huge structure that needs to be defended.<br><br>"
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
 			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
-			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can stun everything in an area after a delay.<br>"
+			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can smite an area for a brief stun and delayed explosion.<br>"
 			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (x-ray, night vision) but damage the wearer's eyes.<br>"
-			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon.<br>"
+			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon that produces Vitality.<br>"
 			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"
 			dat += "<font color=#BE8700><b>Marauder:</b></font> A clockwork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
 			dat += "<font color=#BE8700 size=3>Structures (* = requires power)</font><br>"
 			dat += "<font color=#BE8700><b>Warden:</b></font> An ocular warden, which is a ranged turret that damages non-Servants that see it.<br>"
-			dat += "<font color=#BE8700><b>Daemon*:</b></font> A tinkerer's daemon, which quickly creates components.<br>"
-			dat += "<font color=#BE8700><b>Lens*:</b></font> An interdiction lens, which sabotages machinery in a large area to create power.<br>"
-			dat += "<font color=#BE8700><b>Obelisk*:</b></font> A clockwork obelisk, which can broadcast large messages and allows limited teleportation.<br>"
-			dat += "<font color=#BE8700><b>Motor*:</b></font> A mania motor, which serves as area-denial through negative effects and eventual conversion.<br>"
 			dat += "<font color=#BE8700><b>Prism*:</b></font> A prolonging prism, which delays the shuttle for two minutes at a huge power cost.<br><br>"
+			dat += "<font color=#BE8700><b>Motor*:</b></font> A mania motor, which serves as area-denial through negative effects and eventual conversion.<br>"
+			dat += "<font color=#BE8700><b>Daemon*:</b></font> A tinkerer's daemon, which quickly creates components.<br>"
+			dat += "<font color=#BE8700><b>Obelisk*:</b></font> A clockwork obelisk, which can broadcast large messages and allows limited teleportation.<br>"
 			dat += "<font color=#BE8700 size=3>Sigils</font><br>"
 			dat += "<i>Note: Sigils can be stacked on top of one another, making certain sigils very effective when paired!</i><br>"
 			dat += "<font color=#BE8700><b>Transgression:</b></font> Stuns the first non-Servant to cross it for ten seconds and blinds others nearby. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Submission:</b></font> Converts the first non-Servant to stand on the sigil for seven seconds. Disappears on use.<br>"
+			dat += "<font color=#BE8700><b>Matrix:</b></font> Drains health from non-Servants, producing Vitality. Can heal and revive Servants.<br>"
 			dat += "<font color=#BE8700><b>Accession:</b></font> Identical to the Sigil of Submission, but doesn't disappear on use. It can also convert a single mindshielded target, but will disappear after doing this.<br>"
-			dat += "<font color=#BE8700><b>Transmission:</b></font> Stores power for clockwork structures. Feeding it brass sheets will create power.<br><br>"
+			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create additional power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
 			var/servants = 0 //Calculate the current production time for slab components
@@ -457,7 +458,7 @@
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
 			dat += "<font color=#1E8CE1>[get_component_icon(VANGUARD_COGWHEEL)]VC</font> Vanguard Cogwheels are defensive and repairing, and are used in defensive scripture;<br>"
-			dat += "<font color=#AF0AAF>[get_component_icon(GEIS_CAPACITOR)]GC</font> Geis Capacitors are for conversion and control, and are used in mind-related scripture;<br>" //References the old name
+			dat += "<font color=#AF0AAF>[get_component_icon(GEIS_CAPACITOR)]GC</font> Geis Capacitors are for conversion and control, and are used in mind-related scripture;<br>"
 			dat += "<font color=#5A6068>[get_component_icon(REPLICANT_ALLOY)]RA</font> Replicant Alloy is a strong, malleable metal and is used for construction and creation;<br>"
 			dat += "<font color=#DAAA18>[get_component_icon(HIEROPHANT_ANSIBLE)]HA</font> Hierophant Ansibles are for transmission and power, and are used in power and teleportation scripture<br><br>"
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
@@ -494,12 +495,11 @@
 			becomes necessary: <b>power</b>. Almost all clockwork structures require power to function in some way. There is nothing special about this power; it's mere electricity, \
 			and can be harnessed in several ways.<br><br>"
 			dat += "To begin with, if there is no other source of power nearby, structures will draw from the area's APC, assuming it has one. This is inefficient and ill-advised as \
-			anything but a last resort. Instead, it is recommended that a <b>sigil of transmission</b> is created. This sigil serves as a sort of battery for nearby clockwork \
-			structures, and those structures will happily draw power from the sigil before they resort to pathetic APCs and other sources of energy.<br><br>"
+			anything but a last resort. Instead, it is recommended that a <b>Sigil of Transmission</b> is created. This sigil serves as both battery  and power generator for nearby clockwork \
+			structures, and those structures will happily draw power from the sigil before they resort to APCs.<br><br>"
 			dat += "Generating power is less easy. The most reliable and efficient way is using brass sheets; attacking a sigil of transmission with brass sheets will convert them \
-			to power, at a rate of <b>[POWER_FLOOR]W</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> \
-			section.) There are also structures that <i>generate</i> power instead of consuming it; for instance, the interdiction lens sabotages all non-clockwork machines in a \
-			very large area and creates power from doing so. This allows Servants to simultaneously cripple an entire department as well as fueling their own machinery.<br><br>"
+			to power, at a rate of <b>[POWER_FLOOR]W</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> section.) \
+			Activating a sigil of transmission will also cause it to drain power from the nearby area, which, while effective, serves as an obvious tell that there is something wrong.<br><br>"
 			dat += "Without power, many structures will not function, making a base vulnerable to attack. For this reason, it is critical that you keep an eye on your power reserves and \
 			ensure that they remain comfortably high.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
@@ -510,15 +510,14 @@
 			converted just like normal crew</i> and will gain special abilities; this is covered later. This section will also cover converting the station's structure itself; walls, \
 			floors, windows, tables, and other objects can all be converted into clockwork versions, and serve an important purpose.<br><br>"
 			dat += "<font color=#BE8700><b>A Note on Geis:</b></font> There are several ways to convert humans and silicons. However, the most important tool to making them work is \
-			<b>Geis</b>, a Driver-tier scripture. Using it whispers an invocation very quickly - this is incredibly obvious - and charges your slab with power. In addition to <i>making \
-			the slab visible in your hand,</i> you can now use it on a target within melee range shackle them, and briefly mute them. It is by far your most reliable tool for capturing \
-			potential converts and other personnel stealthily and efficiently, and is the preferred method of subduing targets for conversion using one of the below methods. Note that \
-			the shackles are not invincible, and after 25 seconds of continued resisting, a target is able to break free of them. While other servants are able to reinforce the bindings \
-			by using Geis on the same target, you can't do so yourself, so use your time wisely.<br><br>"
-			dat += "<font color=#BE8700><b>Converting:</b></font> The two methods of conversion are the <b>sigil of submission</b>, whose purpose is to do so, and the <b>mania motor.</b> The sigil of \
-			submission is a sigil that, when stood on by a non-Servant for seven full seconds, will convert that non-Servant. This is by and large the main conversion method you should use, and \
-			more or less every new Servant should be created by one. They are cheap, early, and permanent! If you do place one, make sure it's hidden well or in a base. You can also destroy the sigil \
-			(without getting components back) by attacking it on harm intent. The mania motor is generally unreliable, only converting those who stand near it for an extended period.<br><br>"
+			<b>Geis</b>, a Driver-tier scripture. Using it whispers an invocation very quickly and charges your slab with power. In addition to <i>making the slab visible in your hand,</i> \
+			you can now use it on a target within melee range to bind and mute them. It is by far your most reliable tool for capturing potential converts and targets, though it is incredibly \
+			obvious. In addition, you are unable to take any actions other than moving while your target is bound. The binding will last for 25 seconds and mute for about 13 seconds, though \
+			allies can use Geis to refresh these effects.<br><br>"
+			dat += "<font color=#BE8700><b>Converting:</b></font> The two methods of conversion are the <b>sigil of submission</b>, whose purpose is to do so, and the <b>mania motor.</b> \
+			The sigil of submission is a sigil that, when stood on by a non-Servant for eight seconds, will convert that non-Servant. This is the only practical way to convert targets. \
+			Sigils of submission are cheap, early, and permanent! Make sure sigils of submission are placed only in bases or otherwise hidden spots, or with a sigil of transgression on them. \
+			The mania motor, however, is generally unreliable and unlocked later, only converting those who stand near it for an extended period.<br><br>"
 			dat += "<font color=#BE8700><b>Converting Humans:</b></font> For obvious reasons, humans are the most common conversion target. Because every crew member is different, and \
 			may be armed with different equipment, you should take precautions to ensure that they aren't able to resist. If able, removing a headset is essential, as is restraining \
 			them through handcuffs, cable ties, or other restraints. Some crew, like security, are also implanted with mindshield implants; these will prevent conversion and must be \
@@ -526,9 +525,8 @@
 			begins administering mindshield implants, this will greatly inhibit conversion. Also note that mindshield implants can be broken by a sigil of accession automatically, but \
 			the sigil will disappear.<br><br>"
 			dat += "<font color=#BE8700><b>Converting Silicons:</b></font> Due to their robotic nature, silicons are generally more predictable than humans in terms of conversion. \
-			However, they are also much, much harder to subdue, especially cyborgs. The easiest way to convert a cyborg is by using a flash or a sigil of transgression to stun it, \
-			then very quickly using Geis to restrain them. If you stack a sigil of transgression and one of the conversion sigils, a crossing cyborg will be stunned and helpless to \
-			escape in time before the other sigil converts them.<br><br>"
+			However, they are also much, much harder to subdue, especially cyborgs. The easiest way to convert a cyborg is by using Geis to restrain them, then dragging them to a sigil \
+			of submission. If you stack a sigil of transgression and a sigil of submission, a crossing cyborg will be stunned and helpless to escape before they are converted.<br><br>"
 			dat += "Converting AIs is very often the hardest task of the cult, and has been the downfall of countless successful Servants. Their omnipresence across the station, \
 			coupled with their secure location and ability to lock themselves securely, makes them a powerful target. However, once the AI itself is reached, it is usually completely \
 			helpless to resist its own conversion. A very common tactic is to take advantage of a converted cyborg to rush the AI before it is able to react.<br><br>"

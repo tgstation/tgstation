@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - bugfix: "Hijacking should now be possible again!"
