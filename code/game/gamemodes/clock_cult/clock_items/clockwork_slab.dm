@@ -19,7 +19,7 @@
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
-	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/sigil_of_submission, \
+	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis, /datum/clockwork_scripture/create_object/sigil_of_submission, \
 	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	var/recollection_category = "Default"
