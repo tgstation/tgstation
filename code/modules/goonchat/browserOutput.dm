@@ -170,7 +170,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
 /proc/icon2base64(icon/icon, iconKey = "misc")
-	return
+	return FALSE
 	if (!isicon(icon))
 		return FALSE
 	GLOB.iconCache[iconKey] << icon
