@@ -47,17 +47,7 @@
 		add_logs(user, M, "fed", reagentlist(src))
 
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	if(iscarbon(M))
-		var/mob/living/carbon/human/H = M
-		if(foodtype & H.dna.species.toxic_food)
-			to_chat(M,"<span class='warning'>What the hell is this?!</span>")
-			M.adjust_disgust(25 + 30 * fraction)
-		else if(foodtype & H.dna.species.disliked_food)
-			to_chat(M,"<span class='notice'>That didn't taste very good...</span>")
-			M.adjust_disgust(11 + 15 * fraction)
-		else if(foodtype & H.dna.species.liked_food)
-			to_chat(M,"<span class='notice'>I love this taste!</span>")
-			M.adjust_disgust(-5 + -2.5 * fraction)
+	checkLiked(fraction, M)
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)

@@ -49,11 +49,11 @@
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
 
 /obj/item/organ/stomach/Remove()
-	..()
 	var/mob/living/carbon/human/H = owner
-
 	if(istype(H))
 		H.clear_alert("disgust")
+
+	..()
 
 /obj/item/organ/stomach/fly
 	name = "insectoid stomach"
