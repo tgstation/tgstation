@@ -206,7 +206,7 @@
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "The power cost to delay a shuttle increases based on CV and the number of times activated."
+	usage_tip = "The power cost to delay a shuttle increases based on the number of times activated."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = VANGUARD_COGWHEEL
