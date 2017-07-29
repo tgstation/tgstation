@@ -77,25 +77,24 @@
 	invis_view = 2
 	flash_protect = -1
 	darkness_view = 8
-	actions_types = list(/datum/action/item_action/hands_free/shift_nerves)
-	var/max_darkness_view = 8
-	var/min_darkness_view = 0
+	//actions_types = list(/datum/action/item_action/hands_free/shift_nerves)
+	var/isOn = TRUE
 	flags = ABSTRACT | NODROP | UNACIDABLE
 
+/*
 /obj/item/clothing/glasses/night/shadowling/attack_self(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
+	var/obj/item/organ/eyes/E = user.getorganslot("eye_sight")
 	if(H.dna.species.id != "shadowling")
-		user << "<span class='warning'>You aren't sure how to do this...</span>"
+		to_chat(user, "<span class='warning'>You aren't sure how to do this...</span>")
 		return
-	var/new_dark_view
-	new_dark_view = (input(user, "Enter the radius of tiles to see with night vision.", "Night Vision", "[new_dark_view]") as num)
-	new_dark_view = Clamp(new_dark_view,min_darkness_view,max_darkness_view)
-	switch(new_dark_view)
-		if(0)
-			user << "<span class='notice'>Your night vision capabilities fade away for the time being.</span>"
-		else
-			user << "<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>"
-	darkness_view = new_dark_view
-	user.update_sight()
+	if (!isOn)
+		E.sight_flags |= (SEE_MOBS|SEE_INFRA|SEE_SELF)
+		to_chat(user, "<span class='notice>Your night vision activates, allowing you to see no matter the light level</span>")
+	else
+		E.sight_flags -= (SEE_MOBS|SEE_INFRA|SEE_SELF)
+		to_chat(user, "<span class='notice>Your night vision subsides, allowing you to easily tell the difference between light levels.</span>")
+
+	user.update_sight()*/
