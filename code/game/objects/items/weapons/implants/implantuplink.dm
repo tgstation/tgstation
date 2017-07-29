@@ -3,6 +3,8 @@
 	desc = "Sneeki breeki."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "materials=4;magnets=4;programming=4;biotech=4;syndicate=5;bluespace=5"
 	var/starting_tc = 0
 

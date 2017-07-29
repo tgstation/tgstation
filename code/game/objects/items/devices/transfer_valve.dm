@@ -3,6 +3,8 @@
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	item_state = "ttv"
+	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks"
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two

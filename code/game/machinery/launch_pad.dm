@@ -209,6 +209,8 @@
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "briefcase"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	flags = CONDUCT
 	force = 8
 	hitsound = "swing_hit"
