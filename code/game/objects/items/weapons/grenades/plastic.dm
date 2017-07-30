@@ -172,8 +172,8 @@
 
 /obj/item/weapon/grenade/plastic/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
-	plastic_overlay = mutable_appearance(icon, "plastic-explosive2")
 	..()
+	plastic_overlay = mutable_appearance(icon, "plastic-explosive2")
 
 /obj/item/weapon/grenade/plastic/c4/Destroy()
 	qdel(wires)
