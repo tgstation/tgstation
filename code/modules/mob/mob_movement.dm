@@ -170,9 +170,9 @@
 		if(Process_ShadowWalk(direct))
 			moving = 0
 			return
-		else
-			if(mob.m_intent && mob.m_intent == MOVE_INTENT_RUN)
-				delay = delay*SW_LIGHT_FACTOR
+
+		if(mob.m_intent && mob.m_intent == MOVE_INTENT_RUN)
+			delay = delay*SW_LIGHT_FACTOR
 
 
 	if (old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)

@@ -75,8 +75,8 @@ Made by Xhuis
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 
 /datum/game_mode/shadowling/announce()
-	world << "<b>The current game mode is - Shadowling!</b>"
-	world << "<b>There are alien <span class='shadowling'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
+	to_chat(world, "<b>The current game mode is - Shadowling!</b>")
+	to_chat(world, "<b>There are alien <span class='shadowling'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>")
 
 /datum/game_mode/shadowling/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -231,13 +231,13 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/declare_completion()
 	if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
-		world << "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>"
+		to_chat(world, "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>")
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
-		world << "<span class='redtext'>The shadowlings have been killed by the crew!</span>"
+		to_chat(world, "<span class='redtext'>The shadowlings have been killed by the crew!</span>")
 	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
-		world << "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>"
+		to_chat(world, "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>")
 	else
-		world << "<span class='redtext'>The shadowlings have failed!</span>"
+		to_chat(world, "<span class='redtext'>The shadowlings have failed!</span>")
 	..()
 	return 1
 
@@ -254,7 +254,7 @@ Made by Xhuis
 			for(var/datum/mind/thrall in thralls)
 				text += printplayer(thrall)
 	text += "<br>"
-	world << text
+	to_chat(world, text)
 
 
 /*
@@ -268,6 +268,7 @@ Made by Xhuis
 	id = "shadowling"
 	say_mod = "chitters"
 	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
+	mutanteyes = /obj/item/organ/eyes/night_vision/sling
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 

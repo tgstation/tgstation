@@ -58,6 +58,10 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	owner.update_sight()
 
+/obj/item/organ/eyes/night_vision/sling
+	name = "shadowling eyes"
+	actions_types = list()
+
 /obj/item/organ/eyes/night_vision/alien
 	name = "alien eyes"
 	desc = "It turned out they had them after all!"
