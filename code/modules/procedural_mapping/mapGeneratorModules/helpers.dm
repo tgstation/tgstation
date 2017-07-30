@@ -68,13 +68,13 @@
 	buildmode_name = "Block: Full Mass Deletion"
 
 /datum/mapGenerator/massdelete/nomob
-	modules = list(/datum/mapGeneratorModule/bottomLayer/no_delete_mobs)
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs)
 	buildmode_name = "Block: Mass Deletion - Leave Mobs"
 
 /datum/mapGenerator/massdelete/noturf
-	modules = list(/datum/mapGeneratorModule/bottomLayer/leave_turfs)
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs)
 	buildmode_name = "Block: Mass Deletion - Leave Turfs"
 
 /datum/mapGenerator/massdelete/regen
-	modules = list(/datum/mapGeneratorModule/bottomLayer/regeneration_delete)
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete)
 	buildmode_name = "Block: Mass Deletion - Leave Mobs and Turfs"
