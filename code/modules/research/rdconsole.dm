@@ -500,7 +500,7 @@ doesn't have toxins access.
 				say("Uploading research from disk.")
 				tdisk_update = TRUE
 				addtimer(CALLBACK(src, .proc/tdisk_update_complete), 50)
-		if("ddisk_erasepos")
+	//	if("ddisk_erasepos")
 
 	SStgui.try_update_ui(usr, src, "rdconsole")			//Force refresh.
 
