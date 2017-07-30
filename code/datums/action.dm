@@ -10,12 +10,13 @@
 	var/check_flags = 0
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
-	var/button_icon = 'icons/mob/actions.dmi'
-	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 	var/buttontooltipstyle = ""
 
-	var/icon_icon = 'icons/mob/actions.dmi'
-	var/button_icon_state = "default"
+	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
+
+	var/icon_icon = 'icons/mob/actions.dmi' //This is the file for the ACTION icon
+	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
 
 /datum/action/New(Target)
@@ -168,7 +169,7 @@
 
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
-	
+
 /datum/action/item_action/rcl
 	name = "Change Cable Color"
 	button_icon_state = "rcl_rainbow"
@@ -268,6 +269,7 @@
 	return ..()
 
 /datum/action/item_action/clock
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
@@ -482,7 +484,7 @@
 	var/obj/effect/proc_holder/spell/S = target
 	S.action = src
 	name = S.name
-	button_icon = S.action_icon
+	icon_icon = S.action_icon
 	button_icon_state = S.action_icon_state
 	background_icon_state = S.action_background_icon_state
 	button.name = name
