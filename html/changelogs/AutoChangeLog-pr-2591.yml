@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - spellcheck: "Player-controlled medibots now receive a notice whenever they try to heal someone with too high health."
