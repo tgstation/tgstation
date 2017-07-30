@@ -4,7 +4,7 @@
 
 /mob/living/silicon/robot/forceMove(atom/destination)
 	. = ..()
-	update_camera_location(oldLoc)
+	update_camera_location(destination)
 
 /mob/living/silicon/robot/proc/do_camera_update(oldLoc)
 	if(!QDELETED(camera) && oldLoc != get_turf(src))
