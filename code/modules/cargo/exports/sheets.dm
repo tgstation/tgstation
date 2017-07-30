@@ -79,8 +79,7 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-// Bluespace Polycrystals. About as common on the asteroid as
-
+// Bluespace Polycrystals. Uncommon.
 /datum/export/stack/bscrystal
 	cost = 750
 	message = "of bluespace crystals"
