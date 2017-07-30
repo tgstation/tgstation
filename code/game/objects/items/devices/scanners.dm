@@ -16,6 +16,8 @@ MASS SPECTROMETER
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=150)
 
 /obj/item/device/t_scanner/attack_self(mob/user)
@@ -56,7 +58,9 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
 	icon_state = "health"
-	item_state = "analyzer"
+	item_state = "healthanalyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
@@ -246,6 +250,8 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
@@ -319,6 +325,8 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -378,6 +386,8 @@ MASS SPECTROMETER
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	throwforce = 0

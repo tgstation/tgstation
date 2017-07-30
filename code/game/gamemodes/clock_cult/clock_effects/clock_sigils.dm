@@ -20,7 +20,7 @@
 	return ..()
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
-	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == INTENT_HARM)))
+	if(iscarbon(user) && !user.stat && !is_servant_of_ratvar(user))
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
 		qdel(src)
 		return 1
@@ -175,7 +175,7 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that will serve as a battery for clockwork structures."
+	clockwork_desc = "A sigil that serves as power generation and a battery for clockwork structures."
 	icon_state = "sigiltransmission"
 	alpha = 50
 	color = "#EC8A2D"
@@ -183,7 +183,12 @@
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
-	var/power_charge = CLOCKCULT_POWER_UNIT //starts with CLOCKCULT_POWER_UNIT by default
+	var/power_charge = 0 //starts with no power
+	var/drain_range = 14
+
+/obj/effect/clockwork/sigil/transmission/Initialize()
+	. = ..()
+	update_glow()
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)
@@ -199,7 +204,8 @@
 		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
 			structure_number++
 		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
-		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? "":"s"] [structure_number == 1 ? "is":"are"] in range.</span>")
+		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? " is":"s are"] in range.</span>")
+		to_chat(user, "<span class='brass'>While active, it will gradually drain power from nearby electronics. It is currently [isprocessing ? "active":"disabled"].</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
 		else if(!GLOB.ratvar_awakens)
@@ -218,12 +224,40 @@
 		return TRUE
 	return ..()
 
+/obj/effect/clockwork/sigil/transmission/attack_ai(mob/user)
+	if(is_servant_of_ratvar(user))
+		attack_hand(user)
+
+/obj/effect/clockwork/sigil/transmission/attack_hand(mob/user)
+	if(is_servant_of_ratvar(user))
+		visible_message("<span class='notice'>[user] [isprocessing ? "de":""]activates [src].</span>", "<span class='brass'>You [isprocessing ? "de":""]activate the [sigil_name].</span>")
+		if(isprocessing)
+			STOP_PROCESSING(SSobj, src)
+		else
+			START_PROCESSING(SSobj, src)
+	else
+		return ..()
+
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(is_servant_of_ratvar(L))
 		if(iscyborg(L))
 			charge_cyborg(L)
 	else if(power_charge)
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
+
+/obj/effect/clockwork/sigil/transmission/process()
+	var/power_drained = 0
+
+	for(var/t in spiral_range_turfs(drain_range, src))
+		var/turf/T = t
+		for(var/M in T)
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE)
+
+		CHECK_TICK
+
+	modify_charge(-Floor(power_drained, MIN_CLOCKCULT_POWER))
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
 
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
@@ -259,10 +293,6 @@
 		return FALSE
 	return TRUE
 
-/obj/effect/clockwork/sigil/transmission/Initialize()
-	. = ..()
-	update_glow()
-
 /obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
 	if(GLOB.ratvar_awakens)
 		update_glow()
@@ -296,8 +326,7 @@
 	stat_affected = DEAD
 	resist_string = "glows shimmering yellow"
 	sigil_name = "Vitality Matrix"
-	var/static/vitality = 0
-	var/base_revive_cost = 20
+	var/revive_cost = 150
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
@@ -305,11 +334,11 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='[vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>")
+		to_chat(user, "<span class='[GLOB.clockwork_vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":GLOB.clockwork_vitality]</b> units of vitality.</span>")
 		if(GLOB.ratvar_awakens)
 			to_chat(user, "<span class='inathneq_small'>It can revive Servants at no cost!</span>")
 		else
-			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[base_revive_cost]</b> vitality plus vitality equal to the non-oxygen damage they have, in addition to being destroyed in the process.</span>")
+			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[revive_cost]</b> vitality.</span>")
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
@@ -318,7 +347,7 @@
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || GLOB.clockwork_vitality))) && get_turf(L) == get_turf(src))
 		sigil_active = TRUE
 		if(animation_number >= 4)
 			new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
@@ -343,40 +372,37 @@
 				else
 					vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
-				vitality += vitality_drained
+				GLOB.clockwork_vitality += vitality_drained
 			else
 				break
 		else
 			if(L.stat == DEAD)
-				var/revival_cost = base_revive_cost + L.getCloneLoss() + L.getToxLoss() + L.getFireLoss() + L.getBruteLoss() //ignores oxygen damage
+				var/revival_cost = revive_cost
 				if(GLOB.ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
-				if(vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
+				if(GLOB.clockwork_vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
 					if(ghost)
 						ghost.reenter_corpse()
 					L.revive(1, 1)
 					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
 					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, [GLOB.ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \
-					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
-					vitality -= revival_cost
-					if(!GLOB.ratvar_awakens)
-						qdel(src)
+					L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] body dripping blue ichor!</span>", "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
+					GLOB.clockwork_vitality -= revival_cost
 				break
 			var/vitality_for_cycle = 3
 			if(!GLOB.ratvar_awakens)
 				if(L.stat == CONSCIOUS)
 					vitality_for_cycle = 2
-				vitality_for_cycle = min(vitality, vitality_for_cycle)
+				vitality_for_cycle = min(GLOB.clockwork_vitality, vitality_for_cycle)
 			var/vitality_used = L.heal_ordered_damage(vitality_for_cycle, damage_heal_order)
 
 			if(!vitality_used)
 				break
 
 			if(!GLOB.ratvar_awakens)
-				vitality -= vitality_used
+				GLOB.clockwork_vitality -= vitality_used
 
 		sleep(2)
 

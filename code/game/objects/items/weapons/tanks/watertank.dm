@@ -103,6 +103,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
@@ -164,6 +166,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 
@@ -208,6 +212,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "atmos_nozzle"
 	item_state = "nozzleatmos"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	safety = 0
 	max_water = 200
 	power = 8
@@ -458,6 +464,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)

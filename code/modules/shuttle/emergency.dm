@@ -525,6 +525,7 @@
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/weapon/storage/toolbox/emergency(src)
 
 /obj/item/weapon/storage/pod/attackby(obj/item/weapon/W, mob/user, params)
 	return

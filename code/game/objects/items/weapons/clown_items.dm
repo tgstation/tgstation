@@ -100,6 +100,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
+	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = WEIGHT_CLASS_TINY

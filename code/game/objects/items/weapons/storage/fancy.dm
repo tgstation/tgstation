@@ -81,6 +81,8 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "eggbox"
 	icon_type = "egg"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	name = "egg box"
 	storage_slots = 12
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg)

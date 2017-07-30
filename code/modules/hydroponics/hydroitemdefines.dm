@@ -5,6 +5,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
@@ -41,6 +43,8 @@
 	name = "pest spray"
 	icon_state = "pestspray"
 	item_state = "plantbgone"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
 	container_type = OPENCONTAINER
 	slot_flags = SLOT_BELT
@@ -63,6 +67,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cultivator"
 	item_state = "cultivator"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags = CONDUCT
 	force = 5
 	throwforce = 7
@@ -76,6 +82,9 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
+	item_state = "hatchet"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags = CONDUCT
 	force = 12
 	w_class = WEIGHT_CLASS_TINY
@@ -94,6 +103,8 @@
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
 	force = 13
@@ -106,6 +117,7 @@
 	slot_flags = SLOT_BACK
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/swiping = FALSE
 
 /obj/item/weapon/scythe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -116,6 +128,21 @@
 			BP.drop_limb()
 			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
+
+/obj/item/weapon/scythe/pre_attackby(atom/A, mob/living/user, params)
+	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
+		return ..()
+	else
+		var/turf/user_turf = get_turf(user)
+		var/dir_to_target = get_dir(user_turf, get_turf(A))
+		swiping = TRUE
+		var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
+		for(var/i in scythe_slash_angles)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
+			for(var/obj/structure/spacevine/V in T)
+				if(user.Adjacent(V))
+					melee_attack_chain(user, V)
+		swiping = FALSE
 
 // *************************************
 // Nutrient defines for hydroponics

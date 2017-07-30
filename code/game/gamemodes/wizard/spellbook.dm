@@ -376,7 +376,7 @@
 /datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
+		new /obj/item/weapon/paper/guides/antag/guardian/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"

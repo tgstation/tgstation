@@ -3,6 +3,8 @@
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
 	flags = CONDUCT
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
 	var/inverse = 0 // For inverse dir frames like light fixtures.
@@ -114,6 +116,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = CONDUCT
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50, MAT_GLASS=50)

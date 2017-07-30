@@ -3,6 +3,8 @@
 	desc = "Sneeki breeki."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/starting_tc = 0
 
 /obj/item/weapon/implant/uplink/New()
