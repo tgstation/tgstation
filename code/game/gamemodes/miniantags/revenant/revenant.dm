@@ -6,7 +6,7 @@
 #define INVISIBILITY_REVENANT 50
 
 /mob/living/simple_animal/revenant
-	name = "revenant"
+	name = "\a Revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
