@@ -111,6 +111,7 @@
 							remove_mousepointer(ranged_ability_user.client)
 							ranged_mousepointer = 'icons/effects/geis_target.dmi'
 							add_mousepointer(ranged_ability_user.client)
+					sleep(1)
 				if(!QDELETED(slab))
 					slab.flags &= ~NODROP
 				in_progress = FALSE
