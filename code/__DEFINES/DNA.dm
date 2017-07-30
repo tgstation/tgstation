@@ -23,7 +23,6 @@
 #define WACKY		"Wacky"
 #define MUT_MUTE	"Mute"
 #define SMILE		"Smile"
-#define STONER		"Stoner"
 #define UNINTELLIGABLE		"Unintelligable"
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"

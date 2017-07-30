@@ -358,12 +358,6 @@
 	uniform = /obj/item/clothing/under/shorts/red
 	r_pocket = /obj/item/weapon/storage/wallet/random
 
-/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	H.dna.add_mutation(STONER)
-
 /////////////////Officers+Nanotrasen Security//////////////////////
 
 /obj/effect/mob_spawn/human/bridgeofficer
