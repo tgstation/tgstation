@@ -46,9 +46,9 @@ Head of Security
 	head = /obj/item/clothing/head/HoS/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	suit_store = /obj/item/weapon/gun/energy/e_gun
-	r_pocket = /obj/item/device/assembly/flash/handheld
+	r_pocket = /obj/item/weapon/reagent_containers/food/snacks/donut
 	l_pocket = /obj/item/weapon/restraints/handcuffs
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1, /obj/item/weapon/reagent_containers/food/drinks/coffee)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
@@ -94,10 +94,10 @@ Warden
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	r_pocket = /obj/item/device/assembly/flash/handheld
+	r_pocket = /obj/item/weapon/reagent_containers/food/snacks/donut
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	suit_store = /obj/item/weapon/gun/energy/e_gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1, /obj/item/weapon/reagent_containers/food/drinks/coffee)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
@@ -273,9 +273,9 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
-	r_pocket = /obj/item/device/assembly/flash/handheld
+	r_pocket = /obj/item/weapon/reagent_containers/food/snacks/donut
 	suit_store = /obj/item/weapon/gun/energy/e_gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1, /obj/item/weapon/reagent_containers/food/drinks/coffee)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
