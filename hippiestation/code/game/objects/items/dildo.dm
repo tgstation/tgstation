@@ -3,12 +3,12 @@
 /obj/item/dragon
 	name = "Bad Dragon"
 	desc = "You really shouldn't see this.. but if you do... Huzzah.. you found a bug.. please scream at Spacedong!"
-	icon = 'icons/obj/dicks.dmi'
+	icon = 'hippiestation/icons/obj/dicks.dmi'
 	icon_state = null
 	force = 5
 	w_class = 6
 	throwforce = 5
-	hitsound = 'sound/items/squishy.ogg'
+	hitsound = 'hippiestation/sound/misc/squishy.ogg'
 	attack_verb = list("slapped")
 
 /obj/item/dragon/suicide_act(mob/user)
