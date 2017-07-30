@@ -7,6 +7,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	slot_flags = SLOT_BACK
 	force = 5
 	throwforce = 6
@@ -571,6 +573,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	req_defib = FALSE
 
 /obj/item/weapon/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
@@ -592,6 +596,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH

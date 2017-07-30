@@ -4,6 +4,8 @@
 	flags = CONDUCT
 	origin_tech = "materials=1;engineering=1"
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
 	var/inverse = 0 // For inverse dir frames like light fixtures.
@@ -115,6 +117,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = CONDUCT
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "engineering=2;programming=1"
