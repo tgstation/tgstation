@@ -6,3 +6,5 @@
 	if(mind)
 		SSticker.mode.remove_revolutionary(mind)
 		SSticker.mode.remove_gangster(mind,1,remove_bosses=1)
+		SSticker.mode.remove_thrall(mind,0)
+		SSticker.mode.remove_shadowling(mind)

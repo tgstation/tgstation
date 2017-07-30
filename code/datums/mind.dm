@@ -466,6 +466,10 @@
 
 		sections["gang"] = text
 
+		/** SHADOWLING **/
+
+		sections["shadowling"] = HandleShadowling()
+
 		/** Abductors **/
 		text = "Abductor"
 		if(SSticker.mode.config_tag == "abductor")
