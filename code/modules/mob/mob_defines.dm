@@ -51,6 +51,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
+	var/shadow_walk = 0
 	var/lastpuke = 0
 
 	var/name_archive //For admin things like possession

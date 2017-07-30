@@ -1,3 +1,6 @@
+#define MAX_SW_LUMS 0.2
+#define SW_LIGHT_FACTOR 2.75
+
 /mob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
@@ -160,7 +163,18 @@
 
 	//We are now going to move
 	moving = 1
+
 	var/delay = mob.movement_delay()
+
+	if(Can_ShadowWalk(mob))
+		if(Process_ShadowWalk(direct))
+			moving = 0
+			return
+
+		if(mob.m_intent && mob.m_intent == MOVE_INTENT_RUN)
+			delay = delay*SW_LIGHT_FACTOR
+
+
 	if (old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay + delay
 	else
@@ -188,6 +202,50 @@
 			O.intercept_user_move(direct, mob, n, oldloc)
 
 	return .
+
+
+proc/Can_ShadowWalk(var/mob/mob)
+	if(mob.shadow_walk)
+		return 1
+	if(ishuman(mob))
+		var/mob/living/carbon/human/H = mob
+		if(istype(H.dna.species, /datum/species/shadow/ling))
+			return 1
+	return 0
+
+/client/proc/Process_ShadowWalk(direct)
+	var/turf/target = get_step(mob, direct)
+	var/turf/mobloc = get_turf(mob)
+
+	if (istype(mob.pulling))
+		var/doPull = 1
+		if (mob.pulling.anchored)
+			mob.stop_pulling()
+			doPull = 0
+		if (mob.pulling == mob.loc && mob.pulling.density)
+			mob.stop_pulling()
+			doPull = 0
+		if (istype(mob.pulling, /mob/))
+			var/mob/M = mob.pulling
+
+			M.stop_pulling()
+			if (M.buckled)
+				mob.stop_pulling()
+				doPull = 0
+		if (doPull)
+			var/turf/pullloc = get_turf(mob.pulling)
+
+			if(mobloc.get_lumcount()==null || mobloc.get_lumcount() <= MAX_SW_LUMS || pullloc.get_lumcount()==null || pullloc.get_lumcount() <= MAX_SW_LUMS || target.get_lumcount()==null || target.get_lumcount() <= MAX_SW_LUMS)
+				mob.pulling.dir = get_dir(mob.pulling, mob)
+				mob.pulling.loc = mob.loc
+				return 1
+
+	if (target.get_lumcount() == null || target.get_lumcount() <= MAX_SW_LUMS)
+		mob.loc = target
+		mob.dir = direct
+		return 1
+
+	return 0
 
 /mob/Moved(oldLoc, dir)
 	. = ..()

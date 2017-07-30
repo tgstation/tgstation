@@ -1630,3 +1630,25 @@
 	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
+
+/datum/reagent/shadowling_blindness_smoke
+	name = "odd black liquid"
+	id = "blindness_smoke"
+	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
+	color = "#000000" //Complete black (RGB: 0, 0, 0)
+	metabolization_rate = 100 //lel
+
+/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
+	if(!is_shadow_or_thrall(M))
+		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
+		M.blind_eyes(5)
+		if(prob(25))
+			M.visible_message("<b>[M]</b> claws at their eyes!")
+			M.Stun(3, 0)
+			. = 1
+	else
+		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
+		M.adjustOxyLoss(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		. = 1
+	return ..() || .

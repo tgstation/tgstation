@@ -83,6 +83,9 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
 
+		if(!wear_mask && is_thrall(src) && in_range(user,src))
+			msg += "Their features seem unnaturally tight and drawn.\n"
+
 
 
 	msg += "*---------*</span>"
