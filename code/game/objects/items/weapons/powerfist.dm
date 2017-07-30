@@ -24,7 +24,7 @@
 		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
 		return
 	if(tank)
-		to_chat(user, "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
+		to_chat(user, "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>")
 
 
 /obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user, params)
@@ -80,7 +80,7 @@
 	target.apply_damage(force * fisto_setting, BRUTE)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
-	new /obj/effect/overlay/temp/kinetic_blast(target.loc)
+	new /obj/effect/temp_visual/kinetic_blast(target.loc)
 	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
 

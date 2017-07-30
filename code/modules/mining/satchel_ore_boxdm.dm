@@ -6,7 +6,7 @@
 	icon_state = "orebox"
 	name = "ore box"
 	desc = "A heavy wooden box, which can be filled with a lot of ores."
-	density = 1
+	density = TRUE
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user, params)
@@ -27,6 +27,11 @@
 			deconstruct(TRUE, user)
 	else
 		return ..()
+
+/obj/structure/ore_box/examine(mob/living/user)
+	if(Adjacent(user) && istype(user))
+		show_contents(user)
+	. = ..()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	if(Adjacent(user))

@@ -1,3 +1,6 @@
+//wrapper macro for sending images that makes grepping easy
+#define SEND_IMAGE(target, image) target << image
+
 /proc/random_blood_type()
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
@@ -68,9 +71,11 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	if(!GLOB.moth_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs"))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "moth_wings" = pick(GLOB.moth_wings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -177,7 +182,7 @@ Proc for attack log creation, because really why not
 
 	if(target && isliving(target))
 		living_target = target
-	
+
 	var/hp =" "
 	if(living_target)
 		hp = "(NEWHP: [living_target.health])"
@@ -255,6 +260,20 @@ Proc for attack log creation, because really why not
 		qdel(progbar)
 
 
+//some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
+/mob/proc/break_do_after_checks(list/checked_health, check_clicks)
+	if(check_clicks && next_move > world.time)
+		return FALSE
+	return TRUE
+
+//pass a list in the format list("health" = mob's health var) to check health during this
+/mob/living/break_do_after_checks(list/checked_health, check_clicks)
+	if(islist(checked_health))
+		if(health < checked_health["health"])
+			return FALSE
+		checked_health["health"] = health
+	return ..()
+
 /proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
@@ -290,7 +309,7 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 
@@ -401,7 +420,7 @@ Proc for attack log creation, because really why not
 			prefs = new
 
 		var/adminoverride = 0
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+		if(M.client && check_rights_for(M.client, R_ADMIN) && (prefs.chat_toggles & CHAT_DEAD))
 			adminoverride = 1
 		if(isnewplayer(M) && !adminoverride)
 			continue
@@ -435,3 +454,39 @@ Proc for attack log creation, because really why not
 			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
+
+
+/proc/log_talk(mob/user,message,logtype)
+	var/turf/say_turf = get_turf(user)
+
+	var/sayloc = ""
+	if(say_turf)
+		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
+
+
+	var/logmessage = "[message] [sayloc]"
+
+	switch(logtype)
+
+		if(LOGDSAY)
+			log_dsay(logmessage)
+		if(LOGSAY)
+			log_say(logmessage)
+		if(LOGWHISPER)
+			log_whisper(logmessage)
+		if(LOGEMOTE)
+			log_emote(logmessage)
+		if(LOGPDA)
+			log_pda(logmessage)
+		if(LOGCHAT)
+			log_chat(logmessage)
+		if(LOGCOMMENT)
+			log_comment(logmessage)
+		if(LOGASAY)
+			log_adminsay(logmessage)
+		if(LOGOOC)
+			log_ooc(logmessage)
+		else
+			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
+			log_say(logmessage)
+

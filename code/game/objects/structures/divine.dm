@@ -3,8 +3,8 @@
 	desc = "An altar designed to perform blood sacrifice for a deity."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "sacrificealtar"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	can_buckle = 1
 
 /obj/structure/sacrificealtar/attack_hand(mob/living/user)
@@ -23,8 +23,8 @@
 	desc = "A fountain containing the waters of life."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "fountain"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/time_between_uses = 1800
 	var/last_process = 0
 

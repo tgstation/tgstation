@@ -50,17 +50,22 @@
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
 	..()
 	if(!iscarbon(user))
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = user
 	if(C.gloves)
-		return 0
+		return FALSE
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.dna && H.dna.species)
+			if(PIERCEIMMUNE in H.dna.species.species_traits)
+				return FALSE
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
 	if(affecting)
 		if(affecting.receive_damage(0, force))
 			C.update_damage_overlays()
 	to_chat(C, "<span class='userdanger'>The nettle burns your bare hand!</span>")
-	return 1
+	return TRUE
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return
@@ -93,8 +98,8 @@
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
 		if(prob(50))
-			user.Paralyse(5)
-			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>")
+			user.Knockdown(100)
+			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
@@ -105,6 +110,6 @@
 
 		M.adjust_blurriness(force/7)
 		if(prob(20))
-			M.Paralyse(force / 6)
-			M.Weaken(force / 15)
+			M.Unconscious(force / 0.3)
+			M.Knockdown(force / 0.75)
 		M.drop_item()

@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
+	novariants = TRUE
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	..()
@@ -55,7 +56,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 			if (!R && replace)
 				user.put_in_hands(new_item)
 
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(amount != 1)
 			to_chat(user, "<span class='warning'>You must use a single rod!</span>")
@@ -74,3 +75,12 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/cyborg/update_icon()
 	return
+
+/obj/item/stack/rods/ten
+	amount = 10
+
+/obj/item/stack/rods/twentyfive
+	amount = 25
+
+/obj/item/stack/rods/fifty
+	amount = 50

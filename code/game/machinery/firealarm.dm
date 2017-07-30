@@ -1,10 +1,10 @@
 /obj/item/weapon/electronics/firealarm
 	name = "fire alarm electronics"
-	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
+	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
-	desc = "Used for building Fire Alarms"
+	desc = "Used for building fire alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
@@ -14,12 +14,11 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	anchored = 1
-	obj_integrity = 250
+	anchored = TRUE
 	max_integrity = 250
 	integrity_failure = 100
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
@@ -34,7 +33,7 @@
 		src.setDir(dir)
 	if(building)
 		buildstage = 0
-		panel_open = 1
+		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
@@ -79,12 +78,13 @@
 	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		if(user)
-			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
-								"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+	if(emagged)
+		return
+	emagged = TRUE
+	if(user)
+		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
+							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
+	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(!emagged && detecting && !stat && (temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
@@ -110,7 +110,7 @@
 /obj/machinery/firealarm/proc/reset_in(time)
 	addtimer(CALLBACK(src, .proc/reset), time)
 
-/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -153,6 +153,21 @@
 		return
 
 	if(panel_open)
+
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(obj_integrity < max_integrity)
+				if(WT.remove_fuel(0,user))
+					to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+					playsound(loc, WT.usesound, 40, 1)
+					if(do_after(user, 40*WT.toolspeed, target = src))
+						obj_integrity = max_integrity
+						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+						to_chat(user, "<span class='notice'>You repair [src].</span>")
+			else
+				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			return
+
 		switch(buildstage)
 			if(2)
 				if(istype(W, /obj/item/device/multitool))
@@ -190,6 +205,7 @@
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
+								stat &= ~BROKEN
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/weapon/electronics/firealarm(user.loc)
@@ -230,9 +246,10 @@
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 1)
-		var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
-		if(!disassembled)
-			I.obj_integrity = I.max_integrity * 0.5
+		if(!(stat & BROKEN))
+			var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
+			if(!disassembled)
+				I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
@@ -245,39 +262,6 @@
 	name = "\improper PARTY BUTTON"
 	desc = "Cuban Pete is in the house!"
 
-/obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
-	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
-		return
-
-	if (buildstage != 2)
-		return
-
-	user.set_machine(src)
-	var/area/A = src.loc
-	var/d1
-	var/dat
-	if(ishuman(user) || user.has_unlimited_silicon_privilege)
-		A = A.loc
-
-		if (A.party)
-			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
-		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []</BODY></HTML>", d1)
-
-	else
-		A = A.loc
-		if (A.fire)
-			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
-		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []", stars("Party Button"), d1)
-
-	var/datum/browser/popup = new(user, "firealarm", "Party Alarm")
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
 
 /obj/machinery/firealarm/partyalarm/reset()
 	if (stat & (NOPOWER|BROKEN))
@@ -300,3 +284,8 @@
 	for(var/area/RA in A.related)
 		RA.partyalert()
 	return
+
+/obj/machinery/firealarm/partyalarm/ui_data(mob/user)
+	. = ..()
+	var/area/A = get_area(src)
+	.["alarm"] = A.party

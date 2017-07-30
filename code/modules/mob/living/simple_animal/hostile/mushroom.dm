@@ -20,7 +20,7 @@
 	attacktext = "chomps"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1
@@ -29,12 +29,13 @@
 	unique_name = 1
 	speak_emote = list("squeaks")
 	deathmessage = "fainted."
+	var/cap_color = "#ffffff"
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
 	var/faint_ticker = 0 //If we hit three, another mushroom's gonna eat us
-	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
-	var/image/cap_dead = null
+	var/static/mutable_appearance/cap_living //Where we store our cap icons so we dont generate them constantly to update our icon
+	var/static/mutable_appearance/cap_dead
 
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
@@ -53,11 +54,10 @@
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
 	move_to_delay = rand(3,11)
-	var/cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	cap_living = image('icons/mob/animal.dmi',icon_state = "mushroom_cap")
-	cap_dead = image('icons/mob/animal.dmi',icon_state = "mushroom_cap_dead")
-	cap_living.color = cap_color
-	cap_dead.color = cap_color
+	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
+	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
+
+	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	UpdateMushroomCap()
 	health = maxHealth
 	..()
@@ -101,6 +101,8 @@
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
 	cut_overlays()
+	cap_living.color = cap_color
+	cap_dead.color = cap_color
 	if(health == 0)
 		add_overlay(cap_dead)
 	else

@@ -10,7 +10,7 @@
 	density = TRUE
 	use_power = TRUE
 	idle_power_usage = 75
-	var/list/linkedturfs = list() //List contains all of the linked pool turfs to this controller, assignment happens on New()
+	var/list/linkedturfs //List contains all of the linked pool turfs to this controller, assignment happens on initialize
 	var/temperature = 3 //1-5 Frigid Cool Normal Warm Scalding
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
 	var/linkedmist = list() //Used to keep track of created mist
@@ -29,24 +29,24 @@
 	var/tempunlocked = FALSE
 	var/canplus = TRUE
 	var/canminus = TRUE
+	resistance_flags = INDESTRUCTIBLE|UNACIDABLE
 
-/obj/machinery/poolcontroller/New() //This proc automatically happens on world start
+/obj/machinery/poolcontroller/Initialize()
+	. = ..()
 	wires = new /datum/wires/poolcontroller(src)
-	for(var/turf/open/pool/water/W in range(srange,src)) //Search for /turf/open/beach/water in the range of var/srange
-		src.linkedturfs += W
+	for(var/turf/open/pool/W in range(srange,src)) //Search for /turf/open/beach/water in the range of var/srange
+		LAZYADD(linkedturfs, W)
 	for(var/obj/machinery/drain/pooldrain in range(srange,src))
-		src.linkeddrain += pooldrain
-	..() //Always call your parents when you're a new thing.
+		src.linkeddrain = pooldrain
 
 /obj/machinery/poolcontroller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.
 	if(!emagged) //If it is not already emagged, emag it.
 		to_chat(user, "<span class='warning'>You disable the [src]'s safety features.</span>")
+		do_sparks(5, TRUE, src)
 		emagged = TRUE
 		tempunlocked = TRUE
 		drainable = TRUE
-		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-		sparks.set_up(1, 1, src)
-		sparks.start()
+		do_sparks(1, 1)
 		if(GLOB.adminlog)
 			log_say("[key_name(user)] emagged the poolcontroller")
 			message_admins("[key_name_admin(user)] emagged the poolcontroller")
@@ -56,35 +56,33 @@
 		shock(user,50)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker/large))
+	if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker))
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
-
 		if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len == 1) //check if full and allow one reageant only.
 			beaker =  W
 			user.drop_item()
 			W.loc = src
 			to_chat(user, "You add the beaker to the machine!")
 			updateUsrDialog()
-			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			for(var/X in beaker.reagents.reagent_list)
+				var/datum/reagent/R  = X
 				cur_reagent = "[R.name]"
 				if(GLOB.adminlog)
 					log_say("[key_name(user)] has changed the pool's chems to [R.name]")
 					message_admins("[key_name_admin(user)] has changed the pool's chems to [R.name].")
 			timer = 15
-
-
 		else
 			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
 		return
 
 	if (istype(W,/obj/item/weapon/screwdriver))
+		cut_overlays()
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
-		cut_overlays()
 		if(panel_open)
-			overlays += image(icon, "wires")
+			add_overlay("wires")
 		return
 	else
 		return attack_hand(user)
@@ -105,11 +103,13 @@
 		return 0
 
 /obj/machinery/poolcontroller/proc/poolreagent()
-	for(var/turf/open/pool/water/W in linkedturfs)
+	for(var/X in linkedturfs)
+		var/turf/open/pool/W = X
 		for(var/mob/living/carbon/human/swimee in W)
 			if(beaker && cur_reagent)
 				beaker.reagents.reaction(swimee, VAPOR, 0.03) //3 percent
-				for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				for(var/Q in beaker.reagents.reagent_list)
+					var/datum/reagent/R = Q
 					swimee.reagents.add_reagent(R.id, 0.5) //osmosis
 		for(var/obj/objects in W)
 			if(beaker && cur_reagent)
@@ -131,7 +131,8 @@
 
 /obj/machinery/poolcontroller/proc/updatePool()
 	if(!drained)
-		for(var/turf/open/pool/water/W in linkedturfs) //Check for pool-turfs linked to the controller.
+		for(var/X in linkedturfs) //Check for pool-turfs linked to the controller.
+			var/turf/open/pool/W = X
 			for(var/mob/living/M in W) //Check for mobs in the linked pool-turfs.
 				switch(temperature) //Apply different effects based on what the temperature is set to.
 					if(5) //Scalding
@@ -198,21 +199,23 @@
 		if(900 to INFINITY)
 			bloodcolor = "#FF5555"
 			src.bloody = 1000
-	for(var/turf/open/pool/water/color1 in linkedturfs)
+	for(var/X in linkedturfs)
+		var/turf/open/pool/color1 = X
 		color1.color = "bloodcolor"
 		color1.watereffect.color = "bloodcolor"
 
 /obj/machinery/poolcontroller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
-	for(var/turf/open/pool/water/W in linkedturfs)
-		var/M = new /obj/effect/mist(W)
-		if(misted)
-			return
-		linkedmist += M
-
+	for(var/X in linkedturfs)
+		var/turf/open/pool/W = X
+		if(W.filled)
+			var/M = new /obj/effect/mist(W)
+			if(misted)
+				return
+			linkedmist += M
 	misted = TRUE //var just to keep track of when the mist on proc has been called.
 
 /obj/machinery/poolcontroller/proc/mistoff() //Delete all /obj/effect/mist from all linked pool tiles.
-	for(var/obj/effect/mist/M in linkedmist)
+	for(var/M in linkedmist)
 		qdel(M)
 	misted = FALSE //no mist left, turn off the tracking var
 

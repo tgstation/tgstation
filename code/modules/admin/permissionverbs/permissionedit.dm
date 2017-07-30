@@ -60,7 +60,7 @@
 	if (!check_rights(R_PERMISSIONS))
 		return
 
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
@@ -75,7 +75,7 @@
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
 
-	var/DBQuery/query_get_admin = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
+	var/datum/DBQuery/query_get_admin = SSdbcore.NewQuery("SELECT id FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
 	if(!query_get_admin.warn_execute())
 		return
 
@@ -86,19 +86,19 @@
 		admin_id = text2num(query_get_admin.item[1])
 
 	if(new_admin)
-		var/DBQuery/query_add_admin = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin")]` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
+		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin")]` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
 		if(!query_add_admin.warn_execute())
 			return
-		var/DBQuery/query_add_admin_log = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
+		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
 		if(!query_add_admin_log.warn_execute())
 			return
 		to_chat(usr, "<span class='adminnotice'>New admin added.</span>")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
-			var/DBQuery/query_change_admin = GLOB.dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET rank = '[new_rank]' WHERE id = [admin_id]")
+			var/datum/DBQuery/query_change_admin = SSdbcore.NewQuery("UPDATE `[format_table_name("admin")]` SET rank = '[new_rank]' WHERE id = [admin_id]")
 			if(!query_change_admin.warn_execute())
 				return
-			var/DBQuery/query_change_admin_log = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
+			var/datum/DBQuery/query_change_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
 			if(!query_change_admin_log.warn_execute())
 				return
 			to_chat(usr, "<span class='adminnnotice'>Admin rank changed.</span>")
@@ -112,14 +112,14 @@
 	if(check_rights(R_PERMISSIONS))
 		return
 
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))
 		return
 
-	var/DBQuery/query_get_perms = GLOB.dbcon.NewQuery("SELECT id, flags FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
+	var/datum/DBQuery/query_get_perms = SSdbcore.NewQuery("SELECT id, flags FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
 	if(!query_get_perms.warn_execute())
 		return
 
@@ -130,8 +130,8 @@
 	if(!admin_id)
 		return
 
-	var/DBQuery/query_change_perms = GLOB.dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
+	var/datum/DBQuery/query_change_perms = SSdbcore.NewQuery("UPDATE `[format_table_name("admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
 	if(!query_change_perms.warn_execute())
 		return
-	var/DBQuery/query_change_perms_log = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edit permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
+	var/datum/DBQuery/query_change_perms_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edit permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
 	query_change_perms_log.warn_execute()

@@ -14,7 +14,7 @@
 	speed = 0
 	stat_attack = 1
 	robust_searching = 1
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -52,7 +52,7 @@
 
 /mob/living/simple_animal/hostile/stickman/Initialize(mapload, var/wizard_summoned)
 	..()
-	new /obj/effect/overlay/temp/paper_scatter(src)
+	new /obj/effect/temp_visual/paper_scatter(src)
 	summoned_by_wizard = wizard_summoned
 
 /mob/living/simple_animal/hostile/stickman/death()

@@ -13,12 +13,12 @@
 	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
-	var/jaunt_in_type = /obj/effect/overlay/temp/wizard
-	var/jaunt_out_type = /obj/effect/overlay/temp/wizard/out
+	var/jaunt_in_type = /obj/effect/temp_visual/wizard
+	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
-	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
+	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
 		INVOKE_ASYNC(src, .proc/do_jaunt, target)
 
@@ -49,7 +49,7 @@
 	jaunt_steam(mobloc)
 	target.canmove = 0
 	holder.reappearing = 1
-	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
+	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
 	new jaunt_in_type(mobloc, target.dir)
 	sleep(jaunt_in_time)
@@ -72,10 +72,11 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	var/canmove = 1
 	var/reappearing = 0
-	density = 0
-	anchored = 1
+	var/movedelay = 0
+	var/movespeed = 2
+	density = FALSE
+	anchored = TRUE
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -86,15 +87,14 @@
 	return ..()
 
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
-	if (!src.canmove || reappearing || !direction) return
+	if ((movedelay > world.time) || reappearing || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	setDir(direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
-	src.canmove = 0
-	spawn(2) src.canmove = 1
+	movedelay = world.time + movespeed
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return

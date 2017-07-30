@@ -39,8 +39,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 800
 	works_from_distance = 1
-	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
-	alt_sound = 'sound/items/PSHOOM_2.ogg'
+	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
+	alt_sound = 'sound/items/pshoom_2.ogg'
 
 /obj/item/weapon/storage/part_replacer/bluespace/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user))
@@ -72,10 +72,10 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 
-/obj/item/weapon/stock_parts/New()
-	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+/obj/item/weapon/stock_parts/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 //Rating 1
 

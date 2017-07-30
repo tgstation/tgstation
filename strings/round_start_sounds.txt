@@ -1,6 +1,6 @@
-sound/ambience/title1.ogg
-sound/ambience/title2.ogg
-sound/ambience/title3.ogg
-sound/ambience/title4.ogg
-sound/misc/i_did_not_grief_them.ogg
-sound/ambience/clown.ogg
+hippiestation/sound/lobby/MacDeMarcoPassingOutThePiecesOFFICIALSINGLE6Lk3NFWw9Fg.ogg
+hippiestation/sound/lobby/GranTurismo3ConcentrationadzUSH1vZYU.ogg
+hippiestation/sound/lobby/macdemarcodonjuanmZrTD7F9yfo.ogg
+hippiestation/sound/lobby/DJCamQuartetRebirthofCooloU0ZmbBY9QI.ogg
+hippiestation/sound/lobby/MacDeMarcoCookingUpSomethingGoodLiveatPartTimePunksStudion4AZdabfblg.ogg
+hippiestation/sound/lobby/SAINTPEPSIENJOYYOURSELFMusicVideohI0qMtdfng.ogg

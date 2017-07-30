@@ -1,8 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Teams playing CTF have their own radio channels, rather than using
-the Centcom and Syndicate channels."
-  - bugfix: "Actually actually makes CTF barricades repair between rounds."
-  - bugfix: "Blue CTF lasers have little blue effects when they hit things, rather
-than red effects."

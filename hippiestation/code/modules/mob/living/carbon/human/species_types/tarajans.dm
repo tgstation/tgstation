@@ -8,7 +8,8 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	mutant_bodyparts = list("tail_human")
+	mutant_bodyparts = list("tail_human","ears")
+	mutant_organs = list(/obj/item/organ/tail/cat/tcat,/obj/item/organ/ears/cat/tcat)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/cat
 	skinned_type = /obj/item/stack/sheet/animalhide/cat
 	exotic_bloodtype = "O-" //universal donor, more reason to drain their blood
@@ -33,22 +34,12 @@
 
 /datum/species/tarajan/on_species_gain(mob/living/carbon/human/C)
 	C.draw_hippie_parts()
-	C.dna.features["tail_human"] = "TCat"
 	. = ..()
 
 /datum/species/tarajan/on_species_loss(mob/living/carbon/human/C)
 	C.draw_hippie_parts(TRUE)
-	C.dna.features["tail_human"] = null
 	. = ..()
 
-/obj/item/bodypart/var/should_draw_hippie = FALSE
-
-/mob/living/carbon/proc/draw_hippie_parts(undo = FALSE)
-	if(!undo)
-		for(var/O in bodyparts)
-			var/obj/item/bodypart/B = O
-			B.should_draw_hippie = TRUE
-	else
-		for(var/O in bodyparts)
-			var/obj/item/bodypart/B = O
-			B.should_draw_hippie = FALSE
+/datum/species/tarajan/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()

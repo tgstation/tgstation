@@ -5,8 +5,6 @@
 	dna_cost = 0
 	req_dna = 1
 	req_stat = DEAD
-	max_genetic_damage = 100
-
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
@@ -19,9 +17,7 @@
 	user.update_canmove()
 
 	addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
-
-	feedback_add_details("changeling_powers","FD")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)

@@ -53,9 +53,9 @@
 		return 1
 	if(health <= 0 && checkDead)
 		return 1
-	if(paralysis)
+	if(IsUnconscious())
 		return 1
-	if(stunned)
+	if(IsStun())
 		return 1
 	if(stat)
 		return 1
@@ -85,7 +85,7 @@
 			return TRUE
 
 	// CLOTHING
-	else if(istype(I,/obj/item/clothing))
+	else if(istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
 		monkeyDrop(C)
 		addtimer(CALLBACK(src, .proc/pickup_and_wear, C), 5)
@@ -132,6 +132,10 @@
 	return 0
 
 /mob/living/carbon/monkey/proc/handle_combat()
+	// Don't do any AI if inside another mob (devoured)
+	if (ismob(loc))
+		// Really no idea what needs to be returned but everything else is TRUE
+		return TRUE
 
 	if(on_fire || buckled || restrained())
 		if(!resisting && prob(MONKEY_RESIST_PROB))
@@ -268,7 +272,11 @@
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
 
 					// check if target has a weapon
-					var/obj/item/weapon/W = locate(/obj/item/weapon) in target.held_items
+					var/obj/item/weapon/W
+					for(var/obj/item/weapon/I in target.held_items)
+						if(!(I.flags & ABSTRACT))
+							W = I
+							break
 
 					// if the target has a weapon, chance to disarm them
 					if(W && prob(MONKEY_ATTACK_DISARM_PROB))
@@ -437,13 +445,13 @@
 		retaliate(user)
 
 /mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+	if(istype(Proj , /obj/item/projectile/beam)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)
 	..()
 
-/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

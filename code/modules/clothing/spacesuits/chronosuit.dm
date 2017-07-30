@@ -30,7 +30,6 @@
 	var/list/hands_nodrop = list()
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
-	var/image/phase_underlay = null
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
@@ -86,21 +85,17 @@
 	if(istype(user))
 		if(to_turf)
 			user.forceMove(to_turf)
-		user.SetStunned(0)
+		user.SetStun(0)
 		user.next_move = 1
 		user.alpha = 255
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
-		user.anchored = 0
+		user.anchored = FALSE
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
 			if(I in hands_nodrop)
 				I.flags &= ~NODROP
-		if(phase_underlay && !QDELETED(phase_underlay))
-			user.underlays -= phase_underlay
-			qdel(phase_underlay)
-			phase_underlay = null
 		if(camera)
 			camera.remove_target_ui()
 			camera.loc = user
@@ -133,8 +128,6 @@
 
 		user.ExtinguishMob()
 
-		phase_underlay = create_phase_underlay(user)
-
 		hands_nodrop = list()
 		for(var/obj/item/I in user.held_items)
 			if(!(I.flags & NODROP))
@@ -143,7 +136,7 @@
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
-		user.anchored = 1
+		user.anchored = TRUE
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
@@ -170,15 +163,6 @@
 		phase_timer_id = addtimer(CALLBACK(src, .proc/finish_chronowalk, user, to_turf), 3, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
-
-
-/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
-	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
-	user_icon.AddAlphaMask(getFlatIcon(user))
-	var/image/phase = new(user_icon)
-	phase.appearance_flags = RESET_COLOR|RESET_ALPHA
-	user.underlays += phase
-	return phase
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
@@ -238,7 +222,7 @@
 			if(user.wear_suit == src)
 				if(hard_landing)
 					user.electrocute_act(35, src, safety = 1)
-					user.Weaken(10)
+					user.Knockdown(200)
 				if(!silent)
 					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
 					if(camera)
@@ -257,8 +241,8 @@
 
 /obj/effect/chronos_cam
 	name = "Chronosuit View"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
 	mouse_opacity = 0

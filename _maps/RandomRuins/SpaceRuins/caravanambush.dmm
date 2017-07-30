@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered)
@@ -16,7 +16,7 @@
 /turf/closed/wall,
 /area/ruin/powered)
 "ae" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -105,7 +105,6 @@
 /area/ruin/powered)
 "as" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -175,16 +174,15 @@
 /area/ruin/unpowered/no_grav)
 "aD" = (
 /obj/item/stack/rods,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "aE" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (EAST)";
 	icon_state = "pile";
 	dir = 4
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "aF" = (
 /mob/living/simple_animal/hostile/pirate,
 /turf/open/floor/plasteel,
@@ -228,7 +226,6 @@
 /area/ruin/unpowered/no_grav)
 "aO" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -237,16 +234,16 @@
 /obj/structure/chair,
 /obj/item/weapon/shard,
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aQ" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aR" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aS" = (
 /turf/open/floor/plating/airless{
@@ -256,11 +253,10 @@
 /area/ruin/unpowered/no_grav)
 "aT" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular";
 	icon_state = "singular"
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "aU" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/internals/plasma/full,
@@ -270,25 +266,24 @@
 /area/ruin/powered)
 "aV" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular";
 	icon_state = "singular"
 	},
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aW" = (
 /obj/effect/gibspawner/human,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aX" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/open/floor/plating/airless{
 	icon = 'icons/obj/smooth_structures/lattice.dmi';
 	icon_plating = "lattice";
 	icon_state = "lattice";
 	name = "anchor chain"
 	},
-/area/space)
+/area/template_noop)
 "aY" = (
 /obj/structure/statue/gold/cmo,
 /turf/open/floor/plasteel,
@@ -307,7 +302,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "bb" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -319,7 +314,7 @@
 	},
 /obj/item/stack/rods,
 /obj/effect/gibspawner/human,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "bd" = (
 /obj/structure/chair{
@@ -328,10 +323,10 @@
 /obj/item/weapon/shard,
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "be" = (
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "bf" = (
 /obj/item/stack/sheet/metal,
@@ -358,8 +353,8 @@
 /area/ruin/unpowered/no_grav)
 "bk" = (
 /obj/structure/girder,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bl" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/unpowered)
@@ -395,20 +390,19 @@
 /area/ruin/unpowered)
 "bq" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (WEST)";
 	icon_state = "pile";
 	dir = 8
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "br" = (
 /obj/item/stack/sheet/metal,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bs" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bt" = (
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg3";
@@ -453,11 +447,10 @@
 /area/ruin/unpowered)
 "bA" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile";
 	icon_state = "pile"
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless{
@@ -515,12 +508,11 @@
 /area/ruin/unpowered)
 "bK" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (NORTH)";
 	icon_state = "plating";
 	dir = 1
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bL" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/yellow/airless,
@@ -543,7 +535,7 @@
 	},
 /area/ruin/unpowered)
 "bP" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -551,13 +543,12 @@
 /area/ruin/powered)
 "bQ" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (NORTH)";
 	icon_state = "plating";
 	dir = 1
 	},
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bR" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless{
@@ -626,15 +617,12 @@
 /area/ruin/unpowered)
 "ca" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 8;
-	icon_state = "burst_l";
-	tag = "icon-burst_l (EAST)"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "cb" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -659,15 +647,14 @@
 /area/ruin/powered)
 "cg" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (EAST)";
 	icon_state = "plating";
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ch" = (
-/turf/open/space,
+/turf/template_noop,
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless{
@@ -792,7 +779,7 @@
 	},
 /area/ruin/unpowered)
 "cx" = (
-/turf/open/space,
+/turf/template_noop,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
@@ -847,9 +834,7 @@
 /area/ruin/unpowered)
 "cF" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 8;
-	icon_state = "burst_r";
-	tag = "icon-burst_r (EAST)"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -931,13 +916,12 @@
 /area/ruin/unpowered)
 "cR" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (WEST)";
 	icon_state = "plating";
 	dir = 8
 	},
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "cS" = (
 /obj/machinery/door/airlock/external{
 	icon_state = "door_locked";
@@ -1008,8 +992,8 @@
 /area/ruin/unpowered)
 "dc" = (
 /obj/item/weapon/shard,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "dd" = (
 /obj/structure/chair{
 	dir = 4

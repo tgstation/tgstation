@@ -12,8 +12,8 @@
 	visor_vars_to_toggle = NONE //we don't actually toggle anything we just set it
 	tint = 3 //this'll get reset, but it won't handle vision updates properly otherwise
 
-/obj/item/clothing/glasses/wraith_spectacles/New()
-	..()
+/obj/item/clothing/glasses/wraith_spectacles/Initialize()
+	. = ..()
 	GLOB.all_clockwork_objects += src
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
@@ -129,6 +129,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		apply_eye_damage(H)
+		return ..()
 
 /datum/status_effect/wraith_spectacles/tick()
 	if(!ishuman(owner))

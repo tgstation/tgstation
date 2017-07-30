@@ -3,11 +3,10 @@
 	desc = "You sit in this. Either by will or force.\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
-	anchored = 1
+	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = 0
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -25,7 +24,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -37,10 +36,9 @@
 	return attack_hand(user)
 
 /obj/structure/chair/narsie_act()
-	if(prob(20))
-		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
@@ -51,7 +49,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		E.setDir(dir)
 		E.part = SK
 		SK.loc = E
@@ -120,7 +118,6 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
@@ -142,14 +139,13 @@
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	buildstackamount = 2
-	var/image/armrest = null
+	var/mutable_appearance/armrest
 	item_chair = null
 
 /obj/structure/chair/comfy/Initialize()
-	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
+	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
 
@@ -181,7 +177,7 @@
 	color = rgb(255,251,0)
 
 /obj/structure/chair/office
-	anchored = 0
+	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
 
@@ -235,21 +231,21 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
+	materials = list(MAT_METAL = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/narsie_act()
-	if(prob(20))
-		var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
-		if(istype(A,/obj/structure/chair))
+		if(istype(A, /obj/structure/chair))
 			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))
@@ -275,7 +271,7 @@
 
 
 
-/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
 		return 1
@@ -290,7 +286,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Weaken(1)
+				C.Knockdown(20)
 		smash(user)
 
 
@@ -315,10 +311,10 @@
 	icon_state = "wooden_chair_toppled"
 	item_state = "woodenchair"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
+	materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()

@@ -40,7 +40,7 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
-	log_say("[key_name(src)] : [message]")
+
 
 	message = trim(message)
 
@@ -49,7 +49,14 @@
 
 	var/obj/machinery/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		send_speech(message, 7, T, "robot", get_spans(), message_language=language)
+		var/turf/padturf = get_turf(T)
+		var/padloc
+		if(padturf)
+			padloc = COORD(padturf)
+		else
+			padloc = "(UNKNOWN)"
+		log_talk(src,"HOLOPAD [padloc]: [key_name(src)] : [message]", LOGSAY)
+		send_speech(message, 7, T, "robot", get_spans(), language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
@@ -153,7 +160,7 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.client && !M.ear_deaf && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				if(M.client && M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						M << voice
@@ -164,11 +171,9 @@
 
 #endif
 
-/mob/living/silicon/ai/can_speak_in_language(datum/language/dt)
-	if(HAS_SECONDARY_FLAG(src, OMNITONGUE))
-		. = has_language(dt)
-	else if(is_servant_of_ratvar(src))
+/mob/living/silicon/ai/could_speak_in_language(datum/language/dt)
+	if(is_servant_of_ratvar(src))
 		// Ratvarian AIs can only speak Ratvarian
-		. = ispath(dt, /datum/language/ratvar) && has_language(dt)
+		. = ispath(dt, /datum/language/ratvar)
 	else
 		. = ..()

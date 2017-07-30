@@ -14,7 +14,7 @@
 	var/tables_required = 2
 	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -55,9 +55,7 @@
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
-	desc = "Whether you're sleeping or waking, it's going to be \
-		quite chaotic."
-	obj_integrity = 1000
+	desc = "Whether you're sleeping or waking, it's going to be quite chaotic."
 	max_integrity = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
@@ -68,7 +66,6 @@
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	grant_language(/datum/language/common)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -105,7 +102,7 @@
 	// Existing sleepers
 	for(var/i in found)
 		var/mob/living/L = i
-		L.SetSleeping(10)
+		L.SetSleeping(200)
 
 	// Missing sleepers
 	for(var/i in sleepers - found)
@@ -148,11 +145,11 @@
 		3. Don't get messed up in their affairs."
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
+	initial_language_holder = /datum/language_holder/universal
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= GLOB.access_cent_bar
-	grant_all_languages(omnitongue=TRUE)
+	access_card.access |= ACCESS_CENT_BAR
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -163,16 +160,15 @@
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
+	initial_language_holder = /datum/language_holder/universal
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= GLOB.access_cent_bar
+	access_card.access |= ACCESS_CENT_BAR
 	access_card.flags |= NODROP
-
-	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -185,7 +181,6 @@
 /obj/structure/table/wood/bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags = NODECONSTRUCT
-	obj_integrity = 1000
 	max_integrity = 1000
 	var/boot_dir = 1
 
@@ -194,7 +189,7 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Weaken(2)
+		M.Knockdown(40)
 		M.throw_at(throwtarget, 5, 1,src)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
@@ -212,7 +207,7 @@
 			return TRUE
 
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (GLOB.access_cent_bar in ID.access))
+	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers
@@ -221,7 +216,7 @@
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 
-/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
 		return 1
 
@@ -256,7 +251,7 @@
 /mob/living/simple_animal/hostile/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 /obj/effect/decal/hammerandsickle
 	name = "hammer and sickle"

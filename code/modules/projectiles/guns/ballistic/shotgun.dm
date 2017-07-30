@@ -20,6 +20,7 @@
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+		playsound(user, 'sound/weapons/shotguninsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 
@@ -35,12 +36,10 @@
 	return (chambered.BB ? 1 : 0)
 
 /obj/item/weapon/gun/ballistic/shotgun/attack_self(mob/living/user)
-	if(recentpump)
+	if(recentpump > world.time)
 		return
 	pump(user)
-	recentpump = 1
-	spawn(10)
-		recentpump = 0
+	recentpump = world.time + 10
 	return
 
 /obj/item/weapon/gun/ballistic/shotgun/blow_up(mob/user)
@@ -90,8 +89,8 @@
 	..()
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/gun/energy/plasmacutter))
 		sawoff(user)
-	if(istype(A, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/W = A
+	if(istype(A, /obj/item/weapon/melee/transforming/energy))
+		var/obj/item/weapon/melee/transforming/energy/W = A
 		if(W.active)
 			sawoff(user)
 
@@ -106,7 +105,7 @@
 	item_state = "moistnugget"
 	slot_flags = 0 //no SLOT_BACK sprite, alas
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
-	var/bolt_open = 0
+	var/bolt_open = FALSE
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
@@ -148,9 +147,9 @@
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
-/obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/New()
-	..()
-	bolt_open = 1
+/obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
+	. = ..()
+	bolt_open = TRUE
 	pump()
 	gun_type = type
 
@@ -194,6 +193,14 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 
+/obj/item/weapon/gun/ballistic/shotgun/automatic/combat/compact
+	name = "compact combat shotgun"
+	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
+	icon_state = "cshotgunc"
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
+	w_class = WEIGHT_CLASS_BULKY
+
 //Dual Feed Shotgun
 
 /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube
@@ -203,11 +210,11 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
-	var/toggled = 0
+	var/toggled = FALSE
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 
-/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/New()
-	..()
+/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
+	. = ..()
 	if (!alternate_magazine)
 		alternate_magazine = new mag_type(src)
 

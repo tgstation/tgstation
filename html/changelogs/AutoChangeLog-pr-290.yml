@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Putting sec armour and a helmet on a corgi no longer makes the corgi immune to item attacks."
-  - rscadd: "All items with armour will now grant corgis actual armour."

@@ -17,9 +17,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/slice, reagents_per_slice)
 	..()
-	var/image/I = new(icon, "rawcutlet_coloration")
-	I.color = filling_color
-	slice.add_overlay(I)
+	var/mutable_appearance/filling = mutable_appearance(icon, "rawcutlet_coloration")
+	filling.color = filling_color
+	slice.add_overlay(filling)
 	slice.filling_color = filling_color
 	slice.name = "raw [name] cutlet"
 	slice.meat_type = name

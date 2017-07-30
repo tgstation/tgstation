@@ -4,7 +4,7 @@
 	name = "Hell Lobby"
 	//icon = "ICON FILENAME"
 	//icon_state = "NAME OF ICON"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/hell/trial1
 	name = "Hell Trial1"
@@ -52,7 +52,7 @@
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
 	icon_state = "green"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/prison/control
 	name = "Prison Security Checkpoint"
@@ -102,7 +102,7 @@
 /area/prison/solar
 	name = "Prison Solar Array"
 	icon_state = "storage"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/prison/podbay
 	name = "Prison Podbay"
@@ -115,15 +115,22 @@
 /area/prison/solitary
 	name = "Solitary Confinement"
 	icon_state = "brig"
+	
+/area/prison/execution_room
+	name = "Prisoner Education Chamber"
+	icon_state = "execution_room"
 
-/area/prison/cell_block/A
+/area/prison/cell_block/a
+//	/area/prison/cell_block/A
 	name = "Prison Cell Block A"
 	icon_state = "brig"
 
-/area/prison/cell_block/B
+/area/prison/cell_block/b
+//	/area/prison/cell_block/B
 	name = "Prison Cell Block B"
 	icon_state = "brig"
 
-/area/prison/cell_block/C
+/area/prison/cell_block/c
+//	/area/prison/cell_block/C
 	name = "Prison Cell Block C"
 	icon_state = "brig"

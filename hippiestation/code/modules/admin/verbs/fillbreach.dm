@@ -1,7 +1,7 @@
 /client/proc/reset_atmos()
 	set name = "Clean Air"
 	set category = "Special Verbs"
-	set desc = "Cleans the air in a radius of harmful gasses like plasma and n2o "
+	set desc = "Cleans the air in a radius of harmful gasses like plasma and N2O"
 	var/size = input("How big?", "Input") in list(5, 10, 20, "Cancel")
 	if(size == "Cancel")
 		return 0
@@ -18,7 +18,6 @@
 		return 0
 	for(var/turf/open/space/T in range(size))
 		T.ChangeTurf(/turf/open/floor/plating)
-	spawn(1)
 	cleanair(size)
 	message_admins("[key_name(src)] filled the hullbreachs in [size] tiles.")
 	log_game("[key_name(src)] filled the hullbreachs in [size] tiles.")

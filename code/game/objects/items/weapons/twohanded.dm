@@ -84,21 +84,17 @@
 	return
 
 /obj/item/weapon/twohanded/dropped(mob/user)
-	..()
+	. = ..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(!wielded)
 		return
-	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
-		if(istype(O))
-			O.unwield(user, FALSE)
 	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	..()
+	. = ..()
 	if(wielded) //Trying to unwield it
 		unwield(user)
 	else //Trying to wield it
@@ -106,6 +102,8 @@
 
 /obj/item/weapon/twohanded/equip_to_best_slot(mob/M)
 	if(..())
+		if(istype(src, /obj/item/weapon/twohanded/required))
+			return // unwield forces twohanded-required items to be dropped.
 		unwield(M)
 		return
 
@@ -179,16 +177,21 @@
 	else
 		unwield(user)
 
+/obj/item/weapon/twohanded/required/dropped(mob/living/user, show_message = TRUE)
+	unwield(user, show_message)
+	..()
+
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
 		user.dropItemToGround(src)
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+	if(!wielded)
+		return
 	if(show_message)
 		to_chat(user, "<span class='notice'>You drop [src].</span>")
 	..(user, FALSE)
-	user.dropItemToGround(src)
 
 /*
  * Fireaxe
@@ -206,7 +209,6 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
@@ -223,10 +225,10 @@
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window))
+		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
-		else if(istype(A,/obj/structure/grille))
+		else if(istype(A, /obj/structure/grille))
 			var/obj/structure/grille/G = A
 			G.take_damage(40, BRUTE, "melee", 0)
 
@@ -255,16 +257,15 @@
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
-	var/hacked = 0
-	var/brightness_on = 6//TWICE AS BRIGHT AS A REGULAR ESWORD
+	var/hacked = FALSE
+	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/Initialize()
-	..()
+	. = ..()
 	if(LAZYLEN(possible_colors))
 		item_color = pick(possible_colors)
 		switch(item_color)
@@ -315,7 +316,7 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		return ..()
 	return 0
@@ -359,7 +360,7 @@
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
-	// same as /obj/item/weapon/melee/energy, mostly
+	// same as /obj/item/weapon/melee/transforming/energy, mostly
 	if(!wielded)
 		return ""
 	var/in_mouth = ""
@@ -387,8 +388,8 @@
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		if(hacked == 0)
-			hacked = 1
+		if(!hacked)
+			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			update_icon()
@@ -415,7 +416,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/obj/item/weapon/grenade/explosive = null
@@ -490,7 +490,7 @@
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
-	var/on = 0
+	var/on = FALSE
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
@@ -520,7 +520,7 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
@@ -565,7 +565,6 @@
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
@@ -600,20 +599,19 @@
 	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
-	if(isliving(user))
+/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/living/user)
+	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user))
 		var/mob/living/U = user
-		if(U.mind && !U.mind.devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
-			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
-				"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
-			if(ishuman(U))
-				var/mob/living/carbon/human/H = U
-				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
-			else
-				U.adjustFireLoss(rand(force/2,force))
+		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
+			"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
+		if(ishuman(U))
+			var/mob/living/carbon/human/H = U
+			H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+		else
+			U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
-	if(user.mind && !user.mind.devilinfo && (user.mind.soulOwner != user.mind))
+	if(user.mind && user.owns_soul() && !is_devil(user))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()
@@ -621,10 +619,10 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !wielded)
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		var/turf/closed/wall/W = target
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
-		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
 		return 1
 	..()
@@ -647,7 +645,7 @@
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(wielded || attack_type != PROJECTILE_ATTACK)
@@ -698,55 +696,3 @@
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
-
-/*
- * Sky Bulge (Gae Bolg, tradtional dragoon lance from many FF games.)
- */
-/obj/item/weapon/twohanded/skybulge	//Copy+paste job from bonespear because no explosions.
-	icon_state = "sky_bulge0"
-	name = "Sky Bulge"
-	desc = "A legendary stick with a very pointy tip. Looks to be used for throwing. And jumping. Can be stubborn if you throw too much." //TODO: Be funnier.
-	force = 10 //This thing aint for robusting.
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
-	force_unwielded = 10
-	force_wielded = 18					//Same as regular spear. This is a utility weapon.
-	throwforce = 24						//And that utility is throwing. 24 so it takes 5 hits instead of 4.
-	throw_speed = 4
-	embedded_impact_pain_multiplier = 0	//If you somehow embed this, it's not going to hurt.
-	armour_penetration = 15				//Same as Bone Spear
-	embed_chance = 0					//Would ruin the whole theme of the thing.
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored", "lanced") //Added lanced for flavour.
-	sharpness = IS_SHARP
-	var/maxdist = 16
-	var/throw_cooldown = 0				//Should equate to half a second. Not supposed to be varedited.
-
-/obj/item/weapon/twohanded/skybulge/update_icon()
-	icon_state = "sky_bulge[wielded]"
-
-/obj/item/weapon/twohanded/skybulge/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)  //Throw cooldown and offhand-proofing.
-	if(throw_cooldown > world.time)
-		var/mob/user = thrownby
-		user.put_in_hands(src)
-		return
-	unwield(src)
-	..()
-
-/obj/item/weapon/twohanded/skybulge/throw_impact(atom/target) //Praise be the ratvar spear for showing me how to use this proc.
-	var/turf/turfhit = get_turf(target)
-	var/mob/user = thrownby
-	var/turf/source = get_turf(thrownby)
-
-	if(source.z == ZLEVEL_STATION && get_dist(turfhit, source) < maxdist || source.z != ZLEVEL_STATION)
-		..()
-		if(do_after_mob(user, src, 5, uninterruptible = 1, progress = 0))
-			if(QDELETED(src))
-				return
-			var/turf/landing = get_turf(src)
-			if (loc != landing)
-				return
-			user.forceMove(landing)
-	throw_cooldown = world.time + 5				//Half a second between throws.
-	user.put_in_hands(src)
-	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)

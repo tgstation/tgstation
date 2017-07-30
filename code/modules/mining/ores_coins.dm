@@ -1,3 +1,8 @@
+
+#define GIBTONITE_QUALITY_HIGH 3
+#define GIBTONITE_QUALITY_MEDIUM 2
+#define GIBTONITE_QUALITY_LOW 1
+
 /**********************Mineral ores**************************/
 
 /obj/item/weapon/ore
@@ -18,9 +23,14 @@
 	..()
 
 /obj/item/weapon/ore/Crossed(atom/movable/AM)
+	set waitfor = FALSE
+	var/show_message = TRUE
+	for(var/obj/item/weapon/ore/O in loc)
+		if(O != src)
+			show_message = FALSE
+			break
 	var/obj/item/weapon/storage/bag/ore/OB
 	if(istype(loc, /turf/open/floor/plating/asteroid))
-		var/turf/open/floor/plating/asteroid/F = loc
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			for(var/thing in H.get_storage_slots())
@@ -31,20 +41,37 @@
 				if(istype(thing, /obj/item/weapon/storage/bag/ore))
 					OB = thing
 					break
-		else if(issilicon(AM))
+		else if(iscyborg(AM))
 			var/mob/living/silicon/robot/R = AM
 			for(var/thing in R.module_active)
 				if(istype(thing, /obj/item/weapon/storage/bag/ore))
 					OB = thing
 					break
 		if(OB)
-			F.attackby(OB, AM)
+			var/obj/structure/ore_box/box
+			if(!OB.can_be_inserted(src, TRUE, AM))
+				if(!OB.spam_protection)
+					to_chat(AM, "<span class='warning'>Your [OB.name] is full and can't hold any more ore!</span>")
+					OB.spam_protection = TRUE
+					sleep(1)
+					OB.spam_protection = FALSE
+			else
+				OB.handle_item_insertion(src, TRUE, AM)
 			// Then, if the user is dragging an ore box, empty the satchel
 			// into the box.
 			var/mob/living/L = AM
 			if(istype(L.pulling, /obj/structure/ore_box))
-				var/obj/structure/ore_box/box = L.pulling
-				box.attackby(OB, AM)
+				box = L.pulling
+				for(var/obj/item/weapon/ore/O in OB)
+					OB.remove_from_storage(src, box)
+			if(show_message)
+				playsound(L, "rustle", 50, TRUE)
+				if(box)
+					L.visible_message("<span class='notice'>[L] offloads the ores into [box].</span>", \
+					"<span class='notice'>You offload the ores beneath you into your [box.name].</span>")
+				else
+					L.visible_message("<span class='notice'>[L] scoops up the ores beneath them.</span>", \
+					"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
 	return ..()
 
 /obj/item/weapon/ore/uranium
@@ -184,10 +211,11 @@
 	item_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 0
-	var/primed = 0
+	var/primed = FALSE
 	var/det_time = 100
-	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
+	var/quality = GIBTONITE_QUALITY_LOW //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/attacher = "UNKNOWN"
+	var/det_timer
 
 /obj/item/weapon/twohanded/required/gibtonite/Destroy()
 	qdel(wires)
@@ -213,10 +241,12 @@
 		return
 	if(primed)
 		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
-			primed = 0
+			primed = FALSE
+			if(det_timer)
+				deltimer(det_timer)
 			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
-			quality = 1
+			quality = GIBTONITE_QUALITY_LOW
 			return
 	..()
 
@@ -237,8 +267,8 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
+		primed = TRUE
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
-		primed = 1
 		icon_state = "Gibtonite active"
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
@@ -248,27 +278,30 @@
 
 		if(notify_admins)
 			if(triggered_by == 1)
-				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("An explosion has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)].")
 			else if(triggered_by == 2)
-				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [key_name_admin(attacher)]<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)")
+				message_admins("A signal has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
 			else
-				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[ADMIN_LOOKUPFLW(attacher)] has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)].")
 		if(triggered_by == 1)
-			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			log_game("An explosion has primed a [name] for detonation at [A][COORD(bombturf)]")
 		else if(triggered_by == 2)
-			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [key_name(attacher)].")
+			log_game("A signal has primed a [name] for detonation at [A][COORD(bombturf)]. Igniter attacher: [key_name(attacher)].")
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
-			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
-		spawn(det_time)
-		if(primed)
-			if(quality == 3)
-				explosion(src.loc,2,4,9,adminlog = notify_admins)
-			if(quality == 2)
-				explosion(src.loc,1,2,5,adminlog = notify_admins)
-			if(quality == 1)
-				explosion(src.loc,-1,1,3,adminlog = notify_admins)
-			qdel(src)
+			log_game("[key_name(user)] has primed a [name] for detonation at [A][COORD(bombturf)]")
+		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
+
+/obj/item/weapon/twohanded/required/gibtonite/proc/detonate(notify_admins)
+	if(primed)
+		switch(quality)
+			if(GIBTONITE_QUALITY_HIGH)
+				explosion(src,2,4,9,adminlog = notify_admins)
+			if(GIBTONITE_QUALITY_MEDIUM)
+				explosion(src,1,2,5,adminlog = notify_admins)
+			if(GIBTONITE_QUALITY_LOW)
+				explosion(src,0,1,3,adminlog = notify_admins)
+		qdel(src)
 
 /obj/item/weapon/ore/Initialize()
 	..()
@@ -392,14 +425,14 @@
 			return
 
 		if (CC.use(1))
-			add_overlay(image('icons/obj/economy.dmi',"coin_string_overlay"))
+			add_overlay("coin_string_overlay")
 			string_attached = 1
 			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")
 		else
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
-	else if(istype(W,/obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(!string_attached)
 			..()
 			return

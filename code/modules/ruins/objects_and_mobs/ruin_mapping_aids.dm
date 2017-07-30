@@ -4,10 +4,11 @@
 	name = "lava baseturf editor"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
-	var/baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	var/baseturf = /turf/open/lava/smooth/lava_land_surface
+	layer = POINT_LAYER
 
 /obj/effect/baseturf_helper/Initialize()
-	..()
+	. = ..()
 	var/area/thearea = get_area(src)
 	for(var/turf/T in get_area_turfs(thearea, z))
 		if(T.baseturf != T.type) //Don't break indestructible walls and the like

@@ -1,0 +1,4 @@
+author: "Fox McCloud"
+delete-after: True
+changes: 
+  - rscadd: "Sound should carry further, but should get quieter and quieter the further you are from it"

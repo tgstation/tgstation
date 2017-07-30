@@ -15,7 +15,7 @@
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
-	var/holocreator_busy = 0 //to prevent placing multiple holo barriers at once
+	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
 	if(flag)
@@ -34,11 +34,11 @@
 				if(signs.len < max_signs)
 					playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
 					if(creation_time)
-						holocreator_busy = 1
+						holocreator_busy = TRUE
 						if(!do_after(user, creation_time, target = target))
-							holocreator_busy = 0
+							holocreator_busy = FALSE
 							return
-						holocreator_busy = 0
+						holocreator_busy = FALSE
 						if(signs.len >= max_signs)
 							return
 						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
@@ -74,6 +74,14 @@
 	creation_time = 30
 	max_signs = 6
 
+/obj/item/weapon/holosign_creator/atmos
+	name = "ATMOS holofan projector"
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
+	icon_state = "signmaker_engi"
+	holosign_type = /obj/structure/holosign/barrier/atmos
+	creation_time = 0
+	max_signs = 3
+
 /obj/item/weapon/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields"
@@ -87,7 +95,7 @@
 		var/mob/living/silicon/robot/R = user
 
 		if(shock)
-			user <<"<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>"
+			to_chat(user, "<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 5
 			if(signs.len)
@@ -96,7 +104,7 @@
 			shock = 0
 			return
 		else if(R.emagged&&!shock)
-			user <<"<span class='warning'>You clear all active holograms, and overload your energy projector!</span>"
+			to_chat(user, "<span class='warning'>You clear all active holograms, and overload your energy projector!</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 30
 			if(signs.len)

@@ -42,8 +42,9 @@
 /obj/item/weapon/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
-
+	reagents.add_reagent("water", max_water - 10)
+	reagents.add_reagent("cryogenic_fluid", 10) //improved turf extinguishing
+	
 /obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
@@ -94,6 +95,9 @@
 		return 0
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
+	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
+	if (target.loc == user)
+		return
 	//TODO; Add support for reagents in water.
 	if(refilling)
 		refilling = FALSE

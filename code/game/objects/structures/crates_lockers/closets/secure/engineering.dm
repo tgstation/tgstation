@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/engineering_chief
 	name = "\proper chief engineer's locker"
-	req_access = list(GLOB.access_ce)
+	req_access = list(ACCESS_CE)
 	icon_state = "ce"
 
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
@@ -26,10 +26,11 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/weapon/door_remote/chief_engineer(src)
 	new /obj/item/weapon/pipe_dispenser(src)
+	new /obj/item/weapon/inducer(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
-	req_access = list(GLOB.access_engine_equip)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	icon_state = "eng"
 	icon_door = "eng_elec"
 
@@ -37,6 +38,8 @@
 	..()
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
+	new /obj/item/weapon/inducer(src)
+	new /obj/item/weapon/inducer(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
 	for(var/i in 1 to 3)
@@ -46,7 +49,7 @@
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
-	req_access = list(GLOB.access_engine_equip)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	icon_state = "eng"
 	icon_door = "eng_weld"
 
@@ -55,11 +58,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/welding(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/weldingtool/largetank(src)
+		new /obj/item/weapon/weldingtool(src)
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
-	req_access = list(GLOB.access_engine_equip)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	icon_state = "eng_secure"
 
 /obj/structure/closet/secure_closet/engineering_personal/PopulateContents()
@@ -75,7 +78,7 @@
 
 /obj/structure/closet/secure_closet/atmospherics
 	name = "\proper atmospheric technician's locker"
-	req_access = list(GLOB.access_atmospherics)
+	req_access = list(ACCESS_ATMOSPHERICS)
 	icon_state = "atmos"
 
 /obj/structure/closet/secure_closet/atmospherics/PopulateContents()
@@ -85,7 +88,7 @@
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/device/analyzer(src)
-	new /obj/item/weapon/holosign_creator/engineering(src)
+	new /obj/item/weapon/holosign_creator/atmos(src)
 	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)

@@ -31,6 +31,22 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/ancient
+	icon_state = "firstaid"
+	desc = "A first aid kit with the ability to heal common types of injuries."
+
+
+/obj/item/weapon/storage/firstaid/ancient/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/ointment(src)
+
 /obj/item/weapon/storage/firstaid/fire
 	name = "burn treatment kit"
 	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
@@ -128,7 +144,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	w_class = WEIGHT_CLASS_SMALL
-	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice)
+	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/dice)
 	allow_quick_gather = 1
 	use_to_pickup = 1
 

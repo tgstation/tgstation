@@ -26,22 +26,18 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/chair/comfy/black{
-	tag = "icon-comfychair (NORTH)";
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -96,8 +92,7 @@
 /area/shuttle/escape)
 "at" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -177,6 +172,9 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aG" = (
@@ -251,8 +249,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/chair/comfy/beige{
-	tag = "icon-comfychair (NORTH)";
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -269,8 +265,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -295,7 +290,6 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -421,11 +415,11 @@ ab
 ab
 ab
 ab
-aI
+ao
 aL
 aL
 aL
-aT
+ao
 ab
 ab
 ab
@@ -445,7 +439,7 @@ ao
 ao
 ao
 ao
-ao
+aT
 ab
 aV
 aY
@@ -525,7 +519,7 @@ ao
 ao
 ao
 ao
-ao
+aT
 ab
 aW
 aZ
@@ -541,11 +535,11 @@ ab
 ab
 ab
 ab
-aI
+ao
 aK
 aK
 aK
-aT
+ao
 ab
 ab
 ab

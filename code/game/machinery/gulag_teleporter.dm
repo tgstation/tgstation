@@ -11,10 +11,10 @@ The console is located at computer/gulag_teleporter.dm
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
-	state_open = 0
-	density = 1
-	anchored = 1
-	use_power = 1
+	state_open = FALSE
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/locked = FALSE
@@ -136,13 +136,14 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/proc/strip_occupant()
 	if(linked_reclaimer)
 		linked_reclaimer.stored_items[occupant] = list()
-	for(var/obj/item/W in occupant)
-		if(!is_type_in_typecache(W, required_items) && occupant.temporarilyRemoveItemFromInventory(W))
+	var/mob/living/mob_occupant = occupant
+	for(var/obj/item/W in mob_occupant)
+		if(!is_type_in_typecache(W, required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue
 			if(linked_reclaimer)
-				linked_reclaimer.stored_items[occupant] += W
+				linked_reclaimer.stored_items[mob_occupant] += W
 				linked_reclaimer.contents += W
 				W.forceMove(linked_reclaimer)
 			else
@@ -178,3 +179,4 @@ The console is located at computer/gulag_teleporter.dm
 	desc = "A recieving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
+	resistance_flags = INDESTRUCTIBLE

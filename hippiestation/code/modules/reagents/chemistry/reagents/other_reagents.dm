@@ -1,0 +1,21 @@
+/datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
+	if(iscultist(M))
+		M.drowsyness = max(M.drowsyness-5, 0)
+		M.adjustToxLoss(-3, 0)
+		M.adjustOxyLoss(-3, 0)
+		M.adjustBruteLoss(-3, 0)
+		M.adjustFireLoss(-3, 0)
+		M.adjustCloneLoss(-5, 0)
+		M.adjustBrainLoss(-3, 0)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+				C.blood_volume += 5
+	else
+		M.adjustBrainLoss(3)
+		M.adjustToxLoss(1, 0)
+		M.adjustFireLoss(2, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustBruteLoss(2, 0)
+	holder.remove_reagent(src.id, 1)
+	return FINISHONMOBLIFE(M)

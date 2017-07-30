@@ -37,12 +37,11 @@
 /area/shuttle/abandoned)
 "af" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ag" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -82,14 +81,12 @@
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ao" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -164,9 +161,8 @@
 	},
 /area/shuttle/abandoned)
 "aB" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -203,7 +199,7 @@
 	anchored = 1
 	},
 /obj/structure/light_construct,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aI" = (
 /turf/closed/wall/shuttle{
@@ -230,7 +226,7 @@
 "aM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
 /obj/machinery/door/window,
@@ -256,7 +252,7 @@
 /area/shuttle/abandoned)
 "aR" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/structure/chair{
@@ -338,7 +334,6 @@
 /area/shuttle/abandoned)
 "bh" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
@@ -545,7 +540,7 @@ aa
 aC
 aj
 aj
-bp
+bk
 aC
 aa
 aa
@@ -786,7 +781,7 @@ bl
 aj
 aj
 aj
-br
+bk
 aC
 aC
 aC
@@ -955,7 +950,7 @@ aN
 aj
 bq
 aj
-af
+aW
 aj
 aj
 aW
@@ -980,7 +975,7 @@ aj
 aV
 aY
 aC
-bs
+bl
 aj
 aC
 aj
@@ -998,7 +993,7 @@ aj
 aG
 aC
 aj
-af
+aW
 aj
 bn
 aj
@@ -1096,7 +1091,7 @@ aC
 aC
 aC
 aL
-aR
+be
 aL
 aC
 aC

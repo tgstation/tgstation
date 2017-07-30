@@ -13,7 +13,7 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(H.z != 1)
+		if(H.z != ZLEVEL_STATION)
 			continue //lets not try to strand people in space or stuck in the wizards den
 		moblocs += H.loc
 		mobs += H
@@ -21,8 +21,8 @@
 	if(!mobs)
 		return
 
-	shuffle(moblocs)
-	shuffle(mobs)
+	shuffle_inplace(moblocs)
+	shuffle_inplace(mobs)
 
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!moblocs)
@@ -55,8 +55,8 @@
 	if(!mobs)
 		return
 
-	shuffle(mobnames)
-	shuffle(mobs)
+	shuffle_inplace(mobnames)
+	shuffle_inplace(mobs)
 
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!mobnames)
@@ -89,7 +89,7 @@
 	if(!mobs)
 		return
 
-	shuffle(mobs)
+	shuffle_inplace(mobs)
 
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new /obj/effect/proc_holder/spell/targeted/mind_transfer
 	while(mobs.len > 1)

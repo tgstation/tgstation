@@ -39,7 +39,7 @@
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
-	..()
+	. = ..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
@@ -322,10 +322,10 @@
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/space))
+		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/immutable/space))
 			space_in_group = 1
 			qdel(A)
-			A = new/datum/gas_mixture/space()
+			A = new/datum/gas_mixture/immutable/space()
 		A.merge(T.air)
 
 	for(var/id in A_gases)
@@ -364,7 +364,7 @@
 /turf/open/conductivity_directions()
 	if(blocks_air)
 		return ..()
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(src, direction)
 		if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 			. |= direction
@@ -393,7 +393,7 @@
 
 	if(conductivity_directions)
 		//Conduct with tiles around me
-		for(var/direction in GLOB.cardinal)
+		for(var/direction in GLOB.cardinals)
 			if(conductivity_directions & direction)
 				var/turf/neighbor = get_step(src,direction)
 

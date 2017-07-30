@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/hydroponics
 	name = "botanist's locker"
-	req_access = list(GLOB.access_hydroponics)
+	req_access = list(ACCESS_HYDROPONICS)
 	icon_state = "hydro"
 
 /obj/structure/closet/secure_closet/hydroponics/PopulateContents()

@@ -1,7 +1,7 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","gravgun","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
+	var/list/gunslist 			= list("taser","gravgun","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","g17","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor","voodoo", "whistle", "battlemage", "immortality", "ghostsword", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic", "bloodcontract")
 
@@ -89,6 +89,8 @@
 					G = new /obj/item/weapon/gun/ballistic/automatic/l6_saw(get_turf(H))
 				if("car")
 					G = new /obj/item/weapon/gun/ballistic/automatic/m90(get_turf(H))
+				if("glock17")
+					G = new /obj/item/weapon/gun/ballistic/automatic/pistol/g17(get_turf(H))
 				if("alienpistol")
 					G = new /obj/item/weapon/gun/energy/alien(get_turf(H))
 				if("dragnet")
@@ -124,7 +126,7 @@
 				if("gravgun")
 					G = new /obj/item/weapon/gun/energy/gravity_gun(get_turf(H))
 			G.unlock()
-			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
+			playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
 
 		else
 			switch (randomizemagic)
@@ -199,7 +201,7 @@
 						if("bloodcontract")
 							new /obj/item/blood_contract(get_turf(H))
 					to_chat(H, "<span class='notice'>You suddenly feel lucky.</span>")
-			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
+			playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
 
 
 /proc/summonevents()

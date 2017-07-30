@@ -30,7 +30,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else if (isloc(var_value))
 		. = VV_ATOM_REFERENCE
 
-	else if (istype(var_value,/client))
+	else if (istype(var_value, /client))
 		. = VV_CLIENT
 
 	else if (istype(var_value, /datum))
@@ -44,7 +44,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		else
 			. = VV_TYPE
 
-	else if (istype(var_value,/list))
+	else if (islist(var_value))
 		. = VV_LIST
 
 	else if (isfile(var_value))
@@ -529,6 +529,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if(!variable)
 			return
 
+	if(!O.can_vv_get(variable))
+		return
+
 	var_value = O.vars[variable]
 
 	if(variable in GLOB.VVlocked)
@@ -591,7 +594,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	switch(class)
 		if(VV_LIST)
-			if(!istype(var_value,/list))
+			if(!islist(var_value))
 				mod_list(list(), O, original_name, variable)
 
 			mod_list(var_value, O, original_name, variable)
@@ -609,6 +612,8 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (O.vv_edit_var(variable, var_new) == FALSE)
 		to_chat(src, "Your edit was rejected by the object.")
 		return
-	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]")
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[var_new]")]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] to [var_new]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [var_new]"
+	message_admins(msg)
+	admin_ticket_log(O, msg)

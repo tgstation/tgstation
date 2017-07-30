@@ -5,7 +5,7 @@
 	mind.show_memory(src, 0)
 
 	//Round specific stuff
-	if(SSticker && SSticker.mode)
+	if(SSticker.mode)
 		switch(SSticker.mode.name)
 			if("sandbox")
 				CanBuild()

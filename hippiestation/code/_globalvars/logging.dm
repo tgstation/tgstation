@@ -1,0 +1,2 @@
+GLOBAL_LIST_EMPTY(mentorlog)
+GLOBAL_PROTECT(mentorlog)

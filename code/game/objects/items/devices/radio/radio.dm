@@ -5,7 +5,7 @@
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
 	dog_fashion = /datum/dog_fashion/back
-	var/on = 1 // 0 for off
+	var/on = TRUE // 0 for off
 	var/last_transmission
 	var/frequency = 1459 //common chat
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
@@ -44,13 +44,6 @@
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
-
-/obj/item/device/radio/New()
-	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
-	secure_radio_connections = new
-	..()
 
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
@@ -92,7 +85,11 @@
 	return ..()
 
 /obj/item/device/radio/Initialize()
-	..()
+	wires = new /datum/wires/radio(src)
+	if(prison_radio)
+		wires.cut(WIRE_TX) // OH GOD WHY
+	secure_radio_connections = new
+	. = ..()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 
@@ -107,7 +104,7 @@
 	else
 		ui_interact(user)
 
-/obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -444,7 +441,7 @@
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
 						  verb_say, verb_ask, verb_exclaim, verb_yell, language)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(radio_freq)
 		return
 	if(broadcasting)
@@ -533,12 +530,12 @@
 	listening = 0
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
-	on = 0
+	on = FALSE
 	spawn(200)
 		if(emped == curremp) //Don't fix it if it's been EMP'd again
 			emped = 0
 			if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
-				on = 1
+				on = TRUE
 	..()
 
 ///////////////////////////////
@@ -559,8 +556,8 @@
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
-	..()
+/obj/item/device/radio/borg/syndicate/Initialize()
+	. = ..()
 	set_frequency(GLOB.SYND_FREQ)
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)

@@ -24,3 +24,11 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.add_mutation(CLUWNEMUT)
 	return
+
+/obj/item/clothing/shoes/blastco
+	name = "BlastCo(tm) rollerskates"
+	desc = "A pair of roller skates, syndicate style. Will make you go faster."
+	icon_state = "magboots-old1"
+	item_state = "magboots-old1"
+	slowdown = -1
+	resistance_flags = FIRE_PROOF | ACID_PROOF

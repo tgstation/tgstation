@@ -4,7 +4,7 @@
 	name = "modular computer"
 	desc = "An advanced computer."
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	var/hardware_flag = 0								// A flag that describes this device type
 	var/last_power_usage = 0							// Power usage during last tick
@@ -27,15 +27,13 @@
 
 	var/obj/item/device/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
-/obj/machinery/modular_computer/New()
-	..()
+/obj/machinery/modular_computer/Initialize()
+	. = ..()
 	cpu = new(src)
 	cpu.physical = src
 
 /obj/machinery/modular_computer/Destroy()
-	if(cpu)
-		qdel(cpu)
-		cpu = null
+	QDEL_NULL(cpu)
 	return ..()
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)

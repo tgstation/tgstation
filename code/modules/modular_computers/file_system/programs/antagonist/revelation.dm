@@ -7,6 +7,11 @@
 	requires_ntnet = 0
 	available_on_ntnet = 0
 	available_on_syndinet = 1
+	tgui_id = "ntos_revelation"
+	ui_style = "syndicate"
+	ui_x = 400
+	ui_y = 250
+
 	var/armed = 0
 
 /datum/computer_file/program/revelation/run_program(var/mob/living/user)
@@ -57,16 +62,6 @@
 	var/datum/computer_file/program/revelation/temp = ..()
 	temp.armed = armed
 	return temp
-
-/datum/computer_file/program/revelation/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "revelation", "Revelation Virus", 400, 250, state = state)
-		ui.set_style("syndicate")
-		ui.set_autoupdate(state = 1)
-		ui.open()
-
 
 /datum/computer_file/program/revelation/ui_data(mob/user)
 	var/list/data = get_header_data()

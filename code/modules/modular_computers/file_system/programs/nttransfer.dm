@@ -1,6 +1,6 @@
 /datum/computer_file/program/nttransfer
 	filename = "nttransfer"
-	filedesc = "NTNet P2P Transfer Client"
+	filedesc = "P2P Transfer Client"
 	extended_desc = "This program allows for simple file transfer via direct peer to peer connection."
 	program_icon_state = "comm_logs"
 	size = 7
@@ -8,6 +8,7 @@
 	requires_ntnet_feature = NTNET_PEERTOPEER
 	network_destination = "other device via P2P tunnel"
 	available_on_ntnet = 1
+	tgui_id = "ntos_net_transfer"
 
 	var/error = ""										// Error screen
 	var/server_password = ""							// Optional password to download the file.
@@ -81,20 +82,6 @@
 	downloaded_file = null
 	remote = null
 	download_completion = 0
-
-
-/datum/computer_file/program/nttransfer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-
-		ui = new(user, src, ui_key, "ntnet_transfer", "NTNet P2P Transfer Client", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/nttransfer/ui_act(action, params)
 	if(..())

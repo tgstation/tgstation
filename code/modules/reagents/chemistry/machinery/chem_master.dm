@@ -1,11 +1,11 @@
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -17,12 +17,12 @@
 	var/useramount = 30 // Last used amount
 	layer = BELOW_OBJ_LAYER
 
-/obj/machinery/chem_master/New()
+/obj/machinery/chem_master/Initialize()
 	create_reagents(100)
 	add_overlay("waitlight")
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
-	..()
+	. = ..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
@@ -136,7 +136,7 @@
 		return ..()
 
 
-/obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

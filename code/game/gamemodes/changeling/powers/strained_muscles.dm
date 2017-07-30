@@ -20,15 +20,20 @@
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
-			user.Weaken(3)
+			user.Knockdown(60)
 			user.emote("gasp")
 
+	INVOKE_ASYNC(src, .proc/muscle_loop, user)
+
+	return TRUE
+
+/obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
 		user.status_flags |= GOTTAGOFAST
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
-			user.Weaken(2)
+			user.Knockdown(40)
 			user.status_flags &= ~GOTTAGOFAST
 			break
 
@@ -41,10 +46,6 @@
 
 		sleep(40)
 
-	while(!active) //Damage stacks decrease fairly rapidly while not in sanic mode
-		if(stacks >= 1)
-			stacks--
+	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
+		stacks--
 		sleep(20)
-
-	feedback_add_details("changeling_powers","SANIC")
-	return 1

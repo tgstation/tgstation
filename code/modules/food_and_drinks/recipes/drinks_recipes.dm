@@ -416,8 +416,8 @@
 /datum/chemical_reaction/bananahonk
 	name = "Banana Honk"
 	id = "bananahonk"
-	results = list("bananahonk" = 3)
-	required_reagents = list("banana" = 1, "cream" = 1, "sugar" = 1)
+	results = list("bananahonk" = 2)
+	required_reagents = list("laughter" = 1, "cream" = 1)
 
 /datum/chemical_reaction/silencer
 	name = "Silencer"
@@ -542,9 +542,9 @@
 	results = list("chocolate_milk" = 2)
 	required_reagents = list("milk" = 1, "cocoa" = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
-	
+
 /datum/chemical_reaction/eggnog
 	name = "eggnog"
 	id = "eggnog"
 	results = list("eggnog" = 15)
-	required_reagents = list("rum" = 5, "cream" = 5, "eggyolk" = 5) 
+	required_reagents = list("rum" = 5, "cream" = 5, "eggyolk" = 5)

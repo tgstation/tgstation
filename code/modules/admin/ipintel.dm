@@ -33,8 +33,8 @@
 			cachedintel.cache = TRUE
 			return cachedintel
 
-		if(GLOB.dbcon.Connect())
-			var/DBQuery/query_get_ip_intel = GLOB.dbcon.NewQuery({"
+		if(SSdbcore.Connect())
+			var/datum/DBQuery/query_get_ip_intel = SSdbcore.NewQuery({"
 				SELECT date, intel, TIMESTAMPDIFF(MINUTE,date,NOW())
 				FROM [format_table_name("ipintel")]
 				WHERE
@@ -62,8 +62,8 @@
 	res.intel = ip_intel_query(ip)
 	if (updatecache && res.intel >= 0)
 		SSipintel.cache[ip] = res
-		if(GLOB.dbcon.Connect())
-			var/DBQuery/query_add_ip_intel = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
+		if(SSdbcore.Connect())
+			var/datum/DBQuery/query_add_ip_intel = SSdbcore.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
 			query_add_ip_intel.Execute()
 
 

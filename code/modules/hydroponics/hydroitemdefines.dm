@@ -28,8 +28,8 @@
 	throw_speed = 3
 	throw_range = 10
 
-/obj/item/weapon/reagent_containers/spray/weedspray/New()
-	..()
+/obj/item/weapon/reagent_containers/spray/weedspray/Initialize()
+	. = ..()
 	reagents.add_reagent("weedkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/weedspray/suicide_act(mob/user)
@@ -50,8 +50,8 @@
 	throw_speed = 3
 	throw_range = 10
 
-/obj/item/weapon/reagent_containers/spray/pestspray/New()
-	..()
+/obj/item/weapon/reagent_containers/spray/pestspray/Initialize()
+	. = ..()
 	reagents.add_reagent("pestkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/pestspray/suicide_act(mob/user)
@@ -135,8 +135,8 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/Initialize()
+	. = ..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -147,8 +147,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez/Initialize()
+	. = ..()
 	reagents.add_reagent("eznutriment", 50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z
@@ -157,8 +157,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
 
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z/Initialize()
+	. = ..()
 	reagents.add_reagent("left4zednutriment", 50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
@@ -167,8 +167,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh/Initialize()
+	. = ..()
 	reagents.add_reagent("robustharvestnutriment", 50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty
@@ -191,8 +191,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-/obj/item/weapon/reagent_containers/glass/bottle/killer/weedkiller/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/killer/weedkiller/Initialize()
+	. = ..()
 	reagents.add_reagent("weedkiller", 50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller
@@ -201,6 +201,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle20"
 
-/obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller/Initialize()
+	. = ..()
 	reagents.add_reagent("pestkiller", 50)

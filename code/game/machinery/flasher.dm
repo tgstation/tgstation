@@ -9,21 +9,20 @@
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
-	var/strength = 5 //How weakened targets are when flashed.
+	var/strength = 100 //How knocked down targets are when flashed.
 	var/base_state = "mflash"
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 100
-	anchored = 1
+	anchored = TRUE
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-p"
-	strength = 4
-	anchored = 0
+	strength = 80
+	anchored = FALSE
 	base_state = "pflash"
-	density = 1
+	density = TRUE
 
 /obj/machinery/flasher/New(loc, ndir = 0, built = 0)
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
@@ -119,7 +118,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
-			L.Weaken(strength)
+			L.Knockdown(strength)
 
 	return 1
 
@@ -149,10 +148,14 @@
 			var/obj/item/wallframe/flasher/F = new(get_turf(src))
 			transfer_fingerprints_to(F)
 			F.id = id
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
+
+/obj/machinery/flasher/portable/Initialize()
+	. = ..()
+	proximity_monitor = new(src, 0)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
 	if (last_flash && world.time < last_flash + 150)
@@ -170,26 +173,18 @@
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
-			anchored = 1
+			anchored = TRUE
 			power_change()
-			add_to_proximity_list(src, range)
+			proximity_monitor.SetRange(range)
 		else
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
-			anchored = 0
+			anchored = FALSE
 			power_change()
-			remove_from_proximity_list(src, range)
+			proximity_monitor.SetRange(0)
 
 	else
 		return ..()
-
-/obj/machinery/flasher/portable/Destroy()
-	remove_from_proximity_list(src, range)
-	return ..()
-
-/obj/machinery/flasher/portable/Moved(oldloc)
-	remove_from_proximity_list(oldloc, range)
-	return ..()
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"

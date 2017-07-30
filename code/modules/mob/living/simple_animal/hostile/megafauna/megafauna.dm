@@ -8,7 +8,7 @@
 	maxHealth = 1000
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
-	environment_smash = 3
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -34,15 +34,21 @@
 	/obj/structure/barricade,
 	/obj/machinery/field,
 	/obj/machinery/power/emitter)
+	var/list/crusher_loot
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
+	var/recovery_time = 0
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
+
+/mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
+	. = ..()
+	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
@@ -52,11 +58,18 @@
 	if(health > 0)
 		return
 	else
+		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+		if(C && crusher_loot)
+			if(C.total_damage >= maxHealth * 0.60) //if you do at least 60% of its health with the crusher, you'll get the item
+				spawn_crusher_loot()
 		if(!admin_spawned)
-			feedback_set_details("megafauna_kills","[initial(name)]")
+			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
+	loot = crusher_loot
 
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
@@ -71,6 +84,8 @@
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	if(recovery_time >= world.time)
+		return
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
@@ -79,14 +94,6 @@
 				OpenFire()
 		else
 			devour(L)
-
-/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
-	var/turf/oldloc = loc
-	. = ..()
-	if(!.)
-		return
-	var/turf/newloc = loc
-	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
@@ -109,7 +116,8 @@
 		if(3)
 			adjustBruteLoss(50)
 
-
+/mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
+	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
@@ -118,7 +126,7 @@
 	if(admin_spawned)
 		return FALSE
 
-	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 		for(var/mob/living/L in view(7,src))
 			if(L.stat)
 				continue
@@ -135,11 +143,11 @@
 
 	if(!player || !medal)
 		return
-	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 		spawn()
-			var/result = world.SetMedal(medal, player, GLOB.medal_hub, GLOB.medal_pass)
+			var/result = world.SetMedal(medal, player, global.medal_hub, global.medal_pass)
 			if(isnull(result))
-				GLOB.medals_enabled = FALSE
+				global.medals_enabled = FALSE
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
 			else if (result)
@@ -150,7 +158,7 @@
 
 	if(!score || !player)
 		return
-	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 		spawn()
 			var/list/oldscore = GetScore(score,player,1)
 
@@ -164,10 +172,10 @@
 
 			var/newscoreparam = list2params(oldscore)
 
-			var/result = world.SetScores(player.ckey, newscoreparam, GLOB.medal_hub, GLOB.medal_pass)
+			var/result = world.SetScores(player.ckey, newscoreparam, global.medal_hub, global.medal_pass)
 
 			if(isnull(result))
-				GLOB.medals_enabled = FALSE
+				global.medals_enabled = FALSE
 				log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
 
@@ -176,11 +184,11 @@
 
 	if(!score || !player)
 		return
-	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 
-		var/scoreget = world.GetScores(player.ckey, score, GLOB.medal_hub, GLOB.medal_pass)
+		var/scoreget = world.GetScores(player.ckey, score, global.medal_hub, global.medal_pass)
 		if(isnull(scoreget))
-			GLOB.medals_enabled = FALSE
+			global.medals_enabled = FALSE
 			log_game("SCORE ERROR: Could not contact hub to get score. Score:[score] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get score: [score] for [player.ckey]!")
 			return
@@ -197,12 +205,12 @@
 
 	if(!player || !medal)
 		return
-	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 
-		var/result = world.GetMedal(medal, player, GLOB.medal_hub, GLOB.medal_pass)
+		var/result = world.GetMedal(medal, player, global.medal_hub, global.medal_pass)
 
 		if(isnull(result))
-			GLOB.medals_enabled = FALSE
+			global.medals_enabled = FALSE
 			log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
 		else if (result)
@@ -212,12 +220,12 @@
 
 	if(!player || !medal)
 		return
-	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 
-		var/result = world.ClearMedal(medal, player, GLOB.medal_hub, GLOB.medal_pass)
+		var/result = world.ClearMedal(medal, player, global.medal_hub, global.medal_pass)
 
 		if(isnull(result))
-			GLOB.medals_enabled = FALSE
+			global.medals_enabled = FALSE
 			log_game("MEDAL ERROR: Could not contact hub to clear medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to clear [medal] medal for [player.ckey]!")
 		else if (result)
@@ -227,6 +235,6 @@
 
 
 /proc/ClearScore(client/player)
-	world.SetScores(player.ckey, "", GLOB.medal_hub, GLOB.medal_pass)
+	world.SetScores(player.ckey, "", global.medal_hub, global.medal_pass)
 
 #undef MEDAL_PREFIX

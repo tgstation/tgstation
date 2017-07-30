@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Airlocks properly remove the shock overlay when a temporary shock runs out."

@@ -8,7 +8,7 @@
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
 	var/mob/attacher = null
-	var/valve_open = 0
+	var/valve_open = FALSE
 	var/toggle = 1
 	origin_tech = "materials=1;engineering=1"
 
@@ -79,7 +79,7 @@
 	if (src.loc == usr)
 		if(tank_one && href_list["tankone"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_one.loc = get_turf(src)
 			tank_one = null
 			update_icon()
@@ -87,7 +87,7 @@
 				w_class = WEIGHT_CLASS_NORMAL
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_two.loc = get_turf(src)
 			tank_two = null
 			update_icon()
@@ -156,7 +156,7 @@
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
 	if(!valve_open && tank_one && tank_two)
-		valve_open = 1
+		valve_open = TRUE
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
@@ -178,21 +178,21 @@
 
 		var/log_attacher = ""
 		if(attacher)
-			log_attacher = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)"
+			log_attacher = "[ADMIN_QUE(attacher)] [ADMIN_FLW(attacher)]"
 
 		var/mob/mob = get_mob_by_key(src.fingerprintslast)
 		var/last_touch_info = ""
 		if(mob)
-			last_touch_info = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>)"
+			last_touch_info = "[ADMIN_QUE(mob)] [ADMIN_FLW(mob)]"
 
 		var/log_str3 = " Last touched by: [key_name_admin(mob)]"
 
-		var/bomb_message = "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
+		var/bomb_message = "[log_str1] [A.name][ADMIN_JMP(bombturf)] [log_str2][log_attacher] [log_str3][last_touch_info]"
 
 		GLOB.bombers += bomb_message
 
 		message_admins(bomb_message, 0, 1)
-		log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")
+		log_game("[log_str1] [A.name][COORD(bombturf)] [log_str2] [log_str3]")
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)
@@ -202,7 +202,7 @@
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
-		valve_open = 0
+		valve_open = FALSE
 		src.update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here

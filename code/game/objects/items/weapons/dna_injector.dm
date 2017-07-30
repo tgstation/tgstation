@@ -30,7 +30,7 @@
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()
 
-	if(M.has_dna() && !(M.disabilities & NOCLONE))
+	if(M.has_dna() && !(RADIMMUNE in M.dna.species.species_traits) && !(M.disabilities & NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
@@ -50,9 +50,8 @@
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 		log_attack(log_msg)
-	else
-		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
-		return
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -79,7 +78,9 @@
 
 	add_logs(user, target, "injected", src)
 
-	inject(target, user)	//Now we actually do the heavy lifting.
+	if(!inject(target, user))	//Now we actually do the heavy lifting.
+		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
+
 	used = 1
 	icon_state = "dnainjector0"
 	desc += " This one is used up."
@@ -307,11 +308,11 @@
 
 /obj/item/weapon/dnainjector/timed/inject(mob/living/carbon/M, mob/user)
 	prepare()
+	if(M.stat == DEAD)	//prevents dead people from having their DNA changed
+		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
+		return FALSE
 
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
-		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
-			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
@@ -352,9 +353,9 @@
 				M.updateappearance(mutations_overlay_update=1)
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
 		log_attack(log_msg)
+		return TRUE
 	else
-		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
-		return
+		return FALSE
 
 /obj/item/weapon/dnainjector/timed/hulk
 	name = "\improper DNA injector (Hulk)"

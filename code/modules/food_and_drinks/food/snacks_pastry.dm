@@ -13,8 +13,8 @@
 	filling_color = "#D2691E"
 	tastes = list("donut" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/New()
-	..()
+/obj/item/weapon/reagent_containers/food/snacks/donut/Initialize()
+	. = ..()
 	if(prob(30))
 		icon_state = "donut2"
 		name = "frosted donut"
@@ -28,8 +28,8 @@
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/chaos/New()
-	..()
+/obj/item/weapon/reagent_containers/food/snacks/donut/chaos/Initialize()
+	. = ..()
 	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
 	bonus_reagents = list("[extra_reagent]" = 3, "sugar" = 1)
@@ -48,8 +48,8 @@
 	extra_reagent = "berryjuice"
 	tastes = list("jelly" = 1, "donut" = 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/New()
-	..()
+/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/Initialize()
+	. = ..()
 	if(extra_reagent)
 		reagents.add_reagent("[extra_reagent]", 3)
 	if(prob(30))
@@ -210,13 +210,13 @@
 	filling_color = "#F0E68C"
 	tastes = list("mushroom" = 1, "biscuit" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/New()
+/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize()
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 		bonus_reagents = list("omnizine" = 5, "nutriment" = 1, "vitamin" = 1)
-	..()
+	. = ..()
 	if(fey)
 		reagents.add_reagent("omnizine", 5)
 
