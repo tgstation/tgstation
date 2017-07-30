@@ -1261,7 +1261,7 @@
 				if(src in SSticker.mode.shadows)
 					SSticker.mode.shadows -= src
 					special_role = null
-					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
+					to_chat(current, "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>")
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
@@ -1274,18 +1274,18 @@
 					log_admin("[key_name(usr)] has de-thrall'ed [current].")
 			if("shadowling")
 				if(!ishuman(current))
-					usr << "<span class='warning'>This only works on humans!</span>"
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
 				SSticker.mode.shadows += src
 				special_role = "shadowling"
-				current << "<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
+				to_chat(current, "<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
 				time is nigh to cast it off and enter your true form. You have disguised yourself amongst the humans, but you are not one of them. You are a shadowling, and you are to ascend at all costs.\
-				</b></span>"
+				</b></span>")
 				SSticker.mode.finalize_shadowling(src)
 				SSticker.mode.update_shadow_icons_added(src)
 			if("thrall")
 				if(!ishuman(current))
-					usr << "<span class='warning'>This only works on humans!</span>"
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
 				SSticker.mode.add_thrall(src)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")

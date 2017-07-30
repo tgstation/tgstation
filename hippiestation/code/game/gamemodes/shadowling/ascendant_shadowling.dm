@@ -43,7 +43,7 @@
 /mob/living/simple_animal/ascendant_shadowling/singularity_act(args)
 	. = ..(args)
 	to_chat(src, "<span class='shadowling>NO NO NO AAAAAAAAAAAAAAAAAAA-</span>")
-	to_chat(world, "<span class='shadowling'><b>\"<font size=6>NO!</font> <font size=5>I will</font> <font size=4>not be... destroyed</font> <font size=3>by a...</font> <font size=2>AAAAAAA-</font>\"</span>")
+	to_chat(world, "<span class='shadowling'><b>\"<font size=6>NO!</font> <font size=5>I will</font> <font size=4>not be.... destroyed</font> <font size=3>by a....</font> <font size=2>AAAAAAA-</font>\"</span>")
 	for(var/mob/M in GLOB.mob_list)
 		to_chat(M, "<span class='notice'><i><b>You feel a woosh as newly released energy temporarily distorts space itself...</b></i></span>")
 		M << 'sound/hallucinations/wail.ogg'
