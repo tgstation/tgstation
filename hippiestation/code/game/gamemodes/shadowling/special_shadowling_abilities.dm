@@ -5,6 +5,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	desc = "Casts off your disguise."
 	panel = "Shadowling Evolution"
 	charge_max = 3000
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "hatch"
@@ -109,6 +110,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	panel = "Shadowling Evolution"
 	charge_max = 3000
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "ascend"
 
 /obj/effect/proc_holder/spell/self/shadowling_ascend/cast(list/targets,mob/user = usr)

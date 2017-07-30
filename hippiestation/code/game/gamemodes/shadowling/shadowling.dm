@@ -272,6 +272,15 @@ Made by Xhuis
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 
+
+/datum/species/shadow/ling/on_species_gain(mob/living/carbon/human/C)
+	C.draw_hippie_parts()
+	. = ..()
+
+/datum/species/shadow/ling/on_species_loss(mob/living/carbon/human/C)
+	C.draw_hippie_parts(TRUE)
+	. = ..()
+
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
 	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry

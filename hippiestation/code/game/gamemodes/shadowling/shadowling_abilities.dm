@@ -16,6 +16,7 @@
 	panel = "Shadowling Abilities"
 	charge_max = 300
 	human_req = 1
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	clothes_req = 0
 	action_icon_state = "glare"
 
@@ -49,6 +50,7 @@
 		else //Only alludes to the shadowling if the target is close by
 			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>")
 		target.Stun(10)
+		target.Weaken(10)
 		M.silent += 10
 
 
@@ -59,6 +61,7 @@
 	charge_max = 150 //Short cooldown because people can just turn the lights back on
 	human_req = 1
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	range = 5
 	action_icon_state = "veil"
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
@@ -114,6 +117,7 @@
 	panel = "Shadowling Abilities"
 	range = 3
 	charge_max = 250
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "icy_veins"
@@ -146,6 +150,7 @@
 	desc = "Allows you to enslave a conscious, non-braindead, non-catatonic human to your will. This takes some time to cast."
 	panel = "Shadowling Abilities"
 	charge_max = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	human_req = 1
 	clothes_req = 0
 	range = 1 //Adjacent to user
@@ -239,6 +244,7 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "commune"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind/cast(mob/living/user,mob/user = usr)
 	if(!is_shadow(user))
@@ -260,6 +266,7 @@
 	name = "Rapid Re-Hatch"
 	desc = "Re-forms protective chitin that may be lost during cloning or similar processes."
 	panel = "Shadowling Abilities"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	charge_max = 600
 	human_req = 1
 	clothes_req = 0
@@ -290,6 +297,7 @@
 	charge_max = 300 //30 second cooldown to prevent spam
 	human_req = 1
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "collective_mind"
 	var/blind_smoke_acquired
 	var/screech_acquired
@@ -357,6 +365,7 @@
 	panel = "Shadowling Abilities"
 	charge_max = 600
 	human_req = 1
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	clothes_req = 0
 	action_icon_state = "black_smoke"
 	sound = 'sound/effects/bamf.ogg'
@@ -387,6 +396,7 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "screech"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/effects/screech.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets,mob/user = usr)
@@ -426,6 +436,7 @@
 	human_req = 1
 	clothes_req = 0
 	include_user = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "revive_thrall"
 
 /obj/effect/proc_holder/spell/targeted/revive_thrall/cast(list/targets,mob/user = usr)
@@ -523,6 +534,7 @@
 	human_req = 1
 	clothes_req = 0
 	charge_max = 600
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "extend_shuttle"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle/cast(list/targets, mob/living/carbon/human/user = usr)
@@ -574,6 +586,7 @@
 	charge_max = 450
 	human_req = 1
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "glare"
 
 /obj/effect/proc_holder/spell/targeted/lesser_glare/cast(list/targets,mob/user = usr)
@@ -608,6 +621,7 @@
 	charge_max = 1200
 	human_req = 1
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "shadow_walk"
 
 /obj/effect/proc_holder/spell/self/lesser_shadow_walk/cast(mob/living/carbon/human/user)
@@ -625,6 +639,7 @@
 	charge_max = 0
 	human_req = 1
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "darksight"
 	active = 0
 
@@ -647,6 +662,7 @@
 	charge_max = 50
 	human_req = 1
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/cast(mob/living/carbon/human/user)
@@ -678,6 +694,7 @@
 	charge_max = 0
 	clothes_req = 0
 	action_icon_state = "annihilate"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/Staff_Chaos.ogg'
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
@@ -710,6 +727,7 @@
 	panel = "Ascendant"
 	range = 7
 	charge_max = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	clothes_req = 0
 	action_icon_state = "enthrall"
 
@@ -749,6 +767,7 @@
 	panel = "Ascendant"
 	charge_max = 15
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "shadow_walk"
 
 /obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(mob/living/simple_animal/ascendant_shadowling/user)
@@ -773,6 +792,7 @@
 	charge_max = 100
 	clothes_req = 0
 	action_icon_state = "lightning_storm"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/lightningbolt.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
@@ -799,6 +819,7 @@
 	panel = "Ascendant"
 	charge_max = 0
 	clothes_req = 0
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind_ascendant/cast(mob/living/carbon/human/user)
