@@ -456,10 +456,12 @@
 	if(charge<35)
 		charge += 1
 	if(world.time < stop && active)
+		var/sound/song_played = sound(selection.song_path)
+
 		for(var/mob/M in range(10,src))
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
+				M.playsound_local(get_turf(M), null, 100, channel = CHANNEL_JUKEBOX, S = song_played)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
 		for(var/mob/L in rangers)

@@ -71,9 +71,11 @@
 				continue
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
+
+	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(source, soundfile, 100, falloff = 5)
+		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
