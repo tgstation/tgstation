@@ -680,7 +680,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Data HUDs enabled.</span>")
 		data_huds_on = 1
 
-/mob/dead/observer/verb/restore_ghost_apperance()
+/mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"
 	set desc = "Sets your deadchat name and ghost appearance to your \
 		roundstart character."
