@@ -274,6 +274,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(slab_overlay)
 		slab.add_overlay(slab_overlay)
 		slab.item_state = "clockwork_slab"
+		slab.lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+		slab.righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 		slab.inhand_overlay = slab_overlay
 	slab.slab_ability = new ranged_type(slab)
 	slab.slab_ability.slab = slab
@@ -299,6 +301,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 				slab.slab_ability.remove_ranged_ability()
 		slab.cut_overlays()
 		slab.item_state = initial(slab.item_state)
+		slab.item_state = initial(slab.lefthand_file)
+		slab.item_state = initial(slab.righthand_file)
 		slab.inhand_overlay = null
 		if(invoker)
 			invoker.update_inv_hands()

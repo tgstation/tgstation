@@ -8,6 +8,8 @@
 	force = 15
 	throwforce = 10
 	item_state = "pickaxe"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
@@ -89,6 +91,8 @@
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 8
@@ -106,6 +110,8 @@
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	item_state = "spade"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL

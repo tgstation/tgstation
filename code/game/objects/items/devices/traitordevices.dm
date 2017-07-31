@@ -25,6 +25,8 @@ effective or pretty fucking useless.
 	throw_range = 7
 	flags = CONDUCT
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "magnets=3;combat=3;syndicate=3"
 
 	var/times_used = 0 //Number of times it's been used.

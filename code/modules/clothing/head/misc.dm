@@ -282,3 +282,19 @@
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the land."
 	icon_state = "fancycrown"
+
+/obj/item/clothing/head/scarecrow_hat
+	name = "scarecrow hat"
+	desc = "A simple straw hat."
+	icon_state = "scarecrow_hat"
+
+/obj/item/clothing/head/pharoah
+	name = "pharoah hat"
+	desc = "Walk like an Egyptian."
+	icon_state = "pharoah_hat"
+	icon_state = "pharoah_hat"
+
+/obj/item/clothing/head/jester/alt
+	name = "jester hat"
+	desc = "A hat with bells, to add some merryness to the suit."
+	icon_state = "jester_hat2"

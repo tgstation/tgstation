@@ -14,6 +14,8 @@
 	name = "holographic energy sword"
 	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 3.0
 	throw_speed = 2
 	throw_range = 5

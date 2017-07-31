@@ -3,9 +3,9 @@
 // eye damage, eye_blind, eye_blurry, druggy, BLIND disability, NEARSIGHT disability, and HUSK disability.
 
 /mob/living/carbon/damage_eyes(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
 	if (!eyes)
-		return 
+		return
 	if(amount>0)
 		eyes.eye_damage = amount
 		if(eyes.eye_damage > 20)
@@ -15,9 +15,9 @@
 				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 
 /mob/living/carbon/set_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
 	if (!eyes)
-		return 
+		return
 	eyes.eye_damage = max(amount,0)
 	if(eyes.eye_damage > 20)
 		if(eyes.eye_damage > 30)
@@ -28,7 +28,7 @@
 		clear_fullscreen("eye_damage")
 
 /mob/living/carbon/adjust_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
 	if (!eyes)
 		return
 	eyes.eye_damage = max(eyes.eye_damage+amount, 0)

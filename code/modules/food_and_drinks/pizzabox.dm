@@ -4,6 +4,8 @@
 	desc = "Special delivery!"
 	icon_state = "pizzabomb_inactive"
 	item_state = "eshield0"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	origin_tech = "syndicate=3;engineering=3"
 
 /obj/item/pizzabox
@@ -12,6 +14,8 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox"
 	item_state = "pizzabox"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
 	var/open = FALSE
 	var/boxtag = ""

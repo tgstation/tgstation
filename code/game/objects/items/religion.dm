@@ -3,6 +3,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banner"
 	item_state = "banner"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A banner with Nanotrasen's logo on it."
 	var/moralecooldown = 0
 	var/moralewait = 600
@@ -100,6 +102,8 @@
 	name = "godstaff"
 	desc = "It's a stick..?"
 	icon_state = "godstaff-red"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	var/conversion_color = "#ffffff"
 	var/staffcooldown = 0
 	var/staffwait = 30

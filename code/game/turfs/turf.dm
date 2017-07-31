@@ -129,7 +129,7 @@
 				return FALSE
 
 	var/list/large_dense = list()
-	
+
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
@@ -209,14 +209,14 @@
 		qdel(L)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
-	return ChangeTurf(path, new_baseturf, defer_change, ignore_air)
+/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
+	return ChangeTurf(path, new_baseturf, defer_change, ignore_air, forceop)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
+/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(!path)
 		return
-	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
+	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
 	var/old_baseturf = baseturf
@@ -419,24 +419,23 @@
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type)
+/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, delmobs = TRUE, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(),ignored_atoms)
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(),delmobs? ignored_atoms : ignored_atoms + typecacheof(list(/mob)))
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
-	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE)
-
+	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop = forceop)
+    
 	SSair.remove_from_active(newT)
 	newT.CalculateAdjacentTurfs()
 	SSair.add_to_active(newT,1)
 
 /turf/proc/is_transition_turf()
 	return
-
 
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1

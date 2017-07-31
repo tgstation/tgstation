@@ -3,6 +3,8 @@
 	desc = "Yummy."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	unique_rename = 1
 	var/bitesize = 2
 	var/bitecount = 0

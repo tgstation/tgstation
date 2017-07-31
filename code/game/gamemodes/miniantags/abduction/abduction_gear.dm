@@ -153,6 +153,8 @@
 	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
+	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	origin_tech = "engineering=7;magnets=4;bluespace=4;abductor=3"
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
@@ -240,6 +242,8 @@
 	desc = "A compact device used to shut down communications equipment."
 	icon_state = "silencer"
 	item_state = "gizmo"
+	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	origin_tech = "materials=4;programming=7;abductor=3"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
@@ -339,6 +343,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
+	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=4;combat=4;biotech=7;abductor=4"
 	force = 7
@@ -485,6 +491,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "cuff_white" // Needs sprite
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 450
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
 	origin_tech = "materials=4;magnets=5;abductor=2"

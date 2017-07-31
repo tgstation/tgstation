@@ -1,3 +1,4 @@
+
 // Modules
 
 /turf/open/floor/plasteel/shuttle/red/syndicate
@@ -14,8 +15,8 @@
 /datum/mapGeneratorModule/syndieFurniture
 	clusterCheckFlags = CLUSTER_CHECK_ALL
 	spawnableTurfs = list()
-	spawnableAtoms = list(/obj/structure/table = 20, /obj/structure/chair = 15, /obj/structure/chair/stool = 10,
-		/obj/structure/frame/computer = 15, /obj/item/weapon/storage/toolbox/syndicate = 15,
+	spawnableAtoms = list(/obj/structure/table = 20,/obj/structure/chair = 15,/obj/structure/chair/stool = 10, \
+		/obj/structure/frame/computer = 15, /obj/item/weapon/storage/toolbox/syndicate = 15 ,\
 		/obj/structure/closet/syndicate = 25, /obj/machinery/suit_storage_unit/syndicate = 15)
 
 /datum/mapGeneratorModule/splatterLayer/syndieMobs
@@ -28,21 +29,24 @@
 // Generators
 
 /datum/mapGenerator/syndicate/empty //walls and floor only
-		modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
+	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
 		/datum/mapGeneratorModule/border/syndieWalls,\
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate"
 
 /datum/mapGenerator/syndicate/mobsonly
 	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
 		/datum/mapGeneratorModule/border/syndieWalls,\
 		/datum/mapGeneratorModule/splatterLayer/syndieMobs, \
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate: Mobs"
 
 /datum/mapGenerator/syndicate/furniture
 	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
 		/datum/mapGeneratorModule/border/syndieWalls,\
 		/datum/mapGeneratorModule/syndieFurniture, \
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate: Furniture"
 
 /datum/mapGenerator/syndicate/full
 	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
@@ -50,3 +54,4 @@
 		/datum/mapGeneratorModule/syndieFurniture, \
 		/datum/mapGeneratorModule/splatterLayer/syndieMobs, \
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate: All"

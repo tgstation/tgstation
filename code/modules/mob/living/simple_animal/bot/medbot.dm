@@ -461,6 +461,8 @@
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
+		if(C.maxHealth - C.health < heal_threshold)
+			to_chat(src, "<span class='notice'>[C] is healthy! Your programming prevents you from injecting anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 15] for oxygen damage.)</span>")
 		var/list/messagevoice = list("All patched up!" = 'sound/voice/mpatchedup.ogg',"An apple a day keeps me away." = 'sound/voice/mapple.ogg',"Feel better soon!" = 'sound/voice/mfeelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
