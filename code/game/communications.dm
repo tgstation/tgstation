@@ -306,4 +306,4 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 	for(var/d in data)
 		var/val = data[d]
 		if(istext(val))
-			data[d] = html_encode(val)
+			data[d] = rhtml_encode(val)

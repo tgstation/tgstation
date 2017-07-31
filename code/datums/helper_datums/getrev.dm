@@ -73,12 +73,12 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/details 
+		var/details
 		if(world.RunningService())
 			var/cm = testmerge[line]["commit"]
-			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
+			details = ": '" + rhtml_encode(testmerge[line]["title"]) + "' by " + rhtml_encode(testmerge[line]["author"]) + " at commit " + rhtml_encode(copytext(cm, 1, min(length(cm), 7)))
 		else if(has_pr_details)	//tgs2 support
-			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
+			details = ": '" + rhtml_encode(testmerge[line]["title"]) + "' by " + rhtml_encode(testmerge[line]["user"]["login"])
 		. += "<a href=\"[config.githuburl]/pull/[line]\">#[line][details]</a><br>"
 
 /client/verb/showrevinfo()

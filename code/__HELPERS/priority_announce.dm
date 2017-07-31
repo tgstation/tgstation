@@ -7,7 +7,7 @@
 	if(type == "Priority")
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
 		if (title && length(title) > 0)
-			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
+			announcement += "<br><h2 class='alert'>[rhtml_encode(title)]</h2>"
 	else if(type == "Captain")
 		announcement += "<h1 class='alert'>Captain Announces</h1>"
 		GLOB.news_network.SubmitArticle(text, "Captain's Announcement", "Station Announcements", null)
@@ -15,13 +15,13 @@
 	else
 		announcement += "<h1 class='alert'>[command_name()] Update</h1>"
 		if (title && length(title) > 0)
-			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
+			announcement += "<br><h2 class='alert'>[rhtml_encode(title)]</h2>"
 		if(title == "")
 			GLOB.news_network.SubmitArticle(text, "Central Command Update", "Station Announcements", null)
 		else
 			GLOB.news_network.SubmitArticle(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
 
-	announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
+	announcement += "<br><span class='alert'>[rhtml_encode(text)]</span><br>"
 	announcement += "<br>"
 
 	for(var/mob/M in GLOB.player_list)

@@ -62,7 +62,7 @@
 		return 0
 
 /proc/stars(n, pr)
-	n = html_encode(n)
+	n = rhtml_encode(n)
 	if (pr == null)
 		pr = 25
 	if (pr <= 0)

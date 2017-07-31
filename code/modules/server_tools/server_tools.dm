@@ -37,7 +37,7 @@ GLOBAL_PROTECT(reboot_mode)
 	var/command = params[SERVICE_CMD_PARAM_COMMAND]
 	if(!command)
 		return "No command!"
-	
+
 	var/static/last_irc_status = 0
 	switch(command)
 		if(SERVICE_CMD_HARD_REBOOT)
@@ -56,7 +56,7 @@ GLOBAL_PROTECT(reboot_mode)
 			var/msg = params["message"]
 			if(!istext(msg) || !msg)
 				return "No message set!"
-			to_chat(src, "<span class='boldannounce'>[html_encode(msg)]</span>")
+			to_chat(src, "<span class='boldannounce'>[rhtml_encode(msg)]</span>")
 			return "SUCCESS"
 		if(SERVICE_CMD_IRC_STATUS)
 			var/rtod = REALTIMEOFDAY
@@ -73,7 +73,7 @@ GLOBAL_PROTECT(reboot_mode)
 			if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
 				return
 			last_irc_status = rtod
-			return "[GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config.server ? config.server : "[world.internet_address]:[world.port]"]" 
+			return "[GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config.server ? config.server : "[world.internet_address]:[world.port]"]"
 		if(SERVICE_CMD_ADMIN_MSG)
 			return IrcPm(params[SERVICE_CMD_PARAM_TARGET], params[SERVICE_CMD_PARAM_MESSAGE], params[SERVICE_CMD_PARAM_SENDER])
 

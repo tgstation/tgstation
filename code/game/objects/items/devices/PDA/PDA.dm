@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
-			hrefstart = "<a href='?src=\ref[L];track=[html_encode(source.owner)]'>"
+			hrefstart = "<a href='?src=\ref[L];track=[rhtml_encode(source.owner)]'>"
 			hrefend = "</a>"
 
 		to_chat(L, "[\bicon(src)] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
@@ -814,7 +814,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")
 		note = replacetext(note, "</ul>", "\[/list\]")
-		note = html_encode(note)
+		note = rhtml_encode(note)
 		notescanned = 1
 		to_chat(user, "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" )
 
