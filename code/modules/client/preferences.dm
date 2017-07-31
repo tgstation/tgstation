@@ -106,6 +106,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/uplink_spawn_loc = UPLINK_PDA
 
 	var/list/menuoptions
+	var/is_updating = FALSE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -768,6 +769,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
 			to_chat(user, text)
+		return
+
+	//Anything that updates the preference icon lives below this line
+	if(is_updating)
+		to_chat(user, "<span class='redtext'>Your preference icon is still updating, please wait.</span>")
 		return
 
 	if(href_list["preference"] == "job")
