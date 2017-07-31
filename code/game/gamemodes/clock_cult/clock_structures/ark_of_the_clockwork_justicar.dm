@@ -8,9 +8,8 @@
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
-	density = FALSE
-	invisibility = INVISIBILITY_MAXIMUM
-	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE | FREEZE_PROOF
+	density = TRUE
+	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
 	var/active = FALSE
@@ -36,7 +35,6 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
 	hierophant_message("<span class='nezbere_large'>\"You have one minute until the Ark activates.\"</span>")
-	glow.icon_state = "clockwork_gateway_activating"
 	addtimer(CALLBACK(src, .proc/let_slip_the_dogs), 600)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/let_slip_the_dogs()
@@ -102,6 +100,15 @@
 	if(countdown)
 		qdel(countdown)
 		countdown = null
+	for(var/mob/living/L in GLOB.player_list)
+		if(L.z == z)
+			L.visible_message("<span class='warning'>[L] vanishes in a flash of yellow light!</span>", ignore_mob = L)
+			L.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
+			L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+		L.clear_fullscreen("flash", 30)
+		L.Stun(50)
+	for(var/obj/effect/clockwork/city_of_cogs_rift/R in GLOB.all_clockwork_objects)
+		qdel(R)
 	. = ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
@@ -226,24 +233,13 @@
 				QDEL_IN(src, 3)
 				sleep(3)
 				GLOB.clockwork_gateway_activated = TRUE
-				new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
+				var/obj/structure/destructible/clockwork/massive/ratvar/R = new(startpoint)
+				var/turf/T =  locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), ZLEVEL_STATION) //approximate center of the station
+				R.forceMove(T)
 				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")].\"</span>")
 				send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
-				var/x0 = startpoint.x
-				var/y0 = startpoint.y
-				for(var/I in spiral_range_turfs(255, startpoint))
-					var/turf/T = I
-					if(!T)
-						continue
-					var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-					if(dist < 100)
-						dist = TRUE
-					else
-						dist = FALSE
-					T.ratvar_act(dist, TRUE)
-					CHECK_TICK
 
 
 

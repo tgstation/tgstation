@@ -185,38 +185,27 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
-		SSticker.news_report = CLOCK_PROSELYTIZATION //failure, technically, but we have the station
-		if(GLOB.ratvar_awakens)
-			SSticker.news_report = CLOCK_SUMMON
-			return TRUE
+		SSticker.news_report = CLOCK_SUMMON
+		return TRUE
 	else
 		SSticker.news_report = CULT_FAILURE
 	return FALSE
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
-	return 0 //Doesn't end until the round does
+	return //Doesn't end until the round does
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""
 	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
-			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			text += "<span class='large_brass'><b>Ratvar's servants defended the Ark until its activation!</b></span>"
 			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		else
-			var/half_victory = FALSE
-			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
-			if(G)
-				half_victory = TRUE
-			if(half_victory)
-				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway \
-				was successfully constructed!</b></span>"
-				SSticker.mode_result = "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)"
-			else
-				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
-		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
+			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
+			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
+		text += "<br><b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
 		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
 		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
 		for(var/i in SSticker.scripture_states)
@@ -244,6 +233,7 @@ Credit where due:
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
 
+	head = /obj/item/clothing/head/hardhat/white
 	uniform = /obj/item/clothing/under/color/yellow
 	shoes = /obj/item/clothing/shoes/sneakers/green
 	back = /obj/item/weapon/storage/backpack

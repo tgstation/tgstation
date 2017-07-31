@@ -20,6 +20,7 @@
 	name = "ratvarian camera observer"
 	desc = "A console used to snoop on the station's goings-on. A jet of steam occasionally whooshes out from slats on its sides."
 	use_power = FALSE
+	networks = list("SS13", "MiniSat") //:eye:
 
 /obj/machinery/computer/camera_advanced/ratvar/Initialize()
 	. = ..()
@@ -33,7 +34,7 @@
 
 /obj/machinery/computer/camera_advanced/ratvar/process()
 	. = ..()
-	if(!stat && prob(1))
+	if(!stat && prob(0.5))
 		playsound(src, 'sound/effects/servostep.ogg', 50, TRUE)
 		sleep(5)
 		visible_message("<span class='notice'>Air whooshes as steam vents out of [src].</span>",,"<span class='italics'>You hear whooshing.</span>")
