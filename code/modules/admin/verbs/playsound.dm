@@ -29,7 +29,7 @@
 	message_admins("[key_name_admin(src)] played sound [S]")
 
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs.toggles & SOUND_MIDI)
+		if(M.client && M.client.prefs.toggles & SOUND_MIDI)
 			M << admin_sound
 
 	SSblackbox.add_details("admin_verb","Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
