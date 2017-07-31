@@ -42,7 +42,6 @@
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
-	var/obj/machinery/camera/camera = null
 
 	var/opened = 0
 	var/emagged = FALSE
@@ -76,7 +75,6 @@
 	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/sight_mode = 0
-	var/updating = 0 //portable camera camerachunk update
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	var/list/upgrades = list()
@@ -125,16 +123,16 @@
 			lawupdate = FALSE
 
 	radio = new /obj/item/device/radio/borg(src)
-	if(!scrambledcodes && !camera)
-		camera = new /obj/machinery/camera(src)
-		camera.c_tag = real_name
-		camera.network = list("SS13")
+	if(!scrambledcodes && !builtInCamera)
+		builtInCamera = new (src)
+		builtInCamera.c_tag = real_name
+		builtInCamera.network = list("SS13")
 		if(wires.is_cut(WIRE_CAMERA))
-			camera.status = 0
+			builtInCamera.status = 0
 	module = new /obj/item/weapon/robot_module(src)
 	module.rebuild_modules()
 	update_icons()
-	..()
+	. = ..()
 
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
@@ -189,7 +187,6 @@
 	wires = null
 	module = null
 	eye_lights = null
-	camera = null
 	cell = null
 	return ..()
 
@@ -233,8 +230,8 @@
 
 	real_name = changed_name
 	name = real_name
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 
 /mob/living/silicon/robot/proc/get_standard_name()
 	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
@@ -615,29 +612,6 @@
 		add_overlay(head_overlay)
 	update_fire()
 
-#define BORG_CAMERA_BUFFER 30
-
-/mob/living/silicon/robot/proc/do_camera_update(oldLoc)
-	if(oldLoc != src.loc)
-		GLOB.cameranet.updatePortableCamera(src.camera)
-	updating = 0
-
-/mob/living/silicon/robot/Move(a, b, flag)
-	var/oldLoc = src.loc
-	. = ..()
-	if(.)
-		if(src.camera)
-			if(!updating)
-				updating = 1
-				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
-	if(module)
-		if(istype(module, /obj/item/weapon/robot_module/miner))
-			if(istype(loc, /turf/open/floor/plating/asteroid))
-				for(var/obj/item/I in held_items)
-					if(istype(I, /obj/item/weapon/storage/bag/ore))
-						loc.attackby(I, src)
-#undef BORG_CAMERA_BUFFER
-
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		if(mmi)
@@ -656,9 +630,8 @@
 	canmove = 1
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
-	if(src.camera)
-		qdel(src.camera)
-		src.camera = null
+	if(!QDELETED(builtInCamera))
+		QDEL_NULL(builtInCamera)
 		// I'm trying to get the Cyborg to not be listed in the camera list
 		// Instead of being listed as "deactivated". The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
@@ -939,8 +912,8 @@
 
 /mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
 	if(..()) //successfully ressuscitated from death
-		if(camera && !wires.is_cut(WIRE_CAMERA))
-			camera.toggle_cam(src,0)
+		if(!QDELETED(builtInCamera) && !wires.is_cut(WIRE_CAMERA))
+			builtInCamera.toggle_cam(src,0)
 		update_headlamp()
 		if(admin_revive)
 			locked = TRUE
@@ -951,8 +924,8 @@
 	..()
 	if(oldname != real_name)
 		notify_ai(RENAME, oldname, newname)
-	if(camera)
-		camera.c_tag = real_name
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name
 	custom_name = newname
 
 
@@ -1016,8 +989,8 @@
 	name = "[designation] AI Shell [rand(100,999)]"
 	real_name = name
 	GLOB.available_ai_shells |= src
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
 	notify_ai(AI_SHELL)
 
@@ -1032,15 +1005,15 @@
 	GLOB.available_ai_shells -= src
 	name = "Unformatted Cyborg [rand(100,999)]"
 	real_name = name
-	if(camera)
-		camera.c_tag = real_name
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name
 	diag_hud_set_aishell()
 
 /mob/living/silicon/robot/proc/deploy_init(var/mob/living/silicon/ai/AI)
 	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up seperately in the shells list
 	name = real_name
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 	mainframe = AI
 	deployed = TRUE
 	connected_ai = mainframe
@@ -1084,8 +1057,8 @@
 	undeployment_action.Remove(src)
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
 	mainframe.diag_hud_set_deployed()
 	if(mainframe.laws)
