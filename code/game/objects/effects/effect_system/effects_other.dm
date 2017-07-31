@@ -145,42 +145,42 @@
 	currloc = null
 	return ..()
 
-/datum/effect_system/trail_follow/ion/space_trail/start()
-	if(!src.on)
-		src.on = 1
-		src.processing = 1
-	if(src.processing)
-		src.processing = 0
+/datum/effect_system/trail_follow/ion/space_trail/start() //fuck whoever put 20 src's in here making me remove them
+	if(!on)
+		on = 1
+		processing = 1
+	if(processing)
+		processing = 0
 		spawn(0)
 			var/turf/T = get_turf(src.holder)
 			if(currloc != T)
 				switch(holder.dir)
 					if(NORTH)
-						src.oldposition = T
-						src.oldposition = get_step(oldposition, SOUTH)
-						src.oldloc = get_step(oldposition,EAST)
+						oldposition = T
+						oldposition = get_step(oldposition, SOUTH)
+						oldloc = get_step(oldposition,EAST)
 						//src.oldloc = get_step(oldloc, SOUTH)
 					if(SOUTH) // More difficult, offset to the north!
-						src.oldposition = get_step(holder,NORTH)
-						src.oldposition = get_step(oldposition,NORTH)
-						src.oldloc = get_step(oldposition,EAST)
+						oldposition = get_step(holder,NORTH)
+						oldposition = get_step(oldposition,NORTH)
+						oldloc = get_step(oldposition,EAST)
 						//src.oldloc = get_step(oldloc,NORTH)
 					if(EAST) // Just one to the north should suffice
-						src.oldposition = T
-						src.oldposition = get_step(oldposition, WEST)
-						src.oldloc = get_step(oldposition,NORTH)
+						oldposition = T
+						oldposition = get_step(oldposition, WEST)
+						oldloc = get_step(oldposition,NORTH)
 						//src.oldloc = get_step(oldloc,WEST)
 					if(WEST) // One to the east and north from there
-						src.oldposition = get_step(holder,EAST)
-						src.oldposition = get_step(oldposition,EAST)
-						src.oldloc = get_step(oldposition,NORTH)
+						oldposition = get_step(holder,EAST)
+						oldposition = get_step(oldposition,EAST)
+						oldloc = get_step(oldposition,NORTH)
 						//src.oldloc = get_step(oldloc,EAST)
 				if(istype(T, /turf/open/space))
-					var/obj/effect/particle_effect/ion_trails/I = new /obj/effect/particle_effect/ion_trails(src.oldposition)
-					var/obj/effect/particle_effect/ion_trails/II = new /obj/effect/particle_effect/ion_trails(src.oldloc)
+					var/obj/effect/particle_effect/ion_trails/I = new /obj/effect/particle_effect/ion_trails(oldposition)
+					var/obj/effect/particle_effect/ion_trails/II = new /obj/effect/particle_effect/ion_trails(oldloc)
 					//src.oldposition = T
-					I.dir = src.holder.dir
-					II.dir = src.holder.dir
+					I.dir = holder.dir
+					II.dir = holder.dir
 					flick("ion_fade", I)
 					flick("ion_fade", II)
 					I.icon_state = ""
@@ -189,7 +189,7 @@
 						if(I) qdel(I)
 						if(II) qdel(I)
 			spawn(2)
-				if(src.on)
-					src.processing = 1
-					src.start()
+				if(on)
+					processing = 1
+					start()
 			currloc = T

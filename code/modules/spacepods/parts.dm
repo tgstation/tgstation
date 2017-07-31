@@ -62,8 +62,8 @@
 		if(!linkedparts)
 			to_chat(user, "<span class='rose'>You cannot assemble a pod frame because you do not have the necessary assembly.</span>")
 			return
-		var/obj/structure/spacepod_frame/pod = new /obj/structure/spacepod_frame(src.loc)
-		pod.dir = src.dir
+		var/obj/structure/spacepod_frame/pod = new /obj/structure/spacepod_frame(loc)
+		pod.dir = dir
 		to_chat(user, "<span class='notice'>You strut the pod frame together.</span>")
 		R.use(10)
 		for(var/obj/item/pod_parts/pod_frame/F in linkedparts)
@@ -85,11 +85,11 @@
 	if(anchored)
 		to_chat(usr, "\The [src] is securely bolted!")
 		return 0
-	src.dir = turn(src.dir, -90)
+	dir = turn(dir, -90)
 	return 1
 
 /obj/item/pod_parts/pod_frame/attack_hand()
-	src.rotate()
+	rotate()
 
 /obj/item/pod_parts/pod_frame/fore_port
 	name = "fore port pod frame"
