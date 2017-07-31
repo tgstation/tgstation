@@ -283,7 +283,7 @@ Difficulty: Very Hard
 	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
 
-	S["stored_items"]				<< stored_items
+	WRITE_FILE(S["stored_items"], stored_items)
 	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()

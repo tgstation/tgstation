@@ -129,7 +129,7 @@
 				family[C.type] += 1
 			else
 				family[C.type] = 1
-	S["family"]				<< family
+	WRITE_FILE(S["family"], family)
 	memory_saved = 1
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()

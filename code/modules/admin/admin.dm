@@ -595,7 +595,7 @@
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
 			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
-			world << 'sound/ai/attention.ogg'
+			SEND_SOUND(world, sound('sound/ai/attention.ogg'))
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
 		SSblackbox.add_details("admin_verb","Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

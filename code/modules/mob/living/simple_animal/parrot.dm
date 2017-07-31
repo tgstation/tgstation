@@ -935,10 +935,10 @@
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 	if(islist(speech_buffer))
-		S["phrases"] 			<< speech_buffer
-	S["roundssurvived"]		<< rounds_survived
-	S["longestsurvival"]	<< longest_survival
-	S["longestdeathstreak"] << longest_deathstreak
+		WRITE_FILE(S["phrases"], speech_buffer)
+	WRITE_FILE(S["roundssurvived"], rounds_survived)
+	WRITE_FILE(S["longestsurvival"], longest_survival)
+	WRITE_FILE(S["longestdeathstreak"], longest_deathstreak)
 	memory_saved = 1
 
 /mob/living/simple_animal/parrot/Poly/ghost
