@@ -380,8 +380,7 @@
 		adjust_drugginess(-1)
 
 	if(hallucination)
-		spawn handle_hallucinations()
-		hallucination = max(hallucination-2,0)
+		handle_hallucinations()
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

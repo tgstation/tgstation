@@ -85,7 +85,6 @@
 	holder.flags |= NODROP
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
-	holder.w_class = WEIGHT_CLASS_HUGE
 	holder.materials = null
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
@@ -234,5 +233,5 @@
 /obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
-	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)
+	contents = newlist(/obj/item/weapon/retractor/augment, /obj/item/weapon/hemostat/augment, /obj/item/weapon/cautery/augment, /obj/item/weapon/surgicaldrill/augment, /obj/item/weapon/scalpel/augment, /obj/item/weapon/circular_saw/augment, /obj/item/weapon/surgical_drapes)
 	origin_tech = "materials=3;engineering=3;biotech=3;programming=2;magnets=3"

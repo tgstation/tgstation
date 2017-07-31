@@ -271,7 +271,7 @@
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+		var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
 		if (!eyes)
 			return
 		if(visual)

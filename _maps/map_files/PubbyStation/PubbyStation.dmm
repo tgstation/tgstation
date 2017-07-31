@@ -9985,9 +9985,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+	dir = 10
 	},
 /area/bridge)
 "avS" = (
@@ -45442,8 +45440,7 @@
 	},
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/plasteel/darkyellow/side{
-	dir = 1;
-	initial_gas_mix = "n2=100;TEMP=80"
+	dir = 1
 	},
 /area/engine/engine_smes)
 "bUR" = (
@@ -45462,8 +45459,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	dir = 1;
-	initial_gas_mix = "n2=100;TEMP=80"
+	dir = 1
 	},
 /area/engine/engine_smes)
 "bUS" = (
@@ -45473,8 +45469,7 @@
 	},
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/plasteel/darkyellow/side{
-	dir = 1;
-	initial_gas_mix = "n2=100;TEMP=80"
+	dir = 1
 	},
 /area/engine/engine_smes)
 "bUT" = (
@@ -53381,10 +53376,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmE" = (
 /obj/structure/grille,
@@ -53413,17 +53405,11 @@
 /area/tcommsat/computer)
 "cmG" = (
 /obj/machinery/blackbox_recorder,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmH" = (
 /obj/machinery/message_server,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmI" = (
 /obj/machinery/power/apc{
@@ -53434,233 +53420,149 @@
 	pixel_y = 24
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cmJ" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cmK" = (
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cmL" = (
 /obj/machinery/telecomms/bus/preset_three,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmM" = (
 /obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmN" = (
 /obj/machinery/telecomms/processor/preset_three,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmO" = (
 /obj/machinery/telecomms/processor/preset_one,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmP" = (
 /obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmQ" = (
 /obj/machinery/telecomms/bus/preset_one,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmR" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkred/side{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/darkred/side/telecomms,
 /area/tcommsat/server)
 "cmS" = (
-/turf/open/floor/plasteel/darkpurple/side{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/whitepurple/side/telecomms,
 /area/tcommsat/server)
 "cmT" = (
-/turf/open/floor/plasteel/darkgreen/side{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/darkgreen/side/telecomms,
 /area/tcommsat/server)
 "cmU" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkgreen/side{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/whitepurple/side/telecomms,
 /area/tcommsat/server)
 "cmV" = (
 /obj/machinery/telecomms/server/presets/security,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmW" = (
 /obj/machinery/telecomms/server/presets/science,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmX" = (
 /obj/machinery/telecomms/hub/preset,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmY" = (
 /obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cmZ" = (
 /obj/machinery/telecomms/server/presets/service,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cna" = (
 /obj/machinery/telecomms/server/presets/medical,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnb" = (
 /obj/machinery/telecomms/server/presets/command,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnc" = (
 /obj/machinery/power/terminal,
 /obj/machinery/ntnet_relay,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnd" = (
 /obj/machinery/telecomms/server/presets/supply,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cne" = (
 /obj/machinery/telecomms/server/presets/engineering,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnf" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 1;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/darkblue/side/telecomms{
+	dir = 1
 	},
 /area/tcommsat/server)
 "cng" = (
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 1;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/darkblue/side/telecomms{
+	dir = 1
 	},
 /area/tcommsat/server)
 "cnh" = (
-/turf/open/floor/plasteel/darkyellow/side{
-	dir = 1;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/whitepurple/side/telecomms{
+	dir = 1
 	},
 /area/tcommsat/server)
 "cni" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkyellow/side{
-	dir = 1;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/whitepurple/side/telecomms{
+	dir = 1
 	},
 /area/tcommsat/server)
 "cnj" = (
 /obj/machinery/telecomms/processor/preset_four,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnk" = (
 /obj/machinery/telecomms/broadcaster/preset_left,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnl" = (
 /obj/machinery/telecomms/bus/preset_four,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnm" = (
 /obj/machinery/telecomms/bus/preset_two,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnn" = (
 /obj/machinery/telecomms/broadcaster/preset_right,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cno" = (
 /obj/machinery/telecomms/processor/preset_two,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnp" = (
 /obj/machinery/camera{
@@ -53693,9 +53595,7 @@
 /obj/item/weapon/stock_parts/subspace/amplifier,
 /obj/item/weapon/stock_parts/subspace/analyzer,
 /obj/item/weapon/stock_parts/subspace/analyzer,
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cns" = (
 /obj/structure/table,
@@ -53703,9 +53603,7 @@
 /obj/item/weapon/stock_parts/subspace/ansible,
 /obj/item/weapon/stock_parts/subspace/crystal,
 /obj/item/weapon/stock_parts/subspace/crystal,
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cnt" = (
 /obj/structure/table,
@@ -53713,9 +53611,7 @@
 /obj/item/weapon/stock_parts/subspace/filter,
 /obj/item/weapon/stock_parts/subspace/transmitter,
 /obj/item/weapon/stock_parts/subspace/transmitter,
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cnu" = (
 /obj/machinery/camera/motion{
@@ -53723,9 +53619,7 @@
 	dir = 1;
 	network = list("SS13","Telecoms")
 	},
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cnv" = (
 /obj/structure/table,
@@ -53733,9 +53627,7 @@
 /obj/item/weapon/stock_parts/subspace/treatment,
 /obj/item/weapon/stock_parts/manipulator,
 /obj/item/weapon/stock_parts/manipulator,
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cnw" = (
 /obj/structure/table,
@@ -53743,17 +53635,13 @@
 /obj/item/weapon/stock_parts/console_screen,
 /obj/item/weapon/stock_parts/micro_laser,
 /obj/item/weapon/stock_parts/micro_laser,
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cnx" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/scanning_module,
 /obj/item/weapon/stock_parts/scanning_module,
-/turf/open/floor/plasteel/black{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "cny" = (
 /obj/structure/lattice,
@@ -83051,7 +82939,7 @@ clG
 cmG
 cmK
 cmP
-cmT
+cmS
 cmY
 cnd
 cnh
