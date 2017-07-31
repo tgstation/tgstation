@@ -17,7 +17,6 @@
 	debris = list()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/resisting = FALSE
 	var/mob_layer = MOB_LAYER
 
 /obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, obj/item/clockwork/slab/the_slab)
@@ -34,8 +33,6 @@
 	icon_state = "geisbinding"
 
 /obj/structure/destructible/clockwork/geis_binding/process()
-	if(!resisting)
-		return
 	if(LAZYLEN(buckled_mobs))
 		for(var/V in buckled_mobs)
 			var/mob/living/L = V
