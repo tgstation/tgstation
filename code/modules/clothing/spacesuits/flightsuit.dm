@@ -1157,10 +1157,10 @@
 			maint_panel = TRUE
 		else
 			maint_panel = FALSE
-		usermessage("You [maint_panel? "open" : "close"] the maintainence panel.")
+		usermessage("You [maint_panel? "open" : "close"] the maintenance panel.")
 		return FALSE
 	else if(!maint_panel)
-		usermessage("The maintainence panel is closed!", "boldwarning")
+		usermessage("The maintenance panel is closed!", "boldwarning")
 		return FALSE
 	else if(istype(I, /obj/item/weapon/crowbar))
 		var/list/inputlist = list()
@@ -1223,7 +1223,7 @@
 //FLIGHT HELMET----------------------------------------------------------------------------------------------------------------------------------------------------
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	name = "flight helmet"
-	desc = "A sealed helmet attached to a flight suit for EVA usage scenerios. Its visor contains an information uplink HUD."
+	desc = "A sealed helmet attached to a flight suit for EVA usage scenarios. Its visor contains an information uplink HUD."
 	icon_state = "flighthelmet"
 	item_state = "flighthelmet"
 	item_color = "flight"

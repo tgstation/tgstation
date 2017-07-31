@@ -20,7 +20,7 @@
 
 /obj/item/weapon/paper/fluff/ruins/listeningstation/reports/june
 	name = "june report"
-	info = "Nanotrasen communications have been noticably less frequent recently.  The pirate radio station I found last month has been transmitting pro-Nanotrasen propaganda. I will continue to monitor it."
+	info = "Nanotrasen communications have been noticeably less frequent recently.  The pirate radio station I found last month has been transmitting pro-Nanotrasen propaganda. I will continue to monitor it."
 
 /obj/item/weapon/paper/fluff/ruins/listeningstation/reports/may
 	name = "may report"
@@ -36,7 +36,7 @@
 
 /obj/item/weapon/paper/fluff/ruins/listeningstation/odd_report
 	name = "odd report"
-	info = "I wonder how much longer they will accept my empty reports. They will cancel the case  soon without results.  When the pickup comes, I will tell them I have lost faith in our cause, and beg them to consider a diplomatic solution. How many nuclear teams have been dispatched with those nukes? I must try and prevent more from ever being sent. If they will not listen to reason, I will detonate the warehouse myself. Maybe some day in the immediate future, space will be peaceful, though I don't intend to live to see it. And that is why I write this down- it is my sacrifice that stabilised your worlds, traveller. Spare a thought for me, and please attempt to prevent nuclear proliferation, should it ever rear it's ugly head again. -Donk Co. Operative #451"
+	info = "I wonder how much longer they will accept my empty reports. They will cancel the case  soon without results.  When the pickup comes, I will tell them I have lost faith in our cause, and beg them to consider a diplomatic solution. How many nuclear teams have been dispatched with those nukes? I must try and prevent more from ever being sent. If they will not listen to reason, I will detonate the warehouse myself. Maybe some day in the immediate future, space will be peaceful, though I don't intend to live to see it. And that is why I write this down- it is my sacrifice that stabilized your worlds, traveller. Spare a thought for me, and please attempt to prevent nuclear proliferation, should it ever rear it's ugly head again. -Donk Co. Operative #451"
 
 /obj/item/weapon/paper/fluff/ruins/listeningstation/briefing
 	name = "mission briefing"

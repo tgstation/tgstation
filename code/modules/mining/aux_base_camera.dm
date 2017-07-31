@@ -27,7 +27,7 @@
 	delay_mod = 0.5
 
 /obj/machinery/computer/camera_advanced/base_construction
-	name = "base contruction console"
+	name = "base construction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("SS13")
 	var/obj/item/weapon/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
@@ -267,7 +267,7 @@ datum/action/innate/aux_base/install_turret/Activate()
 	var/turf/turret_turf = get_turf(remote_eye)
 
 	if(is_blocked_turf(turret_turf))
-		to_chat(owner, "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>")
+		to_chat(owner, "<span class='warning'>Location is obstructed by something. Please clear the location and try again.</span>")
 		return
 
 	var/obj/machinery/porta_turret/aux_base/T = new /obj/machinery/porta_turret/aux_base(turret_turf)

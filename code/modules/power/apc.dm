@@ -28,7 +28,7 @@
 
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
-// one per area, needs wire conection to power network through a terminal
+// one per area, needs wire connection to power network through a terminal
 
 // controls power to devices in that area
 // may be opened to change power cell
