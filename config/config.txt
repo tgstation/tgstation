@@ -180,7 +180,7 @@ CHECK_RANDOMIZER
 
 ## Github api key
 ## This is an api key for the user account used for posting and editing issues
-## It can be created here: https://github.com/settings/tokens
+## It can be created here: https://github.com/settings/tokens it requires public_repo for public repositories or repo for private repositories
 # GITHUBAPIKEY 02b8cded8078010769829d0e551f024364ee4a5c
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
