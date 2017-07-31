@@ -7,7 +7,7 @@
 	desc = "A basic power cell that holds 1000 units of energy."
 	id = "basic_cell"
 	req_tech = list("powerstorage" = 1)
-	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
+	build_type = PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 50)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell
@@ -18,7 +18,7 @@
 	desc = "A power cell that holds 10000 units of energy."
 	id = "high_cell"
 	req_tech = list("powerstorage" = 2)
-	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/high
@@ -29,7 +29,7 @@
 	desc = "A power cell that holds 20000 units of energy."
 	id = "super_cell"
 	req_tech = list("powerstorage" = 3, "materials" = 3)
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/super
@@ -40,7 +40,7 @@
 	desc = "A power cell that holds 30000 units of energy."
 	id = "hyper_cell"
 	req_tech = list("powerstorage" = 5, "materials" = 5, "engineering" = 5)
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 700, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/hyper

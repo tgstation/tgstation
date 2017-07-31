@@ -225,7 +225,7 @@
 
 	spawn_result(mob/user as mob)
 		..()
-		feedback_inc("spacepod_created",1)
+		SSblackbox.add_details("spacepod_created",1)
 		return
 
 /obj/item/weapon/circuitboard/mecha/pod

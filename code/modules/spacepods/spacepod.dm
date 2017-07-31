@@ -57,10 +57,10 @@
 
 	var/lights = 0
 	var/lights_power = 6
-	var/list/icon_light_color = list("pod_civ" = LIGHT_COLOR_WHITE, \
+	var/list/icon_light_color = list("pod_civ" = null, \
 									 "pod_mil" = "#BBF093", \
 									 "pod_synd" = LIGHT_COLOR_RED, \
-									 "pod_gold" = LIGHT_COLOR_WHITE, \
+									 "pod_gold" = null, \
 									 "pod_black" = "#3B8FE5", \
 									 "pod_industrial" = "#CCCC00")
 
@@ -111,8 +111,6 @@
 	src.ion_trail.set_up(src)
 	src.ion_trail.start()
 	src.use_internal_tank = 1
-	pr_int_temp_processor = new /datum/global_iterator/pod_preserve_temp(list(src))
-	pr_give_air = new /datum/global_iterator/pod_tank_give_air(list(src))
 	equipment_system = new(src)
 	equipment_system.installed_modules += battery
 	GLOB.spacepods_list += src
@@ -130,8 +128,6 @@
 	QDEL_NULL(battery)
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(internal_tank)
-	QDEL_NULL(pr_int_temp_processor)
-	QDEL_NULL(pr_give_air)
 	QDEL_NULL(ion_trail)
 	occupant_sanity_check()
 	if(pilot)
@@ -143,12 +139,6 @@
 			passengers -= M
 	GLOB.spacepods_list -= src
 	return ..()
-
-/obj/spacepod/process()
-	if(src.empcounter > 0)
-		src.empcounter--
-	else
-		processing -= src
 
 /obj/spacepod/proc/update_icons()
 	if(!pod_overlays)
@@ -201,7 +191,7 @@
 
 /obj/spacepod/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.melee_damage_upper == 0)
-		user.custom_emote(1, "[user.friendly] [src]")
+		user.emote(1, "[user.friendly] [src]")
 	else
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		deal_damage(damage)
@@ -272,7 +262,6 @@
 	deal_damage(80 / severity)
 	if(empcounter < (40 / severity))
 		empcounter = 40 / severity
-	processing += src
 
 	switch(severity)
 		if(1)
@@ -601,8 +590,9 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
-	cabin_air.oxygen = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
-	cabin_air.nitrogen = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.assert_gases("o2","n2")
+	cabin_air.gases["o2"][MOLES] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.gases["n2"][MOLES] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	return cabin_air
 
 /obj/spacepod/proc/add_airtank()
@@ -715,15 +705,10 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	if(!istype(user))
 		return 0
 
-	var/fukkendisk = user.GetTypeInAllContents(/obj/item/weapon/disk/nuclear)
 
 	if(user.incapacitated()) //are you cuffed, dying, lying, stunned or other
 		return 0
 	if(!ishuman(user))
-		return 0
-
-	if(fukkendisk)
-		to_chat(user, "<span class='danger'><B>The nuke-disk is locking the door every time you try to open it. You get the feeling that it doesn't want to go into the spacepod.</b></span>")
 		return 0
 
 	for(var/mob/living/simple_animal/slime/S in range(1,usr))
@@ -946,45 +931,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 
 	return 1
 
-/datum/global_iterator/pod_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
-	delay = 20
 
-	process(var/obj/spacepod/spacepod)
-		if(spacepod.cabin_air && spacepod.cabin_air.return_volume() > 0)
-			var/delta = spacepod.cabin_air.temperature - T20C
-			spacepod.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
-
-/datum/global_iterator/pod_tank_give_air
-	delay = 15
-
-/datum/global_iterator/pod_tank_give_air/process(var/obj/spacepod/spacepod)
-	if(spacepod && spacepod.internal_tank)
-		var/datum/gas_mixture/tank_air = spacepod.internal_tank.return_air()
-		var/datum/gas_mixture/cabin_air = spacepod.cabin_air
-
-		var/release_pressure = ONE_ATMOSPHERE
-		var/cabin_pressure = cabin_air.return_pressure()
-		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
-		var/transfer_moles = 0
-		if(pressure_delta > 0) //cabin pressure lower than release pressure
-			if(tank_air.return_temperature() > 0)
-				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
-				var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
-				cabin_air.merge(removed)
-		else if(pressure_delta < 0) //cabin pressure higher than release pressure
-			var/datum/gas_mixture/t_air = spacepod.get_turf_air()
-			pressure_delta = cabin_pressure - release_pressure
-			if(t_air)
-				pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
-			if(pressure_delta > 0) //if location pressure is lower than cabin pressure
-				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
-				var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
-				if(t_air)
-					t_air.merge(removed)
-				else //just delete the cabin gas, we're in space or some shit
-					qdel(removed)
-	else
-		return stop()
 
 /obj/spacepod/relaymove(mob/user, direction)
 	if(usr != src.pilot)
@@ -1045,6 +992,41 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 
 /obj/effect/landmark/spacepod/random/New()
 	..()
+
+/obj/spacepod/process()
+	var/obj/spacepod/spacepod = src //fuck you paracode for making me do this
+	if(spacepod && spacepod.internal_tank)
+		var/datum/gas_mixture/tank_air = spacepod.internal_tank.return_air()
+		var/datum/gas_mixture/cabin_air = spacepod.cabin_air
+
+		var/release_pressure = ONE_ATMOSPHERE
+		var/cabin_pressure = cabin_air.return_pressure()
+		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
+		var/transfer_moles = 0
+		if(pressure_delta > 0) //cabin pressure lower than release pressure
+			if(tank_air.return_temperature() > 0)
+				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
+				var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
+				cabin_air.merge(removed)
+		else if(pressure_delta < 0) //cabin pressure higher than release pressure
+			var/datum/gas_mixture/t_air = spacepod.get_turf_air()
+			pressure_delta = cabin_pressure - release_pressure
+			if(t_air)
+				pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
+			if(pressure_delta > 0) //if location pressure is lower than cabin pressure
+				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
+				var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
+				if(t_air)
+					t_air.merge(removed)
+				else //just delete the cabin gas, we're in space or some shit
+					qdel(removed)
+	else
+		return
+
+	if(spacepod.cabin_air && spacepod.cabin_air.return_volume() > 0)
+		var/delta = spacepod.cabin_air.temperature - T20C
+		spacepod.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
+
 
 #undef DAMAGE
 #undef FIRE
