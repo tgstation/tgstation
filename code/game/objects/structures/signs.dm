@@ -244,6 +244,36 @@
 	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
 
+/obj/structure/sign/evac
+	name = "\improper EVACUATION"
+	desc = "A sign labelling an area where evacuation procedures take place."
+	icon_state = "evac"
+
+/obj/structure/sign/custodian
+	name = "\improper CUSTODIAN"
+	desc = "A sign labelling an area where the custodian works."
+	icon_state = "custodian"
+
+/obj/structure/sign/engineering
+	name = "\improper ENGINEERING"
+	desc = "A sign labelling an area where engineers work."
+	icon_state = "engine"
+
+/obj/structure/sign/cargo
+	name = "\improper CARGO"
+	desc = "A sign labelling an area where cargo ships dock."
+	icon_state = "cargo"
+
+/obj/structure/sign/security
+	name = "\improper SECURITY"
+	desc = "A sign labelling an area where the law is law."
+	icon_state = "security"
+
+/obj/structure/sign/holy
+	name = "\improper HOLY"
+	desc = "A sign labelling a religious area."
+	icon_state = "holy"
+
 /obj/structure/sign/xeno_warning_mining
 	name = "DANGEROUS ALIEN LIFE"
 	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
@@ -289,3 +319,8 @@
 	name = "command department"
 	desc = "A direction sign, pointing out which way the Command department is."
 	icon_state = "direction_bridge"
+
+/obj/structure/sign/logo
+	name = "station logo"
+	desc = "A sign: SPACE STATION 13."
+	icon_state = "ss13sign-1"

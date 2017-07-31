@@ -20,12 +20,6 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
 
-/obj/effect/decal/sandeffect
-	name = "sandy tile"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "sandeffect"
-	layer = ABOVE_OPEN_TURF_LAYER
-
 /obj/effect/decal/fakelattice
 	name = "lattice"
 	desc = "A lightweight support lattice."

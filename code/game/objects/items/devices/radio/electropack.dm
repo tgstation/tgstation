@@ -4,6 +4,8 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "electropack0"
 	item_state = "electropack"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE

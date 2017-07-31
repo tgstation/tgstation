@@ -186,6 +186,8 @@
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
 
 /obj/item/weapon/twohanded/bostaff/update_icon()

@@ -120,6 +120,8 @@ obj/item/weapon/construction
 	desc = "A device used to rapidly build and deconstruct walls and floors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
 	var/mode = 1
 	var/canRturf = 0
@@ -405,6 +407,8 @@ obj/item/weapon/construction
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	origin_tech = "materials=3"
 	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
@@ -452,6 +456,8 @@ obj/item/weapon/construction
 	desc = "A device used to rapidly provide lighting sources to an area."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 200
 	max_matter = 200
 	var/mode = LIGHT_MODE

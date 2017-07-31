@@ -249,7 +249,7 @@
 /area/djstation)
 "aR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/djstation,
+/obj/item/weapon/paper/fluff/ruins/djstation,
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "aS" = (

@@ -896,8 +896,8 @@
 	icon_state = "1-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "cG" = (
@@ -1691,9 +1691,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "eU" = (
-/obj/item/weapon/paper/crumpled{
-	info = "Theres a lot of sensitive info on these disks, try and keep them secure! If these backup copies get into the wrong hands, god knows what they could do with the genetic research on these disk.."
-	},
+/obj/item/weapon/paper/crumpled/awaymissions/research/sensitive_info,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "eV" = (

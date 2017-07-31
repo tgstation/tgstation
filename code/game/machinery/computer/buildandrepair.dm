@@ -150,6 +150,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "programming=2"
 	materials = list(MAT_GLASS=1000)
 	w_class = WEIGHT_CLASS_SMALL

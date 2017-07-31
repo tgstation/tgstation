@@ -49,7 +49,7 @@
 /turf/open/floor/plating/ashplanet/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
-/turf/open/floor/plating/lava/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+/turf/open/lava/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
 /turf/open/floor/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)

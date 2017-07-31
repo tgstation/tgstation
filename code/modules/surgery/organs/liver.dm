@@ -64,3 +64,25 @@
 	icon_state = "pliver"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 
+/obj/item/organ/liver/cybernetic
+	name = "cybernetic liver"
+	icon_state = "liver-c"
+	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	origin_tech = "biotech=4"
+
+/obj/item/organ/liver/cybernetic/upgraded
+	name = "upgraded cybernetic liver"
+	icon_state = "liver-c-u"
+	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
+	origin_tech = "biotech=6"
+	alcohol_tolerance = 0.001
+	maxHealth = 200 //double the health of a normal liver
+	toxTolerance = 15 //can shrug off up to 15u of toxins
+	toxLethality = 0.3 //20% less damage than a normal liver
+
+/obj/item/organ/liver/cybernetic/emp_act(severity)
+	switch(severity)
+		if(1)
+			damage+=100
+		if(2)
+			damage+=50

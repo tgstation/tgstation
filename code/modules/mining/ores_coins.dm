@@ -30,48 +30,39 @@
 			show_message = FALSE
 			break
 	var/obj/item/weapon/storage/bag/ore/OB
-	if(istype(loc, /turf/open/floor/plating/asteroid))
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			for(var/thing in H.get_storage_slots())
-				if(istype(thing, /obj/item/weapon/storage/bag/ore))
-					OB = thing
-					break
-			for(var/thing in H.held_items)
-				if(istype(thing, /obj/item/weapon/storage/bag/ore))
-					OB = thing
-					break
-		else if(iscyborg(AM))
-			var/mob/living/silicon/robot/R = AM
-			for(var/thing in R.module_active)
-				if(istype(thing, /obj/item/weapon/storage/bag/ore))
-					OB = thing
-					break
-		if(OB)
-			var/obj/structure/ore_box/box
-			if(!OB.can_be_inserted(src, TRUE, AM))
-				if(!OB.spam_protection)
-					to_chat(AM, "<span class='warning'>Your [OB.name] is full and can't hold any more ore!</span>")
-					OB.spam_protection = TRUE
-					sleep(1)
-					OB.spam_protection = FALSE
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		OB = locate(/obj/item/weapon/storage/bag/ore) in H.get_storage_slots()
+		if(!OB)
+			OB = locate(/obj/item/weapon/storage/bag/ore) in H.held_items
+	else if(iscyborg(AM))
+		var/mob/living/silicon/robot/R = AM
+		OB = locate(/obj/item/weapon/storage/bag/ore) in R.held_items
+	if(OB)
+		var/obj/structure/ore_box/box
+		if(!OB.can_be_inserted(src, TRUE, AM))
+			if(!OB.spam_protection)
+				to_chat(AM, "<span class='warning'>Your [OB.name] is full and can't hold any more ore!</span>")
+				OB.spam_protection = TRUE
+				sleep(1)
+				OB.spam_protection = FALSE
+		else
+			OB.handle_item_insertion(src, TRUE, AM)
+		// Then, if the user is dragging an ore box, empty the satchel
+		// into the box.
+		var/mob/living/L = AM
+		if(istype(L.pulling, /obj/structure/ore_box))
+			box = L.pulling
+			for(var/obj/item/weapon/ore/O in OB)
+				OB.remove_from_storage(src, box)
+		if(show_message)
+			playsound(L, "rustle", 50, TRUE)
+			if(box)
+				L.visible_message("<span class='notice'>[L] offloads the ores into [box].</span>", \
+				"<span class='notice'>You offload the ores beneath you into your [box.name].</span>")
 			else
-				OB.handle_item_insertion(src, TRUE, AM)
-			// Then, if the user is dragging an ore box, empty the satchel
-			// into the box.
-			var/mob/living/L = AM
-			if(istype(L.pulling, /obj/structure/ore_box))
-				box = L.pulling
-				for(var/obj/item/weapon/ore/O in OB)
-					OB.remove_from_storage(src, box)
-			if(show_message)
-				playsound(L, "rustle", 50, TRUE)
-				if(box)
-					L.visible_message("<span class='notice'>[L] offloads the ores into [box].</span>", \
-					"<span class='notice'>You offload the ores beneath you into your [box.name].</span>")
-				else
-					L.visible_message("<span class='notice'>[L] scoops up the ores beneath them.</span>", \
-					"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
+				L.visible_message("<span class='notice'>[L] scoops up the ores beneath them.</span>", \
+				"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
 	return ..()
 
 /obj/item/weapon/ore/uranium

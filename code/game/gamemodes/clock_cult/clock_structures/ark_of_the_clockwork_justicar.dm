@@ -8,8 +8,9 @@
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
-	density = TRUE
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	density = FALSE
+	invisibility = INVISIBILITY_MAXIMUM
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE | FREEZE_PROOF
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
 	var/active = FALSE

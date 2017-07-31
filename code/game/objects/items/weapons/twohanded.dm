@@ -198,6 +198,8 @@
  */
 /obj/item/weapon/twohanded/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
+	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
@@ -238,6 +240,8 @@
  */
 /obj/item/weapon/twohanded/dualsaber
 	icon_state = "dualsaber0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
 	force = 3
@@ -401,6 +405,8 @@
 //spears
 /obj/item/weapon/twohanded/spear
 	icon_state = "spearglass0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
@@ -477,6 +483,8 @@
 	name = "chainsaw"
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon_state = "chainsaw_off"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	flags = CONDUCT
 	force = 13
 	var/force_on = 21
@@ -555,6 +563,8 @@
 
 /obj/item/weapon/twohanded/pitchfork
 	icon_state = "pitchfork0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "pitchfork"
 	desc = "A simple tool used for moving hay."
 	force = 7
@@ -631,6 +641,8 @@
 
 /obj/item/weapon/twohanded/vibro_weapon
 	icon_state = "hfrequency0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "vibro sword"
 	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
 	force_unwielded = 20
@@ -679,6 +691,8 @@
  */
 /obj/item/weapon/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 11

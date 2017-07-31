@@ -7,6 +7,7 @@
 
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
 GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
+GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
 GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence

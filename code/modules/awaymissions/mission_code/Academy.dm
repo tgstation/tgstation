@@ -1,6 +1,36 @@
 
 //Academy Items
 
+/obj/item/weapon/paper/fluff/awaymissions/academy/console_maint
+	name = "Console Maintenance"
+	info = "We're upgrading to the latest mainframes for our consoles, the shipment should be in before spring break is over!"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/automotive
+	name = "Automotive Repair 101"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/pyromancy
+	name = "Pyromancy 250"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/biology
+	name = "Biology Lab"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/aplus
+	name = "Summoning Midterm Exam"
+	info = "Grade: A+ Educator's Notes: Excellent form."
+	
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/bminus
+	name = "Summoning Midterm Exam"
+	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement."
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/dminus
+	name = "Summoning Midterm Exam"
+	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS."
+	
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/failure
+	name = "Pyromancy Evaluation"
+	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
+
+
 /obj/singularity/academy
 	dissipate = 0
 	move_self = 0

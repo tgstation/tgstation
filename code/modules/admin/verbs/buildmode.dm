@@ -194,11 +194,14 @@
 					valueholder = input(user,"Enter variable value:" ,"Value") as turf in world
 		if(AREA_BUILDMODE)
 			var/list/gen_paths = subtypesof(/datum/mapGenerator)
-
-			var/type = input(user,"Select Generator Type","Type") as null|anything in gen_paths
+			var/list/options = list()
+			for(var/path in gen_paths)
+				var/datum/mapGenerator/MP = path
+				options[initial(MP.buildmode_name)] = path
+			var/type = input(user,"Select Generator Type","Type") as null|anything in options
 			if(!type) return
 
-			generator_path = type
+			generator_path = options[type]
 			cornerA = null
 			cornerB = null
 
@@ -342,7 +345,12 @@
 				if(cornerA && cornerB)
 					if(!generator_path)
 						to_chat(user, "<span class='warning'>Select generator type first.</span>")
+						return
 					var/datum/mapGenerator/G = new generator_path
+					if(istype(G, /datum/mapGenerator/repair/reload_station_map))
+						if(GLOB.reloading_map)
+							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
+							return
 					G.defineRegion(cornerA,cornerB,1)
 					G.generate()
 					cornerA = null

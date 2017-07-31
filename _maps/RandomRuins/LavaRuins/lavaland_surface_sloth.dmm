@@ -1,26 +1,19 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/indestructible/riveted{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
+/turf/closed/indestructible/riveted,
 /area/ruin/unpowered)
 "b" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered)
 "c" = (
-/obj/item/weapon/paper{
-	desc = "have not gotten around to finishing my cursed item yet sorry - sloth";
-	name = "note from sloth"
-	},
+/obj/item/weapon/paper/fluff/stations/lavaland/sloth/note,
 /turf/open/floor/sepia{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	blocks_air = 0;
 	slowdown = 10
 	},
 /area/ruin/unpowered)
 "d" = (
 /turf/open/floor/sepia{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	blocks_air = 0;
 	slowdown = 10
 	},
@@ -28,7 +21,6 @@
 "e" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/sepia{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	blocks_air = 0;
 	slowdown = 10
 	},
@@ -37,7 +29,6 @@
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange,
 /turf/open/floor/sepia{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	blocks_air = 0;
 	slowdown = 10
 	},
@@ -46,7 +37,13 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/brown,
 /turf/open/floor/sepia{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	blocks_air = 0;
+	slowdown = 10
+	},
+/area/ruin/unpowered)
+"h" = (
+/obj/effect/baseturf_helper,
+/turf/open/floor/sepia{
 	blocks_air = 0;
 	slowdown = 10
 	},
@@ -129,7 +126,7 @@ a
 b
 a
 d
-d
+h
 d
 d
 a

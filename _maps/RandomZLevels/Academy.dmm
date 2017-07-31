@@ -108,10 +108,7 @@
 /area/awaymission/academy/headmaster)
 "ar" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper{
-	info = "We're upgrading to the latest mainframes for our consoles, the shipment should be in before spring break is over!";
-	name = "Console Maintenance"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/console_maint,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "as" = (
@@ -1287,9 +1284,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	name = "Automotive Repair 101"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/automotive,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "eh" = (
@@ -1302,9 +1297,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	name = "Pyromancy 250"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/pyromancy,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "ej" = (
@@ -1779,9 +1772,7 @@
 /obj/structure/noticeboard{
 	pixel_y = -32
 	},
-/obj/item/weapon/paper{
-	name = "Biology Lab"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/biology,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "fz" = (
@@ -2205,10 +2196,7 @@
 /area/awaymission/academy/academyaft)
 "gH" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	info = "Grade: A+ Educator's Notes: Excellent form.";
-	name = "Summoning Midterm Exam"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/aplus,
 /obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -2217,10 +2205,7 @@
 "gI" = (
 /obj/structure/table,
 /obj/item/weapon/gun/ballistic/revolver/russian,
-/obj/item/weapon/paper{
-	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement.";
-	name = "Summoning Midterm Exam"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/bminus,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2319,10 +2304,7 @@
 "gW" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/paper{
-	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS.";
-	name = "Summoning Midterm Exam"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/dminus,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2772,10 +2754,7 @@
 /obj/structure/closet,
 /obj/item/weapon/storage/box/snappops,
 /obj/item/weapon/storage/backpack,
-/obj/item/weapon/paper{
-	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage.";
-	name = "Pyromancy Evaluation"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/failure,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "id" = (
