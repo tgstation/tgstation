@@ -1325,4 +1325,5 @@
 	name = "Helmet Smart Zoom"
 	icon_icon = 'icons/mob/actions.dmi'
 	background_icon_state = "bg_tech_blue"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"

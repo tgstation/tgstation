@@ -293,7 +293,7 @@ Difficulty: Medium
 	animate(src, pixel_z = 0, time = duration)
 
 /obj/effect/temp_visual/target
-	icon = 'icons/mob/actions.dmi'
+	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
