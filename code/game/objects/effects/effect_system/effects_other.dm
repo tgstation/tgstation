@@ -152,33 +152,28 @@
 	if(processing)
 		processing = 0
 		spawn(0)
-			var/turf/T = get_turf(src.holder)
+			var/turf/T = get_turf(holder)
 			if(currloc != T)
 				switch(holder.dir)
 					if(NORTH)
 						oldposition = T
 						oldposition = get_step(oldposition, SOUTH)
 						oldloc = get_step(oldposition,EAST)
-						//src.oldloc = get_step(oldloc, SOUTH)
 					if(SOUTH) // More difficult, offset to the north!
 						oldposition = get_step(holder,NORTH)
 						oldposition = get_step(oldposition,NORTH)
 						oldloc = get_step(oldposition,EAST)
-						//src.oldloc = get_step(oldloc,NORTH)
 					if(EAST) // Just one to the north should suffice
 						oldposition = T
 						oldposition = get_step(oldposition, WEST)
 						oldloc = get_step(oldposition,NORTH)
-						//src.oldloc = get_step(oldloc,WEST)
 					if(WEST) // One to the east and north from there
 						oldposition = get_step(holder,EAST)
 						oldposition = get_step(oldposition,EAST)
 						oldloc = get_step(oldposition,NORTH)
-						//src.oldloc = get_step(oldloc,EAST)
 				if(istype(T, /turf/open/space))
 					var/obj/effect/particle_effect/ion_trails/I = new /obj/effect/particle_effect/ion_trails(oldposition)
 					var/obj/effect/particle_effect/ion_trails/II = new /obj/effect/particle_effect/ion_trails(oldloc)
-					//src.oldposition = T
 					I.dir = holder.dir
 					II.dir = holder.dir
 					flick("ion_fade", I)
