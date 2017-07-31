@@ -15,6 +15,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/proc/checkLiked(var/fraction, mob/M)
+	var/last_check_time
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
