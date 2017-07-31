@@ -6,6 +6,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	item_state = "RPED"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 50
@@ -39,8 +41,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 800
 	works_from_distance = 1
-	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
-	alt_sound = 'sound/items/PSHOOM_2.ogg'
+	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
+	alt_sound = 'sound/items/pshoom_2.ogg'
 
 /obj/item/weapon/storage/part_replacer/bluespace/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user))

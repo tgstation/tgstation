@@ -5,8 +5,8 @@
 	desc = "A stacking console with an electromagnetic writer, used to track ore mined by prisoners."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/item/weapon/card/id/prisoner/inserted_id
@@ -34,7 +34,7 @@
 			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
 	return ..()
 
-/obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -122,7 +122,7 @@
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!emagged)
-		emagged = 1
+		emagged = TRUE
 		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 
 
@@ -131,7 +131,7 @@
 
 /obj/machinery/mineral/stacking_machine/laborstacker
 	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.
-	var/list/ore_values = list("glass" = 1, "metal" = 2, "solid plasma" = 20, "plasteel" = 23, "reinforced glass" = 4, "gold" = 20, "silver" = 20, "uranium" = 20, "diamond" = 25, "bananium" = 50)
+	var/list/ore_values = list("glass" = 1, "metal" = 2, "reinforced glass" = 4, "gold" = 20, "silver" = 20, "uranium" = 20, "titanium" = 20, "solid plasma" = 20, "plasteel" = 23, "plasma glass" = 23, "diamond" = 25, "bluespace polycrystal" = 30, "plastitanium" = 45, "bananium" = 50)
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	if(istype(inp))
@@ -148,8 +148,8 @@
 	desc = "A console used by prisoners to check the progress on their quotas. Simply swipe a prisoner ID."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
 	user.examinate(src)

@@ -126,7 +126,6 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	horizontal = TRUE
 	delivery_icon = "deliverycrate"

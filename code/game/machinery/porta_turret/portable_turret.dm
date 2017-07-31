@@ -8,14 +8,14 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = 1
+	anchored = TRUE
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
-	density = 1
-	use_power = 1				//this turret uses and requires power
+	density = TRUE
+	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(GLOB.access_security)
+	req_access = list(ACCESS_SECURITY)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -28,12 +28,11 @@
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
 
-	obj_integrity = 160			//the turret's health
-	max_integrity = 160
+	max_integrity = 160		//the turret's health
 	integrity_failure = 80
 	armor = list(melee = 50, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 90)
 
-	var/locked = 1			//if the turret's behaviour control access is locked
+	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
 	var/installation = /obj/item/weapon/gun/energy/e_gun/turret		//the type of weapon installed by default
@@ -254,7 +253,7 @@
 
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
-			anchored = 1
+			anchored = TRUE
 			invisibility = INVISIBILITY_MAXIMUM
 			update_icon()
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
@@ -262,7 +261,7 @@
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			update_icon()
 			invisibility = 0
@@ -275,7 +274,7 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I,/obj/item/device/multitool) && !locked)
+	else if(istype(I, /obj/item/device/multitool) && !locked)
 		var/obj/item/device/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
@@ -283,15 +282,16 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-		visible_message("[src] hums oddly...")
-		emagged = 1
-		controllock = 1
-		on = 0 //turns off the turret temporarily
-		update_icon()
-		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	if(emagged)
+		return
+	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
+	visible_message("[src] hums oddly...")
+	emagged = TRUE
+	controllock = 1
+	on = FALSE //turns off the turret temporarily
+	update_icon()
+	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -550,14 +550,14 @@
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
-	req_access = list(GLOB.access_syndicate)
+	req_access = list(ACCESS_SYNDICATE)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "syndicate"
@@ -567,7 +567,7 @@
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/Taser.ogg'
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -578,9 +578,8 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
-	max_integrity = 40
 	integrity_failure = 20
-	obj_integrity = 40
+	max_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/weakbullet3
 	lethal_projectile = /obj/item/projectile/bullet/weakbullet3
 
@@ -615,10 +614,9 @@
 
 /obj/machinery/porta_turret/centcomm_shuttle
 	installation = null
-	obj_integrity = 260
 	max_integrity = 260
 	always_up = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
 	stun_projectile = /obj/item/projectile/beam/laser
@@ -646,14 +644,14 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	var/enabled = 1
 	var/lethal = 0
-	var/locked = 1
+	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	req_access = list(GLOB.access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -661,7 +659,7 @@
 	..()
 	if(built)
 		setDir(ndir)
-		locked = 0
+		locked = FALSE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
@@ -691,9 +689,9 @@
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN) return
 
-	if (istype(I,/obj/item/device/multitool))
+	if (istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I
-		if(M.buffer && istype(M.buffer,/obj/machinery/porta_turret))
+		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
 			to_chat(user, "You link \the [M.buffer] with \the [src]")
 			return
@@ -720,12 +718,13 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-		emagged = 1
-		locked = 0
-		if(user && user.machine == src)
-			attack_hand(user)
+	if(emagged)
+		return
+	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
+	emagged = TRUE
+	locked = FALSE
+	if(user && user.machine == src)
+		attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))
@@ -863,7 +862,7 @@
 	. = ..()
 
 /obj/machinery/porta_turret/lasertag
-	req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
+	req_access = list(ACCESS_MAINT_TUNNELS, ACCESS_THEATRE)
 	check_records = 0
 	criminals = 0
 	auth_weapons = 1
@@ -924,11 +923,11 @@
 	if(on)
 		if(team_color == "blue")
 			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
-				on = 0
+				on = FALSE
 				spawn(100)
-					on = 1
+					on = TRUE
 		else if(team_color == "red")
 			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
-				on = 0
+				on = FALSE
 				spawn(100)
-					on = 1
+					on = TRUE

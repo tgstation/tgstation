@@ -134,7 +134,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(GLOB.cardinal)
+					var/anydir = pick(GLOB.cardinals)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
@@ -302,7 +302,7 @@
 	else
 		health = 0
 		icon_state = icon_dead
-		density = 0
+		density = FALSE
 		lying = 1
 		..()
 
@@ -387,7 +387,7 @@
 		..()
 
 /mob/living/simple_animal/update_canmove()
-	if(paralysis || stunned || weakened || stat || resting)
+	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
 		drop_all_held_items()
 		canmove = 0
 	else if(buckled)

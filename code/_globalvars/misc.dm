@@ -14,3 +14,5 @@ GLOBAL_VAR_INIT(CELLRATE, 0.002)  // multiplier for watts per tick <> cell stora
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
 GLOBAL_LIST_EMPTY(powernets)
+
+GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes

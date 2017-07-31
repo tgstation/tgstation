@@ -105,7 +105,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	ore_type = /obj/item/weapon/ore/glass/basalt
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/Initialize()

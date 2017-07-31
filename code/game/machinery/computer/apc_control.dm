@@ -3,7 +3,7 @@
 	desc = "Used to remotely control the flow of power to different parts of the station."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
-	req_access = list(GLOB.access_engine)
+	req_access = list(ACCESS_ENGINE)
 	circuit = /obj/item/weapon/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/list/apcs //APCs the computer has access to
@@ -31,7 +31,7 @@
 		if(active_apc)
 			if(!active_apc.locked)
 				active_apc.say("Remote access canceled. Interface locked.")
-				playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
+				playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, 0)
 				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
@@ -128,7 +128,7 @@
 		if(active_apc)
 			to_chat(usr, "<span class='robot danger'>[bicon(src)] Disconnected from [active_apc].</span>")
 			active_apc.say("Remote access canceled. Interface locked.")
-			playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
+			playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, 0)
 			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
@@ -141,7 +141,7 @@
 		log_game("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
 		if(APC.locked)
 			APC.say("Remote access detected. Interface unlocked.")
-			playsound(APC, 'sound/machines/BoltsUp.ogg', 25, 0)
+			playsound(APC, 'sound/machines/boltsup.ogg', 25, 0)
 			playsound(APC, 'sound/machines/terminal_alert.ogg', 50, 0)
 		APC.locked = FALSE
 		APC.update_icon()
@@ -192,13 +192,13 @@
 		logs = list()
 	interact(usr) //Refresh the UI after a filter changes
 
-/obj/machinery/computer/apc_control/emag_act(mob/living/user)
+/obj/machinery/computer/apc_control/emag_act(mob/user)
 	if(emagged)
 		return
 	user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
 	log_game("[key_name_admin(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
 	playsound(src, "sparks", 50, 1)
-	emagged = 1
+	emagged = TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !emagged ? operator : "\[NULL OPERATOR\]"

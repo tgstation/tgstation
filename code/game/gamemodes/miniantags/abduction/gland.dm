@@ -108,7 +108,7 @@
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly,/datum/species/jelly))
+	var/species = pick(list(/datum/species/lizard, /datum/species/jelly/slime, /datum/species/pod, /datum/species/fly, /datum/species/jelly))
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
@@ -133,10 +133,9 @@
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
 	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
 	var/datum/disease/D = new virus_type()
-	D.carrier = 1
+	D.carrier = TRUE
 	owner.viruses += D
 	D.affected_mob = owner
-	D.holder = owner
 	owner.med_hud_set_status()
 
 
@@ -167,6 +166,8 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
@@ -212,7 +213,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cocoon_large3"
 	color = rgb(10,120,10)
-	density = 1
+	density = TRUE
 	var/hatch_time = 0
 
 /obj/structure/spider/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)

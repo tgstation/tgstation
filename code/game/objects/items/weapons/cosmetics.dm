@@ -6,7 +6,7 @@
 	icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
-	var/open = 0
+	var/open = FALSE
 
 
 /obj/item/weapon/lipstick/purple
@@ -49,7 +49,7 @@
 	if(!open)
 		return
 
-	if(!istype(M, /mob))
+	if(!ismob(M))
 		return
 
 	if(ishuman(M))
@@ -118,7 +118,7 @@
 		H.hair_style = "Skinhead"
 
 	H.update_hair()
-	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+	playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 
 
 /obj/item/weapon/razor/attack(mob/M, mob/user)

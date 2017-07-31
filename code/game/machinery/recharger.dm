@@ -3,17 +3,17 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/charging = null
-	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer)
+	var/static/list/allowed_devices = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/ammo_box/magazine/recharge, /obj/item/device/modular_computer))
 	var/recharge_coeff = 1
 
-/obj/machinery/recharger/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recharger(null)
+/obj/machinery/recharger/Initialize()
+	. = ..()
+	var/obj/item/weapon/circuitboard/machine/recharger/B = new()
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/recharger
@@ -37,7 +37,7 @@
 		playsound(loc, G.usesound, 75, 1)
 		return
 
-	var/allowed = is_type_in_list(G, allowed_devices)
+	var/allowed = is_type_in_typecache(G, allowed_devices)
 
 	if(allowed)
 		if(anchored)
@@ -60,7 +60,7 @@
 				return 1
 			G.loc = src
 			charging = G
-			use_power = 2
+			use_power = ACTIVE_POWER_USE
 			update_icon(scan = TRUE)
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
@@ -88,7 +88,7 @@
 		charging.loc = loc
 		user.put_in_hands(charging)
 		charging = null
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		update_icon()
 
 /obj/machinery/recharger/attack_paw(mob/user)
@@ -99,7 +99,7 @@
 		charging.update_icon()
 		charging.loc = loc
 		charging = null
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		update_icon()
 
 /obj/machinery/recharger/process()

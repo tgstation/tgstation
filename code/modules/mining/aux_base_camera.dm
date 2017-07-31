@@ -33,6 +33,7 @@
 	var/obj/item/weapon/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	circuit = /obj/item/weapon/circuitboard/computer/base_construction
 	off_action = new/datum/action/innate/camera_off/base_construction
+	jump_action = null
 	var/datum/action/innate/aux_base/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
 	var/datum/action/innate/aux_base/build/build_action = new //Action for using the RCD
 	var/datum/action/innate/aux_base/airlock_type/airlock_mode_action = new //Action for setting the airlock type
@@ -88,22 +89,43 @@
 	return ..()
 
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
-	off_action.target = user
-	off_action.Grant(user)
-	switch_mode_action.target = src
-	switch_mode_action.Grant(user)
-	build_action.target = src
-	build_action.Grant(user)
-	airlock_mode_action.target = src
-	airlock_mode_action.Grant(user)
-	window_action.target = src
-	window_action.Grant(user)
-	fan_action.target = src
-	fan_action.Grant(user)
-	turret_action.target = src
-	turret_action.Grant(user)
+	..()
+
+	if(switch_mode_action)
+		switch_mode_action.target = src
+		switch_mode_action.Grant(user)
+		actions += switch_mode_action
+
+	if(build_action)
+		build_action.target = src
+		build_action.Grant(user)
+		actions += build_action
+
+	if(airlock_mode_action)
+		airlock_mode_action.target = src
+		airlock_mode_action.Grant(user)
+		actions += airlock_mode_action
+
+	if(window_action)
+		window_action.target = src
+		window_action.Grant(user)
+		actions += window_action
+
+	if(fan_action)
+		fan_action.target = src
+		fan_action.Grant(user)
+		actions += fan_action
+
+	if(turret_action)
+		turret_action.target = src
+		turret_action.Grant(user)
+		actions += turret_action
+
 	eyeobj.invisibility = 0 //When the eye is in use, make it visible to players so they know when someone is building.
 
+/obj/machinery/computer/camera_advanced/base_construction/remove_eye_control(mob/living/user)
+	..()
+	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
 
 /datum/action/innate/aux_base //Parent aux base action
 	var/mob/living/C //Mob using the action
@@ -138,23 +160,6 @@
 /datum/action/innate/camera_off/base_construction
 	name = "Log out"
 
-/datum/action/innate/camera_off/base_construction/Activate()
-	if(!owner || !owner.remote_control)
-		return
-
-	var/mob/camera/aiEye/remote/base_construction/remote_eye =owner.remote_control
-
-	var/obj/machinery/computer/camera_advanced/base_construction/origin = remote_eye.origin
-	origin.switch_mode_action.Remove(target)
-	origin.build_action.Remove(target)
-	origin.airlock_mode_action.Remove(target)
-	origin.window_action.Remove(target)
-	origin.fan_action.Remove(target)
-	origin.turret_action.Remove(target)
-	remote_eye.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
-
-	..()
-
 //*******************FUNCTIONS*******************
 
 /datum/action/innate/aux_base/build
@@ -183,7 +188,7 @@
 
 	owner.changeNext_move(CLICK_CD_RANGE)
 	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
-	playsound(target_turf, 'sound/items/Deconstruct.ogg', 60, 1)
+	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, 1)
 
 /datum/action/innate/aux_base/switch_mode
 	name = "Switch Mode"

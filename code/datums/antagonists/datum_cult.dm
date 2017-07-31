@@ -37,14 +37,12 @@
 		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 		GLOB.sac_complete = TRUE
 	SSticker.mode.cult_objectives += "sacrifice"
-	if(GLOB.summon_spots.len)
-		SSticker.mode.cult_objectives += "eldergod"
-	else
+	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
-			var/area/summon = pick(GLOB.sortedAreas)
+			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
 			if(summon && (summon.z == ZLEVEL_STATION) && summon.valid_territory)
-				GLOB.summon_spots |= summon
-		SSticker.mode.cult_objectives += "eldergod"
+				GLOB.summon_spots += summon
+	SSticker.mode.cult_objectives += "eldergod"
 
 /datum/antagonist/cult/proc/cult_memorization(datum/mind/cult_mind)
 	var/mob/living/current = cult_mind.current
@@ -56,6 +54,7 @@
 					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
 				else
 					explanation = "The veil has already been weakened here, proceed to the final objective."
+					GLOB.sac_complete = TRUE
 			if("eldergod")
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie'. <b>The summoning can only be accomplished in [english_list(GLOB.summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
 		if(!silent)
@@ -111,9 +110,9 @@
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
+		owner.current.visible_message("<span class='big'>[owner.current] looks like [owner.current.p_they()] just reverted to their old faith!</span>", ignored_mob = owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
 		owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
-		owner.current.visible_message("<span class='big'>[owner.current] looks like [owner.current.p_they()] just reverted to their old faith!</span>")
 	if(GLOB.blood_target && GLOB.blood_target_image && owner.current.client)
 		owner.current.client.images -= GLOB.blood_target_image
 	. = ..()

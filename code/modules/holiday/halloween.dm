@@ -123,8 +123,8 @@
 	health = 1e6
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0
@@ -171,7 +171,7 @@
 /mob/living/simple_animal/shade/howling_ghost/adjustHealth()
 	. = 0
 
-/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 
@@ -234,7 +234,7 @@
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/weapon/nullrod))
+	if(istype(O, /obj/item/weapon/nullrod))
 		if(prob(5))
 			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)

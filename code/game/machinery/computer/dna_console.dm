@@ -21,7 +21,7 @@
 	desc = "Scan DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
-	density = 1
+	density = TRUE
 	circuit = /obj/item/weapon/circuitboard/computer/scan_consolenew
 	var/radduration = 2
 	var/radstrength = 1
@@ -33,8 +33,8 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
 	var/list/delayed_action = null
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
 
@@ -85,7 +85,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3)))	//occupent is viable for dna modification
+			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3))) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -463,7 +463,7 @@
 				radstrength = Wrap(radstrength, 1, RADIATION_STRENGTH_MAX+1)
 
 				var/locked_state = connected.locked
-				connected.locked = 1
+				connected.locked = TRUE
 
 				current_screen = "working"
 				ShowInterface(usr)

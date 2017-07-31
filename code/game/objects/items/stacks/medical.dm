@@ -9,7 +9,6 @@
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE
-	obj_integrity = 40
 	max_integrity = 40
 	novariants = FALSE
 	var/heal_brute = 0
@@ -28,7 +27,7 @@
 		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
 		return
 
-	if(!istype(M, /mob/living/carbon) && !istype(M, /mob/living/simple_animal))
+	if(!iscarbon(M) && !isanimal(M))
 		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
 		return 1
 
@@ -56,7 +55,7 @@
 
 	if(user)
 		if (M != user)
-			if (istype(M, /mob/living/simple_animal))
+			if (isanimal(M))
 				var/mob/living/simple_animal/critter = M
 				if (!(critter.healable))
 					to_chat(user, "<span class='notice'> You cannot use [src] on [M]!</span>")
@@ -108,6 +107,8 @@
 	singular_name = "bruise pack"
 	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_brute = 40
 	origin_tech = "biotech=2"
 	self_delay = 20
@@ -139,6 +140,8 @@
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_burn = 40
 	origin_tech = "biotech=2"
 	self_delay = 20

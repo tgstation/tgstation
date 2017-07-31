@@ -60,7 +60,6 @@
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever
 		D.visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
-		D.holder = carriermind.current
 		D.affected_mob = carriermind.current
 		carriermind.current.viruses += D
 	..()

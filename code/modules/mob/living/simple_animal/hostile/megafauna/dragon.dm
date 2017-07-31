@@ -42,7 +42,7 @@ Difficulty: Medium
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
-	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -128,9 +128,9 @@ Difficulty: Medium
 			new /obj/effect/temp_visual/target(turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
-	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
+	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
 
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/fire_wall, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
@@ -185,14 +185,17 @@ Difficulty: Medium
 	negative = !negative //invert it for the swoop down later
 
 	var/oldtransform = transform
-	animate(src, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
+	alpha = 255
+	animate(src, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
 	for(var/i in 1 to 3)
 		sleep(1)
 		if(QDELETED(src) || stat == DEAD) //we got hit and died, rip us
 			qdel(F)
-			swooping &= ~SWOOP_DAMAGEABLE
+			if(stat == DEAD)
+				swooping &= ~SWOOP_DAMAGEABLE
+				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
 			return
-	animate(src, transform = matrix()*0.7, time = 7)
+	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
 	mouse_opacity = 0
 	sleep(7)
@@ -232,7 +235,7 @@ Difficulty: Medium
 			negative = TRUE
 	new /obj/effect/temp_visual/dragon_flight/end(loc, negative)
 	new /obj/effect/temp_visual/dragon_swoop(loc)
-	animate(src, transform = oldtransform, time = 5)
+	animate(src, alpha = 255, transform = oldtransform, time = 5)
 	sleep(5)
 	swooping &= ~SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)
@@ -258,6 +261,7 @@ Difficulty: Medium
 	density = TRUE
 	sleep(1)
 	swooping &= ~SWOOP_DAMAGEABLE
+	SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -304,7 +308,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/Fireball.ogg', 80, 1)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
 	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
@@ -316,7 +320,7 @@ Difficulty: Medium
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
-		if(!islist(flame_hit) || !flame_hit[L])
+		if(islist(flame_hit) && !flame_hit[L])
 			L.adjustFireLoss(40)
 			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			flame_hit[L] = TRUE
@@ -335,7 +339,7 @@ Difficulty: Medium
 	duration = 5
 
 /obj/effect/temp_visual/dragon_flight
-	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
 	pixel_x = -16

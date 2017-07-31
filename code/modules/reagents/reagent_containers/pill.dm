@@ -4,6 +4,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill"
 	item_state = "pill"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	possible_transfer_amounts = list()
 	volume = 50
 	var/apply_type = INGEST

@@ -20,13 +20,25 @@
 /datum/mapGeneratorModule/bottomLayer/massdelete
 	spawnableAtoms = list()
 	spawnableTurfs = list()
+	var/deletemobs = TRUE
+	var/deleteturfs = TRUE
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/generate()
 	if(!mother)
 		return
 	for(var/V in mother.map)
 		var/turf/T = V
-		T.empty()
+		T.empty(deleteturfs? null : T.type, delmobs = deletemobs, forceop = TRUE)
+
+/datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs
+	deletemobs = FALSE
+
+/datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs
+	deleteturfs = FALSE
+
+/datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete
+	deletemobs = FALSE
+	deleteturfs = FALSE
 
 //Only places atoms/turfs on area borders
 /datum/mapGeneratorModule/border
@@ -49,6 +61,20 @@
 
 /datum/mapGenerator/repressurize
 	modules = list(/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Block: Restore Roundstart Air Contents"
 
 /datum/mapGenerator/massdelete
 	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete)
+	buildmode_name = "Block: Full Mass Deletion"
+
+/datum/mapGenerator/massdelete/nomob
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs)
+	buildmode_name = "Block: Mass Deletion - Leave Mobs"
+
+/datum/mapGenerator/massdelete/noturf
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs)
+	buildmode_name = "Block: Mass Deletion - Leave Turfs"
+
+/datum/mapGenerator/massdelete/regen
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete)
+	buildmode_name = "Block: Mass Deletion - Leave Mobs and Turfs"

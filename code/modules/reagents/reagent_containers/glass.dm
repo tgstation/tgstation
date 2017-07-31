@@ -101,7 +101,7 @@
 			else
 				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
 
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
@@ -233,6 +233,8 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	materials = list(MAT_METAL=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
@@ -312,6 +314,102 @@
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/hydrogen
+	name = "hydrogen"
+	list_reagents = list("hydrogen" = 50)
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/lithium
+	name = "lithium"
+	list_reagents = list("lithium" = 50)
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/carbon
+	name = "carbon"
+	list_reagents = list("carbon" = 50)
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/nitrogen
+	name = "nitrogen"
+	list_reagents = list("nitrogen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/oxygen
+	name = "oxygen"
+	list_reagents = list("oxygen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/fluorine
+	name = "fluorine"
+	list_reagents = list("fluorine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sodium
+	name = "sodium"
+	list_reagents = list("sodium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/aluminium
+	name = "aluminium"
+	list_reagents = list("aluminium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silicon
+	name = "silicon"
+	list_reagents = list("silicon" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/phosphorus
+	name = "phosphorus"
+	list_reagents = list("phosphorus" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sulfur
+	name = "sulfur"
+	list_reagents = list("sulfur" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/chlorine
+	name = "chlorine"
+	list_reagents = list("chlorine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/potassium
+	name = "potassium"
+	list_reagents = list("potassium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/iron
+	name = "iron"
+	list_reagents = list("iron" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/copper
+	name = "copper"
+	list_reagents = list("copper" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/mercury
+	name = "mercury"
+	list_reagents = list("mercury" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/radium
+	name = "radium"
+	list_reagents = list("radium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/water
+	name = "water"
+	list_reagents = list("water" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/ethanol
+	name = "ethanol"
+	list_reagents = list("ethanol" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sugar
+	name = "sugar"
+	list_reagents = list("sugar" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sacid
+	name = "sacid"
+	list_reagents = list("sacid" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/welding_fuel
+	name = "welding_fuel"
+	list_reagents = list("welding_fuel" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silver
+	name = "silver"
+	list_reagents = list("silver" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/iodine
+	name = "iodine"
+	list_reagents = list("iodine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/bromine
+	name = "bromine"
+	list_reagents = list("bromine" = 50)

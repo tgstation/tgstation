@@ -1,6 +1,6 @@
 /obj/structure/destructible/cult
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	var/cooldowntime = 0
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
@@ -129,7 +129,7 @@
 	icon_state = "pylon"
 	light_range = 5
 	light_color = LIGHT_COLOR_RED
-	break_sound = 'sound/effects/Glassbr2.ogg'
+	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25
 	var/last_heal = 0
@@ -175,7 +175,7 @@
 				/turf/closed,
 				/turf/open/floor/engine/cult,
 				/turf/open/space,
-				/turf/open/floor/plating/lava,
+				/turf/open/lava,
 				/turf/open/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue
@@ -235,5 +235,5 @@
 	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE

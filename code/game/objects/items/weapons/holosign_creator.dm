@@ -4,6 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
@@ -15,7 +17,7 @@
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
-	var/holocreator_busy = 0 //to prevent placing multiple holo barriers at once
+	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
 	if(flag)
@@ -34,11 +36,11 @@
 				if(signs.len < max_signs)
 					playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
 					if(creation_time)
-						holocreator_busy = 1
+						holocreator_busy = TRUE
 						if(!do_after(user, creation_time, target = target))
-							holocreator_busy = 0
+							holocreator_busy = FALSE
 							return
-						holocreator_busy = 0
+						holocreator_busy = FALSE
 						if(signs.len >= max_signs)
 							return
 						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
@@ -73,6 +75,14 @@
 	holosign_type = /obj/structure/holosign/barrier/engineering
 	creation_time = 30
 	max_signs = 6
+
+/obj/item/weapon/holosign_creator/atmos
+	name = "ATMOS holofan projector"
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
+	icon_state = "signmaker_engi"
+	holosign_type = /obj/structure/holosign/barrier/atmos
+	creation_time = 0
+	max_signs = 3
 
 /obj/item/weapon/holosign_creator/cyborg
 	name = "Energy Barrier Projector"

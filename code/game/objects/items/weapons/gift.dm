@@ -72,7 +72,7 @@
 
 	var/gift_type = pick(gift_type_list)
 
-	if(!ispath(gift_type,/obj/item))
+	if(!ispath(gift_type, /obj/item))
 		return
 
 	qdel(src)

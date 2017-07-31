@@ -6,7 +6,7 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
@@ -24,7 +24,7 @@
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(C.use(4))
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
@@ -41,7 +41,7 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
@@ -59,7 +59,7 @@
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if (C.use(4))
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
@@ -74,10 +74,10 @@
 
 
 /datum/construction/mecha/ripley_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
+	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg), //4
 					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg)//5
 					)
 
@@ -95,7 +95,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/ripley(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ripley0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	const_holder.cut_overlays(TRUE)
 	qdel(src)
 	return
@@ -283,11 +283,11 @@
 
 
 /datum/construction/mecha/gygax_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/gygax_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/gygax_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/gygax_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/gygax_head)
 					)
 
@@ -305,7 +305,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/gygax(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "gygax0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	qdel(src)
 	return
 
@@ -568,11 +568,11 @@
 	return
 
 /datum/construction/mecha/firefighter_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg), //5
 					 list("key"=/obj/item/clothing/suit/fire)//6
 					)
 
@@ -590,7 +590,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/firefighter(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "fireripley0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	qdel(src)
 	return
 
@@ -792,11 +792,11 @@
 
 
 /datum/construction/mecha/honker_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/honker_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/honker_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/honker_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/honker_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/honker_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/honker_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/honker_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/honker_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
@@ -812,24 +812,24 @@
 /datum/construction/mecha/honker_chassis/spawn_result()
 	var/obj/item/mecha_parts/chassis/const_holder = holder
 	const_holder.construct = new /datum/construction/mecha/honker(const_holder)
-	const_holder.density = 1
+	const_holder.density = TRUE
 	qdel(src)
 	return
 
 
 /datum/construction/mecha/honker
 	result = "/obj/mecha/combat/honker"
-	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
-					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
-					 list("key"=/obj/item/weapon/bikehorn),//3
-					 list("key"=/obj/item/clothing/mask/gas/clown_hat),//4
-					 list("key"=/obj/item/weapon/bikehorn),//5
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting),//6
-					 list("key"=/obj/item/weapon/bikehorn),//7
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/peripherals),//8
-					 list("key"=/obj/item/weapon/bikehorn),//9
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/main),//10
-					 list("key"=/obj/item/weapon/bikehorn),//11
+	steps = list(list("key"=/obj/item/weapon/bikehorn), //1
+					 list("key"=/obj/item/clothing/shoes/clown_shoes), //2
+					 list("key"=/obj/item/weapon/bikehorn), //3
+					 list("key"=/obj/item/clothing/mask/gas/clown_hat), //4
+					 list("key"=/obj/item/weapon/bikehorn), //5
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting), //6
+					 list("key"=/obj/item/weapon/bikehorn), //7
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/peripherals), //8
+					 list("key"=/obj/item/weapon/bikehorn), //9
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/main), //10
+					 list("key"=/obj/item/weapon/bikehorn), //11
 					 )
 
 /datum/construction/mecha/honker/action(atom/used_atom,mob/user)
@@ -868,11 +868,11 @@
 	return
 
 /datum/construction/mecha/durand_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/durand_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/durand_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/durand_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/durand_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/durand_head)
 					)
 
@@ -890,7 +890,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/durand(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "durand0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	del src
 	return
 
@@ -1156,11 +1156,11 @@
 
 /datum/construction/mecha/phazon_chassis
 	result = "/obj/mecha/combat/phazon"
-	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/phazon_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/phazon_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/phazon_head)
 					)
 
@@ -1178,7 +1178,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/phazon(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "phazon0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	del src
 	return
 
@@ -1487,11 +1487,11 @@
 //ODYSSEUS
 
 /datum/construction/mecha/odysseus_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/odysseus_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/odysseus_head),//2
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm),//4
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/odysseus_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/odysseus_head), //2
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm), //4
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/odysseus_right_leg)//6
 					)
 
@@ -1509,7 +1509,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/odysseus(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "odysseus0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	del src
 	return
 

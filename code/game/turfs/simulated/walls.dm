@@ -46,13 +46,13 @@
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 
@@ -103,7 +103,7 @@
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, 1)
 		if(TOX)
 			playsound(src, 'sound/effects/spray2.ogg', 100, 1)
 			return 0
@@ -135,7 +135,7 @@
 /turf/closed/wall/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
-	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
 
@@ -167,13 +167,13 @@
 
 /turf/closed/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
 	//check for wall mounted frames
-	if(istype(W,/obj/item/wallframe))
+	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
 		return 1
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/poster))
+	else if(istype(W, /obj/item/weapon/poster))
 		place_poster(W,user)
 		return 1
 
@@ -195,7 +195,7 @@
 					return 1
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*W.toolspeed, target = src))
 			if(!iswallturf(src) || !user || !W || !T)
 				return 1
@@ -227,12 +227,12 @@
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
-	O.anchored = 1
+	O.anchored = TRUE
 	O.opacity = 1
-	O.density = 1
+	O.density = TRUE
 	O.layer = FLY_LAYER
 
-	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, 1)
 
 	if(thermite >= 50)
 		var/burning_time = max(100,300 - thermite)

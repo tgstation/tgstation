@@ -30,7 +30,6 @@
 "i" = (
 /obj/structure/piano,
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
@@ -64,7 +63,6 @@
 /area/ruin/powered/aesthetic)
 "o" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vaporwave,
@@ -78,7 +76,6 @@
 /area/ruin/powered/aesthetic)
 "r" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
@@ -119,7 +116,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/aesthetic)
 "A" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -140,7 +137,6 @@
 /area/ruin/unpowered/no_grav)
 "D" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-recharge_floor_asteroid";
 	icon_state = "recharge_floor_asteroid"
 	},
 /area/ruin/unpowered/no_grav)
@@ -167,27 +163,21 @@
 /area/ruin/unpowered/no_grav)
 "I" = (
 /turf/open/space,
-/obj/effect/decal/sandeffect,
-/turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-platingsandeffect";
-	icon_state = "platingsandeffect"
-	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
 "J" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-l";
 	icon_state = "stairs-l"
 	},
 /area/ruin/unpowered/no_grav)
 "K" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-m";
 	icon_state = "stairs-m"
 	},
 /area/ruin/unpowered/no_grav)
 "L" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-r";
 	icon_state = "stairs-r"
 	},
 /area/ruin/unpowered/no_grav)
@@ -196,7 +186,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "N" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
 "O" = (
@@ -430,7 +420,7 @@ O
 n
 k
 w
-Q
+P
 g
 F
 I
@@ -466,7 +456,7 @@ p
 u
 y
 g
-S
+R
 d
 d
 a

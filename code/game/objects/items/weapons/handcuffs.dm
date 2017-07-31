@@ -9,6 +9,8 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -31,7 +33,7 @@
 		return
 
 	// chance of monkey retaliation
-	if(istype(C, /mob/living/carbon/monkey) && prob(MONKEY_CUFF_RETALIATION_PROB))
+	if(ismonkey(C) && prob(MONKEY_CUFF_RETALIATION_PROB))
 		var/mob/living/carbon/monkey/M
 		M = C
 		M.retaliate(user)
@@ -88,6 +90,8 @@
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
 	item_state = "coil_red"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	origin_tech = "engineering=2"
 	breakouttime = 300 //Deciseconds = 30s
@@ -141,7 +145,9 @@
 
 /obj/item/weapon/restraints/handcuffs/cable/white
 	icon_state = "cuff_white"
-	item_state = "coil_white"
+	item_state = "cuff_white"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 
 /obj/item/weapon/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
@@ -206,7 +212,9 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
-	item_state = "coil_white"
+	item_state = "cuff_white"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
@@ -227,6 +235,8 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags = CONDUCT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
@@ -303,7 +313,7 @@
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
-	if(!istype(loc, /mob))
+	if(!ismob(loc))
 		do_sparks(1, TRUE, src)
 		qdel(src)
 
@@ -320,7 +330,7 @@
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
 	origin_tech = "engineering=3;combat=1"
-	var/weaken = 0
+	var/knockdown = 0
 
 /obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
@@ -338,7 +348,7 @@
 		C.update_inv_legcuffed()
 		SSblackbox.add_details("handcuffs","[type]")
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Weaken(weaken)
+		C.Knockdown(knockdown)
 
 /obj/item/weapon/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
@@ -346,7 +356,7 @@
 	icon_state = "bola_r"
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
-	weaken = 1
+	knockdown = 20
 
 /obj/item/weapon/restraints/legcuffs/bola/energy //For Security
 	name = "energy bola"

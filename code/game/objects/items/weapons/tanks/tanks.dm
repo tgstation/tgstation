@@ -1,6 +1,8 @@
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/smash.ogg'
@@ -142,7 +144,7 @@
 	else
 		. = ..()
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -231,7 +233,7 @@
 
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc,/obj/item/device/transfer_valve))
+		if(!istype(src.loc, /obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//to_chat(world, "\blue[x],[y] tank is exploding: [pressure] kPa")
@@ -246,7 +248,7 @@
 		//to_chat(world, "\blue Exploding Pressure: [pressure] kPa, intensity: [range]")
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc,/obj/item/device/transfer_valve))
+		if(istype(src.loc, /obj/item/device/transfer_valve))
 			qdel(src.loc)
 		else
 			qdel(src)

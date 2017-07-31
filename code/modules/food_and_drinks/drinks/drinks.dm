@@ -6,6 +6,8 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	container_type = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
@@ -29,6 +31,10 @@
 
 	if(!canconsume(M, user))
 		return 0
+	
+	if (!is_open_container())
+		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
+		return 0
 
 	if(M == user)
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
@@ -50,6 +56,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	
+		if (!is_open_container())
+			to_chat(user, "<span class='warning'>[target]'s tab isn't open!</span>")
+			return
 
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] is empty.</span>")
@@ -87,10 +97,16 @@
 			to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
 			reagents.handle_reactions()
 	..()
+	
+
+
+	
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
+
 
 /obj/item/weapon/reagent_containers/food/drinks/trophy
 	name = "pewter cup"
@@ -153,6 +169,7 @@
 	icon_state = "coffee"
 	list_reagents = list("coffee" = 30)
 	spillable = 1
+	resistance_flags = FREEZE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
@@ -183,6 +200,7 @@
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
+	resistance_flags = FREEZE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
@@ -312,7 +330,11 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
-
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	container_type = 0
+	spillable = FALSE
+	
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
@@ -321,6 +343,16 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 	..()
+	
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
+	if(!is_open_container())
+		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
+		container_type = OPENCONTAINER
+		playsound(src, "can_open", 50, 1)
+		spillable = TRUE
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"

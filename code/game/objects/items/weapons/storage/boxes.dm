@@ -26,6 +26,8 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
@@ -533,6 +535,8 @@
 	illustration = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots=21
 	can_hold = list(/obj/item/weapon/light/tube, /obj/item/weapon/light/bulb)
@@ -879,3 +883,11 @@
 /obj/item/weapon/storage/box/silver_sulf/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+
+
+/obj/item/weapon/storage/box/fountainpens
+	name = "box of fountain pens"
+
+/obj/item/weapon/storage/box/fountainpens/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/pen/fountain(src)

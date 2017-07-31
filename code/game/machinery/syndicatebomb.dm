@@ -7,8 +7,8 @@
 	icon_state = "syndicate-bomb"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
 
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -120,14 +120,14 @@
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
 				playsound(loc, I.usesound, 50, 1)
-				anchored = 1
+				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
 				playsound(loc, I.usesound, 50, 1)
-				anchored = 0
+				anchored = FALSE
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
@@ -275,6 +275,8 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
@@ -297,7 +299,7 @@
 		message_admins(adminlog)
 		log_game(adminlog)
 	explosion(get_turf(src), range_heavy, range_medium, range_light, flame_range = range_flame)
-	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
 		qdel(loc)
 	qdel(src)
 
@@ -394,11 +396,11 @@
 
 /obj/item/weapon/bombcore/chemical
 	name = "chemical payload"
-	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. It is able to hold up to four chemical containers, and must be loaded before use."
+	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. Properties of the core may vary with grenade casing type, and must be loaded before use."
 	origin_tech = "combat=4;materials=3"
 	icon_state = "chemcore"
 	var/list/beakers = list()
-	var/max_beakers = 1
+	var/max_beakers = 1 // Read on about grenade casing properties below
 	var/spread_range = 5
 	var/temp_boost = 50
 	var/time_release = 0
@@ -411,7 +413,7 @@
 			total_volume += RC.reagents.total_volume
 
 		if(total_volume < time_release) // If it's empty, the detonation is complete.
-			if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+			if(loc && istype(loc, /obj/machinery/syndicatebomb/))
 				qdel(loc)
 			qdel(src)
 			return
@@ -442,7 +444,7 @@
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), spread_range, reactants, temp_boost))
-		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
 	if(adminlog)
@@ -451,7 +453,7 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, 1, 5)
 
-	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
 		qdel(loc)
 	qdel(src)
 
@@ -525,6 +527,8 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "syndicate=3"
 	var/timer = 0

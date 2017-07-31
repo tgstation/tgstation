@@ -9,7 +9,6 @@
 
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
-	obj_integrity = 100
 	max_integrity = 100
 
 /obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -30,7 +29,7 @@
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
@@ -55,11 +54,10 @@
 	desc = "Looks like some kind of thick resin."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	icon_state = "resin"
-	density = 1
+	density = TRUE
 	opacity = 1
-	anchored = 1
+	anchored = TRUE
 	canSmoothWith = list(/obj/structure/alien/resin)
-	obj_integrity = 200
 	max_integrity = 200
 	smooth = SMOOTH_TRUE
 	var/resintype = null
@@ -92,7 +90,6 @@
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
 	opacity = 0
-	obj_integrity = 160
 	max_integrity = 160
 	resintype = "membrane"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
@@ -101,7 +98,7 @@
 	return attack_hand(user)
 
 
-/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target)
 	return !density
 
 
@@ -115,11 +112,10 @@
 	gender = PLURAL
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = TURF_LAYER
 	icon_state = "weeds"
-	obj_integrity = 15
 	max_integrity = 15
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
@@ -137,7 +133,7 @@
 		blacklisted_turfs = typecacheof(list(
 			/turf/open/space,
 			/turf/open/chasm,
-			/turf/open/floor/plating/lava))
+			/turf/open/lava))
 
 
 	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
@@ -220,7 +216,6 @@
 	icon_state = "egg_growing"
 	density = FALSE
 	anchored = TRUE
-	obj_integrity = 100
 	max_integrity = 100
 	integrity_failure = 5
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive

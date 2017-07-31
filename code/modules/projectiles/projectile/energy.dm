@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
+	is_reflectable = TRUE
 
 /obj/item/projectile/energy/chameleon
 	nodamage = TRUE
@@ -13,14 +14,13 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 	nodamage = 1
-	stun = 5
-	weaken = 5
+	knockdown = 100
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
 
-/obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
 		do_sparks(1, TRUE, src)
@@ -28,7 +28,7 @@
 		var/mob/living/carbon/C = target
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		else if(C.status_flags & CANWEAKEN)
+		else if(C.status_flags & CANKNOCKDOWN)
 			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, jitter), 5)
 
 /obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
@@ -47,7 +47,7 @@
 	. = ..()
 	SpinAnimation()
 
-/obj/item/projectile/energy/net/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
@@ -64,7 +64,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dragnetfield"
 	light_range = 3
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/nettingportal/Initialize()
 	. = ..()
@@ -91,11 +91,11 @@
 	name = "energy snare"
 	icon_state = "e_snare"
 	nodamage = 1
-	weaken = 1
+	knockdown = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
-/obj/item/projectile/energy/trap/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/trap/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
 		new/obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(loc))
 	else if(iscarbon(target))
@@ -111,11 +111,11 @@
 	name = "Energy Bola"
 	icon_state = "e_snare"
 	nodamage = 1
-	weaken = 0
+	knockdown = 0
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
-/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100)
 		do_sparks(1, TRUE, src)
 		qdel(src)
@@ -142,7 +142,7 @@
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
-	weaken = 5
+	knockdown = 100
 	range = 7
 
 /obj/item/projectile/energy/bolt //ebow bolts
@@ -151,7 +151,7 @@
 	damage = 8
 	damage_type = TOX
 	nodamage = 0
-	weaken = 5
+	knockdown = 100
 	stutter = 5
 
 /obj/item/projectile/energy/bolt/halloween
