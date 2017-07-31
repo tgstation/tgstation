@@ -316,7 +316,7 @@
 
 /obj/machinery/door/window/brigdoor/security/holding
 	name = "holding cell door"
-	req_access = list(ACCESS_SEC_DOORS, ACCESS_LAWYER) //love for the lawyer
+	req_one_access = list(ACCESS_SEC_DOORS, ACCESS_LAWYER) //love for the lawyer
 
 /obj/machinery/door/window/clockwork
 	name = "brass windoor"
