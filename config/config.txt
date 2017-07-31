@@ -178,6 +178,11 @@ CHECK_RANDOMIZER
 ##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization 
 # GITHUBREPOID 3234987
 
+## Github api key
+## This is an api key for the user account used for posting and editing issues
+## It can be created here: https://github.com/settings/tokens
+# GITHUBAPIKEY 3234987
+
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
 

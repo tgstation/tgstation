@@ -31,3 +31,9 @@
 #define SERVICE_REQUEST_IRC_BROADCAST "irc"
 #define SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE "send2irc"
 #define SERVICE_REQUEST_WORLD_REBOOT "worldreboot"
+
+//Issue reporting funcs
+
+#define GITHUB_ISSUES_DLL "tools/IssueReporter/TGIssueReporter.dll"
+#define GITHUB_ISSUES_CREATE "CreateIssue"
+#define GITHUB_ISSUES_APPEND "AppendIssue"
