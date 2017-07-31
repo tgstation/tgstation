@@ -135,3 +135,61 @@
 		return
 	else
 		dyn_explosion(location, amount, flashing_factor)
+
+/datum/effect_system/trail_follow/ion/space_trail
+	var/turf/oldloc // secondary ion trail loc
+	var/turf/currloc
+
+/datum/effect_system/trail_follow/ion/space_trail/Destroy()
+	oldloc = null
+	currloc = null
+	return ..()
+
+/datum/effect_system/trail_follow/ion/space_trail/start()
+	if(!src.on)
+		src.on = 1
+		src.processing = 1
+	if(src.processing)
+		src.processing = 0
+		spawn(0)
+			var/turf/T = get_turf(src.holder)
+			if(currloc != T)
+				switch(holder.dir)
+					if(NORTH)
+						src.oldposition = T
+						src.oldposition = get_step(oldposition, SOUTH)
+						src.oldloc = get_step(oldposition,EAST)
+						//src.oldloc = get_step(oldloc, SOUTH)
+					if(SOUTH) // More difficult, offset to the north!
+						src.oldposition = get_step(holder,NORTH)
+						src.oldposition = get_step(oldposition,NORTH)
+						src.oldloc = get_step(oldposition,EAST)
+						//src.oldloc = get_step(oldloc,NORTH)
+					if(EAST) // Just one to the north should suffice
+						src.oldposition = T
+						src.oldposition = get_step(oldposition, WEST)
+						src.oldloc = get_step(oldposition,NORTH)
+						//src.oldloc = get_step(oldloc,WEST)
+					if(WEST) // One to the east and north from there
+						src.oldposition = get_step(holder,EAST)
+						src.oldposition = get_step(oldposition,EAST)
+						src.oldloc = get_step(oldposition,NORTH)
+						//src.oldloc = get_step(oldloc,EAST)
+				if(istype(T, /turf/open/space))
+					var/obj/effect/particle_effect/ion_trails/I = new /obj/effect/particle_effect/ion_trails(src.oldposition)
+					var/obj/effect/particle_effect/ion_trails/II = new /obj/effect/particle_effect/ion_trails(src.oldloc)
+					//src.oldposition = T
+					I.dir = src.holder.dir
+					II.dir = src.holder.dir
+					flick("ion_fade", I)
+					flick("ion_fade", II)
+					I.icon_state = ""
+					II.icon_state = ""
+					spawn( 20 )
+						if(I) qdel(I)
+						if(II) qdel(I)
+			spawn(2)
+				if(src.on)
+					src.processing = 1
+					src.start()
+			currloc = T

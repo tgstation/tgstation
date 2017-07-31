@@ -12,7 +12,7 @@
 /obj/machinery/computer/pod/Initialize()
 	..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
-		if(M.id == id)
+		if(M.check_access(id))
 			connected = M
 
 
@@ -25,18 +25,18 @@
 		return
 
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
-		if(M.id == id)
+		if(M.check_access(id))
 			M.open()
 
 	sleep(20)
 	for(var/obj/machinery/mass_driver/M in range(range, src))
-		if(M.id == id)
+		if(M.check_access(id))
 			M.power = connected.power
 			M.drive()
 
 	sleep(50)
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
-		if(M.id == id)
+		if(M.check_access(id))
 			M.close()
 
 /obj/machinery/computer/pod/attack_hand(mob/user)

@@ -18,7 +18,7 @@
 	cooldown = 1
 	var/openclose
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-		if(M.id == src.id)
+		if(M.check_access(src.id))
 			if(openclose == null)
 				openclose = M.density
 			spawn(0)
@@ -85,7 +85,7 @@
 /obj/item/device/assembly/control/massdriver/activate()
 	cooldown = 1
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-		if (M.id == src.id)
+		if (M.check_access(src.id))
 			spawn( 0 )
 				M.open()
 
@@ -98,7 +98,7 @@
 	sleep(60)
 
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-		if (M.id == src.id)
+		if (M.check_access(src.id))
 			spawn( 0 )
 				M.close()
 
