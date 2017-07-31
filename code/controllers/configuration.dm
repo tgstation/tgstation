@@ -871,7 +871,7 @@
 			if("sql_enabled")
 				sql_enabled = 1
 			if("address")
-				global.sqladdress = value
+				global.sqladdress = replacetext(value, "localhost", "127.0.0.1")
 			if("port")
 				global.sqlport = value
 			if("feedback_database")
