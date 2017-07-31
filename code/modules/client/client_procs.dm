@@ -384,6 +384,8 @@ GLOBAL_LIST(external_rsc_urls)
 	return ..()
 
 /client/Destroy()
+	if(IsAdminAdvancedProcCall() && !check_rights(R_BAN, TRUE))
+		return QDEL_HINT_IWILLGC
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
