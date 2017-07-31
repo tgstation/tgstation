@@ -188,8 +188,8 @@
 	icon_state = "poster2"
 
 /obj/structure/sign/poster/contraband/fun_police
-	name = "Fun Police"
-	desc = "A poster condemning the station's security forces."
+	name = "Groin Destroyer"
+	desc = "Groin... My only weakness..."
 	icon_state = "poster3"
 
 /obj/structure/sign/poster/contraband/lusty_xenomorph
