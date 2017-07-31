@@ -705,10 +705,15 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	if(!istype(user))
 		return 0
 
+	var/fukkendisk = locate(/obj/item/weapon/disk/nuclear) in GetAllContents(user)
 
 	if(user.incapacitated()) //are you cuffed, dying, lying, stunned or other
 		return 0
 	if(!ishuman(user))
+		return 0
+
+	if(fukkendisk)
+		to_chat(user, "<span class='danger'><B>The nuke-disk is locking the door every time you try to open it. You get the feeling that it doesn't want to go into the spacepod.</b></span>")
 		return 0
 
 	for(var/mob/living/simple_animal/slime/S in range(1,usr))
