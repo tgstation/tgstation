@@ -116,7 +116,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/aesthetic)
 "A" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -163,10 +163,8 @@
 /area/ruin/unpowered/no_grav)
 "I" = (
 /turf/open/space,
-/obj/effect/decal/sandeffect,
-/turf/open/floor/plasteel/airless/asteroid{
-	icon_state = "platingsandeffect"
-	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
 "J" = (
 /turf/open/floor/plasteel/airless/asteroid{
@@ -188,7 +186,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "N" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
 "O" = (
@@ -422,7 +420,7 @@ O
 n
 k
 w
-Q
+P
 g
 F
 I
@@ -458,7 +456,7 @@ p
 u
 y
 g
-S
+R
 d
 d
 a

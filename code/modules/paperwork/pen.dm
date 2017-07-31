@@ -223,6 +223,10 @@
 	if(on)
 		icon_state = "edagger"
 		item_state = "edagger"
+		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	else
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+		lefthand_file = initial(lefthand_file)
+		righthand_file = initial(righthand_file)

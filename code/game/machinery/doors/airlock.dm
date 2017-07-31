@@ -233,9 +233,13 @@
 					return
 			else /*if(src.justzap)*/
 				return
-		else if(user.hallucination > 50 && ishuman(user) && prob(10) && src.operating == FALSE)
-			hallucinate_shock(user)
-			return
+		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
+			var/mob/living/carbon/human/H = user
+			if(H.gloves)
+				var/obj/item/clothing/gloves/G = H.gloves
+				if(G.siemens_coefficient)//not insulated
+					hallucinate_shock(H)
+					return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
 			if(cyclelinkedairlock.operating)

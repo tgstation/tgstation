@@ -6,7 +6,7 @@
 #define INVISIBILITY_REVENANT 50
 
 /mob/living/simple_animal/revenant
-	name = "revenant"
+	name = "\a Revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
@@ -419,7 +419,6 @@
 
 //objectives
 /datum/objective/revenant
-	dangerrating = 10
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
@@ -439,7 +438,6 @@
 	return TRUE
 
 /datum/objective/revenantFluff
-	dangerrating = 0
 
 /datum/objective/revenantFluff/New()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \

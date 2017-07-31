@@ -1,9 +1,9 @@
-/obj/item/weapon/paper/manifest
+/obj/item/weapon/paper/fluff/jobs/cargo/manifest
 	var/order_cost = 0
 	var/order_id = 0
 	var/errors = 0
 
-/obj/item/weapon/paper/manifest/New(atom/A, id, cost)
+/obj/item/weapon/paper/fluff/jobs/cargo/manifest/New(atom/A, id, cost)
 	..()
 	order_id = id
 	order_cost = cost
@@ -15,10 +15,10 @@
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_ITEM
 
-/obj/item/weapon/paper/manifest/proc/is_approved()
+/obj/item/weapon/paper/fluff/jobs/cargo/manifest/proc/is_approved()
 	return stamped && stamped.len && !is_denied()
 
-/obj/item/weapon/paper/manifest/proc/is_denied()
+/obj/item/weapon/paper/fluff/jobs/cargo/manifest/proc/is_denied()
 	return stamped && ("stamp-deny" in stamped)
 
 /datum/supply_order
@@ -54,7 +54,7 @@
 	return P
 
 /datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C)
-	var/obj/item/weapon/paper/manifest/P = new(C, id, pack.cost)
+	var/obj/item/weapon/paper/fluff/jobs/cargo/manifest/P = new(C, id, pack.cost)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
@@ -85,7 +85,7 @@
 
 /datum/supply_order/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = pack.generate(T)
-	var/obj/item/weapon/paper/manifest/M = generateManifest(C)
+	var/obj/item/weapon/paper/fluff/jobs/cargo/manifest/M = generateManifest(C)
 
 	if(M.errors & MANIFEST_ERROR_ITEM)
 		if(istype(C, /obj/structure/closet/crate/secure) || istype(C, /obj/structure/closet/crate/large))

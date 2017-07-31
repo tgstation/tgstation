@@ -2585,10 +2585,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	info = "<bold>!NOTICE!</bold><br><br><center>We are expecting arriving guests soon from a nearby station! Stay sharp and make sure guests enjoy their time spent here. Don't think you can sneak off while they're here, either.</center>";
-	name = "!NOTICE!"
-	},
+/obj/item/weapon/paper/fluff/ruins/spacehotel/notice,
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
 "gJ" = (
@@ -2705,26 +2702,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/hotel/dock)
 "hd" = (

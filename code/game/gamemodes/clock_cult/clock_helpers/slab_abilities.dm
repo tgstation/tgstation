@@ -145,29 +145,6 @@
 
 	return TRUE
 
-//For the Volt Void scripture, fires a ray of energy at a target location
-/obj/effect/proc_holder/slab/volt
-	ranged_mousepointer = 'icons/effects/volt_target.dmi'
-
-/obj/effect/proc_holder/slab/volt/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(target == slab || ..()) //we can't cancel
-		return TRUE
-
-	var/turf/T = ranged_ability_user.loc
-	if(!isturf(T))
-		return TRUE
-
-	if(target in view(7, get_turf(ranged_ability_user)))
-		successful = TRUE
-		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [target]!</span>", "<span class='nzcrentr'>You fire a volt ray at [target].</span>")
-		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
-		T = get_turf(target)
-		new/obj/effect/temp_visual/ratvar/volt_hit(T, ranged_ability_user)
-		add_logs(ranged_ability_user, T, "fired a volt ray")
-		remove_ranged_ability()
-
-	return TRUE
-
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard
 /obj/effect/proc_holder/slab/vanguard
 	ranged_mousepointer = 'icons/effects/vanguard_target.dmi'

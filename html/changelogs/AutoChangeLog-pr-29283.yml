@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Cyborgs now regenerate oxygen damage."
-  - bugfix: "If a cyborg somehow takes toxin damage, it can be healed with cables as though it was burn damage."

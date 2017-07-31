@@ -37,7 +37,7 @@
 /area/ruin/powered/beach)
 "ak" = (
 /obj/structure/toilet,
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "al" = (
@@ -50,7 +50,7 @@
 /obj/structure/urinal{
 	pixel_y = 32
 	},
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "an" = (
@@ -65,7 +65,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /obj/structure/mirror{
 	pixel_x = 28
 	},
@@ -90,7 +90,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "au" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "av" = (
@@ -107,7 +107,7 @@
 /area/ruin/powered/beach)
 "ay" = (
 /obj/machinery/door/airlock/hatch,
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "az" = (
@@ -116,7 +116,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aA" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aB" = (
@@ -260,7 +260,7 @@
 /area/ruin/powered/beach)
 "bc" = (
 /obj/machinery/door/airlock/sandstone,
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bd" = (
@@ -366,7 +366,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bL" = (
-/obj/effect/decal/sandeffect{
+/obj/effect/turf_decal/sand{
 	density = 1
 	},
 /obj/effect/decal/fakelattice,
@@ -420,7 +420,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "ce" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -459,7 +459,7 @@
 /turf/open/floor/plating/beach/water,
 /area/ruin/powered/beach)
 "cz" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /obj/effect/baseturf_helper,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
@@ -482,7 +482,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "jF" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "lF" = (
@@ -514,7 +514,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "qa" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -529,23 +529,23 @@
 /area/ruin/powered/beach)
 "zw" = (
 /obj/structure/closet/athletic_mixed,
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "Ec" = (
 /obj/machinery/door/airlock/sandstone,
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "Gc" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "HC" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "TP" = (
@@ -560,7 +560,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "Xp" = (
-/obj/effect/decal/sandeffect,
+/obj/effect/turf_decal/sand,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
