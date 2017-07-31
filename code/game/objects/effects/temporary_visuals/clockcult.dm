@@ -182,9 +182,9 @@
 	light_power = 0.5
 	light_color = "#1E8CE1"
 
-/obj/effect/temp_visual/ratvar/sigil/accession
+/obj/effect/temp_visual/ratvar/sigil/submission
 	color = "#AF0AAF"
 	layer = ABOVE_MOB_LAYER
-	duration = 70
+	duration = 80
 	icon_state = "sigilactiveoverlay"
 	alpha = 0
