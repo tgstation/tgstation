@@ -615,29 +615,6 @@
 		add_overlay(head_overlay)
 	update_fire()
 
-#define BORG_CAMERA_BUFFER 30
-
-/mob/living/silicon/robot/proc/do_camera_update(oldLoc)
-	if(oldLoc != src.loc)
-		GLOB.cameranet.updatePortableCamera(src.camera)
-	updating = 0
-
-/mob/living/silicon/robot/Move(a, b, flag)
-	var/oldLoc = src.loc
-	. = ..()
-	if(.)
-		if(src.camera)
-			if(!updating)
-				updating = 1
-				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
-	if(module)
-		if(istype(module, /obj/item/weapon/robot_module/miner))
-			if(istype(loc, /turf/open/floor/plating/asteroid))
-				for(var/obj/item/I in held_items)
-					if(istype(I, /obj/item/weapon/storage/bag/ore))
-						loc.attackby(I, src)
-#undef BORG_CAMERA_BUFFER
-
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		if(mmi)
