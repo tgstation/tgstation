@@ -68,7 +68,7 @@
 
 /datum/action/innate/cellular_emporium
 	name = "Cellular Emporium"
-	icon = 'icons/obj/drinks.dmi'
+	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
 	background_icon_state = "bg_alien"
 	var/datum/cellular_emporium/cellular_emporium
