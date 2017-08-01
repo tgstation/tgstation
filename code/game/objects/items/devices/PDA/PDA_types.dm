@@ -16,7 +16,7 @@
 	var/datum/component/slippery/S = C
 	if(!istype(S))
 		return
-	var/mob/living/carbon/human/M = S.last_successful_slip
+	var/mob/living/carbon/human/M = S.slip_victim
 	if (istype(M) && (M.real_name != src.owner))
 		var/obj/item/weapon/cartridge/virus/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
