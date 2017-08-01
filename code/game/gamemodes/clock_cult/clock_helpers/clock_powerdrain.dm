@@ -1,6 +1,6 @@
 //horrifying power drain proc made for clockcult's power drain in lieu of six istypes or six for(x in view) loops
 /atom/movable/proc/power_drain(clockcult_user)
-	var/obj/item/weapon/stock_pars/cell/cell = get_cell()
+	var/obj/item/weapon/stock_parts/cell/cell = get_cell()
 	if(cell)
 		return cell.power_drain(clockcult_user)
 	return 0
