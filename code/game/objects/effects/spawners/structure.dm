@@ -31,3 +31,35 @@ again.
 						/obj/structure/grille,
 						/obj/structure/window/reinforced/fulltile
 						)
+
+/obj/effect/spawner/structure/window/reinforced/tinted
+	name = "tinted reinforced window spawner"
+	icon_state = "twindow_spawner"
+	spawn_list = 	list(
+						/obj/structure/grille,
+						/obj/structure/window/reinforced/tinted/fulltile
+						)
+
+/obj/effect/spawner/structure/window/shuttle
+	name = "reinforced tinted window spawner"
+	icon_state = "swindow_spawner"
+	spawn_list = 	list(
+						/obj/structure/grille,
+						/obj/structure/window/shuttle
+						)
+
+/obj/effect/spawner/structure/window/plasma
+	name = "plasma window spawner"
+	icon_state = "pwindow_spawner"
+	spawn_list = 	list(
+						/obj/structure/grille,
+						/obj/structure/window/plasma/fulltile
+						)
+
+/obj/effect/spawner/structure/window/plasma/reinforced
+	name = "reinforced plasma window spawner"
+	icon_state = "prwindow_spawner"
+	spawn_list = 	list(
+						/obj/structure/grille,
+						/obj/structure/window/plasma/reinforced/fulltile
+						)
