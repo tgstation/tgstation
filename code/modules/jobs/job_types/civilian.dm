@@ -9,7 +9,7 @@ Clown
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "the honkmother"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/clown
@@ -19,6 +19,7 @@ Clown
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.rename_self("clown", M.client)
+	H.adjustBrainLoss(75)
 
 /datum/outfit/job/clown
 	name = "Clown"
