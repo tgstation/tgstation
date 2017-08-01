@@ -309,13 +309,12 @@ SUBSYSTEM_DEF(garbage)
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
-	if(SSgarbage)
-		while(SSgarbage.queue.len)
-			var/datum/o = locate(SSgarbage.queue[1])
-			if(istype(o) && o.gc_destroyed)
-				del(o)
-				SSgarbage.totaldels++
-			SSgarbage.queue.Cut(1, 2)
+	while(SSgarbage.queue.len)
+		var/datum/o = locate(SSgarbage.queue[1])
+		if(istype(o) && o.gc_destroyed)
+			del(o)
+			SSgarbage.totaldels++
+		SSgarbage.queue.Cut(1, 2)
 
 /datum/verb/qdel_then_find_references()
 	set category = "Debug"
