@@ -13,7 +13,7 @@ Doesn't work on other aliens/AI.*/
 	var/check_turf = 0
 	var/has_action = 1
 	var/datum/action/spell_action/alien/action = null
-	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_alien"
 
