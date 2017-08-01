@@ -34,16 +34,19 @@
 
 /obj/structure/destructible/clockwork/geis_binding/process()
 	var/tick_damage = 1
+	var/pulled_by_servant = FALSE
 	if(LAZYLEN(buckled_mobs))
 		for(var/V in buckled_mobs)
 			var/mob/living/L = V
 			if(is_servant_of_ratvar(L)) //servants are freed automatically
 				take_damage(obj_integrity)
 				return
-	if(!is_servant_of_ratvar(pulledby))
+			if(is_servant_of_ratvar(L.pulledby))
+				pulled_by_servant = TRUE
+	if(!pulled_by_servant && !is_servant_of_ratvar(pulledby))
 		tick_damage++
 	take_damage(tick_damage, sound_effect = FALSE)
-	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 20, TRUE)
+	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 30, TRUE)
 
 /obj/structure/destructible/clockwork/geis_binding/attack_hand(mob/living/user)
 	return
