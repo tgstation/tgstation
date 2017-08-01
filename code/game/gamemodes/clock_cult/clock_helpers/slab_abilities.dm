@@ -51,6 +51,7 @@
 					add_mousepointer(ranged_ability_user.client)
 			else if(target == pulled_binding || (isliving(target) && L.buckled == pulled_binding))
 				ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] dispels [pulled_binding]!</span>", "<span class='danger'>You dispel the binding!</span>")
+				binding.take_damage(obj_integrity)
 				remove_ranged_ability()
 			return TRUE
 		if(target_is_binding)
