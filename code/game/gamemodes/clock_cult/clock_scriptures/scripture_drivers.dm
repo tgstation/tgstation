@@ -48,8 +48,7 @@
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
-	Excessive absorption will cause unconsciousness."
+	desc = "Provides 25 seconds of stun immunity. At the end of the duration, the invoker is knocked down for the equivalent of 30% of all stuns they absorbed."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
@@ -76,11 +75,11 @@
 	return TRUE
 
 
-//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute, burn, and oxygen damage into half as much toxin damage.
+//Sentinel's Compromise: Allows the invoker to select a nearby servant and heal their brute/burn/oxygen damage with Vitality.
 /datum/clockwork_scripture/ranged_ability/sentinels_compromise
-	descname = "Convert Brute/Burn/Oxygen to Half Toxin"
+	descname = "Heal Brute/Burn/Oxygen"
 	name = "Sentinel's Compromise"
-	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute, burn, and oxygen damage to half as much toxin damage."
+	desc = "Charges your slab with healing power, allowing you to heal a target Servant using Vitality. Healing done without Vitality is much less effective."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	consumed_components = list(VANGUARD_COGWHEEL = 1)
@@ -89,7 +88,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
 	quickbind = TRUE
-	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
+	quickbind_desc = "Allows you to heal a Servant using Vitality.<br><b>Click your slab to disable.</b>"
 	slab_overlay = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
@@ -118,17 +117,18 @@
 	Click your slab to cancel.</b></span>"
 	timeout_time = 100
 
-/datum/clockwork_scripture/ranged_ability/geis/run_scripture()
-	var/servants = 0
-	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(can_recite_scripture(M, TRUE))
-				servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		whispered = FALSE
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*3, 50)
-	return ..()
+/datum/clockwork_scripture/ranged_ability/geis/scripture_effects()
+	var/mob/living/silicon/robot/R
+	if(iscyborg(invoker))
+		R = invoker
+		if(!R.eye_lights)
+			R.update_icons()
+		R.eye_lights.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0)) //robot eye lights turn purple
+		R.update_icons()
+	. = ..()
+	if(!QDELETED(R))
+		R.eye_lights.color = null
+		R.update_icons()
 
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.

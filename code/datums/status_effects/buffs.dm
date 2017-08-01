@@ -43,7 +43,7 @@
 
 /datum/status_effect/vanguard_shield
 	id = "vanguard"
-	duration = 200
+	duration = 250
 	tick_interval = 0 //tick as fast as possible
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/vanguard
@@ -51,7 +51,7 @@
 
 /obj/screen/alert/status_effect/vanguard
 	name = "Vanguard"
-	desc = "You're absorbing stuns! 25% of all stuns taken will affect you after this effect ends."
+	desc = "You're absorbing stuns! 30% of all stuns taken will affect you after this effect ends."
 	icon_state = "vanguard"
 	alerttooltipstyle = "clockcult"
 
@@ -61,7 +61,7 @@
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
 		desc += "<br><b>[Floor(vanguard["stuns_absorbed"] * 0.1)]</b> seconds of stuns held back.\
-		[GLOB.ratvar_awakens ? "":"<br><b>[Floor(min(vanguard["stuns_absorbed"] * 0.025, 20))]</b> seconds of stun will affect you."]"
+		[GLOB.ratvar_awakens ? "":"<br><b>[Floor(min(vanguard["stuns_absorbed"] * 0.030, 20))]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -72,7 +72,7 @@
 /datum/status_effect/vanguard_shield/on_apply()
 	owner.log_message("gained Vanguard stun immunity", INDIVIDUAL_ATTACK_LOG)
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
-	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty-five seconds.</span>")
 	owner.SetStun(0, FALSE)
 	owner.SetKnockdown(0)
 	progbar = new(owner, duration, owner)
@@ -87,7 +87,7 @@
 	var/vanguard = owner.stun_absorption["vanguard"]
 	var/stuns_blocked = 0
 	if(vanguard)
-		stuns_blocked = round(min(vanguard["stuns_absorbed"] * 0.25, 20))
+		stuns_blocked = round(min(vanguard["stuns_absorbed"] * 0.3, 20))
 	if(owner.stat != DEAD)
 		var/message_to_owner = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
 		var/otheractiveabsorptions = FALSE
@@ -98,10 +98,6 @@
 			vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 			owner.Knockdown(stuns_blocked)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
-			if(stuns_blocked >= 300)
-				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
-				stuns_blocked *= 2
-				owner.Unconscious(stuns_blocked)
 		else
 			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)

@@ -45,48 +45,10 @@
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
-/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
-	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
-	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
-	/datum/clockwork_scripture/create_object/tinkerers_cache)
-	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
+/obj/item/clockwork/slab/cyborg
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
+	maximum_quickbound = 6 //we have two unique scriptures, so let us bind one more than normal
 	actions_types = list()
-
-/obj/item/clockwork/slab/cyborg/engineer //two scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
-
-/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armory)
-
-/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
-/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
-/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/tinkerers_daemon)
-
-/obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
-
-/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
-
-/obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
-	if(!GLOB.ratvar_awakens)
-		to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
-	else
-		..()
-
-/obj/item/clockwork/slab/cyborg/ratvar_act()
-	..()
-	if(!GLOB.ratvar_awakens)
-		SStgui.close_uis(src)
 
 /obj/item/clockwork/slab/Initialize()
 	. = ..()
@@ -181,11 +143,7 @@
 			if(targetslab == src)
 				to_chat(user, "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>")
 			else
-				for(var/i in stored_components)
-					targetslab.stored_components[i] += stored_components[i]
-					stored_components[i] = 0
-				update_slab_info(targetslab)
-				update_slab_info(src)
+				transfer_components_to_slab(targetslab)
 				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
 				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
 		else
@@ -211,19 +169,23 @@
 		qdel(C)
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
-		var/obj/item/clockwork/slab/S = I
-		var/needs_update = FALSE
-		for(var/i in stored_components)
-			stored_components[i] += S.stored_components[i]
-			S.stored_components[i] = 0
-			if(S.stored_components[i])
-				needs_update = TRUE
-		if(needs_update)
-			update_slab_info(src)
-			update_slab_info(S)
-		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
+		transfer_components_to_slab(I)
+		user.visible_message("<span class='notice'>[user] empties [src] into [I].</span>", "<span class='notice'>You transfer your slab's components into [I].</span>")
 	else
 		return ..()
+
+/obj/item/clockwork/slab/proc/transfer_components_to_slab(obj/item/clockwork/slab/other_slab)
+	if(other_slab == src)
+		return
+	var/needs_update = FALSE
+	for(var/i in stored_components)
+		if(stored_components[i])
+			needs_update = TRUE
+		other_slab.stored_components[i] += stored_components[i]
+		stored_components[i] = 0
+	if(needs_update)
+		update_slab_info(src)
+		update_slab_info(other_slab)
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)

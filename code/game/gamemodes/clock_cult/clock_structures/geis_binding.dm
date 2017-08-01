@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/geis_binding
 	name = "glowing ring"
 	desc = "A flickering, glowing purple ring around a target."
-	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
+	clockwork_desc = "A binding ring around a target, preventing them from taking action."
 	max_integrity = 25
 	light_range = 2
 	light_power = 0.8
@@ -33,13 +33,13 @@
 	icon_state = "geisbinding"
 
 /obj/structure/destructible/clockwork/geis_binding/process()
+	var/tick_damage = 1
 	if(LAZYLEN(buckled_mobs))
 		for(var/V in buckled_mobs)
 			var/mob/living/L = V
 			if(is_servant_of_ratvar(L)) //servants are freed automatically
 				take_damage(obj_integrity)
 				return
-	var/tick_damage = 1
 	if(!is_servant_of_ratvar(pulledby))
 		tick_damage++
 	take_damage(tick_damage, sound_effect = FALSE)
@@ -56,7 +56,7 @@
 	..()
 	if(M.buckled == src)
 		desc = "A flickering, glowing purple ring around [M]."
-		clockwork_desc = "A binding ring around [M], preventing [M.p_them()] from taking action while [M.p_theyre()] being converted."
+		clockwork_desc = "A binding ring around [M], preventing [M.p_them()] from taking action."
 		icon_state = "geisbinding"
 		mob_layer = M.layer
 		layer = M.layer - 0.01

@@ -47,7 +47,7 @@
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='inathneq_small'>Attacks on living non-Servants will generate <b>[bonus_burn]</b> units of vitality.</span>")
+		to_chat(user, "<span class='inathneq_small'>Attacks on living non-Servants will generate Vitality based on a percentage of damage done.</span>")
 		if(!iscyborg(user))
 			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>")
 
@@ -68,12 +68,12 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L))
-			if(L.put_in_active_hand(src))
+			if(L.stat == CONSCIOUS && L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(L.stat != DEAD && !L.null_rod_check())
 				if(issilicon(L) || iscultist(L))
 					L.Knockdown(100)
 				else
