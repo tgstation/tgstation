@@ -33,11 +33,11 @@
 	var/screen = "main"
 	var/temp
 	var/list/part_sets = list(
-								"Pod_Weaponry",
-								"Pod_Armor",
-								"Pod_Cargo",
-								"Pod_Parts",
-								"Pod_Frame",
+								"Pod Weaponry",
+								"Pod Armor",
+								"Pod Cargo",
+								"Pod Parts",
+								"Pod Frame",
 								"Misc",
 								)
 	var/turf/exit

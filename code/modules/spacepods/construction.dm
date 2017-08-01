@@ -8,14 +8,14 @@
 	icon = 'goon/icons/48x48/pod_construction.dmi'
 	icon_state = "pod_1"
 
-	var/datum/construction/construct
+	var/datum/pconstruction/construct
 
 /obj/structure/spacepod_frame/New()
 	..()
 	bound_width = 64
 	bound_height = 64
 
-	construct = new /datum/construction/reversible2/pod(src)
+	construct = new /datum/pconstruction/reversible2/pod(src)
 
 	dir = EAST
 
@@ -34,11 +34,14 @@
 
 
 /////////////////////////////////
-// CONSTRUCTION STEPS
+//     CONSTRUCTION STEPS     ///
 /////////////////////////////////
-/datum/construction/reversible2/pod
+
+
+
+/datum/pconstruction/reversible2/pod
 	result = /obj/spacepod/civilian
-	//base_icon="pod"
+	base_icon="pod"
 	//taskpath = /datum/job_objective/make_pod
 	steps = list(
 				// 1. Initial state
