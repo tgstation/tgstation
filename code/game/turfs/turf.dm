@@ -235,12 +235,13 @@
 	else
 		W.baseturf = old_baseturf
 
+	W.explosion_id = old_exi
+	W.explosion_level = old_exl
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 
 	W.blueprint_data = old_bp
-	W.explosion_id = old_exi
-	W.explosion_level = old_exl
 
 	return W
 
