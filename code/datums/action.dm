@@ -10,12 +10,13 @@
 	var/check_flags = 0
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
-	var/button_icon = 'icons/mob/actions.dmi'
-	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 	var/buttontooltipstyle = ""
 
-	var/icon_icon = 'icons/mob/actions.dmi'
-	var/button_icon_state = "default"
+	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
+
+	var/icon_icon = 'icons/mob/actions.dmi' //This is the file for the ACTION icon
+	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
 
 /datum/action/New(Target)
@@ -168,9 +169,10 @@
 
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
-	
+
 /datum/action/item_action/rcl
 	name = "Change Cable Color"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
 
 /datum/action/item_action/startchainsaw
@@ -225,6 +227,7 @@
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
 	desc = "Toggles if the club's blasts cause friendly fire."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_ff_on"
 
 /datum/action/item_action/toggle_unfriendly_fire/Trigger()
@@ -258,6 +261,7 @@
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
 	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
@@ -268,6 +272,7 @@
 	return ..()
 
 /datum/action/item_action/clock
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
@@ -367,6 +372,7 @@
 
 /datum/action/item_action/toggle_research_scanner
 	name = "Toggle Research Scanner"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "scan_mode"
 	var/active = FALSE
 
@@ -403,6 +409,7 @@
 /datum/action/item_action/ninjajaunt
 	name = "Phase Jaunt (10E)"
 	desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "ninja_phase"
 
 /datum/action/item_action/ninjasmoke
@@ -441,6 +448,7 @@
 /datum/action/item_action/ninja_stealth
 	name = "Toggle Stealth"
 	desc = "Toggles stealth mode on and off."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "ninja_cloak"
 
 /datum/action/item_action/toggle_glove
@@ -482,7 +490,7 @@
 	var/obj/effect/proc_holder/spell/S = target
 	S.action = src
 	name = S.name
-	button_icon = S.action_icon
+	icon_icon = S.action_icon
 	button_icon_state = S.action_icon_state
 	background_icon_state = S.action_background_icon_state
 	button.name = name
@@ -557,12 +565,14 @@
 /datum/action/item_action/stickmen
 	name = "Summon Stick Minions"
 	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 
 //surf_ss13
 /datum/action/item_action/bhop
 	name = "Activate Jump Boots"
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
 
 /datum/action/language_menu
