@@ -75,6 +75,8 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Called on a component when a component of the same type was added to the same parent
     * See `/datum/component/var/dupe_mode`
     * `C`'s type will always be the same of the called component
+1. `/datum/component/proc/AfterComponentActivated()` (abstract)
+    * Called on a component that was activated after it's `parent`'s `ComponentActivated()` is called
 1. `/datum/component/proc/OnTransfer(datum/new_parent)` (abstract)
     * Called before the new `parent` is assigned in `TakeComponent()`, after the remove signal, before the added signal
     * Allows the component to react to ownership transfers

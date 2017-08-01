@@ -66,6 +66,9 @@
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
 
+/datum/component/proc/AfterComponentActivated()
+	return
+
 /datum/var/list/datum_components //list of /datum/component
 
 /datum/proc/SendSignal(sigtype, ...)
@@ -77,6 +80,7 @@
 			continue
 		if(C.ReceiveSignal(arglist(args)))
 			ComponentActivated(C)
+			C.AfterComponentActivated()
 			. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
