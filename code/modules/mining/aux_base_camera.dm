@@ -128,6 +128,7 @@
 	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
 
 /datum/action/innate/aux_base //Parent aux base action
+	icon_icon = 'icons/mob/actions/actions_construction.dmi'
 	var/mob/living/C //Mob using the action
 	var/mob/camera/aiEye/remote/base_construction/remote_eye //Console's eye mob
 	var/obj/machinery/computer/camera_advanced/base_construction/B //Console itself
