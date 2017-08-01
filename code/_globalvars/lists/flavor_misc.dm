@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(station_prefixes, list("", "Imperium", "Heretical", "Cuban",
 	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
 	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
 	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
-	"Automated", "Experimental", "Augmented"))
+	"Automated", "Experimental", "Augmented", "Szechuan"))
 
 GLOBAL_LIST_INIT(station_names, list("", "Stanford", "Dorf", "Alium",
 	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
