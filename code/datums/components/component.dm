@@ -22,8 +22,7 @@
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
 	if(!dc)
-		dc = list()
-		P.datum_components = dc
+		P.datum_components = dc = list()
 	
 	//set up the typecache
 	var/our_type = type
