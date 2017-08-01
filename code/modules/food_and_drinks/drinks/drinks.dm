@@ -14,11 +14,6 @@
 	volume = 50
 	resistance_flags = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/New()
-	..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
-
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if (gulp_size < 5) gulp_size = 5
 	else gulp_size = max(round(reagents.total_volume / 5), 5)
@@ -31,7 +26,7 @@
 
 	if(!canconsume(M, user))
 		return 0
-	
+
 	if (!is_open_container())
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
 		return 0
@@ -56,7 +51,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-	
+
 		if (!is_open_container())
 			to_chat(user, "<span class='warning'>[target]'s tab isn't open!</span>")
 			return
@@ -97,10 +92,10 @@
 			to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
 			reagents.handle_reactions()
 	..()
-	
 
 
-	
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -334,7 +329,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	container_type = 0
 	spillable = FALSE
-	
+
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
@@ -343,7 +338,7 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 	..()
-	
+
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_open_container())
