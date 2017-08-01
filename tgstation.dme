@@ -218,6 +218,7 @@
 #include "code\datums\browser.dm"
 #include "code\datums\callback.dm"
 #include "code\datums\datacore.dm"
+#include "code\datums\datum.dm"
 #include "code\datums\datumvars.dm"
 #include "code\datums\dna.dm"
 #include "code\datums\dog_fashion.dm"

@@ -66,8 +66,6 @@
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
 
-/datum/var/list/datum_components //list of /datum/component
-
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	. = FALSE
