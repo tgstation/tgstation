@@ -388,7 +388,10 @@
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
-
+	if(!iscultist(user))
+		to_chat(user, "That doesn't seem to do anything useful.")
+		return
+		
 	if(istype(A, /obj/item))
 
 		var/list/cultists = list()
