@@ -398,6 +398,16 @@
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
 
+/obj/structure/sign/poster/contraband/Gymposter_1
+	name = "Gym poster"
+	desc = "First part of big poster"
+	icon_state = "kachalka"
+
+/obj/structure/sign/poster/contraband/Gymposter_2
+	name = "Gym poster ¹2"
+	desc = "Second part of big poster"
+	icon_state = "kachalka_2"
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
