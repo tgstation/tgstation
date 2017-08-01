@@ -18,7 +18,38 @@
 					qdel(src)
 					return
 	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
-	LAZYADD(P.datum_components, src)
+	
+	//lazy init the parent's dc list
+	var/list/dc = P.datum_components
+	if(!dc)
+		P.datum_components = dc = list()
+	
+	//set up the typecache
+	var/our_type = type
+	for(var/I in _GetInverseTypeListExceptRoot(our_type))
+		var/test = dc[I]
+		if(test)	//already another component of this type here
+			var/list/components_of_type
+			if(!islist(test))
+				components_of_type = list(test)
+				dc[I] = components_of_type
+			else
+				components_of_type = test
+			if(I == our_type)	//exact match, take priority
+				var/inserted = FALSE
+				for(var/J in 1 to components_of_type.len)
+					var/datum/component/C = components_of_type[J]
+					if(C.type != our_type) //but not over other exact matches
+						components_of_type.Insert(J, I)
+						inserted = TRUE
+						break
+				if(!inserted)
+					components_of_type += src
+			else	//indirect match, back of the line with ya
+				components_of_type += src
+		else	//only component of this type, no list
+			dc[I] = src
+
 	parent = P
 
 /datum/component/Destroy()
@@ -33,7 +64,20 @@
 /datum/component/proc/_RemoveNoSignal()
 	var/datum/P = parent
 	if(P)
-		LAZYREMOVE(P.datum_components, src)
+		var/list/dc = P.datum_components
+		var/our_type = type
+		for(var/I in _GetInverseTypeListExceptRoot(our_type))
+			var/list/components_of_type = dc[I]
+			if(islist(components_of_type))	//
+				var/list/subtracted = components_of_type - src
+				if(subtracted.len == 1)	//only 1 guy left
+					dc[I] = subtracted[1]	//make him special
+				else
+					dc[I] = subtracted
+			else	//just us
+				dc -= I
+		if(!dc.len)
+			P.datum_components = null
 		parent = null
 
 /datum/component/proc/RegisterSignal(sig_type, proc_on_self, override = FALSE)
@@ -66,7 +110,14 @@
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
 
-/datum/var/list/datum_components //list of /datum/component
+/datum/component/proc/_GetInverseTypeListExceptRoot(our_type_cached)
+	var/datum/component/current_type = our_type_cached
+	. = list()
+	while (current_type != /datum/component)
+		. += current_type
+		current_type = type2parent(current_type)
+
+/datum/var/list/datum_components //special typecache of /datum/component
 
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
@@ -83,21 +134,32 @@
 	return
 
 /datum/proc/GetComponent(c_type)
-	for(var/I in datum_components)
-		if(istype(I, c_type))
-			return I
+	var/list/dc = datum_components
+	if(!dc)
+		return null
+	. = dc[c_type]
+	if(islist(.))
+		return .[1]
 
 /datum/proc/GetExactComponent(c_type)
-	for(var/I in datum_components)
-		var/datum/component/C = I
+	var/list/dc = datum_components
+	if(!dc)
+		return null
+	var/datum/component/C = dc[c_type]
+	if(C)
+		if(islist(C))
+			C = C[1]
 		if(C.type == c_type)
-			return I
+			return C
+	return null
 
 /datum/proc/GetComponents(c_type)
-	. = list()
-	for(var/I in datum_components)
-		if(istype(I, c_type))
-			. += I
+	var/list/dc = datum_components
+	if(!dc)
+		return null
+	. = dc[c_type]
+	if(!islist(.))
+		return list(.)
 
 /datum/proc/AddComponent(new_type, ...)
 	var/nt = new_type
