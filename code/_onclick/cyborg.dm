@@ -105,38 +105,59 @@
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlShiftClick(user)
 
-/obj/machinery/door/airlock/BorgCtrlShiftClick() // Sets/Unsets Emergency Access Override Forwards to AI code.
-	AICtrlShiftClick()
+/obj/machinery/door/airlock/BorgCtrlShiftClick(mob/living/silicon/robot/user) // Sets/Unsets Emergency Access Override Forwards to AI code.
+	if(get_dist(src,user) <= user.remote_range)
+		AICtrlShiftClick()
+	else
+		..()
 
 
 /atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	ShiftClick(user)
 
-/obj/machinery/door/airlock/BorgShiftClick()  // Opens and closes doors! Forwards to AI code.
-	AIShiftClick()
+/obj/machinery/door/airlock/BorgShiftClick(mob/living/silicon/robot/user)  // Opens and closes doors! Forwards to AI code.
+	if(get_dist(src,user) <= user.remote_range)
+		AIShiftClick()
+	else
+		..()
 
 
 /atom/proc/BorgCtrlClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlClick(user)
 
-/obj/machinery/door/airlock/BorgCtrlClick() // Bolts doors. Forwards to AI code.
-	AICtrlClick()
+/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user // Bolts doors. Forwards to AI code.
+	if(get_dist(src,user) <= user.remote_range)
+		AICtrlClick()
+	else
+		..()
 
-/obj/machinery/power/apc/BorgCtrlClick() // turns off/on APCs. Forwards to AI code.
-	AICtrlClick()
+/obj/machinery/power/apc/BorgCtrlClick(mob/living/silicon/robot/user) // turns off/on APCs. Forwards to AI code.
+	if(get_dist(src,user) <= user.remote_range)
+		AICtrlClick()
+	else
+		..()
 
-/obj/machinery/turretid/BorgCtrlClick() //turret control on/off. Forwards to AI code.
-	AICtrlClick()
+/obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user) //turret control on/off. Forwards to AI code.
+	if(get_dist(src,user) <= user.remote_range)
+		AICtrlClick()
+	else
+		..()
 
 /atom/proc/BorgAltClick(mob/living/silicon/robot/user)
 	AltClick(user)
 	return
 
 /obj/machinery/door/airlock/BorgAltClick() // Eletrifies doors. Forwards to AI code.
-	AIAltClick()
+	if(get_dist(src,user) <= user.remote_range)
+		AIAltClick()
+	else
+		..()
 
 /obj/machinery/turretid/BorgAltClick() //turret lethal on/off. Forwards to AI code.
-	AIAltClick()
+	if(get_dist(src,user) <= user.remote_range)
+		AIAltClick()
+	else
+		..()
 
 /*
 	As with AI, these are not used in click code,
