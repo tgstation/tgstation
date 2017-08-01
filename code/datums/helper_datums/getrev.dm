@@ -96,7 +96,7 @@
 		to_chat(src, "[prefix]<a href=\"[config.githuburl]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
-	to_chat(src, "<b>Current Infomational Settings:</b>")
+	to_chat(src, "<b>Current Informational Settings:</b>")
 	to_chat(src, "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]")
 	to_chat(src, "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]")
 	to_chat(src, "Enforce Human Authority: [config.enforce_human_authority]")

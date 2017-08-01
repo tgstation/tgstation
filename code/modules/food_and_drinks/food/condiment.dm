@@ -115,7 +115,7 @@
 	desc = "Tasty spacey sugar!"
 	list_reagents = list("sugar" = 50)
 
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Separate from above since it's a small shaker rather then
 	name = "salt shaker"											//	a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
