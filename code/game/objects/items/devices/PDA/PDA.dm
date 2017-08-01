@@ -447,7 +447,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Toggle Door")
 				if(cartridge && cartridge.access & CART_REMOTE_DOOR)
 					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-						if(M.id == cartridge.remote_door_id)
+						if(M.check_access(cartridge.remote_door_id))
 							if(M.density)
 								M.open()
 							else

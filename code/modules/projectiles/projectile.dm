@@ -348,3 +348,7 @@
 
 /obj/item/projectile/experience_pressure_difference()
 	return
+
+/obj/item/projectile/proc/dumbfire(var/dir)
+	current = get_ranged_target_turf(src, dir, world.maxx) //world.maxx is the range. Not sure how to handle this better.
+	fire()

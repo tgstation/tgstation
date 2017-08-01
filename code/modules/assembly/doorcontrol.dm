@@ -18,7 +18,7 @@
 	cooldown = 1
 	var/openclose
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-		if(M.id == src.id)
+		if(M.check_access(id))
 			if(openclose == null)
 				openclose = M.density
 			spawn(0)
@@ -50,7 +50,7 @@
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
 	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
-		if(D.id_tag == src.id)
+		if(D.id_tag == id)
 			if(specialfunctions & OPEN)
 				open_or_close += D
 				if(!D.density)
@@ -85,20 +85,20 @@
 /obj/item/device/assembly/control/massdriver/activate()
 	cooldown = 1
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-		if (M.id == src.id)
+		if (M.check_access(id))
 			spawn( 0 )
 				M.open()
 
 	sleep(10)
 
 	for(var/obj/machinery/mass_driver/M in GLOB.machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			M.drive()
 
 	sleep(60)
 
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-		if (M.id == src.id)
+		if (M.check_access(id))
 			spawn( 0 )
 				M.close()
 
@@ -113,12 +113,12 @@
 /obj/item/device/assembly/control/igniter/activate()
 	cooldown = 1
 	for(var/obj/machinery/sparker/M in GLOB.machines)
-		if (M.id == src.id)
+		if (M.id == id)
 			spawn( 0 )
 				M.ignite()
 
 	for(var/obj/machinery/igniter/M in GLOB.machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			M.use_power(50)
 			M.on = !M.on
 			M.icon_state = "igniter[M.on]"
@@ -134,7 +134,7 @@
 /obj/item/device/assembly/control/flasher/activate()
 	cooldown = 1
 	for(var/obj/machinery/flasher/M in GLOB.machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			spawn(0)
 				M.flash()
 

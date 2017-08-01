@@ -731,6 +731,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 						if(D.build_type & LIMBGROWER) dat += "Limbgrower<BR>"
 						if(D.build_type & SMELTER) dat += "Smelter<BR>"
+						if(D.build_type & PODFAB) dat += "Spacepod Fabricator<BR>"
 					dat += "Required Materials:<BR>"
 					var/all_mats = D.materials + D.reagents_list
 					for(var/M in all_mats)
