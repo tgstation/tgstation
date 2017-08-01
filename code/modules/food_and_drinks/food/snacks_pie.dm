@@ -27,7 +27,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/splat, hit_atom), 0.5)
+	if(!.) //if we're not being caught
+		splat(hit_atom)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/proc/splat(atom/movable/hit_atom)
 	if(isliving(loc)) //someone caught us!
