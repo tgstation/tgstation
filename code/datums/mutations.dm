@@ -168,6 +168,10 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/telekinesis/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	target.attack_tk(owner)
+	
+/datum/mutation/human/telekinesis/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	visual_indicators -= mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER)
 
 /datum/mutation/human/cold_resistance
 
@@ -189,6 +193,10 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	if(owner.getFireLoss())
 		if(prob(1))
 			owner.heal_bodypart_damage(0,1)   //Is this really needed?
+			
+/datum/mutation/human/cold_resistance/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	visual_indicators -= mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER)
 
 /datum/mutation/human/x_ray
 
