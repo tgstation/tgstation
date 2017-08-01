@@ -196,5 +196,6 @@
 
 /datum/action/generic/drone/select_filter
 	name = "Select Vision Filter"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "drone_vision"
 	procname = /mob/living/simple_animal/drone/verb/toggle_statics
