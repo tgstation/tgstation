@@ -34,7 +34,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/component/var/dupe_mode` (protected, enum)
     * How multiple components of the exact same type are handled when added to the datum.
         * `COMPONENT_DUPE_HIGHLANDER` (default): Old component will be deleted, new component will first have `/datum/component/proc/InheritComponent(datum/component/old, FALSE)` on it
-        * `COMPONENT_DUPE_ALLOWED`: The components will be treated as seperate, `GetComponent()` will return the first added
+        * `COMPONENT_DUPE_ALLOWED`: The components will be treated as separate, `GetComponent()` will return the first added
         * `COMPONENT_DUPE_UNIQUE`: New component will be deleted, old component will first have `/datum/component/proc/InheritComponent(datum/component/new, TRUE)` on it
 1. `/datum/component/var/list/signal_procs` (private)
     * Associated lazy list of signals -> callbacks that will be run when the parent datum recieves that signal

@@ -35024,7 +35024,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Chaplen Quarters";
+	c_tag = "Chaplin Quarters";
 	dir = 2;
 	network = list("SS13")
 	},
@@ -36004,7 +36004,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/camera{
-	c_tag = "Xenobilogy Lab";
+	c_tag = "Xenobiology Lab";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{

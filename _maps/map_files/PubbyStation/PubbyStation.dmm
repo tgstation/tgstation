@@ -17662,7 +17662,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = 1;
 	id = "garbagestacked";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
@@ -19866,7 +19866,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal coveyor"
+	name = "disposal conveyor"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -29076,7 +29076,7 @@
 /area/science/explab)
 "blV" = (
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
+	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Drone' sign";
 	pixel_y = 32
@@ -31843,7 +31843,7 @@
 /area/science/xenobiology)
 "brT" = (
 /obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Moniter";
+	name = "Test Chamber Monitor";
 	network = list("Xeno");
 	pixel_y = 2
 	},
@@ -36758,7 +36758,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_x = 28;
 	pixel_y = 24
 	},
@@ -42005,7 +42005,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
@@ -49228,7 +49228,7 @@
 /area/chapel/main/monastery)
 "ccI" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Chape Access";
+	name = "Chapel Access";
 	opacity = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -50408,7 +50408,7 @@
 /area/engine/engineering)
 "cfs" = (
 /obj/machinery/camera{
-	c_tag = "Engineering Telecoms Access";
+	c_tag = "Engineering Telecomms Access";
 	dir = 8;
 	network = list("Labor")
 	},
@@ -50416,11 +50416,11 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for watching telecoms.";
+	desc = "Used for watching telecomms.";
 	dir = 8;
 	layer = 4;
-	name = "Telecoms Telescreen";
-	network = list("Telecoms");
+	name = "Telecomms Telescreen";
+	network = list("Telecomms");
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel,
@@ -52887,9 +52887,9 @@
 /area/space)
 "clu" = (
 /obj/machinery/camera{
-	c_tag = "Telecoms External Fore";
+	c_tag = "Telecomms External Fore";
 	dir = 1;
-	network = list("SS13, Telecoms");
+	network = list("SS13, Telecomms");
 	start_active = 1
 	},
 /turf/open/space,
@@ -53072,9 +53072,9 @@
 /area/tcommsat/computer)
 "clX" = (
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Access";
+	c_tag = "Telecomms External Access";
 	dir = 1;
-	network = list("SS13","Telecoms")
+	network = list("SS13","Telecomms")
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
@@ -53136,9 +53136,9 @@
 "cmg" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecoms Admin";
+	department = "Telecomms Admin";
 	departmentType = 5;
-	name = "Telecoms RC";
+	name = "Telecomms RC";
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -53169,9 +53169,9 @@
 	pixel_y = 26
 	},
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms Monitoring";
+	c_tag = "Telecomms Monitoring";
 	dir = 2;
-	network = list("SS13","Telecoms")
+	network = list("SS13","Telecomms")
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -53197,7 +53197,7 @@
 "cmk" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Telecoms Monitoring APC";
+	name = "Telecomms Monitoring APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -53282,9 +53282,9 @@
 "cmt" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Port";
+	c_tag = "Telecomms External Port";
 	dir = 8;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)
@@ -53342,9 +53342,9 @@
 "cmz" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Starboard";
+	c_tag = "Telecomms External Starboard";
 	dir = 4;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)
@@ -53430,7 +53430,7 @@
 	cell_type = 5000;
 	dir = 1;
 	layer = 4;
-	name = "Telecoms Server APC";
+	name = "Telecomms Server APC";
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -53719,9 +53719,9 @@
 /area/tcommsat/server)
 "cnu" = (
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms Server Room";
+	c_tag = "Telecomms Server Room";
 	dir = 1;
-	network = list("SS13","Telecoms")
+	network = list("SS13","Telecomms")
 	},
 /turf/open/floor/plasteel/black{
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -53758,18 +53758,18 @@
 "cny" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Port Aft";
+	c_tag = "Telecomms External Port Aft";
 	dir = 2;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)
 "cnz" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecoms External Starboard Aft";
+	c_tag = "Telecomms External Starboard Aft";
 	dir = 2;
-	network = list("Telecoms")
+	network = list("Telecomms")
 	},
 /turf/open/space,
 /area/space)

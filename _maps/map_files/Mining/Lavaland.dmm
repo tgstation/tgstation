@@ -2087,7 +2087,7 @@
 /area/mine/living_quarters)
 "ft" = (
 /obj/machinery/camera{
-	c_tag = "Dormatories";
+	c_tag = "Dormitories";
 	dir = 4;
 	network = list("MINE")
 	},

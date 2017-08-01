@@ -34321,7 +34321,7 @@
 /area/janitor)
 "bAV" = (
 /obj/machinery/door/window/westleft{
-	name = "Janitoral Delivery";
+	name = "Janitorial Delivery";
 	req_access_txt = "26"
 	},
 /obj/effect/turf_decal/delivery,

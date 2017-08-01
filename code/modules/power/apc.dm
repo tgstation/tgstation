@@ -256,7 +256,7 @@
 				O += "apco2-[environ]"
 			add_overlay(O)
 
-	// And now, seperately for cleanness, the lighting changing
+	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)
 		switch(charging)
 			if(0)

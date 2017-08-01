@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(garbage)
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
 
-	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
+	var/list/tobequeued = list()	//We store the references of things to be added to the queue separately so we can spread out GC overhead over a few ticks
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(garbage)
 
 	queue[refid] = gctime
 
-//this is purely to seperate things profile wise.
+//this is purely to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
 	var/time = world.timeofday
 	var/tick = world.tick_usage

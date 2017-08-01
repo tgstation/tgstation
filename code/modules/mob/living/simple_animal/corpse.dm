@@ -2,7 +2,7 @@
 
 //If someone can do this in a neater way, be my guest-Kor
 
-//This has to be seperate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
+//This has to be separate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 

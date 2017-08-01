@@ -471,7 +471,7 @@
 "bD" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/bottle/cyanide{
-	desc = "A cocktail of chemotherpy drugs intended to treat bladder cancer.";
+	desc = "A cocktail of chemotherapy drugs intended to treat bladder cancer.";
 	name = "MVAC regimen"
 	},
 /obj/item/weapon/reagent_containers/syringe,
