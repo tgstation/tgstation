@@ -446,6 +446,7 @@
 /datum/action/toggle_scope_zoom
 	name = "Toggle Scope"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	var/obj/item/weapon/gun/gun = null
 

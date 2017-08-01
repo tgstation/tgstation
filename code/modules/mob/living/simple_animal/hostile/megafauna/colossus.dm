@@ -754,6 +754,7 @@ Difficulty: Very Hard
 	range = -1
 	include_user = 1
 	selection_type = "view"
+	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "exit_possession"
 	sound = null
 
