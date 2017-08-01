@@ -77,6 +77,7 @@
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
+	QDEL_LIST(blueprint_data)
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
@@ -218,9 +219,12 @@
 		return
 	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-
+	
+	var/old_bp = blueprint_data
+	blueprint_data = null
 	var/old_baseturf = baseturf
 	changing_turf = TRUE
+
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
@@ -231,6 +235,8 @@
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
+
+	W.blueprint_data = old_bp
 
 	return W
 
@@ -410,9 +416,7 @@
 	I.setDir(AM.dir)
 	I.alpha = 128
 
-	if(!blueprint_data)
-		blueprint_data = list()
-	blueprint_data += I
+	LAZYADD(blueprint_data, I)
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
