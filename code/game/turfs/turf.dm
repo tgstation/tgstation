@@ -220,6 +220,8 @@
 	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 	
+	var/old_exl = explosion_level
+	var/old_exi = explosion_id
 	var/old_bp = blueprint_data
 	blueprint_data = null
 	var/old_baseturf = baseturf
@@ -237,6 +239,8 @@
 		W.AfterChange(ignore_air)
 
 	W.blueprint_data = old_bp
+	W.explosion_id = old_exi
+	W.explosion_level = old_exl
 
 	return W
 
