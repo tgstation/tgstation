@@ -250,8 +250,7 @@
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
-			var/sameturf = get_turf(oldloc) == get_turf(destination)
-			if(!sameturf)
+			if(!(get_turf(oldloc) == get_turf(destination)))
 				for(var/atom/movable/AM in destination)
 					if(AM == src)
 						continue
