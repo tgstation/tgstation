@@ -56,8 +56,7 @@
 
 	var/obj/item/W = get_active_held_item()
 
-	// Cyborgs have no range-checking unless there is item use
-	if(!W)
+	if(!W && get_dist(src,A) <= remote_range)
 		A.attack_robot(src)
 		return
 

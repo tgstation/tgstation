@@ -93,6 +93,8 @@
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
 
+	var/remote_range = 7 //How far can you interact with machines.
+
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
