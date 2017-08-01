@@ -125,7 +125,7 @@
 /atom/proc/BorgCtrlClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlClick(user)
 
-/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user // Bolts doors. Forwards to AI code.
+/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
 	if(get_dist(src,user) <= user.remote_range)
 		AICtrlClick()
 	else
