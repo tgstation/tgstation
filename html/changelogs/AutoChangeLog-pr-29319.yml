@@ -1,0 +1,5 @@
+author: "Xhuis and oranges"
+delete-after: True
+changes: 
+  - bugfix: "Banana cream pies no longer splat when they're caught by someone."
+  - soundadd: "Throwing a pie in someone's face now has a splat sound."
