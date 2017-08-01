@@ -72,7 +72,7 @@
 /datum/status_effect/vanguard_shield/on_apply()
 	owner.log_message("gained Vanguard stun immunity", INDIVIDUAL_ATTACK_LOG)
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
-	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty-five seconds.</span>")
+	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next 25 seconds.</span>")
 	owner.SetStun(0, FALSE)
 	owner.SetKnockdown(0)
 	progbar = new(owner, duration, owner)
