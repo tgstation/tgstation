@@ -500,7 +500,36 @@ doesn't have toxins access.
 				say("Uploading research from disk.")
 				tdisk_update = TRUE
 				addtimer(CALLBACK(src, .proc/tdisk_update_complete), 50)
-	//	if("ddisk_erasepos")
+		if("ddisk_upall")
+			if(d_disk)
+				for(var/i in d_disk.blueprints)
+					var/datum/design/D = i
+					if(istype(D))
+						stored_research.add_design(D)
+				say("Uploading all disk designs to stored research.")
+				ddisk_update = TRUE
+				addtimer(CALLBACK(src, .proc/ddisk_update_complete), 20)
+		if("clear_designdisk")
+			if(d_disk)
+				for(var/i in d_disk.blueprints)
+					d_disk.blueprints[i] = null
+				say("Wiping design disk.")
+				ddisk_update = TRUE
+				addtimer(CALLBACK(src, .proc/ddisk_update_complete), 50)
+		if("ddisk_uploaddesign")
+			if(params["design_id"])
+				if(stored_research.isDesignResearchedID(params["design_id"]))
+					if(params["slot"])
+						d_disk.blueprints[params["slot"]] = stored_research.isDesignResearchedID(params["design_id"])
+						say("Uploading Design to disk.")
+						ddisk_update = TRUE
+						addtimer(CALLBACK(src, .proc/ddisk_update_complete), 5)
+		if("ddisk_erasepos")
+			if(params["slot"])
+				d_disk.blueprints[params["slot"]] = null
+				say("Clearing slot [params["slot"]] on design disk!")
+				ddisk_update = TRUE
+				addtimer(CALLBACK(src, .proc/ddisk_update_complete), 5)
 
 	SStgui.try_update_ui(usr, src, "rdconsole")			//Force refresh.
 
