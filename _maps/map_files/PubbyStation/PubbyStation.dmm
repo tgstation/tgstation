@@ -1037,6 +1037,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/turretid{
+	control_area = "AI Chamber";
 	name = "AI Chamber turret control";
 	pixel_x = 5;
 	pixel_y = -24
@@ -1055,7 +1056,8 @@
 /area/wreck/ai)
 "acs" = (
 /obj/machinery/turretid{
-	name = "AI Chamber turret control";
+	control_area = "AI Satellite Antechamber";
+	name = "AI Satellite turret control";
 	pixel_x = -5;
 	pixel_y = -24
 	},
@@ -1777,10 +1779,12 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
 "aeg" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/space,
-/area/ai_monitored/turret_protected/AIsatextAP)
+/obj/machinery/porta_turret/ai{
+	installation = /obj/item/weapon/gun/energy/e_gun
+	},
+/turf/open/floor/plating/airless,
+/area/ai_monitored/turret_protected/aisat_interior)
 "aeh" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -1794,10 +1798,12 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aej" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/space,
-/area/ai_monitored/turret_protected/AIsatextAS)
+/obj/machinery/porta_turret/ai{
+	installation = /obj/item/weapon/gun/energy/e_gun
+	},
+/turf/open/floor/plating/airless,
+/area/ai_monitored/turret_protected/aisat_interior)
 "aek" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -53682,6 +53688,17 @@
 	dir = 4
 	},
 /area/science/research/lobby)
+"cnC" = (
+/obj/machinery/turretid{
+	control_area = "AI Satellite Antechamber";
+	name = "AI Satellite turret control";
+	pixel_x = -5;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/darkblue/side{
+	dir = 8
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
 
 (1,1,1) = {"
 aaa
@@ -71585,7 +71602,7 @@ bWV
 bWV
 bWV
 bWV
-ccI
+cbR
 bWV
 bWV
 ceP
@@ -86376,15 +86393,15 @@ ada
 adl
 adx
 adL
-adX
 aeh
 aeh
-adX
+aeh
+aeh
 aeN
 afe
 afx
 afx
-afx
+cnC
 adX
 adX
 adX
@@ -86890,10 +86907,10 @@ adc
 adn
 adz
 adL
-adX
 aeh
 aeh
-adX
+aeh
+aeh
 aeN
 afg
 afz
