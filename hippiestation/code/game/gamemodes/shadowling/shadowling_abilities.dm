@@ -578,9 +578,9 @@
 // THRALL ABILITIES BEYOND THIS POINT //
 
 
-/obj/effect/proc_holder/spell/targeted/lesser_glare //Thrall version of Glare - same effects but for 5 seconds
+/obj/effect/proc_holder/spell/targeted/lesser_glare //a defensive ability, nothing else. can't be used to stun people, steal tasers, etc. Just good for escaping
 	name = "Lesser Glare"
-	desc = "Stuns and mutes a target for a short duration."
+	desc = "Makes a single target dizzy for a bit."
 	panel = "Thrall Abilities"
 	charge_max = 450
 	human_req = 1
@@ -604,13 +604,15 @@
 			return
 		var/mob/living/carbon/human/M = target
 		user.visible_message("<span class='warning'><b>[user]'s eyes flash a bright red!</b></span>")
-		target.visible_message("<span class='danger'>[target] freezes in place, their eyes clouding...</span>")
+		target.visible_message("<span class='danger'>[target] suddendly looks dizzy and nauseous...</span>")
 		if(in_range(target, user))
-			to_chat(target, "<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you are starstruck by the heavenly lights...</span>")
-		else //Only alludes to the shadowling if the target is close by
-			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you are starstruck by their heavenly beauty...</span>")
-		target.Stun(5) //Roughly 50% as long as the normal one
-		M.silent += 5
+			to_chat(target, "<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you suddendly feel dizzy and nauseous...</span>")
+		else //Only alludes to the thrall if the target is close by
+			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you suddendly feel dizzy and nauseous...</span>")
+		M.confused += 25
+		M.Jitter(50)
+		if(prob(25))
+			M.vomit(10)
 
 
 /obj/effect/proc_holder/spell/self/lesser_shadow_walk //Thrall version of Shadow Walk, only works in darkness, doesn't grant phasing, but gives near-invisibility
