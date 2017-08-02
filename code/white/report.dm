@@ -28,7 +28,7 @@
 		dat += "<td>[query_suggestions_select.item[2]]</td>"
 		dat += "<td>[query_suggestions_select.item[3]]</td></tr>"
 	dat += "</table>"
-	usr << browse(dat, "window=suggread;size=600x400")
+	usr << browse(sanitize_russian(dat), "window=suggread;size=600x400")
 
 /client/verb/suggestDBDelete()
 	set category = "Debug"
