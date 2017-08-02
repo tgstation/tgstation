@@ -1035,6 +1035,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/turretid{
+	control_area = "AI Chamber";
 	name = "AI Chamber turret control";
 	pixel_x = 5;
 	pixel_y = -24
@@ -1053,7 +1054,8 @@
 /area/wreck/ai)
 "acs" = (
 /obj/machinery/turretid{
-	name = "AI Chamber turret control";
+	control_area = "AI Satellite Antechamber";
+	name = "AI Satellite turret control";
 	pixel_x = -5;
 	pixel_y = -24
 	},
@@ -1771,10 +1773,12 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
 "aeg" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/space,
-/area/ai_monitored/turret_protected/AIsatextAP)
+/obj/machinery/porta_turret/ai{
+	installation = /obj/item/weapon/gun/energy/e_gun
+	},
+/turf/open/floor/plating/airless,
+/area/ai_monitored/turret_protected/aisat_interior)
 "aeh" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -1788,10 +1792,12 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aej" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/space,
-/area/ai_monitored/turret_protected/AIsatextAS)
+/obj/machinery/porta_turret/ai{
+	installation = /obj/item/weapon/gun/energy/e_gun
+	},
+/turf/open/floor/plating/airless,
+/area/ai_monitored/turret_protected/aisat_interior)
 "aek" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -46842,7 +46848,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/black,
 /area/engine/engine_smes)
 "bYi" = (
@@ -53468,6 +53473,39 @@
 	dir = 4
 	},
 /area/science/research/lobby)
+"cnC" = (
+/obj/machinery/turretid{
+	control_area = "AI Satellite Antechamber";
+	name = "AI Satellite turret control";
+	pixel_x = -5;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/darkblue/side{
+	dir = 8
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
+"cnD" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAP)
+"cnE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAP)
+"cnF" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAP)
+"cnG" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAS)
+"cnH" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAS)
+"cnI" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAS)
 
 (1,1,1) = {"
 aaa
@@ -71371,7 +71409,7 @@ bWV
 bWV
 bWV
 bWV
-ccI
+cbR
 bWV
 bWV
 ceP
@@ -84100,7 +84138,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aby
 aby
 aby
 aby
@@ -84343,7 +84381,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aby
 aby
@@ -84365,6 +84402,7 @@ aaa
 aaa
 aaa
 abI
+aaa
 aaa
 aaa
 acP
@@ -84602,7 +84640,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 abI
 aaa
 aaa
@@ -84620,6 +84657,7 @@ acP
 acP
 acP
 adG
+adS
 adS
 adS
 adS
@@ -84857,7 +84895,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -84878,6 +84915,7 @@ adh
 ads
 adH
 adT
+aee
 aee
 aee
 aev
@@ -85114,7 +85152,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 abI
 abO
@@ -85135,6 +85172,7 @@ adi
 adt
 adI
 adU
+aef
 aef
 aef
 aew
@@ -85371,7 +85409,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -85393,6 +85430,7 @@ adu
 adJ
 adV
 adV
+cnD
 adV
 adV
 aeL
@@ -85628,7 +85666,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -85650,6 +85687,7 @@ adv
 adK
 adW
 aeg
+cnE
 aeg
 aex
 aeM
@@ -85885,7 +85923,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -85907,6 +85944,7 @@ adw
 adL
 adV
 adV
+cnF
 adV
 adV
 aeN
@@ -86142,7 +86180,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -86165,12 +86202,13 @@ adL
 adX
 aeh
 aeh
+aeh
 adX
 aeN
 afe
 afx
 afx
-afx
+cnC
 adX
 adX
 adX
@@ -86399,7 +86437,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 abJ
 abO
@@ -86420,6 +86457,7 @@ adm
 ady
 adM
 adY
+aei
 aei
 aei
 aey
@@ -86656,7 +86694,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -86677,6 +86714,7 @@ adn
 adz
 adL
 adX
+aeh
 aeh
 aeh
 adX
@@ -86913,7 +86951,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -86935,6 +86972,7 @@ adA
 adL
 adZ
 adZ
+cnG
 adZ
 adZ
 aeP
@@ -87170,7 +87208,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -87192,6 +87229,7 @@ adB
 adN
 aea
 aej
+cnH
 aej
 aez
 aeQ
@@ -87427,7 +87465,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -87449,6 +87486,7 @@ adC
 adO
 adZ
 adZ
+cnI
 adZ
 adZ
 aeR
@@ -87684,7 +87722,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 abI
 abO
@@ -87705,6 +87742,7 @@ adq
 adD
 adP
 aeb
+aek
 aek
 aek
 aeA
@@ -87941,7 +87979,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -87962,6 +87999,7 @@ adr
 adE
 adQ
 aec
+ael
 ael
 ael
 aeB
@@ -88200,7 +88238,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 abI
 aaa
 aaa
@@ -88217,6 +88254,7 @@ acV
 acV
 acV
 adF
+acU
 acU
 acU
 acU
@@ -88455,7 +88493,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aby
 aby
@@ -88477,6 +88514,7 @@ aaa
 aaa
 aaa
 abI
+aaa
 aaa
 aaa
 acU
@@ -88725,8 +88763,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 acO
+aby
 aby
 aby
 aby
