@@ -1,0 +1,4 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - rscadd: "Adds the \"seedling\" planetstation mob to the backend"
