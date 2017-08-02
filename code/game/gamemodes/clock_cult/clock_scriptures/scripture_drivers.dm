@@ -97,28 +97,28 @@
 	Click your slab to cancel.</b></span>"
 
 
-//Geis: Grants a short-range binding that will immediately start chanting on binding a valid target.
-/datum/clockwork_scripture/ranged_ability/geis_prep
-	descname = "Melee Convert Attack"
+//Geis: Grants a short-range binding attack that allows you to mute and drag around a target in a very obvious manner.
+/datum/clockwork_scripture/ranged_ability/geis
+	descname = "Melee Mute & Stun"
 	name = "Geis"
-	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
-	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
+	desc = "Charges your slab with divine energy, allowing you to bind and pull a struck heretic."
+	invocations = list("Divinity, grant me strength...", "...to bind the heathen!")
 	whispered = TRUE
 	channel_time = 20
-	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
+	usage_tip = "You CANNOT TAKE ANY NON-PULL ACTIONS while the target is bound, so Sigils of Submission should be placed before use."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Allows you to bind and start converting an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
+	quickbind_desc = "Allows you to bind and mute an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
 	slab_overlay = "geis"
 	ranged_type = /obj/effect/proc_holder/slab/geis
 	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
-	<b>Left-click a target within melee range to convert!\n\
+	<b>Left-click a target within melee range to bind!\n\
 	Click your slab to cancel.</b></span>"
 	timeout_time = 100
 
-/datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
+/datum/clockwork_scripture/ranged_ability/geis/run_scripture()
 	var/servants = 0
 	if(!GLOB.ratvar_awakens)
 		for(var/mob/living/M in GLOB.living_mob_list)
@@ -130,93 +130,25 @@
 		channel_time = min(channel_time + servants*3, 50)
 	return ..()
 
-//The scripture that does the converting.
-/datum/clockwork_scripture/geis
-	name = "Geis Conversion"
-	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 49
-	tier = SCRIPTURE_PERIPHERAL
-	var/mob/living/target
-	var/obj/structure/destructible/clockwork/geis_binding/binding
 
-/datum/clockwork_scripture/geis/Destroy()
-	if(binding && !QDELETED(binding))
-		qdel(binding)
-	return ..()
-
-/datum/clockwork_scripture/geis/can_recite()
-	if(!target)
-		return FALSE
-	return ..()
-
-/datum/clockwork_scripture/geis/run_scripture()
-	var/servants = 0
-	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(can_recite_scripture(M, TRUE))
-				servants++
-	if(target.buckled)
-		target.buckled.unbuckle_mob(target, TRUE)
-	binding = new(get_turf(target))
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*7, 120)
-		binding.can_resist = TRUE
-	binding.setDir(target.dir)
-	binding.buckle_mob(target, TRUE)
-	return ..()
-
-/datum/clockwork_scripture/geis/check_special_requirements()
-	return target && binding && target.buckled == binding && !is_servant_of_ratvar(target) && target.stat != DEAD
-
-/datum/clockwork_scripture/geis/scripture_effects()
-	. = add_servant_of_ratvar(target)
-	if(.)
-		add_logs(invoker, target, "Converted", object = "Geis")
-
-
-//Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.
-/datum/clockwork_scripture/channeled/taunting_tirade
-	descname = "Channeled, Mobile Confusion Trail"
-	name = "Taunting Tirade"
-	desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down. Chanted every second for up to thirty seconds."
-	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
-	chant_amount = 5
-	chant_interval = 10
+//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
+/datum/clockwork_scripture/create_object/sigil_of_submission
+	descname = "Trap, Conversion"
+	name = "Sigil of Submission"
+	desc = "Places a luminous sigil that will convert any non-Servants that remain on it for 8 seconds."
+	invocations = list("Divinity, enlighten...", "...those who trespass here!")
+	channel_time = 60
 	consumed_components = list(GEIS_CAPACITOR = 1)
-	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/submission
+	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
+	usage_tip = "This is the primary conversion method, though it will not penetrate mindshield implants."
 	tier = SCRIPTURE_DRIVER
+	one_per_tile = TRUE
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down.<br><b>Maximum 5 chants.</b>"
-	var/flee_time = 47 //allow fleeing for 5 seconds
-	var/grace_period = 3 //very short grace period so you don't have to stop immediately
-	var/datum/progressbar/progbar
-
-/datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of purple smoke!</span>")
-	var/invoker_old_color = invoker.color
-	invoker.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
-	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
-	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
-	var/endtime = world.time + flee_time
-	progbar = new(invoker, flee_time, invoker)
-	progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
-	animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-	while(world.time < endtime && can_recite())
-		sleep(1)
-		new/obj/structure/destructible/clockwork/taunting_trail(invoker.loc)
-		progbar.update(endtime - world.time)
-	qdel(progbar)
-	if(can_recite() && chant_number != chant_amount)
-		sleep(grace_period)
-	else
-		return FALSE
-	return TRUE
-
-/datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
-	qdel(progbar)
+	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
 
 
 //Replicant: Creates a new clockwork slab.

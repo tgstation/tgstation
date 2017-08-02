@@ -21,8 +21,8 @@
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
-	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/replicant, \
-	/datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
+	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis, /datum/clockwork_scripture/create_object/sigil_of_submission, \
+	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	var/recollection_category = "Default"
 	actions_types = list(/datum/action/item_action/clock/hierophant)
@@ -60,11 +60,11 @@
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
 	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armory)
 
-/obj/item/clockwork/slab/cyborg/security //three scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade)
+/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
-/obj/item/clockwork/slab/cyborg/peacekeeper //three scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade)
+/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
@@ -511,15 +511,15 @@
 			they become a full-fledged Servant, ready and willing to serve the cause of Ratvar. It should also be noted that <i>silicon crew, such as cyborgs and the AI, can be \
 			converted just like normal crew</i> and will gain special abilities; this is covered later. This section will also cover converting the station's structure itself; walls, \
 			floors, windows, tables, and other objects can all be converted into clockwork versions, and serve an important purpose.<br><br>"
-			dat += "<font color=#BE8700><b>Methods of Conversion:</b></font> There are several ways to convert humans and silicons. The first and most readily-available of these is \
-			<b>Geis</b>, a Driver-tier scripture. Using it whispers an invocation very quickly - this is incredibly obvious - and charges your slab with power. In addition to <i>making \
-			the slab visible in your hand,</i> you can now use it on a target within melee range to bind them and begin converting them. While there are six or fewer Servants, they are \
-			unable to escape this binding, meaning that unless you are interrupted, the target is as good as yours. However, the scripture becomes slower for every Servant human or \
-			silicon Servant past [SCRIPT_SERVANT_REQ], and the bindings can be resisted past this, meaning that eventually other methods become more desirable.<br><br>"
-			dat += "The other three methods of conversion are the <b>sigils of submission and accession</b>, whose purpose is to do so, and the <b>mania motor.</b> The sigil of \
-			submission is a sigil that, when stood on by a non-Servant for seven full seconds, will convert that non-Servant. This time requirement does not scale with \
-			Servants, making it the preferred option after Geis becomes too inefficient. It is, however, consumed after use; the sigil of accession solves this problem, and serves as a \
-			permanent conversion sigil. The mania motor is generally unreliable, only converting those who stand near it for an extended period.<br><br>"
+			dat += "<font color=#BE8700><b>A Note on Geis:</b></font> There are several ways to convert humans and silicons. However, the most important tool to making them work is \
+			<b>Geis</b>, a Driver-tier scripture. Using it whispers an invocation very quickly and charges your slab with power. In addition to <i>making the slab visible in your hand,</i> \
+			you can now use it on a target within melee range to bind and mute them. It is by far your most reliable tool for capturing potential converts and targets, though it is incredibly \
+			obvious. In addition, you are unable to take any actions other than moving while your target is bound. The binding will last for 25 seconds and mute for about 13 seconds, though \
+			allies can use Geis to refresh these effects.<br><br>"
+			dat += "<font color=#BE8700><b>Converting:</b></font> The two methods of conversion are the <b>sigil of submission</b>, whose purpose is to do so, and the <b>mania motor.</b> \
+			The sigil of submission is a sigil that, when stood on by a non-Servant for eight seconds, will convert that non-Servant. This is the only practical way to convert targets. \
+			Sigils of submission are cheap, early, and permanent! Make sure sigils of submission are placed only in bases or otherwise hidden spots, or with a sigil of transgression on them. \
+			The mania motor, however, is generally unreliable and unlocked later, only converting those who stand near it for an extended period.<br><br>"
 			dat += "<font color=#BE8700><b>Converting Humans:</b></font> For obvious reasons, humans are the most common conversion target. Because every crew member is different, and \
 			may be armed with different equipment, you should take precautions to ensure that they aren't able to resist. If able, removing a headset is essential, as is restraining \
 			them through handcuffs, cable ties, or other restraints. Some crew, like security, are also implanted with mindshield implants; these will prevent conversion and must be \
@@ -527,9 +527,8 @@
 			begins administering mindshield implants, this will greatly inhibit conversion. Also note that mindshield implants can be broken by a sigil of accession automatically, but \
 			the sigil will disappear.<br><br>"
 			dat += "<font color=#BE8700><b>Converting Silicons:</b></font> Due to their robotic nature, silicons are generally more predictable than humans in terms of conversion. \
-			However, they are also much, much harder to subdue, especially cyborgs. The easiest way to convert a cyborg is by using a flash or a sigil of transgression to stun it, \
-			then very quickly using Geis to restrain them. If you stack a sigil of transgression and one of the conversion sigils, a crossing cyborg will be stunned and helpless to \
-			escape in time before the other sigil converts them.<br><br>"
+			However, they are also much, much harder to subdue, especially cyborgs. The easiest way to convert a cyborg is by using Geis to restrain them, then dragging them to a sigil \
+			of submission. If you stack a sigil of transgression and a sigil of submission, a crossing cyborg will be stunned and helpless to escape before they are converted.<br><br>"
 			dat += "Converting AIs is very often the hardest task of the cult, and has been the downfall of countless successful Servants. Their omnipresence across the station, \
 			coupled with their secure location and ability to lock themselves securely, makes them a powerful target. However, once the AI itself is reached, it is usually completely \
 			helpless to resist its own conversion. A very common tactic is to take advantage of a converted cyborg to rush the AI before it is able to react.<br><br>"

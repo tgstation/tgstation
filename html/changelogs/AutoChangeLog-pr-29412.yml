@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Colossus's shotgun is now a static-spread blast of 6 bolts, making it more predictable."
