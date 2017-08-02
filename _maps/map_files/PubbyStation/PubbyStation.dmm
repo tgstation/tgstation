@@ -53699,6 +53699,28 @@
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
+"cnD" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAP)
+"cnE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAP)
+"cnF" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAP)
+"cnG" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAS)
+"cnH" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAS)
+"cnI" = (
+/turf/open/space/basic,
+/area/ai_monitored/turret_protected/AIsatextAS)
 
 (1,1,1) = {"
 aaa
@@ -84331,7 +84353,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aby
 aby
 aby
 aby
@@ -84574,7 +84596,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aby
 aby
@@ -84596,6 +84617,7 @@ aaa
 aaa
 aaa
 abI
+aaa
 aaa
 aaa
 acP
@@ -84833,7 +84855,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 abI
 aaa
 aaa
@@ -84851,6 +84872,7 @@ acP
 acP
 acP
 adG
+adS
 adS
 adS
 adS
@@ -85088,7 +85110,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -85109,6 +85130,7 @@ adh
 ads
 adH
 adT
+aee
 aee
 aee
 aev
@@ -85345,7 +85367,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 abI
 abO
@@ -85366,6 +85387,7 @@ adi
 adt
 adI
 adU
+aef
 aef
 aef
 aew
@@ -85602,7 +85624,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -85624,6 +85645,7 @@ adu
 adJ
 adV
 adV
+cnD
 adV
 adV
 aeL
@@ -85859,7 +85881,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -85881,6 +85902,7 @@ adv
 adK
 adW
 aeg
+cnE
 aeg
 aex
 aeM
@@ -86116,7 +86138,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -86138,6 +86159,7 @@ adw
 adL
 adV
 adV
+cnF
 adV
 adV
 aeN
@@ -86373,7 +86395,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -86393,10 +86414,11 @@ ada
 adl
 adx
 adL
+adX
 aeh
 aeh
 aeh
-aeh
+adX
 aeN
 afe
 afx
@@ -86630,7 +86652,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 abJ
 abO
@@ -86651,6 +86672,7 @@ adm
 ady
 adM
 adY
+aei
 aei
 aei
 aey
@@ -86887,7 +86909,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -86907,10 +86928,11 @@ adc
 adn
 adz
 adL
+adX
 aeh
 aeh
 aeh
-aeh
+adX
 aeN
 afg
 afz
@@ -87144,7 +87166,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -87166,6 +87187,7 @@ adA
 adL
 adZ
 adZ
+cnG
 adZ
 adZ
 aeP
@@ -87401,7 +87423,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -87423,6 +87444,7 @@ adB
 adN
 aea
 aej
+cnH
 aej
 aez
 aeQ
@@ -87658,7 +87680,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -87680,6 +87701,7 @@ adC
 adO
 adZ
 adZ
+cnI
 adZ
 adZ
 aeR
@@ -87915,7 +87937,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 abI
 abO
@@ -87936,6 +87957,7 @@ adq
 adD
 adP
 aeb
+aek
 aek
 aek
 aeA
@@ -88172,7 +88194,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aaa
 abO
@@ -88193,6 +88214,7 @@ adr
 adE
 adQ
 aec
+ael
 ael
 ael
 aeB
@@ -88431,7 +88453,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 abI
 aaa
 aaa
@@ -88448,6 +88469,7 @@ acV
 acV
 acV
 adF
+acU
 acU
 acU
 acU
@@ -88686,7 +88708,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aby
 aby
 aby
@@ -88708,6 +88729,7 @@ aaa
 aaa
 aaa
 abI
+aaa
 aaa
 aaa
 acU
@@ -88956,8 +88978,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 acO
+aby
 aby
 aby
 aby
