@@ -26,7 +26,7 @@
 	
 	//set up the typecache
 	var/our_type = type
-	for(var/I in _GetInverseTypeListExceptRoot(our_type))
+	for(var/I in _GetInverseTypeList(our_type))
 		var/test = dc[I]
 		if(test)	//already another component of this type here
 			var/list/components_of_type
@@ -66,7 +66,7 @@
 	if(P)
 		var/list/dc = P.datum_components
 		var/our_type = type
-		for(var/I in _GetInverseTypeListExceptRoot(our_type))
+		for(var/I in _GetInverseTypeList(our_type))
 			var/list/components_of_type = dc[I]
 			if(islist(components_of_type))	//
 				var/list/subtracted = components_of_type - src
@@ -110,25 +110,33 @@
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
 
-/datum/component/proc/_GetInverseTypeListExceptRoot(our_type_cached)
-	var/datum/component/current_type = our_type_cached
-	. = list()
+/datum/component/proc/_GetInverseTypeList(current_type)
+	. = list(current_type)
 	while (current_type != /datum/component)
-		. += current_type
 		current_type = type2parent(current_type)
+		. += current_type
 
 /datum/var/list/datum_components //special typecache of /datum/component
 
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	. = FALSE
-	for(var/I in comps)
-		var/datum/component/C = I
-		if(!C.enabled)
-			continue
-		if(C.ReceiveSignal(arglist(args)))
+	if(!comps)
+		return
+	var/target = comps[/datum/component]
+	if(!islist(target))
+		var/datum/component/C = target
+		if(C.enabled && C.ReceiveSignal(arglist(args)))
 			ComponentActivated(C)
-			. = TRUE
+			return TRUE
+	else
+		for(var/I in target)
+			var/datum/component/C = I
+			if(!C.enabled)
+				continue
+			if(C.ReceiveSignal(arglist(args)))
+				ComponentActivated(C)
+				. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
 	return
