@@ -47,8 +47,8 @@
 		if(C.stat != CONSCIOUS || is_servant_of_ratvar(C) || C.null_rod_check() || !C.get_num_legs())
 			continue //shortcut this a bit so we aren't doing checks we don't need to
 		var/datum/status_effect/belligerent/B = C.has_status_effect(STATUS_EFFECT_BELLIGERENT)
-		var/qdeleted_ness = QDELETED(B)
-		if(!qdeleted_ness) //they have the effect already, play a sound
+		var/needs_sound = FALSE
+		if(!QDELETED(B)) //they have the effect already, play a sound
 			if(prob(50))
 				C.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot1.ogg', 30, 1)
 			else
@@ -57,15 +57,13 @@
 			GLOB.clockwork_vitality += 0.2
 			C.apply_damage(0.1, BURN, "l_leg")
 			C.apply_damage(0.1, BURN, "r_leg")
-		if(qdeleted_ness || B.duration - world.time < 10)
-			var/needs_sound = FALSE
-			if(qdeleted_ness) //they don't have the effect yet, try to play a sound
-				needs_sound = TRUE
-				B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT, FALSE)
-			if(!QDELETED(B)) //at this point we need to check again rather than relying on the var
-				if(needs_sound) //hey we need to play a sound
-					playsound(src, 'sound/machines/clockcult/ocularwarden-target.ogg', 50, 1)
-				B.duration = world.time + 30
+		else //they don't have the effect yet, try to play a sound
+			needs_sound = TRUE
+			B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT, FALSE)
+		if(!QDELETED(B))
+			if(needs_sound) //hey we need to play a sound
+				playsound(src, 'sound/machines/clockcult/ocularwarden-target.ogg', 50, 1)
+			B.duration = world.time + 10
 	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
 		if(M.z == z && get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
