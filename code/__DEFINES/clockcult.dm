@@ -27,10 +27,6 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define APPLICATION_SERVANT_REQ 9
 #define APPLICATION_CACHE_REQ 3
 #define APPLICATION_CV_REQ 100
-#define SCRIPTURE_JUDGEMENT "Judgement"
-#define JUDGEMENT_SERVANT_REQ 12
-#define JUDGEMENT_CACHE_REQ 5
-#define JUDGEMENT_CV_REQ 300
 
 //general component/cooldown things
 #define SLAB_PRODUCTION_TIME 450 //how long(deciseconds) slabs require to produce a single component; defaults to 45 seconds

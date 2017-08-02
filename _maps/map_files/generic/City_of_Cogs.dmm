@@ -5,17 +5,19 @@
 "e" = (/obj/structure/grille/ratvar,/obj/structure/window/reinforced/clockwork/fulltile,/turf/open/indestructible/reebe,/area/reebe)
 "f" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab/starter,/turf/open/indestructible/reebe,/area/reebe)
 "g" = (/obj/structure/table/reinforced/brass,/turf/open/indestructible/reebe,/area/reebe)
-"h" = (/obj/effect/landmark/servant_of_ratvar,/turf/open/indestructible/reebe,/area/reebe)
-"i" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/screwdriver/brass,/turf/open/indestructible/reebe,/area/reebe)
-"j" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/storage/toolbox/brass,/turf/open/indestructible/reebe,/area/reebe)
-"k" = (/obj/structure/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 4},/turf/open/indestructible/reebe,/area/reebe)
-"l" = (/obj/machinery/computer/camera_advanced/ratvar,/turf/open/indestructible/reebe,/area/reebe)
-"m" = (/obj/machinery/telecomms/relay/preset/reebe,/turf/open/indestructible/reebe,/area/reebe)
-"n" = (/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe,/turf/open/indestructible/reebe,/area/reebe)
-"o" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/weldingtool/experimental/brass,/turf/open/indestructible/reebe,/area/reebe)
-"p" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/crowbar/brass,/obj/item/weapon/wirecutters/brass,/turf/open/indestructible/reebe,/area/reebe)
-"q" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy,/turf/open/indestructible/reebe,/area/reebe)
-"r" = (/obj/effect/landmark/city_of_cogs,/turf/open/indestructible/reebe,/area/reebe)
+"h" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/screwdriver/brass,/turf/open/indestructible/reebe,/area/reebe)
+"i" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/storage/toolbox/brass,/turf/open/indestructible/reebe,/area/reebe)
+"j" = (/obj/effect/landmark/servant_of_ratvar,/turf/open/indestructible/reebe,/area/reebe)
+"k" = (/obj/structure/table/reinforced/brass,/obj/item/device/radio/intercom/ratvar,/turf/open/indestructible/reebe,/area/reebe)
+"l" = (/obj/structure/chair/wood/wings{dir = 8; icon_state = "wooden_chair_wings"},/turf/open/indestructible/reebe,/area/reebe)
+"m" = (/obj/structure/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 4},/turf/open/indestructible/reebe,/area/reebe)
+"n" = (/obj/machinery/computer/camera_advanced/ratvar,/turf/open/indestructible/reebe,/area/reebe)
+"o" = (/obj/machinery/telecomms/relay/preset/reebe,/turf/open/indestructible/reebe,/area/reebe)
+"p" = (/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe,/turf/open/indestructible/reebe,/area/reebe)
+"q" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/weldingtool/experimental/brass,/obj/item/weapon/paper/fluff/ruins/djstation{name = "paper - 'Station Radio Frequencies'"},/turf/open/indestructible/reebe,/area/reebe)
+"r" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/crowbar/brass,/obj/item/weapon/wirecutters/brass,/turf/open/indestructible/reebe,/area/reebe)
+"s" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy,/turf/open/indestructible/reebe,/area/reebe)
+"t" = (/obj/effect/landmark/city_of_cogs,/turf/open/indestructible/reebe,/area/reebe)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -27,13 +29,13 @@ abbbbbbbbbbbbbbbbbbbbbcccccbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbcccccbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbeeeeebbbbbbbbbbbbbbbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
-abbbbbbbcccccccccccfgcccccccggcccccccccccbbbbbbba
-abbbbbbbcccccccccccgcchchchccicccccccccccbbbbbbba
-abbbbbbbcccccccccccjccccccccklcccccccccccbbbbbbba
-abbbbbbbcccccccccccmcchcnchcklcccccccccccbbbbbbba
-abbbbbbbcccccccccccgccccccccklcccccccccccbbbbbbba
-abbbbbbbcccccccccccocchchchccgcccccccccccbbbbbbba
-abbbbbbbcccccccccccgpcccccccgqcccccccccccbbbbbbba
+abbbbbbbcccccccccccfgccccccchgcccccccccccbbbbbbba
+abbbbbbbccccccccccciccjcjcjcckcccccccccccbbbbbbba
+abbbbbbbcccccccccccklcccccccmncccccccccccbbbbbbba
+abbbbbbbcccccccccccoccjcpcjcmncccccccccccbbbbbbba
+abbbbbbbcccccccccccklcccccccmncccccccccccbbbbbbba
+abbbbbbbcccccccccccqccjcjcjcckcccccccccccbbbbbbba
+abbbbbbbcccccccccccgrcccccccgscccccccccccbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
@@ -61,9 +63,9 @@ abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbcccbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbcccccbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbcrrrcbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbcrrrcbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbcrrrcbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbctttcbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbctttcbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbctttcbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbcccccbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

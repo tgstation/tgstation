@@ -110,12 +110,3 @@
 	construction_value = 0
 	max_integrity = 250
 	needs_power = FALSE
-
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe/Initialize()
-	. = ..()
-	transform *= 1.5
-	GLOB.poi_list += src
-
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe/Destroy()
-	GLOB.poi_list -= src
-	return ..()

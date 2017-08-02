@@ -15,6 +15,18 @@
 /obj/item/device/radio/intercom/unscrewed
 	unfastened = TRUE
 
+/obj/item/device/radio/intercom/ratvar
+	name = "hierophant intercom"
+	desc = "A modified intercom that uses the Hierophant network instead of subspace tech. Can listen to and broadcast on any frequency."
+	icon_state = "intercom_ratvar"
+	freerange = TRUE
+
+/obj/item/device/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		to_chat(user, "<span class='danger'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
+		return //no unfastening!
+	. = ..()
+
 /obj/item/device/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -114,7 +126,7 @@
 		if(!on)
 			icon_state = "intercom-p"
 		else
-			icon_state = "intercom"
+			icon_state = initial(icon_state)
 
 /obj/item/device/radio/intercom/add_blood(list/blood_dna)
 	return 0

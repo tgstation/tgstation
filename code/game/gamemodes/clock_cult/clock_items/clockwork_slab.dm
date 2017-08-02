@@ -487,7 +487,7 @@
 			dat += "It should also be noted that some scripture cannot be recited alone. Especially with more powerful scripture, you may need multiple Servants to recite a piece of \
 			scripture; both of you will need to stand still until the recital completes. <i>Only human and silicon Servants are valid for scripture recital!</i> Constructs cannot help \
 			in reciting scripture.<br><br>"
-			dat += "Finally, scripture is separated into four \"tiers\" based on power: Drivers, Scripts, Applications, and Judgement.[prob(1) ? " (The Revenant tier was removed a long time ago. \
+			dat += "Finally, scripture is separated into three \"tiers\" based on power: Drivers, Scripts, and Applications.[prob(1) ? " (The Revenant tier was removed a long time ago. \
 			Get with the times.)" : ""] You can view the requirements to unlock each tier in its scripture list. Once a tier is unlocked, it's unlocked permanently; the cult only needs to fill the \
 			requirement for unlocking a tier once!<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
@@ -600,11 +600,6 @@
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, <b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
-		if(SCRIPTURE_JUDGEMENT)
-			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
-				data["tier_info"] = "<font color=#B18B25><b>This scripture is permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
 
 	data["selected"] = selected_scripture
 

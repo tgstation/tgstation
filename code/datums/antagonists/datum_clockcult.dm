@@ -118,8 +118,6 @@
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	if(!GLOB.clockwork_gateway_activated)
-		current.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current = owner.current
@@ -129,7 +127,6 @@
 	current.faction -= "ratvar"
 	current.remove_language(/datum/language/ratvar)
 	current.clear_alert("clockinfo")
-	current.clear_alert("scripturereq")
 	for(var/datum/action/innate/function_call/F in owner.current.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(current))

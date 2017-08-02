@@ -5,8 +5,6 @@ Pieces of scripture require certain follower counts, contruction value, and acti
 Drivers: Unlocked by default
 Scripts: 5 servants and a cache
 Applications: 8 servants, 3 caches, and 100 CV
-Revenant: 10 servants, 4 caches, and 200 CV
-Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or destroyed
 */
 
 /datum/clockwork_scripture
