@@ -62,8 +62,8 @@
 			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
 			query_db_version.Execute()
 			if(query_db_version.NextRow())
-				var/db_major = query_db_version.item[1]
-				var/db_minor = query_db_version.item[2]
+				var/db_major = text2num(query_db_version.item[1])
+				var/db_minor = text2num(query_db_version.item[2])
 				if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
 					message_admins("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 					log_sql("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
