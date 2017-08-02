@@ -571,7 +571,6 @@
 	},
 /area/awaymission/academy/headmaster)
 "bR" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -581,7 +580,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "bS" = (
@@ -648,14 +647,13 @@
 	},
 /area/awaymission/academy/headmaster)
 "cf" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cg" = (
@@ -910,9 +908,8 @@
 	},
 /area/awaymission/academy/headmaster)
 "cW" = (
-/obj/structure/grille,
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cX" = (
@@ -1354,8 +1351,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "es" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "et" = (
@@ -1830,7 +1826,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "fG" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -1840,7 +1835,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "fH" = (
@@ -1950,14 +1945,13 @@
 /turf/open/floor/plasteel/red/side,
 /area/awaymission/academy/classrooms)
 "fZ" = (
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "ga" = (
@@ -1991,7 +1985,6 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "gg" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -2001,7 +1994,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gh" = (
@@ -2087,14 +2080,13 @@
 	},
 /area/awaymission/academy/classrooms)
 "gs" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gt" = (
@@ -2169,13 +2161,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "gE" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gF" = (
@@ -2317,13 +2308,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "gY" = (
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gZ" = (
@@ -3042,7 +3032,6 @@
 	},
 /area/awaymission/academy/academyaft)
 "iT" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3053,7 +3042,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iU" = (
@@ -3070,14 +3059,13 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "iV" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iW" = (
@@ -3117,12 +3105,11 @@
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "jb" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jc" = (
@@ -3141,25 +3128,23 @@
 	},
 /area/awaymission/academy/academyaft)
 "jd" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "je" = (
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jf" = (
@@ -3189,12 +3174,11 @@
 	},
 /area/awaymission/academy/academyaft)
 "jh" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "ji" = (
@@ -3353,9 +3337,8 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jE" = (
-/obj/structure/grille,
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jF" = (
@@ -3429,8 +3412,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jQ" = (
@@ -3470,8 +3452,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "jX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "jY" = (

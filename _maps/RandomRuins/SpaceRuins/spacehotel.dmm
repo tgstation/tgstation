@@ -108,8 +108,7 @@
 	name = "Hotel Guest Room 3"
 	})
 "ao" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 3"
@@ -120,8 +119,7 @@
 	name = "Hotel Guest Room 4"
 	})
 "aq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -132,8 +130,7 @@
 	name = "Hotel Guest Room 5"
 	})
 "as" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 5"
@@ -144,8 +141,7 @@
 	name = "Hotel Guest Room 6"
 	})
 "au" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 6"
@@ -1097,8 +1093,7 @@
 /turf/open/floor/carpet,
 /area/ruin/hotel)
 "cG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel)
@@ -1707,8 +1702,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "ec" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel/workroom)
@@ -2172,8 +2166,7 @@
 /turf/open/floor/carpet,
 /area/ruin/hotel/dock)
 "fv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel/dock)
@@ -3700,8 +3693,7 @@
 /turf/open/floor/carpet,
 /area/ruin/hotel/pool)
 "jv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3982,8 +3974,7 @@
 	},
 /area/ruin/hotel/security)
 "km" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/security)
 "kn" = (
@@ -4893,8 +4884,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
 "mN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel/pool)

@@ -586,12 +586,11 @@
 	},
 /area/ruin/deepstorage)
 "bg" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -771,9 +770,8 @@
 	},
 /area/ruin/deepstorage)
 "bA" = (
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1050,14 +1048,13 @@
 	},
 /area/ruin/deepstorage)
 "cc" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1256,12 +1253,11 @@
 	},
 /area/ruin/deepstorage)
 "cv" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1560,13 +1556,12 @@
 	},
 /area/ruin/deepstorage)
 "da" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1770,7 +1765,6 @@
 	},
 /area/ruin/deepstorage)
 "ds" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
@@ -1781,7 +1775,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2395,7 +2389,6 @@
 	},
 /area/ruin/deepstorage)
 "eu" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
@@ -2406,7 +2399,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2632,10 +2625,9 @@
 	},
 /area/ruin/deepstorage/airlock)
 "eM" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2721,7 +2713,6 @@
 	},
 /area/ruin/deepstorage)
 "eT" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "bunkershutter"
 	},
@@ -2735,7 +2726,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2870,13 +2861,12 @@
 	},
 /area/ruin/deepstorage)
 "fh" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "bunkershutter"
 	},
 /obj/structure/cable/yellow,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3067,12 +3057,11 @@
 	},
 /area/ruin/deepstorage/power)
 "fB" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3150,9 +3139,8 @@
 	},
 /area/ruin/deepstorage/power)
 "fK" = (
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3338,12 +3326,11 @@
 	},
 /area/ruin/deepstorage/power)
 "gc" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -4029,9 +4016,8 @@
 	},
 /area/ruin/deepstorage/power)
 "hq" = (
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
