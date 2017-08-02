@@ -15,8 +15,7 @@
 	},
 /area/shuttle/abandoned)
 "ae" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "af" = (

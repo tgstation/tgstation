@@ -79,6 +79,8 @@
 			details = ": '" + rhtml_encode(testmerge[line]["title"]) + "' by " + rhtml_encode(testmerge[line]["author"]) + " at commit " + rhtml_encode(copytext(cm, 1, min(length(cm), 7)))
 		else if(has_pr_details)	//tgs2 support
 			details = ": '" + rhtml_encode(testmerge[line]["title"]) + "' by " + rhtml_encode(testmerge[line]["user"]["login"])
+		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
+			continue
 		. += "<a href=\"[config.githuburl]/pull/[line]\">#[line][details]</a><br>"
 
 /client/verb/showrevinfo()
@@ -96,7 +98,7 @@
 		to_chat(src, "[prefix]<a href=\"[config.githuburl]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
-	to_chat(src, "<b>Current Infomational Settings:</b>")
+	to_chat(src, "<b>Current Informational Settings:</b>")
 	to_chat(src, "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]")
 	to_chat(src, "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]")
 	to_chat(src, "Enforce Human Authority: [config.enforce_human_authority]")

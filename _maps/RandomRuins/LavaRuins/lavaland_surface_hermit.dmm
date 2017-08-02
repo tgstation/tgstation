@@ -173,8 +173,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
 "J" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},

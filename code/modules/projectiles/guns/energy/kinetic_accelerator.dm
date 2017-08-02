@@ -427,7 +427,7 @@
 
 /obj/item/borg/upgrade/modkit/bounty
 	name = "death syphon"
-	desc = "Killing or assisting in killing a creature permenantly increases your damage against that type of creature."
+	desc = "Killing or assisting in killing a creature permanently increases your damage against that type of creature."
 	denied_type = /obj/item/borg/upgrade/modkit/bounty
 	modifier = 1.25
 	cost = 30
@@ -534,7 +534,7 @@
 
 /obj/item/borg/upgrade/modkit/tracer/adjustable
 	name = "adjustable tracer bolts"
-	desc = "Causes kinetic accelerator bolts to have a adjustably-colored tracer trail and explosion. Use in-hand to change color."
+	desc = "Causes kinetic accelerator bolts to have a adjustable-colored tracer trail and explosion. Use in-hand to change color."
 
 /obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
 	bolt_color = input(user,"Choose Color") as color
