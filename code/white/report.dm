@@ -1,4 +1,4 @@
-/verb/suggest()
+/client/verb/suggest()
 	set category = "OOC"
 	set name = "Report a Bug, Suggestion"
 	var/suggbug = input("Report about something to Joctopus!", "Write a code to be a Host, or write something about your bug", "Error!")
@@ -9,7 +9,7 @@
 	var/datum/DBQuery/query_suggestions_insert = SSdbcore.NewQuery("INSERT INTO suggestion (ckey, sugg) VALUES ('[ckey]', '[sugg]')")
 	query_suggestions_insert.Execute()
 
-/verb/readsuggest()
+/client/verb/readsuggest()
 	set category = "Debug"
 	set name = "Read Bugs, Suggestions"
 	var/datum/DBQuery/query_suggestions_select = SSdbcore.NewQuery("SELECT id, ckey, sugg FROM suggestion")
@@ -28,8 +28,9 @@
 		dat += "<td>[query_suggestions_select.item[2]]</td>"
 		dat += "<td>[query_suggestions_select.item[3]]</td></tr>"
 	dat += "</table>"
+	usr << browse(dat, "window=suggread;size=600x400")
 
-/verb/suggestDBDelete()
+/client/verb/suggestDBDelete()
 	set category = "Debug"
 	set name = "Delete Suggest"
 	if(!check_rights())
