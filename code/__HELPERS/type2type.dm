@@ -537,3 +537,18 @@
 	if(!istype(the_matrix) || the_matrix.len != 20)
 		return "#ffffffff"
 	return rgb(the_matrix[1]*255, the_matrix[6]*255, the_matrix[11]*255, the_matrix[16]*255)
+
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj || /mob)
+				return /atom/movable
+			if(/area || /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))

@@ -51,6 +51,7 @@
 					add_mousepointer(ranged_ability_user.client)
 			else if(target == pulled_binding || (isliving(target) && L.buckled == pulled_binding))
 				ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] dispels [pulled_binding]!</span>", "<span class='danger'>You dispel the binding!</span>")
+				binding.take_damage(obj_integrity)
 				remove_ranged_ability()
 			return TRUE
 		if(target_is_binding)
@@ -101,13 +102,13 @@
 				while(!QDELETED(binding) && !QDELETED(ranged_ability_user))
 					if(ranged_ability_user.pulling == binding)
 						pulled_binding = binding
-						if(ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target.dmi')
+						if(ranged_ability_user.client && ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target.dmi')
 							remove_mousepointer(ranged_ability_user.client)
 							ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
 							add_mousepointer(ranged_ability_user.client)
 					else //if we're not pulling it, swap our mousepointer
 						pulled_binding = null
-						if(ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target_remove.dmi')
+						if(ranged_ability_user.client && ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target_remove.dmi')
 							remove_mousepointer(ranged_ability_user.client)
 							ranged_mousepointer = 'icons/effects/geis_target.dmi'
 							add_mousepointer(ranged_ability_user.client)

@@ -177,6 +177,7 @@
 	var/ice_creamed = 0
 	var/cone_type
 	bitesize = 3
+	foodtype = DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/Initialize()
 	. = ..()

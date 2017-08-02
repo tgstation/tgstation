@@ -63,6 +63,17 @@
 		clear_fullscreen("high")
 		clear_alert("high")
 
+/mob/living/carbon/adjust_disgust(amount)
+	var/old_disgust = disgust
+	if(amount>0)
+		disgust = min(disgust+amount, DISGUST_LEVEL_MAXEDOUT)
+
+	else if(old_disgust)
+		disgust = max(disgust+amount, 0)
+
+/mob/living/carbon/set_disgust(amount)
+	if(amount >= 0)
+		disgust = amount
 
 /mob/living/carbon/cure_blind()
 	if(disabilities & BLIND)

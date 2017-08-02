@@ -65,6 +65,12 @@
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
 
+//Disgust levels for humans
+#define DISGUST_LEVEL_MAXEDOUT 150
+#define DISGUST_LEVEL_DISGUSTED 75
+#define DISGUST_LEVEL_VERYGROSS 50
+#define DISGUST_LEVEL_GROSS 25
+
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
