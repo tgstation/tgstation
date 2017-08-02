@@ -18283,7 +18283,7 @@
 /area/security/prison)
 "aLB" = (
 /obj/structure/table,
-/obj/item/trash/deadmouse{
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse{
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{

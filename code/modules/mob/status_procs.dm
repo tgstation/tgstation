@@ -219,6 +219,14 @@
 /mob/proc/set_drugginess(amount)
 	return
 
+/////////////////////////////////// GROSSED OUT ////////////////////////////////////
+
+/mob/proc/adjust_disgust(amount)
+	return
+
+/mob/proc/set_disgust(amount)
+	return
+
 /////////////////////////////////// BLIND DISABILITY ////////////////////////////////////
 
 /mob/proc/cure_blind() //when we want to cure the BLIND disability only.

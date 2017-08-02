@@ -12,6 +12,7 @@
 	var/extra_reagent = null
 	filling_color = "#D2691E"
 	tastes = list("donut" = 1)
+	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
@@ -47,6 +48,7 @@
 	bonus_reagents = list("sugar" = 1, "vitamin" = 1)
 	extra_reagent = "berryjuice"
 	tastes = list("jelly" = 1, "donut" = 3)
+	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/Initialize()
 	. = ..()
@@ -64,12 +66,14 @@
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	extra_reagent = "slimejelly"
+	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	extra_reagent = "cherryjelly"
+	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
@@ -81,12 +85,14 @@
 	list_reagents = list("nutriment" = 6)
 	filling_color = "#F4A460"
 	tastes = list("muffin" = 1)
+	foodtype = GRAIN | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/berry
 	name = "berry muffin"
 	icon_state = "berrymuffin"
 	desc = "A delicious and spongy little cake, with berries."
 	tastes = list("muffin" = 3, "berry" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
@@ -94,6 +100,7 @@
 	alpha = 125
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 	tastes = list("muffin" = 3, "spookiness" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
@@ -103,6 +110,7 @@
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#FFE4E1"
 	tastes = list("custard" = 1)
+	foodtype = GRAIN | MEAT | VEGETABLES
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -115,6 +123,7 @@
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 	filling_color = "#D2691E"
 	tastes = list("waffles" = 1)
+	foodtype = GRAIN | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 	name = "\improper Soylent Green"
@@ -125,6 +134,7 @@
 	list_reagents = list("nutriment" = 10, "vitamin" = 1)
 	filling_color = "#9ACD32"
 	tastes = list("waffles" = 7, "people" = 1)
+	foodtype = GRAIN | GROSS | MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "\improper Soylent Virdians"
@@ -135,6 +145,7 @@
 	list_reagents = list("nutriment" = 10, "vitamin" = 1)
 	filling_color = "#9ACD32"
 	tastes = list("waffles" = 7, "the colour green" = 1)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
 	name = "roffle waffles"
@@ -146,6 +157,7 @@
 	list_reagents = list("nutriment" = 8, "mushroomhallucinogen" = 2, "vitamin" = 2)
 	filling_color = "#00BFFF"
 	tastes = list("waffle" = 1, "mushrooms" = 1)
+	foodtype = GRAIN | VEGETABLES | TOXIC | SUGAR
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -158,6 +170,7 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1)
+	foodtype = GRAIN | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"
@@ -167,6 +180,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -174,6 +188,7 @@
 	bonus_reagents = list("omnizine" = 3)
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/dankpocket
 	name = "\improper Dank-pocket"
@@ -182,6 +197,7 @@
 	list_reagents = list("lipolicide" = 3, "space_drugs" = 3, "nutriment" = 4)
 	filling_color = "#00FF00"
 	tastes = list("meat" = 2, "dough" = 2)
+	foodtype = GRAIN | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
@@ -191,6 +207,7 @@
 	list_reagents = list("nutriment" = 3)
 	filling_color = "#F4A460"
 	tastes = list("cookie" = 1)
+	foodtype = GRAIN | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "poppy pretzel"
@@ -200,6 +217,7 @@
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#F0E68C"
 	tastes = list("pretzel" = 1)
+	foodtype = GRAIN | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 	name = "plump helmet biscuit"
@@ -209,6 +227,7 @@
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#F0E68C"
 	tastes = list("mushroom" = 1, "biscuit" = 1)
+	foodtype = GRAIN | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize()
 	var/fey = prob(10)
@@ -229,6 +248,7 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cracker" = 1)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
@@ -239,6 +259,7 @@
 	list_reagents = list("nutriment" = 6, "ketchup" = 3, "vitamin" = 3)
 	filling_color = "#8B0000"
 	tastes = list("bun" = 3, "meat" = 2)
+	foodtype = GRAIN | MEAT | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
@@ -248,6 +269,7 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#8B0000"
 	tastes = list("bun" = 3, "meat" = 2)
+	foodtype = GRAIN | MEAT | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/khachapuri
 	name = "khachapuri"
@@ -256,6 +278,7 @@
 	list_reagents = list("nutriment" = 12, "vitamin" = 2)
 	filling_color = "#FFFF4D"
 	tastes = list("bread" = 1, "egg" = 1, "cheese" = 1)
+	foodtype = GRAIN | MEAT | DAIRY
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
@@ -266,6 +289,7 @@
 	list_reagents = list("nutriment" = 3, "sugar" = 3)
 	filling_color = "#CD853F"
 	tastes = list("sweetness" = 1)
+	foodtype = GRAIN | JUNKFOOD | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
@@ -275,6 +299,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#FFE4C4"
 	tastes = list("biscuit" = 3, "chocolate" = 1)
+	foodtype = GRAIN | JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
@@ -284,6 +309,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#D2691E"
 	tastes = list("cookie" = 2, "oat" = 1)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
@@ -293,6 +319,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1, "raisins" = 1)
+	foodtype = GRAIN | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"
@@ -302,6 +329,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cake" = 3, "cherry" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/bluecherrycupcake
 	name = "blue cherry cupcake"
@@ -311,6 +339,7 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cake" = 3, "blue cherry" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/honeybun
 	name = "honey bun"
@@ -320,3 +349,4 @@
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
 	tastes = list("pastry" = 1, "sweetness" = 1)
+	foodtype = GRAIN
