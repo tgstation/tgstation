@@ -63,7 +63,7 @@
 		if(!QDELETED(B))
 			if(needs_sound) //hey we need to play a sound
 				playsound(src, 'sound/machines/clockcult/ocularwarden-target.ogg', 50, 1)
-			B.duration = world.time + 10
+			B.duration = max(world.time + 10, B.duration)
 	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
 		if(M.z == z && get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
