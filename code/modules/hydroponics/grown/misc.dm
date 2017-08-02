@@ -54,6 +54,7 @@
 	icon_state = "cabbage"
 	filling_color = "#90EE90"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 
 // Sugarcane
@@ -79,6 +80,7 @@
 	icon_state = "sugarcane"
 	filling_color = "#FFD700"
 	bitesize_mod = 2
+	foodtype = VEGETABLES | SUGAR
 
 
 // Gatfruit
@@ -109,6 +111,7 @@
 	origin_tech = "combat=6"
 	trash = /obj/item/weapon/gun/ballistic/revolver
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb

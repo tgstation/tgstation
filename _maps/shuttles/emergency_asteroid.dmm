@@ -29,8 +29,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ah" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ai" = (
@@ -328,8 +327,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "bi" = (

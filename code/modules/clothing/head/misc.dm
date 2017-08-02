@@ -248,7 +248,7 @@
 
 /obj/item/clothing/head/jester
 	name = "jester hat"
-	desc = "A hat with bells, to add some merryness to the suit."
+	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
 	dynamic_hair_suffix = "null"
 
@@ -300,6 +300,6 @@
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"
-	desc = "A hat with bells, to add some merryness to the suit."
+	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat2"
 	dynamic_hair_suffix = "null"

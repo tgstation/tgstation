@@ -70,7 +70,6 @@
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return 0
-
 			else if(fullness <= 50)
 				to_chat(M, "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
 			else if(fullness > 50 && fullness < 150)
@@ -107,12 +106,13 @@
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
-				var/fraction = min(bitesize/reagents.total_volume, 1)
+				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
 				bitecount++
 				On_Consume()
-			return 1
+				checkLiked(fraction, M)
+				return 1
 
 	return 0
 

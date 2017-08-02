@@ -372,13 +372,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
+	var/sound/alert_sound = sound('sound/effects/alert.ogg')
 	for(var/mob/M in GLOB.mob_list)
 		if(M.z != z)
 			continue
 		M.update_gravity(M.mob_has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
-			M.playsound_local(T, 'sound/effects/alert.ogg', 100, 1, 0.5)
+			M.playsound_local(T, null, 100, 1, 0.5, S = alert_sound)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)

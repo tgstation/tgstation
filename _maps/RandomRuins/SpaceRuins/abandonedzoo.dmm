@@ -15,8 +15,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/abandonedzoo)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -71,8 +70,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/abandonedzoo)
 "ag" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/abandonedzoo)
 "ah" = (
@@ -86,8 +84,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/abandonedzoo)
 "ak" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;

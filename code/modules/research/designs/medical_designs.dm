@@ -215,7 +215,7 @@
 /datum/design/cyberimp_surgical
     name = "Surgical Arm Implant"
     desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
-    id = "ci-surgey"
+    id = "ci-surgery"
     req_tech = list("materials" = 3, "engineering" = 3, "biotech" = 3, "programming" = 2, "magnets" = 3)
     build_type = PROTOLATHE | MECHFAB
     materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)

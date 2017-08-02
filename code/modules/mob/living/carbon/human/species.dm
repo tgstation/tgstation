@@ -10,9 +10,9 @@
 
 
 /datum/species
-	var/id = null		// if the game needs to manually check your race to do something not included in a proc here, it will use this
-	var/limbs_id = null	//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
-	var/name = null		// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
+	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
+	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
+	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
@@ -21,18 +21,21 @@
 	var/face_y_offset = 0
 	var/hair_y_offset = 0
 
-	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
+	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
-	var/skinned_type = null
+	var/skinned_type
+	var/liked_food = NONE
+	var/disliked_food = GROSS
+	var/toxic_food = TOXIC
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
-	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
+	var/dangerous_existence //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
@@ -68,7 +71,7 @@
 
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
-	var/obj/item/mutanthands = null
+	var/obj/item/mutanthands
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
 
 	var/obj/item/organ/liver/mutantliver
