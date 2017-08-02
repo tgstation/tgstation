@@ -1,7 +1,7 @@
 /client/verb/suggest()
 	set category = "OOC"
-	set name = "Report a Bug, Suggestion"
-	var/suggbug = input("Report about something to Joctopus!", "Write a code to be a Host, or write something about your bug", "Error!")
+	set name = "Report a Bug, Suggestions"
+	var/suggbug = input("Write a code to be a Host, or write something about your bug or your suggestion", "Report about something to Joctopus!", " ")
 	suggbug = sanitizeSQL(suggbug)
 	suggestDBInsert(usr.ckey, suggbug)
 
@@ -33,7 +33,7 @@
 /client/verb/suggestDBDelete()
 	set category = "Debug"
 	set name = "Delete Suggest"
-	if(!check_rights())
+	if(!usr.ckey == "joctopus")
 		usr << "Fuck you, leatherman."
 		return
 	var/todelete = input("sugg id", "sugg id", "Error!")
