@@ -20,7 +20,7 @@
 	return ..()
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
-	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == INTENT_HARM)))
+	if(iscarbon(user) && !user.stat && !is_servant_of_ratvar(user))
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
 		qdel(src)
 		return 1
@@ -175,7 +175,7 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that will serve as a battery for clockwork structures."
+	clockwork_desc = "A sigil that serves as power generation and a battery for clockwork structures."
 	icon_state = "sigiltransmission"
 	alpha = 50
 	color = "#EC8A2D"
@@ -183,7 +183,12 @@
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
-	var/power_charge = CLOCKCULT_POWER_UNIT //starts with CLOCKCULT_POWER_UNIT by default
+	var/power_charge = 0 //starts with no power
+	var/drain_range = 14
+
+/obj/effect/clockwork/sigil/transmission/Initialize()
+	. = ..()
+	update_glow()
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)
@@ -199,7 +204,8 @@
 		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
 			structure_number++
 		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
-		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? "":"s"] [structure_number == 1 ? "is":"are"] in range.</span>")
+		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? " is":"s are"] in range.</span>")
+		to_chat(user, "<span class='brass'>While active, it will gradually drain power from nearby electronics. It is currently [isprocessing ? "active":"disabled"].</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
 		else if(!GLOB.ratvar_awakens)
@@ -218,12 +224,40 @@
 		return TRUE
 	return ..()
 
+/obj/effect/clockwork/sigil/transmission/attack_ai(mob/user)
+	if(is_servant_of_ratvar(user))
+		attack_hand(user)
+
+/obj/effect/clockwork/sigil/transmission/attack_hand(mob/user)
+	if(is_servant_of_ratvar(user))
+		visible_message("<span class='notice'>[user] [isprocessing ? "de":""]activates [src].</span>", "<span class='brass'>You [isprocessing ? "de":""]activate the [sigil_name].</span>")
+		if(isprocessing)
+			STOP_PROCESSING(SSobj, src)
+		else
+			START_PROCESSING(SSobj, src)
+	else
+		return ..()
+
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(is_servant_of_ratvar(L))
 		if(iscyborg(L))
 			charge_cyborg(L)
 	else if(power_charge)
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
+
+/obj/effect/clockwork/sigil/transmission/process()
+	var/power_drained = 0
+
+	for(var/t in spiral_range_turfs(drain_range, src))
+		var/turf/T = t
+		for(var/M in T)
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE)
+
+		CHECK_TICK
+
+	modify_charge(-Floor(power_drained, MIN_CLOCKCULT_POWER))
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
 
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
@@ -258,10 +292,6 @@
 			to_chat(cyborg, "<span class='warning'>You are already regenerating power!</span>")
 		return FALSE
 	return TRUE
-
-/obj/effect/clockwork/sigil/transmission/Initialize()
-	. = ..()
-	update_glow()
 
 /obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
 	if(GLOB.ratvar_awakens)
