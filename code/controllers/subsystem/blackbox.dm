@@ -262,7 +262,7 @@ SUBSYSTEM_DEF(blackbox)
 		if (!details)
 			details = text
 		else
-			details += " [text]"
+			details += " | [text]"
 
 /datum/feedback_variable/proc/get_details()
 	return details
