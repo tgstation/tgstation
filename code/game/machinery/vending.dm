@@ -4,7 +4,7 @@
 
 /datum/data/vending_product
 	var/product_name = "generic"
-	var/product_path = null
+	var/product_path
 	var/amount = 0
 	var/max_amount = 0
 	var/display_color = "blue"
@@ -23,22 +23,22 @@
 	verb_exclaim = "beeps"
 	max_integrity = 300
 	integrity_failure = 100
-	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
-	var/active = 1		//No sales pitches if off!
-	var/vend_ready = 1	//Are we ready to vend?? Is it time??
+	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
+	var/active = TRUE		//No sales pitches if off!
+	var/vend_ready = TRUE	//Are we ready to vend?? Is it time??
 
 	// To be filled out at compile time
-	var/list/products	= list()	//For each, use the following pattern:
-	var/list/contraband	= list()	//list(/type/path = amount, /type/path2 = amount2)
-	var/list/premium 	= list()	//No specified amount = only one in stock
+	var/list/products	//For each, use the following pattern:
+	var/list/contraband	//list(/type/path = amount, /type/path2 = amount2)
+	var/list/premium	//No specified amount = only one in stock
 
 	var/product_slogans = ""	//String of slogans separated by semicolons, optional
 	var/product_ads = ""		//String of small ad messages in the vending screen - random chance
-	var/list/product_records = list()
-	var/list/hidden_records = list()
-	var/list/coin_records = list()
-	var/list/slogan_list = list()
-	var/list/small_ads = list()	//Small ad messages in the vending screen - random chance of popping up whenever you open it
+	var/list/product_records
+	var/list/hidden_records
+	var/list/coin_records
+	var/list/slogan_list
+	var/list/small_ads	//Small ad messages in the vending screen - random chance of popping up whenever you open it
 	var/vend_reply				//Thank you for shopping!
 	var/last_reply = 0
 	var/last_slogan = 0			//When did we last pitch?
@@ -54,16 +54,25 @@
 	var/obj/item/weapon/coin/coin
 	var/obj/item/stack/spacecash/bill
 
-	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
+	var/list/dish_quants  //used by the snack machine's custom compartment to count dishes.
 
-	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	var/obj/item/weapon/vending_refill/refill_canister		//The type of refill canisters used by this machine.
 	var/refill_count = 3		//The number of canisters the vending machine uses
 
 /obj/machinery/vending/Initialize()
-	..()
+	. = ..()
+	products = list()
+	contraband = list()
+	premium = list()
+	product_records = list()
+	hidden_records = list()
+	coin_records = list()
+	slogan_list = list()
+	small_ads = list()
+	dish_quants = list()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
-		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
+		var/obj/item/weapon/circuitboard/machine/B = new
 		B.apply_default_parts(src)
 	else
 		build_inventory(products)
@@ -124,10 +133,9 @@
 	return ..()
 
 /obj/machinery/vending/snack/Destroy()
-	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
-		S.loc = get_turf(src)
-	qdel(wires)
-	wires = null
+	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src)
+		S.forceMove(get_turf(src))
+	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
@@ -388,13 +396,17 @@
 	emagged = TRUE
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
-/obj/machinery/vending/attack_ai(mob/user)
-	return attack_hand(user)
+/obj/machinery/vending/attack_ai(mob/living/user)
+	ShowInterface(user)
 
-/obj/machinery/vending/attack_hand(mob/user)
+/obj/machinery/vending/attack_hand(mob/living/user)
+	ShowInterface(user)
+
+/obj/machinery/vending/proc/ShowInterface(mob/living/user)
 	var/dat = ""
 	if(panel_open && !isAI(user))
-		return wires.interact(user)
+		wires.interact(user)
+		return
 	else
 		if(stat & (BROKEN|NOPOWER))
 			return
