@@ -5,7 +5,7 @@
 This is a basic explanation of how say() works. Read this if you don't understand something.
 
 The basic "flow" of say() is that a speaker says a message, which is heard by hearers. What appears on screen
-is constructed by each hearer seperately, and not by the speaker.
+is constructed by each hearer separately, and not by the speaker.
 
 This rewrite was needed, but is far from perfect. Report any bugs you come across and feel free to fix things up.
 Radio code, while very much related to saycode, is not something I wanted to touch, so the code related to that may be messy.
@@ -122,7 +122,7 @@ global procs
 		Called right before handle_inherent_channels()
 
 	can_speak_vocal(message)
-		Checks if the mob can vocalize their message. This is seperate so, for example, muzzles don't block
+		Checks if the mob can vocalize their message. This is separate so, for example, muzzles don't block
 		hivemind chat.
 		Called right after handle_inherent_channels()
 

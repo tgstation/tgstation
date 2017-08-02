@@ -26,24 +26,29 @@
 	tastes = list("pie" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
-	if(!..()) //was it caught by a mob?
-		var/turf/T = get_turf(hit_atom)
-		new/obj/effect/decal/cleanable/pie_smudge(T)
-		reagents.reaction(hit_atom, TOUCH)
+	. = ..()
+	if(!.) //if we're not being caught
+		splat(hit_atom)
 
-		if(ishuman(hit_atom))
-			var/mob/living/carbon/human/H = hit_atom
-			var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
-			if(H.dna.species.id == "lizard")
-				creamoverlay.icon_state = "creampie_lizard"
-			else
-				creamoverlay.icon_state = "creampie_human"
-			H.Knockdown(20) //splat!
-			H.adjust_blurriness(1)
-			visible_message("<span class='userdanger'>[H] was creamed by [src]!!</span>")
-			H.add_overlay(creamoverlay)
-
-		qdel(src)
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream/proc/splat(atom/movable/hit_atom)
+	if(isliving(loc)) //someone caught us!
+		return
+	var/turf/T = get_turf(hit_atom)
+	new/obj/effect/decal/cleanable/pie_smudge(T)
+	reagents.reaction(hit_atom, TOUCH)
+	if(ishuman(hit_atom))
+		var/mob/living/carbon/human/H = hit_atom
+		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
+		if(H.dna.species.limbs_id == "lizard")
+			creamoverlay.icon_state = "creampie_lizard"
+		else
+			creamoverlay.icon_state = "creampie_human"
+		H.Knockdown(20) //splat!
+		H.adjust_blurriness(1)
+		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		playsound(H, "desceration", 50, TRUE)
+		H.add_overlay(creamoverlay)
+	qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis

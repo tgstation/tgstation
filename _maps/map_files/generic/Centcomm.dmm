@@ -10330,7 +10330,7 @@
 	base_state = "rightsecure";
 	dir = 2;
 	icon_state = "rightsecure";
-	name = "Thunderdoom Booth";
+	name = "Thunderdome Booth";
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/bot,

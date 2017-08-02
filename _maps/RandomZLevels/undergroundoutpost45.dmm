@@ -9874,7 +9874,7 @@
 	dir = 8
 	},
 /obj/machinery/button/door{
-	desc = "A remote control-switch whichs locks the research division down in the event of a biohazard leak or contamination.";
+	desc = "A remote control-switch which locks the research division down in the event of a biohazard leak or contamination.";
 	id = "UO45_biohazard";
 	name = "Biohazard Door Control";
 	pixel_y = 8;

@@ -117,6 +117,10 @@
 	animate(T1, pixel_y = pixel_y + 9, alpha = 0, time = 8, easing = EASE_IN)
 	animate(T2, pixel_y = pixel_y - 9, alpha = 0, time = 8, easing = EASE_IN)
 
+/obj/structure/destructible/clockwork/geis_binding/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
+	if(buckled_mob != user)
+		return ..()
+
 /obj/item/geis_binding
 	name = "glowing ring"
 	desc = "A flickering ring preventing you from holding items."

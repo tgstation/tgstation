@@ -200,6 +200,7 @@
 
 /datum/action/innate/camera_off
 	name = "End Camera View"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 
 /datum/action/innate/camera_off/Activate()
@@ -212,6 +213,7 @@
 
 /datum/action/innate/camera_jump
 	name = "Jump To Camera"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/Activate()

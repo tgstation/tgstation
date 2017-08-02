@@ -281,7 +281,7 @@
 				to_chat(H, "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>")
 				H.internal = H.r_store
 
-		//Seperate so CO2 jetpacks are a little less cumbersome.
+		//Separate so CO2 jetpacks are a little less cumbersome.
 		if(!C.internal && istype(C.back, /obj/item/weapon/tank))
 			to_chat(C, "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>")
 			C.internal = C.back

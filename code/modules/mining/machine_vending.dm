@@ -143,7 +143,7 @@
 				SSblackbox.add_details("mining_equipment_bought",
 					"[src.type]|[prize.equipment_path]")
 				// Add src.type to keep track of free golem purchases
-				// seperately.
+				// separately.
 	updateUsrDialog()
 	return
 
