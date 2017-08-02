@@ -6,7 +6,6 @@
 	desc = "A rare collectable hat."
 	dynamic_hair_suffix = "+detective"
 
-
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"
 	desc = "It smells faintly of plasma."
