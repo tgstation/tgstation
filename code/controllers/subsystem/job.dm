@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	if(config.load_jobs_from_txt)
 		LoadJobs()
-	..()
+	. = ..()
 
 
 /datum/controller/subsystem/job/proc/SetupOccupations(faction = "Station")

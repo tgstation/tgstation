@@ -231,7 +231,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/random/Initialize()
 	. = INITIALIZE_HINT_QDEL
-	..()
+	. = ..()
 	var/type = pick(typesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
 	new type(loc)
 

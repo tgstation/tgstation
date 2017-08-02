@@ -35,7 +35,7 @@
 	. = ..()
 
 /obj/item/weapon/twohanded/ctf/Initialize()
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 	if(!reset)
 		reset = new reset_path(get_turf(src))
@@ -154,7 +154,7 @@
 	var/static/arena_reset = FALSE
 
 /obj/machinery/capture_the_flag/Initialize()
-	..()
+	. = ..()
 	if(!ctf_object_typecache)
 		ctf_object_typecache = typecacheof(list(
 			/turf,
@@ -581,7 +581,7 @@
 	invisibility = 0
 
 /obj/effect/ctf/ammo/Initialize(mapload)
-	..()
+	. = ..()
 	QDEL_IN(src, AMMO_DROP_LIFETIME)
 
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
@@ -615,7 +615,7 @@
 	icon_state = "barrier0"
 
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		CTF.dead_barricades += src
 

@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(ticker)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
-	..()
+	. = ..()
 	start_at = world.time + (config.lobby_countdown * 10)
 
 /datum/controller/subsystem/ticker/fire()

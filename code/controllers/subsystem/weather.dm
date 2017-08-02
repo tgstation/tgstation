@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(weather)
 		addtimer(CALLBACK(src, .proc/make_z_eligible, Z), rand(3000, 6000) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
-	..()
+	. = ..()
 	for(var/V in subtypesof(/datum/weather))
 		var/datum/weather/W = V
 		new W	//weather->New will handle adding itself to the list

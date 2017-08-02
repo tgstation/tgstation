@@ -669,7 +669,7 @@
 	return ..()
 
 /obj/machinery/turretid/Initialize(mapload) //map-placed turrets autolink turrets
-	..()
+	. = ..()
 	if(!mapload)
 		return
 	if(control_area && istext(control_area))

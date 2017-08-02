@@ -93,7 +93,7 @@ Difficulty: Very Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
 
 /obj/effect/temp_visual/at_shield

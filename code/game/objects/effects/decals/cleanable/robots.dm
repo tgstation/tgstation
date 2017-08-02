@@ -48,7 +48,7 @@
 	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/oil/Initialize()
-	..()
+	. = ..()
 	reagents.add_reagent("oil", 30)
 
 /obj/effect/decal/cleanable/oil/streak

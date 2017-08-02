@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	novariants = TRUE
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
-	..()
+	. = ..()
 
 	recipes = GLOB.rod_recipes
 	update_icon()

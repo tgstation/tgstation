@@ -159,7 +159,7 @@
 	return ..()
 
 /obj/machinery/airalarm/Initialize(mapload)
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/airalarm/ui_status(mob/user)

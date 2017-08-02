@@ -18,7 +18,7 @@
 	var/list/tags = list()
 
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
-	..()
+	. = ..()
 	if(!SSticker.mode.gang_points)
 		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
 

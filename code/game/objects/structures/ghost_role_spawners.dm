@@ -123,7 +123,7 @@
 	golems, so that no golem may ever be forced to serve again.</b>"
 
 /obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
-	..()
+	. = ..()
 	if(species)
 		name += " ([initial(species.prefix)])"
 		mob_species = species

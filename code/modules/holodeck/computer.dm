@@ -44,7 +44,7 @@
 	var/current_cd = 0
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()

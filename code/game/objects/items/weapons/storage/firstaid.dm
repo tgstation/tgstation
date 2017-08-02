@@ -56,7 +56,7 @@
 	item_state = "firstaid-ointment"
 
 /obj/item/weapon/storage/firstaid/fire/Initialize(mapload)
-	..()
+	. = ..()
 	icon_state = pick("ointment","firefirstaid")
 
 /obj/item/weapon/storage/firstaid/fire/PopulateContents()

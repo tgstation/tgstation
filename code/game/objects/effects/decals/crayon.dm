@@ -7,7 +7,7 @@
 	var/do_icon_rotate = TRUE
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
-	..()
+	. = ..()
 
 	name = e_name
 	desc = "A [name] vandalizing the station."
@@ -44,7 +44,7 @@
 	G.territory_new |= list(territory.type = territory.name)
 	//If this isn't tagged by a specific gangster there's no bonus income.
 	set_mind_owner(user_mind)
-	..(mapload, newcolor, icon_state, e_name, rotation)
+	. = ..(mapload, newcolor, icon_state, e_name, rotation)
 
 /obj/effect/decal/cleanable/crayon/gang/proc/set_mind_owner(datum/mind/mind)
 	if(istype(user_mind) && istype(gang) && islist(gang.tags_by_mind[user_mind]))	//Clear us out of old ownership

@@ -372,7 +372,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/nullrod/tribal_knife/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 /obj/item/weapon/nullrod/tribal_knife/New()

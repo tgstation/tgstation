@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPoly()
 	LoadChiselMessages()
 	LoadTrophies()
-	..()
+	. = ..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")

@@ -19,7 +19,7 @@
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/Initialize()
-	..()
+	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
 	blood_DNA["Non-human DNA"] = "A+"
 
@@ -54,7 +54,7 @@
 	mergeable_decal = 0
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize()
-	..()
+	. = ..()
 	reagents.add_reagent("liquidgibs", 5)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
@@ -94,7 +94,7 @@
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/gibs/old/Initialize()
-	..()
+	. = ..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
 	blood_DNA["Non-human DNA"] = "A+"

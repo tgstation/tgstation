@@ -40,7 +40,7 @@
 	search_objects = 2
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize()
-	..()
+	. = ..()
 	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
@@ -60,7 +60,7 @@
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Initialize()
-	..()
+	. = ..()
 	if(spawn_mecha_type)
 		var/obj/mecha/M = new spawn_mecha_type (get_turf(src))
 		if(istype(M))

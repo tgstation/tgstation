@@ -33,7 +33,7 @@
 	var/will_burrow = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
-	..()
+	. = ..()
 	var/i = rand(1,3)
 	while(i)
 		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)

@@ -15,7 +15,7 @@
 
 /obj/structure/ladder/Initialize(mapload)
 	GLOB.ladders += src
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy()

@@ -531,7 +531,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
 
 /obj/item/device/radio/headset/abductor/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 	make_syndie()
 

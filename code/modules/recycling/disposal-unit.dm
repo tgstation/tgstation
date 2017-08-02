@@ -62,7 +62,7 @@
 		deconstruct()
 
 /obj/machinery/disposal/Initialize(mapload)
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /obj/machinery/disposal/LateInitialize()

@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(air)
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
-	..()
+	. = ..()
 
 
 /datum/controller/subsystem/air/fire(resumed = 0)

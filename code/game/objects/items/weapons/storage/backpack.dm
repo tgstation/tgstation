@@ -288,7 +288,7 @@
 		icon_state = initial(icon_state)
 
 /obj/item/weapon/storage/backpack/satchel/flat/Initialize(mapload)
-	..()
+	. = ..()
 	SSpersistence.new_secret_satchels += src
 
 /obj/item/weapon/storage/backpack/satchel/flat/PopulateContents()
@@ -305,7 +305,7 @@
 	var/revealed = 0
 
 /obj/item/weapon/storage/backpack/satchel/flat/secret/Initialize()
-	..()
+	. = ..()
 
 	if(isfloorturf(loc) && !istype(loc, /turf/open/floor/plating/))
 		hide(1)

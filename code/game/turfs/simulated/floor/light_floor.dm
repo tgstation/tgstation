@@ -13,7 +13,7 @@
 
 
 /turf/open/floor/light/Initialize()
-	..()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/light/break_tile()

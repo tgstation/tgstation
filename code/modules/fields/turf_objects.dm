@@ -13,7 +13,7 @@
 /obj/effect/abstract/proximity_checker/advanced/Initialize(mapload, _monitor)
 	if(_monitor)
 		parent = _monitor
-	return ..()
+	return . = ..()
 
 /obj/effect/abstract/proximity_checker/advanced/center
 	name = "field anchor"

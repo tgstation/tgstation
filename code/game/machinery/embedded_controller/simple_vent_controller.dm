@@ -52,7 +52,7 @@
 	var/airpump_tag
 
 /obj/machinery/embedded_controller/radio/simple_vent_controller/Initialize(mapload)
-	..()
+	. = ..()
 
 	if(!mapload)
 		return

@@ -71,7 +71,7 @@
 
 
 /turf/open/space/transit/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)

@@ -7,7 +7,7 @@
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
-	..()
+	. = ..()
 	if(loot && loot.len)
 		var/turf/T = get_turf(src)
 		while(lootcount && loot.len)
@@ -89,7 +89,7 @@
 
 /obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
-	..()
+	. = ..()
 
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
@@ -130,7 +130,7 @@
 	loot = list()
 	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
 		loot[path] = TRUE
-	..()
+	. = ..()
 
 // Minor lootdrops follow
 

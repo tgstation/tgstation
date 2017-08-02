@@ -17,7 +17,7 @@
 
 
 /obj/item/clothing/head/helmet/Initialize()
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/clothing/head/helmet/sec
@@ -192,7 +192,7 @@
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
-	..()
+	. = ..()
 	// old knight helmets do not offer protection against loud noises
 	CLEAR_SECONDARY_FLAG(src, BANG_PROTECT)
 

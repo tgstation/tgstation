@@ -12,7 +12,7 @@
 	mergeable_decal = 0
 
 /obj/effect/decal/cleanable/ash/Initialize()
-	..()
+	. = ..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -22,7 +22,7 @@
 	icon_state = "big_ash"
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
-	..()
+	. = ..()
 	reagents.add_reagent("ash", 30) //double the amount of ash.
 
 
@@ -44,7 +44,7 @@
 	icon_state = "greenglow"
 
 /obj/effect/decal/cleanable/greenglow/Initialize(mapload)
-	..()
+	. = ..()
 	set_light(1)
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
@@ -102,7 +102,7 @@
 	desc = "You try not to look at the chunks, and fail."
 
 /obj/effect/decal/cleanable/vomit/old/Initialize()
-	..()
+	. = ..()
 	icon_state += "-old"
 
 /obj/effect/decal/cleanable/tomato_smudge
@@ -153,7 +153,7 @@
 /obj/effect/decal/cleanable/shreds/Initialize()
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
-	..()
+	. = ..()
 
 /obj/effect/decal/cleanable/salt
 	name = "salt pile"

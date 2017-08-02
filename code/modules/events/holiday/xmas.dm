@@ -85,7 +85,7 @@
 	var/tree = /obj/structure/flora/tree/pine/xmas
 
 /obj/effect/landmark/xmastree/Initialize(mapload)
-	..()
+	. = ..()
 	if(FESTIVE_SEASON in SSevents.holidays)
 		new tree(get_turf(src))
 	qdel(src)

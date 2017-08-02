@@ -149,5 +149,5 @@
 	add_overlay("recharge_comp_on")
 
 /obj/machinery/computer/mech_bay_power_console/Initialize()
-	..()
+	. = ..()
 	reconnect()

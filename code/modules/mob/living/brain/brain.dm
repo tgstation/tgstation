@@ -7,7 +7,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 
 /mob/living/brain/Initialize()
-	..()
+	. = ..()
 	create_dna(src)
 	stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)

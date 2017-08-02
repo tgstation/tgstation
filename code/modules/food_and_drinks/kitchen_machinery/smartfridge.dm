@@ -18,7 +18,7 @@
 	var/list/initial_contents
 
 /obj/machinery/smartfridge/Initialize()
-	..()
+	. = ..()
 	create_reagents()
 	reagents.set_reacting(FALSE)
 

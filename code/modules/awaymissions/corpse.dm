@@ -135,7 +135,7 @@
 		outfit = new outfit()
 	if(!outfit)
 		outfit = new /datum/outfit
-	return ..()
+	return . = ..()
 
 /obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
 	if(mob_species)

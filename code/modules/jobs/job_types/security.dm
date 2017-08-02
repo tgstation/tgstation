@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
 	recalculateChannels()
-	..()
+	. = ..()
 
 /obj/item/device/radio/headset/headset_sec/alt/department/engi
 	keyslot = new /obj/item/device/encryptionkey/headset_sec

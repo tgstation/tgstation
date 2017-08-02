@@ -21,7 +21,7 @@
 
 
 /obj/item/device/taperecorder/Initialize(mapload)
-	..()
+	. = ..()
 	if(starting_tape_type)
 		mytape = new starting_tape_type(src)
 	update_icon()
