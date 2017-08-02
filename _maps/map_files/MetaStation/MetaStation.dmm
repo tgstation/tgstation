@@ -190,8 +190,7 @@
 /turf/closed/wall/r_wall,
 /area/security/prison)
 "aay" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -255,8 +254,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aaF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -326,8 +324,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aaL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -335,8 +332,7 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "aaM" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_2)
 "aaN" = (
@@ -424,8 +420,7 @@
 /turf/closed/wall/r_wall,
 /area/prison/execution_room)
 "aba" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d2 = 2;
@@ -442,8 +437,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "abc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -1130,8 +1124,7 @@
 /turf/open/space,
 /area/solar/starboard/fore)
 "acA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
@@ -1144,8 +1137,7 @@
 	},
 /area/prison/execution_room)
 "acB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
 	layer = 2.9;
@@ -1310,8 +1302,7 @@
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
 "acQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "acR" = (
@@ -1808,8 +1799,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
 "adI" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_3)
 "adJ" = (
@@ -1981,8 +1971,7 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hos)
 "aea" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -1994,8 +1983,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "aeb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -2011,8 +1999,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "aec" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -2034,8 +2021,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aee" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "aef" = (
@@ -2237,8 +2223,7 @@
 /turf/closed/wall,
 /area/security/range)
 "aez" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/range)
 "aeA" = (
@@ -2254,16 +2239,14 @@
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
 "aeC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aeD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/effect/landmark/syndicate_breach_area,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2271,8 +2254,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aeE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -2668,8 +2650,7 @@
 	},
 /area/security/prison)
 "afc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -2917,8 +2898,7 @@
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/fitness/recreation)
 "afC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
@@ -3120,8 +3100,7 @@
 	},
 /area/security/prison)
 "afW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/security/prison)
@@ -3217,8 +3196,7 @@
 	},
 /area/ai_monitored/security/armory)
 "age" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -3307,8 +3285,7 @@
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/heads/hos)
 "agm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -3554,8 +3531,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "agL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/prison)
 "agM" = (
@@ -3657,8 +3633,7 @@
 	},
 /area/ai_monitored/security/armory)
 "agV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosprivacy";
@@ -3800,8 +3775,7 @@
 /turf/closed/wall,
 /area/maintenance/disposal)
 "ahq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ahr" = (
@@ -4330,13 +4304,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/port/fore)
 "aip" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aiq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -4465,28 +4437,24 @@
 	},
 /area/security/warden)
 "aiA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "aiB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/security/warden)
 "aiC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "aiD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -4494,8 +4462,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "aiE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -4507,8 +4474,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "aiF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -4550,8 +4516,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "aiH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -4568,8 +4533,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "aiI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -4818,8 +4782,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ajo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "ajp" = (
@@ -4905,8 +4868,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "ajx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -5486,8 +5448,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "akG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -5514,8 +5475,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "akK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -5714,8 +5674,7 @@
 	},
 /area/security/main)
 "akW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5895,8 +5854,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard)
 "alr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "als" = (
@@ -5917,8 +5875,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/gravity_generator)
 "alv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "alw" = (
@@ -6613,8 +6570,7 @@
 	},
 /area/crew_quarters/fitness/recreation)
 "amD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
@@ -6814,8 +6770,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -6963,8 +6918,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "anr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/security/warden)
@@ -7496,8 +7450,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "aov" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/warden)
 "aow" = (
@@ -7549,8 +7502,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aoA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -7909,8 +7861,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aph" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -7918,8 +7869,7 @@
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "api" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -7939,8 +7889,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/gravity_generator)
 "apk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -7949,8 +7898,7 @@
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "apl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -8178,8 +8126,7 @@
 	},
 /area/security/brig)
 "apH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -9055,8 +9002,7 @@
 	},
 /area/crew_quarters/dorms)
 "arD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -9688,8 +9634,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "asA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10367,8 +10312,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "atJ" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "atK" = (
@@ -10419,8 +10363,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "atQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -10453,8 +10396,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "atT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/security/main)
@@ -10485,8 +10427,7 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "atW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -10495,8 +10436,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "atX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10504,15 +10444,13 @@
 /turf/open/floor/plating,
 /area/security/main)
 "atY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/security/main)
 "atZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/security/main)
 "aua" = (
@@ -10868,8 +10806,7 @@
 	},
 /area/maintenance/port/fore)
 "auN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -10878,8 +10815,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "auO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10891,8 +10827,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "auP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -12051,8 +11986,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
 "awO" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "awP" = (
@@ -12749,8 +12683,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "ayi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "ayj" = (
@@ -12855,8 +12788,7 @@
 /turf/closed/wall,
 /area/prison/execution_room)
 "ayw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -12887,8 +12819,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ayy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -12975,8 +12906,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ayD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
@@ -13015,8 +12945,7 @@
 /turf/closed/wall/r_wall,
 /area/security/detectives_office)
 "ayG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "detective_shutters";
 	name = "detective's office shutters"
@@ -13043,8 +12972,7 @@
 /turf/open/floor/plasteel,
 /area/security/detectives_office)
 "ayI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "detective_shutters";
 	name = "detective's office shutters"
@@ -13459,8 +13387,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
 "azC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
 "azD" = (
@@ -14700,9 +14627,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aBO" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aBQ" = (
@@ -14900,8 +14826,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/fore)
 "aCk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -14913,8 +14838,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aCl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -14931,8 +14855,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aCm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -14957,8 +14880,7 @@
 	},
 /area/security/brig)
 "aCo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "Secure Gate";
 	name = "brig shutters"
@@ -15257,8 +15179,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aCR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -15298,19 +15219,17 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCW" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCX" = (
@@ -15332,8 +15251,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "aCZ" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aDa" = (
@@ -15573,8 +15491,7 @@
 	},
 /area/hallway/primary/fore)
 "aDE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -16194,8 +16111,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/warehouse)
 "aEF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -16215,8 +16131,7 @@
 	},
 /area/construction/storage/wing)
 "aEH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -16674,8 +16589,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aFu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -16871,8 +16785,7 @@
 /turf/closed/wall,
 /area/construction/storage/wing)
 "aFO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -16884,8 +16797,7 @@
 /turf/open/floor/plating,
 /area/construction/storage/wing)
 "aFP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -16897,8 +16809,7 @@
 /turf/open/floor/plating,
 /area/construction/storage/wing)
 "aFQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -16923,8 +16834,7 @@
 	},
 /area/construction/storage/wing)
 "aFS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -16933,8 +16843,7 @@
 /turf/open/floor/plating,
 /area/construction/storage/wing)
 "aFT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -16950,8 +16859,7 @@
 /turf/open/floor/plating,
 /area/construction/storage/wing)
 "aFU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -17206,8 +17114,7 @@
 	},
 /area/hallway/primary/fore)
 "aGp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/door/poddoor/preopen{
 	id = "briglockdown";
@@ -17636,8 +17543,7 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aHc" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
@@ -17863,8 +17769,7 @@
 /turf/closed/wall/r_wall,
 /area/hallway/primary/fore)
 "aHy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
@@ -18095,11 +18000,10 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIc" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -18122,8 +18026,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
 "aIg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aIh" = (
@@ -18545,8 +18448,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/fore)
 "aIG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -18554,8 +18456,7 @@
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
 "aIH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -18897,8 +18798,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aJB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -19031,8 +18931,7 @@
 /turf/closed/wall,
 /area/storage/primary)
 "aJO" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/storage/primary)
 "aJP" = (
@@ -19253,8 +19152,7 @@
 	},
 /area/crew_quarters/dorms)
 "aKn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
@@ -20496,8 +20394,7 @@
 	},
 /area/crew_quarters/locker)
 "aNg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/hydroponics/garden)
 "aNh" = (
@@ -20660,8 +20557,7 @@
 /turf/open/space,
 /area/space)
 "aND" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "aNE" = (
@@ -20756,8 +20652,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aNN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -20876,8 +20771,7 @@
 	},
 /area/storage/primary)
 "aNZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -21440,12 +21334,11 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aPc" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "aPd" = (
@@ -21643,8 +21536,7 @@
 	},
 /area/storage/primary)
 "aPs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -21705,8 +21597,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
 "aPy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -21742,8 +21633,7 @@
 	},
 /area/hallway/primary/fore)
 "aPB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "aPC" = (
@@ -21755,14 +21645,12 @@
 /turf/open/floor/plasteel/black,
 /area/security/courtroom)
 "aPD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "aPE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "lawyer_shutters";
@@ -21785,8 +21673,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aPG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "lawyer_shutters";
 	name = "law office shutters"
@@ -21852,8 +21739,7 @@
 	},
 /area/crew_quarters/locker)
 "aPN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -21956,8 +21842,7 @@
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "aPX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -22669,8 +22554,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aRm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -23026,8 +22910,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aSe" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
 "aSf" = (
@@ -23601,8 +23484,7 @@
 	},
 /area/storage/primary)
 "aTh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -23636,8 +23518,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aTk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "aTl" = (
@@ -24254,8 +24135,7 @@
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
 "aUw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -24653,11 +24533,10 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aVh" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aVk" = (
@@ -24736,8 +24615,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "aVs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "aVt" = (
@@ -24998,8 +24876,7 @@
 	},
 /area/security/checkpoint/supply)
 "aVR" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/storage/primary)
@@ -25314,8 +25191,7 @@
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/heads/chief)
 "aWA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "aWB" = (
@@ -25429,8 +25305,7 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "aWS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "aWT" = (
@@ -26381,8 +26256,7 @@
 	},
 /area/ai_monitored/turret_protected/ai)
 "aYz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "AI Core shutters";
 	name = "AI core shutters"
@@ -26571,8 +26445,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aYS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/checkpoint/supply)
 "aYT" = (
@@ -28317,8 +28190,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bbN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bbO" = (
@@ -28499,8 +28371,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bci" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "bcj" = (
@@ -28579,8 +28450,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bcu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bcv" = (
@@ -28828,8 +28698,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "bcU" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "bcV" = (
@@ -29065,8 +28934,7 @@
 	},
 /area/quartermaster/office)
 "bdq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -29107,8 +28975,7 @@
 	},
 /area/hallway/primary/port)
 "bdw" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bdx" = (
@@ -29770,8 +29637,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "beK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -30119,13 +29985,11 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bfq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bfr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -30142,8 +30006,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bfs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -30164,8 +30027,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bft" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -30182,8 +30044,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bfu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -30199,8 +30060,7 @@
 /turf/closed/wall/r_wall,
 /area/bridge)
 "bfw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -30213,8 +30073,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bfx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -30306,8 +30165,7 @@
 /turf/closed/wall/r_wall,
 /area/storage/tools)
 "bfH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/storage/tools)
@@ -30321,8 +30179,7 @@
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "bfJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/storage/tools)
@@ -30380,8 +30237,7 @@
 	},
 /area/storage/tech)
 "bfQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -30394,8 +30250,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "bfR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -30440,8 +30295,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bfV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
@@ -30461,8 +30315,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bfX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
@@ -31091,8 +30944,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bhg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
 	layer = 2.9;
@@ -31205,8 +31057,7 @@
 	},
 /area/bridge)
 "bhs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -31625,8 +31476,7 @@
 	},
 /area/engine/break_room)
 "bie" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/break_room)
 "bif" = (
@@ -31668,8 +31518,7 @@
 /turf/open/space,
 /area/space)
 "bij" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_4)
 "bik" = (
@@ -31807,8 +31656,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "biz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -32015,8 +31863,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "biY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -33348,8 +33195,7 @@
 	},
 /area/hallway/primary/starboard)
 "blj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -33419,8 +33265,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/break_room)
 "blt" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "blu" = (
@@ -33811,8 +33656,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bmg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
@@ -33822,8 +33666,7 @@
 /turf/open/floor/plasteel/black,
 /area/quartermaster/office)
 "bmi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/quartermaster/office)
@@ -34180,8 +34023,7 @@
 /turf/closed/wall,
 /area/storage/art)
 "bmM" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/storage/art)
 "bmN" = (
@@ -34998,8 +34840,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bol" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -35233,8 +35074,7 @@
 	},
 /area/hallway/primary/central)
 "boL" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -40290,8 +40130,7 @@
 	},
 /area/hallway/primary/central)
 "bxZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/door/poddoor/preopen{
 	id = "hop";
@@ -40300,8 +40139,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "bya" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -40825,8 +40663,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bza" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bzb" = (
@@ -41546,8 +41383,7 @@
 	},
 /area/hallway/primary/starboard)
 "bAA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "open";
@@ -41975,8 +41811,7 @@
 /turf/closed/wall,
 /area/hallway/secondary/command)
 "bBz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -41998,8 +41833,7 @@
 	},
 /area/hallway/secondary/command)
 "bBB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -42077,8 +41911,7 @@
 	},
 /area/hallway/primary/port)
 "bBH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "open";
@@ -42094,8 +41927,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bBI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "open";
@@ -42115,8 +41947,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bBJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "open";
@@ -42140,8 +41971,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bBK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "open";
@@ -42161,8 +41991,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bBL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "open";
@@ -42261,8 +42090,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bBS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "bBT" = (
@@ -42429,8 +42257,7 @@
 	},
 /area/engine/atmos)
 "bCm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -42524,8 +42351,7 @@
 	},
 /area/engine/atmos)
 "bCy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
 	dir = 4
 	},
@@ -42566,8 +42392,7 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "bCE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "bCF" = (
@@ -42583,8 +42408,7 @@
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "bCG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -44501,8 +44325,7 @@
 	},
 /area/engine/atmos)
 "bFX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
@@ -44748,8 +44571,7 @@
 /turf/closed/wall/r_wall,
 /area/teleporter)
 "bGF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/hallway/secondary/command)
@@ -44916,8 +44738,7 @@
 	},
 /area/hallway/primary/central)
 "bGY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -45139,16 +44960,14 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bHw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bHx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -45156,16 +44975,14 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bHy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bHz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -45173,8 +44990,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bHA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -45182,8 +44998,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bHB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4
 	},
@@ -45535,8 +45350,7 @@
 	},
 /area/hallway/secondary/command)
 "bIl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -45918,8 +45732,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bJa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
@@ -46264,8 +46077,7 @@
 	},
 /area/teleporter)
 "bJM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -46326,8 +46138,7 @@
 	},
 /area/hallway/secondary/command)
 "bJS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -46407,8 +46218,7 @@
 	},
 /area/gateway)
 "bJX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -47105,8 +46915,7 @@
 	},
 /area/teleporter)
 "bLv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -47176,8 +46985,7 @@
 	},
 /area/gateway)
 "bLC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/gateway)
@@ -48182,8 +47990,7 @@
 	},
 /area/hallway/primary/central)
 "bNv" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -48826,8 +48633,7 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "bOJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -48875,8 +48681,7 @@
 	},
 /area/hallway/primary/central)
 "bOP" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/preopen{
 	id = "kitchenwindow";
 	name = "kitchen shutters"
@@ -50878,8 +50683,7 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "bSI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "corporate_privacy";
@@ -51633,8 +51437,7 @@
 /turf/open/floor/plasteel/green,
 /area/hallway/primary/central)
 "bUe" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/hydroponics)
 "bUf" = (
@@ -53644,8 +53447,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bYc" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "bYd" = (
@@ -53904,8 +53706,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bYC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "bYD" = (
@@ -54164,8 +53965,7 @@
 	},
 /area/security/checkpoint/medical)
 "bZa" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "bZb" = (
@@ -54267,8 +54067,7 @@
 /turf/closed/wall,
 /area/science/research)
 "bZj" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/research)
 "bZk" = (
@@ -54683,8 +54482,7 @@
 	},
 /area/security/checkpoint/medical)
 "cah" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -55732,8 +55530,7 @@
 	},
 /area/security/checkpoint/medical)
 "cbS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
 "cbT" = (
@@ -55863,8 +55660,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cck" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -56684,8 +56480,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cdP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -56855,20 +56650,17 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "ceg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "ceh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "cei" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -57569,8 +57361,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "cft" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "cfu" = (
@@ -57855,8 +57646,7 @@
 /turf/closed/wall,
 /area/medical/chemistry)
 "cfX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters";
 	name = "chemistry shutters"
@@ -57918,8 +57708,7 @@
 /turf/closed/wall/r_wall,
 /area/science/lab)
 "cge" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters";
 	name = "research shutters"
@@ -58368,8 +58157,7 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/storage)
 "cgV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -58399,8 +58187,7 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/medbay/central)
 "cgY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
@@ -59399,8 +59186,7 @@
 	},
 /area/maintenance/starboard/aft)
 "ciY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -59917,8 +59703,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ckd" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -60248,8 +60033,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "ckN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ckO" = (
@@ -60395,8 +60179,7 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/sleeper)
 "cli" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -60784,8 +60567,7 @@
 /turf/closed/wall/r_wall,
 /area/science/explab)
 "clT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "telelab";
 	name = "test chamber blast door"
@@ -60794,8 +60576,7 @@
 /turf/open/floor/plating,
 /area/science/explab)
 "clU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "telelab";
 	name = "test chamber blast door"
@@ -60926,19 +60707,16 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cmk" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/medical/surgery)
 "cml" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/medical/surgery)
 "cmm" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/medical/surgery)
@@ -60952,8 +60730,7 @@
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "cmo" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/medical/sleeper)
@@ -60989,8 +60766,7 @@
 /turf/closed/wall,
 /area/crew_quarters/heads/cmo)
 "cmv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -61002,8 +60778,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
 "cmw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -61019,8 +60794,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
 "cmx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -61585,8 +61359,7 @@
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "cnz" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/medical/cryo)
 "cnA" = (
@@ -61735,8 +61508,7 @@
 	},
 /area/medical/chemistry)
 "cnL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters_2";
 	name = "chemistry shutters"
@@ -61788,8 +61560,7 @@
 /turf/open/floor/plasteel/purple,
 /area/hallway/primary/aft)
 "cnR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters_2";
 	name = "research shutters"
@@ -61844,8 +61615,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cnX" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/lab)
 "cnY" = (
@@ -62182,8 +61952,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "coG" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -63124,8 +62893,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cqk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -63291,8 +63059,7 @@
 /turf/open/floor/plasteel/purple,
 /area/hallway/primary/aft)
 "cqw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters_2";
 	name = "research shutters"
@@ -63991,8 +63758,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "crN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -64009,8 +63775,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "crO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -64029,8 +63794,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "crP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -64718,8 +64482,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "csY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 2;
@@ -65384,8 +65147,7 @@
 	},
 /area/medical/patients_rooms/room_a)
 "cun" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -65537,8 +65299,7 @@
 	},
 /area/medical/genetics)
 "cuy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "genetics_shutters";
 	name = "genetics shutters"
@@ -65638,8 +65399,7 @@
 	},
 /area/science/research)
 "cuL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/machinery/door/poddoor/preopen{
 	id = "rdprivacy";
@@ -66149,8 +65909,7 @@
 	},
 /area/science/misc_lab/range)
 "cvL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "researchrangeshutters";
 	name = "blast door"
@@ -66473,8 +66232,7 @@
 	},
 /area/medical/patients_rooms/room_b)
 "cwr" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -66961,8 +66719,7 @@
 	},
 /area/medical/medbay/aft)
 "cxl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -66995,8 +66752,7 @@
 	},
 /area/medical/genetics/cloning)
 "cxp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -67048,8 +66804,7 @@
 	},
 /area/medical/genetics)
 "cxv" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/medical/genetics)
 "cxw" = (
@@ -68055,8 +67810,7 @@
 	},
 /area/science/research)
 "czr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "toxins_blastdoor";
 	name = "biohazard containment door"
@@ -68222,8 +67976,7 @@
 /turf/closed/wall,
 /area/science/test_area)
 "czK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/test_area)
 "czL" = (
@@ -68872,8 +68625,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cAP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/mixing)
 "cAQ" = (
@@ -68932,8 +68684,7 @@
 	},
 /area/medical/medbay/aft)
 "cAX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -68972,8 +68723,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "cBb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/medical/genetics/cloning)
@@ -69078,8 +68828,7 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "cBm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "researchrangeshutters";
 	name = "blast door"
@@ -69118,8 +68867,7 @@
 	},
 /area/science/research)
 "cBq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "toxins_blastdoor";
 	name = "biohazard containment door"
@@ -69363,8 +69111,7 @@
 /turf/closed/wall/r_wall,
 /area/medical/virology)
 "cBS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/virology)
 "cBT" = (
@@ -69530,8 +69277,7 @@
 /turf/closed/wall/r_wall,
 /area/science/robotics/mechbay)
 "cCo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics_shutters";
 	name = "robotics shutters"
@@ -69935,8 +69681,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/aft)
 "cDa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics_shutters";
 	name = "robotics shutters"
@@ -70213,8 +69958,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "cDE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -70816,8 +70560,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cEA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/space)
 "cEB" = (
@@ -70851,8 +70594,7 @@
 /turf/closed/wall,
 /area/medical/virology)
 "cEF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
@@ -70884,8 +70626,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "cEH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -71365,8 +71106,7 @@
 	},
 /area/medical/virology)
 "cFD" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -71435,8 +71175,7 @@
 /turf/closed/wall/r_wall,
 /area/medical/virology)
 "cFK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -72259,8 +71998,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cGZ" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -72434,8 +72172,7 @@
 	},
 /area/medical/virology)
 "cHq" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -72893,8 +72630,7 @@
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "cId" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
@@ -73017,8 +72753,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cIp" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
@@ -73305,8 +73040,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cIP" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/robotics/lab)
 "cIQ" = (
@@ -73877,8 +73611,7 @@
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "cJU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/server)
 "cJV" = (
@@ -75260,8 +74993,7 @@
 /turf/open/floor/plating/airless,
 /area/medical/virology)
 "cMw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -75989,8 +75721,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cNP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
@@ -76157,8 +75888,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cOh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
 "cOi" = (
@@ -76570,8 +76300,7 @@
 /turf/closed/wall,
 /area/hallway/secondary/exit/departure_lounge)
 "cPc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -76580,8 +76309,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "cPd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -76726,8 +76454,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cPv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "cPx" = (
@@ -76751,8 +76478,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cPA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_parlour";
 	name = "chapel shutters"
@@ -77787,8 +77513,7 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "cRL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_space";
 	name = "chapel shutters"
@@ -79095,8 +78820,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "cUg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "cUh" = (
@@ -79462,8 +79186,7 @@
 /turf/open/floor/wood,
 /area/library)
 "cUU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/wood,
 /area/library)
 "cUV" = (
@@ -79631,8 +79354,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "cVp" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cVr" = (
@@ -79684,8 +79406,7 @@
 /area/shuttle/transport)
 "cVy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "cVz" = (
@@ -79721,8 +79442,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cVG" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cVH" = (
@@ -80366,8 +80086,7 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cWK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "cWL" = (
@@ -81399,8 +81118,7 @@
 	},
 /area/construction/mining/aux_base)
 "cYF" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cYG" = (
@@ -82480,11 +82198,10 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "daZ" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dbb" = (
@@ -84063,19 +83780,17 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "ded" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dee" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "def" = (
@@ -84085,13 +83800,12 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "deh" = (
-/obj/structure/grille,
 /obj/structure/cable/white{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dei" = (
@@ -84381,11 +84095,10 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "deS" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "deT" = (
@@ -84505,17 +84218,15 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "dfk" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dfm" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dfp" = (
@@ -84903,8 +84614,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "dgp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -85068,8 +84778,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "dhk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -86977,8 +86686,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "dlN" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "dlO" = (
@@ -87147,13 +86855,11 @@
 /turf/closed/wall,
 /area/quartermaster/sorting)
 "dmH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "dmI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "dmJ" = (
@@ -87205,8 +86911,7 @@
 /turf/closed/wall,
 /area/quartermaster/sorting)
 "dmY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "dmZ" = (
@@ -87238,8 +86943,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
 "dni" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dnj" = (
@@ -87319,8 +87023,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
 "dnD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dnE" = (
@@ -87527,8 +87230,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "doI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "doJ" = (
@@ -87688,8 +87390,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
 "dpu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dpv" = (
@@ -88610,8 +88311,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
 "duq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dur" = (
@@ -89188,8 +88888,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dxk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dxl" = (
@@ -89245,24 +88944,21 @@
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dxB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dxC" = (
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dxD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dxE" = (
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dxF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dxG" = (
@@ -89353,8 +89049,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dyd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dye" = (
@@ -90017,8 +89712,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dAS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dAT" = (
@@ -90069,8 +89763,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dBg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dBh" = (
@@ -90168,8 +89861,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "dBD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
 	d2 = 4
@@ -90177,8 +89869,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "dBE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
 	d2 = 4
@@ -90186,8 +89877,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "dBF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -90199,8 +89889,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "dBG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -90208,8 +89897,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "dBH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
@@ -90218,8 +89906,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "dBI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/engine/break_room)
@@ -90232,8 +89919,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "dBK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "open";
@@ -90263,8 +89949,7 @@
 	},
 /area/engine/atmos)
 "dBN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -90281,8 +89966,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "dBP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -90290,8 +89974,7 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "dBQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -90299,8 +89982,7 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "dBR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
 	d2 = 4
@@ -90321,8 +90003,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dBT" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -90331,8 +90012,7 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "dBU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -90340,14 +90020,12 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "dBV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/medical/virology)
 "dBW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/medical/virology)

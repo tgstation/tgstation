@@ -25,6 +25,7 @@
 	icon_state = "soybeans"
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Koibean
 /obj/item/seeds/soya/koi
@@ -46,3 +47,4 @@
 	icon_state = "koibeans"
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
+	foodtype = VEGETABLES

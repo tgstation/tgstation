@@ -40,7 +40,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 /mob/living/silicon/Initialize()
-	..()
+	. = ..()
 	GLOB.silicon_mobs += src
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)

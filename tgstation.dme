@@ -36,6 +36,7 @@
 #include "code\__DEFINES\DNA.dm"
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\flags.dm"
+#include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\hud.dm"
 #include "code\__DEFINES\inventory.dm"
 #include "code\__DEFINES\is_helpers.dm"

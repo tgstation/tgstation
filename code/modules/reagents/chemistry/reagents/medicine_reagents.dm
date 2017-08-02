@@ -52,6 +52,7 @@
 	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
+	M.disgust = 0
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.slurring = 0
