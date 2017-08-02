@@ -22,21 +22,24 @@
 		<!DOCTYPE html>
 		<html>
 		<table>
-		<tr><td>id</td><td>ckey</td><td>sugg</td></tr>"}
+		<tr><td>id</td><td>ckey</td><td>sugg</td><td>X</td></tr>"}
 	while(query_suggestions_select.NextRow())
 		dat += "<tr><td>[query_suggestions_select.item[1]]</td>"
 		dat += "<td>[query_suggestions_select.item[2]]</td>"
-		dat += "<td>[query_suggestions_select.item[3]]</td></tr>"
+		dat += "<td>[query_suggestions_select.item[3]]</td>"
+		dat += "<td><a href='?deleteDB=[query_suggestions_select.item[1]]'>D</a></td></tr>"
 	dat += "</table>"
 	usr << browse(sanitize_russian(dat), "window=suggread;size=600x400")
 
-/client/verb/suggestDBDelete()
-	set category = "Debug"
-	set name = "Delete Suggest"
+/client/Topic(href, href_list, hsrc)
+	if(href_list["deleteDB"])
+		suggestDBDelete(href_list["deleteDB"])
+		return
+
+proc/suggestDBDelete(var/id)
 	if(!usr.ckey == "joctopus")
 		usr << "Fuck you, leatherman."
 		return
-	var/todelete = input("sugg id", "sugg id", "Error!")
-	var/datum/DBQuery/query_suggestions_delete = SSdbcore.NewQuery("DELETE FROM suggestion WHERE id = [todelete]")
+	var/datum/DBQuery/query_suggestions_delete = SSdbcore.NewQuery("DELETE FROM suggestion WHERE id = [text2num(id)]")
 	query_suggestions_delete.Execute()
 	usr << "succ"
