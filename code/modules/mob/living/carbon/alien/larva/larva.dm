@@ -22,7 +22,7 @@
 
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/larva/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small/tiny

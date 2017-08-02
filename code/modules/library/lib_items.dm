@@ -25,7 +25,7 @@
 
 
 /obj/structure/bookcase/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 	state = 2

@@ -43,7 +43,7 @@
 
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
-	..()
+	. = ..()
 	if(created_name)
 		name = created_name
 	if(created_lasercolor)

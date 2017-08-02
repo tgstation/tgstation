@@ -121,7 +121,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/clothing/mask/cigarette/Initialize()
-	..()
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	if(list_reagents)
@@ -378,7 +378,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/packeditem = 0
 
 /obj/item/clothing/mask/cigarette/pipe/Initialize()
-	..()
+	. = ..()
 	name = "empty [initial(name)]"
 
 /obj/item/clothing/mask/cigarette/pipe/Destroy()

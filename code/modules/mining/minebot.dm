@@ -48,7 +48,7 @@
 	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
-	..()
+	. = ..()
 	toggle_light_action = new()
 	toggle_light_action.Grant(src)
 	toggle_mode_action = new()

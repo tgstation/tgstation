@@ -12,7 +12,7 @@
 
 
 /mob/living/simple_animal/hostile/boss/Initialize()
-	..()
+	. = ..()
 
 	atb = new()
 	atb.point_regen_delay = point_regen_delay

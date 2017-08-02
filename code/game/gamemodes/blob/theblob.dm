@@ -35,7 +35,7 @@
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
-	.= ..()
+	. = ..()
 	ConsumeTile()
 	if(atmosblock)
 		CanAtmosPass = ATMOS_PASS_NO

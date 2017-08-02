@@ -549,7 +549,7 @@
 	dog_fashion = null
 
 /obj/item/device/radio/borg/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
 
 /obj/item/device/radio/borg/syndicate

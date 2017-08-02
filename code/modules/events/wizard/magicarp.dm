@@ -43,7 +43,7 @@
 	
 /mob/living/simple_animal/hostile/carp/ranged/Initialize()
 	projectiletype = pick(allowed_projectile_types)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos
 	name = "chaos magicarp"

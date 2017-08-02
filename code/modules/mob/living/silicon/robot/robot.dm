@@ -787,7 +787,7 @@
 	var/set_module = /obj/item/weapon/robot_module/syndicate
 
 /mob/living/silicon/robot/syndicate/Initialize()
-	..()
+	. = ..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)

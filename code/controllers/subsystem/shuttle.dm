@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(shuttle)
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
-	..()
+	. = ..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	// transit zone

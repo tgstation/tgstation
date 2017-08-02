@@ -19,7 +19,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 /datum/controller/subsystem/processing/overlays/Initialize()
 	initialized = TRUE
 	Flush()
-	..()
+	. = ..()
 
 /datum/controller/subsystem/processing/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches

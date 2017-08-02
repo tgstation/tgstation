@@ -118,7 +118,7 @@
 	else
 		return INITIALIZE_HINT_QDEL //No pack, no gun
 	
-	return ..()
+	return . = ..()
 
 /obj/item/weapon/gun/ballistic/minigun/attack_self(mob/living/user)
 	return

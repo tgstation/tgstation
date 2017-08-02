@@ -21,7 +21,7 @@
 	var/trigger_delay = 10
 
 /obj/item/device/pressure_plate/Initialize()
-	..()
+	. = ..()
 	tile_overlay = image(icon = 'icons/turf/floors.dmi', icon_state = "pp_overlay")
 	if(roundstart_signaller)
 		sigdev = new

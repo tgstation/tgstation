@@ -173,7 +173,7 @@
 		SSblackbox.add_details("wisp_lantern","Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
-	..()
+	. = ..()
 	wisp = new(src)
 
 /obj/item/device/wisp_lantern/Destroy()
@@ -242,7 +242,7 @@
 	teleport_color = "#FD3F48"
 
 /obj/item/device/warp_cube/red/Initialize()
-	..()
+	. = ..()
 	if(!linked)
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
@@ -397,7 +397,7 @@
 	desc = "Somehow, it's in two places at once."
 
 /obj/item/device/shared_storage/red/Initialize()
-	..()
+	. = ..()
 	if(!bag)
 		var/obj/item/weapon/storage/backpack/shared/S = new(src)
 		var/obj/item/device/shared_storage/blue = new(src.loc)
@@ -701,7 +701,7 @@
 	var/list/mob/dead/observer/spirits
 
 /obj/item/weapon/melee/ghost_sword/Initialize()
-	..()
+	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src

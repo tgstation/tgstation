@@ -158,7 +158,7 @@
 	name = "wizard"
 
 /obj/effect/landmark/start/wizard/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.wizardstart += loc
 	qdel(src)
 
@@ -172,7 +172,7 @@
 	GLOB.newplayer_start += loc
 
 /obj/effect/landmark/start/new_player/Initialize(mapload)
-	..()
+	. = ..()
 	qdel(src)
 
 
@@ -181,7 +181,7 @@
 	name = "JoinLate"
 
 /obj/effect/landmark/latejoin/Initialize(mapload)
-	..()
+	. = ..()
 	SSjob.latejoin_trackers += loc
 	qdel(src)
 
@@ -227,7 +227,7 @@
 	name = "xeno_spawn"
 
 /obj/effect/landmark/xeno_spawn/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.xeno_spawn += loc
 	qdel(src)
 
@@ -236,7 +236,7 @@
 	name = "blobstart"
 
 /obj/effect/landmark/blobstart/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.blobstart += loc
 	qdel(src)
 
@@ -244,7 +244,7 @@
 	name = "secequipment"
 
 /obj/effect/landmark/secequipment/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.secequipment += loc
 	qdel(src)
 
@@ -252,7 +252,7 @@
 	name = "prisonwarp"
 
 /obj/effect/landmark/prisonwarp/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.prisonwarp += loc
 	qdel(src)
 
@@ -260,7 +260,7 @@
 	name = "Emergencyresponseteam"
 
 /obj/effect/landmark/ert_spawn/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.emergencyresponseteamspawn += loc
 	qdel(src)
 
@@ -268,7 +268,7 @@
 	name = "Holding Facility"
 
 /obj/effect/landmark/holding_facility/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.holdingfacility += loc
 	qdel(src)
 
@@ -276,7 +276,7 @@
 	name = "tdomeobserve"
 
 /obj/effect/landmark/thunderdome/observe/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdomeobserve += loc
 	qdel(src)
 
@@ -284,7 +284,7 @@
 	name = "tdome1"
 
 /obj/effect/landmark/thunderdome/one/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdome1	+= loc
 	qdel(src)
 
@@ -292,7 +292,7 @@
 	name = "tdome2"
 
 /obj/effect/landmark/thunderdome/two/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdome2 += loc
 	qdel(src)
 
@@ -300,7 +300,7 @@
 	name = "tdomeadmin"
 
 /obj/effect/landmark/thunderdome/admin/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdomeadmin += loc
 	qdel(src)
 

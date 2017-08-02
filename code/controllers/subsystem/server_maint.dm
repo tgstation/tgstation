@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(server_maint)
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)
 		world.update_hub_visibility(TRUE)
-	..()
+	. = ..()
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)

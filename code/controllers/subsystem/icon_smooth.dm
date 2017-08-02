@@ -29,4 +29,4 @@ SUBSYSTEM_DEF(icon_smooth)
 		smooth_icon(A)
 		CHECK_TICK
 
-	..()
+	. = ..()

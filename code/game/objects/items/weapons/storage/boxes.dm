@@ -33,7 +33,7 @@
 	var/illustration = "writing"
 
 /obj/item/weapon/storage/box/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/storage/box/update_icon()
@@ -726,7 +726,7 @@
 	item_state = null
 
 /obj/item/weapon/storage/box/ingredients/Initialize()
-	..()
+	. = ..()
 	if(item_state)
 		name = "[name] ([item_state])"
 		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."

@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		listening_level = position.z
 
 /obj/machinery/telecomms/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload && autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)

@@ -120,7 +120,7 @@
 	START_PROCESSING(SSflightpacks, src)
 	update_parts()
 	sync_processing(SSflightpacks)
-	..()
+	. = ..()
 
 /obj/item/device/flightpack/full/Initialize()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
@@ -128,7 +128,7 @@
 	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
-	..()
+	. = ..()
 
 /obj/item/device/flightpack/proc/usermessage(message, span = "boldnotice", mob/mob_override = null)
 	var/mob/targ = wearer

@@ -24,7 +24,7 @@
 	name = "motion-sensitive security camera"
 
 /obj/machinery/camera/motion/Initialize()
-	..()
+	. = ..()
 	upgradeMotion()
 
 // ALL UPGRADES
@@ -44,7 +44,7 @@
 
 //This camera type automatically sets it's name to whatever the area that it's in is called.
 /obj/machinery/camera/autoname/Initialize()
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/camera/autoname/LateInitialize()

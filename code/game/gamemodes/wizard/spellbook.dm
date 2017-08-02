@@ -553,7 +553,7 @@
 		to_chat(user, "It appears to have no author.")
 
 /obj/item/weapon/spellbook/Initialize()
-	..()
+	. = ..()
 	prepare_spells()
 
 /obj/item/weapon/spellbook/proc/prepare_spells()
@@ -898,7 +898,7 @@
 	qdel(src)
 
 /obj/item/weapon/spellbook/oneuse/random/Initialize()
-	..()
+	. = ..()
 	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade, /obj/item/weapon/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)

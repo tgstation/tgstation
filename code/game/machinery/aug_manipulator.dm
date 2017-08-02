@@ -14,7 +14,7 @@
 
 /obj/machinery/aug_manipulator/Initialize()
     initial_icon_state = initial(icon_state)
-    return ..()
+    return . = ..()
 
 /obj/machinery/aug_manipulator/update_icon()
 	cut_overlays()

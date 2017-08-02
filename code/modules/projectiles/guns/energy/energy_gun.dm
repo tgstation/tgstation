@@ -24,7 +24,7 @@
 
 /obj/item/weapon/gun/energy/e_gun/mini/Initialize()
 	gun_light = new /obj/item/device/flashlight/seclite(src)
-	return ..()
+	return . = ..()
 
 /obj/item/weapon/gun/energy/e_gun/mini/update_icon()
 	..()

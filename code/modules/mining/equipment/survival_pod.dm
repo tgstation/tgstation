@@ -205,7 +205,7 @@
 	desc = "A heated storage unit. This one's seen better days."
 
 /obj/machinery/smartfridge/survival_pod/empty/Initialize(mapload)
-	..(mapload, TRUE)
+	. = ..(mapload, TRUE)
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	return isitem(O)

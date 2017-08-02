@@ -37,7 +37,7 @@
 
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot/Initialize()
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
-	return ..()
+	return . = ..()
 
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted
 	pin = /obj/item/device/firing_pin

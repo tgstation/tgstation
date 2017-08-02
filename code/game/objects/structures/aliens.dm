@@ -127,7 +127,7 @@
 /obj/structure/alien/weeds/Initialize()
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
-	..()
+	. = ..()
 
 	if(!blacklisted_turfs)
 		blacklisted_turfs = typecacheof(list(
@@ -178,7 +178,7 @@
 
 /obj/structure/alien/weeds/node/Initialize()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
-	..()
+	. = ..()
 	set_light(lon_range)
 	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
 	if(W && W != src)
@@ -223,7 +223,7 @@
 	var/obj/item/clothing/mask/facehugger/child
 
 /obj/structure/alien/egg/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 	if(status == GROWING || status == GROWN)
 		child = new(src)

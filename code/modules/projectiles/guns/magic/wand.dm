@@ -15,7 +15,7 @@
 			max_charges = Ceiling(max_charges / 3)
 		else
 			max_charges = Ceiling(max_charges / 2)
-	return ..()
+	return . = ..()
 
 /obj/item/weapon/gun/magic/wand/examine(mob/user)
 	..()

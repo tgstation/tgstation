@@ -135,7 +135,7 @@
 
 
 /obj/machinery/abductor/console/Initialize(mapload)
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/abductor/console/LateInitialize()

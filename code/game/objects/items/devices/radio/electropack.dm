@@ -20,7 +20,7 @@
 	return (FIRELOSS)
 
 /obj/item/device/electropack/Initialize()
-	..()
+	. = ..()
 	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()

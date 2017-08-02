@@ -18,7 +18,7 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/Initialize()
-	..()
+	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")
 
@@ -29,7 +29,7 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/Initialize()
-	..()
+	. = ..()
 	add_overlay("security")
 	add_overlay("security_key")
 

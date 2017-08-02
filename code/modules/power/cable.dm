@@ -764,7 +764,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	item_state = "coil_red2"
 
 /obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. =..()
+	. = ..()
 	amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)

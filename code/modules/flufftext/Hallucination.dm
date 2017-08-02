@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/active = TRUE //qdelery
 
 /obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
-	..()
+	. = ..()
 	target = T
 	current_image = GetImage()
 	if(target.client)
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	image_state = "alienh_pounce"
 
 /obj/effect/hallucination/simple/xeno/Initialize(mapload, mob/living/carbon/T)
-	..()
+	. = ..()
 	name = "alien hunter ([rand(1, 1000)])"
 
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	image_state = "clown"
 
 /obj/effect/hallucination/simple/clown/Initialize(mapload, mob/living/carbon/T, duration)
-	..(loc, T)
+	. = ..(loc, T)
 	name = pick(GLOB.clown_names)
 	QDEL_IN(src,duration)
 
@@ -624,7 +624,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
 
 /obj/effect/fake_attacker/Initialize(mapload, mob/living/carbon/T)
-	..()
+	. = ..()
 	my_target = T
 	QDEL_IN(src, 300)
 	step_away(src,my_target,2)

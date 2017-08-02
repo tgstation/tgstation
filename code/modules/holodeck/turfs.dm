@@ -44,14 +44,14 @@
 
 /turf/open/floor/holofloor/asteroid/Initialize()
 	icon_state = "asteroid[rand(0, 12)]"
-	..()
+	. = ..()
 
 /turf/open/floor/holofloor/basalt
 	name = "basalt"
 	icon_state = "basalt0"
 
 /turf/open/floor/holofloor/basalt/Initialize()
-	..()
+	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -63,7 +63,7 @@
 
 /turf/open/floor/holofloor/space/Initialize()
 	icon_state = SPACE_ICON_STATE // so realistic
-	..()
+	. = ..()
 
 /turf/open/floor/holofloor/hyperspace
 	name = "hyperspace"
@@ -72,10 +72,10 @@
 
 /turf/open/floor/holofloor/hyperspace/Initialize()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
-	..()
+	. = ..()
 
 /turf/open/floor/holofloor/hyperspace/ns/Initialize()
-	..()
+	. = ..()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
 
 /turf/open/floor/holofloor/carpet
@@ -89,7 +89,7 @@
 	canSmoothWith = null
 
 /turf/open/floor/holofloor/carpet/Initialize()
-	..()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/update_icon), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()

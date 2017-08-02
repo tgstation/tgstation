@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 
 /obj/item/stack/sheet/animalhide/human/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.human_recipes
-	return ..()
+	return . = ..()
 
 /obj/item/stack/sheet/animalhide/generic
 	name = "skin"
@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.corgi_recipes
-	return ..()
+	return . = ..()
 
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.monkey_recipes
-	return ..()
+	return . = ..()
 
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/xeno/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.xeno_recipes
-	return ..()
+	return . = ..()
 
 //don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
 /obj/item/stack/sheet/xenochitin
@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 
 /obj/item/stack/sheet/leather/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.leather_recipes
-	return ..()
+	return . = ..()
 
 /*
  * Sinew
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.sinew_recipes
-	return ..()
+	return . = ..()
 
 		/*
  * Plates

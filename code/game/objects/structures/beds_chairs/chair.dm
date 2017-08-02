@@ -15,7 +15,7 @@
 	layer = OBJ_LAYER
 
 /obj/structure/chair/Initialize()
-	..()
+	. = ..()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 
@@ -147,7 +147,7 @@
 /obj/structure/chair/comfy/Initialize()
 	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
-	return ..()
+	return . = ..()
 
 /obj/structure/chair/comfy/Destroy()
 	QDEL_NULL(armrest)

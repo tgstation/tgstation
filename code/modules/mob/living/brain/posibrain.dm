@@ -149,7 +149,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	to_chat(user, msg)
 
 /obj/item/device/mmi/posibrain/Initialize()
-	..()
+	. = ..()
 	brainmob = new(src)
 	var/new_name
 	if(!LAZYLEN(possible_names))

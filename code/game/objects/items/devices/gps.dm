@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 
 /obj/item/device/gps/Initialize()
-	..()
+	. = ..()
 	GLOB.GPS_list += src
 	name = "global positioning system ([gpstag])"
 	add_overlay("working")
