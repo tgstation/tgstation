@@ -1261,8 +1261,7 @@
 	name = "Syndicate Outpost"
 	})
 "bP" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1652,8 +1651,7 @@
 	name = "Syndicate Outpost"
 	})
 "cn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3064,7 +3062,6 @@
 	name = "MO19 Research"
 	})
 "eb" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
@@ -3076,7 +3073,7 @@
 	layer = 2.9;
 	name = "Acid-Proof biohazard containment door"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3371,8 +3368,7 @@
 	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3913,8 +3909,7 @@
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4428,8 +4423,7 @@
 	name = "MO19 Research"
 	})
 "fV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4760,8 +4754,7 @@
 	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5015,8 +5008,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5513,13 +5505,12 @@
 	name = "MO19 Research"
 	})
 "hu" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor{
 	id = "AwayRD";
 	layer = 2.9;
 	name = "privacy shutter"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6128,8 +6119,7 @@
 	name = "MO19 Arrivals"
 	})
 "io" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6917,8 +6907,7 @@
 	name = "MO19 Arrivals"
 	})
 "jA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -6941,8 +6930,7 @@
 	name = "MO19 Arrivals"
 	})
 "jC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -7063,8 +7051,7 @@
 	name = "MO19 Arrivals"
 	})
 "jM" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8301,8 +8288,7 @@
 	name = "MO19 Arrivals"
 	})
 "lA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8792,12 +8778,11 @@
 	name = "MO19 Arrivals"
 	})
 "mv" = (
-/obj/structure/grille,
 /obj/structure/sign/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -9795,9 +9780,8 @@
 	name = "MO19 Arrivals"
 	})
 "nV" = (
-/obj/structure/grille,
 /obj/structure/disposalpipe/segment,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},

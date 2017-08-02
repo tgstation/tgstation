@@ -79,8 +79,6 @@
 	var/cooldown = 0
 	var/acceleration = 1
 
-	var/obj/machinery/camera/portable/builtInCamera
-
 	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
@@ -151,7 +149,7 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	builtInCamera = new /obj/machinery/camera/portable(src)
+	builtInCamera = new (src)
 	builtInCamera.network = list("SS13")
 
 

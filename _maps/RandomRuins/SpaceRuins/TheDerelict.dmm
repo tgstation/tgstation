@@ -4082,8 +4082,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/derelict/arrival)
 "lZ" = (
@@ -4171,8 +4170,7 @@
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "mn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "mo" = (

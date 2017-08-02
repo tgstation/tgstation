@@ -6,8 +6,7 @@
 /turf/closed/wall,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -121,8 +120,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "au" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "ohnorevs"
 	},

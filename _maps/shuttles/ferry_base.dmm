@@ -17,8 +17,7 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "e" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "f" = (
