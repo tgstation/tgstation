@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Sigils of Transmission can now drain power in a large area when activated by a Servant."
+  - rscdel: "Interdiction Lenses have been removed, as they were largely only used to drain power into Sigils of Transmission."
+  - balance: "Sigils can no longer directly be removed by Servants."
