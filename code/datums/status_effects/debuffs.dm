@@ -100,6 +100,7 @@
 	alert_type = /obj/screen/alert/status_effect/belligerent
 	var/leg_damage_on_toggle = 2 //damage on initial application and when the owner tries to toggle to run
 	var/cultist_damage_on_toggle = 10 //damage on initial application and when the owner tries to toggle to run, but to cultists
+	var/does_damage_on_first_application = TRUE
 
 /obj/screen/alert/status_effect/belligerent
 	name = "Belligerent"
@@ -107,8 +108,13 @@
 	icon_state = "belligerent"
 	alerttooltipstyle = "clockcult"
 
+/datum/status_effect/belligerent/on_creation(mob/living/new_owner, set_first_damage)
+	if(isnum(set_first_damage))
+		does_damage_on_first_application = set_first_damage
+	. = ..()
+
 /datum/status_effect/belligerent/on_apply()
-	return do_movement_toggle(TRUE)
+	return do_movement_toggle(does_damage_on_first_application)
 
 /datum/status_effect/belligerent/tick()
 	if(!do_movement_toggle())
