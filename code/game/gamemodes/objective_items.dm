@@ -77,11 +77,7 @@
 	difficulty = 5
 
 /datum/objective_item/steal/nuke_core
-<<<<<<< HEAD
-	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core"
-=======
 	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core!"
->>>>>>> 6d453c8e82... now it compiles
 	targetitem = /obj/item/nuke_core
 	difficulty = 15
 
