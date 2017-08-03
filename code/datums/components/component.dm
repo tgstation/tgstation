@@ -61,6 +61,9 @@
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
+/datum/component/ui_host()	//makes sense
+	return parent
+
 /datum/component/proc/_RemoveNoSignal()
 	var/datum/P = parent
 	if(P)

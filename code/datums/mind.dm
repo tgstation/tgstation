@@ -296,10 +296,7 @@
 		if(!silent) to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
-		var/obj/item/device/uplink/U = new(uplink_loc)
-		U.owner = "[traitor_mob.key]"
-		uplink_loc.hidden_uplink = U
-
+		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
@@ -1431,9 +1428,9 @@
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.GetAllContents()
 	for (var/obj/item/I in L)
-		if (I.hidden_uplink)
-			return I.hidden_uplink
-	return null
+		. = I.GetComponent(/datum/component/uplink)
+		if (.)
+			break
 
 /datum/mind/proc/take_uplink()
 	var/obj/item/device/uplink/H = find_syndicate_uplink()

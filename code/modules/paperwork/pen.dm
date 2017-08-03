@@ -99,18 +99,11 @@
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
-		if(hidden_uplink && degrees == traitor_unlock_degrees)
+		GET_COMPONENT(uplink, /datum/component/uplink)
+		if(uplink && degrees == traitor_unlock_degrees)
 			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 			degrees = 0
-			hidden_uplink.interact(user)
-
-
-/obj/item/weapon/pen/attackby(obj/item/I, mob/user, params)
-	if(hidden_uplink)
-		return hidden_uplink.attackby(I, user, params)
-	else
-		return ..()
-
+			uplink.interact(user)
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))

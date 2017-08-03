@@ -71,7 +71,7 @@
 			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 		else
 			difficulty += 2
-		if(!target.detonatable || prob(difficulty * 15) || (target.hidden_uplink))
+		if(!target.detonatable || prob(difficulty * 15) || target.GetComponent(/datum/component/uplink))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
 			U.show_message("<span class='notice'>Success!</span>", 1)
@@ -92,14 +92,14 @@
 		charges--
 		var/lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
-		if(!target.hidden_uplink)
-			var/obj/item/device/uplink/uplink = new(target)
-			target.hidden_uplink = uplink
-			target.lock_code = lock_code
+		GET_COMPONENT_FROM(uplink, /datum/component/uplink, target)
+		if(!uplink)
+			uplink = target.AddComponent(/datum/component/uplink)
+			uplink.lock_code = lock_code
 		else
-			target.hidden_uplink.hidden_crystals += target.hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
-		target.hidden_uplink.telecrystals = telecrystals
+			uplink.hidden_crystals += uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
+		uplink.telecrystals = telecrystals
 		telecrystals = 0
-		target.hidden_uplink.active = TRUE
+		uplink.active = TRUE
 	else
 		to_chat(U, "PDA not found.")

@@ -31,19 +31,19 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
 	if(uplinkholder)
-		to_chat(user, "<span class='notice'>The [src] already has an uplink in it.</span>")
+		to_chat(user, "<span class='notice'>[src] already has an uplink in it.</span>")
 		return
-	if(O.hidden_uplink)
+	GET_COMPONENT_FROM(uplink, /datum/component/uplink, O)
+	if(uplink)
 		var/obj/item/I = user.get_active_held_item()
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 		uplinkholder = I
-		I.loc = src
-		I.add_fingerprint(user)
+		add_fingerprint(user)
 		update_icon()
 		updateUsrDialog()
 	else
-		to_chat(user, "<span class='notice'>The [O] doesn't appear to be an uplink...</span>")
+		to_chat(user, "<span class='notice'>[O] doesn't appear to be an uplink...</span>")
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
@@ -58,26 +58,28 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
+		GET_COMPONENT_FROM(uplink, /datum/component/uplink, uplinkholder)
 		if(amt < 0)
-			linkedboss.storedcrystals += uplinkholder.hidden_uplink.telecrystals
+			linkedboss.storedcrystals += uplink.telecrystals
 			if(addLog)
-				linkedboss.logTransfer("[src] donated [uplinkholder.hidden_uplink.telecrystals] telecrystals to [linkedboss].")
-			uplinkholder.hidden_uplink.telecrystals = 0
-		else if(amt <= uplinkholder.hidden_uplink.telecrystals)
-			uplinkholder.hidden_uplink.telecrystals -= amt
+				linkedboss.logTransfer("[src] donated [uplink.telecrystals] telecrystals to [linkedboss].")
+			uplink.telecrystals = 0
+		else if(amt <= uplink.telecrystals)
+			uplink.telecrystals -= amt
 			linkedboss.storedcrystals += amt
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
 /obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
+		GET_COMPONENT_FROM(uplink, /datum/component/uplink, uplinkholder)
 		if(amt < 0)
-			uplinkholder.hidden_uplink.telecrystals += linkedboss.storedcrystals
+			uplink.telecrystals += linkedboss.storedcrystals
 			if(addLog)
 				linkedboss.logTransfer("[src] received [linkedboss.storedcrystals] telecrystals from [linkedboss].")
 			linkedboss.storedcrystals = 0
 		else if(amt <= linkedboss.storedcrystals)
-			uplinkholder.hidden_uplink.telecrystals += amt
+			uplink.telecrystals += amt
 			linkedboss.storedcrystals -= amt
 			if(addLog)
 				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
@@ -97,7 +99,8 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
 
 	if(uplinkholder)
-		dat += "[uplinkholder.hidden_uplink.telecrystals] telecrystals remain in this uplink.<BR>"
+		GET_COMPONENT_FROM(uplink, /datum/component/uplink, uplinkholder)
+		dat += "[uplink.telecrystals] telecrystals remain in this uplink.<BR>"
 		if(linkedboss)
 			dat += "Donate TC: <a href='byond://?src=\ref[src];donate=1'>1</a> | <a href='byond://?src=\ref[src];donate=5'>5</a> | <a href='byond://?src=\ref[src];donate=-1'>All</a>"
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
@@ -176,8 +179,9 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
 		dat += "[A.name] | "
-		if(A.uplinkholder)
-			dat += "[A.uplinkholder.hidden_uplink.telecrystals] telecrystals."
+		GET_COMPONENT_FROM(uplink, /datum/component/uplink, A)
+		if(uplink)
+			dat += "[uplink.telecrystals] telecrystals."
 		if(storedcrystals)
 			dat+= "<BR>Add TC: <a href ='?src=\ref[src];target=\ref[A];give=1'>1</a> | <a href ='?src=\ref[src];target=\ref[A];give=5'>5</a> | <a href ='?src=\ref[src];target=\ref[A];give=10'>10</a> | <a href ='?src=\ref[src];target=\ref[A];give=-1'>All</a>"
 		dat += "<BR>"

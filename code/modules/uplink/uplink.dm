@@ -3,39 +3,39 @@ GLOBAL_LIST_EMPTY(uplinks)
 /**
  * Uplinks
  *
- * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
+ * All /obj/item(s) have a /datum/component/uplink. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
  * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
-/obj/item/device/uplink
+/datum/component/uplink
 	name = "syndicate uplink"
 	desc = "There is something wrong if you're examining this."
-	var/active = FALSE
 	var/lockable = TRUE
 	var/telecrystals = 20
 	var/selected_cat = null
-	var/owner = null
-	var/datum/game_mode/gamemode = null
+	var/owner = null	//the owner's key
+	var/datum/game_mode/gamemode
 	var/spent_telecrystals = 0
 	var/purchase_log = ""
 	var/list/uplink_items
-	var/hidden_crystals = 0
+	var/hidden_crystals
 
-/obj/item/device/uplink/Initialize()
-	. = ..()
+/datum/component/uplink/New()
 	GLOB.uplinks += src
+	..()
 	uplink_items = get_uplink_items(gamemode)
 
-/obj/item/device/uplink/proc/set_gamemode(gamemode)
+/datum/component/uplink/set_gamemode(gamemode)
 	src.gamemode = gamemode
 	uplink_items = get_uplink_items(gamemode)
 
-/obj/item/device/uplink/Destroy()
+/datum/component/uplink/Destroy()
 	GLOB.uplinks -= src
 	return ..()
 
-/obj/item/device/uplink/attackby(obj/item/I, mob/user, params)
-	for(var/item in subtypesof(/datum/uplink_item))
+/datum/component/OnAttackBy(obj/item/I, mob/user)
+	var/static/list/uplink_items_subtypes = subtypesof(/datum/uplink_item)
+	for(var/item in uplink_items_subtypes)
 		var/datum/uplink_item/UI = item
 		var/path = null
 		if(initial(UI.refund_path))
@@ -54,14 +54,13 @@ GLOBAL_LIST_EMPTY(uplinks)
 			to_chat(user, "<span class='notice'>[I] refunded.</span>")
 			qdel(I)
 			return
-	..()
 
-/obj/item/device/uplink/interact(mob/user)
+/datum/component/uplink/proc/interact(mob/user)
 	active = TRUE
 	if(user)
 		ui_interact(user)
 
-/obj/item/device/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/datum/component/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -70,7 +69,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		ui.set_style("syndicate")
 		ui.open()
 
-/obj/item/device/uplink/ui_data(mob/user)
+/datum/component/ui_data(mob/user)
 	if(!user.mind)
 		return
 	var/list/data = list()
@@ -103,7 +102,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	return data
 
 
-/obj/item/device/uplink/ui_act(action, params)
+/datum/component/ui_act(action, params)
 	if(!active)
 		return
 
@@ -128,22 +127,13 @@ GLOBAL_LIST_EMPTY(uplinks)
 			selected_cat = params["category"]
 	return 1
 
-
-/obj/item/device/uplink/ui_host()
-	return loc
-
-// Refund certain items by hitting the uplink with it.
-/obj/item/device/radio/uplink/attackby(obj/item/I, mob/user, params)
-	return hidden_uplink.attackby(I, user, params)
-
 // A collection of pre-set uplinks, for admin spawns.
 /obj/item/device/radio/uplink/Initialize()
 	. = ..()
 	icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	hidden_uplink = new(src)
-	hidden_uplink.active = TRUE
+	
 	hidden_uplink.lockable = FALSE
 
 /obj/item/device/radio/uplink/nuclear/Initialize()

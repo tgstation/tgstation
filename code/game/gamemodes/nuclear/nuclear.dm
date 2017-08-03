@@ -343,8 +343,9 @@
 
 	if(tc)
 		var/obj/item/device/radio/uplink/nuclear/U = new(H)
-		U.hidden_uplink.owner = "[H.key]"
-		U.hidden_uplink.telecrystals = tc
+		GET_COMPONENT_FROM(U, /datum/component/uplink, UP)
+		UP.owner = H.key
+		UP.telecrystals = tc
 		H.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
