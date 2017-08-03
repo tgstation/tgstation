@@ -180,7 +180,7 @@
 	if(isarea(A) && src.areastring == null)
 		src.area = A
 	else
-		src.area = locate(text2path(areastring))
+		src.area = locate(text2path(areastring)) in GLOB.sortedAreas
 	update_icon()
 
 	make_terminal()

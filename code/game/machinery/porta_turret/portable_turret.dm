@@ -676,7 +676,7 @@
 	if(!control_area)
 		control_area = get_area(src)
 	else
-		control_area = locate(text2path(control_area))
+		control_area = locate(text2path(control_area)) in GLOB.sortedAreas
 
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
