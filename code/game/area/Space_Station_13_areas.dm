@@ -531,6 +531,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/toilet/locker
 	name = "Locker Toilets"
 	icon_state = "toilet"
+
+/area/crew_quarters/toilet/fitness
+	name = "Fitness Toilets"
+	icon_state = "toilet"
 	
 /area/crew_quarters/toilet/female
 	name = "Female Toilets"
