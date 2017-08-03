@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -217,11 +217,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"B" = (
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/space)
 "C" = (
 /obj/structure/chair/wood/wings{
 	icon_state = "wooden_chair_wings";
@@ -341,6 +336,14 @@
 /area/ruin/unpowered)
 "Q" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper,
+/turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -510,7 +513,7 @@ d
 g
 o
 h
-h
+S
 C
 J
 h

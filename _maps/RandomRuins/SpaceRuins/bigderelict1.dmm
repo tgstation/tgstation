@@ -202,8 +202,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "aK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
 "aL" = (
@@ -259,7 +258,7 @@
 	name = "critter crate - mr.tiggles";
 	opened = 1
 	},
-/obj/item/weapon/paper/crumpled/snowdin{
+/obj/item/weapon/paper/crumpled/ruins/snowdin{
 	info = "<i>A crumpled piece of manifest paper, out of the barely legible pen writing,  you can see something about a warning involving whatever was originally in the crate.</i>"
 	},
 /obj/structure/alien/weeds{
@@ -455,7 +454,7 @@
 	name = "Tradeport Officer";
 	random = 1
 	},
-/obj/item/weapon/paper/crumpled/snowdin{
+/obj/item/weapon/paper/crumpled/ruins/snowdin{
 	icon_state = "scrap_bloodied";
 	info = "If anyone finds this, please, don't let my kids know I died a coward.."
 	},
@@ -772,8 +771,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "cc" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/dockedship)
 "cd" = (

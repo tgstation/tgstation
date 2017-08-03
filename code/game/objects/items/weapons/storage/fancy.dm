@@ -81,6 +81,8 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "eggbox"
 	icon_type = "egg"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	name = "egg box"
 	storage_slots = 12
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg)
@@ -220,7 +222,7 @@
 
 /obj/item/weapon/storage/fancy/rollingpapers
 	name = "rolling paper pack"
-	desc = "A pack of NanoTrasen brand rolling papers."
+	desc = "A pack of Nanotrasen brand rolling papers."
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"

@@ -51,8 +51,7 @@
 /turf/closed/wall,
 /area/ruin/onehalf/dorms_med)
 "ah" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/onehalf/dorms_med)
 "ai" = (
@@ -442,8 +441,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/onehalf/drone_bay)
 "be" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/onehalf/drone_bay)
 "bf" = (
@@ -811,8 +809,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/onehalf/hallway)
 "bZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
 	name = "bridge blast door"
@@ -906,8 +903,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ck" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -959,8 +955,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/onehalf/bridge)
 "cq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -1025,8 +1020,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/onehalf/bridge)
 "cz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -1149,8 +1143,7 @@
 	},
 /area/ruin/onehalf/hallway)
 "cQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/onehalf/hallway)
 "cR" = (
@@ -1176,8 +1169,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/onehalf/bridge)
 "cV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -1257,8 +1249,7 @@
 	},
 /area/ruin/onehalf/hallway)
 "de" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -1275,8 +1266,7 @@
 /turf/open/floor/plating,
 /area/ruin/onehalf/bridge)
 "df" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -1292,8 +1282,7 @@
 /turf/open/floor/plating,
 /area/ruin/onehalf/bridge)
 "dg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;

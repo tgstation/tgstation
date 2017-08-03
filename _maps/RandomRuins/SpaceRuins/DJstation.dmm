@@ -21,8 +21,7 @@
 /turf/closed/wall,
 /area/djstation)
 "ag" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/djstation)
 "ah" = (
@@ -249,7 +248,7 @@
 /area/djstation)
 "aR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/djstation,
+/obj/item/weapon/paper/fluff/ruins/djstation,
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "aS" = (

@@ -4,7 +4,7 @@
 	var/intercepttext = ""
 	switch(report)
 		if(1)
-			intercepttext += "<FONT size = 3><b>NanoTrasen Update</b>: Biohazard Alert.</FONT><HR>"
+			intercepttext += "<FONT size = 3><b>Nanotrasen Update</b>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
 			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. The origin of the biohazard is unknown.<BR>"
 			intercepttext += "<b>Biohazard Response Procedure 5-6</b> has been issued for [station_name()].<BR>"
@@ -22,7 +22,7 @@
 					if(bomb.z == ZLEVEL_STATION)
 						bomb.r_code = nukecode
 
-			intercepttext += "<FONT size = 3><b>NanoTrasen Update</b>: Biohazard Alert.</FONT><HR>"
+			intercepttext += "<FONT size = 3><b>Nanotrasen Update</b>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate that the biohazard has grown out of control and will soon reach critical mass.<BR>"
 			intercepttext += "<b>Biohazard Response Procedure 5-12</b> has been issued for [station_name()].<BR>"
 			intercepttext += "Orders for all [station_name()] personnel are as follows:<BR>"

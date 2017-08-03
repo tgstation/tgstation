@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(throwing)
 			finalize()
 			return
 
-/datum/thrownthing/proc/finalize(hit = FALSE)
+/datum/thrownthing/proc/finalize(hit = FALSE, target=null)
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
@@ -120,13 +120,15 @@ SUBSYSTEM_DEF(throwing)
 			thrownthing.newtonian_move(init_dir)
 	else
 		thrownthing.newtonian_move(init_dir)
+
+	if(target)
+		thrownthing.throw_impact(target, src)
+
 	if (callback)
 		callback.Invoke()
 
 /datum/thrownthing/proc/hit_atom(atom/A)
-	thrownthing.throw_impact(A, src)
-	thrownthing.newtonian_move(init_dir)
-	finalize(TRUE)
+	finalize(hit=TRUE, target=A)
 
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
@@ -134,6 +136,5 @@ SUBSYSTEM_DEF(throwing)
 		if (AM == thrownthing)
 			continue
 		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
-			thrownthing.throwing = null
-			thrownthing.throw_impact(AM, src)
+			finalize(hit=TRUE, target=AM)
 			return TRUE

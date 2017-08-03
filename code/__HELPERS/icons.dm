@@ -974,6 +974,8 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
 	var/static/list/freeze_item_icons = list()
+	if(resistance_flags & FREEZE_PROOF)
+		return
 	if(!HAS_SECONDARY_FLAG(src, FROZEN) && (initial(icon) && initial(icon_state)))
 		var/index = freeze_icon_index()
 		var/icon/IC

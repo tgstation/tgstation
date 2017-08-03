@@ -108,8 +108,7 @@
 	name = "Hotel Guest Room 3"
 	})
 "ao" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 3"
@@ -120,8 +119,7 @@
 	name = "Hotel Guest Room 4"
 	})
 "aq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -132,8 +130,7 @@
 	name = "Hotel Guest Room 5"
 	})
 "as" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 5"
@@ -144,8 +141,7 @@
 	name = "Hotel Guest Room 6"
 	})
 "au" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 6"
@@ -1097,8 +1093,7 @@
 /turf/open/floor/carpet,
 /area/ruin/hotel)
 "cG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel)
@@ -1707,8 +1702,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "ec" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel/workroom)
@@ -2172,8 +2166,7 @@
 /turf/open/floor/carpet,
 /area/ruin/hotel/dock)
 "fv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel/dock)
@@ -2585,10 +2578,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	info = "<bold>!NOTICE!</bold><br><br><center>We are expecting arriving guests soon from a nearby station! Stay sharp and make sure guests enjoy their time spent here. Don't think you can sneak off while they're here, either.</center>";
-	name = "!NOTICE!"
-	},
+/obj/item/weapon/paper/fluff/ruins/spacehotel/notice,
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
 "gJ" = (
@@ -2705,26 +2695,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
-/obj/item/weapon/paper/pamphlet{
-	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
-	name = "hotel pamphlet"
-	},
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/hotel/dock)
 "hd" = (
@@ -3718,8 +3693,7 @@
 /turf/open/floor/carpet,
 /area/ruin/hotel/pool)
 "jv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -4000,8 +3974,7 @@
 	},
 /area/ruin/hotel/security)
 "km" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/hotel/security)
 "kn" = (
@@ -4911,8 +4884,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
 "mN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/hotel/pool)

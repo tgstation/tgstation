@@ -14,6 +14,8 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -417,7 +419,7 @@
 	slowdown = 0
 
 /obj/item/weapon/storage/backpack/duffelbag/syndie/hitman
-	desc = "A large duffel bag for holding extra things. There is a NanoTrasen logo on the back."
+	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
 	icon_state = "duffel-syndieammo"
 	item_state = "duffel-syndieammo"
 

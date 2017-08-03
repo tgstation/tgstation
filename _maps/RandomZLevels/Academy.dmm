@@ -108,10 +108,7 @@
 /area/awaymission/academy/headmaster)
 "ar" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper{
-	info = "We're upgrading to the latest mainframes for our consoles, the shipment should be in before spring break is over!";
-	name = "Console Maintenance"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/console_maint,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "as" = (
@@ -574,7 +571,6 @@
 	},
 /area/awaymission/academy/headmaster)
 "bR" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -584,7 +580,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "bS" = (
@@ -651,14 +647,13 @@
 	},
 /area/awaymission/academy/headmaster)
 "cf" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cg" = (
@@ -913,9 +908,8 @@
 	},
 /area/awaymission/academy/headmaster)
 "cW" = (
-/obj/structure/grille,
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cX" = (
@@ -1287,9 +1281,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	name = "Automotive Repair 101"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/automotive,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "eh" = (
@@ -1302,9 +1294,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	name = "Pyromancy 250"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/pyromancy,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "ej" = (
@@ -1361,8 +1351,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "es" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "et" = (
@@ -1779,9 +1768,7 @@
 /obj/structure/noticeboard{
 	pixel_y = -32
 	},
-/obj/item/weapon/paper{
-	name = "Biology Lab"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/biology,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "fz" = (
@@ -1839,7 +1826,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "fG" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -1849,7 +1835,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "fH" = (
@@ -1959,14 +1945,13 @@
 /turf/open/floor/plasteel/red/side,
 /area/awaymission/academy/classrooms)
 "fZ" = (
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "ga" = (
@@ -2000,7 +1985,6 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "gg" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -2010,7 +1994,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gh" = (
@@ -2096,14 +2080,13 @@
 	},
 /area/awaymission/academy/classrooms)
 "gs" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gt" = (
@@ -2178,13 +2161,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "gE" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gF" = (
@@ -2205,10 +2187,7 @@
 /area/awaymission/academy/academyaft)
 "gH" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	info = "Grade: A+ Educator's Notes: Excellent form.";
-	name = "Summoning Midterm Exam"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/aplus,
 /obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -2217,10 +2196,7 @@
 "gI" = (
 /obj/structure/table,
 /obj/item/weapon/gun/ballistic/revolver/russian,
-/obj/item/weapon/paper{
-	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement.";
-	name = "Summoning Midterm Exam"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/bminus,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2319,10 +2295,7 @@
 "gW" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/paper{
-	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS.";
-	name = "Summoning Midterm Exam"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/dminus,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2335,13 +2308,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "gY" = (
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gZ" = (
@@ -2772,10 +2744,7 @@
 /obj/structure/closet,
 /obj/item/weapon/storage/box/snappops,
 /obj/item/weapon/storage/backpack,
-/obj/item/weapon/paper{
-	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage.";
-	name = "Pyromancy Evaluation"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/failure,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "id" = (
@@ -3063,7 +3032,6 @@
 	},
 /area/awaymission/academy/academyaft)
 "iT" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3074,7 +3042,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iU" = (
@@ -3091,14 +3059,13 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "iV" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iW" = (
@@ -3138,12 +3105,11 @@
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "jb" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jc" = (
@@ -3162,25 +3128,23 @@
 	},
 /area/awaymission/academy/academyaft)
 "jd" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "je" = (
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jf" = (
@@ -3210,12 +3174,11 @@
 	},
 /area/awaymission/academy/academyaft)
 "jh" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "ji" = (
@@ -3374,9 +3337,8 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jE" = (
-/obj/structure/grille,
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jF" = (
@@ -3450,8 +3412,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jQ" = (
@@ -3491,8 +3452,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "jX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "jY" = (

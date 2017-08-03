@@ -586,12 +586,11 @@
 	},
 /area/ruin/deepstorage)
 "bg" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -771,9 +770,8 @@
 	},
 /area/ruin/deepstorage)
 "bA" = (
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1050,14 +1048,13 @@
 	},
 /area/ruin/deepstorage)
 "cc" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1129,18 +1126,9 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	info = "To whoever keeps it up with the long, hot showers: you're going on the next ice-mining trip. If you feel the need to use up all the damn water during your 'relaxation' time, you sure as hell are gonna work for all that water!";
-	name = "water concerns"
-	},
-/obj/item/weapon/paper{
-	info = "Hydroponics is our life and blood here, if it dies then so do we. Keep the damn plants watered!";
-	name = "hydroponics notice"
-	},
-/obj/item/weapon/paper{
-	info = "Please make sure to throw all excess waste into the crusher in the back! It's amazing what you can get out of what others consider 'garbage' if you run it through a giant crusher enough times.";
-	name = "recycling notice"
-	},
+/obj/item/weapon/paper/fluff/ruins/deepstorage/water_concern,
+/obj/item/weapon/paper/fluff/ruins/deepstorage/hydro_notice,
+/obj/item/weapon/paper/fluff/ruins/deepstorage/recycling_notice,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1265,12 +1253,11 @@
 	},
 /area/ruin/deepstorage)
 "cv" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1569,13 +1556,12 @@
 	},
 /area/ruin/deepstorage)
 "da" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1779,7 +1765,6 @@
 	},
 /area/ruin/deepstorage)
 "ds" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
@@ -1790,7 +1775,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2404,7 +2389,6 @@
 	},
 /area/ruin/deepstorage)
 "eu" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
@@ -2415,7 +2399,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2641,10 +2625,9 @@
 	},
 /area/ruin/deepstorage/airlock)
 "eM" = (
-/obj/structure/grille,
 /obj/structure/cable/yellow,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2730,7 +2713,6 @@
 	},
 /area/ruin/deepstorage)
 "eT" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "bunkershutter"
 	},
@@ -2744,7 +2726,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2879,13 +2861,12 @@
 	},
 /area/ruin/deepstorage)
 "fh" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "bunkershutter"
 	},
 /obj/structure/cable/yellow,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3076,12 +3057,11 @@
 	},
 /area/ruin/deepstorage/power)
 "fB" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3159,9 +3139,8 @@
 	},
 /area/ruin/deepstorage/power)
 "fK" = (
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3347,12 +3326,11 @@
 	},
 /area/ruin/deepstorage/power)
 "gc" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -4038,9 +4016,8 @@
 	},
 /area/ruin/deepstorage/power)
 "hq" = (
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},

@@ -3,6 +3,8 @@
 	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
 	icon_state = "signaller"
 	item_state = "signaler"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
 	origin_tech = "magnets=1;bluespace=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
@@ -183,6 +185,8 @@ Code:
 	desc = "The neutralized core of an anomaly. It'd probably be valuable for research."
 	icon_state = "anomaly core"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)

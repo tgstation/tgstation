@@ -59,4 +59,4 @@ Bonus
 		else
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
-			M.hallucination += (15 * power)
+			M.hallucination += (45 * power)

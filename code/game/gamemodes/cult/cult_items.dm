@@ -3,6 +3,8 @@
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon_state = "cultblade"
 	item_state = "cultblade"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
@@ -386,7 +388,10 @@
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
-
+	if(!iscultist(user))
+		to_chat(user, "That doesn't seem to do anything useful.")
+		return
+		
 	if(istype(A, /obj/item))
 
 		var/list/cultists = list()

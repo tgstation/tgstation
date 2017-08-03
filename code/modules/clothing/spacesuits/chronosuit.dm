@@ -320,6 +320,7 @@
 
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "chrono_phase"
 	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null

@@ -48,8 +48,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -61,8 +60,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -77,8 +75,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -90,8 +87,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -107,8 +103,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -124,8 +119,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -138,8 +132,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -227,8 +220,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -237,8 +229,7 @@
 /area/bridge)
 "aay" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
 	name = "Bridge View Blast door"
@@ -643,6 +634,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -857,8 +849,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "captainspace";
 	name = "Captain's Space Shutters"
@@ -1006,8 +997,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "abK" = (
@@ -1092,8 +1082,7 @@
 	name = "Asteroid"
 	})
 "abU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "detectivewindows";
 	name = "Detective Privacy Blast door"
@@ -1235,8 +1224,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1941,8 +1929,7 @@
 /turf/closed/wall,
 /area/quartermaster/storage)
 "ado" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "adp" = (
@@ -1954,8 +1941,7 @@
 /turf/closed/wall,
 /area/quartermaster/storage)
 "adq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -2200,8 +2186,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "adP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "aicorewindow";
 	name = "AI Core Shutters"
@@ -2217,8 +2202,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "adR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "aicorewindow";
 	name = "AI Core Shutters"
@@ -2259,8 +2243,7 @@
 	pixel_x = -32
 	},
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
@@ -2285,8 +2268,7 @@
 /area/crew_quarters/heads/hop)
 "adW" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "adX" = (
@@ -2491,8 +2473,7 @@
 	name = "Asteroid"
 	})
 "aeq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
@@ -2512,8 +2493,7 @@
 /turf/open/floor/plasteel,
 /area/security/detectives_office)
 "aes" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/security/detectives_office)
@@ -2533,8 +2513,7 @@
 /area/crew_quarters/heads/captain/private)
 "aev" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
 "aew" = (
@@ -2557,8 +2536,7 @@
 /area/crew_quarters/heads/captain/private)
 "aex" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sign/electricshock{
 	pixel_x = 32
@@ -2753,8 +2731,7 @@
 	},
 /area/bridge)
 "aeI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -3326,6 +3303,7 @@
 /area/quartermaster/storage)
 "afD" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "afE" = (
@@ -3375,8 +3353,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "afK" = (
@@ -3495,6 +3472,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -3546,6 +3524,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "afZ" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "aga" = (
@@ -3571,8 +3550,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "agd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -3693,8 +3671,7 @@
 	},
 /area/bridge)
 "agn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
@@ -4245,8 +4222,7 @@
 /area/bridge)
 "ahg" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
 	name = "HoP Blast door"
@@ -4664,8 +4640,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "ahN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /obj/machinery/door/poddoor/preopen{
 	id = "captainhall";
@@ -4827,8 +4802,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aif" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -4946,8 +4920,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "air" = (
@@ -4994,14 +4967,12 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "aiu" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "detectivewindows";
 	name = "Detective Privacy Blast door"
@@ -5028,8 +4999,7 @@
 /area/security/detectives_office)
 "aiw" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "detectivewindows";
 	name = "Detective Privacy Blast door"
@@ -5148,8 +5118,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -5304,8 +5273,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "aiV" = (
@@ -5357,8 +5325,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -5409,8 +5376,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigfront";
 	name = "Brig Blast door"
@@ -5513,6 +5479,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -5664,6 +5631,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -5979,8 +5947,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "ajV" = (
@@ -6517,7 +6484,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13"
 	},
 /area/hallway/primary/central{
@@ -6743,6 +6709,7 @@
 	},
 /area/quartermaster/storage)
 "akM" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
@@ -6791,8 +6758,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "akU" = (
@@ -6827,8 +6793,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/security/brig)
@@ -6951,8 +6916,7 @@
 /area/teleporter)
 "alh" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/teleporter)
 "ali" = (
@@ -6985,8 +6949,7 @@
 /area/teleporter)
 "alk" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -7119,8 +7082,7 @@
 	})
 "alv" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
@@ -7545,8 +7507,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/teleporter)
 "ame" = (
@@ -7554,8 +7515,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -7592,6 +7552,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -7636,8 +7597,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -7647,8 +7607,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
@@ -7830,16 +7789,14 @@
 /turf/closed/wall,
 /area/quartermaster/miningdock)
 "amD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "amE" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
 "amF" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "amG" = (
@@ -8229,8 +8186,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ann" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -8295,8 +8251,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "ant" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
@@ -8426,6 +8381,7 @@
 /area/security/brig)
 "anD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -8573,8 +8529,7 @@
 	},
 /area/teleporter)
 "anQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -8822,7 +8777,6 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/miningdock)
@@ -9411,6 +9365,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/brown,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -10270,8 +10225,7 @@
 	},
 /area/quartermaster/miningdock)
 "aqt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/pods{
 	name = "MINING POD"
 	},
@@ -10357,8 +10311,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aqE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -10431,8 +10384,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -10608,8 +10560,7 @@
 	name = "Atrium"
 	})
 "arb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/bar{
 	name = "Atrium"
@@ -10658,8 +10609,7 @@
 	name = "Atrium"
 	})
 "arf" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -11235,8 +11185,7 @@
 /turf/open/floor/plasteel/red,
 /area/security/brig)
 "arP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/storage/primary)
 "arQ" = (
@@ -11615,7 +11564,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
 	filter_type = "n2";
-	name = "nitogren filter";
+	name = "nitrogen filter";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -11770,8 +11719,7 @@
 /area/security/brig)
 "asM" = (
 /obj/structure/cable/white,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "asN" = (
@@ -12173,6 +12121,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -12235,8 +12184,7 @@
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aty" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -12934,6 +12882,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/corner,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -13151,6 +13100,7 @@
 /area/storage/primary)
 "auW" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -14030,6 +13980,7 @@
 	name = "Station Intercom";
 	pixel_x = -26
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -14282,6 +14233,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -14495,8 +14447,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "axt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "axu" = (
@@ -15038,8 +14989,7 @@
 	},
 /area/engine/atmos)
 "ays" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Blast door"
@@ -15064,8 +15014,7 @@
 	name = "Primary Hallway"
 	})
 "ayu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "ayv" = (
@@ -15265,7 +15214,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Central Starborad Maintenance APC";
+	name = "Central Starboard Maintenance APC";
 	pixel_y = 25
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -15396,8 +15345,7 @@
 	name = "\improper Departure Lounge"
 	})
 "azb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -15532,8 +15480,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "azs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
@@ -16731,8 +16678,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aBC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -17028,8 +16974,7 @@
 /turf/closed/wall,
 /area/crew_quarters/kitchen)
 "aCc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "aCd" = (
@@ -17077,8 +17022,7 @@
 	name = "Primary Hallway"
 	})
 "aCi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 4;
 	icon_state = "0-4"
@@ -17120,8 +17064,7 @@
 	name = "\improper Departure Lounge"
 	})
 "aCk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 4;
 	icon_state = "0-4"
@@ -17165,8 +17108,7 @@
 	name = "\improper Departure Lounge"
 	})
 "aCm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 8;
 	icon_state = "0-8"
@@ -17176,8 +17118,7 @@
 	name = "\improper Departure Lounge"
 	})
 "aCn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit{
@@ -17378,8 +17319,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aCH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Blast door"
@@ -17420,8 +17360,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aCJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Blast door"
@@ -17634,6 +17573,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -19124,6 +19064,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -19302,6 +19243,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/kitchen)
 "aFU" = (
@@ -19356,6 +19298,7 @@
 	name = "\improper Departure Lounge"
 	})
 "aGa" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -19369,8 +19312,7 @@
 	name = "\improper Departure Lounge"
 	})
 "aGc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -19460,8 +19402,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aGl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -20225,8 +20166,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "aHw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "ceblast";
 	name = "Engineering Lockdown Shutters"
@@ -20273,8 +20213,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aHy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "ceblast";
 	name = "Engineering Lockdown Shutters"
@@ -20314,8 +20253,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aHA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "ceblast";
 	name = "Engineering Lockdown Shutters"
@@ -21334,8 +21272,7 @@
 	},
 /area/engine/gravity_generator)
 "aJj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -21416,8 +21353,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aJo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
@@ -21532,8 +21468,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aJA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
@@ -21949,8 +21884,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit{
@@ -22295,6 +22229,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/neutral,
 /area/engine/engineering)
 "aKM" = (
@@ -22426,6 +22362,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aKW" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/greenblue/side{
 	icon_state = "greenblue";
 	dir = 8
@@ -22590,6 +22527,7 @@
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -22737,8 +22675,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aLG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -22795,8 +22732,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aLL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -22891,6 +22827,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aLW" = (
@@ -22905,8 +22842,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aLX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -23296,8 +23232,7 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "aMK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
@@ -23306,7 +23241,7 @@
 "aML" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	name = "Telecoms Control Room";
+	name = "Telecomms Control Room";
 	req_access = null;
 	req_access_txt = "19; 61"
 	},
@@ -23321,8 +23256,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/server)
 "aMM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/tcommsat/server)
@@ -23399,11 +23333,10 @@
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aMS" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMT" = (
@@ -23422,11 +23355,10 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aMW" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMX" = (
@@ -23672,7 +23604,7 @@
 	},
 /obj/item/weapon/book/manual/hydroponics_pod_people,
 /obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/item/toy/figure/botanist,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -24183,8 +24115,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/central)
 "aOh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hydroponics)
 "aOi" = (
@@ -24200,8 +24131,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aOj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/hydroponics)
@@ -24392,19 +24322,17 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aOC" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aOD" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aOE" = (
@@ -25163,8 +25091,7 @@
 	name = "Primary Hallway"
 	})
 "aPz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aPA" = (
@@ -25222,14 +25149,13 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aPG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "aPH" = (
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -25280,8 +25206,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aPL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aPM" = (
@@ -25607,6 +25532,7 @@
 /area/hallway/primary/central)
 "aQo" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
 	icon_state = "L6"
 	},
@@ -25640,7 +25566,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -25681,6 +25606,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -25775,10 +25701,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aQH" = (
@@ -25789,7 +25713,7 @@
 	},
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -25936,8 +25860,7 @@
 /turf/closed/wall,
 /area/library)
 "aQX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/library)
 "aQY" = (
@@ -25978,8 +25901,7 @@
 /turf/closed/wall,
 /area/medical/morgue)
 "aRc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "aRd" = (
@@ -26000,8 +25922,7 @@
 /turf/open/floor/plasteel,
 /area/medical/morgue)
 "aRe" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/medical/morgue)
@@ -26009,11 +25930,10 @@
 /turf/closed/wall,
 /area/medical/chemistry)
 "aRg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Privacy Shutters"
+	name = "Chemistry Privacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -26026,7 +25946,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Privacy Shutters"
+	name = "Chemistry Privacy Shutters"
 	},
 /obj/machinery/door/window/southleft{
 	name = "Chemistry Desk";
@@ -26038,11 +25958,10 @@
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "aRj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemisttop";
-	name = "Chemisty Lobby Shutters"
+	name = "Chemistry Lobby Shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -26095,8 +26014,7 @@
 /turf/closed/wall/r_wall,
 /area/science/lab)
 "aRs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
 	name = "Research and Development Shutter"
@@ -26173,8 +26091,7 @@
 	name = "Primary Hallway"
 	})
 "aRy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aRz" = (
@@ -26195,10 +26112,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "aRB" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aRC" = (
@@ -26218,10 +26133,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aRE" = (
@@ -26231,10 +26144,8 @@
 	on = 1;
 	target_temperature = 80
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aRF" = (
@@ -26629,8 +26540,7 @@
 /turf/closed/wall,
 /area/hallway/primary/central)
 "aSr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "aSs" = (
@@ -26823,7 +26733,7 @@
 "aSM" = (
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
-	name = "Telecoms Server Room";
+	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
 	},
@@ -26835,15 +26745,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aSN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plating,
 /area/tcommsat/server)
@@ -27098,8 +27005,7 @@
 /turf/open/floor/plasteel/vault,
 /area/medical/medbay/zone3)
 "aTp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "aTq" = (
@@ -27148,7 +27054,7 @@
 /obj/item/weapon/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistbot";
-	name = "Chemisty Privacy Shutters"
+	name = "Chemistry Privacy Shutters"
 	},
 /obj/machinery/door/window/southleft{
 	dir = 8;
@@ -27268,8 +27174,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aTL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/lab)
 "aTM" = (
@@ -27426,10 +27331,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aTY" = (
@@ -27441,10 +27344,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aTZ" = (
@@ -27454,10 +27355,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aUa" = (
@@ -27588,8 +27487,7 @@
 	},
 /area/medical/morgue)
 "aUn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
 "aUo" = (
@@ -27698,6 +27596,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aUD" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -27823,10 +27722,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "aUP" = (
@@ -27836,10 +27733,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "aUQ" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -28178,15 +28072,11 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aVC" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/research)
 "aVD" = (
@@ -28201,10 +28091,7 @@
 	network = list("SS13","RD");
 	pixel_x = 22
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aVE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -28391,8 +28278,7 @@
 	},
 /area/medical/morgue)
 "aWb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -28604,18 +28490,14 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aWt" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/research)
 "aWu" = (
@@ -28623,10 +28505,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/research)
 "aWv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -28762,8 +28641,7 @@
 	},
 /area/medical/morgue)
 "aWK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
 "aWL" = (
@@ -28780,8 +28658,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aWM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
@@ -28804,8 +28681,7 @@
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "aWO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/nosmoking_1{
 	pixel_x = 32
 	},
@@ -28878,8 +28754,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aWV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/science/lab)
@@ -28898,8 +28773,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "rdxeno";
 	name = "Xenobiology Containment Door"
@@ -28936,8 +28810,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "rdxeno";
 	name = "Xenobiology Containment Door"
@@ -29415,8 +29288,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/bluecross_2,
 /turf/open/floor/plating,
 /area/medical/medbay/zone3)
@@ -30040,8 +29912,7 @@
 /turf/closed/wall,
 /area/science/robotics/mechbay)
 "aZc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
@@ -30059,8 +29930,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "aZe" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "aZf" = (
@@ -30436,6 +30306,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/blue,
 /area/medical/medbay/zone3)
 "aZO" = (
@@ -30507,8 +30378,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "aZT" = (
@@ -30577,8 +30447,7 @@
 	},
 /area/science/research)
 "baa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/robotics/lab)
 "bab" = (
@@ -30838,8 +30707,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "baw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/bluecross_2,
 /obj/structure/sign/nosmoking_1{
 	pixel_y = -28
@@ -31112,8 +30980,7 @@
 	},
 /area/science/research)
 "baU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -31400,6 +31267,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bby" = (
@@ -31506,8 +31374,7 @@
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "bbG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -31657,8 +31524,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "bbV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/barricade/wooden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -31823,8 +31689,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "bcm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
@@ -32249,8 +32114,7 @@
 /turf/open/floor/plasteel/red,
 /area/hallway/primary/central)
 "bdh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 8;
 	icon_state = "0-8"
@@ -32740,8 +32604,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "beb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
@@ -33629,7 +33492,7 @@
 "bfw" = (
 /obj/structure/bonfire,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice{
-	desc = "For the weary spacemen on their quest to rekindle the first plasmafire.";
+	desc = "For the weary spacemen on their quest to rekindle the first plasma fire.";
 	name = "Carton of Estus"
 	},
 /obj/item/weapon/nullrod/claymore/glowing{
@@ -33731,6 +33594,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/port)
 "bfG" = (
@@ -34129,8 +33993,7 @@
 	},
 /area/science/xenobiology)
 "bgo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
@@ -34468,8 +34331,7 @@
 /turf/closed/wall,
 /area/hallway/secondary/entry)
 "bgU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bgV" = (
@@ -34923,8 +34785,7 @@
 	},
 /area/science/xenobiology)
 "bhN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -34952,6 +34813,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -35031,7 +34893,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Chaplen Quarters";
+	c_tag = "Chaplain's Quarters";
 	dir = 2;
 	network = list("SS13")
 	},
@@ -35047,8 +34909,7 @@
 /turf/open/floor/wood,
 /area/chapel/main)
 "bib" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -35166,6 +35027,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "chapel"
@@ -35184,8 +35046,7 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "bio" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -35593,8 +35454,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "biW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -35651,8 +35511,7 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bjc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "bjd" = (
@@ -35662,10 +35521,7 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/xenobiology)
 "bje" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -35679,10 +35535,7 @@
 	name = "science camera";
 	network = list("SS13","RD")
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/xenobiology)
 "bjf" = (
 /obj/structure/dresser,
@@ -35707,8 +35560,7 @@
 	},
 /area/chapel/main)
 "bjh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/chapel/main)
 "bji" = (
@@ -35731,8 +35583,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "bjl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapelprivacy";
 	name = "Chapel Privacy Shutters"
@@ -35841,18 +35692,16 @@
 /area/science/xenobiology)
 "bjw" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/xenobiology)
 "bjx" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/xenobiology)
 "bjy" = (
@@ -35938,10 +35787,7 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bjI" = (
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/xenobiology)
 "bjJ" = (
 /obj/machinery/photocopier,
@@ -36021,7 +35867,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/camera{
-	c_tag = "Xenobilogy Lab";
+	c_tag = "Xenobiology Lab";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -36146,8 +35992,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "bjX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -36156,8 +36001,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bjY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -36820,11 +36664,7 @@
 /area/hallway/primary/central)
 "blq" = (
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation,
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "blr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36839,6 +36679,7 @@
 	c_tag = "Research Division North";
 	dir = 2
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
 	},
@@ -36993,8 +36834,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "blJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/chapel/main)
 "blK" = (
@@ -37171,48 +37011,43 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bmP" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bmQ" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bmR" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bmS" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bmT" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bmU" = (
@@ -37362,7 +37197,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnx" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -37395,7 +37229,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnF" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -37434,7 +37267,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnM" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -37670,8 +37502,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "boG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "boH" = (
@@ -37684,8 +37515,7 @@
 	},
 /area/shuttle/syndicate)
 "boI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "boJ" = (
@@ -37791,8 +37621,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bpl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bpm" = (
@@ -37808,7 +37637,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bpq" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -38385,8 +38213,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "brw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "brx" = (
@@ -38399,8 +38226,7 @@
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate)
 "bry" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "brz" = (
@@ -38537,7 +38363,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bsb" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -38558,7 +38383,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "bsf" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -38592,7 +38416,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bsl" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -38641,7 +38464,6 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bsu" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -39628,68 +39450,51 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buH" = (
 /obj/machinery/telecomms/bus/preset_one/birdstation,
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Telecoms Server Room APC";
+	name = "Telecomms Server Room APC";
 	pixel_x = -26
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buI" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buJ" = (
 /obj/machinery/telecomms/server/presets/common/birdstation,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buL" = (
 /obj/machinery/telecomms/hub/preset,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buN" = (
@@ -39697,11 +39502,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "buO" = (
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
@@ -39709,52 +39510,36 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buP" = (
 /obj/machinery/message_server,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buQ" = (
 /obj/machinery/telecomms/processor/preset_one/birdstation,
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "buR" = (
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buS" = (
 /obj/machinery/ntnet_relay,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buT" = (
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buU" = (
@@ -39763,10 +39548,8 @@
 	dir = 8;
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "buV" = (
@@ -39811,8 +39594,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "bvd" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "bve" = (
@@ -40048,8 +39830,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bvT" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bvU" = (
@@ -40069,8 +39850,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bvZ" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bwa" = (
@@ -40124,8 +39904,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "bwm" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bwn" = (
@@ -40257,16 +40036,14 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "bwL" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bwM" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bwN" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bwO" = (
@@ -40286,8 +40063,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bwT" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bwU" = (
@@ -40432,32 +40208,28 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "bxp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "bxq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "bxr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "bxs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 8
 	},
@@ -40495,6 +40267,261 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"bxw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/hallway/primary/central{
+	name = "Primary Hallway"
+	})
+"bxx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/bridge)
+"bxy" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/crew_quarters/heads/hop)
+"bxz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/hallway/primary/central{
+	name = "Primary Hallway"
+	})
+"bxA" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/red/side{
+	dir = 6
+	},
+/area/security/brig)
+"bxB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/teleporter)
+"bxC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner,
+/area/maintenance/starboard/central)
+"bxD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/central{
+	name = "Primary Hallway"
+	})
+"bxE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/port/central)
+"bxF" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
+/area/crew_quarters/theatre)
+"bxG" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar{
+	name = "Atrium"
+	})
+"bxH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
+"bxI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
+"bxJ" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/crew_quarters/dorms)
+"bxK" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner,
+/area/crew_quarters/dorms)
+"bxL" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar{
+	name = "Atrium"
+	})
+"bxM" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
+"bxN" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/port/central)
+"bxO" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar{
+	name = "Atrium"
+	})
+"bxP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/primary/central{
+	name = "Primary Hallway"
+	})
+"bxQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8;
+	heat_capacity = 1e+006
+	},
+/area/hallway/primary/central{
+	name = "Primary Hallway"
+	})
+"bxR" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/maintenance/port)
+"bxS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/grimy,
+/area/library)
+"bxT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/whiteblue/corner{
+	dir = 1
+	},
+/area/medical/medbay/zone3)
+"bxU" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/corner,
+/area/maintenance/port)
+"bxV" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/circuit,
+/area/science/robotics/mechbay)
+"bxW" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
+"bxX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
+"bxY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
@@ -72470,7 +72497,7 @@ avF
 awJ
 axo
 ayi
-azo
+bxI
 aAp
 aBx
 aCB
@@ -74029,7 +74056,7 @@ aNa
 aEt
 aOI
 aPP
-aQV
+bxR
 aRS
 aTb
 aUb
@@ -75296,7 +75323,7 @@ auL
 avQ
 aqz
 axz
-asB
+bxH
 azy
 aAA
 aBI
@@ -75832,7 +75859,7 @@ aQW
 aRY
 aTg
 aUf
-aUX
+bxS
 aVS
 aWE
 aXh
@@ -76312,7 +76339,7 @@ ajb
 akb
 ala
 alQ
-akb
+bxA
 ala
 aoz
 apE
@@ -76336,7 +76363,7 @@ aGx
 aHD
 aIA
 aCM
-aCM
+bxP
 aCM
 aNi
 anH
@@ -76832,7 +76859,7 @@ aoB
 apG
 akc
 akc
-akc
+bxD
 atM
 auR
 avW
@@ -77123,7 +77150,7 @@ aWG
 aXl
 aQW
 aYF
-aXd
+bxU
 aRS
 bbo
 bcb
@@ -77610,7 +77637,7 @@ avY
 awQ
 axG
 ayy
-azC
+bxJ
 aAH
 aBQ
 azC
@@ -77869,7 +77896,7 @@ awQ
 awQ
 awQ
 aAH
-aBQ
+bxK
 awQ
 awQ
 awQ
@@ -78645,7 +78672,7 @@ awQ
 awQ
 awQ
 awQ
-arY
+bxN
 aHM
 aHM
 aHM
@@ -78654,7 +78681,7 @@ aHM
 aHM
 aHM
 aOZ
-aQd
+bxQ
 ayV
 aSh
 aTm
@@ -78920,7 +78947,7 @@ aVh
 aWd
 aWL
 aXn
-aXn
+bxT
 aYL
 aZH
 bay
@@ -79397,7 +79424,7 @@ akm
 ali
 alZ
 amU
-anM
+bxB
 anM
 apL
 alg
@@ -79663,7 +79690,7 @@ atd
 atW
 atd
 atd
-atd
+bxE
 axL
 ayD
 atd
@@ -80434,7 +80461,7 @@ atf
 atY
 avb
 awg
-awg
+bxF
 awg
 ayF
 azF
@@ -80672,7 +80699,7 @@ acd
 acU
 adM
 adM
-adM
+bxx
 age
 agV
 aby
@@ -81719,7 +81746,7 @@ asg
 asg
 asg
 asg
-awT
+bxG
 asg
 avi
 awn
@@ -81731,7 +81758,7 @@ asg
 awT
 aAR
 avi
-asg
+bxO
 asg
 aLf
 aMt
@@ -81761,7 +81788,7 @@ bfK
 bgg
 bgT
 bhG
-biw
+bxY
 bgU
 aaa
 aaa
@@ -82752,7 +82779,7 @@ axP
 ayL
 asg
 aAR
-asg
+bxL
 avi
 asg
 asg
@@ -84065,7 +84092,7 @@ aZc
 aZV
 baO
 bbD
-bcu
+bxV
 bdm
 beh
 beL
@@ -84284,7 +84311,7 @@ anU
 aoW
 aqc
 alu
-asn
+bxC
 atm
 auj
 avo
@@ -84784,7 +84811,7 @@ acq
 adi
 adW
 aeL
-afw
+bxy
 agq
 ahh
 aia
@@ -85819,7 +85846,7 @@ abt
 abt
 ajF
 akJ
-aly
+bxz
 amt
 ank
 anZ
@@ -86067,7 +86094,7 @@ abt
 abL
 acu
 adm
-adY
+bxw
 adm
 afB
 agu
@@ -86635,7 +86662,7 @@ aZj
 bae
 baY
 bbM
-bcA
+bxW
 bdw
 bep
 aZl
@@ -87153,7 +87180,7 @@ bcC
 bdy
 ber
 aZl
-bfq
+bxX
 bfP
 bfP
 bfP
@@ -87896,7 +87923,7 @@ aaa
 aaa
 azb
 blM
-blZ
+bxM
 bsC
 azb
 aaa

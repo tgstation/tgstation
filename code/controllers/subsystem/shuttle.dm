@@ -217,6 +217,9 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
+	if(call_reason)
+		SSblackbox.add_details("shuttle_reason", call_reason)
+		log_game("Shuttle call reason: [call_reason]")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
@@ -226,7 +229,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)
-	var/intercepttext = "<font size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</font><hr>\
+	var/intercepttext = "<font size = 3><b>Nanotrasen Update</b>: Request For Shuttle.</font><hr>\
 						To whom it may concern:<br><br>\
 						We have taken note of the situation upon [station_name()] and have come to the \
 						conclusion that it does not warrant the abandonment of the station.<br>\

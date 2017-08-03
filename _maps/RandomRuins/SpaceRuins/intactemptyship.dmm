@@ -79,13 +79,11 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "p" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/authorship)
 "q" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/authorship)
 "r" = (
