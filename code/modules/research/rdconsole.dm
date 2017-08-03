@@ -43,6 +43,8 @@ doesn't have toxins access.
 	var/datum/techweb_node/selected_node
 	var/datum/design/selected_design
 	var/locked = FALSE
+	var/uploading_ddisk_design
+	var/uploading_slot
 
 /proc/CallMaterialName(ID)
 	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
@@ -156,96 +158,6 @@ doesn't have toxins access.
 	playsound(src, "sparks", 75, 1)
 	emagged = TRUE
 	to_chat(user, "<span class='notice'>You disable the security protocols</span>")
-
-/*
-
-	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
-		var/n = text2num(href_list["updt_design"])
-		screen = SCICONSOLE_UPDATE_DATABASE
-		var/wait = 50
-		if(!n)
-			wait = 0
-			for(var/D in d_disk.blueprints)
-				if(D)
-					wait += 50
-		spawn(wait)
-			screen = SCICONSOLE_DDISK
-			if(d_disk)
-				if(!n)
-					for(var/D in d_disk.blueprints)
-						if(D)
-							stored_research.add_design(D)
-				else
-					stored_research.add_design(d_disk.blueprints[n])
-				updateUsrDialog()
-
-	else if(href_list["clear_design"]) //Erases data on the design disk.
-		if(d_disk)
-			var/n = text2num(href_list["clear_design"])
-			if(!n)
-				for(var/i in 1 to d_disk.max_blueprints)
-					d_disk.blueprints[i] = null
-			else
-				d_disk.blueprints[n] = null
-
-
-	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
-		var/slot = text2num(href_list["copy_design"])
-		var/datum/design/D = stored_research.researched_designs[href_list["copy_design_ID"]]
-		if(D)
-			var/autolathe_friendly = 1
-			if(D.reagents_list.len)
-				autolathe_friendly = 0
-				D.category -= "Imported"
-			else
-				for(var/x in D.materials)
-					if( !(x in list(MAT_METAL, MAT_GLASS)))
-						autolathe_friendly = 0
-						D.category -= "Imported"
-
-			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
-				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
-				D.category |= "Imported"
-			d_disk.blueprints[slot] = D
-		screen = SCICONSOLE_DDISK
-
-
-	if(SCICONSOLE_TDISK) //Technology Disk Menu
-		dat += SCICONSOLE_HEADER
-		dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A>"
-		dat += "<A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
-		dat += "<A href='?src=\ref[src];updt_tech=0'>Upload All</A>"
-		dat += "<A href='?src=\ref[src];copy_tech=1'>Load Technology to Disk</A>"
-		dat += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
-		for(var/i in t_disk.stored_research.researched_nodes)
-			var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
-			dat += "<A href='?src=\ref[src];view_node=[i];back_screen=[screen]'>[N.display_name]</A>"
-		dat += "</div>"
-
-	if(SCICONSOLE_DDISK) //Design Disk menu.
-		dat += SCICONSOLE_HEADER
-		dat += "Disk Operations: <A href='?src=\ref[src];clear_design=0'>Clear Disk</A><A href='?src=\ref[src];updt_design=0'>Upload All</A><A href='?src=\ref[src];eject_design=1'>Eject Disk</A>"
-		for(var/i in 1 to d_disk.max_blueprints)
-			dat += "<div class='statusDisplay'>"
-			if(d_disk.blueprints[i])
-				var/datum/design/D = d_disk.blueprints[i]
-				dat += "<A href='?src=\ref[src];view_design=[D.id]'>[D.name]</A>"
-				dat += "Operations: <A href='?src=\ref[src];updt_design=[i]'>Upload to Database</A> <A href='?src=\ref[src];clear_design=[i]'>Clear Slot</A>"
-			else
-				dat += "Empty SlotOperations: <A href='?src=\ref[src];menu=[SCICONSOLE_DDISKL];disk_slot=[i]'>Load Design to Slot</A>"
-			dat += "</div>"
-	if(SCICONSOLE_DDISKL) //Design disk submenu
-		dat += SCICONSOLE_HEADER
-		dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_DDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>"
-		dat += "<h3>Load Design to Disk:</h3>"
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
-			dat += "[D.name] "
-			dat += "<A href='?src=\ref[src];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
-		dat += "</div>"
-
-*/
-
 
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
@@ -385,19 +297,22 @@ doesn't have toxins access.
 	data["ddisk"] = d_disk? TRUE : FALSE
 	data["tdisk_update"] = tdisk_update
 	data["ddisk_update"] = ddisk_update
-	data["alldesigns"] = list()
-	for(var/v in matching_designs_protolathe)
-		var/datum/design/D = matching_designs_protolathe[v]
-		data["alldesigns"] += list(list("name" = D.name, "id" = D.id))
+	data["ddisk_upload"] = uploading_ddisk_design
 	if(d_disk)
-		data["ddisk_size"] = d_disk.max_blueprints
-		data["ddisk_designs"] = list()
-		for(var/i in 1 to d_disk.max_blueprints)
-			var/datum/design/D = d_disk.blueprints[i]
-			if(istype(D))
-				data["ddisk_designs"] += list(list("pos" = "[i]", "name" = D.name, "id" = D.id))
-			else
-				data["ddisk_designs"] += list(list("pos" = "[i]", "name" = "Empty Slot", "id" = "null"))
+		if(!uploading_ddisk_design)
+			data["ddisk_size"] = d_disk.max_blueprints
+			data["ddisk_designs"] = list()
+			for(var/i in 1 to d_disk.max_blueprints)
+				var/datum/design/D = d_disk.blueprints[i]
+				if(istype(D))
+					data["ddisk_designs"] += list(list("pos" = "[i]", "name" = D.name, "id" = D.id))
+				else
+					data["ddisk_designs"] += list(list("pos" = "[i]", "name" = "Empty Slot", "id" = "null"))
+		else
+			data["ddisk_possible_designs"] = list()
+			for(var/i in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[i]
+				data["ddisk_possible_designs"] += list(list("name" = D.name, "id" = D.id))
 	if(t_disk)
 		data["tdisk_nodes"] = list()
 		for(var/v in t_disk.stored_research.researched_nodes)
@@ -516,11 +431,16 @@ doesn't have toxins access.
 				say("Wiping design disk.")
 				ddisk_update = TRUE
 				addtimer(CALLBACK(src, .proc/ddisk_update_complete), 50)
+		if("upload_empty_ddisk_slot")
+			if(params["slot"])
+				uploading_ddisk_design = TRUE
+				uploading_slot = params["slot"]
 		if("ddisk_uploaddesign")
+			uploading_ddisk_design = FALSE
 			if(params["design_id"])
 				if(stored_research.isDesignResearchedID(params["design_id"]))
-					if(params["slot"])
-						d_disk.blueprints[params["slot"]] = stored_research.isDesignResearchedID(params["design_id"])
+					if(uploading_slot)
+						d_disk.blueprints[uploading_slot] = stored_research.isDesignResearchedID(params["design_id"])
 						say("Uploading Design to disk.")
 						ddisk_update = TRUE
 						addtimer(CALLBACK(src, .proc/ddisk_update_complete), 5)
