@@ -180,11 +180,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/bicon(thing)
 	if (!thing)
 		return
-
+	var/static/list/bicon_cache = list()
 	if (isicon(thing))
 		var/icon/I = thing
 		var/icon_md5 = md5(I)
-		if (!bicon_cache[I]) // Doesn't exist yet, make it.
+		if (!bicon_cache[icon_md5]) // Doesn't exist yet, make it.
 			I = icon(I) //copy it
 			I.Scale(16,16) //scale it
 			bicon_cache[icon_md5] = icon2base64(thing) //base64 it
@@ -194,7 +194,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/atom/A = thing
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
 
-	var/static/list/bicon_cache = list()
+
 	if (!bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
 		I.Scale(16,16)
