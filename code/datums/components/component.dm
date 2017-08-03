@@ -117,8 +117,6 @@
 		. += current_type
 		current_type = type2parent(current_type)
 
-/datum/var/list/datum_components //special typecache of /datum/component
-
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	. = FALSE
