@@ -368,7 +368,7 @@
 
 /obj/item/projectile/bullet/saw/hollow
 	damage = 60
-	armour_penetration = -10
+	armour_penetration = -60
 
 /obj/item/projectile/bullet/saw/ap
 	damage = 40
