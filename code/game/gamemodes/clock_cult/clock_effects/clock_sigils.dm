@@ -16,9 +16,8 @@
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
 	if(is_servant_of_ratvar(user))
 		if(istype(I, /obj/item/clockwork/slab))
-			var/obj/item/clockwork/slab/S = I
 			user.visible_message("<span class='warning'>[user] starts to dispel [src]...</span>", "<span class='danger'>You start to dispel [src]...</span>")
-			if(do_after(user, 20, target = src)
+			if(do_after(user, 20, target = src))
 				user.visible_message("<span class='warning'>[user] dispels [src]!</span>", "<span class='danger'>You dispel [src]!</span>")
 				for(var/i in component_refund)
 					if(component_refund[i])

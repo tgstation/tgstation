@@ -51,7 +51,7 @@
 					add_mousepointer(ranged_ability_user.client)
 			else if(target == pulled_binding || (isliving(target) && L.buckled == pulled_binding))
 				ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] starts to dispel [binding]...</span>", "<span class='danger'>You start to dispel [binding]...</span>")
-				if(do_after(ranged_ability_user, 20, target = binding)
+				if(do_after(ranged_ability_user, 20, target = binding))
 					ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] dispels [binding]!</span>", "<span class='danger'>You dispel [binding]!</span>")
 					binding.take_damage(obj_integrity)
 					remove_ranged_ability()
@@ -88,7 +88,7 @@
 				ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
 				add_mousepointer(ranged_ability_user.client)
 				add_logs(ranged_ability_user, L, "bound with Geis")
-				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
+				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, -5, frequency = 0.5)
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
 					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the binding immediately
