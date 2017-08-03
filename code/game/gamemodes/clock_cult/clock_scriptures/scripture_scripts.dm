@@ -182,61 +182,38 @@
 	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
 
 
-//Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
-/datum/clockwork_scripture/function_call
-	descname = "Permanent Summonable Spear"
-	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every 3 minutes, with it lasting 3 minutes. The spear's attacks will generate Vitality, used for healing."
+//Arcane Armory: Grants the invoker the ability to call forth a Ratvarian spear and a set of clockwork armor.
+/datum/clockwork_scripture/arcane_armory
+	descname = "Permanent Summonable Spear & Armor"
+	name = "Arcane Armory"
+	desc = "Grants the invoker the abilities to call forth a powerful Ratvarian spear and a set of clockwork armor. The spear's attacks will generate Vitality, used for healing, and being attacked \
+	with the armor on will slightly increase the duration of Vanguard."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
 	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
-	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
+	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear and prevent resummoning for a time."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 
-/datum/clockwork_scripture/function_call/check_special_requirements()
-	for(var/datum/action/innate/function_call/F in invoker.actions)
-		to_chat(invoker, "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
-		return FALSE
+/datum/clockwork_scripture/arcane_armory/check_special_requirements()
+	if(invoker.mind)
+		var/datum/antagonist/clockcult/C = invoker.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+		if(!C)
+			return FALSE
+		if(C.armory_bound)
+			to_chat(invoker, "<span class='warning'>You have already bound an arcane armory to yourself!</span>")
+			return FALSE
 	return invoker.can_hold_items()
 
-/datum/clockwork_scripture/function_call/scripture_effects()
+/datum/clockwork_scripture/arcane_armory/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
-	var/datum/action/innate/function_call/F = new()
-	F.Grant(invoker)
-	return TRUE
-
-//Function Call action: Calls forth a Ratvarian spear once every 3 minutes.
-/datum/action/innate/function_call
-	name = "Function Call"
-	desc = "Allows you to summon a Ratvarian spear to fight enemies."
-	button_icon_state = "ratvarian_spear"
-	background_icon_state = "bg_clock"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
-	buttontooltipstyle = "clockcult"
-	var/cooldown = 0
-	var/base_cooldown = RATVARIAN_SPEAR_DURATION
-
-/datum/action/innate/function_call/IsAvailable()
-	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
-		return FALSE
-	return ..()
-
-/datum/action/innate/function_call/Activate()
-	if(!owner.get_empty_held_indexes())
-		to_chat(usr, "<span class='warning'>You need an empty hand to call forth your spear!</span>")
-		return FALSE
-	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
-	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
-	owner.put_in_hands(R)
-	if(!GLOB.ratvar_awakens)
-		to_chat(owner, "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>")
-	cooldown = base_cooldown + world.time
-	owner.update_action_buttons_icon()
-	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
+	"<span class='brass'>You bind a Ratvarian spear and a set of clockwork armor to yourself.<br>Use the \"Summon Spear\" and \"Call Cuirass\" action buttons to call them forth, respectively.</span>")
+	var/datum/antagonist/clockcult/C = invoker.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+	C.armory_bound = TRUE
+	C.spear.Grant(invoker)
+	C.cuirass.Grant(invoker)
 	return TRUE
 
 
