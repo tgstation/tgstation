@@ -1,3 +1,24 @@
+/mob/living/silicon/robot/Moved(oldLoc, dir)
+	. = ..()
+	update_camera_location(oldLoc)
+
+/mob/living/silicon/robot/forceMove(atom/destination)
+	. = ..()
+	update_camera_location(destination)
+
+/mob/living/silicon/robot/proc/do_camera_update(oldLoc)
+	if(!QDELETED(camera) && oldLoc != get_turf(src))
+		GLOB.cameranet.updatePortableCamera(camera)
+	updating = FALSE
+
+#define BORG_CAMERA_BUFFER 30
+/mob/living/silicon/robot/proc/update_camera_location(oldLoc)
+	oldLoc = get_turf(oldLoc)
+	if(!QDELETED(camera) && !updating && oldLoc != get_turf(src))
+		updating = TRUE
+		addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
+#undef BORG_CAMERA_BUFFER
+
 /mob/living/silicon/robot/Process_Spacemove(movement_dir = 0)
 	if(ionpulse())
 		return 1
