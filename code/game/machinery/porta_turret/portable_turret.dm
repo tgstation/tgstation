@@ -672,15 +672,11 @@
 	..()
 	if(!mapload)
 		return
-	if(control_area && istext(control_area))
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
-			if(A.name == control_area)
-				control_area = A
-				break
-
+	
 	if(!control_area)
 		control_area = get_area(src)
+	else
+		control_area = locate(text2path(control_area))
 
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T

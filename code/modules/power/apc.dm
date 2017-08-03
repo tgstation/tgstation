@@ -180,7 +180,7 @@
 	if(isarea(A) && src.areastring == null)
 		src.area = A
 	else
-		src.area = get_area_by_name(areastring)
+		src.area = locate(text2path(areastring))
 	update_icon()
 
 	make_terminal()

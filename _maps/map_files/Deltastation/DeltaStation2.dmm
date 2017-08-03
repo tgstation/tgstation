@@ -52094,7 +52094,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bVK" = (
 /obj/machinery/turretid{
-	control_area = "AI Upload Chamber";
+	control_area = "/area/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
 	name = "AI Upload turret control";
 	pixel_y = -32
