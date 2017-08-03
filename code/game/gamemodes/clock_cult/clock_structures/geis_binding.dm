@@ -40,10 +40,10 @@
 				take_damage(obj_integrity)
 				return
 	var/tick_damage = 1
-	if(!is_servant_of_ratvar(pulledby))
-		tick_damage++
+	if(anchored)
+		tick_damage *= 0.5
 	take_damage(tick_damage, sound_effect = FALSE)
-	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 20, TRUE)
+	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 40, TRUE, -5)
 
 /obj/structure/destructible/clockwork/geis_binding/attack_hand(mob/living/user)
 	return
