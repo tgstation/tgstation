@@ -210,14 +210,6 @@ Difficulty: Very Hard
 		if(prob(5))
 			shoot_projectile(T)
 
-<<<<<<< HEAD
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	var/turf/T = get_turf(target)
-	newtonian_move(get_dir(T, targets_from))
-	for(var/turf/turf in range(1, T))
-		shoot_projectile(turf)
-=======
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
 	var/turf/target_turf = get_turf(target)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
@@ -228,8 +220,7 @@ Difficulty: Very Hard
 	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
 	for(var/i in colossus_shotgun_shot_angles)
 		shoot_projectile(null, angle_to_target + i)
->>>>>>> 2d1fd03b72... review
-
+		
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
@@ -243,13 +234,7 @@ Difficulty: Very Hard
 		if(M.client)
 			flash_color(M.client, rgb(200, 0, 0), 1)
 			shake_camera(M, 4, 3)
-<<<<<<< HEAD
-	playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
-=======
 	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
->>>>>>> 2d1fd03b72... review
-
-
 
 /obj/item/projectile/colossus
 	name ="death bolt"
