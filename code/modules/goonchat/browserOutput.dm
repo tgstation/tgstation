@@ -183,12 +183,18 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/static/list/bicon_cache = list()
 	if (isicon(thing))
 		var/icon/I = thing
-		var/icon_md5 = md5(I)
-		if (!bicon_cache[icon_md5]) // Doesn't exist yet, make it.
-			I = icon(I) //copy it
-			I.Scale(16,16) //scale it
-			bicon_cache[icon_md5] = icon2base64(thing) //base64 it
-		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache[icon_md5]]'>"
+		var/icon_base64 = icon2base64(I)
+
+		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
+			var/icon_md5 = md5(icon_base64)
+			debug_admins(icon_md5)
+			icon_base64 = bicon_cache[icon_md5]
+			if (!icon_base64) // Doesn't exist yet, make it.
+				I = icon(I)
+				I.Scale(world.icon_size, world.icon_size)
+				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
+
+		return "<img class='icon misc' src='data:image/png;base64,[icon_base64]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = thing
@@ -197,11 +203,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	if (!bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
-		I.Scale(16,16)
 		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
+
+		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
+			I.Scale(world.icon_size, world.icon_size)
+
 		bicon_cache[key] = icon2base64(I, key)
 
 	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"

@@ -28,10 +28,12 @@ img {
 	margin: 0;
 	padding: 0;
 	line-height: 1;
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: pixelated;
 }
 img.icon {
-	width: 16px;
-	height: 16px;
+	height: 1em;
+	width: auto;
 }
 
 a {color: #0000ff;}
@@ -356,7 +358,6 @@ h1.alert, h2.alert		{color: #000000;}
 .clown					{color: #FF69Bf;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 
-BIG IMG.icon 			{width: 32px; height: 32px;}
 
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 16px;}
