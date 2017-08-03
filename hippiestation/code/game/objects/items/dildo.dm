@@ -1,8 +1,8 @@
-//Coded by Nexendia~, ported by Spacedong
+//Coded by Nexendia~ :)
 
 /obj/item/dragon
 	name = "Bad Dragon"
-	desc = "You really shouldn't see this.. but if you do... Huzzah.. you found a bug.. please scream at Spacedong!"
+	desc = "You really shouldn't see this.. but if you do... Huzzah.. you found a bug.. please scream at Nexendia!" //Suck a dick Spacedong my shit not yours
 	icon = 'hippiestation/icons/obj/dicks.dmi'
 	icon_state = null
 	force = 5
