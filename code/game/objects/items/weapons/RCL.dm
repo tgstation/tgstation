@@ -23,7 +23,7 @@
 /obj/item/weapon/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
-		if(user.transferItemToLoc(src))
+		if(user.transferItemToLoc(W, src))
 			loaded = W
 			loaded.max_amount = max_amount //We store a lot.
 		else

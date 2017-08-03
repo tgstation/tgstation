@@ -6,8 +6,7 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -398,8 +397,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /obj/structure/sign/bluecross_2,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -506,8 +504,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bF" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bG" = (

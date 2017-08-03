@@ -580,8 +580,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/syndicate_lava_base)
 "bv" = (
@@ -600,8 +599,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -979,8 +977,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/bluecross_2,
 /turf/open/floor/plating,
 /area/ruin/powered/syndicate_lava_base)
@@ -1062,8 +1059,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "lavalandsyndi";
 	name = "Syndicate Research Experimentor Shutters"

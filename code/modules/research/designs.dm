@@ -498,7 +498,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/handdrill
 	name = "Hand Drill"
-	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
 	id = "handdrill"
 	req_tech = list("materials" = 4, "engineering" = 6)
 	build_type = PROTOLATHE
@@ -508,7 +508,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/jawsoflife
 	name = "Jaws of Life"
-	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws"
 	id = "jawsoflife"
 	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
 	build_path = /obj/item/weapon/crowbar/power

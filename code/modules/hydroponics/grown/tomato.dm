@@ -22,6 +22,7 @@
 	splat_type = /obj/effect/decal/cleanable/tomato_smudge
 	filling_color = "#FF6347"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -43,7 +44,7 @@
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
 	origin_tech = "biotech=5"
-
+	foodtype = VEGETABLES | GROSS
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
