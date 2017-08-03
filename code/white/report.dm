@@ -31,10 +31,6 @@
 	dat += "</table>"
 	usr << browse(sanitize_russian(dat), "window=suggread;size=600x400")
 
-/client/Topic(href, href_list, hsrc)
-	if(href_list["deleteDB"])
-		suggestDBDelete(href_list["deleteDB"])
-		return
 
 proc/suggestDBDelete(var/id)
 	if(!usr.ckey == "joctopus")
