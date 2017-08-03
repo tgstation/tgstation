@@ -1035,7 +1035,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/turretid{
-	control_area = "AI Chamber";
+	control_area = "/area/ai_monitored/turret_protected/ai";
 	name = "AI Chamber turret control";
 	pixel_x = 5;
 	pixel_y = -24
@@ -1054,7 +1054,7 @@
 /area/ai_monitored/turret_protected/ai)
 "acs" = (
 /obj/machinery/turretid{
-	control_area = "AI Satellite Antechamber";
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	name = "AI Satellite turret control";
 	pixel_x = -5;
 	pixel_y = -24
@@ -53475,7 +53475,7 @@
 /area/science/research/lobby)
 "cnC" = (
 /obj/machinery/turretid{
-	control_area = "AI Satellite Antechamber";
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	name = "AI Satellite turret control";
 	pixel_x = -5;
 	pixel_y = -24

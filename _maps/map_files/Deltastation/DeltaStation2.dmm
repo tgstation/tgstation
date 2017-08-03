@@ -48253,7 +48253,7 @@
 "bPo" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/turretid{
-	control_area = "AI Satellite Antechamber";
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
