@@ -5721,7 +5721,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/security/processing/cremation)
+/area/maintenance/department/security/brig)
 "amJ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 6
@@ -6066,7 +6066,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/security/brig)
+/area/maintenance/department/security/brig)
 "any" = (
 /obj/machinery/light{
 	dir = 8
@@ -9920,7 +9920,7 @@
 	req_access_txt = "20"
 	},
 /turf/open/floor/plating,
-/area/bridge)
+/area/maintenance/fore)
 "avN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/vault,
@@ -10512,7 +10512,7 @@
 	req_access_txt = "20"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain)
+/area/maintenance/fore)
 "awU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -13328,7 +13328,7 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
+/area/maintenance/department/cargo)
 "aDm" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -14956,7 +14956,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/security/detectives_office)
+/area/maintenance/department/security/brig)
 "aGU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -16920,7 +16920,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/quartermaster/storage)
+/area/maintenance/department/cargo)
 "aLi" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -17711,7 +17711,7 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
+/area/maintenance/department/security/brig)
 "aMR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -19959,7 +19959,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/maintenance/department/crew_quarters/bar)
 "aRN" = (
 /turf/closed/wall,
 /area/crew_quarters/kitchen)
@@ -20043,7 +20043,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/bar)
+/area/maintenance/department/crew_quarters/bar)
 "aRV" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -20082,7 +20082,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/storage/eva)
+/area/maintenance/department/crew_quarters/bar)
 "aRY" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -21106,7 +21106,7 @@
 	req_one_access_txt = "12;46"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/theatre)
+/area/maintenance/department/crew_quarters/bar)
 "aUh" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Theatre Maintenance";
@@ -21115,7 +21115,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/crew_quarters/theatre)
+/area/maintenance/department/crew_quarters/bar)
 "aUi" = (
 /obj/machinery/camera{
 	c_tag = "Central Primary Hallway Cargo";
@@ -24472,7 +24472,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/quartermaster/office)
+/area/maintenance/department/cargo)
 "bbB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
@@ -27135,7 +27135,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/quartermaster/miningdock)
+/area/maintenance/department/cargo)
 "bhs" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -29130,7 +29130,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/storage/emergency/port)
+/area/maintenance/department/engine)
 "bmh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -32690,7 +32690,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/entry)
+/area/maintenance/department/engine)
 "btP" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -36558,7 +36558,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/medical/chemistry)
+/area/maintenance/department/engine)
 "bBm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow/corner{
@@ -38653,7 +38653,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/maintenance/department/cargo)
 "bFB" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -47142,7 +47142,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/maintenance/department/engine)
 "bYJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -86040,7 +86040,7 @@ adw
 adL
 adV
 adV
-cnF
+cnD
 adV
 adV
 aeN
@@ -87582,7 +87582,7 @@ adC
 adO
 adZ
 adZ
-cnI
+cnG
 adZ
 adZ
 aeR
@@ -90774,7 +90774,7 @@ bKX
 bVZ
 bWO
 bXA
-bYr
+bQO
 bZe
 bZM
 caF
@@ -91288,7 +91288,7 @@ bVi
 bMe
 bWP
 bXy
-bYr
+bQO
 bZe
 bZN
 caH
@@ -95592,7 +95592,7 @@ atn
 aFM
 aGJ
 aGJ
-aIn
+aDl
 aEk
 aEk
 aLj

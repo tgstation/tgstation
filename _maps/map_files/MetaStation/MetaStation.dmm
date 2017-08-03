@@ -55512,7 +55512,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/medical/storage)
+/area/maintenance/port/aft)
 "cbJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -72018,7 +72018,7 @@
 	req_access_txt = "6"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/aft)
 "cGU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/extinguisher_cabinet{
@@ -111567,7 +111567,7 @@ cia
 cia
 cuj
 cbx
-dDx
+dDw
 bXE
 cxU
 cxU
@@ -113328,7 +113328,7 @@ bok
 bqz
 bsL
 buk
-dCQ
+dCH
 bdP
 baG
 baG
@@ -113337,7 +113337,7 @@ bEB
 baG
 bHW
 baG
-dDd
+dCH
 baG
 bdP
 baG
@@ -113822,7 +113822,7 @@ aJN
 dhI
 aME
 aNW
-dCu
+dCt
 aQx
 aMB
 aTe
@@ -113858,7 +113858,7 @@ bGy
 bGy
 bGy
 bTG
-dDj
+dCE
 bWk
 bXK
 bYV
@@ -116656,7 +116656,7 @@ aJS
 aUx
 aUx
 aXI
-dCF
+dCE
 baQ
 bci
 aaf
@@ -118211,7 +118211,7 @@ bov
 bqN
 bsX
 buA
-dCR
+dCK
 byg
 bzW
 bBJ
@@ -118976,7 +118976,7 @@ aaf
 bfw
 bhp
 bjb
-dCL
+dCK
 bmE
 boy
 bqP
@@ -120540,7 +120540,7 @@ bQr
 bRJ
 bGM
 bTW
-dDk
+dCE
 bWA
 bXV
 bZk
@@ -120768,7 +120768,7 @@ aTp
 aIT
 aTk
 aXS
-dCG
+dCE
 baV
 bcj
 bdH
@@ -120997,7 +120997,7 @@ ajF
 akP
 ami
 anx
-dCd
+dCb
 apU
 arp
 asF
@@ -121598,7 +121598,7 @@ cAu
 cBo
 crL
 cwN
-dDD
+dDy
 cFl
 cGh
 cHb
@@ -123107,7 +123107,7 @@ aWf
 aWf
 aWf
 aWf
-dDh
+dCT
 aWf
 aWf
 bVo
@@ -123590,7 +123590,7 @@ aMY
 aOu
 aOv
 aQR
-dCy
+dCv
 aTw
 aUM
 aWs
@@ -124655,7 +124655,7 @@ bUh
 bVs
 bWN
 bWR
-dDn
+dDl
 caM
 ccu
 bST
@@ -126699,7 +126699,7 @@ dCU
 byC
 bwX
 bHe
-dDc
+dCU
 bKm
 bKe
 bNE
@@ -130517,7 +130517,7 @@ axQ
 ayR
 axY
 aBG
-dCm
+dCk
 aEk
 aFs
 aGT

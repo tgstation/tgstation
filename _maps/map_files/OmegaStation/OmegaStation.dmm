@@ -12012,7 +12012,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/theatre)
+/area/maintenance/port/central)
 "ath" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -13952,7 +13952,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar)
+/area/maintenance/starboard/central)
 "awx" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -18750,7 +18750,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/kitchen)
+/area/maintenance/starboard/central)
 "aFg" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -20476,7 +20476,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hydroponics)
+/area/maintenance/port/central)
 "aHP" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -20940,7 +20940,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/janitor)
+/area/maintenance/port/central)
 "aID" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -26087,9 +26087,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard)
 "aRy" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -29234,7 +29232,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/library)
+/area/maintenance/port)
 "aXO" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/toxin{
@@ -32924,7 +32922,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/zone3)
+/area/maintenance/port)
 "beG" = (
 /obj/structure/sign/bluecross_2,
 /turf/closed/wall,
@@ -33042,7 +33040,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/science/robotics/lab)
+/area/maintenance/starboard)
 "beQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -33534,7 +33532,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/chapel/main)
+/area/maintenance/port)
 "bfA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -33560,7 +33558,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/chapel/main)
+/area/maintenance/port)
 "bfC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
@@ -34281,7 +34279,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
+/area/maintenance/port)
 "bgP" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
@@ -78915,7 +78913,7 @@ alg
 apJ
 apJ
 apI
-ata
+aHF
 atU
 apI
 apI
@@ -81758,7 +81756,7 @@ asg
 awT
 aAR
 avi
-bxO
+bxL
 asg
 aLf
 aMt

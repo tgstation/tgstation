@@ -2333,7 +2333,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining/aux_base)
+/area/maintenance/starboard/fore)
 "aeT" = (
 /obj/structure/chair{
 	dir = 4;
@@ -6410,7 +6410,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/customs)
+/area/maintenance/port/fore)
 "aoo" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -6430,7 +6430,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/maintenance/starboard/fore)
 "aop" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -8989,7 +8989,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/quartermaster/warehouse)
+/area/maintenance/starboard/fore)
 "asY" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -9032,7 +9032,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/maintenance/starboard/fore)
 "ate" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -12505,7 +12505,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/service)
+/area/maintenance/port/fore)
 "aAx" = (
 /turf/closed/wall,
 /area/crew_quarters/bar)
@@ -19518,7 +19518,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/theatre)
+/area/maintenance/port/fore)
 "aOe" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -24291,7 +24291,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hydroponics)
+/area/maintenance/port/fore)
 "aWE" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -38399,7 +38399,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/storage/primary)
+/area/maintenance/port/fore)
 "bxt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/plasticflaps{
@@ -43854,7 +43854,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/detectives_office)
+/area/maintenance/starboard)
 "bGP" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26;
@@ -57891,7 +57891,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/lawoffice)
+/area/maintenance/starboard)
 "cgR" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
@@ -58342,7 +58342,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/library)
+/area/maintenance/port)
 "chN" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -58858,7 +58858,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/security/range)
+/area/maintenance/starboard)
 "ciI" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -60291,7 +60291,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/locker)
+/area/maintenance/starboard)
 "clx" = (
 /turf/closed/wall,
 /area/crew_quarters/locker)
@@ -62541,7 +62541,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/locker)
+/area/maintenance/starboard)
 "cpW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -63941,7 +63941,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
+/area/maintenance/starboard)
 "csO" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -67570,7 +67570,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/library)
+/area/maintenance/port)
 "czM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -69529,7 +69529,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/maintenance/port)
 "cDB" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -69822,7 +69822,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/toilet/restrooms)
+/area/maintenance/starboard/aft)
 "cEh" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
@@ -72743,7 +72743,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/xenobiology)
+/area/maintenance/port)
 "cJD" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -72841,7 +72841,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/maintenance/port)
 "cJO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -73167,7 +73167,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/medical/storage)
+/area/maintenance/starboard/aft)
 "cKC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -74817,7 +74817,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/maintenance/starboard/aft)
 "cNR" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -78310,7 +78310,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
+/area/maintenance/starboard/aft)
 "cUM" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -78449,7 +78449,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/department/electrical)
+/area/maintenance/port)
 "cVb" = (
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
@@ -85133,7 +85133,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/explab)
+/area/maintenance/port)
 "diZ" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -88781,7 +88781,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/medical/surgery)
+/area/maintenance/starboard/aft)
 "dqk" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -93686,7 +93686,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/mixing)
+/area/maintenance/port)
 "dzM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -96030,7 +96030,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/robotics/lab)
+/area/maintenance/port/aft)
 "dEk" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -96231,7 +96231,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/mixing)
+/area/maintenance/port/aft)
 "dEE" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -96430,7 +96430,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft)
+/area/maintenance/aft)
 "dEW" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -97128,7 +97128,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft)
+/area/maintenance/port/aft)
 "dGp" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -97382,7 +97382,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/maintenance/aft)
 "dGO" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -97471,7 +97471,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/maintenance/starboard/aft)
 "dGS" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -99289,7 +99289,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/maintenance/port/aft)
 "dKJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -100395,7 +100395,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/chapel/office)
+/area/maintenance/port/aft)
 "dMG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -100486,7 +100486,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
+/area/maintenance/port/aft)
 "dMQ" = (
 /turf/closed/wall,
 /area/hallway/secondary/exit/departure_lounge)
@@ -148465,7 +148465,7 @@ dJN
 cJM
 dLH
 dML
-dNJ
+dED
 dOy
 dPo
 dQd

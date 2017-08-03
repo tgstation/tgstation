@@ -6170,7 +6170,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/quartermaster/sorting)
+/area/maintenance/asteroid/fore/cargo_west)
 "amK" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box,
@@ -6460,7 +6460,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/captain)
+/area/maintenance/asteroid/fore/com_north)
 "anj" = (
 /obj/structure/table/wood,
 /obj/item/weapon/pinpointer,
@@ -6545,7 +6545,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/quartermaster/sorting)
+/area/maintenance/asteroid/fore/cargo_west)
 "ans" = (
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plating/asteroid,
@@ -7077,7 +7077,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/quartermaster/office)
+/area/maintenance/asteroid/fore/cargo_west)
 "aov" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -7726,7 +7726,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/locker)
+/area/maintenance/asteroid/fore/com_north)
 "apL" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/astplate{
@@ -9241,7 +9241,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/chief/private)
+/area/maintenance/asteroid/fore/com_east)
 "asU" = (
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
@@ -10387,7 +10387,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/quartermaster/storage)
+/area/maintenance/asteroid/fore/cargo_west)
 "avf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -10842,7 +10842,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/cmo/private)
+/area/maintenance/asteroid/fore/com_north)
 "avZ" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet{
@@ -12756,7 +12756,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/hor/private)
+/area/maintenance/asteroid/fore/com_east)
 "azX" = (
 /obj/structure/chair{
 	dir = 1
@@ -13984,7 +13984,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/quartermaster/miningdock)
+/area/maintenance/asteroid/fore/cargo_south)
 "aCx" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
@@ -15135,7 +15135,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/toilet)
+/area/maintenance/asteroid/fore/com_north)
 "aEr" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -15232,7 +15232,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/hos/private)
+/area/bridge)
 "aEB" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -16199,7 +16199,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/hop)
+/area/bridge)
 "aGd" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -16421,7 +16421,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/quartermaster/qm/private)
+/area/maintenance/asteroid/fore/com_east)
 "aGs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/extinguisher_cabinet{
@@ -17584,7 +17584,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/checkpoint/supply)
+/area/maintenance/asteroid/fore/cargo_south)
 "aIF" = (
 /obj/effect/landmark/secequipment,
 /turf/open/floor/plasteel/red/side{
@@ -30036,7 +30036,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/primary/starboard)
+/area/maintenance/asteroid/starboard)
 "bfq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -30806,7 +30806,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/primary/starboard)
+/area/maintenance/asteroid/starboard)
 "bgE" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -39501,7 +39501,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/medical/virology)
+/area/maintenance/asteroid/starboard)
 "bvO" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -43945,7 +43945,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/atmos)
+/area/maintenance/asteroid/central)
 "bDU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -47735,7 +47735,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/primary/starboard)
+/area/maintenance/asteroid/starboard)
 "bKY" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -47762,7 +47762,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/medical/chemistry)
+/area/maintenance/asteroid/starboard)
 "bLa" = (
 /obj/structure/plasticflaps,
 /turf/open/floor/plating{
@@ -47955,7 +47955,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/primary/starboard)
+/area/maintenance/asteroid/starboard)
 "bLs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -48029,7 +48029,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/fitness)
+/area/maintenance/asteroid/port/west)
 "bLy" = (
 /obj/machinery/light{
 	dir = 8
@@ -48871,7 +48871,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/medical/genetics)
+/area/maintenance/asteroid/starboard)
 "bMP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -49354,7 +49354,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/medical/medbay/zone2)
+/area/maintenance/asteroid/starboard)
 "bNL" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -49370,7 +49370,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/medical/genetics)
+/area/maintenance/asteroid/starboard)
 "bNM" = (
 /obj/structure/cable/orange{
 	d1 = 2;
@@ -50018,7 +50018,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/medical/medbay/zone2)
+/area/maintenance/asteroid/starboard)
 "bOP" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
@@ -53155,7 +53155,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/toilet/fitness)
+/area/maintenance/asteroid/port/west)
 "bVh" = (
 /obj/machinery/camera{
 	c_tag = "Fitness Bathrooms";
@@ -58946,7 +58946,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/vacantoffice)
+/area/maintenance/asteroid/aft/arrivals)
 "chd" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -59902,7 +59902,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/secondary/exit)
+/area/maintenance/asteroid/aft/arrivals)
 "ciY" = (
 /obj/structure/grille/broken,
 /obj/item/clothing/head/cone,
@@ -60765,7 +60765,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter)
+/area/maintenance/asteroid/aft/arrivals)
 "ckp" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -62974,7 +62974,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/secondary/entry)
+/area/maintenance/asteroid/aft/arrivals)
 "coq" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -64401,7 +64401,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/primary/aft)
+/area/maintenance/asteroid/aft/science)
 "cqM" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -66130,7 +66130,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/science/lab)
+/area/maintenance/asteroid/aft/science)
 "ctR" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -66809,7 +66809,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/science/xenobiology)
+/area/maintenance/asteroid/aft/science)
 "cvi" = (
 /obj/machinery/light{
 	dir = 8
@@ -68388,7 +68388,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/science/xenobiology)
+/area/maintenance/asteroid/aft/science)
 "cxE" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -68488,7 +68488,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/science/mixing)
+/area/maintenance/asteroid/aft/science)
 "cxQ" = (
 /obj/machinery/r_n_d/server/core,
 /turf/open/floor/circuit{
@@ -69901,7 +69901,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/science/server)
+/area/maintenance/asteroid/aft/science)
 "cAp" = (
 /obj/structure/cable/orange{
 	d1 = 2;
@@ -70193,7 +70193,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/hor)
+/area/maintenance/asteroid/aft/science)
 "cAQ" = (
 /obj/structure/disposaloutlet{
 	dir = 8
@@ -71026,7 +71026,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/science/misc_lab)
+/area/maintenance/asteroid/aft/science)
 "cCy" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -74475,7 +74475,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/checkpoint/checkpoint2)
+/area/maintenance/asteroid/aft/arrivals)
 "cJx" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/cable/orange{
@@ -74969,7 +74969,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/science/mixing)
+/area/maintenance/asteroid/aft/science)
 "cKA" = (
 /obj/item/clothing/head/sombrero/shamebrero,
 /turf/open/floor/plating/asteroid/airless,
@@ -75488,7 +75488,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/quartermaster/qm)
+/area/maintenance/asteroid/fore/cargo_west)
 "cLD" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -75740,7 +75740,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/primary/fore)
+/area/maintenance/asteroid/fore/com_west)
 "cMc" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -76569,7 +76569,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/theatre)
+/area/maintenance/asteroid/port/west)
 "cNE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/cafeteria{
@@ -76893,7 +76893,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/theatre)
+/area/maintenance/asteroid/port/west)
 "cOp" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -77635,7 +77635,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/medical/morgue)
+/area/maintenance/asteroid/starboard)
 "cPR" = (
 /obj/machinery/light{
 	dir = 1
@@ -81833,7 +81833,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/hallway/primary/starboard/fore)
+/area/maintenance/asteroid/fore/cargo_south)
 "cYl" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -89876,7 +89876,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/maintenance/asteroid/fore/com_west)
 "dqH" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall{
@@ -92012,7 +92012,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/courtroom)
+/area/maintenance/asteroid/fore/com_north)
 "duS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -92061,7 +92061,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/heads/hos)
+/area/maintenance/asteroid/fore/com_west)
 "duX" = (
 /obj/machinery/keycard_auth{
 	pixel_x = -24
@@ -99545,9 +99545,9 @@ aaa
 aaa
 aXK
 aXK
-caf
-caf
-caf
+bRR
+bRR
+bRR
 aXK
 aXK
 aaa
@@ -132593,8 +132593,8 @@ aaa
 abC
 aaa
 deF
-dfH
-dfH
+deH
+deH
 deF
 abW
 abW
