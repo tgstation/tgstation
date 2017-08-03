@@ -1,5 +1,3 @@
-/obj/item/clothing/head/
-	dynamic_hair_suffix = "+detective"
 
 //Chef
 /obj/item/clothing/head/chefhat
