@@ -223,8 +223,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2616,8 +2615,7 @@
 	},
 /area/awaymission/snowdin/post)
 "hb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4410,8 +4408,7 @@
 	},
 /area/awaymission/snowdin)
 "lM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},

@@ -77,6 +77,7 @@
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
+	QDEL_LIST(blueprint_data)
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
@@ -219,8 +220,20 @@
 	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
+	var/old_opacity = opacity
+	var/old_dynamic_lighting = dynamic_lighting
+	var/old_affecting_lights = affecting_lights
+	var/old_lighting_object = lighting_object
+	var/old_corners = corners
+ 
+	var/old_exl = explosion_level
+	var/old_exi = explosion_id
+	var/old_bp = blueprint_data
+	blueprint_data = null
+
 	var/old_baseturf = baseturf
 	changing_turf = TRUE
+
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
@@ -229,8 +242,30 @@
 	else
 		W.baseturf = old_baseturf
 
+	W.explosion_id = old_exi
+	W.explosion_level = old_exl
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
+
+	W.blueprint_data = old_bp
+ 
+	if(SSlighting.initialized)
+		recalc_atom_opacity()
+		lighting_object = old_lighting_object
+		affecting_lights = old_affecting_lights
+		corners = old_corners
+		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+			reconsider_lights()
+
+		if (dynamic_lighting != old_dynamic_lighting)
+			if (IS_DYNAMIC_LIGHTING(src))
+				lighting_build_overlay()
+			else
+				lighting_clear_overlay()
+
+		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+			S.update_starlight()
 
 	return W
 
@@ -350,8 +385,7 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
 
@@ -410,26 +444,24 @@
 	I.setDir(AM.dir)
 	I.alpha = 128
 
-	if(!blueprint_data)
-		blueprint_data = list()
-	blueprint_data += I
+	LAZYADD(blueprint_data, I)
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, delmobs = TRUE, forceop = FALSE)
+/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(),delmobs? ignored_atoms : ignored_atoms + typecacheof(list(/mob)))
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(ignore_typecache), ignored_atoms)
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
 	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop = forceop)
-    
+
 	SSair.remove_from_active(newT)
 	newT.CalculateAdjacentTurfs()
 	SSair.add_to_active(newT,1)

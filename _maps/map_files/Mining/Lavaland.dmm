@@ -1216,8 +1216,7 @@
 	},
 /area/mine/production)
 "dt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "du" = (

@@ -202,8 +202,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "aK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
 "aL" = (
@@ -772,8 +771,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "cc" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/dockedship)
 "cd" = (

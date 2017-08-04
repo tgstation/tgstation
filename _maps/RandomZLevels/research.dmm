@@ -3743,8 +3743,7 @@
 	},
 /area/awaymission/research/interior/medbay)
 "kB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "kC" = (

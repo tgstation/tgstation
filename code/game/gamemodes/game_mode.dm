@@ -83,7 +83,7 @@
 
 	if(SSdbcore.Connect())
 		var/sql
-		if(SSticker && SSticker.mode)
+		if(SSticker.mode)
 			sql += "game_mode = '[SSticker.mode]'"
 		if(GLOB.revdata.originmastercommit)
 			if(sql)

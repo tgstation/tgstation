@@ -165,8 +165,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered)
 "aC" = (
@@ -499,8 +498,7 @@
 /area/ruin/unpowered)
 "bJ" = (
 /turf/open/floor/plating,
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"

@@ -483,6 +483,7 @@ BLIND     // can't see anything
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
+	dog_fashion = null
 
 /obj/item/clothing/suit/space
 	name = "space suit"
