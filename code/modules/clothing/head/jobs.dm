@@ -7,7 +7,7 @@
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	equip_delay_other = 10
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
@@ -63,7 +63,7 @@
 	item_state = "cage"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
 
 
 /obj/item/clothing/head/witchunter_hat

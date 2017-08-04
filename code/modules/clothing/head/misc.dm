@@ -56,7 +56,7 @@
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/nurse
 
@@ -111,7 +111,7 @@
 	name = "rabbit ears"
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
@@ -138,7 +138,7 @@
 	desc = "Yarr."
 	icon_state = "bandana"
 	item_state = "bandana"
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
@@ -250,7 +250,7 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/rice_hat
 	name = "rice hat"
@@ -280,7 +280,7 @@
 	icon_state = "crown"
 	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
@@ -302,4 +302,4 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat2"
-	dynamic_hair_suffix = "null"
+	dynamic_hair_suffix = ""
