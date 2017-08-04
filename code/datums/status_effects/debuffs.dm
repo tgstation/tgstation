@@ -121,23 +121,26 @@
 		qdel(src)
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
-	var/number_legs = owner.get_num_legs()
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
-		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
-			if(GLOB.ratvar_awakens)
-				owner.Knockdown(20)
-			if(iscultist(owner))
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "r_leg")
-			else
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "l_leg")
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "r_leg")
-		if(owner.m_intent != MOVE_INTENT_WALK)
-			if(!iscultist(owner))
-				to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
-			else //Cultists take extra burn damage
-				to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
-			owner.toggle_move_intent()
+	if(!is_servant_of_ratvar(owner) && !owner.null_rod_check())
+		var/number_legs = owner.get_num_legs()
+		if(iscarbon(owner))
+			if(!number_legs)
+				return FALSE
+			if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
+				if(GLOB.ratvar_awakens)
+					owner.Knockdown(20)
+				if(iscultist(owner)) //Cultists take extra burn damage
+					owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
+					owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "r_leg")
+				else
+					owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "l_leg")
+					owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "r_leg")
+			if(owner.m_intent != MOVE_INTENT_WALK)
+				if(iscultist(owner))
+					to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
+				else
+					to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
+				owner.toggle_move_intent()
 		return TRUE
 	return FALSE
 

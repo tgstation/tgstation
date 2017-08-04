@@ -43,29 +43,30 @@
 /obj/structure/destructible/clockwork/ocular_warden/process()
 	if(!anchored)
 		return
-	for(var/mob/living/carbon/C in hearers(sight_range, src))
-		if(C.stat != CONSCIOUS || is_servant_of_ratvar(C) || C.null_rod_check() || !C.get_num_legs())
+	for(var/mob/living/L in hearers(sight_range, src))
+		if(L.stat != CONSCIOUS || is_servant_of_ratvar(L) || L.null_rod_check())
 			continue //shortcut this a bit so we aren't doing checks we don't need to
-		var/datum/status_effect/belligerent/B = C.has_status_effect(STATUS_EFFECT_BELLIGERENT)
+		var/datum/status_effect/belligerent/B = L.has_status_effect(STATUS_EFFECT_BELLIGERENT)
 		var/needs_sound = FALSE
 		if(!QDELETED(B)) //they have the effect already, play a sound
 			if(prob(50))
-				C.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot1.ogg', 30, 1)
+				L.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot1.ogg', 30, 1)
 			else
-				C.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot2.ogg', 30, 1)
-			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(C))
+				L.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot2.ogg', 30, 1)
+			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(L))
 			GLOB.clockwork_vitality += 0.2
-			C.apply_damage(0.1, BURN, "l_leg")
-			C.apply_damage(0.1, BURN, "r_leg")
+			L.apply_damage(0.1, BURN, "l_leg")
+			L.apply_damage(0.1, BURN, "r_leg")
 		else //they don't have the effect yet, try to play a sound
 			needs_sound = TRUE
-			B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT, FALSE)
+			B = L.apply_status_effect(STATUS_EFFECT_BELLIGERENT, FALSE)
 		if(!QDELETED(B))
 			if(needs_sound) //hey we need to play a sound
 				playsound(src, 'sound/machines/clockcult/ocularwarden-target.ogg', 50, 1)
+				B.duration = world.time + 10
 			B.duration = max(world.time + 10, B.duration)
 	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
 		if(M.z == z && get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
-			M.take_damage(2 * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
+			M.take_damage(3 * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(M))
