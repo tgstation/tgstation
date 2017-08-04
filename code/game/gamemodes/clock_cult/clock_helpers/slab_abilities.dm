@@ -173,8 +173,8 @@
 		target.adjustBruteLoss(-brutedamage)
 		target.adjustFireLoss(-burndamage)
 		target.adjustOxyLoss(-oxydamage)
-		var/damage_to_do = max(0, totaldamage - GLOB.clockwork_vitality)
-		GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - totaldamage)
+		var/damage_to_do = max(0, totaldamage - (GLOB.clockwork_vitality * 2))
+		GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - (totaldamage * 0.5)) //heals 2 damage for every 1 vitality
 		target.adjustToxLoss(damage_to_do * 0.75, TRUE, TRUE)
 		if(user)
 			clockwork_say(user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
