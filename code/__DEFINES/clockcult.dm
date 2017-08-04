@@ -80,8 +80,6 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
 
-#define ARK_CONSUME_COST 15 //how many of each component an Ark needs to consume to activate
-
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 
