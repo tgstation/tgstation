@@ -185,7 +185,7 @@
 										/obj/structure/grille,
 										/obj/machinery/the_singularitygen/tesla))
 
-	for(var/A in typecache_filter_list_reverse(typecache_filter_list(oview(source, zap_range+2), things_to_shock), blacklisted_tesla_types))
+	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
