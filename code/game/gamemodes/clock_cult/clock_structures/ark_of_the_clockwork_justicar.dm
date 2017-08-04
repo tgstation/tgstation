@@ -34,8 +34,12 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
-	hierophant_message("<span class='nezbere_large'>\"You have one minute until the Ark activates.\"</span>")
-	addtimer(CALLBACK(src, .proc/let_slip_the_dogs), 600)
+	visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
+	hierophant_message("<span class='bold large_brass'>The Ark is activating! Get back to the base!</span>")
+	for(var/mob/M in GLOB.player_list)
+		if(is_servant_of_ratvar(M) || isobserver(M) || M.z == z)
+			M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 100, FALSE, pressure_affected = FALSE)
+	addtimer(CALLBACK(src, .proc/let_slip_the_dogs), 300)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/let_slip_the_dogs()
 	spawn_animation()
@@ -54,23 +58,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
-	new/obj/effect/clockwork/general_marker/inathneq(T)
-	hierophant_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy")]!\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
-	sleep(10)
-	new/obj/effect/clockwork/general_marker/sevtug(T)
-	hierophant_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]!\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
-	sleep(10)
-	new/obj/effect/clockwork/general_marker/nezbere(T)
-	hierophant_message("<span class='nezbere'>\"[text2ratvar("Engine, come forth and shine your light across this realm")]!!\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 60, 0)
-	sleep(10)
-	new/obj/effect/clockwork/general_marker/nzcrentr(T)
-	hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
-	sleep(10)
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
 		if(!is_blocked_turf(OT, TRUE))
@@ -80,7 +68,7 @@
 			L.forceMove(pick(open_turfs))
 	countdown = new(src)
 	countdown.start()
-	hierophant_message("<span class='large_brass'><b>The Ark has activated! Defend it at all costs!</b></span>", FALSE, src)
+	hierophant_message("<span class='bold large_bras'>The Ark has activated! Defend it at all costs!</span>", FALSE, src)
 	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSprocessing, src)
 
@@ -236,9 +224,6 @@
 				var/obj/structure/destructible/clockwork/massive/ratvar/R = new(startpoint)
 				var/turf/T =  locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), ZLEVEL_STATION) //approximate center of the station
 				R.forceMove(T)
-				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
-				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
-				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")].\"</span>")
 				send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
 
 
