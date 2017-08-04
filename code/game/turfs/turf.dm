@@ -385,8 +385,7 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
 

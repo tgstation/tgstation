@@ -147,6 +147,5 @@
 	set_frequency(frequency)
 
 /obj/machinery/airlock_sensor/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()

@@ -105,15 +105,14 @@
 
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
-			if(SSjob)
-				for(var/line in SSjob.job_debug)
-					dat += "[line]<BR>"
-				dat+= "*******<BR><BR>"
-				for(var/datum/job/job in SSjob.occupations)
-					if(!job)
-						continue
-					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-				usr << browse(dat, "window=jobdebug;size=600x500")
+			for(var/line in SSjob.job_debug)
+				dat += "[line]<BR>"
+			dat+= "*******<BR><BR>"
+			for(var/datum/job/job in SSjob.occupations)
+				if(!job)
+					continue
+				dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
+			usr << browse(dat, "window=jobdebug;size=600x500")
 
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
