@@ -77,6 +77,7 @@
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
+	QDEL_LIST(blueprint_data)
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
@@ -224,9 +225,15 @@
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
+ 
+	var/old_exl = explosion_level
+	var/old_exi = explosion_id
+	var/old_bp = blueprint_data
+	blueprint_data = null
 
 	var/old_baseturf = baseturf
 	changing_turf = TRUE
+
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
@@ -235,9 +242,14 @@
 	else
 		W.baseturf = old_baseturf
 
+	W.explosion_id = old_exi
+	W.explosion_level = old_exl
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 
+	W.blueprint_data = old_bp
+ 
 	if(SSlighting.initialized)
 		recalc_atom_opacity()
 		lighting_object = old_lighting_object
@@ -433,9 +445,7 @@
 	I.setDir(AM.dir)
 	I.alpha = 128
 
-	if(!blueprint_data)
-		blueprint_data = list()
-	blueprint_data += I
+	LAZYADD(blueprint_data, I)
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
