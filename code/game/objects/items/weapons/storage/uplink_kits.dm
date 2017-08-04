@@ -52,7 +52,7 @@
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
 
 		if("murder") // 28 tc now
-			new /obj/item/weapon/melee/energy/sword/saber(src)
+			new /obj/item/weapon/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon(src)
@@ -87,7 +87,7 @@
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/sbeacondrop/powersink(src)
-			new /obj/item/weapon/cartridge/syndicate(src)
+			new /obj/item/weapon/cartridge/virus/syndicate(src)
 			new /obj/item/weapon/storage/toolbox/syndicate(src) //To actually get to those places
 			new /obj/item/pizzabox/bomb
 
@@ -236,7 +236,16 @@
 /obj/item/weapon/storage/box/syndie_kit/nuke/PopulateContents()
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
-	new /obj/item/weapon/paper/nuke_instructions(src)
+	new /obj/item/weapon/paper/guides/antag/nuke_instructions(src)
+
+/obj/item/weapon/storage/box/syndie_kit/supermatter
+	name = "box"
+
+/obj/item/weapon/storage/box/syndie_kit/supermatter/PopulateContents()
+	new /obj/item/weapon/scalpel/supermatter(src)
+	new /obj/item/weapon/hemostat/supermatter(src)
+	new /obj/item/nuke_core_container/supermatter(src)
+	new /obj/item/weapon/paper/guides/antag/supermatter_sliver(src)
 
 /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
 	name = "boxed virus grenade kit"

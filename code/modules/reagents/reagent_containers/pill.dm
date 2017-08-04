@@ -4,6 +4,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill"
 	item_state = "pill"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	possible_transfer_amounts = list()
 	volume = 50
 	var/apply_type = INGEST
@@ -142,3 +144,10 @@
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
+
+/obj/item/weapon/reagent_containers/pill/shadowtoxin
+	name = "black pill"
+	desc = "I wouldn't eat this if I were you."
+	icon_state = "pill9"
+	color = "#454545"
+	list_reagents = list("shadowmutationtoxin" = 1)

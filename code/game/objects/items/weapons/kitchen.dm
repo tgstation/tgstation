@@ -11,6 +11,8 @@
 /obj/item/weapon/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 	origin_tech = "materials=1"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 
 /obj/item/weapon/kitchen/fork
 	name = "fork"
@@ -86,6 +88,7 @@
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
+	item_state = "knife"
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/kitchen/knife/butcher
@@ -113,6 +116,7 @@
 /obj/item/weapon/kitchen/knife/combat/survival
 	name = "survival knife"
 	icon_state = "survivalknife"
+	item_state = "knife"
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
@@ -122,6 +126,8 @@
 	name = "bone dagger"
 	item_state = "bone_dagger"
 	icon_state = "bone_dagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare mimimum in survival."
 	force = 15
 	throwforce = 15
@@ -138,6 +144,8 @@
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
 	item_state = "carrotshiv"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	force = 8
 	throwforce = 12//fuck git

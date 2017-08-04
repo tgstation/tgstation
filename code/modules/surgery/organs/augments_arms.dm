@@ -85,7 +85,6 @@
 	holder.flags |= NODROP
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
-	holder.w_class = WEIGHT_CLASS_HUGE
 	holder.materials = null
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
@@ -174,7 +173,7 @@
 
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
-	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all neccessary tools."
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
 	origin_tech = "materials=3;engineering=4;biotech=3;powerstorage=4"
 	contents = newlist(/obj/item/weapon/screwdriver/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/weldingtool/largetank/cyborg,
 		/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
@@ -191,8 +190,8 @@
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
-	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
-	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight)
+	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
+	contents = newlist(/obj/item/weapon/melee/transforming/energy/blade/hardlight)
 	origin_tech = "materials=4;combat=5;biotech=3;powerstorage=2;syndicate=5"
 
 /obj/item/organ/cyberimp/arm/medibeam
@@ -222,7 +221,7 @@
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
-	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	contents = newlist(/obj/item/weapon/melee/transforming/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
 	origin_tech = "materials=5;combat=7;biotech=5;powerstorage=5;syndicate=6;programming=5"
 
 /obj/item/organ/cyberimp/arm/combat/Initialize()
@@ -234,5 +233,5 @@
 /obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
-	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)
+	contents = newlist(/obj/item/weapon/retractor/augment, /obj/item/weapon/hemostat/augment, /obj/item/weapon/cautery/augment, /obj/item/weapon/surgicaldrill/augment, /obj/item/weapon/scalpel/augment, /obj/item/weapon/circular_saw/augment, /obj/item/weapon/surgical_drapes)
 	origin_tech = "materials=3;engineering=3;biotech=3;programming=2;magnets=3"

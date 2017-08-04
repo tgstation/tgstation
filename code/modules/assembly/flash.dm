@@ -3,6 +3,8 @@
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
 	icon_state = "flash"
 	item_state = "flashtool"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
@@ -90,7 +92,7 @@
 		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
-			M.Weaken(rand(4,6))
+			M.Knockdown(rand(80,120))
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
 			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
@@ -114,7 +116,7 @@
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(rand(4,6))
+		M.Knockdown(rand(80,120))
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
@@ -142,17 +144,17 @@
 	..()
 
 
-/obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/M, mob/user)
-	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
+/obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
+	if(istype(H) && ishuman(user) && H.stat != DEAD)
 		if(user.mind && (user.mind in SSticker.mode.head_revolutionaries))
-			if(M.client)
-				if(M.stat == CONSCIOUS)
-					M.mind_initialize() //give them a mind datum if they don't have one.
+			if(H.client)
+				if(H.stat == CONSCIOUS)
+					H.mind_initialize() //give them a mind datum if they don't have one.
 					var/resisted
-					if(!M.isloyal())
+					if(!H.isloyal())
 						if(user.mind in SSticker.mode.head_revolutionaries)
-							if(SSticker.mode.add_revolutionary(M.mind))
-								M.Stun(3)
+							if(SSticker.mode.add_revolutionary(H.mind))
+								H.Stun(60)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
 								resisted = 1
@@ -225,6 +227,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "flashshield"
 	item_state = "flashshield"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	slot_flags = SLOT_BACK
 	force = 10
 	throwforce = 5
@@ -256,7 +260,7 @@
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()
@@ -278,6 +282,6 @@
 	if(holder)
 		holder.update_icon()
 
-/obj/item/device/assembly/flash/shield/hit_reaction(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/flash/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	activate()
 	return ..()

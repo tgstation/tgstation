@@ -8,7 +8,7 @@
 	anchored = FALSE
 	verb_say = "states"
 	density = TRUE
-	req_access = list(GLOB.access_engine)
+	req_access = list(ACCESS_ENGINE)
 	var/active = FALSE
 	var/list/rangers = list()
 	var/charge = 35
@@ -18,7 +18,7 @@
 	var/static/list/songs = list(
 		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
 		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	6),
-		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/Paradox.ogg', 	2400, 	4),
+		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/paradox.ogg', 	2400, 	4),
 		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
@@ -67,7 +67,7 @@
 			else if(anchored)
 				to_chat(user,"<span class='notice'>You unsecure and disconnect the [src].</span>")
 				anchored = FALSE
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
 	return ..()
 
@@ -148,7 +148,7 @@
 			selection = available[selected]
 			updateUsrDialog()
 		if("horn")
-			deejay('sound/items/AirHorn2.ogg')
+			deejay('sound/items/airhorn2.ogg')
 		if("alert")
 			deejay('sound/misc/notice1.ogg')
 		if("siren")
@@ -158,11 +158,11 @@
 		if("pump")
 			deejay('sound/weapons/shotgunpump.ogg')
 		if("pop")
-			deejay('sound/weapons/Gunshot3.ogg')
+			deejay('sound/weapons/gunshot3.ogg')
 		if("saber")
 			deejay('sound/weapons/saberon.ogg')
 		if("harm")
-			deejay('sound/AI/harmalarm.ogg')
+			deejay('sound/ai/harmalarm.ogg')
 
 /obj/machinery/disco/proc/deejay(var/S)
 	if (QDELETED(src) || !active || charge < 5)
@@ -392,7 +392,7 @@
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
-			M.setDir(pick(GLOB.cardinal))
+			M.setDir(pick(GLOB.cardinals))
 			M.lay_down(TRUE)
 		 time--
 
@@ -456,10 +456,12 @@
 	if(charge<35)
 		charge += 1
 	if(world.time < stop && active)
+		var/sound/song_played = sound(selection.song_path)
+
 		for(var/mob/M in range(10,src))
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
+				M.playsound_local(get_turf(M), null, 100, channel = CHANNEL_JUKEBOX, S = song_played)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
 		for(var/mob/L in rangers)

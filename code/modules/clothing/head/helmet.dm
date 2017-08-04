@@ -32,6 +32,11 @@
 	can_flashlight = 1
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/old
+	name = "degrading helmet"
+	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
+	tint = 2
+
 /obj/item/clothing/head/helmet/blueshirt
 	icon_state = "blueshift"
 	item_state = "blueshift"
@@ -84,7 +89,7 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	can_toggle = 1
 	toggle_cooldown = 20
-	active_sound = 'sound/items/WEEOO1.ogg'
+	active_sound = 'sound/items/weeoo1.ogg'
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/justice/escape

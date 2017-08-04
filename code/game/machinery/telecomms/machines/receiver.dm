@@ -11,9 +11,9 @@
 	name = "subspace receiver"
 	icon_state = "broadcast receiver"
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	machinetype = 1
 	//heatgen = 0

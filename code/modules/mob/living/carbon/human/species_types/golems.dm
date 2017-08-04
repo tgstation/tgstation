@@ -340,7 +340,7 @@
 	brutemod = 3 //very fragile
 	burnmod = 0.25
 	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
-	attack_sound = 'sound/effects/Glassbr2.ogg'
+	attack_sound = 'sound/effects/glassbr2.ogg'
 	prefix = "Glass"
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
@@ -476,7 +476,7 @@
 	meat = /obj/item/weapon/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them. Your skin also emits bananas when damaged."
 	attack_verb = "honk"
-	attack_sound = 'sound/items/AirHorn2.ogg'
+	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
 
 	var/last_honk = 0
@@ -626,7 +626,6 @@
 /obj/structure/cloth_pile
 	name = "pile of bandages"
 	desc = "It emits a strange aura, as if there was still life within it..."
-	obj_integrity = 50
 	max_integrity = 50
 	armor = list(melee = 90, bullet = 90, laser = 25, energy = 80, bomb = 50, bio = 100, fire = -50, acid = -50)
 	icon = 'icons/obj/items.dmi'

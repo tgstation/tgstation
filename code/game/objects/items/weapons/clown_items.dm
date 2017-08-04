@@ -21,6 +21,7 @@
 	throw_speed = 3
 	throw_range = 7
 	var/cleanspeed = 50 //slower than mop
+	force_string = "robust... against germs"
 
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
@@ -50,7 +51,7 @@
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(4, 2, src)
+		M.slip(80, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target))
@@ -59,7 +60,7 @@
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
-	else if(istype(target,/obj/effect/decal/cleanable))
+	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
@@ -99,6 +100,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
+	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = WEIGHT_CLASS_TINY
@@ -134,7 +137,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	honksound = 'sound/items/AirHorn2.ogg'
+	honksound = 'sound/items/airhorn2.ogg'
 	cooldowntime = 50
 	origin_tech = "materials=4;engineering=4"
 

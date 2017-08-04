@@ -12,13 +12,12 @@
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
-	anchored = 1
-	density = 1
-	use_power = 1
+	anchored = TRUE
+	density = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	obj_integrity = 300
 	max_integrity = 300
 	integrity_failure = 100
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
@@ -29,7 +28,7 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 	var/greytoggle = "Greyscale"
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
-	var/busy = 0
+	var/busy = FALSE
 
 /obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
@@ -94,9 +93,9 @@
 								c.stamped = copy.stamped.Copy()
 							c.copy_overlays(copy, TRUE)
 							toner--
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 			updateUsrDialog()
@@ -127,9 +126,9 @@
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
 					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 		else if(doccopy)
@@ -137,9 +136,9 @@
 				if(toner > 5 && !busy && doccopy)
 					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 			updateUsrDialog()
@@ -150,7 +149,7 @@
 					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>" )
 					break
 				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
-					if(isalienadult(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
 						if(ass.gender == MALE)
@@ -171,12 +170,12 @@
 					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
 					var/icon/ic = icon('icons/obj/items.dmi',"photo")
 					small_img.Scale(8, 8)
-					ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 					p.icon = ic
 					toner -= 5
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 		updateUsrDialog()
@@ -229,9 +228,9 @@
 			p.pixel_x = rand(-10, 10)
 			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
-			busy = 1
+			busy = TRUE
 			sleep(15)
-			busy = 0
+			busy = FALSE
 		updateUsrDialog()
 	else if(href_list["colortoggle"])
 		if(greytoggle == "Greyscale")
@@ -257,7 +256,7 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			if(istype(O,/obj/item/weapon/paper/contract/infernal))
+			if(istype(O, /obj/item/weapon/paper/contract/infernal))
 				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
 				resistance_flags |= FLAMMABLE
 				fire_act()

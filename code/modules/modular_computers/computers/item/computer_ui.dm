@@ -1,5 +1,5 @@
 // Operates TGUI
-/obj/item/device/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/device/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(!enabled)
 		if(ui)
 			ui.close()
@@ -50,6 +50,9 @@
 
 		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running))
 
+	data["has_light"] = has_light
+	data["light_on"] = light_on
+	data["comp_light_color"] = comp_light_color
 	return data
 
 
@@ -128,6 +131,27 @@
 				active_program = P
 				update_icon()
 			return 1
+
+		if("PC_toggle_light")
+			light_on = !light_on
+			if(light_on)
+				set_light(comp_light_luminosity, 1, comp_light_color)
+			else
+				set_light(0)
+
+		if("PC_light_color")
+			var/mob/user = usr
+			var/new_color
+			while(!new_color)
+				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color") as null|color
+				if(!new_color)
+					return
+				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
+					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
+					new_color = null
+			comp_light_color = new_color
+			light_color = new_color
+			update_light()
 		else
 			return
 

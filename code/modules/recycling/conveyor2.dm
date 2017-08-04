@@ -6,8 +6,8 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
-	anchored = 1
-	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
+	anchored = TRUE
+	var/operating = FALSE	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
 	var/backwards		// hopefully self-explanatory
@@ -26,20 +26,20 @@
 
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
 	. = ..()
-	operating = 1
+	operating = TRUE
 	update_move_direction()
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
 		icon_state = "conveyor-broken"
-		operating = 0
+		operating = FALSE
 		return
 	else if(!operable)
-		operating = 0
+		operating = FALSE
 	else if(stat & NOPOWER)
-		operating = 0
+		operating = FALSE
 	else
-		operating = 1
+		operating = TRUE
 	icon_state = "conveyor[operating * verted]"
 
 // create a conveyor
@@ -88,12 +88,12 @@
 /obj/machinery/conveyor/proc/update()
 	if(stat & BROKEN)
 		icon_state = "conveyor-broken"
-		operating = 0
+		operating = FALSE
 		return
 	if(!operable)
-		operating = 0
+		operating = FALSE
 	if(stat & NOPOWER)
-		operating = 0
+		operating = FALSE
 	icon_state = "conveyor[operating * verted]"
 
 	// machine process
@@ -207,7 +207,7 @@
 	var/id = "" 				// must match conveyor IDs to control them
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
-	anchored = 1
+	anchored = TRUE
 	speed_process = 1
 
 
@@ -341,12 +341,12 @@
 			found = 1
 			break
 	if(!found)
-		to_chat(user, "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
+		to_chat(user, "[bicon(src)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
 	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)
 	qdel(src)
 
-/obj/item/weapon/paper/conveyor
+/obj/item/weapon/paper/guides/conveyor
 	name = "paper- 'Nano-it-up U-build series, #9: Build your very own conveyor belt, in SPACE'"
 	info = "<h1>Congratulations!</h1><p>You are now the proud owner of the best conveyor set available for space mail order! We at Nano-it-up know you love to prepare your own structures without wasting time, so we have devised a special streamlined assembly procedure that puts all other mail-order products to shame!</p><p>Firstly, you need to link the conveyor switch assembly to each of the conveyor belt assemblies. After doing so, you simply need to install the belt assemblies onto the floor, et voila, belt built. Our special Nano-it-up smart switch will detected any linked assemblies as far as the eye can see! This convenience, you can only have it when you Nano-it-up. Stay nano!</p>"

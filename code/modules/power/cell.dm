@@ -1,9 +1,11 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell."
+	desc = "A rechargeable electrochemical power cell."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "powerstorage=1"
 	force = 5
 	throwforce = 5
@@ -19,13 +21,16 @@
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
+/obj/item/weapon/stock_parts/cell/get_cell()
+	return src
+
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	START_PROCESSING(SSobj, src)
 	charge = maxcharge
 	if(ratingdesc)
 		desc += " This one has a power rating of [maxcharge], and you should not swallow it."
-	updateicon()
+	update_icon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -46,7 +51,7 @@
 	else
 		return PROCESS_KILL
 
-/obj/item/weapon/stock_parts/cell/proc/updateicon()
+/obj/item/weapon/stock_parts/cell/update_icon()
 	cut_overlays()
 	if(grown_battery)
 		add_overlay("grown_wires")
@@ -151,7 +156,7 @@
 
 
 /obj/item/weapon/stock_parts/cell/blob_act(obj/structure/blob/B)
-	ex_act(1)
+	ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
@@ -161,7 +166,7 @@
 
 /* Cell variants*/
 /obj/item/weapon/stock_parts/cell/crap
-	name = "\improper Nanotrasen brand rechargable AA battery"
+	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	maxcharge = 500
 	materials = list(MAT_GLASS=40)
@@ -172,7 +177,7 @@
 	charge = 0
 
 /obj/item/weapon/stock_parts/cell/secborg
-	name = "security borg rechargable D battery"
+	name = "security borg rechargeable D battery"
 	origin_tech = null
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	materials = list(MAT_GLASS=40)
@@ -244,7 +249,7 @@
 
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
-	desc = "A rechargable transdimensional power cell."
+	desc = "A rechargeable transdimensional power cell."
 	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
 	icon_state = "bscell"
 	maxcharge = 40000
@@ -284,7 +289,7 @@
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
-	desc = "A rechargable starch based power cell."
+	desc = "A rechargeable starch based power cell."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	origin_tech = "powerstorage=1;biotech=1"
@@ -318,3 +323,16 @@
 
 /obj/item/weapon/stock_parts/cell/emproof/corrupt()
 	return
+
+/obj/item/weapon/stock_parts/cell/beam_rifle
+	name = "beam rifle capacitor"
+	desc = "A high powered capacitor that can provide huge amounts of energy in an instant"
+	maxcharge = 50000
+	chargerate = 5000	//Extremely energy intensive
+	rating = 4
+
+/obj/item/weapon/stock_parts/cell/beam_rifle/corrupt()
+	return
+
+/obj/item/weapon/stock_parts/cell/beam_rifle/emp_act(severity)
+	charge = Clamp((charge-(10000/severity)),0,maxcharge)

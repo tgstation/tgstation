@@ -29,8 +29,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ah" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ai" = (
@@ -68,14 +67,12 @@
 /area/shuttle/escape)
 "am" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "an" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -330,8 +327,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "bi" = (
@@ -402,7 +398,6 @@
 /area/shuttle/escape)
 "bt" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -450,7 +445,6 @@
 /area/shuttle/escape)
 "bz" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,

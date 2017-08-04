@@ -14,8 +14,8 @@ Clown
 
 	outfit = /datum/outfit/job/clown
 
-	access = list(GLOB.access_theatre)
-	minimal_access = list(GLOB.access_theatre)
+	access = list(ACCESS_THEATRE)
+	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.rename_self("clown", M.client)
@@ -29,21 +29,18 @@ Clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/weapon/bikehorn
-	r_pocket = /obj/item/toy/crayon/rainbow
 	backpack_contents = list(
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/megaphone/clown = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,
-		/obj/item/weapon/pneumatic_cannon/pie = 1
+		/obj/item/device/instrument/bikehorn = 1,
 		)
 
 	implants = list(/obj/item/weapon/implant/sad_trombone)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/weapon/storage/box/hug/survival
 
@@ -78,8 +75,8 @@ Mime
 
 	outfit = /datum/outfit/job/mime
 
-	access = list(GLOB.access_theatre)
-	minimal_access = list(GLOB.access_theatre)
+	access = list(ACCESS_THEATRE)
+	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.rename_self("mime", M.client)
@@ -94,9 +91,9 @@ Mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/beret
 	suit = /obj/item/clothing/suit/suspenders
-	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1,\
-		/obj/item/toy/crayon/mime=1)
+	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
+	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
 	backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
 
@@ -128,8 +125,8 @@ Curator
 
 	outfit = /datum/outfit/job/curator
 
-	access = list(GLOB.access_library)
-	minimal_access = list(GLOB.access_library, GLOB.access_construction,GLOB.access_mining_station)
+	access = list(ACCESS_LIBRARY)
+	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION)
 
 /datum/outfit/job/curator
 	name = "Curator"
@@ -140,6 +137,7 @@ Curator
 	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
 		/obj/item/weapon/melee/curator_whip = 1,
 		/obj/item/soapstone = 1,
@@ -172,8 +170,8 @@ Lawyer
 
 	outfit = /datum/outfit/job/lawyer
 
-	access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
-	minimal_access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
+	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
@@ -186,7 +184,7 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
-	r_pocket = /obj/item/clothing/tie/lawyers_badge
+	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

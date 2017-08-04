@@ -4,6 +4,8 @@
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -34,7 +36,7 @@
 	if(!check_sprite(target))
 		return
 	if(!active_dummy)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>Scanned [target].</span>")
 			var/obj/temp = new/obj()
@@ -89,8 +91,8 @@
 /obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
-	density = 0
-	var/can_move = 1
+	density = FALSE
+	var/can_move = 0
 	var/obj/item/device/chameleon/master = null
 
 /obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
@@ -126,19 +128,21 @@
 	if(isspaceturf(loc) || !direction)
 		return //No magical space movement!
 
-	if(can_move)
-		can_move = 0
+	if(can_move < world.time)
+		var/amount
 		switch(user.bodytemperature)
 			if(300 to INFINITY)
-				spawn(10) can_move = 1
+				amount = 10
 			if(295 to 300)
-				spawn(13) can_move = 1
+				amount = 13
 			if(280 to 295)
-				spawn(16) can_move = 1
+				amount = 16
 			if(260 to 280)
-				spawn(20) can_move = 1
+				amount = 20
 			else
-				spawn(25) can_move = 1
+				amount = 25
+
+		can_move = world.time + amount
 		step(src, direction)
 	return
 

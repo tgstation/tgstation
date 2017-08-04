@@ -10,6 +10,8 @@
 	burnmod = 1.25
 	heatmod = 1.5
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
+	disliked_food = MEAT | DAIRY
+	liked_food = VEGETABLES | FRUIT | GRAIN
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -50,7 +52,7 @@
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
 				H.rad_act(rand(30,80))
-				H.Weaken(5)
+				H.Knockdown(100)
 				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					H.randmutb()

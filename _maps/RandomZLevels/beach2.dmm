@@ -51,7 +51,8 @@
 /area/awaymission/beach)
 "ak" = (
 /obj/machinery/gateway,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "al" = (
 /obj/machinery/gateway{
@@ -71,10 +72,12 @@
 /area/awaymission/beach)
 "ao" = (
 /obj/machinery/telecomms/relay/preset/mining,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "ap" = (
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aq" = (
 /turf/closed/wall/mineral/sandstone,
@@ -86,7 +89,6 @@
 "as" = (
 /obj/structure/dresser{
 	density = 0;
-	pixel_x = 0;
 	pixel_y = 18
 	},
 /turf/open/floor/wood{
@@ -110,7 +112,8 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aw" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -141,7 +144,8 @@
 /obj/structure/mineral_door/wood{
 	name = "toilet"
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aA" = (
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
@@ -216,18 +220,21 @@
 /obj/structure/bedsheetbin{
 	pixel_y = -6
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aK" = (
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aL" = (
 /obj/structure/closet/athletic_mixed,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aM" = (
 /obj/structure/closet/gmcloset,
@@ -358,13 +365,15 @@
 /area/awaymission/beach)
 "bf" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bg" = (
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bh" = (
 /obj/structure/table,

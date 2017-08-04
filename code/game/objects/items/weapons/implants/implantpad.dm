@@ -4,6 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantpad-0"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -64,7 +66,7 @@
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
 
-		if(istype(loc, /mob))
+		if(ismob(loc))
 			attack_self(loc)
 		else
 			for(var/mob/M in viewers(1, src))

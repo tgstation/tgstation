@@ -44,6 +44,7 @@
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/Initialize()
+	. = ..()
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/D in dog_area)
 		if(!D.owner)
@@ -106,7 +107,7 @@
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
 			user.visible_message("[user] shaves [src]'s hair using \the [O].")
-			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 			shaved = 1
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
@@ -176,13 +177,13 @@
 						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
 						return
 
-					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+					if(istype(item_to_add, /obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
 					//The objects that corgis can wear on their backs.
 					var/allowed = FALSE
-					if(ispath(item_to_add.dog_fashion,/datum/dog_fashion/back))
+					if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/back))
 						allowed = TRUE
 
 					if(!allowed)
@@ -212,7 +213,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
-	if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+	if(istype(item_to_add, /obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)
 		return
 
@@ -472,7 +473,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 

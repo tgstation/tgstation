@@ -21,8 +21,7 @@
 /turf/closed/wall,
 /area/djstation)
 "ag" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/djstation)
 "ah" = (
@@ -96,7 +95,6 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
@@ -194,8 +192,7 @@
 	dir = 8;
 	freerange = 1;
 	listening = 1;
-	name = "Pirate Radio Listening Channel";
-	pixel_x = 0
+	name = "Pirate Radio Listening Channel"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
@@ -214,7 +211,6 @@
 /area/djstation)
 "aL" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -246,14 +242,13 @@
 	dir = 8;
 	freerange = 1;
 	listening = 0;
-	name = "Pirate Radio Broadcast Channel";
-	pixel_x = 0
+	name = "Pirate Radio Broadcast Channel"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "aR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/djstation,
+/obj/item/weapon/paper/fluff/ruins/djstation,
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "aS" = (
@@ -325,7 +320,6 @@
 /area/djstation)
 "be" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -354,7 +348,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cafeteria,

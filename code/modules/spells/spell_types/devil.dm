@@ -10,6 +10,7 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "pitchfork"
 	action_background_icon_state = "bg_demon"
 
@@ -26,6 +27,7 @@
 	invocation = "I aint have this much fun since Georgia."
 	action_icon_state = "golden_violin"
 	name = "Summon golden violin"
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract
@@ -103,18 +105,14 @@
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt/cast(list/targets, mob/living/user = usr)
 	if(istype(user))
 		if(istype(user.loc, /obj/effect/dummy/slaughter/))
-			var/continuing = 0
-			if(istype(get_area(user), /area/shuttle/)) // Can always phase in in a shuttle.
-				continuing = 1
-			else
-				for(var/mob/living/C in orange(2, get_turf(user.loc))) //Can also phase in when nearby a potential buyer.
-					if (C.owns_soul())
-						continuing = 1
-						break
-			if(continuing)
+			if(valid_location(user))
 				to_chat(user, "<span class='warning'>You are now phasing in.</span>")
 				if(do_mob(user,user,150))
-					user.infernalphasein()
+					if(valid_location(user))
+						user.infernalphasein()
+					else
+						to_chat(user, "<span class='warning'>You are no longer near a potential signer.</span>")
+
 			else
 				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.")
 				revert_cast()
@@ -132,6 +130,14 @@
 		return
 	revert_cast()
 
+/obj/effect/proc_holder/spell/targeted/infernal_jaunt/proc/valid_location(mob/living/user = usr)
+	if(istype(get_area(user), /area/shuttle/)) // Can always phase in in a shuttle.
+		return TRUE
+	else
+		for(var/mob/living/C in orange(2, get_turf(user))) //Can also phase in when nearby a potential buyer.
+			if (C.owns_soul())
+				return TRUE
+	return FALSE
 
 /mob/living/proc/infernalphaseout()
 	dust_animation()
@@ -174,6 +180,7 @@
 	cooldown_min = 0
 	overlay = null
 	include_user = 0
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "sintouch"
 	action_background_icon_state = "bg_demon"
 	phase_allowed = 0
@@ -196,8 +203,7 @@
 		if(locate(/datum/objective/sintouched) in H.mind.objectives)
 			continue
 		H.influenceSin()
-		H.Weaken(2)
-		H.Stun(2)
+		H.Knockdown(400)
 
 
 /obj/effect/proc_holder/spell/targeted/summon_dancefloor
@@ -210,6 +216,7 @@
 	school = "conjuration"
 	charge_max = 10
 	cooldown_min = 50 //5 seconds, so the smoke can't be spammed
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "funk"
 	action_background_icon_state = "bg_demon"
 

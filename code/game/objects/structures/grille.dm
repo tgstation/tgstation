@@ -3,13 +3,12 @@
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
-	obj_integrity = 50
 	max_integrity = 50
 	integrity_failure = 20
 	var/rods_type = /obj/item/stack/rods
@@ -23,7 +22,9 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 10)
+			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
+				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
+			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd, passed_mode)
@@ -48,17 +49,11 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/Bumped(atom/user)
-	if(ismob(user))
-		var/tile_density = FALSE
-		for(var/atom/movable/AM in get_turf(src))
-			if(AM == src)
-				continue
-			if(AM.density && AM.layer >= layer)
-				tile_density = TRUE
-				break
-		if(!tile_density)
-			shock(user, 70)
+/obj/structure/grille/CollidedWith(atom/movable/AM)
+	if(!ismob(AM))
+		return
+	var/mob/M = AM
+	shock(M, 70)
 
 
 /obj/structure/grille/attack_paw(mob/user)
@@ -88,8 +83,7 @@
 		take_damage(20, BRUTE, "melee", 1)
 
 
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/structure/grille/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else
@@ -155,7 +149,7 @@
 					WD = new/obj/structure/window/fulltile(loc) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
-				WD.anchored = 0
+				WD.anchored = FALSE
 				WD.state = 0
 				ST.use(2)
 				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
@@ -227,7 +221,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+				playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
@@ -237,7 +231,7 @@
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"
-	density = 0
+	density = FALSE
 	obj_integrity = 20
 	broken = 1
 	rods_amount = 1
@@ -248,6 +242,7 @@
 
 /obj/structure/grille/ratvar
 	icon_state = "ratvargrille"
+	name = "cog grille"
 	desc = "A strangely-shaped grille."
 	broken_type = /obj/structure/grille/ratvar/broken
 
@@ -272,7 +267,7 @@
 
 /obj/structure/grille/ratvar/broken
 	icon_state = "brokenratvargrille"
-	density = 0
+	density = FALSE
 	obj_integrity = 20
 	broken = 1
 	rods_amount = 1

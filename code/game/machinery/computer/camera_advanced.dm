@@ -9,18 +9,43 @@
 	var/list/networks = list("SS13")
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
+	var/list/actions = list()
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/camera_advanced/syndie
+	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
 	eyeobj.origin = src
 
 /obj/machinery/computer/camera_advanced/proc/GrantActions(mob/living/user)
-	off_action.target = user
-	off_action.Grant(user)
-	jump_action.target = user
-	jump_action.Grant(user)
+	if(off_action)
+		off_action.target = user
+		off_action.Grant(user)
+		actions += off_action
+
+	if(jump_action)
+		jump_action.target = user
+		jump_action.Grant(user)
+		actions += jump_action
+
+/obj/machinery/computer/camera_advanced/proc/remove_eye_control(mob/living/user)
+	if(!user)
+		return
+	for(var/V in actions)
+		var/datum/action/A = V
+		A.Remove(user)
+	if(user.client)
+		user.reset_perspective(null)
+		eyeobj.RemoveImages()
+	eyeobj.eye_user = null
+	user.remote_control = null
+
+	current_user = null
+	user.unset_machine()
+	playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && !user.has_unlimited_silicon_privilege) || user.eye_blind || user.incapacitated() )
@@ -35,7 +60,7 @@
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
 	if(M == current_user)
-		off_action.Activate()
+		remove_eye_control(M)
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	if(current_user)
@@ -69,7 +94,7 @@
 /obj/machinery/computer/camera_advanced/attack_robot(mob/user)
 	return attack_hand(user)
 
-obj/machinery/computer/camera_advanced/attack_ai(mob/user)
+/obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
 
 
@@ -92,12 +117,19 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	var/eye_initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
-	
+
 /mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
 	user.sight = 0
 	user.see_in_dark = 2
 	return 1
+
+/mob/camera/aiEye/remote/RemoveImages()
+	..()
+	if(visible_icon)
+		var/client/C = GetViewerClient()
+		if(C)
+			C.images -= user_image
 
 /mob/camera/aiEye/remote/Destroy()
 	eye_user = null
@@ -115,7 +147,8 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 			return
 		T = get_turf(T)
 		loc = T
-		GLOB.cameranet.visibility(src)
+		if(use_static)
+			GLOB.cameranet.visibility(src)
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
@@ -142,6 +175,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 
 /datum/action/innate/camera_off
 	name = "End Camera View"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 
 /datum/action/innate/camera_off/Activate()
@@ -149,22 +183,12 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 		return
 	var/mob/living/C = target
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
-	remote_eye.origin.current_user = null
-	remote_eye.origin.jump_action.Remove(C)
-	if(C.client)
-		C.reset_perspective(null)
-		if(remote_eye.visible_icon)
-			C.client.images -= remote_eye.user_image
-		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			chunk.remove(remote_eye)
-	remote_eye.eye_user = null
-	C.remote_control = null
-	C.unset_machine()
-	Remove(C)
-	playsound(remote_eye.origin, 'sound/machines/terminal_off.ogg', 25, 0)
+	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
+	console.remove_eye_control(target)
 
 /datum/action/innate/camera_jump
 	name = "Jump To Camera"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/Activate()

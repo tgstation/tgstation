@@ -32,7 +32,7 @@
 	if(prob(80))	//mid dirt  - 1/15
 		return
 
-	if(istype(A, /area/engine) || istype(A,/area/assembly) || istype(A,/area/maintenance) || istype(A,/area/construction))
+	if(istype(A, /area/engine)  || istype(A, /area/crew_quarters/heads/chief) || istype(A, /area/assembly) || istype(A, /area/science/robotics) || istype(A, /area/maintenance) || istype(A, /area/construction))
 	 	//Blood, sweat, and oil.  Oh, and dirt.
 		if(prob(3))
 			new /obj/effect/decal/cleanable/blood/old(src)
@@ -46,7 +46,7 @@
 				new /obj/effect/decal/cleanable/dirt(src)
 		return
 
-	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/toilet/locker))
+	if(istype(A, /area/crew_quarters/toilet))
 		if(prob(40))
 			if(prob(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)
@@ -62,7 +62,7 @@
 	if(prob(75))	//low dirt  - 1/60
 		return
 
-	if(istype(A, /area/ai_monitored/turret_protected) || istype(A, /area/security))	//chance of incident
+	if(istype(A, /area/ai_monitored/turret_protected) || istype(A, /area/prison) || istype(A, /area/security) || istype(A, /area/crew_quarters/heads/hos))	//chance of incident
 		if(prob(20))
 			if(prob(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
@@ -71,7 +71,7 @@
 		return
 
 
-	if(istype(A, /area/crew_quarters/kitchen))	//Kitchen messes
+	if(istype(A, /area/crew_quarters/kitchen) || istype(A, /area/crew_quarters/cafeteria))	//Kitchen messes
 		if(prob(60))
 			if(prob(50))
 				new /obj/effect/decal/cleanable/egg_smudge(src)
@@ -79,7 +79,7 @@
 				new /obj/effect/decal/cleanable/flour(src)
 		return
 
-	if(istype(A, /area/medical) || !istype(A, /area/science/robotics))	//Kept clean, but chance of blood
+	if(istype(A, /area/medical) || istype(A, /area/crew_quarters/heads/cmo))	//Kept clean, but chance of blood
 		if(prob(66))
 			if(prob(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)

@@ -27,6 +27,8 @@
 	var/data = "null"
 	var/special = null
 	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
 /obj/item/weapon/card/data/verb/label(t as text)
 	set name = "Label Disk"
@@ -51,6 +53,8 @@
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	origin_tech = "magnets=2;syndicate=2"
 	flags = NOBLUDGEON
 	var/prox_check = TRUE //If the emag requires you to be in range
@@ -76,6 +80,8 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = SLOT_ID
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -92,8 +98,15 @@
 	if(mapload && access_txt)
 		access = text2access(access_txt)
 
+/obj/item/weapon/card/id/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if("assignment","registered_name")
+				update_label()
+
 /obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
+	user.visible_message("<span class='notice'>[user] shows you: [bicon(src)] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
 	return
@@ -129,16 +142,20 @@ update_label("John Doe", "Clowny")
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
 /obj/item/weapon/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
-	access = list(GLOB.access_maint_tunnels, GLOB.access_syndicate)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
@@ -188,13 +205,15 @@ update_label("John Doe", "Clowny")
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
-	access = list(GLOB.access_syndicate)
+	access = list(ACCESS_SYNDICATE)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Captain"
 	assignment = "Captain"
 
@@ -222,7 +241,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Emergency Response Team Commander"
 
 /obj/item/weapon/card/id/ert/Initialize()
-	access = get_all_accesses()+get_ert_access("commander")-GLOB.access_change_ids
+	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/ert/Security
@@ -230,7 +249,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Security Response Officer"
 
 /obj/item/weapon/card/id/ert/Security/Initialize()
-	access = get_all_accesses()+get_ert_access("sec")-GLOB.access_change_ids
+	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/ert/Engineer
@@ -238,7 +257,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Engineer Response Officer"
 
 /obj/item/weapon/card/id/ert/Engineer/Initialize()
-	access = get_all_accesses()+get_ert_access("eng")-GLOB.access_change_ids
+	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/ert/Medical
@@ -246,18 +265,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Medical Response Officer"
 
 /obj/item/weapon/card/id/ert/Medical/Initialize()
-	access = get_all_accesses()+get_ert_access("med")-GLOB.access_change_ids
-	..()
-
-/obj/item/weapon/card/id/marine
-	name = "\improper Marine ID"
-	desc = "A Marine Rifleman ID card"
-	icon_state = "centcom"
-	registered_name = "Iron Hawk Marine"
-	assignment = "Marine Rifleman"
-
-/obj/item/weapon/card/id/marine/Initialize()
-	access = get_all_centcom_access()
+	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	..()
 
 /obj/item/weapon/card/id/prisoner
@@ -265,6 +273,8 @@ update_label("John Doe", "Clowny")
 	desc = "You are a number, you are not a free man."
 	icon_state = "orange"
 	item_state = "orange-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"
 	registered_name = "Scum"
 	var/goal = 0 //How far from freedom?
@@ -303,18 +313,44 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/mining
 	name = "mining ID"
-	access = list(GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
+	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 
 /obj/item/weapon/card/id/away
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(GLOB.access_away_general)
+	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/weapon/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
-	access = list(GLOB.access_away_general, GLOB.access_away_maint)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
 
 /obj/item/weapon/card/id/away/hotel/securty
 	name = "Officer ID"
-	access = list(GLOB.access_away_general, GLOB.access_away_maint, GLOB.access_away_sec)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
+
+/obj/item/weapon/card/id/away/old
+	name = "a perfectly generic identification card"
+	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	access = list(ACCESS_AWAY_GENERAL)
+
+/obj/item/weapon/card/id/away/old/sec
+	name = "Security Officer ID"
+	desc = "Security officers ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/sci
+	name = "Scientist ID"
+	desc = "Scientists ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/eng
+	name = "Engineer ID"
+	desc = "Engineers ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/apc
+	name = "APC Access ID"
+	desc = "Special ID card to allow access to APCs"
+	icon_state = "centcom"
+	access = list(ACCESS_ENGINE_EQUIP)

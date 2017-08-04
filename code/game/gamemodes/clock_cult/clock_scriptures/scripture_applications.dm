@@ -2,28 +2,6 @@
 // APPLICATIONS //
 //////////////////
 
-//Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
-/datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Trap, Permanent Conversion"
-	name = "Sigil of Accession"
-	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
-	It will penetrate mindshield implants once before disappearing."
-	invocations = list("Divinity, enslave...", "...all who trespass here!")
-	channel_time = 70
-	consumed_components = list(BELLIGERENT_EYE = 4, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 2)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission/accession
-	prevent_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. All non-servants to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "It will remain after converting a target, unless that target has a mindshield implant, which it will break to convert them, but consume itself in the process."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 1
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Accession, which can convert a mindshielded non-Servant that remains on it."
-
-
 //Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
 /datum/clockwork_scripture/fellowship_armory
 	descname = "Area Servant Armor"
@@ -53,7 +31,7 @@
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
 	for(var/mob/living/L in orange(1, invoker))
-		if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+		if(can_recite_scripture(L))
 			channel_time = max(channel_time - 10, 0)
 	return ..()
 
@@ -124,8 +102,7 @@
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
 		invoker.notransform = FALSE
-		invoker.Stun(5)
-		invoker.Weaken(5)
+		invoker.Knockdown(100)
 		invoker.apply_damage(10, BRUTE, "head")
 		slab.busy = null
 		return FALSE
@@ -152,66 +129,56 @@
 	return TRUE
 
 
-//Anima Fragment: Creates an empty anima fragment, which produces an anima fragment that moves at extreme speed and does high damage.
-/datum/clockwork_scripture/create_object/anima_fragment
-	descname = "Fast Soul Vessel Shell"
-	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health and slight regeneration, notable melee power, \
-	and exceptional speed, though taking damage will temporarily slow it down."
-	invocations = list("Call forth...", "...the soldiers of Armorer.")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 4)
-	object_path = /obj/structure/destructible/clockwork/shell/fragment
-	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
-	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
-	usage_tip = "Useless without a soul vessel and should not be created without one."
-	tier = SCRIPTURE_APPLICATION
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 4
-	quickbind = TRUE
-	quickbind_desc = "Creates a Fragment Shell, which produces an Anima Fragment when filled with a Soul Vessel."
-
-
-//Sigil of Transmission: Creates a sigil of transmission that can store power for clockwork structures.
+//Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
 /datum/clockwork_scripture/create_object/sigil_of_transmission
-	descname = "Structure Battery"
+	descname = "Structure Power Generator & Battery"
 	name = "Sigil of Transmission"
-	desc = "Places a sigil that stores energy to power clockwork structures."
+	desc = "Places a sigil that can drain and will store energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
 	consumed_components = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 4)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
-	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it.</span>"
+	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it and will drain power when activated.</span>"
 	usage_tip = "Cyborgs can charge from this sigil by remaining over it for 5 seconds."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transmission, which stores power for clockwork structures."
+	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
 
-//Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils of transmission.
-/datum/clockwork_scripture/create_object/interdiction_lens
-	descname = "Structure, Area Sabotage, Power Generator"
-	name = "Interdiction Lens"
-	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
-	invocations = list("May this totem...", "...shroud the false suns!")
+//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
+/datum/clockwork_scripture/create_object/prolonging_prism
+	descname = "Powered Structure, Delay Emergency Shuttles"
+	name = "Prolonging Prism"
+	desc = "Creates a mechanized prism which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
+	invocations = list("May this prism...", "...grant us time to enact his will!")
 	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 5, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
-	object_path = /obj/structure/destructible/clockwork/powered/interdiction_lens
-	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
-	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
+	consumed_components = list(VANGUARD_COGWHEEL = 5, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2)
+	object_path = /obj/structure/destructible/clockwork/powered/prolonging_prism
+	creator_message = "<span class='brass'>You form a prolonging prism, which will delay the arrival of an emergency shuttle at a massive power cost.</span>"
+	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission or the area's APC and fails to disable even one thing, it will disable itself for two minutes."
+	usage_tip = "The power cost to delay a shuttle increases based on the number of times activated."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 6
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
+	quickbind_desc = "Creates a Prolonging Prism, which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
+
+/datum/clockwork_scripture/create_object/prolonging_prism/check_special_requirements()
+	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
+		return FALSE
+	var/turf/T = get_turf(invoker)
+	if(!T || T.z != ZLEVEL_STATION)
+		to_chat(invoker, "<span class='inathneq'>\"You must be on the station to construct one of these, champion.\"</span>")
+		return FALSE
+	return ..()
 
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
@@ -240,7 +207,7 @@
 /datum/clockwork_scripture/create_object/tinkerers_daemon
 	descname = "Powered Structure, Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by Servants by a ratio of 5:1, \
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, active daemons are outnumbered by Servants by a ratio of 5:1, \
 	and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
@@ -256,19 +223,6 @@
 	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
-
-/datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
-	var/servants = 0
-	for(var/mob/living/L in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(L))
-			servants++
-	if(servants * 0.2 < GLOB.clockwork_daemons)
-		to_chat(invoker, "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>")
-		return FALSE
-	if(servants * 0.2 < GLOB.clockwork_daemons+1)
-		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
-		return FALSE
-	return ..()
 
 
 //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.

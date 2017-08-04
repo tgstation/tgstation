@@ -2,16 +2,19 @@
 	var/originmastercommit
 	var/commit
 	var/list/testmerge = list()
-	var/has_pr_details = FALSE	//example data in a testmerge entry when this is true: https://api.github.com/repositories/3234987/pulls/22586
+	var/has_pr_details = FALSE	//tgs2 support
 	var/date
 
 /datum/getrev/New()
-	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
+	if(world.RunningService() && fexists(SERVICE_PR_TEST_JSON))
+		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
+#ifdef SERVERTOOLS
+	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
 			if(I)
 				testmerge |= I
-
+#endif
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
 	if(logs)
@@ -27,12 +30,16 @@
 		log_world(commit)
 		for(var/line in testmerge)
 			if(line)
-				log_world("Test merge active of PR #[line]")
-				SSblackbox.add_details("testmerged_prs","[line]")
+				if(world.RunningService())
+					var/tmcommit = testmerge[line]["commit"]
+					log_world("Test merge active of PR #[line] commit [tmcommit]")
+					SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
+				else //tgs2 support
+					log_world("Test merge active of PR #[line]")
+					SSblackbox.add_details("testmerged_prs","[line]")
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
 		log_world(originmastercommit)
-
 /datum/getrev/proc/DownloadPRDetails()
 	if(!config.githubrepoid)
 		if(testmerge.len)
@@ -66,10 +73,15 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/details = ""
-		if(has_pr_details)
+		var/details
+		if(world.RunningService())
+			var/cm = testmerge[line]["commit"]
+			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
+		else if(has_pr_details)	//tgs2 support
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
-		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br>"
+		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
+			continue
+		. += "<a href=\"[config.githuburl]/pull/[line]\">#[line][details]</a><br>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"
@@ -83,10 +95,10 @@
 			to_chat(src, GLOB.revdata.GetTestMergeInfo())
 			prefix = "Based off origin/master commit: "
 		var/pc = GLOB.revdata.originmastercommit
-		to_chat(src, "[prefix]<a href='[config.githuburl]/commit/[pc]'>[copytext(pc, 1, min(length(pc), 7))]</a>")
+		to_chat(src, "[prefix]<a href=\"[config.githuburl]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
-	to_chat(src, "<b>Current Infomational Settings:</b>")
+	to_chat(src, "<b>Current Informational Settings:</b>")
 	to_chat(src, "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]")
 	to_chat(src, "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]")
 	to_chat(src, "Enforce Human Authority: [config.enforce_human_authority]")

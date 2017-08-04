@@ -24,11 +24,15 @@
 //For the Geis scripture; binds a target to convert.
 /obj/effect/proc_holder/slab/geis
 	ranged_mousepointer = 'icons/effects/geis_target.dmi'
+	var/obj/structure/destructible/clockwork/geis_binding/binding //we always have a reference to the binding
+	var/obj/structure/destructible/clockwork/geis_binding/pulled_binding //we use this to see if we're pulling it or not
+
+/obj/effect/proc_holder/slab/geis/remove_ranged_ability(msg)
+	..()
+	binding = null
+	pulled_binding = null
 
 /obj/effect/proc_holder/slab/geis/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
-		return TRUE
-
 	var/turf/T = ranged_ability_user.loc
 	if(!isturf(T))
 		return TRUE
@@ -36,6 +40,20 @@
 	var/target_is_binding = istype(target, /obj/structure/destructible/clockwork/geis_binding)
 
 	if((target_is_binding || isliving(target)) && ranged_ability_user.Adjacent(target))
+		if(in_progress || ..())
+			var/mob/living/L = target
+			if(!pulled_binding)
+				if(target == binding || (isliving(target) && L.buckled == binding))
+					pulled_binding = binding
+					ranged_ability_user.start_pulling(binding)
+					remove_mousepointer(ranged_ability_user.client)
+					ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
+					add_mousepointer(ranged_ability_user.client)
+			else if(target == pulled_binding || (isliving(target) && L.buckled == pulled_binding))
+				ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] dispels [pulled_binding]!</span>", "<span class='danger'>You dispel the binding!</span>")
+				binding.take_damage(obj_integrity)
+				remove_ranged_ability()
+			return TRUE
 		if(target_is_binding)
 			var/obj/structure/destructible/clockwork/geis_binding/GB = target
 			GB.repair_and_interrupt()
@@ -65,19 +83,44 @@
 				in_progress = TRUE
 				clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
 				remove_mousepointer(ranged_ability_user.client)
+				ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
+				add_mousepointer(ranged_ability_user.client)
 				add_logs(ranged_ability_user, L, "bound with Geis")
+				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
-					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the scripture following this
-				slab.busy = null
-				var/datum/clockwork_scripture/geis/conversion = new
-				conversion.slab = slab
-				conversion.invoker = ranged_ability_user
-				conversion.target = target
-				conversion.run_scripture()
+					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the binding immediately
+				if(L.buckled)
+					L.buckled.unbuckle_mob(target, TRUE)
+				binding = new(get_turf(target))
+				binding.setDir(target.dir)
+				binding.buckle_mob(target, TRUE)
+				pulled_binding = binding
+				ranged_ability_user.start_pulling(binding)
+				slab.busy = "sustaining Geis"
+				slab.flags |= NODROP
+				while(!QDELETED(binding) && !QDELETED(ranged_ability_user))
+					if(ranged_ability_user.pulling == binding)
+						pulled_binding = binding
+						if(ranged_ability_user.client && ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target.dmi')
+							remove_mousepointer(ranged_ability_user.client)
+							ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
+							add_mousepointer(ranged_ability_user.client)
+					else //if we're not pulling it, swap our mousepointer
+						pulled_binding = null
+						if(ranged_ability_user.client && ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target_remove.dmi')
+							remove_mousepointer(ranged_ability_user.client)
+							ranged_mousepointer = 'icons/effects/geis_target.dmi'
+							add_mousepointer(ranged_ability_user.client)
+					sleep(1)
+				if(!QDELETED(slab))
+					slab.flags &= ~NODROP
+				in_progress = FALSE
 				successful = TRUE
 
 		remove_ranged_ability()
+	else
+		..()
 
 	return TRUE
 
@@ -116,65 +159,31 @@
 
 		successful = TRUE
 
+		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
 		var/targetturf = get_turf(L)
+		var/has_holy_water = (L.reagents && L.reagents.has_reagent("holywater"))
+		var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+		for(var/i in 1 to healseverity)
+			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
 			L.adjustOxyLoss(-oxydamage)
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
-			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
-			for(var/i in 1 to healseverity)
-				new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
-			clockwork_say(ranged_ability_user, text2ratvar("Mend wounded flesh!"))
+			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
 			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
+			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
 		else
 			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
 			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
-		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
-		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
-		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
-		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
+			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
-		if(L.reagents && L.reagents.has_reagent("holywater"))
+		if(has_holy_water)
 			L.reagents.remove_reagent("holywater", 1000)
-			to_chat(L, "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>")
 
-		remove_ranged_ability()
-
-	return TRUE
-
-//For the Volt Void scripture, fires a ray of energy at a target location
-/obj/effect/proc_holder/slab/volt
-	ranged_mousepointer = 'icons/effects/volt_target.dmi'
-
-/obj/effect/proc_holder/slab/volt/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(target == slab || ..()) //we can't cancel
-		return TRUE
-
-	var/turf/T = ranged_ability_user.loc
-	if(!isturf(T))
-		return TRUE
-
-	if(target in view(7, get_turf(ranged_ability_user)))
-		successful = TRUE
-		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [target]!</span>", "<span class='nzcrentr'>You fire a volt ray at [target].</span>")
-		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
-		var/turf/targetturf = get_turf(target)
-		var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(ranged_ability_user))
-		var/multiplier = 1
-		var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
-		if(VC.try_use_power(usable_power))
-			multiplier += (usable_power * 0.001) //should be a multiplier of 2 at maximum power usage
-		if(iscyborg(ranged_ability_user))
-			var/mob/living/silicon/robot/C = ranged_ability_user
-			if(C.cell)
-				var/prev_power = usable_power //we don't want to increase the multiplier past 2
-				usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
-				if(usable_power > 0 && C.cell.use(usable_power))
-					multiplier += (usable_power * 0.001)
-		qdel(VC)
-		new/obj/effect/temp_visual/ratvar/volt_hit/true(targetturf, ranged_ability_user, multiplier)
-		add_logs(ranged_ability_user, targetturf, "fired a volt ray")
 		remove_ranged_ability()
 
 	return TRUE

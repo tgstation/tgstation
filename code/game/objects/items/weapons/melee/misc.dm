@@ -5,7 +5,7 @@
 	if(target.check_block())
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind their back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
-		user.Stun(2)
+		user.Stun(40)
 		return TRUE
 
 
@@ -14,6 +14,8 @@
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
 	item_state = "chain"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 10
@@ -47,6 +49,8 @@
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
 	icon_state = "sabre"
 	item_state = "sabre"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	unique_rename = 1
 	force = 15
@@ -60,10 +64,22 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 
-/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
+
+/obj/item/weapon/melee/sabre/on_exit_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+
+/obj/item/weapon/melee/sabre/on_enter_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
@@ -71,20 +87,22 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 0
-	var/on = 1
+	var/on = TRUE
 
-/obj/item/weapon/melee/classic_baton/attack(mob/target, mob/living/user)
+/obj/item/weapon/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
 		return ..()
 
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Weaken(3 * force)
+		user.Knockdown(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
@@ -105,12 +123,12 @@
 		if(cooldown <= world.time)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 					return
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Weaken(3)
+			target.Knockdown(60)
 			add_logs(user, target, "stunned", src)
 			src.add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
@@ -126,12 +144,14 @@
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	item_state = null
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	needs_permit = 0
 	force = 0
-	on = 0
+	on = FALSE
 
 /obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -148,7 +168,7 @@
 		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
-		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(get_turf(H), H.dna)
 		return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
@@ -178,6 +198,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "supermatter_sword"
 	item_state = "supermatter_sword"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
@@ -185,6 +207,7 @@
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
 	origin_tech = "combat=7;materials=6"
+	force_string = "INFINITE"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
@@ -243,13 +266,13 @@
 /obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.drop_item()
-	shard.Bumped(user)
+	shard.CollidedWith(user)
 
 /obj/item/weapon/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
 		shard.Consume()
 	else if(!isturf(target))
-		shard.Bumped(target)
+		shard.CollidedWith(target)
 	else
 		consume_turf(target)
 
@@ -271,6 +294,8 @@
 	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
 	icon_state = "whip"
 	item_state = "chain"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL

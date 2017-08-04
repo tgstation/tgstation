@@ -23,8 +23,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "bible"
 	item_state = "bible"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	var/mob/affecting = null
 	var/deity_name = "Christ"
+	force_string = "holy"
 
 /obj/item/weapon/storage/book/bible/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -86,7 +89,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	return 1
 
 /obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
-	
+
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -94,7 +97,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if (user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
-		user.Paralyse(20)
+		user.Unconscious(400)
 		return
 
 	var/chaplain = 0
@@ -105,10 +108,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='danger'>The book sizzles in your hands.</span>")
 		user.take_bodypart_damage(0,10)
 		return
-	
+
 	if (!heal_mode)
 		return ..()
-	
+
 	var/smack = 1
 
 	if (M.stat != DEAD)
@@ -174,7 +177,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	var/uses = 1
 
 
-	
+
 /obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
 		H.mind.isholy = TRUE

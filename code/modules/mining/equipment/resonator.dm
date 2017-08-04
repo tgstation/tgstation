@@ -4,7 +4,9 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	item_state = "resonator"
-	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It's more effective in a vacuum."
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It does increased damage in low pressure."
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 10
@@ -82,12 +84,8 @@
 /obj/effect/temp_visual/resonance/proc/check_pressure(turf/proj_turf)
 	if(!proj_turf)
 		proj_turf = get_turf(src)
-	if(!istype(proj_turf))
-		return
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
 	resonance_damage = initial(resonance_damage)
-	if(pressure < 50)
+	if(lavaland_equipment_pressure_check(proj_turf))
 		name = "strong [initial(name)]"
 		resonance_damage *= 3
 	else

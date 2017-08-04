@@ -22,7 +22,6 @@
 	desc = "A computer used for remotely handling slimes."
 	networks = list("SS13")
 	circuit = /obj/item/weapon/circuitboard/computer/xenobiology
-	off_action = new/datum/action/innate/camera_off/xenobio
 	var/datum/action/innate/slime_place/slime_place_action = new
 	var/datum/action/innate/slime_pick_up/slime_up_action = new
 	var/datum/action/innate/feed_slime/feed_slime_action = new
@@ -45,23 +44,27 @@
 	eyeobj.icon_state = "camera_target"
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
-	off_action.target = user
-	off_action.Grant(user)
+	..()
 
-	jump_action.target = user
-	jump_action.Grant(user)
+	if(slime_up_action)
+		slime_up_action.target = src
+		slime_up_action.Grant(user)
+		actions += slime_up_action
 
-	slime_up_action.target = src
-	slime_up_action.Grant(user)
+	if(slime_place_action)
+		slime_place_action.target = src
+		slime_place_action.Grant(user)
+		actions += slime_place_action
 
-	slime_place_action.target = src
-	slime_place_action.Grant(user)
+	if(feed_slime_action)
+		feed_slime_action.target = src
+		feed_slime_action.Grant(user)
+		actions += feed_slime_action
 
-	feed_slime_action.target = src
-	feed_slime_action.Grant(user)
-
-	monkey_recycle_action.target = src
-	monkey_recycle_action.Grant(user)
+	if(monkey_recycle_action)
+		monkey_recycle_action.target = src
+		monkey_recycle_action.Grant(user)
+		actions += monkey_recycle_action
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
@@ -83,32 +86,9 @@
 		return
 	..()
 
-/datum/action/innate/camera_off/xenobio/Activate()
-	if(!target || !isliving(target))
-		return
-	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/origin = remote_eye.origin
-	origin.current_user = null
-	origin.jump_action.Remove(C)
-	origin.slime_place_action.Remove(C)
-	origin.slime_up_action.Remove(C)
-	origin.feed_slime_action.Remove(C)
-	origin.monkey_recycle_action.Remove(C)
-	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
-	C.reset_perspective(null)
-	if(C.client)
-		C.client.images -= remote_eye.user_image
-		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			chunk.remove(remote_eye)
-	remote_eye.eye_user = null
-	C.remote_control = null
-	C.unset_machine()
-	Remove(C)
-
-
 /datum/action/innate/slime_place
 	name = "Place Slimes"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "slime_down"
 
 /datum/action/innate/slime_place/Activate()
@@ -128,6 +108,7 @@
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "slime_up"
 
 /datum/action/innate/slime_pick_up/Activate()
@@ -153,6 +134,7 @@
 
 /datum/action/innate/feed_slime
 	name = "Feed Slimes"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "monkey_down"
 
 /datum/action/innate/feed_slime/Activate()
@@ -174,6 +156,7 @@
 
 /datum/action/innate/monkey_recycle
 	name = "Recycle Monkeys"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "monkey_up"
 
 /datum/action/innate/monkey_recycle/Activate()

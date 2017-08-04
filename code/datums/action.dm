@@ -1,5 +1,5 @@
 #define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUNNED 2
+#define AB_CHECK_STUN 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_CONSCIOUS 8
 
@@ -8,14 +8,15 @@
 	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
-	var/processing = 0
+	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
-	var/button_icon = 'icons/mob/actions.dmi'
-	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 	var/buttontooltipstyle = ""
 
-	var/icon_icon = 'icons/mob/actions.dmi'
-	var/button_icon_state = "default"
+	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
+
+	var/icon_icon = 'icons/mob/actions.dmi' //This is the file for the ACTION icon
+	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
 
 /datum/action/New(Target)
@@ -45,6 +46,7 @@
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
+			button.locked = M.client.prefs.buttons_locked
 		M.update_action_buttons()
 	else
 		Remove(owner)
@@ -57,6 +59,7 @@
 		M.update_action_buttons()
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
+	button.locked = FALSE
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -72,8 +75,8 @@
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
 			return 0
-	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned || owner.weakened)
+	if(check_flags & AB_CHECK_STUN)
+		if(owner.IsKnockdown() || owner.IsStun())
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)
@@ -117,7 +120,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	button_icon_state = null
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
@@ -167,6 +170,11 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
+/datum/action/item_action/rcl
+	name = "Change Cable Color"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_rainbow"
+
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
 
@@ -207,9 +215,19 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/toggle_headphones
+	name = "Toggle Headphones"
+	desc = "UNTZ UNTZ UNTZ"
+
+/datum/action/item_action/toggle_headphones/Trigger()
+	var/obj/item/clothing/ears/headphones/H = target
+	if(istype(H))
+		H.toggle(owner)
+
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
 	desc = "Toggles if the club's blasts cause friendly fire."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_ff_on"
 
 /datum/action/item_action/toggle_unfriendly_fire/Trigger()
@@ -227,9 +245,23 @@
 			name = "Toggle Friendly Fire \[ON\]"
 	..()
 
+/datum/action/item_action/synthswitch
+	name = "Change Synthesizer Instrument"
+	desc = "Change the type of instrument your synthesizer is playing as."
+
+/datum/action/item_action/synthswitch/Trigger()
+	if(istype(target, /obj/item/device/instrument/piano_synth))
+		var/obj/item/device/instrument/piano_synth/synth = target
+		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
+		if(!synth.insTypes[chosen])
+			return
+		return synth.changeInstrument(chosen)
+	return ..()
+
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
 	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
@@ -240,6 +272,7 @@
 	return ..()
 
 /datum/action/item_action/clock
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
@@ -263,7 +296,7 @@
 
 /datum/action/item_action/clock/hierophant
 	name = "Hierophant Network"
-	desc = "Allows you to communicate with other Servants."
+	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
 	button_icon_state = "hierophant_slab"
 
 /datum/action/item_action/clock/quickbind
@@ -339,6 +372,7 @@
 
 /datum/action/item_action/toggle_research_scanner
 	name = "Toggle Research Scanner"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "scan_mode"
 	var/active = FALSE
 
@@ -358,12 +392,24 @@
 		active = FALSE
 	..()
 
+/datum/action/item_action/instrument
+	name = "Use Instrument"
+	desc = "Use the instrument specified"
+
+/datum/action/item_action/instrument/Trigger()
+	if(istype(target, /obj/item/device/instrument))
+		var/obj/item/device/instrument/I = target
+		I.interact(usr)
+		return
+	return ..()
+
 /datum/action/item_action/initialize_ninja_suit
 	name = "Toggle ninja suit"
 
 /datum/action/item_action/ninjajaunt
 	name = "Phase Jaunt (10E)"
 	desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "ninja_phase"
 
 /datum/action/item_action/ninjasmoke
@@ -372,6 +418,7 @@
 	button_icon_state = "smoke"
 
 /datum/action/item_action/ninjaboost
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_CONSCIOUS
 	name = "Adrenaline Boost"
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	button_icon_state = "repulse"
@@ -402,6 +449,7 @@
 /datum/action/item_action/ninja_stealth
 	name = "Toggle Stealth"
 	desc = "Toggles stealth mode on and off."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "ninja_cloak"
 
 /datum/action/item_action/toggle_glove
@@ -443,7 +491,8 @@
 	var/obj/effect/proc_holder/spell/S = target
 	S.action = src
 	name = S.name
-	button_icon = S.action_icon
+	desc = S.desc
+	icon_icon = S.action_icon
 	button_icon_state = S.action_icon_state
 	background_icon_state = S.action_background_icon_state
 	button.name = name
@@ -518,12 +567,14 @@
 /datum/action/item_action/stickmen
 	name = "Summon Stick Minions"
 	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 
 //surf_ss13
 /datum/action/item_action/bhop
 	name = "Activate Jump Boots"
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
 
 /datum/action/language_menu

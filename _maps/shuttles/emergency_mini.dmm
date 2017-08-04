@@ -7,14 +7,12 @@
 /area/shuttle/escape)
 "c" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "d" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -37,8 +35,7 @@
 /area/shuttle/escape)
 "g" = (
 /obj/machinery/sleeper{
-	dir = 8;
-	icon_state = "sleeper-open"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -59,8 +56,6 @@
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (WEST)";
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -78,15 +73,12 @@
 	dir = 8
 	},
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (EAST)";
-	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (
@@ -149,8 +141,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -167,8 +157,6 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,

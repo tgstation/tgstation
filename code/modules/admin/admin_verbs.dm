@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
 	/client/proc/reload_admins,
-	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
+	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/cmd_admin_ticket_panel,
@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
 	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
-	/datum/admins/proc/set_admin_notice,/*announcement all clients see when joining the server.*/
+	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
 	/datum/admins/proc/view_txt_log,	/*shows the server log (world_game_log) for today*/
@@ -63,12 +63,16 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
+	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
+	/client/proc/deadchat,
+	/client/proc/toggleprayers,
+	/client/proc/toggleadminhelpsound,
+	/client/proc/respawn_character
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
-GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel,/client/proc/DB_ban_panel,/client/proc/stickybanpanel))
+GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_sounds)
-GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound,/client/proc/play_sound,/client/proc/set_round_end_sound))
+GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cmd_admin_dress,
@@ -93,7 +97,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/smite
 	))
 GLOBAL_PROTECT(admin_verbs_spawn)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom,/client/proc/respawn_character))
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /client/proc/respawn_character))
 GLOBAL_PROTECT(admin_verbs_server)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 /world/proc/AVerbsServer()
@@ -152,11 +156,11 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/cmd_display_init_log
 	)
 GLOBAL_PROTECT(admin_verbs_possess)
-GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess,/proc/release))
+GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_permissions)
-GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions,/client/proc/create_poll))
-GLOBAL_PROTECT(admin_verbs_rejuv)
-GLOBAL_LIST_INIT(admin_verbs_rejuv, list(/client/proc/respawn_character))
+GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
+GLOBAL_PROTECT(admin_verbs_poll)
+GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/create_poll))
 
 //verbs which can be hidden - needs work
 GLOBAL_PROTECT(admin_verbs_hideable)
@@ -251,8 +255,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			verbs += GLOB.admin_verbs_permissions
 		if(rights & R_STEALTH)
 			verbs += /client/proc/stealth
-		if(rights & R_REJUVINATE)
-			verbs += GLOB.admin_verbs_rejuv
+		if(rights & R_ADMIN)
+			verbs += GLOB.admin_verbs_poll
 		if(rights & R_SOUNDS)
 			verbs += GLOB.admin_verbs_sounds
 		if(rights & R_SPAWN)
@@ -275,12 +279,11 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		GLOB.admin_verbs_possess,
 		GLOB.admin_verbs_permissions,
 		/client/proc/stealth,
-		GLOB.admin_verbs_rejuv,
+		GLOB.admin_verbs_poll,
 		GLOB.admin_verbs_sounds,
 		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
 		/client/proc/Cell,
-		/client/proc/do_not_use_these,
 		/client/proc/camera_view,
 		/client/proc/sec_camera_report,
 		/client/proc/intercom_view,

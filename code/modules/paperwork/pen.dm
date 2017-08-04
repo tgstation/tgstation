@@ -26,6 +26,7 @@
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
+	var/font = PEN_FONT
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -64,6 +65,34 @@
 	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
+/obj/item/weapon/pen/fountain
+	name = "fountain pen"
+	desc = "It's a common fountain pen, with a faux wood body."
+	icon_state = "pen-fountain"
+	font = FOUNTAIN_PEN_FONT
+
+/obj/item/weapon/pen/fountain/captain
+	name = "captain's fountain pen"
+	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
+	icon_state = "pen-fountain-o"
+	force = 5
+	throwforce = 5
+	throw_speed = 4
+	colour = "crimson"
+	materials = list(MAT_GOLD = 750)
+	sharpness = IS_SHARP
+	resistance_flags = FIRE_PROOF
+	unique_reskin = list("Oak" = "pen-fountain-o",
+						"Gold" = "pen-fountain-g",
+						"Rosewood" = "pen-fountain-r",
+						"Black and Silver" = "pen-fountain-b",
+						"Command Blue" = "pen-fountain-cb"
+						)
+
+/obj/item/weapon/pen/fountain/captain/reskin_obj(mob/M)
+	..()
+	if(current_skin)
+		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
@@ -165,11 +194,11 @@
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
-	var/on = 0
+	var/on = FALSE
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
 	if(on)
-		on = 0
+		on = FALSE
 		force = initial(force)
 		w_class = initial(w_class)
 		name = initial(name)
@@ -179,7 +208,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
-		on = 1
+		on = TRUE
 		force = 18
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
@@ -194,15 +223,10 @@
 	if(on)
 		icon_state = "edagger"
 		item_state = "edagger"
+		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	else
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
-
-//Crayons path disambiguity sigh.
-/obj/item/proc/on_write(obj/item/weapon/paper/P, mob/user)
-	return
-
-/obj/item/weapon/pen/poison/on_write(obj/item/weapon/paper/P, mob/user)
-	P.contact_poison = "delayed_toxin"
-	P.contact_poison_volume = 10
-	add_logs(user,P,"used poison pen on")
+		lefthand_file = initial(lefthand_file)
+		righthand_file = initial(righthand_file)

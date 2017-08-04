@@ -95,7 +95,7 @@
 "aq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westright,
-/obj/item/weapon/paper/crumpled/snowdin/keys,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/keys,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -123,7 +123,7 @@
 /area/awaymission/snowdin/base)
 "at" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/secnotice,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/secnotice,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -223,8 +223,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -259,8 +258,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -529,8 +527,7 @@
 /area/awaymission/snowdin/base)
 "br" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
@@ -549,7 +546,7 @@
 "bt" = (
 /obj/structure/table,
 /obj/item/weapon/shovel,
-/obj/item/weapon/paper/crumpled/snowdin/shovel,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/shovel,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -590,8 +587,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -638,10 +634,10 @@
 /area/awaymission/snowdin/base)
 "bC" = (
 /obj/structure/showcase{
-	desc = "A strange machine thats supposedly used to help pick up and decypth wave signals. ";
+	desc = "A strange machine thats supposedly used to help pick up and decrypt wave signals. ";
 	icon = 'icons/obj/machines/telecomms.dmi';
 	icon_state = "processor";
-	name = "subsystem signal decrypher"
+	name = "subsystem signal decrypter"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -985,7 +981,7 @@
 /area/awaymission/snowdin/base)
 "cv" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/crumpled/snowdin/snowdingatewaynotice,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/snowdingatewaynotice,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1070,7 +1066,7 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/snowdinlog,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/log,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1314,7 +1310,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dt" = (
-/obj/item/weapon/paper/crumpled/snowdin/lootstructures,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/lootstructures,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -1341,7 +1337,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dx" = (
-/turf/open/floor/plating/lava{
+/turf/open/lava{
 	temperature = 140
 	},
 /area/awaymission/snowdin/dungeon1)
@@ -1514,7 +1510,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dT" = (
-/turf/open/floor/plating/lava{
+/turf/open/lava{
 	temperature = 140
 	},
 /area/awaymission/snowdin/post)
@@ -1558,7 +1554,7 @@
 /area/awaymission/snowdin/post)
 "dZ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/snowdin/syndielava,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/syndielava,
 /obj/machinery/light/small{
 	active_power_usage = 0;
 	dir = 4;
@@ -2128,8 +2124,6 @@
 "fN" = (
 /obj/structure/table/wood,
 /obj/machinery/light/built{
-	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -2259,8 +2253,7 @@
 /obj/machinery/button/door{
 	id = "sekret";
 	name = "shutter control";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -2412,11 +2405,7 @@
 	},
 /area/awaymission/snowdin/post)
 "gA" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "3"
-	},
+/obj/structure/closet/secure_closet/contraband/armory,
 /obj/item/weapon/gun/ballistic/automatic/speargun,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,
@@ -2428,7 +2417,6 @@
 "gB" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkbrown{
@@ -2487,8 +2475,6 @@
 /area/awaymission/snowdin/post)
 "gI" = (
 /obj/machinery/light/built{
-	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkbrown{
@@ -2513,10 +2499,10 @@
 "gL" = (
 /obj/machinery/light/small,
 /obj/structure/showcase{
-	desc = "A strange machine thats supposedly used to help pick up and decypth wave signals. ";
+	desc = "A strange machine thats supposedly used to help pick up and decrypt wave signals. ";
 	icon = 'icons/obj/machines/telecomms.dmi';
 	icon_state = "processor";
-	name = "subsystem signal decrypher"
+	name = "subsystem signal decrypter"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -2629,8 +2615,7 @@
 	},
 /area/awaymission/snowdin/post)
 "hb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2644,8 +2629,6 @@
 /area/awaymission/snowdin/post)
 "hd" = (
 /obj/machinery/light/built{
-	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel{
@@ -2732,7 +2715,7 @@
 /area/awaymission/snowdin/post)
 "hn" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/secnotice,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/secnotice,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3438,7 +3421,6 @@
 /area/awaymission/snowdin/sekret)
 "jq" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cmo{
@@ -3471,7 +3453,6 @@
 /area/awaymission/snowdin/sekret)
 "ju" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -3572,7 +3553,6 @@
 /area/awaymission/snowdin/sekret)
 "jH" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo{
@@ -3589,8 +3569,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
-	tag = "icon-warndark (NORTHWEST)"
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "jJ" = (
@@ -3598,8 +3577,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
-	tag = "icon-warndark (NORTHEAST)"
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "jK" = (
@@ -3668,7 +3646,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black{
-	tag = "icon-warndark (EAST)";
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3687,7 +3664,7 @@
 /area/awaymission/snowdin)
 "jV" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/snowdin/misc1,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/misc1,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3741,8 +3718,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
-	tag = "icon-warndark (NORTHWEST)"
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "kb" = (
@@ -3751,8 +3727,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
-	tag = "icon-warndark (NORTHEAST)"
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "kc" = (
@@ -3912,10 +3887,7 @@
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/paper{
-	info = "YOU SEEN IVAN, WHEN YOU HOLD SAAW LIKE PEESTOL, YOU STRONGER THAN RECOIL FOR FEAR OF HITTING FACE!";
-	name = "SAW Usage"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/saw_usage,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3969,7 +3941,7 @@
 /area/awaymission/snowdin/sekret)
 "kE" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/snowdin/syndienotice,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/syndienotice,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4088,7 +4060,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/black{
-	tag = "icon-warndark (SOUTHWEST)";
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4100,7 +4071,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/black{
-	tag = "icon-warndark (SOUTHEAST)";
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4267,8 +4237,7 @@
 	dir = 8;
 	freerange = 1;
 	listening = 1;
-	name = "Pirate Radio Listening Channel";
-	pixel_x = 0
+	name = "Pirate Radio Listening Channel"
 	},
 /turf/open/floor/plasteel/purple{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4350,8 +4319,7 @@
 	dir = 8;
 	freerange = 1;
 	listening = 0;
-	name = "Pirate Radio Broadcast Channel";
-	pixel_x = 0
+	name = "Pirate Radio Broadcast Channel"
 	},
 /turf/open/floor/plasteel/purple{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4393,8 +4361,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/machinery/light/built{
-	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/effect/landmark/awaystart,
@@ -4442,8 +4408,7 @@
 	},
 /area/awaymission/snowdin)
 "lM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4527,8 +4492,6 @@
 /area/awaymission/snowdin/sekret)
 "lX" = (
 /obj/structure/chair/comfy/beige{
-	tag = "icon-comfychair (EAST)";
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/wood{
@@ -4740,7 +4703,7 @@
 /area/awaymission/snowdin/sekret)
 "mx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg,
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -4758,8 +4721,6 @@
 /area/awaymission/snowdin)
 "mz" = (
 /obj/machinery/light/built{
-	tag = "icon-tube1 (NORTH)";
-	icon_state = "tube1";
 	dir = 1
 	},
 /turf/open/floor/plating{
@@ -4942,9 +4903,7 @@
 "mU" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 30
@@ -5001,7 +4960,7 @@
 /area/awaymission/snowdin)
 "nc" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/snowdin/shovel,
+/obj/item/weapon/paper/crumpled/ruins/snowdin/shovel,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -5107,9 +5066,7 @@
 	},
 /area/awaymission/snowdin)
 "np" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating,
 /area/awaymission/snowdin)
 "nq" = (
@@ -5117,9 +5074,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin)
 "nr" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating,
 /area/awaymission/snowdin)
 "ns" = (
@@ -5201,8 +5156,7 @@
 /area/awaymission/snowdin/sekret)
 "nA" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
@@ -5211,7 +5165,7 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/snowdin/snowdinlog2,
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/log2,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},

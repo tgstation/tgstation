@@ -3,6 +3,8 @@
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
@@ -70,9 +72,12 @@
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 10
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
+	container_type = DRAWABLE
 	flags = null
 	list_reagents = list("epinephrine" = 10)
 

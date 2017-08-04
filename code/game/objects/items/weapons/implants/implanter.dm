@@ -4,6 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -27,7 +29,7 @@
 		return
 	if(user && imp)
 		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
+			M.visible_message("<span class='warning'>[user] is attempting to implant [M].</span>")
 
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_mob(user, M, 50)))

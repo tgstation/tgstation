@@ -8,7 +8,6 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	obj_integrity = 50
 	max_integrity = 50
 
 	var/obj/item/weapon/paper/internalPaper
@@ -20,6 +19,7 @@
 	if(newPaper)
 		internalPaper = newPaper
 		flags = newPaper.flags
+		color = newPaper.color
 		newPaper.forceMove(src)
 	else
 		internalPaper = new /obj/item/weapon/paper(src)
@@ -31,8 +31,8 @@
 		internalPaper = null
 	return ..()
 
-/obj/item/weapon/paperplane/suicide_act(mob/user)
-	user.Stun(10)
+/obj/item/weapon/paperplane/suicide_act(mob/living/user)
+	user.Stun(200)
 	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
@@ -95,7 +95,7 @@
 		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
 		H.adjust_blurriness(6)
 		H.adjust_eye_damage(rand(6,8))
-		H.Weaken(2)
+		H.Knockdown(40)
 		H.emote("scream")
 
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)

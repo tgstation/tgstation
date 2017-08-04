@@ -3,7 +3,7 @@
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light emitter"
-	anchored = 1
+	anchored = TRUE
 	invisibility = 101
 	var/set_luminosity = 8
 	var/set_cap = 0
@@ -19,7 +19,7 @@
 	icon_door = "mixed"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
-	new /obj/item/weapon/storage/backpack/dufflebag(src)
+	new /obj/item/weapon/storage/backpack/duffelbag(src)
 	new /obj/item/weapon/storage/backpack/explorer(src)
 	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
@@ -35,7 +35,10 @@
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
 	icon_state = "mining"
-	req_access = list(GLOB.access_mining)
+	req_access = list(ACCESS_MINING)
+
+/obj/structure/closet/secure_closet/miner/unlocked
+	locked = FALSE
 
 /obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()
@@ -57,7 +60,7 @@
 /**********************Shuttle Computer**************************/
 
 /obj/machinery/computer/shuttle/mining
-	name = "Mining Shuttle Console"
+	name = "mining shuttle console"
 	desc = "Used to call and send the mining shuttle."
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"

@@ -5,6 +5,8 @@
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -18,7 +20,7 @@
 	if(!loaded)
 		return
 	if(isliving(target) && proximity_flag)
-		if(istype(target, /mob/living/simple_animal))
+		if(isanimal(target))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
 				to_chat(user, "<span class='info'>[src] does not work on this sort of creature.</span>")

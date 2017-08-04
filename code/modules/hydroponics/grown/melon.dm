@@ -25,6 +25,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	filling_color = "#008000"
 	bitesize_mod = 3
+	foodtype = FRUIT
 
 // Holymelon
 /obj/item/seeds/watermelon/holy

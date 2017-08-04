@@ -3,38 +3,28 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "c" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "d" = (
 /obj/structure/alien/resin/wall,
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "e" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "f" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "g" = (
@@ -52,16 +42,12 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "j" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "k" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
@@ -70,16 +56,12 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "m" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "n" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
@@ -87,52 +69,36 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "p" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "q" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "r" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "s" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/egg,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "t" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "u" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
@@ -157,16 +123,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "z" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/rank/security,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/weapon/melee/baton/loaded,
@@ -179,9 +139,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "B" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -193,9 +151,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "D" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
@@ -217,9 +173,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "G" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
 	},
@@ -235,11 +189,7 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -262,20 +212,14 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "M" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/weapon/tank/internals/oxygen,
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/xenonest)
 "N" = (
@@ -288,16 +232,12 @@
 /turf/template_noop,
 /area/ruin/xenonest)
 "P" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/template_noop,
 /area/template_noop)
 "Q" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
@@ -309,9 +249,7 @@
 /turf/template_noop,
 /area/ruin/xenonest)
 "S" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /turf/template_noop,
 /area/ruin/xenonest)
 "T" = (
@@ -320,18 +258,20 @@
 /turf/template_noop,
 /area/template_noop)
 "U" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/template_noop,
 /area/template_noop)
 "V" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /turf/template_noop,
 /area/template_noop)
+"W" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/obj/effect/baseturf_helper,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/xenonest)
 
 (1,1,1) = {"
 a
@@ -340,10 +280,10 @@ a
 a
 a
 a
-c
-h
 b
-h
+b
+b
+b
 a
 a
 a
@@ -372,10 +312,10 @@ a
 a
 b
 b
-c
-A
+b
+s
 e
-c
+b
 b
 b
 a
@@ -402,14 +342,14 @@ a
 a
 a
 a
-h
+b
 g
 e
-k
+e
 g
 s
 g
-c
+b
 b
 a
 a
@@ -433,16 +373,16 @@ a
 a
 a
 a
-h
-c
+b
+b
 s
-p
+g
 g
 s
-G
-q
+E
+g
 e
-c
+b
 a
 a
 a
@@ -465,13 +405,13 @@ a
 a
 a
 a
-c
+b
 g
-p
+g
 y
-m
-p
-q
+i
+g
+g
 y
 g
 b
@@ -499,14 +439,14 @@ a
 a
 b
 g
-q
-m
-q
+g
+i
+g
 F
 u
 I
 H
-h
+b
 a
 a
 a
@@ -529,16 +469,16 @@ a
 a
 a
 a
-h
+b
 e
 t
 g
-p
-q
+g
+g
 H
 u
-q
-c
+g
+b
 a
 a
 a
@@ -561,16 +501,16 @@ a
 a
 a
 a
-c
-n
+b
+i
 u
-p
+g
 g
 l
-q
-J
-k
-h
+g
+t
+e
+b
 a
 a
 a
@@ -596,13 +536,13 @@ a
 b
 o
 v
-q
-p
-p
-q
-k
-p
-c
+g
+g
+g
+g
+e
+g
+b
 a
 a
 a
@@ -625,15 +565,15 @@ a
 a
 a
 a
-h
-p
-w
-c
-p
+b
+g
+u
+b
+g
 g
 g
 y
-x
+e
 b
 a
 a
@@ -658,31 +598,31 @@ a
 a
 a
 b
-c
-q
-g
-q
-g
-q
-q
-p
-c
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-c
-h
 b
-h
+g
+g
+g
+g
+g
+g
+g
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
 a
 "}
 (12,1,1) = {"
@@ -690,15 +630,15 @@ a
 a
 a
 a
-h
-x
-p
+b
+e
 g
-p
 g
-q
-p
-h
+g
+g
+g
+g
+b
 a
 a
 a
@@ -710,27 +650,27 @@ a
 a
 a
 a
-h
+b
 b
 M
 i
-c
-h
+b
+b
 "}
 (13,1,1) = {"
 a
 a
 a
 a
-c
-h
-q
-p
-l
-q
+b
+b
 g
-c
-c
+g
+l
+g
+g
+b
+b
 a
 a
 a
@@ -742,12 +682,12 @@ a
 a
 a
 b
-h
-x
-D
+b
+e
+u
 Q
-q
-c
+g
+b
 "}
 (14,1,1) = {"
 a
@@ -755,12 +695,12 @@ a
 a
 a
 a
-c
-h
+b
+b
 g
-q
-p
-h
+g
+g
+b
 b
 a
 a
@@ -773,9 +713,9 @@ a
 a
 a
 a
-c
+b
 i
-q
+g
 l
 g
 e
@@ -788,11 +728,11 @@ a
 a
 a
 a
-c
-c
 b
-c
-c
+b
+b
+b
+b
 a
 a
 a
@@ -804,13 +744,13 @@ a
 a
 a
 b
-h
-c
-p
+b
+b
 g
-q
+g
+g
 i
-h
+b
 b
 "}
 (16,1,1) = {"
@@ -820,10 +760,10 @@ a
 a
 a
 a
-h
+b
 l
 l
-h
+b
 a
 a
 a
@@ -834,14 +774,14 @@ a
 a
 a
 a
-h
-h
-q
+b
+b
+g
 j
 g
 e
-h
-c
+b
+b
 b
 a
 "}
@@ -852,27 +792,27 @@ a
 a
 a
 a
-c
-g
-p
 b
-h
+g
+g
+b
+b
 a
 b
-h
-c
-h
-c
 b
-h
-h
-c
+b
+b
+b
+b
+b
+b
+b
 g
-p
-h
-c
+g
 b
-h
+b
+b
+b
 a
 a
 a
@@ -885,23 +825,23 @@ a
 a
 a
 b
-q
-q
-g
-c
-c
-h
-q
-g
-q
-p
 g
 g
-c
+g
+b
+b
 b
 g
-c
-h
+g
+g
+g
+g
+g
+b
+b
+g
+b
+b
 a
 a
 a
@@ -916,22 +856,22 @@ a
 a
 a
 a
-h
-h
+b
+b
 g
 g
-p
-c
 g
-q
-p
+W
 g
-q
-p
+g
+g
+g
+g
+g
 l
-q
 g
-p
+g
+g
 b
 a
 a
@@ -943,27 +883,27 @@ a
 "}
 (20,1,1) = {"
 b
-c
-h
+b
+b
 b
 a
 a
 a
 b
-c
-p
-l
-p
-q
+b
 g
-c
-h
-c
-h
-q
-p
-q
-h
+l
+g
+g
+g
+b
+b
+b
+b
+g
+g
+g
+b
 b
 a
 a
@@ -974,28 +914,28 @@ a
 a
 "}
 (21,1,1) = {"
-c
+b
 e
 i
-h
-c
-h
 b
-h
-c
-q
-p
+b
+b
+b
+b
+b
 g
-p
-h
+g
+g
+g
+b
 b
 a
 a
 b
-c
+b
 g
-p
-c
+g
+b
 a
 a
 a
@@ -1011,23 +951,23 @@ f
 j
 g
 b
-c
-q
+b
 g
-p
 g
-q
-q
-c
+g
+g
+g
+g
+b
 b
 a
 a
 a
-h
-q
-q
+b
 g
-h
+g
+g
+b
 a
 a
 a
@@ -1040,25 +980,25 @@ a
 (23,1,1) = {"
 d
 g
-k
+e
 l
-q
 g
-p
-c
-h
-p
-c
-h
-c
-a
-a
-a
-a
-c
 g
-p
-c
+g
+b
+b
+g
+b
+b
+b
+a
+a
+a
+a
+b
+g
+g
+b
 b
 a
 a
@@ -1070,13 +1010,13 @@ a
 a
 "}
 (24,1,1) = {"
-c
-c
+b
+b
 i
-m
+i
 b
-c
-h
+b
+b
 b
 b
 g
@@ -1087,10 +1027,10 @@ a
 a
 a
 a
-c
-p
+b
 g
-c
+g
+b
 a
 a
 a
@@ -1103,17 +1043,17 @@ a
 "}
 (25,1,1) = {"
 a
-h
-c
-c
-h
+b
+b
+b
+b
 a
 a
 a
-c
+b
 E
-c
-h
+b
+b
 a
 a
 a
@@ -1123,7 +1063,7 @@ b
 g
 L
 b
-c
+b
 b
 a
 a
@@ -1131,7 +1071,7 @@ a
 a
 a
 a
-c
+b
 "}
 (26,1,1) = {"
 a
@@ -1142,28 +1082,28 @@ a
 a
 a
 a
-c
-p
+b
 g
-h
-a
-a
-a
-a
-a
-h
-q
-p
-q
 g
-c
-h
-c
+b
+a
+a
 a
 a
 a
 b
-h
+g
+g
+g
+g
+b
+b
+b
+a
+a
+a
+b
+b
 "}
 (27,1,1) = {"
 a
@@ -1173,27 +1113,27 @@ a
 a
 a
 b
-c
-h
-q
-q
-c
+b
+b
+g
+g
+b
 b
 a
 a
 a
 a
-c
-c
-g
-p
-p
-g
-q
 b
-c
-h
-c
+b
+g
+g
+g
+g
+g
+b
+b
+b
+b
 y
 g
 "}
@@ -1204,30 +1144,30 @@ a
 a
 a
 b
-h
+b
 B
 g
-q
+g
 l
-x
-h
+e
+b
 a
 a
 a
 b
-c
+b
 g
-q
-h
-c
 g
-p
-q
+b
+b
+g
+g
+g
 b
 O
 R
-p
-q
+g
+g
 "}
 (29,1,1) = {"
 a
@@ -1235,30 +1175,30 @@ a
 a
 a
 a
-c
+b
 z
 C
 j
 g
-x
-m
-c
-a
-a
-a
-h
-g
-p
-c
-h
+e
+i
 b
-c
+a
+a
+a
+b
+g
+g
+b
+b
+b
+b
 g
 l
 b
 O
-S
-p
+R
+g
 g
 "}
 (30,1,1) = {"
@@ -1267,31 +1207,31 @@ a
 a
 a
 a
-c
+b
 i
-D
-p
-n
-m
-c
+u
+g
+i
+i
+b
 b
 a
 a
 a
-c
-q
-h
-c
-a
-a
-h
-c
 b
-c
-c
+g
+b
+b
+a
+a
+b
+b
+b
+b
+b
 y
-q
-p
+g
+g
 "}
 (31,1,1) = {"
 a
@@ -1299,31 +1239,31 @@ a
 a
 a
 a
-h
 b
-c
+b
+b
 g
-c
-c
-h
-a
-a
-a
-a
 b
-p
-c
+b
 b
 a
 a
 a
 a
-a
-a
-a
-c
+b
 g
-q
+b
+b
+a
+a
+a
+a
+a
+a
+a
+b
+g
+g
 "}
 (32,1,1) = {"
 a
@@ -1333,19 +1273,19 @@ a
 a
 a
 a
-h
-p
-h
+b
+g
+b
 a
 a
 a
 a
 a
 a
-h
+b
 g
 g
-h
+b
 a
 a
 a
@@ -1353,8 +1293,8 @@ a
 a
 a
 a
-h
-p
+b
+g
 g
 "}
 (33,1,1) = {"
@@ -1366,27 +1306,27 @@ a
 a
 a
 b
-p
-c
+g
+b
 a
 a
 a
 a
 a
 a
-h
-c
+b
+b
 l
-c
+b
 a
 a
 a
 a
 a
 a
-c
-c
-q
+b
+b
+g
 a
 "}
 (34,1,1) = {"
@@ -1397,7 +1337,7 @@ a
 a
 a
 a
-h
+b
 l
 b
 a
@@ -1408,15 +1348,15 @@ a
 a
 a
 b
-p
-h
+g
+b
 a
 a
 a
 a
 a
 a
-c
+b
 a
 a
 a
@@ -1429,9 +1369,9 @@ a
 a
 a
 a
-c
-p
-h
+b
+g
+b
 a
 a
 a
@@ -1439,9 +1379,9 @@ a
 a
 a
 a
-c
-q
-c
+b
+g
+b
 a
 a
 a
@@ -1461,19 +1401,19 @@ a
 a
 a
 a
-h
+b
 g
-c
+b
 a
 a
 a
 a
 a
 a
-c
-h
+b
+b
 g
-h
+b
 a
 a
 a
@@ -1493,18 +1433,18 @@ a
 a
 a
 a
-c
-q
-h
+b
+g
+b
 a
 a
 a
 a
 a
 b
-h
+b
 g
-p
+g
 b
 a
 a
@@ -1525,19 +1465,19 @@ a
 a
 a
 b
-c
-p
-c
 b
-h
-c
-c
+g
 b
-c
-p
-q
-h
-c
+b
+b
+b
+b
+b
+b
+g
+g
+b
+b
 a
 a
 a
@@ -1556,18 +1496,18 @@ a
 a
 a
 b
-c
-q
+b
 g
-k
-h
-c
 g
-q
+e
+b
+b
+g
+g
 K
 g
-q
-c
+g
+b
 b
 a
 a
@@ -1587,19 +1527,19 @@ a
 a
 a
 a
-h
-m
-E
-p
-g
-q
-p
-p
 b
-c
-h
-c
-h
+i
+E
+g
+g
+g
+g
+g
+b
+b
+b
+b
+b
 a
 a
 a
@@ -1618,16 +1558,16 @@ a
 a
 a
 a
-c
-c
+b
+b
 e
-q
+g
 l
 g
-x
-c
-h
-c
+e
+b
+b
+b
 a
 a
 a
@@ -1650,13 +1590,13 @@ a
 a
 a
 a
-h
-x
-q
+b
+e
 g
-n
-m
-c
+g
+i
+i
+b
 b
 a
 a
@@ -1683,12 +1623,12 @@ a
 a
 a
 r
-c
-h
-c
 b
-h
-c
+b
+b
+b
+b
+b
 a
 a
 a

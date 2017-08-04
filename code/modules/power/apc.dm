@@ -27,10 +27,8 @@
 #define APC_UPOVERLAY_OPERATING 8192
 
 
-#define APC_UPDATE_ICON_COOLDOWN 200 // 20 seconds
-
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
-// one per area, needs wire conection to power network through a terminal
+// one per area, needs wire connection to power network through a terminal
 
 // controls power to devices in that area
 // may be opened to change power cell
@@ -45,10 +43,9 @@
 	desc = "A control terminal for the area electrical systems."
 
 	icon_state = "apc0"
-	anchored = 1
-	use_power = 0
+	anchored = TRUE
+	use_power = NO_POWER_USE
 	req_access = null
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
@@ -64,12 +61,12 @@
 	var/lighting = 3
 	var/equipment = 3
 	var/environ = 3
-	var/operating = 1
+	var/operating = TRUE
 	var/charging = 0
 	var/chargemode = 1
 	var/chargecount = 0
-	var/locked = 1
-	var/coverlocked = 1
+	var/locked = TRUE
+	var/coverlocked = TRUE
 	var/aidisabled = 0
 	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
@@ -93,19 +90,20 @@
 	var/force_update = 0
 	var/update_state = -1
 	var/update_overlay = -1
+	var/icon_update_needed = FALSE
 
+/obj/machinery/power/apc/get_cell()
+	return cell
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
 	//The terminal is what the power computer looks for anyway.
-	if(!terminal)
-		make_terminal()
 	if(terminal)
 		terminal.connect_to_network()
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
-		req_access = list(GLOB.access_engine_equip)
+		req_access = list(ACCESS_ENGINE_EQUIP)
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
@@ -127,7 +125,7 @@
 	if (building)
 		area = get_area(src)
 		opened = 1
-		operating = 0
+		operating = FALSE
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
@@ -138,9 +136,9 @@
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
+	area.power_light = FALSE
+	area.power_equip = FALSE
+	area.power_environ = FALSE
 	area.power_change()
 	if(occupier)
 		malfvacate(1)
@@ -179,10 +177,13 @@
 	var/area/A = src.loc.loc
 
 	//if area isn't specified use current
-	if(isarea(A) && src.areastring == null)
+	if(areastring)
+		src.area = locate(text2path(areastring)) in GLOB.sortedAreas
+		if(!src.area)
+			src.area = A
+			stack_trace("Bad areastring path for [src], [src.areastring]")
+	else if(isarea(A) && src.areastring == null)
 		src.area = A
-	else
-		src.area = get_area_by_name(areastring)
 	update_icon()
 
 	make_terminal()
@@ -212,11 +213,11 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-
 	var/update = check_updates() 		//returns 0 if no need to update icons.
 						// 1 if we need to update the icon_state
 						// 2 if we need to update the overlays
 	if(!update)
+		icon_update_needed = FALSE
 		return
 
 	if(update & 1) // Updating the icon state
@@ -240,6 +241,8 @@
 			icon_state = "apcemag"
 		else if(update_state & UPSTATE_WIREEXP)
 			icon_state = "apcewires"
+		else if(update_state & UPSTATE_MAINT)
+			icon_state = "apc0"
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		cut_overlays()
@@ -256,7 +259,7 @@
 				O += "apco2-[environ]"
 			add_overlay(O)
 
-	// And now, seperately for cleanness, the lighting changing
+	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)
 		switch(charging)
 			if(0)
@@ -272,8 +275,9 @@
 	else
 		set_light(0)
 
-/obj/machinery/power/apc/proc/check_updates()
+	icon_update_needed = FALSE
 
+/obj/machinery/power/apc/proc/check_updates()
 	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
 	update_state = 0
@@ -344,7 +348,7 @@
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
-	addtimer(CALLBACK(src, .proc/update_icon), APC_UPDATE_ICON_COOLDOWN, TIMER_UNIQUE)
+	icon_update_needed = TRUE
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
@@ -371,7 +375,7 @@
 							return
 							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 						else if (emagged) // We emag board, not APC's frame
-							emagged = 0
+							emagged = FALSE
 							user.visible_message(\
 								"[user.name] has discarded emaged power control board from [src.name]!",\
 								"<span class='notice'>You discarded shorten board.</span>")
@@ -391,7 +395,7 @@
 							return
 			else if (opened!=2) //cover isn't removed
 				opened = 0
-				coverlocked = 1 //closing cover relocks it
+				coverlocked = TRUE //closing cover relocks it
 				update_icon()
 				return
 		else if (!(stat & BROKEN)) // b) on closed and not broken APC
@@ -446,6 +450,8 @@
 				update_icon()
 		else if(emagged)
 			to_chat(user, "<span class='warning'>The interface is broken!</span>")
+		else if((stat & MAINT) && !opened)
+			..() //its an empty closed frame... theres no wires to expose!
 		else
 			panel_open = !panel_open
 			to_chat(user, "The wires have been [panel_open ? "exposed" : "unexposed"]")
@@ -489,7 +495,7 @@
 			return
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			if (C.get_amount() < 10 || !C)
 				return
@@ -517,11 +523,11 @@
 
 		user.visible_message("[user.name] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
-				locked = 1 //We placed new, locked board in
+				locked = TRUE //We placed new, locked board in
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
@@ -609,8 +615,9 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
-			emagged = 1
-			locked = 0
+			playsound(src, "sparks", 75, 1)
+			emagged = TRUE
+			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
 
@@ -621,20 +628,18 @@
 		return
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
 			user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
-
+			cell.update_icon()
 			src.cell = null
-			user.visible_message("[user.name] removes the power cell from [src.name]!",\
-								 "<span class='notice'>You remove the power cell.</span>")
-			//to_chat(user, "You remove the power cell.")
 			charging = 0
 			src.update_icon()
 		return
+	if((stat & MAINT) && !opened) //no board; no interface
+		return
 	..()
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
@@ -717,9 +722,9 @@
 		area.power_equip = (equipment > 1)
 		area.power_environ = (environ > 1)
 	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
@@ -937,7 +942,8 @@
 		return 0
 
 /obj/machinery/power/apc/process()
-
+	if(icon_update_needed)
+		update_icon()
 	if(stat & (BROKEN|MAINT))
 		return
 	if(!area.requires_power)
@@ -1153,7 +1159,7 @@
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
-	operating = 0
+	operating = FALSE
 	if(occupier)
 		malfvacate(1)
 	update_icon()

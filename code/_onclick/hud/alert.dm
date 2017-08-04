@@ -109,16 +109,25 @@
 
 
 //Gas alerts
-/obj/screen/alert/oxy
+/obj/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
-	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
-The box in your backpack has an oxygen tank and breath mask in it."
-	icon_state = "oxy"
+	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
+	icon_state = "not_enough_oxy"
 
 /obj/screen/alert/too_much_oxy
 	name = "Choking (O2)"
 	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_oxy"
+
+/obj/screen/alert/not_enough_nitro
+	name = "Choking (No N2)"
+	desc = "You're not getting enough nitrogen. Find some good air before you pass out!"
+	icon_state = "not_enough_nitro"
+
+/obj/screen/alert/too_much_nitro
+	name = "Choking (N2)"
+	desc = "There's too much nitrogen in the air, and you're breathing it in! Find some good air before you pass out!"
+	icon_state = "too_much_nitro"
 
 /obj/screen/alert/not_enough_co2
 	name = "Choking (No CO2)"
@@ -135,11 +144,10 @@ The box in your backpack has an oxygen tank and breath mask in it."
 	desc = "You're not getting enough plasma. Find some good air before you pass out!"
 	icon_state = "not_enough_tox"
 
-/obj/screen/alert/tox_in_air
+/obj/screen/alert/too_much_tox
 	name = "Choking (Plasma)"
-	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
-The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = "tox_in_air"
+	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	icon_state = "too_much_tox"
 //End gas alerts
 
 
@@ -157,6 +165,21 @@ The box in your backpack has an oxygen tank and gas mask in it."
 	name = "Starving"
 	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
+
+/obj/screen/alert/gross
+	name = "Grossed out."
+	desc = "That was kind of gross..."
+	icon_state = "gross"
+
+/obj/screen/alert/verygross
+	name = "Very grossed out."
+	desc = "I'm not feeling very well.."
+	icon_state = "gross2"
+
+/obj/screen/alert/disgusted
+	name = "DISGUSTED"
+	desc = "ABSOLUTELY DISGUSTIN'"
+	icon_state = "gross3"
 
 /obj/screen/alert/hot
 	name = "Too Hot"
@@ -204,11 +227,6 @@ If you're feeling frisky, click yourself in help intent to pull the object out."
 	if(isliving(usr))
 		var/mob/living/carbon/human/M = usr
 		return M.help_shake_act(M)
-
-/obj/screen/alert/asleep
-	name = "Asleep"
-	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
-	icon_state = "asleep"
 
 /obj/screen/alert/weightless
 	name = "Weightless"
@@ -306,7 +324,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense1"
-			desc = "The sacrifice is complete, bring the wrath of Nar-Sie upon the crew!"
+			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(GLOB.summon_spots)]!"
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
@@ -361,7 +379,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Next Tier Requirements"
 	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
 	icon_state = "no-servants-caches"
-	var/static/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 
 /obj/screen/alert/clockwork/scripture_reqs/Initialize()
 	. = ..()
@@ -374,12 +391,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork/scripture_reqs/process()
 	if(GLOB.clockwork_gateway_activated)
-		qdel(src)
+		mob_viewer.clear_alert("scripturereq")
 		return
 	var/current_state
-	scripture_states = scripture_unlock_check()
-	for(var/i in scripture_states)
-		if(!scripture_states[i])
+	for(var/i in SSticker.scripture_states)
+		if(!SSticker.scripture_states[i])
 			current_state = i
 			break
 	icon_state = "no"
@@ -411,10 +427,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				req_servants = APPLICATION_SERVANT_REQ
 				req_caches = APPLICATION_CACHE_REQ
 				req_cv = APPLICATION_CV_REQ
-			if(SCRIPTURE_REVENANT)
-				req_servants = REVENANT_SERVANT_REQ
-				req_caches = REVENANT_CACHE_REQ
-				req_cv = REVENANT_CV_REQ
 			if(SCRIPTURE_JUDGEMENT)
 				req_servants = JUDGEMENT_SERVANT_REQ
 				req_caches = JUDGEMENT_CACHE_REQ
@@ -459,7 +471,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/servants = 0
 		var/validservants = 0
 		var/unconverted_ais_exist = get_unconverted_ais()
-		var/list/scripture_states = scripture_unlock_check()
 		var/list/textlist
 		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L))
@@ -475,18 +486,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
 		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
 		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
-		if(GLOB.clockwork_daemons)
-			textlist += "<b>[GLOB.clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < GLOB.clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
-		else
-			textlist += "No Tinkerer's Daemons.<br>"
+		textlist += "<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.still_needs_components())
-				textlist += "Ark Components required: "
+				textlist += "Ark Components required:<br>"
 				for(var/i in G.required_components)
 					if(G.required_components[i])
-						textlist += "<b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
+						textlist += "[get_component_icon(i)] <b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
 				textlist += "<br>"
 			else
 				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
@@ -496,21 +504,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 			else
 				textlist += "<b>An unconverted AI exists!</b><br>"
-		if(scripture_states[SCRIPTURE_REVENANT])
-			var/inathneq_available = GLOB.clockwork_generals_invoked["inath-neq"] <= world.time
-			var/sevtug_available = GLOB.clockwork_generals_invoked["sevtug"] <= world.time
-			var/nezbere_available = GLOB.clockwork_generals_invoked["nezbere"] <= world.time
-			var/nezcrentr_available = GLOB.clockwork_generals_invoked["nzcrentr"] <= world.time
-			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				textlist += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
-				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
-			else
-				textlist += "Generals available: <b>NONE</b><br>"
-		else
-			textlist += "Generals available: <b>NONE</b><br>"
-		for(var/i in scripture_states)
+		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				textlist += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 		desc = textlist.Join()
 	..()
 

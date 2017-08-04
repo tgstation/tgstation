@@ -15,8 +15,8 @@
 	new /obj/item/clothing/under/sl_suit(src)
 	new /obj/item/clothing/under/rank/bartender(src)
 	new /obj/item/clothing/under/rank/bartender(src)
-	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/tie/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -39,8 +39,8 @@
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
-	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/tie/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/apron/chef(src)
 	new /obj/item/clothing/head/soft/mime(src)
@@ -64,6 +64,7 @@
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 	new /obj/item/weapon/paint/paint_remover(src)
+	new /obj/item/weapon/melee/flyswatter(src)
 	new /obj/item/device/flashlight(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/caution(src)
@@ -94,8 +95,8 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
-	new /obj/item/clothing/tie/lawyers_badge(src)
-	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/accessory/lawyers_badge(src)
+	new /obj/item/clothing/accessory/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"
@@ -125,7 +126,6 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	horizontal = TRUE
 	delivery_icon = "deliverycrate"
@@ -140,8 +140,8 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/weapon/storage/backpack/security(src)
 	new /obj/item/weapon/storage/backpack/satchel/sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/sec(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/sec(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/security(src)
 	for(var/i in 1 to 3)
@@ -176,7 +176,7 @@
 	icon_door = "atmos_wardrobe"
 
 /obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
-	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/engineering(src)
 	new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
 	for(var/i in 1 to 3)
@@ -192,7 +192,7 @@
 	icon_door = "yellow"
 
 /obj/structure/closet/wardrobe/engineering_yellow/PopulateContents()
-	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/engineering(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
 	new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
@@ -210,7 +210,7 @@
 	name = "medical doctor's wardrobe"
 
 /obj/structure/closet/wardrobe/white/medical/PopulateContents()
-	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/med(src)
 	new /obj/item/weapon/storage/backpack/medic(src)
 	new /obj/item/weapon/storage/backpack/satchel/med(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
@@ -352,3 +352,16 @@
 		new /obj/item/clothing/under/rank/hydroponics(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/bandana(src)
+
+
+/obj/structure/closet/wardrobe/curator
+	name = "treasure hunting wardrobe"
+	icon_door = "black"
+
+/obj/structure/closet/wardrobe/curator/PopulateContents()
+	new /obj/item/clothing/head/fedora/curator(src)
+	new /obj/item/clothing/suit/curator(src)
+	new /obj/item/clothing/under/rank/curator/treasure_hunter(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
+

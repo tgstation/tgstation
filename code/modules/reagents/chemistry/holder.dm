@@ -406,14 +406,14 @@
 							if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
 							for(var/mob/M in seen)
-								to_chat(M, "<span class='notice'>\icon[my_atom] [C.mix_message]</span>")
+								to_chat(M, "<span class='notice'>[bicon(my_atom)] [C.mix_message]</span>")
 
 						if(istype(cached_my_atom, /obj/item/slime_extract))
 							var/obj/item/slime_extract/ME2 = my_atom
 							ME2.Uses--
 							if(ME2.Uses <= 0) // give the notification that the slime core is dead
 								for(var/mob/M in seen)
-									to_chat(M, "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>")
+									to_chat(M, "<span class='notice'>[bicon(my_atom)] \The [my_atom]'s power is consumed in the reaction.</span>")
 									ME2.name = "used slime extract"
 									ME2.desc = "This extract has been used up."
 
@@ -452,21 +452,21 @@
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("morphine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
 /datum/reagents/proc/check_gofast(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else

@@ -32,6 +32,8 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	item_state = "trashbag"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 
 	w_class = WEIGHT_CLASS_BULKY
 	max_w_class = WEIGHT_CLASS_SMALL
@@ -88,6 +90,7 @@
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
 	can_hold = list(/obj/item/weapon/ore)
+	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 
 /obj/item/weapon/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
@@ -112,7 +115,7 @@
 	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
 	w_class = WEIGHT_CLASS_TINY
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown,/obj/item/weapon/reagent_containers/food/snacks/ash_flora,/obj/item/weapon/reagent_containers/honeycomb)
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/grown, /obj/item/weapon/reagent_containers/honeycomb)
 	resistance_flags = FLAMMABLE
 
 ////////
@@ -152,7 +155,7 @@
 	allow_quick_empty = 1 // this function is superceded
 
 /obj/item/weapon/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W, stop_messages = 0)
-	if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/mineral/wood))
+	if(!istype(W, /obj/item/stack/sheet) || istype(W, /obj/item/stack/sheet/mineral/sandstone) || istype(W, /obj/item/stack/sheet/mineral/wood))
 		if(!stop_messages)
 			to_chat(usr, "The snatcher does not accept [W].")
 		return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
@@ -329,7 +332,7 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Weaken(2)
+			M.Knockdown(40)
 
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
 	cut_overlays()
@@ -374,5 +377,5 @@
 	max_combined_w_class = 200
 	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
-	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/weapon/reagent_containers/food/snacks/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
 	resistance_flags = FLAMMABLE

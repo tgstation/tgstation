@@ -1,6 +1,6 @@
 /obj/item/weapon/book/manual/random/Initialize()
 	..()
-	var/static/banned_books = list(/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
+	var/static/banned_books = list(/obj/item/weapon/book/manual/random, /obj/item/weapon/book/manual/nuclear, /obj/item/weapon/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/weapon/book/manual) - banned_books)
 	new newtype(loc)
 	qdel(src)
@@ -20,7 +20,7 @@
 /obj/structure/bookcase/random
 	var/category = null
 	var/book_count = 2
-	anchored = 1
+	anchored = TRUE
 	state = 2
 
 /obj/structure/bookcase/random/Initialize(mapload)

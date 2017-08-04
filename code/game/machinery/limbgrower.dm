@@ -9,23 +9,22 @@
 	desc = "It grows new limbs using Synthflesh."
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
-	density = 1
+	density = TRUE
 	container_type = OPENCONTAINER
 
-	var/operating = 0
-	anchored = 1
-	use_power = 1
+	var/operating = FALSE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	var/disabled = 0
 	idle_power_usage = 10
 	active_power_usage = 100
-	var/busy = 0
+	var/busy = FALSE
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
 	var/datum/research/files
 	var/selected_category
 	var/screen = 1
-	var/emag = FALSE //Gives access to other cool stuff
 
 	var/list/categories = list(
 							"human",
@@ -117,7 +116,7 @@
 			var/power = max(2000, synth_cost/5)
 
 			if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))
-				busy = 1
+				busy = TRUE
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
@@ -140,7 +139,7 @@
 			new buildpath(loc)
 	else
 		src.visible_message("<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>")
-	busy = 0
+	busy = FALSE
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"
 	updateUsrDialog()
@@ -178,7 +177,7 @@
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
-		if(C=="special" && !emag)	//Only want to show special when console is emagged
+		if(C=="special" && !emagged)	//Only want to show special when console is emagged
 			continue
 
 		dat += "<td><A href='?src=\ref[src];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
@@ -233,10 +232,10 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
-	if(emag==TRUE)
+	if(emagged)
 		return
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			files.AddDesign2Known(D)
-	to_chat(user, "A warning flashes onto the screen, stating that safety overrides have been deactivated")
-	emag = TRUE
+	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
+	emagged = TRUE

@@ -2,8 +2,8 @@
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
@@ -25,12 +25,14 @@
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
+	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
+	var/ignore_source_check = FALSE
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
@@ -38,10 +40,11 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
+	var/is_reflectable = FALSE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
-	var/weaken = 0
-	var/paralyze = 0
+	var/knockdown = 0
+	var/unconscious = 0
 	var/irradiate = 0
 	var/stutter = 0
 	var/slur = 0
@@ -78,15 +81,17 @@
 		return "chest"
 
 /obj/item/projectile/proc/prehit(atom/target)
-	return
+	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
 		if(impact_effect_type)
 			new impact_effect_type(target_loca, target, src)
 		return 0
 	var/mob/living/L = target
+	if(L.buckled && ismob(L.buckled))
+		L = L.buckled
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
@@ -124,7 +129,7 @@
 			reagent_note += num2text(R.volume) + ") "
 
 	add_logs(firer, L, "shot", src, reagent_note)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -132,17 +137,16 @@
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
-/obj/item/projectile/Bump(atom/A, yes)
-	if(!yes) //prevents double bumps.
-		return
+/obj/item/projectile/Collide(atom/A)
 	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
+			ignore_source_check = TRUE
 			return FALSE
-	if(firer && !ricochets)
+	if(firer && !ignore_source_check)
 		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
 			loc = A.loc
-			return 0
+			return FALSE
 
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
@@ -155,13 +159,16 @@
 
 	var/turf/target_turf = get_turf(A)
 
-	prehit(A)
+	if(!prehit(A))
+		if(forcedodge)
+			loc = target_turf
+		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
-		return 0
+		return FALSE
 	else
 		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
@@ -169,9 +176,11 @@
 				mobs_list += L
 			if(mobs_list.len)
 				var/mob/living/picked_mob = pick(mobs_list)
-				prehit(picked_mob)
+				if(!prehit(picked_mob))
+					return FALSE
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
+	return TRUE
 
 /obj/item/projectile/proc/check_ricochet()
 	if(prob(ricochet_chance))
@@ -194,7 +203,7 @@
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
 		return
-	if(setAngle)
+	if(isnum(setAngle))
 		Angle = setAngle
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
@@ -214,9 +223,10 @@
 				Angle=round(Get_Angle(src,current))
 			if(spread)
 				Angle += (rand() - 0.5) * spread
-			var/matrix/M = new
-			M.Turn(Angle)
-			transform = M
+			if(!nondirectional_sprite)
+				var/matrix/M = new
+				M.Turn(Angle)
+				transform = M
 
 			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
 			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
@@ -254,11 +264,8 @@
 				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 			old_pixel_x = pixel_x_offset
 			old_pixel_y = pixel_y_offset
-
-			if(original && (original.layer>=2.75) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original, 1)
+			if(can_hit_target(original, permutated))
+				Collide(original)
 			Range()
 			if (delay > 0)
 				sleep(delay)
@@ -270,58 +277,71 @@
 				if((!( current ) || loc == current))
 					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Bump(original, 1)
+				if(can_hit_target(original, permutated))
+					Collide(original)
 				Range()
 			sleep(config.run_speed * 0.9)
 
+//Returns true if the target atom is on our current turf and above the right layer
+/obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
+	if(target && (target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target))
+		if(loc == get_turf(target))
+			if(!(target in passthrough))
+				return TRUE
+	return FALSE
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
-	src.loc = get_turf(user)
-	src.starting = get_turf(user)
-	src.current = curloc
-	src.yo = targloc.y - curloc.y
-	src.xo = targloc.x - curloc.x
+	forceMove(get_turf(user))
+	starting = get_turf(user)
+	current = curloc
+	yo = targloc.y - curloc.y
+	xo = targloc.x - curloc.x
 
-	if(params)
-		var/list/mouse_control = params2list(params)
-		if(mouse_control["icon-x"])
-			src.p_x = text2num(mouse_control["icon-x"])
-		if(mouse_control["icon-y"])
-			src.p_y = text2num(mouse_control["icon-y"])
-		if(mouse_control["screen-loc"])
-			//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
-			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
+	var/list/calculated = calculate_projectile_angle_and_pixel_offsets(user, params)
+	Angle = calculated[1]
+	p_x = calculated[2]
+	p_y = calculated[3]
 
-			//Split X+Pixel_X up into list(X, Pixel_X)
-			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-
-			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
-			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-			// to_chat(world, "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]")
-			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
-			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
-
-			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
-
-			var/ox = round(screenview/2) //"origin" x
-			var/oy = round(screenview/2) //"origin" y
-			// to_chat(world, "Pixel position: [x] [y]")
-			var/angle = Atan2(y - oy, x - ox)
-			// to_chat(world, "Angle: [angle]")
-			src.Angle = angle
 	if(spread)
 		src.Angle += spread
 
+/proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
+	var/list/mouse_control = params2list(params)
+	var/p_x = 0
+	var/p_y = 0
+	var/angle = 0
+	if(mouse_control["icon-x"])
+		p_x = text2num(mouse_control["icon-x"])
+	if(mouse_control["icon-y"])
+		p_y = text2num(mouse_control["icon-y"])
+	if(mouse_control["screen-loc"])
+		//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
+		var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
+
+		//Split X+Pixel_X up into list(X, Pixel_X)
+		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+
+		//Split Y+Pixel_Y up into list(Y, Pixel_Y)
+		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+		// to_chat(world, "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]")
+		var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
+		var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
+
+		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
+		var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+
+		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
+		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
+		// to_chat(world, "Pixel position: [x] [y]")
+		angle = Atan2(y - oy, x - ox)
+		// to_chat(world, "Angle: [angle]")
+	return list(angle, p_x, p_y)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
-		Bump(AM, 1)
+		Collide(AM)
 
 /obj/item/projectile/Destroy()
 	return ..()

@@ -115,6 +115,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
+	lefthand_file = 'icons/mob/inhands/antag/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
 /*
@@ -135,8 +137,8 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
@@ -181,7 +183,7 @@
 		user.show_message("<span class='warning'>*click*</span>", 2)
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
-	playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
@@ -212,10 +214,12 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/active = 0
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
-	var/hacked = 0
+	var/hacked = FALSE
 
 /obj/item/toy/sword/attack_self(mob/user)
 	active = !( active )
@@ -237,7 +241,7 @@
 		w_class = WEIGHT_CLASS_SMALL
 	add_fingerprint(user)
 
-// Copied from /obj/item/weapon/melee/energy/sword/attackby
+// Copied from /obj/item/weapon/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
 		if((W.flags & NODROP) || (flags & NODROP))
@@ -247,13 +251,13 @@
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
-				newSaber.hacked = 1
+				newSaber.hacked = TRUE
 				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
 	else if(istype(W, /obj/item/device/multitool))
-		if(hacked == 0)
-			hacked = 1
+		if(!hacked)
+			hacked = TRUE
 			item_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 
@@ -316,7 +320,7 @@
 	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
-/obj/item/weapon/twohanded/dualsaber/toy/hit_reaction()
+/obj/item/weapon/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
@@ -328,6 +332,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5
@@ -521,7 +527,7 @@
 	return list(pick(messages))
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
-	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+	user.loc.visible_message("<span class='[span]'>[bicon(src)] [message]</span>")
 	if(chattering)
 		chatter(message, phomeme, user)
 
@@ -584,7 +590,6 @@
 
 /obj/item/toy/cards
 	resistance_flags = FLAMMABLE
-	obj_integrity = 50
 	max_integrity = 50
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
@@ -947,7 +952,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
+		playsound(src, 'sound/machines/alarm.ogg', 100, 0, surround = 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1077,7 +1082,7 @@
 		user.visible_message("<span class='notice'>[user] pulls back the string on [src].</span>")
 		icon_state = "[initial(icon_state)]_used"
 		sleep(5)
-		audible_message("<span class='danger'>\icon[src] Hiss!</span>")
+		audible_message("<span class='danger'>[bicon(src)] Hiss!</span>")
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
@@ -1270,7 +1275,7 @@
 	name = "Wizard action figure"
 	icon_state = "wizard"
 	toysay = "Ei Nath!"
-	toysound = 'sound/magic/Disintegrate.ogg'
+	toysound = 'sound/magic/disintegrate.ogg'
 
 /obj/item/toy/figure/rd
 	name = "Research Director action figure"
@@ -1329,7 +1334,7 @@
 	name = "[initial(name)] - [doll_name]"
 
 /obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
-	log_say("[key_name(M)] : through dummy : [message]")
+	log_talk(M,"[key_name(M)] : through dummy : [message]",LOGSAY)
 	say(message, language)
 	return NOPASS
 

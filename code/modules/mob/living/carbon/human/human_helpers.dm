@@ -35,7 +35,7 @@
 		return pda.owner
 	return if_no_id
 
-//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
+//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name()
 	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
@@ -66,12 +66,21 @@
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
+	var/obj/item/device/modular_computer/tablet/tablet = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
 	else if(istype(pda))
 		. = pda.owner
+	else if(istype(tablet))
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
+		if(card_slot && (card_slot.stored_card2 || card_slot.stored_card))
+			if(card_slot.stored_card2) //The second card is the one used for authorization in the ID changing program, so we prioritize it here for consistency
+				. = card_slot.stored_card2.registered_name
+			else
+				if(card_slot.stored_card)
+					. = card_slot.stored_card.registered_name
 	if(!.)
 		. = if_no_id	//to prevent null-names making the mob unclickable
 	return

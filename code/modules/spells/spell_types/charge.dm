@@ -44,8 +44,8 @@
 						charged_item = I
 						break
 				else
-					to_chat(L, "<span class='caution'>Glowing red letters appear on the front cover...</span>")
-					to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
+					to_chat(L, "<span class='danger'>Glowing red letters appear on the front cover...</span>")
+					to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
 					burnt_out = 1
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
@@ -55,7 +55,7 @@
 					I.max_charges = 0
 					burnt_out = 1
 				I.charges = I.max_charges
-				if(istype(item,/obj/item/weapon/gun/magic/wand) && I.max_charges != 0)
+				if(istype(item, /obj/item/weapon/gun/magic/wand) && I.max_charges != 0)
 					var/obj/item/weapon/gun/magic/W = item
 					W.icon_state = initial(W.icon_state)
 				I.recharge_newshot()
@@ -84,7 +84,7 @@
 								C.maxcharge = 1
 								burnt_out = 1
 						C.charge = C.maxcharge
-						if(istype(C.loc,/obj/item/weapon/gun))
+						if(istype(C.loc, /obj/item/weapon/gun))
 							var/obj/item/weapon/gun/G = C.loc
 							G.process_chamber()
 						item.update_icon()
@@ -95,5 +95,5 @@
 		else if(burnt_out)
 			to_chat(L, "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>")
 		else
-			playsound(get_turf(L), 'sound/magic/Charge.ogg', 50, 1)
+			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, 1)
 			to_chat(L, "<span class='notice'>[charged_item] suddenly feels very warm!</span>")

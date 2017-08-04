@@ -40,9 +40,8 @@
 	desc = "A light fixture under construction."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-stage1"
-	anchored = 1
+	anchored = TRUE
 	layer = WALL_OBJ_LAYER
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
 
@@ -78,7 +77,7 @@
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 				user.visible_message("[user.name] deconstructs [src].", \
 					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
 				qdel(src)
 				return
 
@@ -154,15 +153,14 @@
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
-	anchored = 1
+	anchored = TRUE
 	layer = WALL_OBJ_LAYER
-	obj_integrity = 100
 	max_integrity = 100
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
-	var/on = 0					// 1 if on, 0 if off
+	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = 0
 	var/static_power_used = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
@@ -222,7 +220,7 @@
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
 	if(A)
-		on = 0
+		on = FALSE
 //		A.update_lights()
 	return ..()
 
@@ -233,13 +231,13 @@
 			icon_state = "[base_state][on]"
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
-			on = 0
+			on = FALSE
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
-			on = 0
+			on = FALSE
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
-			on = 0
+			on = FALSE
 	return
 
 // update the icon_state and luminosity of the light depending on its state
@@ -256,10 +254,10 @@
 				if(trigger)
 					burn_out()
 			else
-				use_power = 2
+				use_power = ACTIVE_POWER_USE
 				set_light(brightness)
 	else
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		set_light(0)
 
 	active_power_usage = (brightness * 10)
@@ -276,7 +274,7 @@
 	if(status == LIGHT_OK)
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
-		on = 0
+		on = FALSE
 		set_light(0)
 
 // attempt to set the light's on/off status
@@ -407,9 +405,9 @@
 				if(LIGHT_BROKEN)
 					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
 				else
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+					playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 // returns whether this light has power
@@ -519,7 +517,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(on)
 			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
@@ -530,7 +528,7 @@
 		return
 	status = LIGHT_OK
 	brightness = initial(brightness)
-	on = 1
+	on = TRUE
 	update()
 
 /obj/machinery/light/tesla_act(power, explosive = FALSE)
@@ -647,7 +645,7 @@
 		src.visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 		update()
 
 

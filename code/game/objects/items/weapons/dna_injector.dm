@@ -3,6 +3,8 @@
 	desc = "This injects the person with DNA."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "dnainjector"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -30,7 +32,7 @@
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()
 
-	if(M.has_dna() && !(M.disabilities & NOCLONE))
+	if(M.has_dna() && !(RADIMMUNE in M.dna.species.species_traits) && !(M.disabilities & NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)

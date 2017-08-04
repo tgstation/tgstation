@@ -96,9 +96,9 @@
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
 	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
+		if(istype(A, /obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+		else if(istype(A, /obj/effect/landmark/abductor/scientist))
 			scientist_landmarks[text2num(A.team)] = A
 
 	var/team_name = team_names[team_number]
@@ -200,7 +200,7 @@
 	to_chat(world, text)
 
 //Landmarks
-// TODO: Split into seperate landmarks for prettier ships
+// TODO: Split into separate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1
 
@@ -210,7 +210,6 @@
 
 // OBJECTIVES
 /datum/objective/experiment
-	dangerrating = 10
 	target_amount = 6
 	var/team
 

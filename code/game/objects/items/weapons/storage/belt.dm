@@ -6,14 +6,20 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
-	obj_integrity = 300
 	max_integrity = 300
+	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/weapon/storage/belt/update_icon()
 	cut_overlays()
-	for(var/obj/item/I in contents)
-		add_overlay("[I.name]")
+	if(content_overlays)
+		for(var/obj/item/I in contents)
+			var/mutable_appearance/M = I.get_belt_overlay()
+			add_overlay(M)
 	..()
+
+/obj/item/weapon/storage/belt/Initialize()
+	. = ..()
+	update_icon()
 
 /obj/item/weapon/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
@@ -35,10 +41,11 @@
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves
 		)
+	content_overlays = TRUE
 
 /obj/item/weapon/storage/belt/utility/chief
-	name = "Chief Engineer's toolbelt"
-	desc = "Holds tools, looks snazzy"
+	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
+	desc = "Holds tools, looks snazzy."
 	icon_state = "utilitybelt_ce"
 	item_state = "utility_ce"
 
@@ -57,6 +64,15 @@
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+
+/obj/item/weapon/storage/belt/utility/full/engi/PopulateContents()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
@@ -149,6 +165,7 @@
 		/obj/item/clothing/gloves/,
 		/obj/item/weapon/restraints/legcuffs/bola
 		)
+	content_overlays = TRUE
 
 /obj/item/weapon/storage/belt/security/full/PopulateContents()
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
@@ -200,7 +217,7 @@
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
-		/obj/item/organ/hivelord_core,
+		/obj/item/organ/regenerative_core,
 		/obj/item/device/wormhole_jaunter,
 		/obj/item/weapon/storage/bag/plants,
 		/obj/item/stack/marker_beacon
@@ -249,8 +266,8 @@
 /obj/item/weapon/storage/belt/military
 	name = "chest rig"
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
-	icon_state = "explorer1"
-	item_state = "explorer1"
+	icon_state = "militarywebbing"
+	item_state = "militarywebbing"
 	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/military/abductor
@@ -289,7 +306,9 @@
 	icon_state = "grenadebeltnew"
 	item_state = "security"
 	max_w_class = WEIGHT_CLASS_BULKY
+	display_contents_with_number = TRUE
 	storage_slots = 30
+	max_combined_w_class = 60 //needs to be this high
 	can_hold = list(
 		/obj/item/weapon/grenade,
 		/obj/item/weapon/screwdriver,
@@ -374,6 +393,7 @@
 	icon_state = "bandolier"
 	item_state = "bandolier"
 	storage_slots = 18
+	display_contents_with_number = TRUE
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
 		)
@@ -461,6 +481,7 @@
 	icon_state = "sheath"
 	item_state = "sheath"
 	storage_slots = 1
+	rustle_jimmies = FALSE
 	w_class = WEIGHT_CLASS_BULKY
 	max_w_class = WEIGHT_CLASS_BULKY
 	can_hold = list(

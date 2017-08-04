@@ -8,10 +8,9 @@
 	desc = "A solar directional tracker."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
-	anchored = 1
-	density = 1
-	use_power = 0
-	obj_integrity = 250
+	anchored = TRUE
+	density = TRUE
+	use_power = NO_POWER_USE
 	max_integrity = 250
 	integrity_failure = 50
 
@@ -47,7 +46,7 @@
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.tracker = 1
-		S.anchored = 1
+		S.anchored = TRUE
 	S.loc = src
 	update_icon()
 
@@ -67,7 +66,7 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
 		if(do_after(user, 50*W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
 			deconstruct(TRUE)
 	else
@@ -75,7 +74,7 @@
 
 /obj/machinery/power/tracker/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
-		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		unset_control()
 

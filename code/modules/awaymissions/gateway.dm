@@ -5,8 +5,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
 	var/checkparts = TRUE
@@ -21,7 +21,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
 		switch(dir)
 			if(SOUTH,SOUTHEAST,SOUTHWEST)
-				density = 0
+				density = FALSE
 	..()
 
 /obj/machinery/gateway/proc/toggleoff()
@@ -89,7 +89,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centerstation
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 
 	//warping vars
 	var/wait = 0				//this just grabs world.time at world start
@@ -136,7 +136,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centerstation/CollidedWith(atom/movable/AM)
 	if(!active)
 		return
 	if(!detect())
@@ -161,7 +161,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		if(calibrated)
 			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return
@@ -176,7 +176,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centeraway
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	var/obj/machinery/gateway/centeraway/stationgate = null
 	can_link = TRUE
 
@@ -212,7 +212,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return TRUE
 	return FALSE
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centeraway/CollidedWith(atom/movable/AM)
 	if(!detect())
 		return
 	if(!active)
@@ -238,3 +238,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		var/mob/M = AM
 		if (M.client)
 			M.client.move_delay = max(world.time + 5, M.client.move_delay)
+
+
+/obj/item/weapon/paper/fluff/gateway
+	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research"
+	name = "Confidential Correspondence, Pg 1"

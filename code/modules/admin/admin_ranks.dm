@@ -27,6 +27,9 @@ GLOBAL_PROTECT(admin_ranks)
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
 
+#if DM_VERSION > 512
+#error remove the rejuv keyword from this proc
+#endif
 /proc/admin_keyword_to_flag(word, previous_rights=0)
 	var/flag = 0
 	switch(ckey(word))
@@ -48,8 +51,8 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_POSSESS
 		if("stealth")
 			flag = R_STEALTH
-		if("rejuv","rejuvinate")
-			flag = R_REJUVINATE
+		if("poll")
+			flag = R_POLL
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
@@ -60,6 +63,9 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_SPAWN
 		if("@","prev")
 			flag = previous_rights
+		if("rejuv","rejuvinate")
+			stack_trace("Legacy keyword rejuvinate used defaulting to R_ADMIN")
+			flag = R_ADMIN
 	return flag
 
 /proc/admin_keyword_to_path(word) //use this with verb keywords eg +/client/proc/blah
@@ -67,6 +73,11 @@ GLOBAL_PROTECT(admin_ranks)
 
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(word, previous_rights=0)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin_private("[key_name(usr)][msg]")
+		return
 	var/flag = admin_keyword_to_flag(word, previous_rights)
 	if(flag)
 		switch(text2ascii(word,1))
@@ -86,6 +97,7 @@ GLOBAL_PROTECT(admin_ranks)
 					if(!adds.Remove(path))
 						subs += path	//-
 
+
 // Checks for (keyword-formatted) rights on this admin
 /datum/admins/proc/check_keyword(word)
 	var/flag = admin_keyword_to_flag(word)
@@ -100,11 +112,14 @@ GLOBAL_PROTECT(admin_ranks)
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
+		return
 	GLOB.admin_ranks.Cut()
 
 	if(config.admin_legacy_system)
 		var/previous_rights = 0
-		//load text from file and process each line seperately
+		//load text from file and process each line separately
 		for(var/line in world.file2list("config/admin_ranks.txt"))
 			if(!line)
 				continue
@@ -157,6 +172,9 @@ GLOBAL_PROTECT(admin_ranks)
 
 
 /proc/load_admins(target = null)
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
+		return
 	//clear the datums references
 	if(!target)
 		GLOB.admin_datums.Cut()
@@ -177,7 +195,7 @@ GLOBAL_PROTECT(admin_ranks)
 		//load text from file
 		var/list/lines = world.file2list("config/admins.txt")
 
-		//process each line seperately
+		//process each line separately
 		for(var/line in lines)
 			if(!length(line))
 				continue
@@ -258,6 +276,9 @@ GLOBAL_PROTECT(admin_ranks)
 	if(!check_rights(R_PERMISSIONS))
 		message_admins("[key_name_admin(usr)] attempted to edit the admin permissions without sufficient rights.")
 		log_admin("[key_name(usr)] attempted to edit the admin permissions without sufficient rights.")
+		return
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>")
 		return
 
 	var/adm_ckey
@@ -360,7 +381,6 @@ GLOBAL_PROTECT(admin_ranks)
 			if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
 				D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
-
 			D.rank.process_keyword(keyword)
 
 			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)

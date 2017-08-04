@@ -103,7 +103,7 @@
 	update_text()
 
 /obj/item/weapon/paper/contract/infernal/suicide_act(mob/user)
-	if(signed && (user == target.current) && istype(user,/mob/living/carbon/human/))
+	if(signed && (user == target.current) && istype(user, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
 		H.forcesay("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!")
 		H.visible_message("<span class='suicide'>[H] holds up a contract claiming [user.p_their()] soul, then immediately catches fire.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -276,7 +276,7 @@
 	if(!user.dna)
 		return -1
 	user.dna.add_mutation(HULK)
-	var/obj/item/organ/hivelord_core/organ = new /obj/item/organ/hivelord_core
+	var/obj/item/organ/regenerative_core/organ = new /obj/item/organ/regenerative_core
 	organ.Insert(user)
 	return ..()
 
@@ -304,11 +304,11 @@
 		id.assignment = "Captain"
 		id.update_label()
 		if(worn)
-			if(istype(worn,/obj/item/device/pda))
+			if(istype(worn, /obj/item/device/pda))
 				var/obj/item/device/pda/PDA = worn
 				PDA.id = id
 				id.loc = worn
-			else if(istype(worn,/obj/item/weapon/storage/wallet))
+			else if(istype(worn, /obj/item/weapon/storage/wallet))
 				var/obj/item/weapon/storage/wallet/W = worn
 				W.front_id = id
 				id.loc = worn

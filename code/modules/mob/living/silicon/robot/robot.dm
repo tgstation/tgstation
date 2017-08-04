@@ -42,16 +42,15 @@
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
-	var/obj/machinery/camera/camera = null
 
 	var/opened = 0
-	var/emagged = 0
+	var/emagged = FALSE
 	var/emag_cooldown = 0
 	var/wiresexposed = 0
 
 	var/ident = 0
-	var/locked = 1
-	var/list/req_access = list(GLOB.access_robotics)
+	var/locked = TRUE
+	var/list/req_access = list(ACCESS_ROBOTICS)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
@@ -76,7 +75,6 @@
 	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/sight_mode = 0
-	var/updating = 0 //portable camera camerachunk update
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	var/list/upgrades = list()
@@ -93,9 +91,14 @@
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
 
+	var/remote_range = 7 //How far can you interact with machines.
+
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
+
+/mob/living/silicon/robot/get_cell()
+	return cell
 
 /mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -122,16 +125,16 @@
 			lawupdate = FALSE
 
 	radio = new /obj/item/device/radio/borg(src)
-	if(!scrambledcodes && !camera)
-		camera = new /obj/machinery/camera(src)
-		camera.c_tag = real_name
-		camera.network = list("SS13")
+	if(!scrambledcodes && !builtInCamera)
+		builtInCamera = new (src)
+		builtInCamera.c_tag = real_name
+		builtInCamera.network = list("SS13")
 		if(wires.is_cut(WIRE_CAMERA))
-			camera.status = 0
+			builtInCamera.status = 0
 	module = new /obj/item/weapon/robot_module(src)
 	module.rebuild_modules()
 	update_icons()
-	..()
+	. = ..()
 
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
@@ -186,13 +189,16 @@
 	wires = null
 	module = null
 	eye_lights = null
-	camera = null
 	cell = null
 	return ..()
 
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/weapon/robot_module)
+		return
+
+	if(wires.is_cut(WIRE_RESET_MODULE))
+		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
 	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
@@ -226,8 +232,8 @@
 
 	real_name = changed_name
 	name = real_name
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 
 /mob/living/silicon/robot/proc/get_standard_name()
 	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
@@ -383,13 +389,14 @@
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
-		if (getFireLoss() > 0)
+		if (getFireLoss() > 0 || getToxLoss() > 0)
 			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
+				adjustToxLoss(-30)
 				updatehealth()
 				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
@@ -540,7 +547,7 @@
 	if(locked)
 		switch(alert("You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
-				locked = 0
+				locked = FALSE
 				update_icons()
 				to_chat(usr, "<span class='notice'>You unlock your cover.</span>")
 
@@ -556,7 +563,7 @@
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(istype(george.get_active_held_item(), /obj/item))
+		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
 	return 0
 
@@ -568,7 +575,7 @@
 	if(!L.len) //no requirements
 		return 1
 
-	if(!istype(I, /obj/item/weapon/card/id) && istype(I, /obj/item))
+	if(!istype(I, /obj/item/weapon/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
@@ -584,7 +591,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -607,29 +614,6 @@
 		add_overlay(head_overlay)
 	update_fire()
 
-#define BORG_CAMERA_BUFFER 30
-
-/mob/living/silicon/robot/proc/do_camera_update(oldLoc)
-	if(oldLoc != src.loc)
-		GLOB.cameranet.updatePortableCamera(src.camera)
-	updating = 0
-
-/mob/living/silicon/robot/Move(a, b, flag)
-	var/oldLoc = src.loc
-	. = ..()
-	if(.)
-		if(src.camera)
-			if(!updating)
-				updating = 1
-				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
-	if(module)
-		if(istype(module, /obj/item/weapon/robot_module/miner))
-			if(istype(loc, /turf/open/floor/plating/asteroid))
-				for(var/obj/item/I in held_items)
-					if(istype(I,/obj/item/weapon/storage/bag/ore))
-						loc.attackby(I, src)
-#undef BORG_CAMERA_BUFFER
-
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		if(mmi)
@@ -648,9 +632,8 @@
 	canmove = 1
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
-	if(src.camera)
-		qdel(src.camera)
-		src.camera = null
+	if(!QDELETED(builtInCamera))
+		QDEL_NULL(builtInCamera)
 		// I'm trying to get the Cyborg to not be listed in the camera list
 		// Instead of being listed as "deactivated". The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
@@ -793,7 +776,7 @@
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
-	req_access = list(GLOB.access_syndicate)
+	req_access = list(ACCESS_SYNDICATE)
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
@@ -841,6 +824,8 @@
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
 		if(AI_SHELL) //New Shell
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg shell detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>")
+		if(DISCONNECT) //Tampering with the wires
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || low_power_mode)
@@ -910,7 +895,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(paralysis || stunned || weakened || getOxyLoss() > maxHealth*0.5)
+		if(IsUnconscious() || IsStun() || IsKnockdown() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -929,11 +914,11 @@
 
 /mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
 	if(..()) //successfully ressuscitated from death
-		if(camera && !wires.is_cut(WIRE_CAMERA))
-			camera.toggle_cam(src,0)
+		if(!QDELETED(builtInCamera) && !wires.is_cut(WIRE_CAMERA))
+			builtInCamera.toggle_cam(src,0)
 		update_headlamp()
 		if(admin_revive)
-			locked = 1
+			locked = TRUE
 		notify_ai(NEW_BORG)
 		. = 1
 
@@ -941,8 +926,8 @@
 	..()
 	if(oldname != real_name)
 		notify_ai(RENAME, oldname, newname)
-	if(camera)
-		camera.c_tag = real_name
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name
 	custom_name = newname
 
 
@@ -1006,8 +991,8 @@
 	name = "[designation] AI Shell [rand(100,999)]"
 	real_name = name
 	GLOB.available_ai_shells |= src
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
 	notify_ai(AI_SHELL)
 
@@ -1022,15 +1007,15 @@
 	GLOB.available_ai_shells -= src
 	name = "Unformatted Cyborg [rand(100,999)]"
 	real_name = name
-	if(camera)
-		camera.c_tag = real_name
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name
 	diag_hud_set_aishell()
 
 /mob/living/silicon/robot/proc/deploy_init(var/mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up seperately in the shells list
+	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up separately in the shells list
 	name = real_name
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 	mainframe = AI
 	deployed = TRUE
 	connected_ai = mainframe
@@ -1051,6 +1036,7 @@
 /datum/action/innate/undeployment
  	name = "Disconnect from shell"
  	desc = "Stop controlling your shell and resume normal core operations."
+ 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
  	button_icon_state = "ai_core"
 
 /datum/action/innate/undeployment/Trigger()
@@ -1074,11 +1060,12 @@
 	undeployment_action.Remove(src)
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
-	if(camera)
-		camera.c_tag = real_name	//update the camera name too
+	if(!QDELETED(builtInCamera))
+		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
 	mainframe.diag_hud_set_deployed()
-	mainframe.show_laws() //Always remind the AI when switching
+	if(mainframe.laws)
+		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -1109,7 +1096,7 @@
 		return
 	if(incapacitated())
 		return
-	if(M.restrained())
+	if(M.incapacitated())
 		return
 	if(module)
 		if(!module.allow_riding)

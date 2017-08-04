@@ -4,7 +4,7 @@
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "r_wall"
 	opacity = 1
-	density = 1
+	density = TRUE
 
 	var/d_state = INTACT
 	hardness = 10
@@ -106,7 +106,7 @@
 
 			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover...</span>")
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src, 'sound/items/welder.ogg', 100, 1)
 				if(do_after(user, 60*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != COVER)
 						return 1
@@ -190,7 +190,7 @@
 
 			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 				to_chat(user, "<span class='notice'>You begin slicing through the support rods...</span>")
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src, 'sound/items/welder.ogg', 100, 1)
 				if(do_after(user, 100*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_RODS)
 						return 1

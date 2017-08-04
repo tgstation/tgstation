@@ -3,6 +3,8 @@
 	desc = "Danger. Very robust."
 	icon_state = "red"
 	item_state = "toolbox_red"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags = CONDUCT
 	force = 12
 	throwforce = 12
@@ -140,10 +142,10 @@
 	max_combined_w_class = 28
 	storage_slots = 28
 	attack_verb = list("robusted", "crushed", "smashed")
-	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
+	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/PopulateContents()
-	new proselytizer_type(src)
+	new fabricator_type(src)
 	new /obj/item/weapon/screwdriver/brass(src)
 	new /obj/item/weapon/wirecutters/brass(src)
 	new /obj/item/weapon/wrench/brass(src)
@@ -151,7 +153,7 @@
 	new /obj/item/weapon/weldingtool/experimental/brass(src)
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
-	var/slab_type = /obj/item/clockwork/slab/scarab
+	var/slab_type = /obj/item/clockwork/slab
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
 	..()
@@ -159,7 +161,7 @@
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
 	slab_type = /obj/item/clockwork/slab/debug
-	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug
+	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
 
 
 /obj/item/weapon/storage/toolbox/artistic

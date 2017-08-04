@@ -14,10 +14,10 @@
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'
+	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	canmove = 0
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
@@ -53,7 +53,7 @@
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	var/malf_cooldown = 0 //Cooldown var for malf modules
+	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
 	var/obj/machinery/power/apc/malfhack = null
 	var/explosive = 0 //does the AI explode when it dies?
@@ -78,8 +78,6 @@
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
-
-	var/obj/machinery/camera/portable/builtInCamera
 
 	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
@@ -123,7 +121,7 @@
 	eyeobj.loc = src.loc
 	rename_self("ai")
 
-	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"default"))
+	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -151,7 +149,7 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	builtInCamera = new /obj/machinery/camera/portable(src)
+	builtInCamera = new (src)
 	builtInCamera.network = list("SS13")
 
 
@@ -164,6 +162,9 @@
 
 	. = ..()
 
+/mob/living/silicon/ai/IgniteMob()
+	fire_stacks = 0
+	. = ..()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -632,13 +633,12 @@
 		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/M in GLOB.machines) //change status
+	for (var/M in GLOB.ai_status_displays) //change status of displays
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
 			AISD.emotion = emote
 		//if Friend Computer, change ALL displays
 		else if(istype(M, /obj/machinery/status_display))
-
 			var/obj/machinery/status_display/SD = M
 			if(emote=="Friend Computer")
 				SD.friendc = 1
@@ -702,10 +702,10 @@
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
-				"default" = 'icons/mob/AI.dmi',
-				"floating face" = 'icons/mob/AI.dmi',
+				"default" = 'icons/mob/ai.dmi',
+				"floating face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
-				"horror" = 'icons/mob/AI.dmi'
+				"horror" = 'icons/mob/ai.dmi'
 				)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
@@ -875,10 +875,10 @@
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
 		light_cameras()
-	if(istype(A,/obj/machinery/camera))
+	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
-		if(istype(A, /atom/movable))
+		if(ismovableatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -961,6 +961,7 @@
 /datum/action/innate/deploy_shell
 	name = "Deploy to AI Shell"
 	desc = "Wirelessly control a specialized cyborg shell."
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_shell"
 
 /datum/action/innate/deploy_shell/Trigger()
@@ -972,6 +973,7 @@
 /datum/action/innate/deploy_last_shell
 	name = "Reconnect to shell"
 	desc = "Reconnect to the most recently used AI shell."
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_last_shell"
 	var/mob/living/silicon/robot/last_used_shell
 

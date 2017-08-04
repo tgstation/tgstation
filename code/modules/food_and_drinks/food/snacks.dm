@@ -3,6 +3,8 @@
 	desc = "Yummy."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	unique_rename = 1
 	var/bitesize = 2
 	var/bitecount = 0
@@ -68,7 +70,6 @@
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return 0
-
 			else if(fullness <= 50)
 				to_chat(M, "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
 			else if(fullness > 50 && fullness < 150)
@@ -105,12 +106,13 @@
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
-				var/fraction = min(bitesize/reagents.total_volume, 1)
+				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
 				bitecount++
 				On_Consume()
-			return 1
+				checkLiked(fraction, M)
+				return 1
 
 	return 0
 
@@ -132,10 +134,10 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		..() // -> item/attackby()
 		return 0
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > WEIGHT_CLASS_SMALL)
@@ -182,7 +184,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
-		return 0
+		return FALSE
 
 	if ( \
 			!isturf(src.loc) || \
@@ -191,7 +193,7 @@
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
-		return 1
+		return FALSE
 
 	var/slices_lost = 0
 	if (accuracy >= IS_SHARP_ACCURATE)
@@ -211,6 +213,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
 		initialize_slice(slice, reagents_per_slice)
 	qdel(src)
+	return TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
 	slice.create_reagents(slice.volume)
@@ -226,7 +229,7 @@
 			. = new trash(location)
 			trash = null
 			return
-		else if(istype(trash, /obj/item))
+		else if(isitem(trash))
 			var/obj/item/trash_item = trash
 			trash_item.forceMove(location)
 			. = trash

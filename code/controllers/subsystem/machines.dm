@@ -37,15 +37,15 @@ SUBSYSTEM_DEF(machines)
 
 	var/seconds = wait * 0.1
 	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
+		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(thing && thing.process(seconds) != PROCESS_KILL)
-			if(thing:use_power)
-				thing:auto_use_power() //add back the power state
+		if(!QDELETED(thing) && thing.process(seconds) != PROCESS_KILL)
+			if(thing.use_power)
+				thing.auto_use_power() //add back the power state
 		else
 			processing -= thing
-			if (thing)
-				thing.isprocessing = 0
+			if (!QDELETED(thing))
+				thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return
 

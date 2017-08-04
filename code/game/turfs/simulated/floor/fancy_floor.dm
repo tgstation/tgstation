@@ -105,7 +105,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	ore_type = /obj/item/weapon/ore/glass/basalt
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/Initialize()
@@ -157,6 +157,12 @@
 		make_plating()
 		if(smooth)
 			queue_smooth_neighbors(src)
+
+/turf/open/floor/carpet/black
+	icon = 'icons/turf/floors/carpet_black.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/black
+	canSmoothWith = list(/turf/open/floor/carpet/black)
+
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

@@ -6,8 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -71,7 +70,6 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/bluespace,
@@ -79,7 +77,6 @@
 "ap" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /obj/item/toy/snappop/phoenix,
@@ -173,7 +170,6 @@
 /obj/structure/table,
 /obj/item/toy/sword,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/noslip,
@@ -210,8 +206,7 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/item/toy/snappop/phoenix,
 /obj/machinery/light/small{
@@ -261,7 +256,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /obj/item/toy/snappop/phoenix,
@@ -284,14 +278,12 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aX" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/noslip,
@@ -325,8 +317,7 @@
 	},
 /obj/item/weapon/crowbar,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4

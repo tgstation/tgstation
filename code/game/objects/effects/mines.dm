@@ -1,8 +1,8 @@
 /obj/effect/mine
 	name = "dummy mine"
 	desc = "Better stay away from that thing."
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
 	var/triggered = 0
@@ -22,7 +22,7 @@
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
 		return
-	visible_message("<span class='danger'>[victim] sets off \icon[src] [src]!</span>")
+	visible_message("<span class='danger'>[victim] sets off [bicon(src)] [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -44,11 +44,11 @@
 
 /obj/effect/mine/stun
 	name = "stun mine"
-	var/stun_time = 8
+	var/stun_time = 80
 
-/obj/effect/mine/stun/mineEffect(mob/victim)
+/obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
-		victim.Weaken(stun_time)
+		victim.Knockdown(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
@@ -95,7 +95,7 @@
 	desc = "pick me up"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "electricity2"
-	density = 0
+	density = FALSE
 	var/duration = 0
 
 /obj/effect/mine/pickup/New()
@@ -127,7 +127,7 @@
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
-		new /obj/effect/hallucination/delusion(victim.loc,victim,force_kind="demon",duration=duration,skip_nearby=0)
+		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
 	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP

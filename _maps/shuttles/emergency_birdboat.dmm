@@ -6,15 +6,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
 /obj/structure/table,
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/weapon/hemostat,
@@ -33,9 +31,8 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "ag" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -79,8 +76,7 @@
 /area/shuttle/escape)
 "ap" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion"
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -105,9 +101,8 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "au" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -296,7 +291,6 @@
 /area/shuttle/escape)
 "aX" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,

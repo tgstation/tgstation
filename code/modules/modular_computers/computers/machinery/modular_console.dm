@@ -9,14 +9,13 @@
 	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
 	var/console_department = "" // Used in New() to set network tag according to our area.
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	base_idle_power_usage = 100
 	base_active_power_usage = 500
 	max_hardware_size = 4
 	steel_sheet_cost = 10
 	light_strength = 2
-	obj_integrity = 300
 	max_integrity = 300
 	integrity_failure = 150
 

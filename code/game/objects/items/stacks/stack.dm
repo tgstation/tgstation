@@ -18,9 +18,11 @@
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
+	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
+	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 
 /obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
-	..()
+	. = ..()
 	if(new_amount)
 		amount = new_amount
 	if(!merge_type)
@@ -29,6 +31,28 @@
 		for(var/obj/item/stack/S in loc)
 			if(S.merge_type == merge_type)
 				merge(S)
+	update_weight()
+	update_icon()
+
+/obj/item/stack/proc/update_weight()
+	if(amount <= (max_amount * (1/3)))
+		w_class = Clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+	else if (amount <= (max_amount * (2/3)))
+		w_class = Clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+	else
+		w_class = full_w_class
+
+/obj/item/stack/update_icon()
+	if(novariants)
+		return ..()
+	if(amount <= (max_amount * (1/3)))
+		icon_state = initial(icon_state)
+	else if (amount <= (max_amount * (2/3)))
+		icon_state = "[initial(icon_state)]_2"
+	else
+		icon_state = "[initial(icon_state)]_3"
+	..()
+
 
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
@@ -147,7 +171,7 @@
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
 
-		if (istype(O,/obj/item))
+		if (isitem(O))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 
@@ -178,7 +202,7 @@
 		return 0
 	return 1
 
-/obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
+/obj/item/stack/proc/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
 	if(zero_amount())
 		return 0
 	if (is_cyborg)
@@ -188,6 +212,7 @@
 	amount -= used
 	zero_amount()
 	update_icon()
+	update_weight()
 	return 1
 
 /obj/item/stack/proc/zero_amount()
@@ -204,6 +229,7 @@
 	else
 		src.amount += amount
 	update_icon()
+	update_weight()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
 	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
@@ -216,7 +242,7 @@
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)
-	use(transfer)
+	use(transfer, TRUE)
 	S.add(transfer)
 
 /obj/item/stack/Crossed(obj/o)
@@ -243,13 +269,15 @@
 		return
 	if(!in_range(src, user))
 		return
+	if(is_cyborg)
+		return
 	else
 		if(zero_amount())
 			return
 		//get amount from user
 		var/min = 0
 		var/max = src.get_amount()
-		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max]") as num)
+		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as num)
 		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= src.get_amount())
 			return
 		else
@@ -263,7 +291,7 @@
 	user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
-	use(amount)
+	use(amount, TRUE)
 
 
 

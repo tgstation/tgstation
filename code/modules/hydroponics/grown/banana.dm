@@ -23,6 +23,7 @@
 	trash = /obj/item/weapon/grown/bananapeel
 	filling_color = "#FFFF00"
 	bitesize = 5
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -117,5 +118,5 @@
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
 	if(iscarbon(AM))
 		var/mob/living/carbon/carbon = AM
-		if(carbon.slip(2, 2, src, FALSE))
+		if(carbon.slip(40, src, FALSE))
 			qdel(src)

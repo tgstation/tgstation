@@ -162,10 +162,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
-//SOUND:
-#define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS	1
-#define SURROUND_CAP	7
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).
@@ -173,6 +169,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 // Used by NewsCaster and NewsPaper.
 // Used by Modular Computers
 #define PEN_FONT "Verdana"
+#define FOUNTAIN_PEN_FONT "Segoe Script"
 #define CRAYON_FONT "Comic Sans MS"
 #define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
@@ -425,3 +422,18 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_ACTIVE 1
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
+
+//Gangster starting influences
+
+#define GANGSTER_SOLDIER_STARTING_INFLUENCE 5
+#define GANGSTER_BOSS_STARTING_INFLUENCE 20
+
+//for obj explosion block calculation
+#define EXPLOSION_BLOCK_PROC -1
+
+//for determining which type of heartbeat sound is playing
+#define BEAT_FAST 1
+#define BEAT_SLOW 2
+#define BEAT_NONE 0
+
+

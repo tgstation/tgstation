@@ -70,8 +70,7 @@
 	cell_type = 0;
 	dir = 4;
 	name = "Cargo Bay APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -93,19 +92,13 @@
 /area/ruin/derelictoutpost/dockedship)
 "ar" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 1;
-	icon_state = "burst_r";
-	name = "shuttle engine";
-	tag = "icon-burst_r (NORTH)"
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/dockedship)
 "as" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 1;
-	icon_state = "burst_l";
-	name = "shuttle engine";
-	tag = "icon-burst_l (NORTH)"
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/dockedship)
@@ -116,15 +109,13 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "av" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -135,36 +126,24 @@
 /area/ruin/derelictoutpost/cargobay)
 "ax" = (
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (NORTH)";
-	icon_state = "rwindow";
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/derelictoutpost/dockedship)
 "ay" = (
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (NORTH)";
-	icon_state = "rwindow";
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -223,8 +202,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "aK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
 "aL" = (
@@ -280,7 +258,7 @@
 	name = "critter crate - mr.tiggles";
 	opened = 1
 	},
-/obj/item/weapon/paper/crumpled/snowdin{
+/obj/item/weapon/paper/crumpled/ruins/snowdin{
 	info = "<i>A crumpled piece of manifest paper, out of the barely legible pen writing,  you can see something about a warning involving whatever was originally in the crate.</i>"
 	},
 /obj/structure/alien/weeds{
@@ -420,7 +398,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 9
@@ -434,7 +411,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -452,7 +428,6 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -466,7 +441,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -480,7 +454,7 @@
 	name = "Tradeport Officer";
 	random = 1
 	},
-/obj/item/weapon/paper/crumpled/snowdin{
+/obj/item/weapon/paper/crumpled/ruins/snowdin{
 	icon_state = "scrap_bloodied";
 	info = "If anyone finds this, please, don't let my kids know I died a coward.."
 	},
@@ -492,7 +466,6 @@
 /area/ruin/derelictoutpost/powerstorage)
 "br" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -501,8 +474,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -525,7 +497,6 @@
 /area/ruin/derelictoutpost/dockedship)
 "bw" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -605,7 +576,6 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTH)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 1
@@ -721,7 +691,6 @@
 /area/ruin/derelictoutpost)
 "bU" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -734,7 +703,6 @@
 /area/ruin/derelictoutpost)
 "bV" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -743,7 +711,6 @@
 /area/ruin/derelictoutpost)
 "bW" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 6
@@ -757,13 +724,11 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTH)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 1
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -778,14 +743,12 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -808,8 +771,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "cc" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/dockedship)
 "cd" = (
@@ -835,16 +797,13 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "cf" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (NORTH)";
-	icon_state = "rwindow";
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkred,
@@ -894,7 +853,6 @@
 	cell_type = 0;
 	dir = 2;
 	name = "Tradepost APC";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/cable{
@@ -911,7 +869,6 @@
 	},
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTH)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 1
@@ -942,8 +899,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -952,9 +908,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -967,9 +921,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -977,9 +929,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1020,8 +970,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -1039,9 +988,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1054,9 +1001,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
@@ -1065,9 +1010,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost)
@@ -1080,9 +1023,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost)
@@ -1116,7 +1057,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 10
@@ -1137,7 +1077,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1151,7 +1090,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -1173,8 +1111,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1182,9 +1119,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/structure/janitorialcart,
 /turf/open/floor/plasteel,
@@ -1198,16 +1133,13 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/item/weapon/mop,
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "cK" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 10
@@ -1220,15 +1152,12 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "cL" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -1241,9 +1170,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1257,9 +1184,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1277,8 +1202,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1312,7 +1236,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTH)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 1
@@ -1342,7 +1265,6 @@
 /area/ruin/derelictoutpost/cargobay)
 "cX" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTH)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 1
@@ -1371,7 +1293,6 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTH)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 1
@@ -1413,7 +1334,6 @@
 /area/ruin/derelictoutpost/cargobay)
 "dd" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 10
@@ -1422,7 +1342,6 @@
 /area/ruin/derelictoutpost/cargobay)
 "de" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1431,7 +1350,6 @@
 /area/ruin/derelictoutpost/cargobay)
 "df" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1445,14 +1363,12 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "dg" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1465,15 +1381,12 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
 "dh" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1491,15 +1404,12 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/cargobay)
 "di" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -1565,7 +1475,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -1579,7 +1488,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 6
@@ -1614,8 +1522,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
@@ -1645,7 +1552,6 @@
 /area/ruin/derelictoutpost)
 "dv" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 9
@@ -1659,7 +1565,6 @@
 /area/ruin/derelictoutpost)
 "dw" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1678,7 +1583,6 @@
 /area/ruin/derelictoutpost)
 "dx" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1692,7 +1596,6 @@
 /area/ruin/derelictoutpost)
 "dy" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1707,7 +1610,6 @@
 /area/ruin/derelictoutpost)
 "dz" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -1724,7 +1626,6 @@
 /area/ruin/derelictoutpost)
 "dA" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -1733,7 +1634,6 @@
 /area/ruin/derelictoutpost)
 "dB" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 6
@@ -1746,8 +1646,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
@@ -1787,7 +1686,6 @@
 /area/ruin/derelictoutpost)
 "dF" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 10
@@ -1801,7 +1699,6 @@
 /area/ruin/derelictoutpost)
 "dG" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -1815,7 +1712,6 @@
 /area/ruin/derelictoutpost)
 "dH" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 6
@@ -1836,8 +1732,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
@@ -1866,7 +1761,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -1883,7 +1777,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 9
@@ -1891,14 +1784,12 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
 "dN" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -1917,7 +1808,6 @@
 	name = "gelatinous membrane"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -1936,7 +1826,6 @@
 	},
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -1950,7 +1839,6 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 6
@@ -2066,8 +1954,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost)
@@ -2127,8 +2014,7 @@
 	cell_type = 0;
 	dir = 4;
 	name = "Cargo Storage APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -2193,8 +2079,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargostorage)
@@ -2209,7 +2094,6 @@
 /area/ruin/derelictoutpost)
 "ew" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -2219,7 +2103,6 @@
 /area/ruin/derelictoutpost/cargostorage)
 "ex" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -2228,7 +2111,6 @@
 /area/ruin/derelictoutpost/cargostorage)
 "ey" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (WEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 8
@@ -2238,7 +2120,6 @@
 /area/ruin/derelictoutpost/cargostorage)
 "ez" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (NORTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 5
@@ -2246,8 +2127,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargostorage)
@@ -2306,7 +2186,6 @@
 /area/ruin/derelictoutpost/cargostorage)
 "eI" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHWEST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 10
@@ -2314,8 +2193,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargostorage)
@@ -2326,7 +2204,6 @@
 	name = "pried-open airlock"
 	},
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (EAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 4
@@ -2334,15 +2211,12 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/cargostorage)
 "eK" = (
 /obj/effect/decal/cleanable/blood/old{
-	tag = "icon-trails_1 (SOUTHEAST)";
 	name = "dried blood trail";
 	icon_state = "trails_1";
 	dir = 6

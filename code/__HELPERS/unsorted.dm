@@ -42,13 +42,13 @@
 		.+=360
 
 //Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
 Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
 Random error in tile placement x, error in tile placement y, and block offset.
 Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
 Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
-Turf and target are seperate in case you want to teleport some distance from a turf the target is not standing on or something.
+Turf and target are separate in case you want to teleport some distance from a turf the target is not standing on or something.
 */
 
 	var/dirx = 0//Generic location finding variable.
@@ -442,19 +442,23 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
 		return 0
-		//since NORTHEAST == NORTH & EAST, etc, doing it this way allows for diagonal mass drivers in the future
+		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
 
-		// Note diagonal directions won't usually be accurate
+	var/x = A.x
+	var/y = A.y
 	if(direction & NORTH)
-		target = locate(target.x, world.maxy, target.z)
-	if(direction & SOUTH)
-		target = locate(target.x, 1, target.z)
+		y = world.maxy
+	else if(direction & SOUTH) //you should not have both NORTH and SOUTH in the provided direction
+		y = 1
 	if(direction & EAST)
-		target = locate(world.maxx, target.y, target.z)
-	if(direction & WEST)
-		target = locate(1, target.y, target.z)
-	return target
+		x = world.maxx
+	else if(direction & WEST)
+		x = 1
+	if(direction in GLOB.diagonals) //let's make sure it's accurately-placed for diagonals
+		var/lowest_distance_to_map_edge = min(abs(x - A.x), abs(y - A.y))
+		return get_ranged_target_turf(A, direction, lowest_distance_to_map_edge)
+	return locate(x,y,A.z)
 
 // returns turf relative to A in given direction at set range
 // result is bounded to map size
@@ -466,11 +470,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y = A.y
 	if(direction & NORTH)
 		y = min(world.maxy, y + range)
-	if(direction & SOUTH)
+	else if(direction & SOUTH)
 		y = max(1, y - range)
 	if(direction & EAST)
 		x = min(world.maxx, x + range)
-	if(direction & WEST)
+	else if(direction & WEST) //if you have both EAST and WEST in the provided direction, then you're gonna have issues
 		x = max(1, x - range)
 
 	return locate(x,y,A.z)
@@ -487,19 +491,26 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents()
+/atom/proc/GetAllContents(list/ignore_typecache)
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
+	if(ignore_typecache)		//If there's a typecache, use it.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
+			if(ignore_typecache[A.type])
+				continue
+			processing_list |= (A.contents - assembled)
+			assembled |= A
 
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		processing_list -= A
+	else		//If there's none, only make this check once for performance.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
 
-		for(var/atom/a in A)
-			if(!(a in assembled))
-				processing_list |= a
+			processing_list |= (A.contents - assembled)
 
-		assembled |= A
+			assembled |= A
 
 	return assembled
 
@@ -722,11 +733,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
-	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()
+	var/AMiconheight = AMicon.Height()
+	var/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
-		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
-		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
+		pixel_x_offset += ((AMiconwidth/world.icon_size)-1)*(world.icon_size*0.5)
+		pixel_y_offset += ((AMiconheight/world.icon_size)-1)*(world.icon_size*0.5)
 
 	//DY and DX
 	var/rough_x = round(round(pixel_x_offset,world.icon_size)/world.icon_size)
@@ -834,11 +845,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [bicon(icon)] [target].", "<span class='notice'>You use the analyzer on [bicon(icon)] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	to_chat(user, "<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
+	to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)] [target].</span>")
 	if(total_moles>0)
 		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
@@ -1210,6 +1221,9 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
+		sleep(world.tick_lag)
+		return 1
 	. = 0
 	var/i = 1
 	do
@@ -1222,7 +1236,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
-	if(istype(mob_or_client, /mob))
+	if(ismob(mob_or_client))
 		var/mob/M = mob_or_client
 		if(M.client)
 			C = M.client
@@ -1242,8 +1256,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 #define QDEL_NULL(item) qdel(item); item = null
 #define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
 #define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
 #define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qel(L[I]); L.Cut(); }
+
+/proc/______qdel_list_wrapper(list/L) //the underscores are to encourage people not to use this directly.
+	QDEL_LIST(L)
+
+
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1344,7 +1364,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //kevinz000 if you touch this I will hunt you down
 GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 GLOBAL_PROTECT(valid_HTTPSGet)
-/proc/HTTPSGet(url)
+/proc/HTTPSGet(url)	//tgs2 support
 	if(findtext(url, "\""))
 		GLOB.valid_HTTPSGet = FALSE
 
@@ -1395,9 +1415,6 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 
 #define UNTIL(X) while(!(X)) stoplag()
 
-/proc/to_chat(target, message)
-	target << message
-
 /proc/pass()
 	return
 
@@ -1417,3 +1434,10 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
+
+//counts the number of bits in Byond's 16-bit width field
+//in constant time and memory!
+/proc/BitCount(bitfield)
+	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
+	temp = ((temp + (temp>>3))&29127) % 63	//070707
+	return temp

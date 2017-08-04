@@ -25,13 +25,19 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-//this returns the mob's protection against eye damage (number between -1 and 2)
+//this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
 	return 0
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
 	return 0
+
+/mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+	return FALSE
+
+/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return
@@ -55,13 +61,13 @@
 		else
 				return 0
 
-/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		if(istype(I,/obj/item/weapon)) //If the item is a weapon...
+		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
 			var/obj/item/weapon/W = I
 			dtype = W.damtype
 
@@ -98,12 +104,12 @@
 			step_away(src,M,15)
 		switch(M.damtype)
 			if(BRUTE)
-				Paralyse(1)
+				Unconscious(20)
 				take_overall_damage(rand(M.force/2, M.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
 				take_overall_damage(0, rand(M.force/2, M.force))
-				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				M.mech_toxin_damage(src)
 			else
@@ -306,12 +312,11 @@
 			reagents.add_reagent("heparin", 5)
 		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
-		GLOB.cult_narsie.resize(1.1)
 		GLOB.cult_narsie.souls_needed -= src
 		GLOB.cult_narsie.souls += 1
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
 			GLOB.cult_narsie.resolved = TRUE
-			world << sound('sound/machines/Alarm.ogg')
+			world << sound('sound/machines/alarm.ogg')
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
@@ -365,6 +370,7 @@
 /mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(A != src)
 		end_pixel_y = get_standard_pixel_y_offset(lying)
-	used_item = get_active_held_item()
+	if(!used_item)
+		used_item = get_active_held_item()
 	..()
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

@@ -169,12 +169,11 @@
 			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
 								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
 		else
-			target.Weaken(10)
-			target.Stun(10)
+			target.Knockdown(200)
 			target.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = target
-				S.emp_act(1)
+				S.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.silent += 5

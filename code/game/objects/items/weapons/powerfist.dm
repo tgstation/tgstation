@@ -3,6 +3,8 @@
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
 	icon_state = "powerfist"
 	item_state = "powerfist"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags = CONDUCT
 	attack_verb = list("whacked", "fisted", "power-punched")
 	force = 20
@@ -24,7 +26,7 @@
 		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
 		return
 	if(tank)
-		to_chat(user, "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
+		to_chat(user, "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>")
 
 
 /obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user, params)

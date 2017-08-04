@@ -17,11 +17,21 @@
 
 /datum/surgery_step/sever_tail
 	name = "sever tail"
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 80, /obj/item/weapon/twohanded/required/chainsaw = 80, /obj/item/weapon/mounted_chainsaw = 80, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 40, /obj/item/weapon/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/circular_saw = 100,
+	/obj/item/weapon/melee/sabre = 100, /obj/item/weapon/melee/transforming/energy/sword/cyborg/saw = 100,
+	/obj/item/weapon/melee/arm_blade = 80, /obj/item/weapon/twohanded/required/chainsaw = 80,
+	/obj/item/weapon/mounted_chainsaw = 80, /obj/item/weapon/twohanded/fireaxe = 50,
+	/obj/item/weapon/hatchet = 40, /obj/item = 30) // 30% success with any sharp item.
 	time = 64
 
 /datum/surgery_step/sever_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to sever [target]'s tail!", "<span class='notice'>You begin to sever [target]'s tail...</span>")
+
+/datum/surgery_step/sever_tail/tool_check(mob/user, obj/item/tool)
+	if(implement_type == /obj/item && !tool.is_sharp())
+		return FALSE
+
+	return TRUE
 
 /datum/surgery_step/sever_tail/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/carbon/human/L = target

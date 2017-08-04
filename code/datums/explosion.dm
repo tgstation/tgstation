@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
 	EX_PREPROCESS_EXIT_CHECK
 
@@ -96,7 +96,9 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
-		var/ex_sound = get_sfx("explosion")
+		var/sound/explosion_sound = sound(get_sfx("explosion"))
+		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
+
 		for(var/mob/M in GLOB.player_list)
 			// Double check for client
 			var/turf/M_turf = get_turf(M)
@@ -104,12 +106,12 @@ GLOBAL_LIST_EMPTY(explosions)
 				var/dist = get_dist(M_turf, epicenter)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
-					M.playsound_local(epicenter, ex_sound, 100, 1, frequency, falloff = 5)
+					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
 					var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-					M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
+					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit
@@ -125,7 +127,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			E = new
 		E.set_up(epicenter)
 		E.start()
-	
+
 	EX_PREPROCESS_CHECK_TICK
 
 	//flash mobs
@@ -165,20 +167,20 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/throw_dist = dist
 
 		if(dist < devastation_range)
-			dist = 1
+			dist = EXPLODE_DEVASTATE
 		else if(dist < heavy_impact_range)
-			dist = 2
+			dist = EXPLODE_HEAVY
 		else if(dist < light_impact_range)
-			dist = 3
+			dist = EXPLODE_LIGHT
 		else
-			dist = 0
+			dist = EXPLODE_NONE
 
 		//------- EX_ACT AND TURF FIRES -------
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
 
-		if(dist > 0)
+		if(dist > EXPLODE_NONE)
 			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 			T.explosion_id = id
 			T.ex_act(dist)
@@ -192,7 +194,7 @@ GLOBAL_LIST_EMPTY(explosions)
 				var/throw_range = rand(throw_dist, max_range)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = EXPLOSION_THROW_SPEED //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
-				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)		
+				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
 
 		//wait for the lists to repop
 		var/break_condition
@@ -208,7 +210,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 			if(!running)
 				break
-			
+
 			//update the trackers
 			affTurfLen = affected_turfs.len
 			expBlockLen = cached_exp_block.len
@@ -249,7 +251,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(GLOB.Debug2)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
-	if(!stopped)	//if we aren't in a hurry
+	if(running)	//if we aren't in a hurry
 		//Machines which report explosions.
 		for(var/array in GLOB.doppler_arrays)
 			var/obj/machinery/doppler_array/A = array
@@ -273,28 +275,21 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	. = list()
 	var/processed = 0
-	while(!stopped && running)
-		var/I 
+	while(running)
+		var/I
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]
 			var/current_exp_block = T.density ? T.explosion_block : 0
 
-			for(var/obj/machinery/door/D in T)
-				if(D.density)
-					current_exp_block += D.explosion_block
+			for(var/obj/O in T)
+				var/the_block = O.explosion_block
+				current_exp_block += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
 
-			for(var/obj/structure/window/W in T)
-				if(W.reinf && W.fulltile)
-					current_exp_block += W.explosion_block
-
-			for(var/obj/structure/blob/B in T)
-				current_exp_block += B.explosion_block
-			
 			.[T] = current_exp_block
 
 			if(TICK_CHECK)
 				break
-		
+
 		processed = I
 		stoplag()
 
@@ -351,19 +346,12 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/turf/TT = T
 			while(TT != epicenter)
 				TT = get_step_towards(TT,epicenter)
-				if(TT.density && TT.explosion_block)
+				if(TT.density)
 					dist += TT.explosion_block
 
-				for(var/obj/machinery/door/D in TT)
-					if(D.density && D.explosion_block)
-						dist += D.explosion_block
-
-				for(var/obj/structure/window/W in TT)
-					if(W.explosion_block && W.fulltile)
-						dist += W.explosion_block
-
-				for(var/obj/structure/blob/B in T)
-					dist += B.explosion_block
+				for(var/obj/O in T)
+					var/the_block = O.explosion_block
+					dist += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
 
 		if(dist < dev)
 			T.color = "red"

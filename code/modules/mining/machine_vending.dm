@@ -5,8 +5,8 @@
 	desc = "An equipment vendor for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",		/obj/item/stack/marker_beacon,											10),
@@ -26,9 +26,9 @@
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,								600),
-		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,								600),
+		new /datum/data/mining_equipment("Tracking Implant Kit", /obj/item/weapon/storage/box/minertracker,								600),
 		new /datum/data/mining_equipment("Jaunter",				/obj/item/device/wormhole_jaunter,										750),
-		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/weapon/twohanded/required/mining_hammer,						750),
+		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/weapon/twohanded/required/kinetic_crusher,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator,						750),
 		new /datum/data/mining_equipment("Resonator",			/obj/item/weapon/resonator,												800),
 		new /datum/data/mining_equipment("Fulton Pack",			/obj/item/weapon/extraction_pack,										1000),
@@ -39,19 +39,20 @@
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,							2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,										2000),
 		new /datum/data/mining_equipment("Super Resonator",		/obj/item/weapon/resonator/upgraded,									2500),
+		new /datum/data/mining_equipment("Luxury Shelter Capsule",	/obj/item/weapon/survivalcapsule/luxury,							3000),
 		new /datum/data/mining_equipment("KA White Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer,								100),
 		new /datum/data/mining_equipment("KA Adjustable Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer/adjustable,				150),
 		new /datum/data/mining_equipment("KA Super Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod,								250),
 		new /datum/data/mining_equipment("KA Hyper Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod/orange,						300),
 		new /datum/data/mining_equipment("KA Range Increase",	/obj/item/borg/upgrade/modkit/range,									1000),
 		new /datum/data/mining_equipment("KA Damage Increase",	/obj/item/borg/upgrade/modkit/damage,									1000),
-		new /datum/data/mining_equipment("KA Cooldown Decrease",/obj/item/borg/upgrade/modkit/cooldown,									1000),
+		new /datum/data/mining_equipment("KA Cooldown Decrease", /obj/item/borg/upgrade/modkit/cooldown,									1000),
 		new /datum/data/mining_equipment("KA AoE Damage",		/obj/item/borg/upgrade/modkit/aoe/mobs,									2000),
 		new /datum/data/mining_equipment("Point Transfer Card",	/obj/item/weapon/card/mining_point_card,								500),
 		new /datum/data/mining_equipment("Mining Drone",		/mob/living/simple_animal/hostile/mining_drone,							800),
 		new /datum/data/mining_equipment("Drone Melee Upgrade",	/obj/item/device/mine_bot_ugprade,										400),
-		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_ugprade/health,								400),
-		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,								600),
+		new /datum/data/mining_equipment("Drone Health Upgrade", /obj/item/device/mine_bot_ugprade/health,								400),
+		new /datum/data/mining_equipment("Drone Ranged Upgrade", /obj/item/device/mine_bot_ugprade/cooldown,								600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",	/obj/item/slimepotion/sentience/mining,									1000),
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
 		)
@@ -142,7 +143,7 @@
 				SSblackbox.add_details("mining_equipment_bought",
 					"[src.type]|[prize.equipment_path]")
 				// Add src.type to keep track of free golem purchases
-				// seperately.
+				// separately.
 	updateUsrDialog()
 	return
 
@@ -150,7 +151,7 @@
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
-	if(istype(I,/obj/item/weapon/card/id))
+	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
 			if(!usr.drop_item())
@@ -187,11 +188,11 @@
 			new /obj/item/fulton_core(loc)
 			new /obj/item/stack/marker_beacon/thirty(loc)
 		if("Crusher Kit")
-			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
+			new /obj/item/weapon/twohanded/required/kinetic_crusher(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
 		if("Mining Conscription Kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
+			new /obj/item/weapon/storage/backpack/duffelbag/mining_conscript(loc)
 
 	SSblackbox.add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -273,19 +274,19 @@
 /obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
 	if(istype(AM, /obj/item/weapon/card/id) && proximity)
 		var/obj/item/weapon/card/id/I = AM
-		I.access |=	GLOB.access_mining
-		I.access |= GLOB.access_mining_station
-		I.access |= GLOB.access_mineral_storeroom
-		I.access |= GLOB.access_cargo
+		I.access |=	ACCESS_MINING
+		I.access |= ACCESS_MINING_STATION
+		I.access |= ACCESS_MINERAL_STOREROOM
+		I.access |= ACCESS_CARGO
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 	..()
 
-/obj/item/weapon/storage/backpack/dufflebag/mining_conscript
+/obj/item/weapon/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
+/obj/item/weapon/storage/backpack/duffelbag/mining_conscript/New()
 	..()
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)

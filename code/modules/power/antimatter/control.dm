@@ -3,9 +3,9 @@
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
-	anchored = 0
-	density = 1
-	use_power = 1
+	anchored = FALSE
+	density = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 1000
 
@@ -142,10 +142,10 @@
 		if(active)
 			toggle_power(1)
 		else
-			use_power = 0
+			use_power = NO_POWER_USE
 
 	else if(!stat && anchored)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 
 	return
 
@@ -164,14 +164,14 @@
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = 1
+			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = 0
+			src.anchored = FALSE
 			disconnect_from_network()
 		else
 			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
@@ -201,7 +201,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
 	if(damage >= 20)
@@ -243,7 +243,7 @@
 /obj/machinery/power/am_control_unit/proc/toggle_power(powerfail = 0)
 	active = !active
 	if(active)
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		visible_message("The [src.name] starts up.")
 	else
 		use_power = !powerfail

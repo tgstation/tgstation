@@ -1,24 +1,27 @@
+///////////	papers
 
-//notes for lore or treasure hints wow//--
-
-/obj/item/weapon/paper/crumpled/snowdin/snowdingatewaynotice
+/obj/item/weapon/paper/crumpled/ruins/snowdin/snowdingatewaynotice
 	name = "scribbled note"
 	info = {"The gateway has been inactive for months, engineers think it's due to the recent drop in tempature fucking with the
 	circuitry or something. Without a constant supply of resources from central command, our stock is getting awfully low. Some of the security members have taken to
 	using the sparse rifle ammo left to hunting some of the wildlife to try and keep our food supply from emptying. God forbid if the heating goes out, I don't want to
 	die as a fucking popsicle down here."}
 
-/obj/item/weapon/paper/crumpled/snowdin/misc1
+/obj/item/weapon/paper/crumpled/ruins/snowdin/misc1
 	name = "Mission Prologue"
 	info = {"Holy shit, what a rush! Those Nanotrasen bastards didn't even know what hit 'em! All five of us dropped in right on the captain, didn't even have time to yell! We were in and out with that disk in mere minutes!
 	Crew didn't even know what was happening till the delta alert went down and by then were were already gone. We got a case to drink on the way home to celebrate, fuckin' job well done!"}
 
-/obj/item/weapon/paper/crumpled/snowdin/keys
+/obj/item/weapon/paper/crumpled/ruins/snowdin/keys
 	name = "scribbled note"
 	info = {"As a notice for anyone looking to borrow an ATV, some asshat lost the key set for all the vehicles. Nobody has yet to actually come forward about the potential where-abouts, either due to embarrassment or fear of
 	reprecussions. I hope they enjoy walking through that shit snow during the next shipment because I sure as hell ain't."}
 
-/obj/item/weapon/paper/snowdin/snowdinlog
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/saw_usage
+	name = "SAW Usage"
+	info = "YOU SEEN IVAN, WHEN YOU HOLD SAAW LIKE PEESTOL, YOU STRONGER THAN RECOIL FOR FEAR OF HITTING FACE!"
+
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/log
 	name = "Activity Log"
 	info = {"<b><center>ACTIVITY LOG</b></center><br><br><b>June 3rd</b><br>We've moved to the main base in the valley finally, apparently establishing a listening system on a planet
 	that never stops fucking snowing is a great idea. There's a few outposts further south we'll be supplying from the main gateway. The summer months are enough already, I can only imagine how bad it'll be during winter.<br><br><b>August 23rd</b><br>
@@ -30,7 +33,7 @@
 	<br><br><b>December 10th</b><br>Signal has gotten much stronger, it almost seems like it's coming from under us according to what the researcher managed to decypher. We're waiting from the go from central before investigating.<br><br>
 	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i> "}
 
-/obj/item/weapon/paper/snowdin/snowdinlog2
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/log2
 	name = "Activity Log"
 	info = {"<b><center>ACTIVITY LOG</b></center><br><br><b>June 14th</b><br>Movement to the second post is finally done. We're located on the southernmost area of the valley with a similar objective as the northern post.
 	There are two mid-way stops on the eastern and western sides of the valley so movement in between bases isn't horrible. Not too big of a fan of relying on the northern base for
@@ -40,34 +43,37 @@
 	shipment of supplies. The snow has really kicked up recently, shits almost like a constant blizzard right now. Maybe it'll drop down soon so we can get a word in.<br><br>
 	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i> "}
 
-/obj/item/weapon/paper/snowdin/secnotice
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/secnotice
 	name = "Security Notice"
 	info = {"You have been assigned a position on a listening outpost. Here you'll be watching over several crewmembers assigned to watching signals of the general area.
-	 As not much is expected in terms of issues, we've only assigned one guard per outpost. Crewmembers are expected to keep to their regulated work schedules and may be
-	 disciplined properly if found slacking. Food hoarding is heavily discouraged as all outposts will be sharing from the same shipment every 2-3 months. Hoarding of supplies
-	 should be punished severely as to prevent future incidients. Mutiny and/or rioting should be reported to central and dealt with swiftly. You're here to secure and protect
-	 Nanotrasen assets, not be a police officer. Do what you must, but make sure it's not messy."}
+	As not much is expected in terms of issues, we've only assigned one guard per outpost. Crewmembers are expected to keep to their regulated work schedules and may be
+	disciplined properly if found slacking. Food hoarding is heavily discouraged as all outposts will be sharing from the same shipment every 2-3 months. Hoarding of supplies
+	should be punished severely as to prevent future incidients. Mutiny and/or rioting should be reported to central and dealt with swiftly. You're here to secure and protect
+	Nanotrasen assets, not be a police officer. Do what you must, but make sure it's not messy."}
 
-/obj/item/weapon/paper/snowdin/syndienotice
+/obj/item/weapon/paper/fluff/awaymissions/snowdin/syndienotice
 	name = "Assignment Notice"
 	info = {"You've been assigned as an agent to listen in on Nanotrasen activities from passing ships and nearby stations. The outpost you've been assigned to is under lays of solid
 	ice and we've supplied you with a scrambler to help avoid Nanotrasen discovery, as they've recently built a listening post of their own aboveground. Get aquainted with your new
 	crewmates, because you're gonna be here for awhile. Enjoy the free syndicakes."}
 
-/obj/item/weapon/paper/crumpled/snowdin/syndielava
+/obj/item/weapon/paper/crumpled/ruins/snowdin/syndielava
 	name = "scribbled note"
 	info = {"Some cracks in the ice nearby have exposed some sort of hidden magma stream under all this shit ice. I don't know whats worse at this point honestly; freezing to death or
 	burning alive."}
 
-/obj/item/weapon/paper/crumpled/snowdin/lootstructures
+/obj/item/weapon/paper/crumpled/ruins/snowdin/lootstructures
 	name = "scribbled note"
 	info = {"From what we've seen so far, theres a ton of iced-over ruins down here in the caves. We sent a few men out to check things out and they never came back, so we decided to
 	border up majority of the ruins. We've heard some weird shit coming out of these caves and I'm not gonna find out the hard way myself."}
 
-/obj/item/weapon/paper/crumpled/snowdin/shovel
+/obj/item/weapon/paper/crumpled/ruins/snowdin/shovel
 	name = "shoveling duties"
 	info = {"Snow piles up bad here all-year round, even worse during the winter months. Keeping a constant rotation of shoveling that shit out of the way of the airlocks and keeping the paths decently clear
 	is a good step towards not getting stuck walking through knee-deep snow."}
+
+
+
 
 //lootspawners//--
 
@@ -104,7 +110,7 @@
 				/obj/item/weapon/dnainjector/lasereyesmut = 7,
 				/obj/item/weapon/gun/magic/wand/fireball/inert = 3,
 				/obj/item/weapon/pneumatic_cannon = 15,
-				/obj/item/weapon/melee/energy/sword = 7,
+				/obj/item/weapon/melee/transforming/energy/sword = 7,
 				/obj/item/weapon/spellbook/oneuse/knock = 15,
 				/obj/item/weapon/spellbook/oneuse/summonitem = 20,
 				/obj/item/weapon/spellbook/oneuse/forcewall = 17,
@@ -201,8 +207,8 @@
 	death = FALSE
 	faction = "syndicate"
 	outfit = /datum/outfit/snowsyndie
-	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record infomation. All intruders should be
-	disposed of swirfly to assure no gathered infomation is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
+	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be
+	disposed of swirfly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
 
 /datum/outfit/snowsyndie
 	name = "Syndicate Snow Operative"
@@ -218,26 +224,7 @@
 
 //mobs//--
 
-/mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
-	name = "giant ice spider"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = 1500
-	color = rgb(114,228,250)
-
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice
-	name = "giant ice spider"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = 1500
-	color = rgb(114,228,250)
-
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
-	name = "giant ice spider"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = 1500
-	color = rgb(114,228,250)
+//ice spiders moved to giant_spiders.dm
 
 //objs//--
 

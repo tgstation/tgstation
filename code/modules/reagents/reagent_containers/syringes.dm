@@ -6,12 +6,14 @@
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "syringe_0"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 15
 	var/mode = SYRINGE_DRAW
-	var/busy = 0		// needed for delayed drawing of blood
+	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 	container_type = TRANSPARENT
@@ -62,7 +64,7 @@
 			return
 
 	// chance of monkey retaliation
-	if(istype(target, /mob/living/carbon/monkey) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
+	if(ismonkey(target) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
 		var/mob/living/carbon/monkey/M
 		M = target
 		M.retaliate(user)
@@ -79,13 +81,13 @@
 				if(target != user)
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
-					busy = 1
+					busy = TRUE
 					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
-						busy = 0
+						busy = FALSE
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
 						return
-				busy = 0
+				busy = FALSE
 				if(L.transfer_blood_to(src, drawn_amount))
 					user.visible_message("[user] takes a blood sample from [L].")
 				else
@@ -96,7 +98,7 @@
 					to_chat(user, "<span class='warning'>[target] is empty!</span>")
 					return
 
-				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
+				if(!target.is_drawable())
 					to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
 					return
 
@@ -112,14 +114,17 @@
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+			if(!L && !target.is_injectable()) //only checks on non-living mobs, due to how can_inject() handles
 				to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
 				return
+
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				to_chat(user, "<span class='notice'>[target] is full.</span>")
 				return
 
 			if(L) //living mob
+				if(!L.can_inject(user, TRUE))
+					return
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
 											"<span class='userdanger'>[user] is trying to inject [L]!</span>")

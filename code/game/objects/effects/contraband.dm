@@ -12,8 +12,8 @@
 	var/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
-/obj/item/weapon/poster/New(loc, obj/structure/sign/poster/new_poster_structure)
-	..()
+/obj/item/weapon/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
+	. = ..()
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -49,7 +49,7 @@
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
-	anchored = 1
+	anchored = TRUE
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -58,8 +58,8 @@
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
 
-/obj/structure/sign/poster/New()
-	..()
+/obj/structure/sign/poster/Initialize()
+	. = ..()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -115,7 +115,7 @@
 	forceMove(P)
 	return P
 
-//seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
+//separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.poster_structure)
 		to_chat(user, "<span class='warning'>[P] has no poster... inside it? Inform a coder!</span>")
@@ -123,7 +123,7 @@
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O, /obj/structure/sign/poster))
 			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
 			return
 		stuff_on_wall++

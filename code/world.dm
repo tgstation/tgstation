@@ -5,10 +5,8 @@
 	view = "15x15"
 	cache_lifespan = 7
 	hub = "Exadv1.spacestation13"
-	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
 	fps = 20
-	visibility = 0
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
@@ -24,15 +22,17 @@
 
 	config = new
 
+	CheckSchemaVersion()
 	SetRoundID()
 
 	SetupLogs()
 
-	GLOB.revdata.DownloadPRDetails()
+	if(!RunningService())	//tgs2 support
+		GLOB.revdata.DownloadPRDetails()
 
 	load_motd()
 	load_admins()
-	load_menu()
+	LoadVerbs(/datum/verbs/menu)
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -40,6 +40,9 @@
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	Master.Initialize(10, FALSE)
+
+	if(config.irc_announce_new_game)
+		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -52,18 +55,32 @@
 			external_rsc_urls.Cut(i,i+1)
 #endif
 
-/world/proc/SetRoundID()
+/world/proc/CheckSchemaVersion()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), COALESCE(INET_ATON('[world.internet_address]'), 0), '[world.port]')")
+			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
+			query_db_version.Execute()
+			if(query_db_version.NextRow())
+				var/db_major = text2num(query_db_version.item[1])
+				var/db_minor = text2num(query_db_version.item[2])
+				if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
+					message_admins("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+			else
+				message_admins("Could not get schema version from database")
+		else
+			log_world("Your server failed to establish a connection with the database.")
+
+/world/proc/SetRoundID()
+	if(config.sql_enabled)
+		if(SSdbcore.Connect())
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
 			if(query_round_last_id.NextRow())
 				GLOB.round_id = query_round_last_id.item[1]
-		else
-			log_world("Your server failed to establish a connection with the database.")
 
 /world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
@@ -86,30 +103,35 @@
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
-#define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
-	if(config && config.log_world_topic)
+	var/list/input = params2list(T)
+
+	var/pinging = ("ping" in input)
+	var/playing = ("players" in input)
+
+	if(!pinging && !playing && config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
-	var/list/input = params2list(T)
+	if(input[SERVICE_CMD_PARAM_KEY])
+		return ServiceCommand(input)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
-	var/static/last_irc_status = 0
 
-	if("ping" in input)
+	if(pinging)
 		var/x = 1
 		for (var/client/C in GLOB.clients)
 			x++
 		return x
 
-	else if("players" in input)
+	else if(playing)
 		var/n = 0
 		for(var/mob/M in GLOB.player_list)
 			if(M.client)
 				n++
 		return n
 
-	else if("ircstatus" in input)
-		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
+	else if("ircstatus" in input)	//tgs2 support
+		var/static/last_irc_status = 0
+		if(world.time - last_irc_status < 50)
 			return
 		var/list/adm = get_admin_counts()
 		var/list/allmins = adm["total"]
@@ -136,9 +158,7 @@
 		var/list/presentmins = adm["present"]
 		var/list/afkmins = adm["afk"]
 		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
-		s["gamestate"] = 1
-		if(SSticker)
-			s["gamestate"] = SSticker.current_state
+		s["gamestate"] = SSticker.current_state
 
 		s["map_name"] = SSmapping.config.map_name
 
@@ -177,20 +197,20 @@
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
-	else if("adminmsg" in input)
+	else if("adminmsg" in input)	//tgs2 support
 		if(!key_valid)
 			return "Bad Key"
 		else
 			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
 
-	else if("namecheck" in input)
+	else if("namecheck" in input)	//tgs2 support
 		if(!key_valid)
 			return "Bad Key"
 		else
 			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
 			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
 			return keywords_lookup(input["namecheck"],1)
-	else if("adminwho" in input)
+	else if("adminwho" in input)	//tgs2 support
 		if(!key_valid)
 			return "Bad Key"
 		else
@@ -216,6 +236,7 @@
 		C.AnnouncePR(final_composed)
 
 /world/Reboot(reason = 0, fast_track = FALSE)
+	ServiceReboot() //handles alternative actions if necessary
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -239,18 +260,14 @@
 	s += "<b>[station_name()]</b>";
 	s += " ("
 	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
 	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 
 	var/list/features = list()
 
-	if(SSticker)
-		if(GLOB.master_mode)
-			features += GLOB.master_mode
-	else
-		features += "<b>STARTING</b>"
+	if(GLOB.master_mode)
+		features += GLOB.master_mode
 
 	if (!GLOB.enter_allowed)
 		features += "closed"
@@ -280,3 +297,12 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
+/world/proc/update_hub_visibility(new_visibility)
+	if(new_visibility == GLOB.hub_visibility)
+		return
+	GLOB.hub_visibility = new_visibility
+	if(GLOB.hub_visibility)
+		hub_password = "kMZy3U5jJHSiBQjr"
+	else
+		hub_password = "SORRYNOPASSWORD"

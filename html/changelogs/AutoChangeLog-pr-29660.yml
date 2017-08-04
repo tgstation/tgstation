@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Observing mobs that have no HUD will no longer cause intense lighting glare."

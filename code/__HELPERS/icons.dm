@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			to_chat(src, "Icon is: \icon[getFlatIcon(src)]")
+			to_chat(src, "Icon is: [bicon(getFlatIcon(src))]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -974,6 +974,8 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
 	var/static/list/freeze_item_icons = list()
+	if(resistance_flags & FREEZE_PROOF)
+		return
 	if(!HAS_SECONDARY_FLAG(src, FROZEN) && (initial(icon) && initial(icon_state)))
 		var/index = freeze_icon_index()
 		var/icon/IC

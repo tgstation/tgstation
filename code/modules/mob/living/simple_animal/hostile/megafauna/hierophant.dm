@@ -7,22 +7,24 @@ The Hierophant spawns in its arena, which makes fighting it challenging but not 
 
 The text this boss speaks is ROT4, use ROT22 to decode
 
-The Hierophant's attacks are as follows, and INTENSIFY at a random chance based on Hierophant's health;
-- Creates a cardinal or diagonal blast(Cross Blast) under its target, exploding after a short time.
-	INTENSITY EFFECT: Creates one of the cross blast types under itself instead of under the target.
-	INTENSITY EFFECT: The created Cross Blast fires in all directions if below half health.
-- If no chasers exist, creates a chaser that will seek its target, leaving a trail of blasts.
-	INTENSITY EFFECT: Creates a second, slower chaser.
-- Creates an expanding AoE burst.
-- INTENSE ATTACKS:
+The Hierophant's attacks are as follows;
+- These attacks happen at a random, increasing chance:
 	If target is at least 2 tiles away; Blinks to the target after a very brief delay, damaging everything near the start and end points.
 		As above, but does so multiple times if below half health.
-	Rapidly creates Cross Blasts under a target.
-	If chasers are off cooldown, creates four high-speed chasers.
-- IF TARGET WAS STRUCK IN MELEE: Creates a 3x3 square of blasts under the target.
+	Rapidly creates cardinal and diagonal Cross Blasts under a target.
+	If chasers are off cooldown, creates 4 chasers.
 
-- IF TARGET IS OUTSIDE THE ARENA: Creates an arena around the target for 10 seconds, blinking to it if Hierophant is not in the arena.
+- IF TARGET IS OUTSIDE THE ARENA: Creates an arena around the target for 10 seconds, blinking to the target if not in the created arena.
 	The arena has a 20 second cooldown, giving people a small window to get the fuck out.
+
+- If no chasers exist, creates a chaser that will seek its target, leaving a trail of blasts.
+	Is more likely to create a second, slower, chaser if hurt.
+- If the target is at least 2 tiles away, may Blink to the target after a very brief delay, damaging everything near the start and end points.
+- Creates a cardinal or diagonal blast(Cross Blast) under its target, exploding after a short time.
+	If below half health, the created Cross Blast may fire in all directions.
+- Creates an expanding AoE burst.
+
+- IF ATTACKING IN MELEE: Creates an expanding AoE burst.
 
 Cross Blasts and the AoE burst gain additional range as Hierophant loses health, while Chasers gain additional speed.
 
@@ -71,7 +73,7 @@ Difficulty: Hard
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
 	del_on_death = TRUE
-	death_sound = 'sound/magic/Repulse.ogg'
+	death_sound = 'sound/magic/repulse.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
@@ -124,6 +126,11 @@ Difficulty: Hard
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
+	. = ..()
+	if(istype(the_target, /mob/living/simple_animal/hostile/asteroid/hivelordbrood)) //ignore temporary targets in favor of more permenant targets
+		return FALSE
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
 	. = ..()
@@ -141,8 +148,19 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
 		if(target && isliving(target))
-			INVOKE_ASYNC(src, .proc/melee_blast, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
-		return ..()
+			var/mob/living/L = target
+			if(L.stat != DEAD)
+				if(ranged_cooldown <= world.time)
+					calculate_rage()
+					ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75)
+					INVOKE_ASYNC(src, .proc/burst, get_turf(src))
+				else
+					burst_range = 3
+					INVOKE_ASYNC(src, .proc/burst, get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
+			else
+				devour(L)
+		else
+			return ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
 	if(!blinking)
@@ -150,14 +168,16 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Move()
 	if(!blinking)
-		var/prevloc = loc
 		. = ..()
-		if(!stat && .)
-			var/obj/effect/temp_visual/hierophant/squares/HS = new /obj/effect/temp_visual/hierophant/squares(prevloc)
-			HS.dir = dir
-			playsound(loc, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
-			if(target)
-				arena_trap(target)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(oldLoc, movement_dir)
+	. = ..()
+	if(!stat && .)
+		var/obj/effect/temp_visual/hierophant/squares/HS = new(oldLoc)
+		HS.setDir(movement_dir)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
+		if(target)
+			arena_trap(target)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Goto(target, delay, minimum_distance)
 	wander = TRUE
@@ -172,17 +192,18 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	calculate_rage()
-	var/target_is_slow = FALSE
+	if(blinking)
+		return
+
+	var/target_slowness = 0
 	if(isliving(target))
 		var/mob/living/L = target
 		if(!blinking && L.stat == DEAD && get_dist(src, L) > 2)
 			blink(L)
 			return
-		if(L.movement_delay() > 1.5)
-			target_is_slow = TRUE
-	chaser_speed = max(1, (3 - anger_modifier * 0.04) + target_is_slow * 0.5)
-	if(blinking)
-		return
+		target_slowness += L.movement_delay()
+	target_slowness = max(target_slowness, 1)
+	chaser_speed = max(1, (3 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
 
 	arena_trap(target)
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
@@ -204,18 +225,19 @@ Difficulty: Hard
 			var/blink_counter = 1 + round(anger_modifier * 0.08)
 			switch(pick(possibilities))
 				if("blink_spam") //blink either once or multiple times.
-					if(health < maxHealth * 0.5 && !target_is_slow && blink_counter > 1)
+					if(health < maxHealth * 0.5 && blink_counter > 1)
 						visible_message("<span class='hierophant'>\"Mx ampp rsx iwgeti.\"</span>")
 						var/oldcolor = color
 						animate(src, color = "#660099", time = 6)
-						while(health && target && blink_counter)
+						sleep(6)
+						while(health && !QDELETED(target) && blink_counter)
 							if(loc == target.loc || loc == target) //we're on the same tile as them after about a second we can stop now
 								break
 							blink_counter--
 							blinking = FALSE
 							blink(target)
 							blinking = TRUE
-							sleep(5)
+							sleep(4 + target_slowness)
 						animate(src, color = oldcolor, time = 8)
 						addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 						sleep(8)
@@ -227,15 +249,14 @@ Difficulty: Hard
 					blinking = TRUE
 					var/oldcolor = color
 					animate(src, color = "#660099", time = 6)
-					while(health && target && cross_counter)
+					sleep(6)
+					while(health && !QDELETED(target) && cross_counter)
 						cross_counter--
-						var/delay = 7
 						if(prob(60))
 							INVOKE_ASYNC(src, .proc/cardinal_blasts, target)
 						else
 							INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
-							delay = 5 //this one isn't so mean, so do the next one faster(if there is one)
-						sleep(delay)
+						sleep(6 + target_slowness)
 					animate(src, color = oldcolor, time = 8)
 					addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 					sleep(8)
@@ -244,19 +265,22 @@ Difficulty: Hard
 					visible_message("<span class='hierophant'>\"Mx gerrsx lmhi.\"</span>")
 					blinking = TRUE
 					var/oldcolor = color
-					animate(src, color = "#660099", time = 10)
+					animate(src, color = "#660099", time = 6)
+					sleep(6)
 					var/list/targets = ListTargets()
-					var/list/cardinal_copy = GLOB.cardinal.Copy()
+					var/list/cardinal_copy = GLOB.cardinals.Copy()
 					while(health && targets.len && cardinal_copy.len)
 						var/mob/living/pickedtarget = pick(targets)
-						if(targets.len > 4)
+						if(targets.len >= cardinal_copy.len)
 							pickedtarget = pick_n_take(targets)
 						if(!istype(pickedtarget) || pickedtarget.stat == DEAD)
 							pickedtarget = target
-						var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, pickedtarget, chaser_speed, FALSE)
+							if(QDELETED(pickedtarget) || (istype(pickedtarget) && pickedtarget.stat == DEAD))
+								break //main target is dead and we're out of living targets, cancel out
+						var/obj/effect/temp_visual/hierophant/chaser/C = new(loc, src, pickedtarget, chaser_speed, FALSE)
 						C.moving = 3
 						C.moving_dir = pick_n_take(cardinal_copy)
-						sleep(10)
+						sleep(8 + target_slowness)
 					chaser_cooldown = world.time + initial(chaser_cooldown)
 					animate(src, color = oldcolor, time = 8)
 					addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
@@ -264,31 +288,24 @@ Difficulty: Hard
 					blinking = FALSE
 			return
 
-	if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
-		blink(target)
-
-	else if(prob(70 - anger_modifier)) //a cross blast of some type
-		if(prob(anger_modifier)) //at us?
-			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
-				INVOKE_ASYNC(src, .proc/alldir_blasts, src)
-			else if(prob(60))
-				INVOKE_ASYNC(src, .proc/cardinal_blasts, src)
-			else
-				INVOKE_ASYNC(src, .proc/diagonal_blasts, src)
-		else //at them?
-			if(prob(anger_modifier * 2) && health < maxHealth * 0.5 && !target_is_slow) //we're super angry do it at all dirs
-				INVOKE_ASYNC(src, .proc/alldir_blasts, target)
-			else if(prob(60))
-				INVOKE_ASYNC(src, .proc/cardinal_blasts, target)
-			else
-				INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
-	else if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
+	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
 		chaser_cooldown = world.time + initial(chaser_cooldown)
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
-			var/obj/effect/temp_visual/hierophant/chaser/OC = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, max(1.5, 5 - anger_modifier * 0.07), FALSE)
+			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
-			OC.moving_dir = pick(GLOB.cardinal - C.moving_dir)
+			OC.moving_dir = pick(GLOB.cardinals - C.moving_dir)
+
+	else if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
+		blink(target)
+
+	else if(prob(70 - anger_modifier)) //a cross blast of some type
+		if(prob(anger_modifier * (2 / target_slowness)) && health < maxHealth * 0.5) //we're super angry do it at all dirs
+			INVOKE_ASYNC(src, .proc/alldir_blasts, target)
+		else if(prob(60))
+			INVOKE_ASYNC(src, .proc/cardinal_blasts, target)
+		else
+			INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
 	else //just release a burst of power
 		INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 
@@ -311,7 +328,7 @@ Difficulty: Hard
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
@@ -341,11 +358,11 @@ Difficulty: Hard
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
 	arena_cooldown = world.time + initial(arena_cooldown)
-	for(var/d in GLOB.cardinal)
+	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
 		if(t && get_dist(t, T) == 11)
-			new /obj/effect/temp_visual/hierophant/wall(t)
+			new /obj/effect/temp_visual/hierophant/wall(t, src)
 			new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
 	if(get_dist(src, T) >= 11) //hey you're out of range I need to get closer to you!
 		INVOKE_ASYNC(src, .proc/blink, T)
@@ -354,8 +371,8 @@ Difficulty: Hard
 	var/turf/previousturf = T
 	var/turf/J = get_step(previousturf, set_dir)
 	for(var/i in 1 to 10)
-		var/obj/effect/temp_visual/hierophant/squares/HS = new /obj/effect/temp_visual/hierophant/squares(J)
-		HS.dir = set_dir
+		var/obj/effect/temp_visual/hierophant/squares/HS = new(J)
+		HS.setDir(set_dir)
 		previousturf = J
 		J = get_step(previousturf, set_dir)
 		sleep(0.5)
@@ -367,17 +384,17 @@ Difficulty: Hard
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
-	playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
+	playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
+	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
 	blinking = TRUE
 	sleep(2) //short delay before we start...
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, src)
 	for(var/t in RANGE_TURFS(1, T))
-		var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
 		B.damage = 30
 	for(var/t in RANGE_TURFS(1, source))
-		var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
 		B.damage = 30
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
@@ -405,8 +422,8 @@ Difficulty: Hard
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original) //release a wave of blasts
-	playsound(original,'sound/machines/AirlockOpen.ogg', 200, 1)
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed = 0.5) //release a wave of blasts
+	playsound(original,'sound/machines/airlockopen.ogg', 200, 1)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
@@ -415,7 +432,7 @@ Difficulty: Hard
 		var/dist = get_dist(original, T)
 		if(dist > last_dist)
 			last_dist = dist
-			sleep(1 + min(burst_range - last_dist, 12) * 0.5) //gets faster as it gets further out
+			sleep(1 + min(burst_range - last_dist, 12) * spread_speed) //gets faster as it gets further out
 		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
@@ -463,7 +480,9 @@ Difficulty: Hard
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target, height = 0)
+/obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target)
+	if(QDELETED(caster))
+		return FALSE
 	if(mover == caster.pulledby)
 		return TRUE
 	if(istype(mover, /obj/item/projectile))
@@ -501,7 +520,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/chaser/proc/get_target_dir()
 	. = get_cardinal_dir(src, targetturf)
 	if((. != previous_moving_dir && . == more_previouser_moving_dir) || . == 0) //we're alternating, recalculate
-		var/list/cardinal_copy = GLOB.cardinal.Copy()
+		var/list/cardinal_copy = GLOB.cardinals.Copy()
 		cardinal_copy -= more_previouser_moving_dir
 		. = pick(cardinal_copy)
 
@@ -561,7 +580,8 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/blast
 	icon_state = "hierophant_blast"
 	name = "vortex blast"
-	light_range = 1
+	light_range = 2
+	light_power = 2
 	desc = "Get out of the way!"
 	duration = 9
 	var/damage = 10 //how much damage do we do?
@@ -584,7 +604,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	playsound(T,'sound/magic/Blind.ogg', 125, 1, -5) //make a sound
+	playsound(T,'sound/magic/blind.ogg', 125, 1, -5) //make a sound
 	sleep(6) //wait a little
 	bursting = TRUE
 	do_damage(T) //do damage and mark us as bursting
@@ -610,10 +630,18 @@ Difficulty: Hard
 		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor)
+		if(ishostile(L))
+			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
+			if(H.stat == CONSCIOUS && !H.target && H.AIStatus != AI_OFF && !H.client)
+				if(!QDELETED(caster))
+					if(get_dist(H, caster) <= H.aggro_vision_range)
+						H.FindTarget(list(caster), 1)
+					else
+						H.Goto(get_turf(caster), H.move_to_delay, 3)
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
 			L.adjustBruteLoss(damage)
 		add_logs(caster, L, "struck with a [name]")
-	for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
+	for(var/obj/mecha/M in T.contents - hit_things) //also damage mechs.
 		hit_things += M
 		if(M.occupant)
 			if(friendly_fire_check && caster && caster.faction_check_mob(M.occupant))
@@ -644,7 +672,7 @@ Difficulty: Hard
 			H.timer = world.time + 51
 			INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
-				playsound(src,'sound/magic/Blind.ogg', 200, 1, -4)
+				playsound(src,'sound/magic/blind.ogg', 200, 1, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>")
 				H.beacon = null

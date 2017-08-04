@@ -23,106 +23,43 @@ Bonus
 	transmittable = -3
 	level = 5
 	severity = 0
+	symptom_delay_min = 5
+	symptom_delay_max = 10
+	var/purge_alcohol = FALSE
+	var/brain_heal = FALSE
+
+/datum/symptom/sensory_restoration/Start(datum/disease/advance/A)
+	..()
+	if(A.properties["resistance"] >= 6) //heal brain damage
+		brain_heal = TRUE
+	if(A.properties["transmittable"] >= 8) //purge alcohol
+		purge_alcohol = TRUE
 
 /datum/symptom/sensory_restoration/Activate(var/datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	var/mob/living/M = A.affected_mob
 	if(A.stage >= 2)
 		M.restoreEars()
 
 	if(A.stage >= 3)
-		M.dizziness = 0
-		M.drowsyness = 0
-		M.slurring = 0
-		M.confused = 0
-		M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.drunkenness = max(H.drunkenness - 10, 0)
+		M.dizziness = max(0, M.dizziness - 2)
+		M.drowsyness = max(0, M.drowsyness - 2)
+		M.slurring = max(0, M.slurring - 2)
+		M.confused = max(0, M.confused - 2)
+		if(purge_alcohol)
+			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.drunkenness = max(H.drunkenness - 5, 0)
 
 	if(A.stage >= 4)
-		M.drowsyness = max(M.drowsyness-5, 0)
+		M.drowsyness = max(0, M.drowsyness - 2)
 		if(M.reagents.has_reagent("mindbreaker"))
 			M.reagents.remove_reagent("mindbreaker", 5)
 		if(M.reagents.has_reagent("histamine"))
 			M.reagents.remove_reagent("histamine", 5)
 		M.hallucination = max(0, M.hallucination - 10)
 
-	if(A.stage >= 5)
+	if(brain_heal && A.stage >= 5)
 		M.adjustBrainLoss(-3)
-
-/*
-//////////////////////////////////////
-Sensory-Destruction
-	noticable.
-	Lowers resistance
-	Decreases stage speed tremendously.
-	Decreases transmittablity tremendously.
-	the drugs hit them so hard they have to focus on not dying
-
-Bonus
-	The body generates Sensory destructive chemicals.
-	You cannot taste anything anymore.
-	ethanol for extremely drunk victim
-	mindbreaker to break the mind
-	impedrezene to ruin the brain
-
-//////////////////////////////////////
-*/
-/datum/symptom/sensory_destruction
-	name = "Sensory destruction"
-	stealth = -1
-	resistance = -2
-	stage_speed = -3
-	transmittable = -4
-	level = 6
-	severity = 5
-	var/sleepy = 0
-	var/sleepy_ticks = 0
-
-/datum/symptom/sensory_destruction/Activate(var/datum/disease/advance/A)
-	..()
-	var/mob/living/M = A.affected_mob
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		switch(A.stage)
-			if(1)
-				to_chat(M, "<span class='warning'>You can't feel anything.</span>")
-			if(2)
-				to_chat(M, "<span class='warning'>You feel absolutely hammered.</span>")
-				if(prob(10))
-					sleepy_ticks += rand(10,14)
-			if(3)
-				M.reagents.add_reagent("ethanol",rand(5,7))
-				to_chat(M, "<span class='warning'>You try to focus on not dying.</span>")
-				if(prob(15))
-					sleepy_ticks += rand(10,14)
-			if(4)
-				M.reagents.add_reagent("ethanol",rand(6,10))
-				to_chat(M, "<span class='warning'>u can count 2 potato!</span>")
-				if(prob(20))
-					sleepy_ticks += rand(10,14)
-			if(5)
-				M.reagents.add_reagent("ethanol",rand(7,13))
-				if(prob(25))
-					sleepy_ticks += rand(10,14)
-
-	if(sleepy_ticks)
-		if(A.stage>=4)
-			M.hallucination = min(M.hallucination + 10, 50)
-		if(A.stage>=5)
-			if(prob(80))
-				M.adjustBrainLoss(1)
-			if(prob(50))
-				M.drowsyness = max(M.drowsyness, 3)
-		sleepy++
-		sleepy_ticks--
-	else
-		sleepy = 0
-
-	switch(sleepy) //Works like morphine
-		if(11)
-			to_chat(M, "<span class='warning'>You start to feel tired...</span>")
-		if(12 to 24)
-			M.drowsyness += 1
-		if(24 to INFINITY)
-			M.Sleeping(2, 0)

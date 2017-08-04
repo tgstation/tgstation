@@ -21,10 +21,10 @@
 	var/datum/computer/file/embedded_program/program
 
 	name = "embedded controller"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 
-	var/on = 1
+	var/on = TRUE
 
 /obj/machinery/embedded_controller/interact(mob/user)
 	user.set_machine(src)
@@ -73,8 +73,7 @@
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/embedded_controller/radio/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/embedded_controller/radio/Initialize()

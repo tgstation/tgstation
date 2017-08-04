@@ -48,23 +48,23 @@
 //Checks if the list is empty
 /proc/isemptylist(list/L)
 	if(!L.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
 	if(!L || !L.len || !A)
-		return 0
+		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
 	if(!L || !L.len || !A)
 
-		return 0
+		return FALSE
 	if(ispath(A))
 		. = L[A]
 	else
@@ -76,7 +76,7 @@
 		return
 	for(var/V in L)
 		if(string == V)
-			return 1
+			return TRUE
 	return
 
 //Removes a string from a list
@@ -94,6 +94,13 @@
 	for (var/thing in atoms)
 		var/atom/A = thing
 		if (typecache[A.type])
+			. += A
+
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	. = list()
+	for (var/thing in atoms)
+		var/atom/A = thing
+		if (!typecache[A.type])
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
@@ -131,9 +138,12 @@
 	return
 
 //Removes any null entries from the list
+//Returns TRUE if the list had nulls, FALSE otherwise
 /proc/listclearnulls(list/L)
-	var/list/N = new(L.len)
+	var/start_len = L.len
+	var/list/N = new(start_len)
 	L -= N
+	return L.len < start_len
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -284,7 +294,7 @@
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield2list(bitfield = 0, list/wordlist)
 	var/list/r = list()
-	if(istype(wordlist,/list))
+	if(islist(wordlist))
 		var/max = min(wordlist.len,16)
 		var/bit = 1
 		for(var/i=1, i<=max, i++)
@@ -447,14 +457,13 @@
 		. |= key_list[key]
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
-#define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
-
+#define DEFAULTPICK(L, default) ((islist(L) && L:len) ? pick(L) : default)
 #define LAZYINITLIST(L) if (!L) L = list()
-
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )

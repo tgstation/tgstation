@@ -2,15 +2,18 @@
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
-//Bottles now weaken and break when smashed on people's heads. - Giacom
+//Bottles now knockdown and break when smashed on people's heads. - Giacom
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
 	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
-	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	foodtype = ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
 	..()
@@ -80,7 +83,7 @@
 		else
 			headarmor = 0
 
-		//Calculate the weakening duration for the target.
+		//Calculate the knockdown duration for the target.
 		armor_duration = (duration - headarmor) + force
 
 	else
@@ -88,7 +91,6 @@
 		armor_block = target.run_armor_check(affecting, "melee")
 		if(affecting == "head")
 			armor_duration = duration + force
-	armor_duration /= 10
 
 	//Apply the damage!
 	armor_block = min(90,armor_block)
@@ -98,9 +100,9 @@
 	var/head_attack_message = ""
 	if(affecting == "head" && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
-		//Weaken the target for the duration that we calculated and divide it by 5.
+		//Knockdown the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
+			target.apply_effect(min(armor_duration, 200) , KNOCKDOWN) // Never knockdown more than a flash!
 
 	//Display an attack message.
 	if(target != user)
@@ -173,6 +175,7 @@
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
 	list_reagents = list("nothing" = 100)
+	foodtype = NONE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
@@ -191,6 +194,7 @@
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
 	list_reagents = list("holywater" = 100)
+	foodtype = NONE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
@@ -207,6 +211,7 @@
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK."
 	icon_state = "kahluabottle"
 	list_reagents = list("kahlua" = 100)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager
 	name = "College Girl Goldschlager"
@@ -225,6 +230,7 @@
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
 	list_reagents = list("wine" = 100)
+	foodtype = FRUIT | ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Extra-Strong Absinthe"
@@ -284,6 +290,7 @@
 	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
 	icon_state = "lizardwine"
 	list_reagents = list("lizardwine" = 100)
+	foodtype = FRUIT | ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/hcider
 	name = "Jian Hard Cider"
@@ -305,32 +312,44 @@
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
 	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("orangejuice" = 100)
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
 	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("cream" = 100)
+	foodtype = DAIRY
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("tomatojuice" = 100)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
 	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("limejuice" = 100)
+	foodtype = FRUIT
 
 
 ////////////////////////// MOLOTOV ///////////////////////
@@ -339,8 +358,8 @@
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
-	var/list/accelerants = list(	/datum/reagent/consumable/ethanol,/datum/reagent/fuel,/datum/reagent/clf3,/datum/reagent/phlogiston,
-							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
+	var/list/accelerants = list(	/datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
+							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
 	var/active = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)

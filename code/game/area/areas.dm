@@ -12,26 +12,26 @@
 
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
-	var/valid_territory = 1 // If it's a valid territory for gangs to claim
-	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
+	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
+	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
 
 	var/eject = null
 
 	var/fire = null
-	var/atmos = 1
-	var/atmosalm = 0
-	var/poweralm = 1
+	var/atmos = TRUE
+	var/atmosalm = FALSE
+	var/poweralm = TRUE
 	var/party = null
-	var/lightswitch = 1
+	var/lightswitch = TRUE
 
-	var/requires_power = 1
-	var/always_unpowered = 0	// This gets overriden to 1 for space in area/Initialize().
+	var/requires_power = TRUE
+	var/always_unpowered = FALSE	// This gets overriden to 1 for space in area/Initialize().
 
-	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
-	var/power_equip = 1
-	var/power_light = 1
-	var/power_environ = 1
+	var/power_equip = TRUE
+	var/power_light = TRUE
+	var/power_environ = TRUE
 	var/music = null
 	var/used_equip = 0
 	var/used_light = 0
@@ -40,10 +40,10 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = 0
-	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/has_gravity = FALSE
+	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/hidden = FALSE 			//Hides area from player Teleport function.
-	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
 	var/list/related			// the other areas of the same type as this
@@ -108,9 +108,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(requires_power)
 		luminosity = 0
 	else
-		power_light = 1
-		power_equip = 1
-		power_environ = 1
+		power_light = TRUE
+		power_equip = TRUE
+		power_environ = TRUE
 
 		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
 			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
@@ -429,10 +429,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey)
 		return
 
-	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
-		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ)
 
 	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
 		return //General ambience check is below the ship ambience so one can play without the other
@@ -441,7 +441,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
+			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE)
 			L.client.played = 1
 			sleep(600)			//ewww - this is very very bad
 			if(L.&& L.client)
@@ -463,10 +463,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/setup(a_name)
 	name = a_name
-	power_equip = 0
-	power_light = 0
-	power_environ = 0
-	always_unpowered = 0
-	valid_territory = 0
-	blob_allowed = 0
+	power_equip = FALSE
+	power_light = FALSE
+	power_environ = FALSE
+	always_unpowered = FALSE
+	valid_territory = FALSE
+	blob_allowed = FALSE
 	addSorted()

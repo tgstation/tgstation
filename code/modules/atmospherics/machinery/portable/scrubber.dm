@@ -1,7 +1,7 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
 	icon_state = "pscrubber:0"
-	density = 1
+	density = TRUE
 
 	var/on = FALSE
 	var/volume_rate = 1000
@@ -62,7 +62,7 @@
 		update_icon()
 	..()
 
-/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -117,7 +117,7 @@
 	if((!anchored && !movable) || !is_operational())
 		on = FALSE
 		update_icon()
-	use_power = 1 + on
+	use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 	if(!on)
 		return
 

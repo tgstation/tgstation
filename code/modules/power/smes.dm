@@ -18,9 +18,9 @@
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
-	density = 1
-	anchored = 1
-	use_power = 0
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
 
@@ -50,7 +50,7 @@
 
 	spawn(5)
 		dir_loop:
-			for(var/d in GLOB.cardinal)
+			for(var/d in GLOB.cardinals)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
 					if(term && term.dir == turn(d, 180))
@@ -142,7 +142,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			if(C.get_amount() < 10 || !C)
@@ -191,7 +191,7 @@
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
-	if(SSticker && SSticker.IsRoundInProgress())
+	if(SSticker.IsRoundInProgress())
 		var/area/A = get_area(src)
 		var/turf/T = get_turf(src)
 		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
@@ -333,7 +333,7 @@
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

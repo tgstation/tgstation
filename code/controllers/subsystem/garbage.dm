@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(garbage)
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
 
-	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
+	var/list/tobequeued = list()	//We store the references of things to be added to the queue separately so we can spread out GC overhead over a few ticks
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(garbage)
 
 	queue[refid] = gctime
 
-//this is purely to seperate things profile wise.
+//this is purely to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
 	var/time = world.timeofday
 	var/tick = world.tick_usage
@@ -189,6 +189,7 @@ SUBSYSTEM_DEF(garbage)
 	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(isnull(D.gc_destroyed))
+		D.SendSignal(COMSIG_PARENT_QDELETED)
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
@@ -233,25 +234,7 @@ SUBSYSTEM_DEF(garbage)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
-// Default implementation of clean-up code.
-// This should be overridden to remove all references pointing to the object being destroyed.
-// Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
-/datum/proc/Destroy(force=FALSE)
-	tag = null
-	var/list/timers = active_timers
-	active_timers = null
-	for(var/thing in timers)
-		var/datum/timedevent/timer = thing
-		if (timer.spent)
-			continue
-		qdel(timer)
-	return QDEL_HINT_QUEUE
-
-/datum/var/gc_destroyed //Time when this object was destroyed.
-
 #ifdef TESTING
-/datum/var/running_find_references
-/datum/var/last_find_references = 0
 
 /datum/verb/find_refs()
 	set category = "Debug"
@@ -300,13 +283,12 @@ SUBSYSTEM_DEF(garbage)
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
-	if(SSgarbage)
-		while(SSgarbage.queue.len)
-			var/datum/o = locate(SSgarbage.queue[1])
-			if(istype(o) && o.gc_destroyed)
-				del(o)
-				SSgarbage.totaldels++
-			SSgarbage.queue.Cut(1, 2)
+	while(SSgarbage.queue.len)
+		var/datum/o = locate(SSgarbage.queue[1])
+		if(istype(o) && o.gc_destroyed)
+			del(o)
+			SSgarbage.totaldels++
+		SSgarbage.queue.Cut(1, 2)
 
 /datum/verb/qdel_then_find_references()
 	set category = "Debug"

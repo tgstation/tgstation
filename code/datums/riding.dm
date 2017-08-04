@@ -40,12 +40,14 @@
 			passindex++
 			var/mob/living/buckled_mob = m
 			var/list/offsets = get_offsets(passindex)
+			var/rider_dir = get_rider_dir(passindex)
+			buckled_mob.setDir(rider_dir)
 			dir_loop:
 				for(var/offsetdir in offsets)
 					if(offsetdir == ridden_dir)
 						var/list/diroffsets = offsets[offsetdir]
 						buckled_mob.pixel_x = diroffsets[1]
-						if(diroffsets.len == 2)
+						if(diroffsets.len >= 2)
 							buckled_mob.pixel_y = diroffsets[2]
 						if(diroffsets.len == 3)
 							buckled_mob.layer = diroffsets[3]
@@ -55,6 +57,11 @@
 //Override this to set your vehicle's various pixel offsets
 /datum/riding/proc/get_offsets(pass_index) // list(dir = x, y, layer)
 	return list("[NORTH]" = list(0, 0), "[SOUTH]" = list(0, 0), "[EAST]" = list(0, 0), "[WEST]" = list(0, 0))
+
+//Override this to set the passengers/riders dir based on which passenger they are.
+//ie: rider facing the vehicle's dir, but passenger 2 facing backwards, etc.
+/datum/riding/proc/get_rider_dir(pass_index)
+	return ridden.dir
 
 //KEYS
 /datum/riding/proc/keycheck(mob/user)
@@ -97,9 +104,6 @@
 
 /datum/riding/proc/Process_Spacemove(direction)
 	if(ridden.has_gravity())
-		return 1
-
-	if(ridden.pulledby)
 		return 1
 
 	return 0
@@ -164,7 +168,7 @@
 
 
 /datum/riding/janicart/get_offsets(pass_index) // list(dir = x, y, layer)
-	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(-12, 7), "[EAST]" = list(0, 7), "[WEST]" = list( 12, 7))
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 7), "[EAST]" = list(-12, 7), "[WEST]" = list( 12, 7))
 
 //scooter
 /datum/riding/scooter/handle_vehicle_layer()
@@ -257,7 +261,7 @@
 	var/turf/next = get_step(ridden, direction)
 	var/turf/current = get_turf(ridden)
 
-	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
+	if(istype(next, /turf/open/lava) || istype(current, /turf/open/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
 	else
 		to_chat(user, "Boats don't go on land!")
@@ -326,8 +330,7 @@
 
 /datum/riding/human/force_dismount(mob/living/user)
 	ridden.unbuckle_mob(user)
-	user.Weaken(3)
-	user.Stun(3)
+	user.Knockdown(60)
 	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
 
 /datum/riding/cyborg
@@ -336,7 +339,7 @@
 /datum/riding/cyborg/ride_check(mob/user)
 	if(user.incapacitated())
 		var/kick = TRUE
-		if(istype(ridden, /mob/living/silicon/robot))
+		if(iscyborg(ridden))
 			var/mob/living/silicon/robot/R = ridden
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
@@ -344,7 +347,7 @@
 			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
 			Unbuckle(user)
 			return
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			Unbuckle(user)
@@ -382,7 +385,7 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [ridden]!</span>")
 	M.throw_at(target, 14, 5, ridden)
-	M.Weaken(3)
+	M.Knockdown(60)
 
 /datum/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/amount_equipped = 0

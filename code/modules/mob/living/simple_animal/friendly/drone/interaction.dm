@@ -121,13 +121,12 @@
 	if(hack)
 		if(hacked)
 			return
+			Stun(40)
 		if(clockwork)
-			Stun(2)
 			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
-			Stun(2)
 			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
@@ -137,7 +136,7 @@
 			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
-		hacked = 1
+		hacked = TRUE
 		mind.special_role = "hacked drone"
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
@@ -146,14 +145,14 @@
 	else
 		if(!hacked)
 			return
-		Stun(2)
+		Stun(40)
 		visible_message("<span class='info'>[src]'s dislay glows a content blue!</span>", \
 						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
 		to_chat(src, "<span class='info'><b>From now on, these are your laws:</b></span>")
 		laws = initial(laws)
 		to_chat(src, laws)
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
-		hacked = 0
+		hacked = FALSE
 		mind.special_role = null
 		seeStatic = initial(seeStatic)
 		ventcrawler = initial(ventcrawler)
@@ -197,5 +196,6 @@
 
 /datum/action/generic/drone/select_filter
 	name = "Select Vision Filter"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "drone_vision"
 	procname = /mob/living/simple_animal/drone/verb/toggle_statics

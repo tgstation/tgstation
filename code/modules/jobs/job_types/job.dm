@@ -87,7 +87,7 @@
 		. = src.access.Copy()
 
 	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
-		. |= list(GLOB.access_maint_tunnels)
+		. |= list(ACCESS_MAINT_TUNNELS)
 
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
@@ -134,7 +134,7 @@
 
 	var/backpack = /obj/item/weapon/storage/backpack
 	var/satchel  = /obj/item/weapon/storage/backpack/satchel
-	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	var/duffelbag = /obj/item/weapon/storage/backpack/duffelbag
 	var/box = /obj/item/weapon/storage/box/survival
 
 	var/pda_slot = slot_belt
@@ -145,14 +145,14 @@
 			back = /obj/item/weapon/storage/backpack //Grey backpack
 		if(GSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel //Grey satchel
-		if(GDUFFLEBAG)
-			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
+		if(GDUFFELBAG)
+			back = /obj/item/weapon/storage/backpack/duffelbag //Grey Duffel bag
 		if(LSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)
 			back = satchel //Department satchel
-		if(DDUFFLEBAG)
-			back = dufflebag //Department dufflebag
+		if(DDUFFELBAG)
+			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
 

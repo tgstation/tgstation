@@ -1,6 +1,36 @@
 
 //Academy Items
 
+/obj/item/weapon/paper/fluff/awaymissions/academy/console_maint
+	name = "Console Maintenance"
+	info = "We're upgrading to the latest mainframes for our consoles, the shipment should be in before spring break is over!"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/automotive
+	name = "Automotive Repair 101"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/pyromancy
+	name = "Pyromancy 250"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/class/biology
+	name = "Biology Lab"
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/aplus
+	name = "Summoning Midterm Exam"
+	info = "Grade: A+ Educator's Notes: Excellent form."
+	
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/bminus
+	name = "Summoning Midterm Exam"
+	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement."
+
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/dminus
+	name = "Summoning Midterm Exam"
+	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS."
+	
+/obj/item/weapon/paper/fluff/awaymissions/academy/grade/failure
+	name = "Pyromancy Evaluation"
+	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
+
+
 /obj/singularity/academy
 	dissipate = 0
 	move_self = 0
@@ -27,8 +57,7 @@
 	desc = "Made by Abjuration Inc"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
-	anchored = 1
-	obj_integrity = 200
+	anchored = TRUE
 	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
@@ -65,7 +94,7 @@
 
 /obj/structure/academy_wizard_spawner/proc/give_control()
 	set waitfor = FALSE
-	
+
 	if(!current_wizard)
 		return
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
@@ -179,9 +208,9 @@
 			S.speedmod += 1
 		if(7)
 			//Throw
-			user.Stun(3)
+			user.Stun(60)
 			user.adjustBruteLoss(50)
-			var/throw_dir = pick(GLOB.cardinal)
+			var/throw_dir = pick(GLOB.cardinals)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)

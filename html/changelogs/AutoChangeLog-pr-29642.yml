@@ -1,0 +1,4 @@
+author: "Galactic Corgi Breeding Mills, LLC"
+delete-after: True
+changes: 
+  - bugfix: "Fixed corgis being able to wear spacesuit helmets despite lacking the proper code and sprites for them."

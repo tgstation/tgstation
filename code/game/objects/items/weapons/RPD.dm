@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 /obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
-	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
 
 /obj/item/weapon/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
@@ -518,7 +518,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 
 /obj/item/weapon/pipe_dispenser/pre_attackby(atom/A, mob/user)
-	if(!user.IsAdvancedToolUser() || istype(A,/turf/open/space/transit))
+	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
 	//make sure what we're clicking is valid for the current mode
@@ -570,8 +570,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 				new /obj/item/pipe_meter(A)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
-			if(is_anchored_dense_turf(A))
-				to_chat(user, "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>")
+			if(isclosedturf(A))
+				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -594,7 +594,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 
 /obj/item/weapon/pipe_dispenser/proc/activate()
-	playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
 #undef PIPE_BINARY
 #undef PIPE_BENT

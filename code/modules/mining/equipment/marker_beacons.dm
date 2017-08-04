@@ -1,6 +1,6 @@
 /*****************Marker Beacons**************************/
 GLOBAL_LIST_INIT(marker_beacon_colors, list(
-"Random" = FALSE,//not a true color, will pick a random color
+"Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,
 "Yellow" = LIGHT_COLOR_YELLOW,
@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	icon_state = "marker"
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
+	novariants = TRUE
 	var/picked_color = "random"
 
 /obj/item/stack/marker_beacon/ten //miners start with 10 of these
@@ -55,14 +56,14 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
-/obj/item/stack/marker_beacon/AltClick(mob/user)
-	if(user.incapacitated())
+/obj/item/stack/marker_beacon/AltClick(mob/living/user)
+	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
-	if(user.incapacitated() || !in_range(src, user))
+	if(user.incapacitated() || !istype(user) || !in_range(src, user))
 		return
 	if(input_color)
 		picked_color = input_color
@@ -75,7 +76,6 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
 	armor = list(melee = 50, bullet = 75, laser = 75, energy = 75, bomb = 25, bio = 100, rad = 100, fire = 25, acid = 0)
-	obj_integrity = 50
 	max_integrity = 50
 	anchored = TRUE
 	light_range = 2
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		M.update_icon()
 		transfer_fingerprints_to(M)
 		if(user.put_in_hands(M, TRUE)) //delete the beacon if it fails
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			qdel(src) //otherwise delete us
 
 /obj/structure/marker_beacon/attackby(obj/item/I, mob/user, params)
@@ -122,20 +122,20 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		to_chat(user, "<span class='notice'>You start picking [src] up...</span>")
 		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
 			M.add(1)
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			qdel(src)
 	else
 		return ..()
 
-/obj/structure/marker_beacon/AltClick(mob/user)
+/obj/structure/marker_beacon/AltClick(mob/living/user)
 	..()
-	if(user.incapacitated())
+	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
-	if(user.incapacitated() || !in_range(src, user))
+	if(user.incapacitated() || !istype(user) || !in_range(src, user))
 		return
 	if(input_color)
 		picked_color = input_color

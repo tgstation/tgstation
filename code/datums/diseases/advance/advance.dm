@@ -7,7 +7,7 @@
 
 */
 
-#define SYMPTOM_LIMIT 8
+#define SYMPTOM_LIMIT 6
 
 
 
@@ -18,7 +18,6 @@
  */
 
 /datum/disease/advance
-
 	name = "Unknown" // We will always let our Virologist name our disease.
 	desc = "An engineered disease which can contain a multitude of symptoms."
 	form = "Advance Disease" // Will let med-scanners know that this disease was engineered.
@@ -31,7 +30,7 @@
 	var/list/properties = list()
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
-	var/processing = 0
+	var/processing = FALSE
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
@@ -58,7 +57,10 @@
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				symptoms += new S.type
+				var/datum/symptom/new_symp = new S.type
+				new_symp.name = S.name
+				new_symp.neutered = S.neutered
+				symptoms += new_symp
 
 	Refresh()
 	..(process, D)
@@ -76,7 +78,7 @@
 	if(symptoms && symptoms.len)
 
 		if(!processing)
-			processing = 1
+			processing = TRUE
 			for(var/datum/symptom/S in symptoms)
 				S.Start(src)
 
@@ -91,7 +93,7 @@
 	if(!(istype(D, /datum/disease/advance)))
 		return 0
 
-	if(src.GetDiseaseID() != D.GetDiseaseID())
+	if(GetDiseaseID() != D.GetDiseaseID())
 		return 0
 	return 1
 
@@ -116,10 +118,10 @@
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
-	if(!(src.IsSame(D)))
+	if(!(IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
-			AddSymptom(new S.type)
+			AddSymptom(S.Copy())
 
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
@@ -155,8 +157,7 @@
 
 	return generated
 
-/datum/disease/advance/proc/Refresh(new_name = 0)
-	//to_chat(world, "[src.name] \ref[src] - REFRESH!")
+/datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
 	id = null
@@ -192,10 +193,8 @@
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2,3)
+			if(2 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER
-			if(4 to INFINITY)
-				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
 		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
@@ -263,7 +262,7 @@
 	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
 	if(s)
 		AddSymptom(s)
-		Refresh(1)
+		Refresh(TRUE)
 	return
 
 // Randomly remove a symptom.
@@ -272,7 +271,16 @@
 		var/s = safepick(symptoms)
 		if(s)
 			RemoveSymptom(s)
-			Refresh(1)
+			Refresh(TRUE)
+	return
+
+// Randomly neuter a symptom.
+/datum/disease/advance/proc/Neuter()
+	if(symptoms.len)
+		var/s = safepick(symptoms)
+		if(s)
+			NeuterSymptom(s)
+			Refresh(TRUE)
 	return
 
 // Name the disease.
@@ -286,6 +294,8 @@
 		var/list/L = list()
 		for(var/datum/symptom/S in symptoms)
 			L += S.id
+			if(S.neutered)
+				L += "N"
 		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
 		var/result = jointext(L, ":")
 		id = result
@@ -310,6 +320,12 @@
 /datum/disease/advance/proc/RemoveSymptom(datum/symptom/S)
 	symptoms -= S
 	return
+
+// Neuter a symptom, so it will only affect stats
+/datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
+	if(!S.neutered)
+		S.neutered = TRUE
+		S.name += " (neutered)"
 
 /*
 
@@ -395,7 +411,7 @@
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.processing)
+		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
@@ -409,13 +425,6 @@
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
-
-/*
-/mob/verb/test()
-
-	for(var/datum/disease/D in SSdisease.processing)
-		to_chat(src, "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>")
-*/
 
 
 /datum/disease/advance/proc/totalStageSpeed()

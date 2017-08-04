@@ -44,7 +44,7 @@
 		<ui-button  state='{{data.currentSection == 4 ? null : "disabled"}}' action=', the Lord of all things'>the Lord of all things</ui-button>
 		<ui-button  state='{{data.currentSection == 4 ? null : "disabled"}}' action=', Jr.'>jr</ui-button>
     </ui-section>
-	<ui-section label ='submit'>
+    <ui-section label ='submit'>
 		<ui-button state='{{data.currentSection >= 4 ? null : "disabled"}}' action='search'>search</ui-button>
-	<ui-section>
+    </ui-section>
 </ui-display>
