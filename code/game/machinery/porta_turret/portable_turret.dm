@@ -359,28 +359,23 @@
 			popDown()
 		return
 
-	var/list/targets = calculate_targets()
-
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
-
-/obj/machinery/porta_turret/proc/calculate_targets()
 	var/list/targets = list()
-	var/turretview = view(scan_range, base)
-	for(var/A in turretview)
+	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
+
+	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
 		var/atom/AA = A
-		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+
+		if(AA.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 
 		if(check_anomalies)//if it's set to check for simple animals
-			if(istype(A, /mob/living/simple_animal))
+			if(isanimal(A))
 				var/mob/living/simple_animal/SA = A
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
 
-		if(istype(A, /mob/living/carbon))
+		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
 			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.lying))
@@ -399,14 +394,16 @@
 				if(!in_faction(C))
 					targets += C
 
-		if(istype(A, /obj/mecha/))
+		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			//If there is a user and they're not in our faction
 			if(M.occupant && !in_faction(M.occupant))
 				if(assess_perp(M.occupant) >= 4)
 					targets += M
 
-	return targets
+	if(!tryToShootAt(targets))
+		if(!always_up)
+			popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -490,11 +487,9 @@
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
-		spawn()
-			popUp()				//pop the turret up if it's not already up.
+		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		spawn()
-			shootAt(target)
+		shootAt(target)
 		return 1
 	return
 
