@@ -222,8 +222,9 @@
 			if(isliving(G))
 				var/mob/living/L = G
 				wash_mob(L)
-			else
-				wash_obj(G)
+			else 
+				if(isobj(G)) // Skip the light objects
+					wash_obj(G)
 	else
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
@@ -286,7 +287,7 @@
 			wash_obj(O)
 
 
-/obj/machinery/shower/proc/wash_obj(atom/movable/O)
+/obj/machinery/shower/proc/wash_obj(obj/O)
 	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
