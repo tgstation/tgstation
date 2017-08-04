@@ -672,11 +672,14 @@
 	..()
 	if(!mapload)
 		return
-	
-	if(!control_area)
-		control_area = get_area(src)
-	else
+
+	if(control_area)
 		control_area = locate(text2path(control_area)) in GLOB.sortedAreas
+		if(control_area == null)
+			control_area = get_area(src)
+			stack_trace("Bad control_area path for [src], [src.control_area]")
+	else if(!control_area)
+		control_area = get_area(src)
 
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T

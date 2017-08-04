@@ -11785,7 +11785,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Primary Tool Storage APC";
-	areastring = "/turf/open/floor/plating";
+	areastring = "/area/storage/primary";
 	pixel_x = 1;
 	pixel_y = -24
 	},
