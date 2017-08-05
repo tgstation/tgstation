@@ -10,7 +10,7 @@
 	var/category = null
 
 /obj/item/weapon/book/random/Initialize()
-	..()
+	. = ..()
 	create_random_books(amount, src.loc, TRUE, category)
 	qdel(src)
 
@@ -24,7 +24,7 @@
 	state = 2
 
 /obj/structure/bookcase/random/Initialize(mapload)
-	..()
+	. = ..()
 	if(!book_count || !isnum(book_count))
 		update_icon()
 		return
