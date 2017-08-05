@@ -1,6 +1,6 @@
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
-	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'

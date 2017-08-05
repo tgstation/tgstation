@@ -25,6 +25,7 @@
 	gender = PLURAL
 	filling_color = "#FF00FF"
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -44,6 +45,7 @@
 	desc = "Taste so good, you could die!"
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
+	foodtype = FRUIT | TOXIC
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -65,6 +67,7 @@
 	desc = "Taste so good, you could die!"
 	icon_state = "deathberrypile"
 	filling_color = "#708090"
+	foodtype = FRUIT | TOXIC
 
 // Glow Berries
 /obj/item/seeds/berry/glow
@@ -87,6 +90,7 @@
 	desc = "Nutritious!"
 	icon_state = "glowberrypile"
 	filling_color = "#7CFC00"
+	foodtype = FRUIT
 
 // Cherries
 /obj/item/seeds/cherry
@@ -116,6 +120,7 @@
 	gender = PLURAL
 	filling_color = "#FF0000"
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue
@@ -136,6 +141,7 @@
 	icon_state = "bluecherry"
 	filling_color = "#6495ED"
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 // Grapes
 /obj/item/seeds/grape
@@ -166,6 +172,7 @@
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin/healthy
 	filling_color = "#FF1493"
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 // Green Grapes
 /obj/item/seeds/grape/green

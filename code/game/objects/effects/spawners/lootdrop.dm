@@ -46,7 +46,7 @@
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/trash/deadmouse = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,

@@ -23,6 +23,7 @@
 	icon_state = "apple"
 	filling_color = "#FF4500"
 	bitesize = 100 // Always eat the apple in one bite
+	foodtype = FRUIT
 
 // Posioned Apple
 /obj/item/seeds/apple/poisoned
@@ -33,6 +34,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
 	seed = /obj/item/seeds/apple/poisoned
+	foodtype = FRUIT | TOXIC
 
 // Gold Apple
 /obj/item/seeds/apple/gold

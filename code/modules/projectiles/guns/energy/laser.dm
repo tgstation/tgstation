@@ -43,7 +43,7 @@
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
 	item_state = "laser"
-	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lense to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theorically infinite use."
+	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/cyborg
@@ -101,8 +101,8 @@
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 /obj/item/weapon/gun/energy/xray
-	name = "xray laser gun"
-	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"
+	name = "x-ray laser gun"
+	desc = "A high-power laser gun capable of expelling concentrated x-ray blasts that pass through multiple soft targets and heavier materials"
 	icon_state = "xray"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)

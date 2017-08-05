@@ -114,7 +114,7 @@
 /obj/item/organ/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
 	desc = "An implantable set of thruster ports. They use the gas from environment or subject's internals for propulsion in zero-gravity areas. \
-	Unlike regular jetpack, this device has no stablilzation system."
+	Unlike regular jetpack, this device has no stabilization system."
 	slot = "thrusters"
 	icon_state = "imp_jetpack"
 	implant_overlay = null

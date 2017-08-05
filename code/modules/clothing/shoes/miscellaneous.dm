@@ -212,7 +212,7 @@
 
 	jumping = TRUE
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
-	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
+	usr.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
 	usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()

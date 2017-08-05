@@ -25,6 +25,7 @@
 	icon_state = "chilipepper"
 	filling_color = "#FF0000"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Ice Chili
 /obj/item/seeds/chili/ice
@@ -48,6 +49,7 @@
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
@@ -73,6 +75,7 @@
 	var/mob/held_mob
 	filling_color = "#F8F8FF"
 	bitesize_mod = 4
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()

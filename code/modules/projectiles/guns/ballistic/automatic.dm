@@ -365,7 +365,7 @@
 
 /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
-	desc = "An illegally modified .50 cal sniper rifle with supression compatibility. Quickscoping still doesn't work."
+	desc = "An illegally modified .50 cal sniper rifle with suppression compatibility. Quickscoping still doesn't work."
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang

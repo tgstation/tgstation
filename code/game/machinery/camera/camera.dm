@@ -373,20 +373,6 @@
 	else
 		set_light(0)
 
-/obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
-	var/turf/prev_turf
-
-/obj/machinery/camera/portable/Initialize()
-	. = ..()
-	assembly.state = 0 //These cameras are portable, and so shall be in the portable state if removed.
-	assembly.anchored = FALSE
-	assembly.update_icon()
-
-/obj/machinery/camera/portable/process() //Updates whenever the camera is moved.
-	if(GLOB.cameranet && get_turf(src) != prev_turf)
-		GLOB.cameranet.updatePortableCamera(src)
-		prev_turf = get_turf(src)
-
 /obj/machinery/camera/get_remote_view_fullscreens(mob/user)
 	if(view_range == short_range) //unfocused
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)

@@ -171,7 +171,7 @@
 
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
-	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all neccessary tools."
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
 	contents = newlist(/obj/item/weapon/screwdriver/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/weldingtool/largetank/cyborg,
 		/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
 
@@ -187,7 +187,7 @@
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
-	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
+	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
 	contents = newlist(/obj/item/weapon/melee/transforming/energy/blade/hardlight)
 
 /obj/item/organ/cyberimp/arm/medibeam

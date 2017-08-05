@@ -147,8 +147,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "as" = (
