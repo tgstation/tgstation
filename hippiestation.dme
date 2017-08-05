@@ -1029,6 +1029,7 @@
 #include "code\modules\admin\verbs\maprotation.dm"
 #include "code\modules\admin\verbs\massmodvar.dm"
 #include "code\modules\admin\verbs\modifyvariables.dm"
+#include "code\modules\admin\verbs\one_click_antag.dm"
 #include "code\modules\admin\verbs\onlyone.dm"
 #include "code\modules\admin\verbs\panicbunker.dm"
 #include "code\modules\admin\verbs\playsound.dm"
