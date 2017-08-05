@@ -129,6 +129,9 @@
 		if(O.mind.changeling)
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 
+	//handle languages
+	O.remove_all_languages()
+	O.grant_language(/datum/language/monkey)
 
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
@@ -285,6 +288,13 @@
 			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
 				O.mind.changeling.purchasedpowers -= HF
 
+	//handle languages
+	O.remove_all_languages()
+	O.grant_language(/datum/language/common)
+	if(O.job in list("Curator"))
+		O.grant_all_languages(omnitongue=TRUE)
+
+
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
@@ -370,7 +380,6 @@
 	R.cell.maxcharge = 7500
 	R.cell.charge = 7500
 
-
 	R.gender = gender
 	R.invisibility = 0
 
@@ -397,6 +406,8 @@
 	R.loc = loc
 	R.job = "Cyborg"
 	R.notify_ai(NEW_BORG)
+
+	R.grant_language(/datum/language/machine) // Borgs still know galcom
 
 	. = R
 	qdel(src)
@@ -427,6 +438,9 @@
 
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
+
+	new_xeno.remove_all_languages()
+	new_xeno.grant_language(/datum/language/xenocommon)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
@@ -459,6 +473,9 @@
 		new_slime = new /mob/living/simple_animal/slime(loc)
 	new_slime.a_intent = INTENT_HARM
 	new_slime.key = key
+
+	new_slime.remove_all_languages()
+	new_slime.grant_language(/datum/language/slime)
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
 	. = new_slime
@@ -501,7 +518,7 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+		to_chat(usr, "<span class='danger'>Sorry, but this mob type is currently unavailable.</span>")
 		return
 
 	if(notransform)
@@ -534,14 +551,14 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+		to_chat(usr, "<span class='danger'>Sorry, but this mob type is currently unavailable.</span>")
 		return
 
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
 	new_mob.a_intent = INTENT_HARM
-	to_chat(new_mob, "You feel more... animalistic")
+	to_chat(new_mob, "You feel more... animalistic.")
 
 	. = new_mob
 	qdel(src)
