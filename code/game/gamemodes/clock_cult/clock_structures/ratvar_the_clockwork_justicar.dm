@@ -1,8 +1,8 @@
-//Ratvar himself. Impossible to damage by most standard means, He will dominate the station and all upon it.
+//Ratvar himself. Impossible to damage by most standard means, and converts nearby objects and players into clockwork variants and Servants.
 /obj/structure/destructible/clockwork/massive/ratvar
 	name = "Ratvar, the Clockwork Justiciar"
-	desc = "<span class='userdanger'>What is what is what are what real what is all a lie all a lie it's all a lie why how can what is</span>"
-	clockwork_desc = "<span class='large_brass'><b><i>Ratvar, the Clockwork Justiciar, your master eternal.</i></b></span>"
+	desc = "..."
+	clockwork_desc = "<span class='large_brass bold italics'>Ratvar, free at last!</span>"
 	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
 	pixel_x = -235
@@ -13,7 +13,7 @@
 	light_range = 15
 	light_color = "#BE8700"
 	var/atom/prey //Whatever Ratvar is chasing
-	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
+	var/clashing = FALSE //If Ratvar is fighting with Nar-Sie
 	var/convert_range = 10
 	dangerous_possession = TRUE
 

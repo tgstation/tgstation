@@ -17,7 +17,8 @@
 "q" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/weldingtool/experimental/brass,/obj/item/weapon/paper/fluff/ruins/djstation{name = "paper - 'Station Radio Frequencies'"},/turf/open/indestructible/reebe,/area/reebe)
 "r" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/crowbar/brass,/obj/item/weapon/wirecutters/brass,/turf/open/indestructible/reebe,/area/reebe)
 "s" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy,/turf/open/indestructible/reebe,/area/reebe)
-"t" = (/obj/effect/landmark/city_of_cogs,/turf/open/indestructible/reebe,/area/reebe)
+"t" = (/turf/closed/indestructible/reebe/spawn_room,/area/reebe)
+"u" = (/obj/effect/landmark/city_of_cogs,/turf/open/indestructible/reebe,/area/reebe)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -61,11 +62,11 @@ abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
 abbbbbbbcccccccccccccccccccccccccccccccccbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbcccbbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbtttttbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbcccccbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbctttcbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbctttcbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbctttcbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbcuuucbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbcuuucbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbcuuucbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbcccccbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

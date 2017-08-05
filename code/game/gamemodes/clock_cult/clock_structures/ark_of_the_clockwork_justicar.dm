@@ -38,7 +38,7 @@
 	hierophant_message("<span class='bold large_brass'>The Ark is activating! Get back to the base!</span>")
 	for(var/mob/M in GLOB.player_list)
 		if(is_servant_of_ratvar(M) || isobserver(M) || M.z == z)
-			M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 100, FALSE, pressure_affected = FALSE)
+			M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 30, FALSE, pressure_affected = FALSE)
 	addtimer(CALLBACK(src, .proc/let_slip_the_dogs), 300)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/let_slip_the_dogs()
@@ -58,7 +58,6 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
 		if(!is_blocked_turf(OT, TRUE))
@@ -75,13 +74,12 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	if(!purpose_fulfilled)
-		var/area/gate_area = get_area(src)
-		hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has fallen at [gate_area.map_name]!</b></span>")
+		hierophant_message("<span class='bold large_brass'>The Ark has fallen!</span>")
 		send_to_playing_players(sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
 	if(!was_stranded && !purpose_fulfilled)
-		priority_announce("Massive energy anomaly no longer on short-range scanners.","Anomaly Alert")
+		priority_announce("Massive energy anomaly no longer on scanners. Get back to work.","Anomaly Alert")
 	if(glow)
 		qdel(glow)
 		glow = null
@@ -140,22 +138,22 @@
 			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
-					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")
+					to_chat(user, "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>")
 				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-					to_chat(user, "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
+					to_chat(user, "<span class='heavy_brass'>The field is ripping open a copy of itself in Ratvar's prison.</span>")
 				if(GATEWAY_RATVAR_COMING to INFINITY)
-					to_chat(user, "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>")
+					to_chat(user, "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>")
 	else
 		if(!active)
 			to_chat(user, "<span class='warning'>Whatever it is, it doesn't seem to be active.</span>")
 		else
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
-					to_chat(user, "<span class='warning'>It's a swirling mass of blackness.</span>")
+					to_chat(user, "<span class='warning'>You see a swirling bluespace anomaly steadily growing in intensity.</span>")
 				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-					to_chat(user, "<span class='warning'>It seems to be leading somewhere.</span>")
+					to_chat(user, "<span class='warning'>The anomaly is stable, and you can see flashes of something from it.</span>")
 				if(GATEWAY_RATVAR_COMING to INFINITY)
-					to_chat(user, "<span class='boldwarning'>Something is coming through!</span>")
+					to_chat(user, "<span class='boldwarning'>The anomaly is stable! Something is coming through!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!first_sound_played || prob(7))
@@ -194,8 +192,6 @@
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!third_sound_played)
-				var/area/gate_area = get_area(src)
-				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
 				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 35))
 				third_sound_played = TRUE
 			make_glow()
@@ -224,7 +220,6 @@
 				var/obj/structure/destructible/clockwork/massive/ratvar/R = new(startpoint)
 				var/turf/T =  locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), ZLEVEL_STATION) //approximate center of the station
 				R.forceMove(T)
-				send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
 
 
 

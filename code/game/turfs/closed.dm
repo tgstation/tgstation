@@ -59,11 +59,25 @@
 	return
 
 /turf/closed/indestructible/reebe/CollidedWith(atom/movable/AM)
-	playsound(src, 'sound/effects/bamf.ogg', 30, TRUE)
+	playsound(src, 'sound/effects/bamf.ogg', 25, TRUE)
 
 /turf/closed/indestructible/reebe/border
 	opacity = TRUE
 	baseturf = /turf/closed/indestructible/reebe/border
+
+/turf/closed/indestructible/reebe/spawn_room
+	density = FALSE
+
+/turf/closed/indestructible/reebe/spawn_room/Enter(atom/movable/AM, atom/old_loc)
+	if(!is_servant_of_ratvar(AM) || istype(AM, /obj/item/clockwork) || istype(AM, /obj/structure/destructible/clockwork))
+		if(!istype(old_loc, type))
+			to_chat(AM, "<span class='cult'>You step through [src] with little effort. You think you taste the coppery tang of blood.</span>")
+			playsound(src, 'sound/magic/exit_blood.ogg', 25, TRUE)
+		return TRUE
+	to_chat(AM, "<span class='boldwarning'>A malevolent presence pushes you away from [src]!</span>")
+	playsound(src, 'sound/effects/bamf.ogg', 25, TRUE)
+	new/obj/effect/temp_visual/cult/turf(get_turf(src))
+	return
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
