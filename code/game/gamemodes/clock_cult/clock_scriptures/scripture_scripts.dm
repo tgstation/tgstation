@@ -37,7 +37,7 @@
 	Dead Servants can be revived by this sigil at a cost of 150 Vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
-	consumed_components = list(HIEROPHANT_ANSIBLE = 1, VANGUARD_COGWHEEL = 2)
+	consumed_components = list(GEIS_CAPACITOR = 1, VANGUARD_COGWHEEL = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
