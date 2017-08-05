@@ -1,7 +1,8 @@
 /obj/item/weapon/gun/ballistic/revolver
 	fire_sound = 'hippiestation/sound/weapons/gunshot_magnum.ogg'
 
-/obj/item/weapon/gun/ballistic/revolver/attackby(obj/item/A, mob/user, params)
-	..()
-	if(num_loaded)
-		playsound(user, 'hippiestation/sound/weapons/speedload.ogg', 60, 1)
+/obj/item/weapon/gun/ballistic/revolver/detective
+	fire_sound = 'hippiestation/sound/weapons/gunshot_38special.ogg'
+
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel
+	fire_sound = 'hippiestation/sound/weapons/shotgun_shoot.ogg'
