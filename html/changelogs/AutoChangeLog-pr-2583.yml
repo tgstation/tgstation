@@ -1,0 +1,7 @@
+author: "PopNotes"
+delete-after: True
+changes: 
+  - bugfix: "The revolver changes should work now."
+  - soundadd: "New sounds for inserting bullets into guns/magazines AND new sounds for using speedloaders!"
+  - soundadd: "New sound for the detective's revolver. Become the cowboy."
+  - soundadd: "New sound for the double-barrel shotgun. Meaty."
