@@ -222,9 +222,8 @@
 			if(isliving(G))
 				var/mob/living/L = G
 				wash_mob(L)
-			else 
-				if(isobj(G)) // Skip the light objects
-					wash_obj(G)
+			else if(isobj(G)) // Skip the light objects
+				wash_obj(G)
 	else
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
