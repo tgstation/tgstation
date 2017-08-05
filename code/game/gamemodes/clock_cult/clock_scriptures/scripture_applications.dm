@@ -223,25 +223,3 @@
 	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
-
-
-//Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.
-/datum/clockwork_scripture/create_object/clockwork_obelisk
-	descname = "Powered Structure, Teleportation Hub"
-	name = "Clockwork Obelisk"
-	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living Servant or clockwork obelisk."
-	invocations = list("May this obelisk...", "...take us to all places!")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, HIEROPHANT_ANSIBLE = 5)
-	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
-	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
-	observer_message = "<span class='warning'>A brass obelisk appears hanging in midair!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks receive double duration and uses."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
-	quickbind = TRUE
-	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."
