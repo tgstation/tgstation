@@ -968,32 +968,20 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-/atom/proc/freeze_icon_index()
-	return "\ref[initial(icon)]-[initial(icon_state)]"
-
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
-	var/static/list/freeze_item_icons = list()
 	if(resistance_flags & FREEZE_PROOF)
 		return
-	if(!HAS_SECONDARY_FLAG(src, FROZEN) && (initial(icon) && initial(icon_state)))
-		var/index = freeze_icon_index()
-		var/icon/IC
-		var/icon/P = freeze_item_icons[index]
-		if(!P)
-			P = new /icon
-			for(var/iconstate in icon_states(icon))
-				var/icon/O = new('icons/effects/freeze.dmi', "ice_cube")
-				IC = new(icon, iconstate)
-				O.Blend(IC, ICON_ADD)
-				P.Insert(O, iconstate)
-			freeze_item_icons[index] = P
-		icon = P
+	if(!HAS_SECONDARY_FLAG(src, FROZEN))
 		name = "frozen [name]"
+		add_atom_colour(list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)), TEMPORARY_COLOUR_PRIORITY)
+		alpha -= 25
 		SET_SECONDARY_FLAG(src, FROZEN)
 
 //Assumes already frozed
 /obj/proc/make_unfrozen()
-	icon = initial(icon)
-	name = replacetext(name, "frozen ", "")
-	CLEAR_SECONDARY_FLAG(src, FROZEN)
+	if(HAS_SECONDARY_FLAG(src, FROZEN))
+		name = replacetext(name, "frozen ", "")
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
+		alpha += 25
+		CLEAR_SECONDARY_FLAG(src, FROZEN)
