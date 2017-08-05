@@ -16,7 +16,6 @@
 	panel = "Shadowling Abilities"
 	charge_max = 300
 	human_req = 1
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	clothes_req = 0
 	action_icon_state = "glare"
 
@@ -60,7 +59,6 @@
 	charge_max = 150 //Short cooldown because people can just turn the lights back on
 	human_req = 1
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	range = 5
 	action_icon_state = "veil"
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
@@ -116,7 +114,6 @@
 	panel = "Shadowling Abilities"
 	range = 3
 	charge_max = 250
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "icy_veins"
@@ -144,12 +141,13 @@
 				M.reagents.add_reagent("frostoil", 15) //Half of a cryosting
 
 
+
+
 /obj/effect/proc_holder/spell/targeted/enthrall //Turns a target into the shadowling's slave. This overrides all previous loyalties
 	name = "Enthrall"
 	desc = "Allows you to enslave a conscious, non-braindead, non-catatonic human to your will. This takes some time to cast."
 	panel = "Shadowling Abilities"
 	charge_max = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	human_req = 1
 	clothes_req = 0
 	range = 1 //Adjacent to user
@@ -191,8 +189,6 @@
 		if(!target.client)
 			to_chat(user, "<span class='warning'>[target]'s mind is vacant of activity.</span>")
 		enthralling = 1
-		to_chat(user, "<span class='danger'>This target is valid. You begin the enthralling...</span>")
-		to_chat(target, "<span class='userdanger'>[user] stares at you. You feel your head begin to pulse.</span>")
 
 		for(var/progress = 0, progress <= 3, progress++)
 			switch(progress)
@@ -204,23 +200,26 @@
 					user.visible_message("<span class='warning'>[user]'s palms flare a bright red against [target]'s temples!</span>")
 					to_chat(target, "<span class='danger'>A terrible red light floods your mind. You collapse as conscious thought is wiped away.</span>")
 					target.Knockdown(12)
-					sleep(20)
 					if(target.isloyal())
-						to_chat(user, "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>")
+						to_chat(user, "<span class='notice'>They are protected by an implant. You begin to shut down the nanobots in their brain - this will take some time..</span>")
 						user.visible_message("<span class='warning'>[user] pauses, then dips their head in concentration!</span>")
-						to_chat(target, "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>")
-						sleep(100) //10 seconds - not spawn() so the enthralling takes longer
-						to_chat(user, "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>")
+						to_chat(target, "<span class='boldannounce'>You feel your mental protection faltering</span>")
+						if(!do_mob(user, target, 650)) //65 seconds to remove a loyalty implant. yikes!
+							to_chat(user, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
+							to_chat(target, "<span class='userdanger'>You wrest yourself away from [user]'s hands and compose yourself</span>")
+							enthralling = 0
+							return
+						to_chat(user, "<span class='notice'>The nanobots composing the mindshield implant have been rendered inert. Now to continue.</span>")
 						user.visible_message("<span class='warning'>[user] relaxes again.</span>")
 						for(var/obj/item/weapon/implant/mindshield/L in target)
 							if(L)
 								qdel(L)
-						to_chat(target, "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies.</span>")
+						to_chat(target, "<span class='boldannounce'>Your mental protection unexpectedly falters, dims, dies.</span>")
 				if(3)
 					to_chat(user, "<span class='notice'>You begin planting the tumor that will control the new thrall...</span>")
 					user.visible_message("<span class='warning'>A strange energy passes from [user]'s hands into [target]'s head!</span>")
 					to_chat(target, "<span class='boldannounce'>You feel your memories twisting, morphing. A sense of horror dominates your mind.</span>")
-			if(!do_mob(user, target, 70)) //around 21 seconds total for enthralling, 31 for someone with a loyalty implant
+			if(!do_mob(user, target, 70)) //around 21 seconds total for enthralling, 86 for someone with a loyalty implant
 				to_chat(user, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
 				to_chat(target, "<span class='userdanger'>You wrest yourself away from [user]'s hands and compose yourself</span>")
 				enthralling = 0
@@ -243,7 +242,6 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "commune"
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind/cast(mob/living/user,mob/user = usr)
 	if(!is_shadow(user))
@@ -265,7 +263,6 @@
 	name = "Rapid Re-Hatch"
 	desc = "Re-forms protective chitin that may be lost during cloning or similar processes."
 	panel = "Shadowling Abilities"
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	charge_max = 600
 	human_req = 1
 	clothes_req = 0
@@ -296,7 +293,6 @@
 	charge_max = 300 //30 second cooldown to prevent spam
 	human_req = 1
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "collective_mind"
 	var/blind_smoke_acquired
 	var/screech_acquired
@@ -364,7 +360,6 @@
 	panel = "Shadowling Abilities"
 	charge_max = 600
 	human_req = 1
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	clothes_req = 0
 	action_icon_state = "black_smoke"
 	sound = 'sound/effects/bamf.ogg'
@@ -395,7 +390,6 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "screech"
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/effects/screech.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets,mob/user = usr)
@@ -435,7 +429,6 @@
 	human_req = 1
 	clothes_req = 0
 	include_user = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "revive_thrall"
 
 /obj/effect/proc_holder/spell/targeted/revive_thrall/cast(list/targets,mob/user = usr)
@@ -484,7 +477,11 @@
 				thrallToRevive.Knockdown(5)
 				thrallToRevive.visible_message("<span class='warning'><b>[thrallToRevive] collapses, their skin and face distorting!</span>", \
 											   "<span class='userdanger'><i>AAAAAAAAAAAAAAAAAAAGH-</i></span>")
-				sleep(20)
+				if (!do_mob(user, thrallToRevive, 5))
+					thrallToRevive.Unconscious(600)
+					thrallToRevive.visible_message("<span class='warning'><b>[thrallToRevive] gasps, and passes out!</b></span>", "<span class='warning'><i>That... feels nice....</i></span>")
+					to_chat(user, "<span class='warning'>We have been interrupted! [thrallToRevive] will need to rest to recover.</span>")
+					return
 				thrallToRevive.visible_message("<span class='warning'>[thrallToRevive] slowly rises, no longer recognizable as human.</span>", \
 											   "<span class='shadowling'><b>You feel new power flow into you. You have been gifted by your masters. You now closely resemble them. You are empowered in \
 											    darkness but wither slowly in light. In addition, Lesser Glare and Guise have been upgraded into their true forms.</b></span>")
@@ -513,13 +510,18 @@
 				playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
 				playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
 				user.Beam(thrallToRevive,icon_state="red_lightning",icon='icons/effects/effects.dmi',time=1)
-				sleep(10)
+				var/b = do_mob(user, thrallToRevive, 20)
 				if(thrallToRevive.revive(full_heal = 1))
 					thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] heaves in breath, dim red light shining in their eyes.</span>", \
 											   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
 					thrallToRevive.Knockdown(4)
 					thrallToRevive.emote("gasp")
 					playsound(thrallToRevive, "bodyfall", 50, 1)
+					if (!b)
+						thrallToRevive.Knockdown(50)
+						thrallToRevive.Unconscious(500)
+						thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] collapses in exhaustion.</span>", \
+						   "<span class='warning'><b><i>You collapse in exhaustion... nap..... dark.</b></i></span>")
 			else
 				revert_cast()
 				return
@@ -533,7 +535,6 @@
 	human_req = 1
 	clothes_req = 0
 	charge_max = 600
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "extend_shuttle"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle/cast(list/targets, mob/living/carbon/human/user = usr)
@@ -585,7 +586,7 @@
 	charge_max = 450
 	human_req = 1
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
+	action_icon = 'icons/mob/actions.dmi'
 	action_icon_state = "glare"
 
 /obj/effect/proc_holder/spell/targeted/lesser_glare/cast(list/targets,mob/user = usr)
@@ -615,6 +616,7 @@
 			M.vomit(10)
 
 
+
 /obj/effect/proc_holder/spell/self/lesser_shadow_walk //Thrall version of Shadow Walk, only works in darkness, doesn't grant phasing, but gives near-invisibility
 	name = "Guise"
 	desc = "Wraps your form in shadows, making you harder to see."
@@ -622,15 +624,16 @@
 	charge_max = 1200
 	human_req = 1
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "shadow_walk"
+
+/obj/effect/proc_holder/spell/self/lesser_shadow_walk/proc/reappear(mob/living/carbon/human/user)
+	user.visible_message("<span class='warning'>[user] appears from nowhere!</span>", "<span class='shadowling'>Your shadowy guise slips away.</span>")
+	user.alpha = initial(user.alpha)
 
 /obj/effect/proc_holder/spell/self/lesser_shadow_walk/cast(mob/living/carbon/human/user)
 	user.visible_message("<span class='warning'>[user] suddenly fades away!</span>", "<span class='shadowling'>You veil yourself in darkness, making you harder to see.</span>")
 	user.alpha = 10
-	sleep(40)
-	user.visible_message("<span class='warning'>[user] appears from nowhere!</span>", "<span class='shadowling'>Your shadowy guise slips away.</span>")
-	user.alpha = initial(user.alpha)
+	addtimer(CALLBACK(src, .proc/reappear, user), 40)
 
 
 /obj/effect/proc_holder/spell/self/thrall_vision //Toggleable night vision for thralls
@@ -640,7 +643,6 @@
 	charge_max = 0
 	human_req = 1
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "darksight"
 	active = 0
 
@@ -663,7 +665,6 @@
 	charge_max = 50
 	human_req = 1
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/cast(mob/living/carbon/human/user)
@@ -695,7 +696,6 @@
 	charge_max = 0
 	clothes_req = 0
 	action_icon_state = "annihilate"
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/Staff_Chaos.ogg'
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
@@ -712,7 +712,6 @@
 		if (!boom.is_holding(/obj/item/weapon/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
 			user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
 								"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
-			sleep(4)
 			if(iscarbon(boom))
 				playsound(boom, 'sound/magic/Disintegrate.ogg', 100, 1)
 			boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
@@ -728,7 +727,6 @@
 	panel = "Ascendant"
 	range = 7
 	charge_max = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	clothes_req = 0
 	action_icon_state = "enthrall"
 
@@ -768,7 +766,6 @@
 	panel = "Ascendant"
 	charge_max = 15
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "shadow_walk"
 
 /obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(mob/living/simple_animal/ascendant_shadowling/user)
@@ -793,7 +790,6 @@
 	charge_max = 100
 	clothes_req = 0
 	action_icon_state = "lightning_storm"
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/lightningbolt.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
@@ -820,7 +816,6 @@
 	panel = "Ascendant"
 	charge_max = 0
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind_ascendant/cast(mob/living/carbon/human/user)

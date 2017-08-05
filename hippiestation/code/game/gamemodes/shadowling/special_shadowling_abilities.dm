@@ -1,14 +1,14 @@
 //In here: Hatch and Ascendance
-var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian") //Unpronouncable 2: electric boogalo
 /obj/effect/proc_holder/spell/self/shadowling_hatch
 	name = "Hatch"
 	desc = "Casts off your disguise."
 	panel = "Shadowling Evolution"
 	charge_max = 3000
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "hatch"
+
+
 
 /obj/effect/proc_holder/spell/self/shadowling_hatch/cast(list/targets,mob/user = usr)
 	if(user.stat || !ishuman(user) || !user || !is_shadow(user || isinspace(user)))
@@ -31,6 +31,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.unequip_everything()
 
 			sleep(50)
+
 			var/turf/shadowturf = get_turf(user)
 			for(var/turf/open/floor/F in orange(1, user))
 				new /obj/structure/alien/resin/wall/shadowling(F)
@@ -62,12 +63,20 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.status_flags = temp_flags
 			sleep(10)
 			playsound(H.loc, 'sound/effects/ghost.ogg', 100, 1)
-			var/newNameId = pick(possibleShadowlingNames)
-			possibleShadowlingNames.Remove(newNameId)
+			var/newNameId = pick(GLOB.possibleShadowlingNames)
+			var/oldName = H.real_name
+			GLOB.possibleShadowlingNames.Remove(newNameId)
 			H.real_name = newNameId
 			H.name = user.real_name
 			H.SetStun(0)
 			to_chat(H, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
+
+			var/hatchannounce = "<font size=3><span class='shadowling'><b>[oldName] has hatched into the Shadowling [newNameId]!</b></span></font>"
+			for(var/mob/M in GLOB.mob_list)
+				if(is_shadow_or_thrall(M))
+					to_chat(M, hatchannounce)
+				if(M in GLOB.dead_mob_list)
+					to_chat(M, "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [hatchannounce]")
 
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(1, H))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
@@ -92,7 +101,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			H.mind.RemoveSpell(src)
 
-			sleep(10)
+			//do_mob(user, user, 10)
 			to_chat(H, "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
@@ -110,7 +119,6 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	panel = "Shadowling Evolution"
 	charge_max = 3000
 	clothes_req = 0
-	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "ascend"
 
 /obj/effect/proc_holder/spell/self/shadowling_ascend/cast(list/targets,mob/user = usr)
@@ -156,7 +164,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					to_chat(M, "<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
 				to_chat(world, "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>")
 				for(var/mob/M in GLOB.player_list)
-					M << 'sound/hallucinations/veryfar_noise.ogg'
+					M.playsound_local(get_turf(M), 'sound/hallucinations/veryfar_noise.ogg', 150, 1, pressure_affected = FALSE)
 				for(var/obj/machinery/power/apc/A in GLOB.apcs_list)
 					A.overload_lighting()
 				var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(H.loc)
@@ -174,7 +182,6 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					A.real_name = H.real_name
 				H.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
 				H.loc = A
-				sleep(50)
 				if(!SSticker.mode.shadowling_ascended)
 					SSshuttle.emergency.request(null, 0.3)
 				SSticker.mode.shadowling_ascended = 1

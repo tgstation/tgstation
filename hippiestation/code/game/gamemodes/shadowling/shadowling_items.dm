@@ -77,7 +77,7 @@
 	invis_view = 2
 	flash_protect = -1
 	darkness_view = 8
-	actions_types = list(/datum/action/item_action/hands_free/shift_nerves)
+	actions_types = list()
 	var/isOn = TRUE
 	flags = ABSTRACT | NODROP | UNACIDABLE
 

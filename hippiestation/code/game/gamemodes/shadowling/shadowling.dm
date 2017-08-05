@@ -46,7 +46,7 @@ Made by Xhuis
 	var/list/datum/mind/shadows = list()
 	var/list/datum/mind/thralls = list()
 	var/list/shadow_objectives = list()
-	var/required_thralls = 15 //How many thralls are needed (hardcoded for now)
+	var/required_thralls = 15 //How many thralls are needed (this is changed in pre_setup, so it scales based on pop)
 	var/shadowling_ascended = 0 //If at least one shadowling has ascended
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
@@ -98,7 +98,10 @@ Made by Xhuis
 		shadowlings--
 
 	var/thrall_scaling = round(num_players() / 3)
-	required_thralls = Clamp(thrall_scaling, 15, 25)
+	required_thralls = Clamp(thrall_scaling, 15, 30)
+
+	if(!GLOB.possibleShadowlingNames)
+		GLOB.possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
 
 	return 1
 
@@ -106,7 +109,6 @@ Made by Xhuis
 /datum/game_mode/shadowling/post_setup()
 	for(var/datum/mind/shadow in shadows)
 		log_game("[shadow.key] (ckey) has been selected as a Shadowling.")
-		sleep(10)
 		to_chat(shadow.current, "<br>")
 		to_chat(shadow.current, "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>")
 		greet_shadow(shadow)
@@ -117,11 +119,11 @@ Made by Xhuis
 	return
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	to_chat(shadow.current, "<b><span class='shadowling'>You are a shadowling!</span>")
 	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>")
 	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
 	to_chat(shadow.current, "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>")
 	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>")
+	to_chat(shadow.current, "<b>You require [required_thralls] thralls to ascend.</b><br>")
 	shadow.current.playsound_local(get_turf(shadow.current), 'hippiestation/sound/ambience/antag/sling.ogg', 100, FALSE, pressure_affected = FALSE)
 
 
@@ -272,15 +274,6 @@ Made by Xhuis
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 
-
-/datum/species/shadow/ling/on_species_gain(mob/living/carbon/human/C)
-	C.draw_hippie_parts()
-	. = ..()
-
-/datum/species/shadow/ling/on_species_loss(mob/living/carbon/human/C)
-	C.draw_hippie_parts(TRUE)
-	. = ..()
-
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
 	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry
@@ -291,7 +284,7 @@ Made by Xhuis
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			if(H.stat != DEAD)
 				to_chat(H, "<span class='userdanger'>The light burns you!</span>") //Message spam to say "GET THE FUCK OUT"
-				H << 'sound/weapons/sear.ogg'
+				H.playsound_local(get_turf(H), 'sound/weapons/sear.ogg', 150, 1, pressure_affected = FALSE)
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
 			H.heal_overall_damage(5,5)
 			H.adjustToxLoss(-5)
@@ -331,4 +324,3 @@ Made by Xhuis
 	var/datum/atom_hud/antag/shadow_hud = GLOB.huds[ANTAG_HUD_SHADOW]
 	shadow_hud.leave_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, null)
-
