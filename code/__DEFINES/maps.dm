@@ -39,7 +39,7 @@ Last space-z level = empty
 #define ZLEVEL_STATION 2
 #define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
-#define ZLEVLE_CITYOFCOGS 6
+#define ZLEVEL_CITYOFCOGS 6
 #define ZLEVEL_EMPTY_SPACE 12
 #define ZLEVEL_TRANSIT 11
 

@@ -240,7 +240,7 @@ Credit where due:
 	ears = /obj/item/device/radio/headset
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/weapon/storage/belt/utility/servant
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1)
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1, /obj/item/clockwork/abscondence_bijou = 1)
 
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H)
 	H.faction |= "ratvar"
