@@ -100,9 +100,6 @@ Made by Xhuis
 	var/thrall_scaling = round(num_players() / 3)
 	required_thralls = Clamp(thrall_scaling, 15, 30)
 
-	if(!GLOB.possibleShadowlingNames)
-		GLOB.possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
-
 	return 1
 
 
