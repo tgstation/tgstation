@@ -133,8 +133,8 @@
 			active_apc.locked = TRUE
 			active_apc.update_icon()
 			active_apc = null
-		to_chat(usr, "<span class='robot notice'>[bicon(src)] Connected to APC in [get_area(APC)]. Interface request sent.</span>")
-		log_activity("remotely accessed APC in [get_area(APC)]")
+		to_chat(usr, "<span class='robot notice'>[bicon(src)] Connected to APC in [APC.area]. Interface request sent.</span>")
+		log_activity("remotely accessed APC in [APC.area]")
 		APC.interact(usr, GLOB.not_incapacitated_state)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
