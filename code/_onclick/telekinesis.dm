@@ -15,6 +15,7 @@
 		return
 	new /obj/effect/temp_visual/telekinesis(loc)
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
+	add_hiddenprint(user)
 	return
 
 /obj/attack_tk(mob/user)
@@ -34,6 +35,7 @@
 	O.tk_user = user
 	if(O.focus_object(src))
 		user.put_in_active_hand(O)
+		add_hiddenprint(user)
 
 /mob/attack_tk(mob/user)
 	return
