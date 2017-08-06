@@ -418,7 +418,7 @@
 /area/solar/starboard/fore)
 "aaZ" = (
 /turf/closed/wall/r_wall,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aba" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -472,7 +472,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/prison/execution_room)
+/area/security/execution/education)
 "abh" = (
 /obj/item/weapon/soap/nanotrasen,
 /obj/item/weapon/bikehorn/rubberducky,
@@ -639,7 +639,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aby" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -648,7 +648,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "abz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -657,7 +657,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "abA" = (
 /obj/machinery/shower{
 	dir = 4
@@ -864,7 +864,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "abW" = (
 /obj/structure/bed,
 /obj/item/clothing/suit/straight_jacket,
@@ -874,7 +874,7 @@
 /obj/effect/landmark/revenantspawn,
 /obj/item/device/electropack,
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "abX" = (
 /obj/machinery/flasher{
 	id = "justiceflash";
@@ -885,7 +885,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "abY" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restroom";
@@ -996,7 +996,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "acn" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -1005,7 +1005,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aco" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2;
@@ -1015,7 +1015,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "acp" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -1135,7 +1135,7 @@
 /turf/open/floor/plasteel/darkred{
 	dir = 4
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "acB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -1150,7 +1150,7 @@
 /turf/open/floor/plasteel/darkred{
 	dir = 4
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "acC" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 2;
@@ -1181,7 +1181,7 @@
 /turf/open/floor/plasteel/darkred{
 	dir = 4
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "acD" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -1417,7 +1417,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "acW" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red{
@@ -1436,7 +1436,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "acX" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1445,7 +1445,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "acY" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -1458,13 +1458,13 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "acZ" = (
 /obj/machinery/power/apc{
 	cell_type = 2500;
 	dir = 1;
 	name = "Prisoner Education Chamber APC";
-	areastring = "/area/prison/execution_room";
+	areastring = "/area/security/execution/education";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -1481,7 +1481,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "ada" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -1601,7 +1601,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "adn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/chair/office/dark{
@@ -1611,15 +1611,15 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "ado" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "adp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "adq" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -1634,11 +1634,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "adr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/prison/execution_room)
+/area/security/execution/education)
 "ads" = (
 /obj/structure/bed,
 /obj/machinery/camera{
@@ -1821,7 +1821,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 2
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "adK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -1829,7 +1829,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 2
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "adL" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -1838,7 +1838,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 2
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "adM" = (
 /obj/machinery/button/door{
 	id = "prisonereducation";
@@ -1854,7 +1854,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 2
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "adN" = (
 /obj/machinery/light_switch{
 	pixel_x = 26
@@ -1870,7 +1870,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 2
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "adO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/flasher{
@@ -2047,7 +2047,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aeh" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -2061,7 +2061,7 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aei" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -2075,7 +2075,7 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aej" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -2094,7 +2094,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aek" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -2283,7 +2283,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel/vault,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aeI" = (
 /obj/item/weapon/tank/internals/oxygen/red{
 	pixel_x = -4;
@@ -2306,14 +2306,14 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/item/weapon/wrench,
 /turf/open/floor/plasteel/vault,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aeJ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /obj/machinery/space_heater,
 /turf/open/floor/plasteel/vault,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aeK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
@@ -12800,7 +12800,7 @@
 /area/shuttle/labor)
 "ayv" = (
 /turf/closed/wall,
-/area/prison/execution_room)
+/area/security/execution/education)
 "ayw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
