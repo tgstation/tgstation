@@ -260,6 +260,3 @@ Credit where due:
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
-
-/datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H)
-	H.faction |= "ratvar"
