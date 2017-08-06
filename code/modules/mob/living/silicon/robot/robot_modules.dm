@@ -329,7 +329,7 @@
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/melee/baton/loaded,
-		/obj/item/weapon/gun/energy/disabler/cyborg,
+		/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg)
 	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,

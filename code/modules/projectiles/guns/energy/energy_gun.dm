@@ -1,9 +1,9 @@
 /obj/item/weapon/gun/energy/e_gun
 	name = "energy gun"
-	desc = "A basic hybrid energy gun with two settings: disable and kill."
+	desc = "A basic hybrid energy gun with two settings: stun and kill."
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=4;magnets=3"
 	modifystate = 1
 	can_flashlight = 1
@@ -36,7 +36,7 @@
 	desc = "Military issue energy gun, is able to fire stun rounds."
 	icon_state = "energytac"
 	ammo_x_offset = 2
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/e_gun/old
 	name = "prototype energy gun"
@@ -48,7 +48,7 @@
 /obj/item/weapon/gun/energy/e_gun/mini/practice_phaser
 	name = "practice phaser"
 	desc = "A modified version of the basic phaser gun, this one fires less concentrated energy bolts designed for target practice."
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/practice)
+	ammo_type = list(/obj/item/projectile/energy/electrode, /obj/item/ammo_casing/energy/laser/practice)
 	icon_state = "decloner"
 
 /obj/item/weapon/gun/energy/e_gun/hos
@@ -57,7 +57,7 @@
 	icon_state = "hoslaser"
 	origin_tech = null
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
@@ -101,7 +101,7 @@
 	pin = null
 	can_charge = 0
 	ammo_x_offset = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	selfcharge = 1
 	var/fail_tick = 0
 	var/fail_chance = 0

@@ -26,11 +26,6 @@
 	unit_name = "laser gun"
 	export_types = list(/obj/item/weapon/gun/energy/laser)
 
-/datum/export/weapon/disabler
-	cost = 100
-	unit_name = "disabler"
-	export_types = list(/obj/item/weapon/gun/energy/disabler)
-
 /datum/export/weapon/energy_gun
 	cost = 900
 	unit_name = "energy gun"

@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/e_gun/advtaser/mounted
 	name = "mounted taser"
-	desc = "An arm mounted dual-mode weapon that fires electrodes and disabler shots."
+	desc = "An arm mounted weapon that fires electrodes."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "taser"
 	item_state = "armcannonstun4"
