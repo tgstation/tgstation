@@ -106,20 +106,20 @@ Credit where due:
 	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
 	var/servants_to_serve = list()
 	var/roundstart_player_count
-	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 20 + (number of players / 5)
+	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = 3 //Guaranteed three servants
+	var/starter_servants = 4 //Guaranteed three servants
 	var/number_players = num_players()
 	roundstart_player_count = number_players
 	if(number_players > 30) //plus one servant for every additional 10 players above 30
 		number_players -= 30
-		starter_servants += round(number_players/10)
-	starter_servants = min(starter_servants, 8) //max 8 servants (this should only happen with 110 players or more!)
+		starter_servants += round(number_players / 10)
+	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
@@ -128,8 +128,8 @@ Credit where due:
 		servant.assigned_role = "Servant of Ratvar"
 		servant.special_role = "Servant of Ratvar"
 		starter_servants--
-	ark_time = 25 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
-	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer
+	ark_time = 30 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
+	ark_time = min(ark_time, 40) //40 minute maximum for the activation timer
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
@@ -185,6 +185,7 @@ Credit where due:
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
 	if(S && !QDELETED(S))
+		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! Read it!</span>")
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
 		to_chat(L, "<span class='sevtug_small'>In your backpack is an <b>abscondence bijou</b>, your primary tool for getting to and from the station. From Reebe, you can view the \
@@ -251,7 +252,7 @@ Credit where due:
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/weapon/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1, /obj/item/clockwork/abscondence_bijou = 1, \
-	/obj/item/clockwork/replica_fabricator/preloaded = 1, /obj/item/stack/tile/brass/thirty = 1)
+	/obj/item/clockwork/replica_fabricator/preloaded = 1, /obj/item/stack/tile/brass/thirty = 1, /obj/item/weapon/paper/servant_primer = 1)
 	id = /obj/item/weapon/card/id
 
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -260,3 +261,37 @@ Credit where due:
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
+
+/obj/item/weapon/paper/servant_primer
+	name = "The Ark & You: A Primer On Servitude"
+	color = "#DAAA18"
+	info = "<b>DON'T PANIC.</b><br><br>\
+	Here's a quick primer on what you should know here.\
+	<ol>\
+	<li>You're in a place called Reebe right now. The crew can't get here normally.</li>\
+	<li>In the north is your base camp, with supplies, consoles, and the Ark. In the south is an inaccessible area that the crew can walk between \
+	once they arrive (more on that later.) Everything between that space is an open area.</li>\
+	<li>Your job as a servant is to build fortifications and defenses to protect the Ark and your base once the Ark activates. You can do this \
+	however you like, but work with your allies and coordinate your efforts.</li>\
+	<li>Once the Ark activates, the station will be alerted. Portals to Reebe will open up in nearly every room. When they take these portals, \
+	the crewmembers will arrive in the area that you can't access, but can get through it freely - whereas you can't. Treat this as the \"spawn\" of the \
+	crew and defend it accordingly.</li>\
+	<li>You have an item called an <b>abscondence bijou</b> (just call it an absconder) in your backpack. This is what you use to get to the station and \
+	back. You can select where to warp to by using the camera observers (explained later.) <b><i>Do NOT leave the base without informing your teammates, \
+	and do NOT attempt to invade any areas by yourself. You WILL reveal the cult's presence and actively cripple your teammates.</i></b></li></ol>\
+	<hr>\
+	Here is the layout of Reebe, from left to right:\
+	<ul>\
+	<li><b>Dressing Room:</b> Contains clothing, a dresser, and a mirror. There are spare slabs and absconders here.</li>\
+	<li><b>Listening Station:</b> Contains intercoms, a telecomms relay, and a list of frequencies.</li>\
+	<li><b>Ark Chamber:</b> Houses the Ark.</li>\
+	<li><b>Observation Room:</b> Contains five camera observers. These can be used to watch the station through its cameras. You can also use your \
+	absconder to teleport onto the station with these. <b>Alt-clicking the console creates a new absconder!</b> If you go to the station, bring a spare \
+	absconder or two for any converts you manage to get while you're there.</li>\
+	</ul>\
+	<b>Good luck!</b>"
+
+/obj/item/weapon/paper/servant_primer/examine(mob/user)
+	if(!is_servant_of_ratvar(user) && !isobserver(user))
+		to_chat(user, "<span class='danger'>You can't make out any of the words on [src].</span>")
+	..()
