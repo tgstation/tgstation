@@ -92,8 +92,6 @@
 	take_damage((P.damage / 5) , BRUTE, "melee", 1)	//Doesn't really matter what damage flag it is.
 	if(istype(P, /obj/item/projectile/energy/electrode))
 		take_damage(10, BRUTE, "melee", 1)	//Tasers aren't harmful.
-	if(istype(P, /obj/item/projectile/beam/disabler))
-		take_damage(5, BRUTE, "melee", 1)	//Disablers aren't harmful.
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"

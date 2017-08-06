@@ -270,14 +270,6 @@
 					/obj/item/weapon/gun/energy/e_gun/advtaser)
 	crate_name = "taser crate"
 
-/datum/supply_pack/security/disabler
-	name = "Disabler Crate"
-	cost = 1500
-	contains = list(/obj/item/weapon/gun/energy/disabler,
-					/obj/item/weapon/gun/energy/disabler,
-					/obj/item/weapon/gun/energy/disabler)
-	crate_name = "disabler crate"
-
 /datum/supply_pack/security/forensics
 	name = "Forensics Crate"
 	cost = 2000
