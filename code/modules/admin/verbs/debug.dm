@@ -495,9 +495,9 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		qdel(adminmob)
 	SSblackbox.add_details("admin_verb","Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest()
+/client/proc/cmd_admin_areatest(on_station)
 	set category = "Mapping"
-	set name = "Test areas"
+	set name = "Test Areas"
 
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -509,7 +509,12 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	var/list/areas_with_camera = list()
 
 	for(var/area/A in world)
-		if(!(A.type in areas_all))
+		if(on_station)
+			var/turf/picked = safepick(get_area_turfs(A.type))
+			if(picked && (picked.z == ZLEVEL_STATION))
+				if(!(A.type in areas_all))
+					areas_all.Add(A.type)
+		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
@@ -582,6 +587,16 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
+
+/client/proc/cmd_admin_areatest_station()
+	set category = "Mapping"
+	set name = "Test Areas (STATION Z)"
+	cmd_admin_areatest(TRUE)
+
+/client/proc/cmd_admin_areatest_all()
+	set category = "Mapping"
+	set name = "Test Areas (ALL)"
+	cmd_admin_areatest(FALSE)
 
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in GLOB.mob_list)
 	set category = "Fun"
