@@ -1,4 +1,7 @@
 
+//Current rate: 135000 research points in 90 minutes
+//Current cargo price: 500000 points for fullmaxed R&D.
+
 //Base Node
 /datum/techweb_node/base
 	id = "base"
@@ -58,7 +61,11 @@
 	prereq_ids = list("datatheory")
 	research_cost =
 	export_price =
-	design_ids = list("
+	design_ids = list("hdd_basic", "hdd_advanced", "hdd_super", "hdd_cluster", "ssd_small", "ssd_micro", "netcard_basic", "netcard_advanced", "netcard_wired",
+	"portadrive_basic", "portadrive_advanced", "portadrive_super", "cardslot", "aislot", "miniprinter", "APClink", "bat_control", "bat_normal", "bat_advanced",
+	"bat_super", "bat_micro", "bat_nano", "cpu_normal", "pcpu_normal", "cpu_small", "pcpu_small")
+
+
 
 /*
 /datum/techweb_node
