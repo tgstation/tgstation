@@ -22,22 +22,6 @@
 
 //Misc
 
-/area/wreck/ai
-	name = "AI Chamber"
-	icon_state = "ai"
-
-/area/wreck/main
-	name = "Wreck"
-	icon_state = "storage"
-
-/area/wreck/engineering
-	name = "Power Room"
-	icon_state = "engine"
-
-/area/wreck/bridge
-	name = "Bridge"
-	icon_state = "bridge"
-
 /area/generic
 	name = "Unknown"
 	icon_state = "storage"
