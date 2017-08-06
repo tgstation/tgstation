@@ -669,7 +669,7 @@
 		return
 
 	if(control_area)
-		control_area = locate(text2path(control_area)) in GLOB.sortedAreas
+		control_area = get_area_instance_from_text(control_area)
 		if(control_area == null)
 			control_area = get_area(src)
 			stack_trace("Bad control_area path for [src], [src.control_area]")
