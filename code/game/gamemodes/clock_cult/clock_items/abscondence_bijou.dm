@@ -46,6 +46,10 @@
 	else if(isspaceturf(A))
 		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
 		return
+	var/area/AR = get_area(A)
+	if(istype(AR, /area/ai_monitored))
+		to_chat(user, "<span class='sevtug_small'>The structure there is too dense for [src] to pierce. (This is typical in high-security areas.)</span>")
+		return
 	if(alert(user, "Teleport to [A]?", name, "Teleport", "Cancel") == "Cancel" || !charged || !user.canUseTopic(src))
 		return
 	do_sparks(5, TRUE, user)

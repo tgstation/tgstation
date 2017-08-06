@@ -28,11 +28,6 @@
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
-	if(GLOB.ark_of_the_clockwork_justiciar == src)
-		GLOB.ark_of_the_clockwork_justiciar = null
-	return ..()
-
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
 	visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
 	hierophant_message("<span class='bold large_brass'>The Ark is activating! Get back to the base!</span>")
@@ -67,7 +62,7 @@
 			L.forceMove(pick(open_turfs))
 	countdown = new(src)
 	countdown.start()
-	hierophant_message("<span class='bold large_bras'>The Ark has activated! Defend it at all costs!</span>", FALSE, src)
+	hierophant_message("<span class='bold large_brass'>The Ark has activated! Defend it at all costs!</span>", FALSE, src)
 	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSprocessing, src)
 
@@ -76,10 +71,9 @@
 	if(!purpose_fulfilled)
 		hierophant_message("<span class='bold large_brass'>The Ark has fallen!</span>")
 		send_to_playing_players(sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
-	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
-	if(!was_stranded && !purpose_fulfilled)
-		priority_announce("Massive energy anomaly no longer on scanners. Get back to work.","Anomaly Alert")
+	if(!purpose_fulfilled)
+		SSticker.force_ending = TRUE //rip
 	if(glow)
 		qdel(glow)
 		glow = null
@@ -95,6 +89,8 @@
 		L.Stun(50)
 	for(var/obj/effect/clockwork/city_of_cogs_rift/R in GLOB.all_clockwork_objects)
 		qdel(R)
+	if(GLOB.ark_of_the_clockwork_justiciar == src)
+		GLOB.ark_of_the_clockwork_justiciar = null
 	. = ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)

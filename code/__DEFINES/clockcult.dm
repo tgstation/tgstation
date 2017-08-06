@@ -15,6 +15,8 @@ GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_C
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
 GLOBAL_VAR_INIT(ark_of_the_clockwork_justiciar, FALSE) //The Ark on the Reebe z-level
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
+GLOBAL_VAR_INIT(script_scripture_unlocked, FALSE) //If script scripture is available, through converting at least one crewmember
+GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //If script scripture is available
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
 //Scripture tiers and requirements; peripherals should never be used

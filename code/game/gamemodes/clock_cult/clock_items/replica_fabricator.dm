@@ -15,7 +15,7 @@
 	var/repairing = null //what we're currently repairing, if anything
 	var/obj/effect/clockwork/sigil/transmission/recharging = null //the sigil we're charging from, if any
 	var/speed_multiplier = 1 //how fast this fabricator works
-	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
+	var/charge_rate = MIN_CLOCKCULT_POWER * 5 //how much power we gain every two seconds
 	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
 
 /obj/item/clockwork/replica_fabricator/preloaded
@@ -97,7 +97,7 @@
 	return ..()
 
 /obj/item/clockwork/replica_fabricator/process()
-	if(!charge_rate)
+	if(!charge_rate || loc.z != ZLEVEL_CITYOFCOGS)
 		return
 	var/mob/living/L = get_atom_on_turf(src, /mob/living)
 	if(istype(L) && is_servant_of_ratvar(L))
@@ -129,7 +129,7 @@
 			to_chat(user, "<span class='alloy'>It can consume floor tiles, rods, metal, and plasteel for power at rates of <b>2:[POWER_ROD]W</b>, <b>1:[POWER_ROD]W</b>, <b>1:[POWER_METAL]W</b>, \
 			and <b>1:[POWER_PLASTEEL]W</b>, respectively.</span>")
 			to_chat(user, "<span class='alloy'>It can also consume brass sheets for power at a rate of <b>1:[POWER_FLOOR]W</b>.</span>")
-			to_chat(user, "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power[charge_rate ? ", and is gaining <b>[charge_rate*0.5]W</b> of power per second":""].</span>")
+			to_chat(user, "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power[charge_rate ? ", and is gaining <b>[charge_rate]W</b> of power per second":""].</span>")
 			to_chat(user, "<span class='alloy'>Use it in-hand to produce <b>5</b> brass sheets at a cost of <b>[POWER_WALL_TOTAL]W</b> power.</span>")
 
 /obj/item/clockwork/replica_fabricator/attack_self(mob/living/user)

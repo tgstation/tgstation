@@ -88,14 +88,14 @@ Credit where due:
 
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
-	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
+	var/clockwork_explanation = "Defend the Ark of the Clockwork Justiciar and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 1 //24
-	required_enemies = 1 //3
+	required_players = 24
+	required_enemies = 3
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
@@ -113,12 +113,13 @@ Credit where due:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = 1 //Guaranteed three servants
-	/*var/number_players = num_players()
+	var/starter_servants = 3 //Guaranteed three servants
+	var/number_players = num_players()
 	roundstart_player_count = number_players
-	if(number_players > 30) //plus one servant for every additional 15 players
+	if(number_players > 30) //plus one servant for every additional 10 players above 30
 		number_players -= 30
-		starter_servants += round(number_players/15)*/
+		starter_servants += round(number_players/10)
+	starter_servants = min(starter_servants, 8) //max 8 servants (this should only happen with 110 players or more!)
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
@@ -142,9 +143,14 @@ Credit where due:
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
+	addtimer(CALLBACK(src, .proc/unlock_application_scripture), (ark_time * 0.5) * 600)
 	addtimer(CALLBACK(src, .proc/cry_havoc), ark_time * 600) //600 deciseconds in a minute * number of minutes
 	..()
 	return 1
+
+/datum/game_mode/clockwork_cult/proc/unlock_application_scripture()
+	GLOB.application_scripture_unlocked = TRUE
+	hierophant_message("<span class='large_brass bold'>The Ark is halfway prepared. Application scripture has been unlocked!</span>")
 
 /datum/game_mode/clockwork_cult/proc/cry_havoc()
 	if(GLOB.ark_of_the_clockwork_justiciar)
@@ -156,6 +162,8 @@ Credit where due:
 		return 0
 	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")
 	to_chat(M, "<span class='brass'>You have approximately <b>[ark_time]</b> minutes until the Ark activates.</span>")
+	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant.</span>")
+	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked halfway until the Ark's activation.</span>")
 	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
 	return 1
 
@@ -242,7 +250,16 @@ Credit where due:
 	ears = /obj/item/device/radio/headset
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/weapon/storage/belt/utility/servant
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1, /obj/item/clockwork/abscondence_bijou = 1)
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1, /obj/item/clockwork/abscondence_bijou = 1, \
+	/obj/item/clockwork/replica_fabricator/preloaded = 1, /obj/item/stack/tile/brass/thirty = 1)
+	id = /obj/item/weapon/card/id
+
+/datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/obj/item/weapon/card/id/W = H.wear_id
+	W.assignment = "Assistant"
+	W.access += ACCESS_MAINT_TUNNELS
+	W.registered_name = H.real_name
+	W.update_label()
 
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H)
 	H.faction |= "ratvar"

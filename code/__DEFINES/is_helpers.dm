@@ -13,7 +13,7 @@
 
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
-#define isfloorturf(A) (istype(A, /turf/open/floor))
+#define isfloorturf(A) (istype(A, /turf/open/floor) || istype(A, /turf/open/indestructible/reebe))
 
 #define isclosedturf(A) (istype(A, /turf/closed))
 
