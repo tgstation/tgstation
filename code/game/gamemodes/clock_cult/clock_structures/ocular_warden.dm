@@ -15,6 +15,7 @@
 	/obj/item/clockwork/component/belligerent_eye/suppression_lens = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/sight_range = 3
+	var/damage_per_tick = 0.4
 
 /obj/structure/destructible/clockwork/ocular_warden/Initialize()
 	. = ..()
@@ -54,9 +55,9 @@
 			else
 				L.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot2.ogg', 30, 1)
 			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(L))
-			GLOB.clockwork_vitality += 0.2
-			L.apply_damage(0.1, BURN, "l_leg")
-			L.apply_damage(0.1, BURN, "r_leg")
+			GLOB.clockwork_vitality += damage_per_tick
+			L.apply_damage(damage_per_tick * 0.5, BURN, "l_leg")
+			L.apply_damage(damage_per_tick * 0.5, BURN, "r_leg")
 		else //they don't have the effect yet, try to play a sound
 			needs_sound = TRUE
 			B = L.apply_status_effect(STATUS_EFFECT_BELLIGERENT, FALSE)
