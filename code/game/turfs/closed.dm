@@ -49,7 +49,6 @@
 /turf/closed/indestructible/reebe
 	name = "void"
 	icon_state = "reebe"
-	opacity = FALSE
 	baseturf = /turf/closed/indestructible/reebe
 
 /turf/closed/indestructible/reebe/ratvar_act()
@@ -61,16 +60,14 @@
 /turf/closed/indestructible/reebe/CollidedWith(atom/movable/AM)
 	playsound(src, 'sound/effects/bamf.ogg', 25, TRUE)
 
-/turf/closed/indestructible/reebe/border
-	opacity = TRUE
-	baseturf = /turf/closed/indestructible/reebe/border
-
 /turf/closed/indestructible/reebe/spawn_room
 	density = FALSE
+	opacity = FALSE
+	color = "#FFC8C8"
 
 /turf/closed/indestructible/reebe/spawn_room/Enter(atom/movable/AM, atom/old_loc)
 	if(!is_servant_of_ratvar(AM) && !istype(AM, /obj/item/clockwork) && !istype(AM, /obj/structure/destructible/clockwork))
-		for(var/mob/living/L in AM)
+		for(var/mob/living/L in AM.GetAllContents())
 			if(is_servant_of_ratvar(L)) //no closets, you butt
 				playsound(src, 'sound/effects/bamf.ogg', 25, TRUE)
 				new/obj/effect/temp_visual/cult/turf(get_turf(src))

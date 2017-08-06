@@ -15,7 +15,7 @@
 	var/repairing = null //what we're currently repairing, if anything
 	var/obj/effect/clockwork/sigil/transmission/recharging = null //the sigil we're charging from, if any
 	var/speed_multiplier = 1 //how fast this fabricator works
-	var/charge_rate = MIN_CLOCKCULT_POWER * 5 //how much power we gain every two seconds
+	var/charge_rate = MIN_CLOCKCULT_POWER * 10 //how much power we gain every two seconds
 	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
 
 /obj/item/clockwork/replica_fabricator/preloaded
