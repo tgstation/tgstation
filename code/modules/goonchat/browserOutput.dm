@@ -177,6 +177,74 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
+/proc/bIcon(thing, target, icon_state, dir, frame = 1, moving)
+	if (!thing)
+		return
+	var/static/datum/callback/CB = CALLBACK(GLOBAL_PROC, .proc/send_asset)
+
+	var/key
+	var/icon/I = thing
+	if (!target)
+		return
+	if (target == world)
+		target = GLOB.clients
+
+	var/list/targets
+	if (!islist(target))
+		targets = list(target)
+	else
+		targets = target
+		if (!targets.len)
+			return
+	debug_usr("start")
+	if (!isicon(I))
+		debug_usr("not icon")
+		if (isfile(thing)) //special snowflake
+			debug_usr("file")
+			var/name = sanitize_filename("bicon.[thing]")
+			debug_usr("file:[name]")
+			register_asset(name, thing)
+			var/list/callbacks
+			var/list/callback_args = list()
+			for (var/thing2 in targets)
+				callbacks += CB
+				callback_args[++callback_args.len] = list(thing2, name, TRUE)
+			callback_select(callbacks, callback_args, savereturns = FALSE)
+			return "<img class='icon misc' src=\"[url_encode(name)]\">"
+		debug_usr("not file")
+		var/atom/A
+		if (isnull(dir))
+			dir = A.dir
+		if (isnull(icon_state))
+			icon_state = A.icon_state
+		I = A.icon
+		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
+			debug_usr("human")
+			var/icon/temp = I
+			I = icon()
+			I.Insert(temp, dir = SOUTH)
+			dir = SOUTH
+	else
+		debug_usr("icon")
+		if (isnull(dir))
+			dir = SOUTH
+		if (isnull(icon_state))
+			icon_state = ""
+
+	I = icon(I, icon_state, dir, frame)
+
+	key = sanitize_filename("bicon.[md5(icon2base64(I))].[icon_state].[dir].png")
+	debug_usr("key:[key]")
+	register_asset(key, I)
+	var/list/callbacks = list()
+	var/list/callback_args = list()
+	for (var/thing2 in targets)
+		callbacks += CB
+		callback_args[++callback_args.len] = list(thing2, key, TRUE)
+
+	callback_select(callbacks, callback_args, savereturns = FALSE)
+	return "<img class='icon [icon_state]' src=\"[url_encode(key)]\">"
+
 /proc/bicon(thing)
 	if (!thing)
 		return
@@ -193,6 +261,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				I = icon(I)
 				I.Scale(world.icon_size, world.icon_size)
 				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
+
 
 		return "<img class='icon misc' src='data:image/png;base64,[icon_base64]'>"
 
@@ -216,15 +285,15 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
 //Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_bicon(thing)
+/proc/costly_bIcon(thing, target)
 	if (!thing)
 		return
 
 	if (isicon(thing))
-		return bicon(thing)
+		return bIcon(thing, target)
 
 	var/icon/I = getFlatIcon(thing)
-	return bicon(I)
+	return bIcon(I, target)
 
 /proc/to_chat(target, message)
 	if(!target)

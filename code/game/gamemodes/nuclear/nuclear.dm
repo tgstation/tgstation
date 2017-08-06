@@ -288,7 +288,7 @@
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
-			text += "<BIG>[bicon(icon('icons/badass.dmi', "badass"))]</BIG>"
+			text += "<BIG>[bIcon('icons/badass.dmi', world, "badass")]</BIG>"
 		to_chat(world, text)
 	return 1
 

@@ -306,3 +306,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/path in typesof(/datum/html_interface))
 		var/datum/html_interface/hi = new path()
 		hi.registerResources()
+
+//this exists purely to avoid meta by pre-loading all language icons.
+/datum/asset/language/register()
+	set waitfor = FALSE
+	for(var/path in typesof(/datum/language))
+		var/datum/language/L = new path ()
+		L.get_icon()

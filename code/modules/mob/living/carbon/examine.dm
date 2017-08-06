@@ -6,26 +6,26 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bIcon(src, user)] \a <EM>[src]</EM>!\n"
 
 	if (handcuffed)
-		msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] handcuffed!</span>\n"
+		msg += "<span class='warning'>[t_He] [t_is] [bIcon(handcuffed, user)] handcuffed!</span>\n"
 	if (head)
-		msg += "[t_He] [t_is] wearing [bicon(head)] \a [src.head] on [t_his] head. \n"
+		msg += "[t_He] [t_is] wearing [bIcon(head, user)] \a [src.head] on [t_his] head. \n"
 	if (wear_mask)
-		msg += "[t_He] [t_is] wearing [bicon(wear_mask)] \a [src.wear_mask] on [t_his] face.\n"
+		msg += "[t_He] [t_is] wearing [bIcon(wear_mask, user)] \a [src.wear_mask] on [t_his] face.\n"
 	if (wear_neck)
-		msg += "[t_He] [t_is] wearing [bicon(wear_neck)] \a [src.wear_neck] around [t_his] neck.\n"
+		msg += "[t_He] [t_is] wearing [bIcon(wear_neck, user)] \a [src.wear_neck] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))
 			if(I.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_is] holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+				msg += "<span class='warning'>[t_He] [t_is] holding [bIcon(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
-				msg += "[t_He] [t_is] holding [bicon(I)] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
+				msg += "[t_He] [t_is] holding [bIcon(I, user)] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	if (back)
-		msg += "[t_He] [t_has] [bicon(back)] \a [src.back] on [t_his] back.\n"
+		msg += "[t_He] [t_has] [bIcon(back, user)] \a [src.back] on [t_his] back.\n"
 	var/appears_dead = 0
 	if (stat == DEAD)
 		appears_dead = 1
