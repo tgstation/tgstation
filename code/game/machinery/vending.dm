@@ -24,6 +24,7 @@
 	max_integrity = 300
 	integrity_failure = 100
 	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	circuit = /obj/item/weapon/circuitboard/machine/vendor
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 
@@ -62,10 +63,7 @@
 /obj/machinery/vending/Initialize()
 	. = ..()
 	wires = new /datum/wires/vending(src)
-	if(refill_canister) //constructable vending machine
-		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
-		B.apply_default_parts(src)
-	else
+	if(!refill_canister) //constructable vending machine
 		build_inventory(products)
 		build_inventory(contraband, 1)
 		build_inventory(premium, 0, 1)
@@ -76,46 +74,6 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
-
-/obj/item/weapon/circuitboard/machine/vendor
-	name = "Booze-O-Mat Vendor (Machine Board)"
-	build_path = /obj/machinery/vending/boozeomat
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/weapon/vending_refill/boozeomat = 3)
-
-	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
-							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
-							/obj/machinery/vending/cola = "Robust Softdrinks",
-							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-							/obj/machinery/vending/autodrobe = "AutoDrobe",
-							/obj/machinery/vending/clothing = "ClothesMate",
-							/obj/machinery/vending/medical = "NanoMed Plus",
-							/obj/machinery/vending/wallmed = "NanoMed")
-
-/obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		var/position = names_paths.Find(build_path)
-		position = (position == names_paths.len) ? 1 : (position + 1)
-		var/typepath = names_paths[position]
-
-		to_chat(user, "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>")
-		set_type(typepath)
-	else
-		return ..()
-
-/obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
-	build_path = typepath
-	name = "[names_paths[build_path]] Vendor (Machine Board)"
-	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
-
-/obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
-	for(var/typepath in names_paths)
-		if(istype(M, typepath))
-			set_type(typepath)
-			break
-	..()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -795,7 +753,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
-    ..()
+    . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))
     qdel(src)

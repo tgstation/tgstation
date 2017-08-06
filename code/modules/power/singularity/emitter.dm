@@ -3,20 +3,17 @@
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
-	var/icon_state_on = "emitter_+a"
+
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_ENGINE_EQUIP)
-
-	// The following 3 vars are mostly for the prototype
-	var/manual = FALSE
-	var/charge = 0
-	var/atom/target = null
+	circuit = /obj/item/weapon/circuitboard/machine/emitter
 
 	use_power = NO_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 300
 
+	var/icon_state_on = "emitter_+a"
 	var/active = 0
 	var/powered = 0
 	var/fire_delay = 100
@@ -33,6 +30,11 @@
 
 	var/datum/effect_system/spark_spread/sparks
 
+	// The following 3 vars are mostly for the prototype
+	var/manual = FALSE
+	var/charge = 0
+	var/atom/target = null
+
 /obj/machinery/power/emitter/anchored
 	anchored = TRUE
 
@@ -46,20 +48,16 @@
 	state = 2
 	use_power = FALSE
 
-/obj/machinery/power/emitter/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
-	B.apply_default_parts(src)
+/obj/machinery/power/emitter/Initialize()
+	. = ..()
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
+	if(state == 2 && anchored)
+		connect_to_network()
 
-/obj/item/weapon/circuitboard/machine/emitter
-	name = "Emitter (Machine Board)"
-	build_path = /obj/machinery/power/emitter
-	origin_tech = "programming=3;powerstorage=4;engineering=4"
-	req_components = list(
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+	sparks = new
+	sparks.attach(src)
+	sparks.set_up(5, TRUE, src)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -99,15 +97,6 @@
 		return
 	else
 		rotate()
-
-/obj/machinery/power/emitter/Initialize()
-	. = ..()
-	if(state == 2 && anchored)
-		connect_to_network()
-
-	sparks = new
-	sparks.attach(src)
-	sparks.set_up(5, TRUE, src)
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())

@@ -18,7 +18,7 @@
 /obj/machinery/computer/apc_control/Initialize()
 	apcs = list() //To avoid BYOND making the list run through a ton of procs
 	filters = list("Name" = null, "Charge Above" = null, "Charge Below" = null, "Responsive" = null)
-	..()
+	return ..()
 
 /obj/machinery/computer/apc_control/process()
 	apcs = list() //Clear the list every tick

@@ -15,11 +15,14 @@
 	var/obj/item/device/radio/Radio //needed to send messages to sec radio
 
 
-/obj/machinery/mineral/labor_claim_console/New()
+/obj/machinery/mineral/labor_claim_console/Initialize()
 	..()
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
-	addtimer(CALLBACK(src, .proc/locate_stacking_machine), 7)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/labor_claim_console/LateInitialize()
+	locate_stacking_machine()
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id/prisoner))

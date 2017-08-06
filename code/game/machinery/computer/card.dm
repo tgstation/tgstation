@@ -572,8 +572,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_screen = "idminor"
 	circuit = /obj/item/weapon/circuitboard/computer/card/minor
 
-/obj/machinery/computer/card/minor/New()
-	..()
+/obj/machinery/computer/card/minor/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/computer/card/minor/typed_circuit = circuit
 	if(target_dept)
 		typed_circuit.target_dept = target_dept

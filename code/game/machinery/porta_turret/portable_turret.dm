@@ -72,8 +72,8 @@
 
 	var/obj/machinery/turretid/cp = null
 
-/obj/machinery/porta_turret/New(loc)
-	..()
+/obj/machinery/porta_turret/Initialize()
+	. = ..()
 	if(!base)
 		base = src
 	update_icon()
@@ -143,18 +143,13 @@
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
-	if(cover)
-		qdel(cover)
-		cover = null
+	QDEL_NULL(cover)
 	base = null
 	if(cp)
 		cp.turrets -= src
 		cp = null
-	if(stored_gun)
-		qdel(stored_gun)
-		stored_gun = null
-	qdel(spark_system)
-	spark_system = null
+	QDEL_NULL(stored_gun)
+	QDEL_NULL(spark_system)
 	return ..()
 
 
@@ -602,8 +597,8 @@
 /obj/machinery/porta_turret/aux_base/interact(mob/user) //Controlled solely from the base console.
 	return
 
-/obj/machinery/porta_turret/aux_base/New()
-	..()
+/obj/machinery/porta_turret/aux_base/Initialize()
+	. = ..()
 	cover.name = name
 	cover.desc = desc
 
@@ -650,8 +645,8 @@
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/machinery/turretid/New(loc, ndir = 0, built = 0)
-	..()
+/obj/machinery/turretid/Initialize(loc, ndir = 0, built = 0)
+	. = ..()
 	if(built)
 		setDir(ndir)
 		locked = FALSE
@@ -664,7 +659,7 @@
 	return ..()
 
 /obj/machinery/turretid/Initialize(mapload) //map-placed turrets autolink turrets
-	..()
+	. = ..()
 	if(!mapload)
 		return
 
@@ -681,7 +676,8 @@
 		T.cp = src
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
-	if(stat & BROKEN) return
+	if(stat & BROKEN)
+		return
 
 	if (istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I

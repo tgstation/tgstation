@@ -7,43 +7,14 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	anchored = TRUE
-	var/broken = 0
-	var/processing = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
+	circuit = /obj/item/weapon/circuitboard/machine/processor
+	var/broken = 0
+	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
-
-/obj/machinery/processor/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/processor
-	name = "Food Processor (Machine Board)"
-	build_path = /obj/machinery/processor
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-
-/obj/item/weapon/circuitboard/machine/processor
-	name = "Food Processor (Machine Board)"
-	build_path = /obj/machinery/processor
-
-/obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(build_path == /obj/machinery/processor)
-			name = "Slime Processor (Machine Board)"
-			build_path = /obj/machinery/processor/slime
-			to_chat(user, "<span class='notice'>Name protocols successfully updated.</span>")
-		else
-			name = "Food Processor (Machine Board)"
-			build_path = /obj/machinery/processor
-			to_chat(user, "<span class='notice'>Defaulting name protocols.</span>")
-	else
-		return ..()
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -300,11 +271,7 @@
 	name = "Slime processor"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
-/obj/machinery/processor/slime/New()
-	..()
+/obj/machinery/processor/slime/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/slime(null)
 	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/processor/slime
-	name = "Slime Processor (Machine Board)"
-	build_path = /obj/machinery/processor/slime

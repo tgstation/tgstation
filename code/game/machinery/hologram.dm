@@ -40,6 +40,7 @@ Possible to do for anyone motivated enough:
 	active_power_usage = 100
 	max_integrity = 300
 	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	circuit = /obj/item/weapon/circuitboard/machine/holopad
 	var/list/masters = list()//List of living mobs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
@@ -51,8 +52,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
-	B.apply_default_parts(src)
 	holopads += src
 
 /obj/machinery/holopad/Destroy()
@@ -383,12 +382,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(Impersonation)
 		return Impersonation.examine(user)
 	return ..()
-
-/obj/item/weapon/circuitboard/machine/holopad
-	name = "AI Holopad (Machine Board)"
-	build_path = /obj/machinery/holopad
-	origin_tech = "programming=1"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 #undef HOLOPAD_PASSIVE_POWER_USAGE
 #undef HOLOGRAM_POWER_USAGE

@@ -17,25 +17,26 @@ The console is located at computer/gulag_teleporter.dm
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
+	circuit = /obj/item/weapon/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
-	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer = null
-	var/list/required_items
+	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
+	var/static/list/telegulag_required_items = typecacheof(list(
+		/obj/item/weapon/implant,
+		/obj/item/clothing/suit/space/eva/plasmaman,
+		/obj/item/clothing/under/plasmaman,
+		/obj/item/clothing/head/helmet/space/plasmaman,
+		/obj/item/weapon/tank/internals,
+		/obj/item/clothing/mask/breath,
+		/obj/item/clothing/mask/gas))
 
-/obj/machinery/gulag_teleporter/New()
+/obj/machinery/gulag_teleporter/Initialize()
 	..()
-	required_items = typecacheof(list(
-				/obj/item/weapon/implant,
-				/obj/item/clothing/suit/space/eva/plasmaman,
-				/obj/item/clothing/under/plasmaman,
-				/obj/item/clothing/head/helmet/space/plasmaman,
-				/obj/item/weapon/tank/internals,
-				/obj/item/clothing/mask/breath,
-				/obj/item/clothing/mask/gas))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gulag_teleporter(null)
-	B.apply_default_parts(src)
-	addtimer(CALLBACK(src, .proc/locate_reclaimer), 5)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/gulag_teleporter/LateInitialize()
+	locate_reclaimer()
 
 /obj/machinery/gulag_teleporter/Destroy()
 	if(linked_reclaimer)
@@ -45,7 +46,6 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/power_change()
 	..()
 	update_icon()
-
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	if(locked)
@@ -138,7 +138,7 @@ The console is located at computer/gulag_teleporter.dm
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
-		if(!is_type_in_typecache(W, required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
+		if(!is_type_in_typecache(W, telegulag_required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue

@@ -5,7 +5,6 @@
 // This was created for firing ranges, but I suppose this could have other applications - Doohl
 
 /obj/machinery/magnetic_module
-
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "floor_magnet-f"
 	name = "electromagnetic generator"
@@ -29,22 +28,22 @@
 	var/center_y = 0
 	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
 
-/obj/machinery/magnetic_module/New()
+/obj/machinery/magnetic_module/Initialize()
 	..()
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
 
-	spawn(10)	// must wait for map loading to finish
-		SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn()
-		magnetic_process()
+/obj/machinery/magnetic_module/LateInitialize()
+	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
+	magnetic_process()
 
 /obj/machinery/magnetic_module/Destroy()
 	SSradio.remove_object(src, freq)
-	. = ..()
 	center = null
+	return ..()
 
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
@@ -216,27 +215,26 @@
 	var/datum/radio_frequency/radio_connection
 
 
-/obj/machinery/magnetic_controller/New()
+/obj/machinery/magnetic_controller/Initialize()
 	..()
-
 	if(autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
-
-	spawn(45)	// must wait for map loading to finish
-		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
-
-
 	if(path) // check for default path
 		filter_path() // renders rpath
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/magnetic_controller/LateInitialize()
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
 
 /obj/machinery/magnetic_controller/Destroy()
 	SSradio.remove_object(src, frequency)
 	magnets = null
 	rpath = null
-	. = ..()
+	return ..()
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)

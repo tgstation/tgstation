@@ -11,8 +11,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/max_dist = 100
 	verb_say = "states coldly"
 
-/obj/machinery/doppler_array/New()
-	..()
+/obj/machinery/doppler_array/Initialize()
+	. = ..()
 	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/Destroy()

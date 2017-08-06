@@ -51,8 +51,8 @@
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/New()
-	..()
+/obj/machinery/computer/arcade/Initialize()
+	. = ..()
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
@@ -60,11 +60,8 @@
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		qdel(src)
-
-/obj/machinery/computer/arcade/Initialize()
-	. = ..()
+		return
 	Reset()
-
 
 #define PULSE_MEDAL "Jackpot"
 

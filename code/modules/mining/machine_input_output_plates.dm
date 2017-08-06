@@ -8,6 +8,7 @@
 	anchored = TRUE
 
 /obj/machinery/mineral/input/New()
+	. = ..()
 	icon_state = "blank"
 
 /obj/machinery/mineral/output
@@ -18,6 +19,7 @@
 	anchored = TRUE
 
 /obj/machinery/mineral/output/New()
+	. = ..()
 	icon_state = "blank"
 
 /obj/machinery/mineral

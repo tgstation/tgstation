@@ -21,6 +21,7 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = NO_POWER_USE
+	circuit = /obj/item/weapon/circuitboard/machine/smes
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
 
@@ -43,36 +44,24 @@
 	if(!terminal)
 		to_chat(user, "<span class='warning'>This SMES has no power terminal!</span>")
 
-/obj/machinery/power/smes/New()
+/obj/machinery/power/smes/Initialize()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
-	B.apply_default_parts(src)
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(5)
-		dir_loop:
-			for(var/d in GLOB.cardinals)
-				var/turf/T = get_step(src, d)
-				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
-						terminal = term
-						break dir_loop
+/obj/machinery/power/smes/LateInitialize()
+	dir_loop:
+		for(var/d in GLOB.cardinals)
+			var/turf/T = get_step(src, d)
+			for(var/obj/machinery/power/terminal/term in T)
+				if(term && term.dir == turn(d, 180))
+					terminal = term
+					break dir_loop
 
 		if(!terminal)
 			stat |= BROKEN
 			return
 		terminal.master = src
 		update_icon()
-	return
-
-/obj/item/weapon/circuitboard/machine/smes
-	name = "SMES (Machine Board)"
-	build_path = /obj/machinery/power/smes
-	origin_tech = "programming=3;powerstorage=3;engineering=3"
-	req_components = list(
-							/obj/item/stack/cable_coil = 5,
-							/obj/item/weapon/stock_parts/cell = 5,
-							/obj/item/weapon/stock_parts/capacitor = 1)
-	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high/empty)
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0

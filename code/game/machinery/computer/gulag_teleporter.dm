@@ -15,9 +15,12 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/gulag_teleporter_computer/New()
+/obj/machinery/computer/gulag_teleporter_computer/Initialize()
 	..()
-	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/gulag_teleporter_computer/LateInitialize()
+	scan_machinery()
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
