@@ -320,6 +320,8 @@
 	desc = "Particularly twisted dieties grant gifts of dubious value."
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	flags = ABSTRACT | NODROP
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
