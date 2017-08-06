@@ -96,12 +96,6 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	if(seeStatic)
-		var/datum/action/generic/drone/select_filter/SF = new(src)
-		SF.Grant(src)
-	else
-		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
-
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
