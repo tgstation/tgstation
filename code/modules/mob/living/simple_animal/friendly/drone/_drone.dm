@@ -126,8 +126,6 @@
 	if(flavortext)
 		to_chat(src, "[flavortext]")
 
-	updateSeeStaticMobs()
-
 	if(!picked)
 		pickVisualAppearence()
 
