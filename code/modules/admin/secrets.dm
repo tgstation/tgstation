@@ -517,14 +517,14 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one()
-			send_to_playing_players('sound/misc/highlander.ogg')
+			sound_to_playing_players('sound/misc/highlander.ogg')
 
 		if("delayed_onlyone")
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one_delayed()
-			send_to_playing_players('sound/misc/highlander_delayed.ogg')
+			sound_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
