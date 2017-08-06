@@ -97,7 +97,8 @@
 	return ..()
 
 /obj/item/clockwork/replica_fabricator/process()
-	if(!charge_rate || loc.z != ZLEVEL_CITYOFCOGS)
+	var/turf/T = get_turf(src)
+	if(!charge_rate || T.z != ZLEVEL_CITYOFCOGS)
 		return
 	var/mob/living/L = get_atom_on_turf(src, /mob/living)
 	if(istype(L) && is_servant_of_ratvar(L))
