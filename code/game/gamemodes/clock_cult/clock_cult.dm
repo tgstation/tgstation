@@ -288,6 +288,8 @@ Credit where due:
 	<li><b>Observation Room:</b> Contains five camera observers. These can be used to watch the station through its cameras. You can also use your \
 	absconder to teleport onto the station with these. <b>Alt-clicking the console creates a new absconder!</b> If you go to the station, bring a spare \
 	absconder or two for any converts you manage to get while you're there.</li>\
+	<li><b>Infirmary:</b> Contains sleepers and basic medical supplies for superficial wounds. The sleepers can consume Vitality to heal any occupants. \
+	This room is generally more useful during the preparation phase; when defending the Ark, scripture is more useful.</li>\
 	</ul>\
 	<b>Good luck!</b>"
 

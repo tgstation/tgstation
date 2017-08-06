@@ -1,101 +1,105 @@
 "aa" = (/turf/closed/indestructible/reebe,/area/reebe)
 "ab" = (/turf/closed/wall/clockwork,/area/reebe)
-"ac" = (/turf/open/floor/clockwork/reebe,/area/reebe)
-"ad" = (/obj/structure/noticeboard,/obj/item/weapon/paper/fluff/ruins/djstation{name = "paper - 'Station Radio Frequencies'"},/turf/closed/wall/clockwork,/area/reebe)
-"ae" = (/obj/machinery/telecomms/relay/preset/reebe,/turf/open/floor/clockwork/reebe,/area/reebe)
-"af" = (/obj/machinery/computer/camera_advanced/ratvar,/turf/open/floor/clockwork/reebe,/area/reebe)
-"ag" = (/obj/structure/dresser,/obj/structure/mirror{pixel_y = 26},/turf/open/floor/clockwork/reebe,/area/reebe)
-"ah" = (/obj/structure/closet/wardrobe/mixed,/turf/open/floor/clockwork/reebe,/area/reebe)
-"ai" = (/obj/structure/table/reinforced/brass,/obj/item/device/radio/intercom/ratvar,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aj" = (/obj/structure/chair/wood/wings{dir = 8; icon_state = "wooden_chair_wings"},/turf/open/floor/clockwork/reebe,/area/reebe)
-"ak" = (/obj/structure/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
-"al" = (/obj/structure/grille/ratvar,/obj/structure/window/reinforced/clockwork/fulltile,/turf/open/floor/clockwork/reebe,/area/reebe)
-"am" = (/obj/structure/destructible/clockwork/massive/celestial_gateway,/turf/open/floor/clockwork/reebe,/area/reebe)
-"an" = (/obj/structure/chair/wood/wings{dir = 1},/turf/open/floor/clockwork/reebe,/area/reebe)
-"ao" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/turf/open/floor/clockwork/reebe,/area/reebe)
-"ap" = (/obj/machinery/door/airlock/clockwork/brass{name = "Dressing Room"},/turf/open/floor/clockwork/reebe,/area/reebe)
-"aq" = (/obj/machinery/door/airlock/clockwork/brass{name = "Ark Chamber"},/turf/open/floor/clockwork/reebe,/area/reebe)
-"ar" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/turf/open/floor/clockwork/reebe,/area/reebe)
-"as" = (/obj/structure/destructible/clockwork/cache,/turf/open/floor/clockwork/reebe,/area/reebe)
-"at" = (/obj/machinery/door/airlock/clockwork/brass{name = "Listening Station"},/turf/open/floor/clockwork/reebe,/area/reebe)
-"au" = (/obj/machinery/door/airlock/clockwork/brass{name = "Observation Room"},/turf/open/floor/clockwork/reebe,/area/reebe)
-"av" = (/obj/structure/rack,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aw" = (/obj/structure/rack,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/turf/open/floor/clockwork/reebe,/area/reebe)
-"ax" = (/obj/structure/rack,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/turf/open/floor/clockwork/reebe,/area/reebe)
-"ay" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab/starter,/turf/open/floor/clockwork/reebe,/area/reebe)
-"az" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/screwdriver/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aA" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/weldingtool/experimental/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aB" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aC" = (/obj/structure/rack,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aD" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/crowbar/brass,/obj/item/weapon/wirecutters/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aE" = (/obj/effect/landmark/servant_of_ratvar,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aF" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aG" = (/obj/structure/rack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aH" = (/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aI" = (/turf/closed/indestructible/reebe/spawn_room,/area/reebe)
-"aJ" = (/obj/structure/destructible/clockwork/powered/prolonging_prism,/obj/structure/window/reinforced/clockwork{dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
-"aK" = (/obj/effect/landmark/city_of_cogs,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aL" = (/obj/structure/destructible/clockwork/powered/mania_motor,/obj/structure/window/reinforced/clockwork{dir = 8},/turf/open/floor/clockwork/reebe,/area/reebe)
-"aM" = (/obj/structure/destructible/clockwork/cache,/obj/structure/window/reinforced/clockwork{dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
-"aN" = (/obj/machinery/door/airlock/clockwork/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aO" = (/obj/structure/destructible/clockwork/cache,/obj/structure/window/reinforced/clockwork{dir = 8},/turf/open/floor/clockwork/reebe,/area/reebe)
-"aP" = (/obj/structure/destructible/clockwork/powered/tinkerers_daemon,/obj/structure/window/reinforced/clockwork{dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
-"aQ" = (/obj/structure/destructible/clockwork/ocular_warden{desc = "A large brass eye with tendrils trailing below it and a wide red iris. This one seems especially angry about something."; name = "blind warden"; sight_range = 0},/obj/structure/window/reinforced/clockwork{dir = 8},/turf/open/floor/clockwork/reebe,/area/reebe)
-"aR" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/belligerent_eye,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aS" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/belligerent_eye/blind_eye,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aT" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/belligerent_eye/lens_gem,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aU" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aV" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy/replication_plate,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aW" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/geis_capacitor,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aX" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/geis_capacitor/antennae,/turf/open/floor/clockwork/reebe,/area/reebe)
-"aY" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/geis_capacitor/fallen_armor,/turf/open/floor/clockwork/reebe,/area/reebe)
+"ac" = (/obj/structure/grille/ratvar,/obj/structure/window/reinforced/clockwork/fulltile,/turf/open/floor/clockwork/reebe,/area/reebe)
+"ad" = (/turf/open/floor/clockwork/reebe,/area/reebe)
+"ae" = (/obj/machinery/sleeper/clockwork,/turf/open/floor/clockwork/reebe,/area/reebe)
+"af" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/storage/firstaid,/turf/open/floor/clockwork/reebe,/area/reebe)
+"ag" = (/obj/structure/noticeboard,/obj/item/weapon/paper/fluff/ruins/djstation{name = "paper - 'Station Radio Frequencies'"},/turf/closed/wall/clockwork,/area/reebe)
+"ah" = (/obj/machinery/telecomms/relay/preset/reebe,/turf/open/floor/clockwork/reebe,/area/reebe)
+"ai" = (/obj/machinery/computer/camera_advanced/ratvar,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aj" = (/obj/structure/dresser,/obj/structure/mirror{pixel_y = 26},/turf/open/floor/clockwork/reebe,/area/reebe)
+"ak" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/obj/item/clockwork/slab,/turf/open/floor/clockwork/reebe,/area/reebe)
+"al" = (/obj/structure/table/reinforced/brass,/obj/item/device/radio/intercom/ratvar,/turf/open/floor/clockwork/reebe,/area/reebe)
+"am" = (/obj/structure/chair/wood/wings{dir = 8; icon_state = "wooden_chair_wings"},/turf/open/floor/clockwork/reebe,/area/reebe)
+"an" = (/obj/structure/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
+"ao" = (/obj/structure/destructible/clockwork/massive/celestial_gateway,/turf/open/floor/clockwork/reebe,/area/reebe)
+"ap" = (/obj/structure/chair/wood/wings{dir = 1},/turf/open/floor/clockwork/reebe,/area/reebe)
+"aq" = (/obj/machinery/door/airlock/clockwork/brass{name = "Dressing Room"},/turf/open/floor/clockwork/reebe,/area/reebe)
+"ar" = (/obj/machinery/door/airlock/clockwork/brass{name = "Ark Chamber"},/turf/open/floor/clockwork/reebe,/area/reebe)
+"as" = (/obj/machinery/door/airlock/clockwork/brass,/turf/open/floor/clockwork/reebe,/area/reebe{name = "Infirmary"})
+"at" = (/obj/structure/closet/wardrobe/mixed,/turf/open/floor/clockwork/reebe,/area/reebe)
+"au" = (/obj/structure/destructible/clockwork/cache,/turf/open/floor/clockwork/reebe,/area/reebe)
+"av" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/obj/item/clockwork/abscondence_bijou,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aw" = (/obj/machinery/sleeper/clockwork{dir = 1},/turf/open/floor/clockwork/reebe,/area/reebe)
+"ax" = (/obj/machinery/door/airlock/clockwork/brass{name = "Listening Station"},/turf/open/floor/clockwork/reebe,/area/reebe)
+"ay" = (/obj/machinery/door/airlock/clockwork/brass{name = "Observation Room"},/turf/open/floor/clockwork/reebe,/area/reebe)
+"az" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab/starter,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aA" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/screwdriver/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aB" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/weldingtool/experimental/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aC" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aD" = (/obj/structure/rack,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/obj/item/clothing/head/hardhat/white,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aE" = (/obj/structure/table/reinforced/brass,/obj/item/weapon/crowbar/brass,/obj/item/weapon/wirecutters/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aF" = (/obj/effect/landmark/servant_of_ratvar,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aG" = (/obj/structure/rack,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/obj/item/clothing/under/color/yellow,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aH" = (/obj/structure/rack,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/obj/item/clothing/shoes/sneakers/green,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aI" = (/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aJ" = (/obj/structure/rack,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/obj/item/weapon/storage/belt/utility/servant,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aK" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aL" = (/obj/structure/rack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aM" = (/turf/closed/indestructible/reebe/spawn_room,/area/reebe)
+"aN" = (/obj/structure/destructible/clockwork/powered/prolonging_prism,/obj/structure/window/reinforced/clockwork{dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
+"aO" = (/obj/effect/landmark/city_of_cogs,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aP" = (/obj/structure/destructible/clockwork/powered/mania_motor,/obj/structure/window/reinforced/clockwork{dir = 8},/turf/open/floor/clockwork/reebe,/area/reebe)
+"aQ" = (/obj/structure/destructible/clockwork/cache,/obj/structure/window/reinforced/clockwork{dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
+"aR" = (/obj/machinery/door/airlock/clockwork/brass,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aS" = (/obj/structure/destructible/clockwork/cache,/obj/structure/window/reinforced/clockwork{dir = 8},/turf/open/floor/clockwork/reebe,/area/reebe)
+"aT" = (/obj/structure/destructible/clockwork/powered/tinkerers_daemon,/obj/structure/window/reinforced/clockwork{dir = 4},/turf/open/floor/clockwork/reebe,/area/reebe)
+"aU" = (/obj/structure/destructible/clockwork/ocular_warden{desc = "A large brass eye with tendrils trailing below it and a wide red iris. This one seems especially angry about something."; name = "blind warden"; sight_range = 0},/obj/structure/window/reinforced/clockwork{dir = 8},/turf/open/floor/clockwork/reebe,/area/reebe)
+"aV" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/belligerent_eye,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aW" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/belligerent_eye/blind_eye,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aX" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/belligerent_eye/lens_gem,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aY" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment,/turf/open/floor/clockwork/reebe,/area/reebe)
+"aZ" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/replicant_alloy/replication_plate,/turf/open/floor/clockwork/reebe,/area/reebe)
+"ba" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/geis_capacitor,/turf/open/floor/clockwork/reebe,/area/reebe)
+"bb" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/geis_capacitor/antennae,/turf/open/floor/clockwork/reebe,/area/reebe)
+"bc" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/component/geis_capacitor/fallen_armor,/turf/open/floor/clockwork/reebe,/area/reebe)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaabacacacacacabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaababababadabaeabadabacacacacacabafafafafafabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaababagahabaiajacakaialacacamacacalanananananabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabaoacacapacacacacacaqacacacacacaqacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabaracacabaiajacakaialacacacacacalasacacacacabababababaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaababapababababatalalabalalaqalalabalalauabababavawaxababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacayazacacacacacaAacacacaBacacacacacaCabaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacaDacaEacaEacaEacacacacacacacacacacaFabaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacaGabaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacaEacaHacaEacacacacacacacacacacababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacaEacaEacaEacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaIaIaIaIaIaIaIaaaIaIaIaIaIaIaIaaaIaIaIaIaIaIaIaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacabacacacacacacacabacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaababacacacacacacacabacacacacacacacabacacacacacacacababaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabaJacacaKaKaKacacalacacaKaKaKacacalacacaKaKaKacacaLabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabaMacacaKaKaKacacaNacacaKaKaKacacaNacacaKaKaKacacaOabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabaPacacaKaKaKacacalacacaKaKaKacacalacacaKaKaKacacaQabaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaababacacacacacacacabacacacacacacacabacacacacacacacababaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacabacacacacacacacabacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaabababalalalabababababalalalabababababalalalabababaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaabaRaSaTabaaaaaaabaBaUaVabaaaaaaabaWaXaYabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababaaaaaaaaaaababacababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacabaaabadadadadadababacacacababaeafaeabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaababababagabahabagabadadadadadabaiaiaiaiaiabadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaabajakabalamadanalacadadaoadadacapapapapapabadadadacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaacadadaqadadadadadaradadadadadaradadadadadasadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaabadatabalamadanalacadadadadadacauadadadavabawadawabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaababaqababababaxacacabacacaracacabacacayababababasabababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadazaAadadadadadaBadadadaCadadadadadaDabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadaEadaFadaFadaFadadadadadadadadadadaGabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadaHabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadaFadaIadaFadadadadadadadadadadaJabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadaKabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadaFadaFadaFadadadadadadadadadadaLabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaMaMaMaMaMaMaMaaaMaMaMaMaMaMaMaaaMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaabadadadadadadadabadadadadadadadabadadadadadadadabaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaababadadadadadadadabadadadadadadadabadadadadadadadababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabaNadadaOaOaOadadacadadaOaOaOadadacadadaOaOaOadadaPabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabaQadadaOaOaOadadaRadadaOaOaOadadaRadadaOaOaOadadaSabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabaTadadaOaOaOadadacadadaOaOaOadadacadadaOaOaOadadaUabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaababadadadadadadadabadadadadadadadabadadadadadadadababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaabadadadadadadadabadadadadadadadabadadadadadadadabaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaabababacacacabababababacacacabababababacacacabababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaabaVaWaXabaaaaaaabaCaYaZabaaaaaaabbabbbcabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaabababababaaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
