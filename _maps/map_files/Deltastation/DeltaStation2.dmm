@@ -24418,14 +24418,13 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = -32
+	pixel_x = -33
 	},
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/light_switch{
-	pixel_x = -26
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -92813,7 +92812,6 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/camera{
 	c_tag = "Science - Robotics Lab";
 	dir = 8;
@@ -93313,6 +93311,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dyU" = (
