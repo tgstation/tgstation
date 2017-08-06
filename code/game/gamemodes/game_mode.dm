@@ -111,7 +111,7 @@
 	var/list/living_crew = list()
 
 	for(var/mob/Player in GLOB.mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client)
 			living_crew += Player
 	if(living_crew.len / GLOB.joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
 		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
@@ -208,7 +208,7 @@
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.living_mob_list)
-			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
 				if(Player.mind.special_role) //Someone's still antaging!
 					living_antag_player = Player
 					return 0
