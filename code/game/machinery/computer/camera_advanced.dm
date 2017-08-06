@@ -21,6 +21,18 @@
 	desc = "A console used to snoop on the station's goings-on. A jet of steam occasionally whooshes out from slats on its sides."
 	use_power = FALSE
 	networks = list("SS13", "MiniSat") //:eye:
+	var/recharge_ticks = 0 //How many ticks are left until a new bijou can be created
+
+/obj/machinery/computer/camera_advanced/ratvar/process()
+	recharge_ticks = max(0, recharge_ticks - 1)
+
+/obj/machinery/computer/camera_advanced/ratvar/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		if(!recharge_ticks)
+			to_chat(user, "<span class='sevtug_small'>Alt-click on it to dispense a new abscondence bijou.</span>")
+		else
+			to_chat(user, "<span class='sevtug_small'>A new abscondence bijou will be ready in [recharge_ticks] second[recharge_ticks == 1 ? "" : "s"].</span>")
 
 /obj/machinery/computer/camera_advanced/ratvar/Initialize()
 	. = ..()
@@ -40,6 +52,18 @@
 		visible_message("<span class='notice'>Air whooshes as steam vents out of [src].</span>",,"<span class='italics'>You hear whooshing.</span>")
 		playsound(src, 'sound/effects/space_wind.ogg', 100, FALSE)
 		new/obj/effect/temp_visual/steam_release(get_turf(src))
+
+/obj/machinery/computer/camera_advanced/ratvar/AltClick(mob/living/user)
+	if(is_servant_of_ratvar(user))
+		if(recharge_ticks)
+			to_chat(user, "<span class='danger'>[src] is still forming an abscondence bijou. It will be ready in [recharge_ticks] second[recharge_ticks == 1 ? "" : "s"].</span>")
+			return
+		user.visible_message("<span class='notice'>[user] removes a chunk of pink stone from one of [src]'s slots.</span>", \
+		"<span class='notice'>You break off a chunk of crystallized stone, creating an abscondence bijou.</span>")
+		playsound(src, 'sound/effects/glass_step.ogg', 50, TRUE)
+		var/obj/item/clockwork/abscondence_bijou/B = new(get_turf(src))
+		user.put_in_hands(B)
+		recharge_ticks = 30
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()

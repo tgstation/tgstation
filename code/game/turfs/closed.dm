@@ -69,7 +69,12 @@
 	density = FALSE
 
 /turf/closed/indestructible/reebe/spawn_room/Enter(atom/movable/AM, atom/old_loc)
-	if(!is_servant_of_ratvar(AM) || istype(AM, /obj/item/clockwork) || istype(AM, /obj/structure/destructible/clockwork))
+	if(!is_servant_of_ratvar(AM) && !istype(AM, /obj/item/clockwork) && !istype(AM, /obj/structure/destructible/clockwork))
+		for(var/mob/living/L in AM)
+			if(is_servant_of_ratvar(L)) //no closets, you butt
+				playsound(src, 'sound/effects/bamf.ogg', 25, TRUE)
+				new/obj/effect/temp_visual/cult/turf(get_turf(src))
+				return
 		if(!istype(old_loc, type))
 			to_chat(AM, "<span class='cult'>You step through [src] with little effort. You think you taste the coppery tang of blood.</span>")
 			playsound(src, 'sound/magic/exit_blood.ogg', 25, TRUE)

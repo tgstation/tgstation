@@ -177,9 +177,11 @@ Credit where due:
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
 	if(S && !QDELETED(S))
-		to_chat(L, "<span class='alloy'>[slot] is a clockwork slab, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
+		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
-		to_chat(L, "<span class='italics alloy'>Alternatively, check out the wiki page at <b>https://tgstation13.org/wiki/Clockwork_Cult</b>, which contains additional information.</span>")
+		to_chat(L, "<span class='sevtug_small'>In your backpack is an <b>abscondence bijou</b>, your primary tool for getting to and from the station. From Reebe, you can view the \
+		station through the camera consoles and click on a tile while holding the bijou to teleport there. While on the station, you can use the bijou directly to teleport back.</span>")
+		to_chat(L, "<span class='italics alloy'>If you'd like, check out the wiki page at <b>https://tgstation13.org/wiki/Clockwork_Cult</b>, which contains additional information.</span>")
 		return TRUE
 	return FALSE
 

@@ -11,6 +11,16 @@
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/charged = TRUE //If the bijou is ready to use
+	var/recharge_ticks = 0 //How many seconds are left for the bijou to recharge
+
+/obj/item/clockwork/abscondence_bijou/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/item/clockwork/abscondence_bijou/process()
+	recharge_ticks--
+	if(!recharge_ticks)
+		recharge()
 
 /obj/item/clockwork/abscondence_bijou/examine(mob/user)
 	..()
@@ -23,7 +33,12 @@
 		to_chat(user, "<span class='sevtug_small'>You're away from Reebe. Use the bijou in your hand to go back home.</span>")
 
 /obj/item/clockwork/abscondence_bijou/afterattack(atom/movable/A, mob/living/user, proximity)
-	if(user.z != ZLEVEL_CITYOFCOGS || A.z == ZLEVEL_CITYOFCOGS)
+	if(!is_servant_of_ratvar(user))
+		return
+	if(!charged)
+		to_chat(user, "<span class='danger'>[src]'s energy has been depleted for now. It will be charged in [recharge_ticks] second[recharge_ticks == 1 ? "" : "s"].</span>")
+		return
+	if(user.z != ZLEVEL_CITYOFCOGS || A.z != ZLEVEL_STATION)
 		return
 	if(isclosedturf(A))
 		to_chat(user, "<span class='sevtug_small'>You can't teleport into a wall.</span>")
@@ -31,7 +46,6 @@
 	else if(isspaceturf(A))
 		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
 		return
-	show_teleport_marker(user, A)
 	if(alert(user, "Teleport to [A]?", name, "Teleport", "Cancel") == "Cancel" || !charged || !user.canUseTopic(src))
 		return
 	do_sparks(5, TRUE, user)
@@ -44,20 +58,12 @@
 	flash_color(user, flash_color = "#AF0AAF", flash_time = 25)
 	decharge(300) //30 second recharge time
 
-/obj/item/clockwork/abscondence_bijou/proc/show_teleport_marker(mob/living/user, atom/movable/location)
-	var/image/I = image('icons/effects/clockwork_effects.dmi', "ratvars_flame", location)
-	user.client.images += I
-	addtimer(CALLBACK(src, .proc/hide_teleport_marker, user, I), 50)
-
-/obj/item/clockwork/abscondence_bijou/proc/hide_teleport_marker(mob/living/user, image/marker)
-	user.client.images -= marker
-
 /obj/item/clockwork/abscondence_bijou/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='notice'>While [src] is pleasing to the eye, it doesn't seem to have any use.</span>")
 		return
 	if(!charged)
-		to_chat(user, "<span class='danger'>[src]'s energy has been depleted for now. Give it some time to charge.</span>")
+		to_chat(user, "<span class='danger'>[src]'s energy has been depleted for now. It will be charged in [recharge_ticks] second[recharge_ticks == 1 ? "" : "s"].</span>")
 		return
 	if(user.z == ZLEVEL_CITYOFCOGS)
 		to_chat(user, "<span class='danger'>You're already at Reebe. Use the bijou to get to the station instead.</span>")
@@ -80,10 +86,12 @@
 	decharge()
 
 /obj/item/clockwork/abscondence_bijou/proc/decharge(charge_time = 600)
-	charged = FALSE
-	color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-	animate(src, color = initial(color), time = charge_time)
-	addtimer(CALLBACK(src, .proc/recharge), charge_time)
+	for(var/obj/item/clockwork/abscondence_bijou/B in loc.GetAllContents())
+		B.charged = FALSE
+		B.color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+		animate(B, color = initial(B.color), time = charge_time)
+		B.recharge_ticks = charge_time / 10 //600 deciseconds = 60 seconds
+		START_PROCESSING(SSprocessing, B)
 
 /obj/item/clockwork/abscondence_bijou/proc/recharge()
 	charged = TRUE
@@ -91,3 +99,4 @@
 		var/mob/living/L = loc
 		to_chat(L, "<span class='sevtug_small'>[src] is fully recharged!</span>")
 		L.playsound_local(L, 'sound/magic/magic_missile.ogg', 50, FALSE)
+	STOP_PROCESSING(SSprocessing, src)
