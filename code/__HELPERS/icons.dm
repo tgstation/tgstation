@@ -1087,8 +1087,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			debug_admins(icon_md5)
 			icon_base64 = bicon_cache[icon_md5]
 			if (!icon_base64) // Doesn't exist yet, make it.
-				I = icon(I)
-				I.Scale(world.icon_size, world.icon_size)
 				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
 
 
@@ -1105,9 +1103,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
-
-		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
-			I.Scale(world.icon_size, world.icon_size)
 
 		bicon_cache[key] = icon2base64(I, key)
 
