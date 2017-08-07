@@ -177,7 +177,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/bIcon(thing, target, icon_state, dir, frame = 1, moving)
+/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving)
 	if (!thing)
 		return
 	var/static/datum/callback/CB = CALLBACK(GLOBAL_PROC, .proc/send_asset)
@@ -245,7 +245,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	callback_select(callbacks, callback_args, savereturns = FALSE)
 	return "<img class='icon [icon_state]' src=\"[url_encode(key)]\">"
 
-/proc/bicon(thing)
+/proc/icon2base64html(thing)
 	if (!thing)
 		return
 	var/static/list/bicon_cache = list()
@@ -284,16 +284,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
-//Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_bIcon(thing, target)
+//Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
+/proc/costly_icon2html(thing, target)
 	if (!thing)
 		return
 
 	if (isicon(thing))
-		return bIcon(thing, target)
+		return icon2html(thing, target)
 
 	var/icon/I = getFlatIcon(thing)
-	return bIcon(I, target)
+	return icon2html(I, target)
 
 /proc/to_chat(target, message)
 	if(!target)

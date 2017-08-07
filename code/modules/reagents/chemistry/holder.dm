@@ -401,7 +401,7 @@
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
-					var/iconhtml = bIcon(cached_my_atom, seen)
+					var/iconhtml = icon2html(cached_my_atom, seen)
 					if(cached_my_atom)
 						if(!ismob(cached_my_atom)) // No bubbling mobs
 							if(C.mix_sound)
