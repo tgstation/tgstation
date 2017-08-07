@@ -1,0 +1,8 @@
+author: "PopNotes"
+delete-after: True
+changes: 
+  - balance: "The Necrolord set has been buffed in general. Details are as follows:"
+  - balance: "Soulflare's stun actually works for more than a single decisecond now. Seriously, why?"
+  - balance: "Soulsplit no longer requires you to be at 100% health to use, it now only requires at least 80%."
+  - balance: "The Staff of Revenant's final power level is now reached at 30 drained souls instead of 50."
+  - balance: "Made the fluff a little bit cooler."
