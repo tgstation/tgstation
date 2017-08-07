@@ -120,12 +120,12 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	if(seconds_until_activation)
-		return "[seconds_until_activation][s_on_time ? " seconds" : ""]"
+		return "[seconds_until_activation][s_on_time ? "S" : ""]"
 	. = "IMMINENT"
 	if(!obj_integrity)
 		. = "DETONATING"
 	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
-		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)][s_on_time ? " seconds":""]"
+		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)][s_on_time ? "S":""]"
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
