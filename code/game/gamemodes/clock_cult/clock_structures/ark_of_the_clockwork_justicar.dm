@@ -14,6 +14,8 @@
 	immune_to_servant_attacks = TRUE
 	var/active = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
+	var/initial_activation_delay = -1 //How many seconds the Ark will have initially taken to activate
+	var/seconds_until_activation = -1 //How many seconds until the Ark activates; if it should never activate, set this to -1
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
@@ -27,6 +29,7 @@
 	glow = new(get_turf(src))
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
+	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
 	visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
@@ -60,11 +63,9 @@
 	if(open_turfs.len)
 		for(var/mob/living/L in T)
 			L.forceMove(pick(open_turfs))
-	countdown = new(src)
-	countdown.start()
 	hierophant_message("<span class='bold large_brass'>The Ark has activated! Defend it at all costs!</span>", FALSE, src)
+	seconds_until_activation = 0
 	SSshuttle.registerHostileEnvironment(src)
-	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -118,11 +119,13 @@
 	take_damage(damage, BRUTE, "bomb", 0)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
+	if(seconds_until_activation)
+		return "[seconds_until_activation][s_on_time ? " seconds" : ""]"
 	. = "IMMINENT"
 	if(!obj_integrity)
 		. = "DETONATING"
 	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
-		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)][s_on_time ? "S":""]"
+		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)][s_on_time ? " seconds":""]"
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
@@ -130,7 +133,7 @@
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(!active)
-			to_chat(user, "<span class='heavy_brass'>It's running final preparations for activation. You have time, but not much. Get to it.</span>")
+			to_chat(user, "<span class='big'><b>Seconds until the Ark's activation:</b> [get_arrival_text(TRUE)]</span>")
 		else
 			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
 			switch(progress_in_seconds)
@@ -153,6 +156,20 @@
 					to_chat(user, "<span class='boldwarning'>The anomaly is stable! Something is coming through!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
+	if(seconds_until_activation == -1) //we never do anything
+		return
+	if(seconds_until_activation)
+		if(!countdown)
+			countdown = new(src)
+			countdown.start()
+		seconds_until_activation--
+		if(!GLOB.application_scripture_unlocked && initial_activation_delay * 0.5 > seconds_until_activation)
+			GLOB.application_scripture_unlocked = TRUE
+			hierophant_message("<span class='large_brass bold'>The Ark is halfway prepared. Application scripture has been unlocked!</span>")
+		if(!seconds_until_activation)
+			cry_havoc()
+			seconds_until_activation = -1 //we'll set this after cry_havoc()
+		return
 	if(!first_sound_played || prob(7))
 		for(var/mob/M in GLOB.player_list)
 			if(M && !isnewplayer(M))

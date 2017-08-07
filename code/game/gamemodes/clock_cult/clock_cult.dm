@@ -113,7 +113,7 @@ Credit where due:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = 4 //Guaranteed three servants
+	var/starter_servants = 4 //Guaranteed four servants
 	var/number_players = num_players()
 	roundstart_player_count = number_players
 	if(number_players > 30) //plus one servant for every additional 10 players above 30
@@ -129,7 +129,7 @@ Credit where due:
 		servant.special_role = "Servant of Ratvar"
 		starter_servants--
 	ark_time = 30 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
-	ark_time = min(ark_time, 40) //40 minute maximum for the activation timer
+	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
@@ -143,19 +143,11 @@ Credit where due:
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
-	addtimer(CALLBACK(src, .proc/unlock_application_scripture), (ark_time * 0.5) * 600)
-	addtimer(CALLBACK(src, .proc/cry_havoc), ark_time * 600) //600 deciseconds in a minute * number of minutes
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
+	G.initial_activation_delay = ark_time * 60
+	G.seconds_until_activation = ark_time * 60 //60 seconds in a minute * number of minutes
 	..()
 	return 1
-
-/datum/game_mode/clockwork_cult/proc/unlock_application_scripture()
-	GLOB.application_scripture_unlocked = TRUE
-	hierophant_message("<span class='large_brass bold'>The Ark is halfway prepared. Application scripture has been unlocked!</span>")
-
-/datum/game_mode/clockwork_cult/proc/cry_havoc()
-	if(GLOB.ark_of_the_clockwork_justiciar)
-		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-		G.cry_havoc()
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
