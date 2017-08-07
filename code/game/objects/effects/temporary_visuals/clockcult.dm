@@ -62,6 +62,28 @@
 /obj/effect/temp_visual/ratvar/grille/broken
 	icon_state = "ratvarbrokengrilleglow"
 
+/obj/effect/temp_visual/ratvar/belligerent
+	layer = ABOVE_MOB_LAYER
+	icon_state = "belligerent"
+	duration = 10
+
+/obj/effect/temp_visual/ratvar/belligerent/Initialize()
+	. = ..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-10, 10)
+	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
+
+/obj/effect/temp_visual/ratvar/belligerent_cast
+	layer = ABOVE_MOB_LAYER
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "belligerent_eye"
+	pixel_y = 16
+	duration = 20
+
+/obj/effect/temp_visual/ratvar/belligerent_cast/Initialize()
+	. = ..()
+	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
+
 /obj/effect/temp_visual/ratvar/mending_mantra
 	layer = ABOVE_MOB_LAYER
 	duration = 20
@@ -88,7 +110,7 @@
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-10, 10)
-	animate(src, alpha = 0, time = 3, easing = EASE_OUT)
+	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
 
 /obj/effect/temp_visual/ratvar/prolonging_prism
 	icon = 'icons/effects/64x64.dmi'
