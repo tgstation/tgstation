@@ -212,7 +212,7 @@
 	build_path = /obj/machinery/computer/card
 	origin_tech = "programming=3"
 /obj/item/weapon/circuitboard/computer/card/centcom
-	name = "Centcom ID Console (Computer Board)"
+	name = "CentCom ID Console (Computer Board)"
 	build_path = /obj/machinery/computer/card/centcom
 
 /obj/item/weapon/circuitboard/computer/card/minor
