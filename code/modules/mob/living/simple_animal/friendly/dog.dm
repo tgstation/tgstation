@@ -52,7 +52,7 @@
 			break
 
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
-	..()
+	. = ..()
 	regenerate_icons()
 
 
@@ -295,7 +295,7 @@
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
-	..()
+	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
