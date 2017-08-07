@@ -68,8 +68,6 @@
 		if(SM.objective)
 			SM.objective.completed = TRUE
 	H.Stun(15)
-	for(var/i in H)
-		qdel(i)
 	new /obj/effect/cloud(get_turf(H))
 	H.visible_message("<span class='notice'>[H] disappears into a cloud of smoke!</span>")
 	qdel(H)
