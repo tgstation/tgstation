@@ -9462,12 +9462,7 @@
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/fitness)
 "avB" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -22857,10 +22852,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Vacant Office APC";
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-=======
 	areastring = "/area/security/vacantoffice";
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 	pixel_x = -24
 	},
 /obj/structure/cable{
@@ -22868,11 +22860,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/area/security/vacantoffice)
-=======
 /area/maintenance/port)
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 "bbJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -43128,10 +43116,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Telecomms Monitoring APC";
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-=======
 	areastring = "/area/tcommsat/computer";
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 	pixel_y = -24
 	},
 /obj/structure/cable{
@@ -43963,10 +43948,7 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Telecomms Server APC";
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-=======
 	areastring = "/area/tcommsat/server";
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -45237,12 +45219,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bZC" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "privacy shutter"
@@ -45261,19 +45238,11 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "bZD" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-=======
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/window/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "privacy shutter"
@@ -47532,12 +47501,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cev" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-=======
 /obj/effect/spawner/structure/window,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
 	d1 = 1;
@@ -47770,11 +47734,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/window/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "privacy shutter"
@@ -48502,34 +48462,19 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cgL" = (
@@ -48607,11 +48552,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/window/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "privacy shutter"
@@ -48999,12 +48940,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chG" = (
@@ -49262,10 +49198,7 @@
 	cell_type = 15000;
 	dir = 1;
 	name = "Engineering APC";
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-=======
 	areastring = "/area/engine/engineering";
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -49397,11 +49330,7 @@
 /area/engine/engineering)
 "ciq" = (
 /obj/structure/cable,
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/window/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "privacy shutter"
@@ -49412,12 +49341,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cis" = (
@@ -52339,12 +52263,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "coL" = (
@@ -52960,12 +52879,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqa" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -53801,12 +53715,7 @@
 /turf/open/space,
 /area/space)
 "csa" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -58652,12 +58561,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cDl" = (
@@ -59183,12 +59087,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEv" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -59207,12 +59106,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEy" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
@@ -59506,12 +59400,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFe" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
@@ -59530,12 +59419,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFh" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
@@ -60044,12 +59928,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGD" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -60057,12 +59936,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGE" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
 	},
@@ -60078,12 +59952,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cGH" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -60116,24 +59985,14 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGK" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGL" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -62144,80 +62003,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "cMm" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMn" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMo" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMp" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMq" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMr" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMs" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMt" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMu" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMv" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMw" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMx" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMy" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMz" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cMA" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -62275,7 +62060,6 @@
 /area/engine/engineering)
 "cMA" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMB" = (
@@ -62340,12 +62124,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "cMN" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/fulltile,
-=======
 /obj/effect/spawner/structure/window/plasma/reinforced,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cMO" = (
@@ -62832,10 +62611,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Starboard Maintenance APC";
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-=======
 	areastring = "/area/maintenance/starboard";
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 	pixel_x = 26
 	},
 /obj/structure/cable{
@@ -64055,12 +63831,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cTc" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-=======
 /obj/effect/spawner/structure/window,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -64069,12 +63840,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cTd" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-=======
 /obj/effect/spawner/structure/window,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -64112,12 +63878,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
 "cTi" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-=======
 /obj/effect/spawner/structure/window/shuttle,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "cTj" = (
@@ -64133,12 +63894,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
 "cTn" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-=======
 /obj/effect/spawner/structure/window/shuttle,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "cTo" = (
@@ -64148,12 +63904,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "cTq" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-=======
 /obj/effect/spawner/structure/window/shuttle,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "cTr" = (
@@ -64166,21 +63917,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "cTu" = (
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/mining)
-"cTv" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-=======
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "cTv" = (
 /obj/effect/spawner/structure/window/shuttle,
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "cTw" = (
@@ -64214,10 +63955,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Central Maintenance APC";
-<<<<<<< HEAD:_maps/map_files/BoxStation/BoxStation.dmm
-=======
 	areastring = "/area/maintenance/central/secondary";
->>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847:_maps/map_files/BoxStation/BoxStation.dmm
 	pixel_x = -24
 	},
 /obj/structure/cable{
