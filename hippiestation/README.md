@@ -16,7 +16,9 @@ Do not alter the tgstation.dme file. All additions and removals should be to the
 
 Icons are notorious for conflicts. Because of this, **ALL NEW ICONS** must go in the "hippiestation/icons" folder. There are to be no exceptions to this rule. Sounds don't cause conflicts, but for the sake of organization they are to go in the "hippiestation/sounds" folder. No exceptions, either. Unless absolutely necessary, code should go in the "hippiestation/code" folder. Small changes outside of the folder should be done with hook-procs. Larger changes should simply mirror the file in the "hippiestation/code" folder.
 
+### Defines
 
+Defines only work if they come before the code in which they are used. Because of this, please put all defines in the `code/__DEFINES/~hippie_defines' path. Use an existing file, or create a new one if necessary.
 
 If a small addition needs to be made outside of the "hippiestation" folder, then it should be done by adding a proc. This proc will be defined inside of the "hippiestation" folder. By doing this, a large number of things can be done by adding just one line of code outside of the folder! If a file must be changed a lot, re-create it with the changes inside of the "hippiestation/code" folder. **Make sure to follow the file's path correctly** (i.e. code/modules/clothing/clothing.dm.) Then, remove the original file from the hippiestation.dme and add the new one.
 
