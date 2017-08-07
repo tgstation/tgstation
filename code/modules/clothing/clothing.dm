@@ -546,6 +546,8 @@ BLIND     // can't see anything
 		has_sensor = HAS_SENSORS
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
 		return 1
+	if(!attach_accessory(I, user))
+		return ..()
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -591,10 +593,6 @@ BLIND     // can't see anything
 				H.update_inv_wear_suit()
 
 	..()
-
-/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if(!attach_accessory(I, user))
-		..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
 	. = FALSE
