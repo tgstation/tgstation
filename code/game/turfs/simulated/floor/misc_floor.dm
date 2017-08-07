@@ -220,12 +220,6 @@
 	baseturf = /turf/open/floor/clockwork/reebe
 	uses_overlay = FALSE
 
-/turf/open/floor/clockwork/reebe/ex_act()
-	return
-
-/turf/open/floor/clockwork/reebe/fire_act()
-	return
-
 /turf/open/floor/bluespace
 	slowdown = -1
 	icon_state = "bluespace"
