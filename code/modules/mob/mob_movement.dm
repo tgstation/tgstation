@@ -165,11 +165,10 @@
 
 	if(Can_ShadowWalk(mob))
 		if(Process_ShadowWalk(direct))
-			moving = 0
-			return
+			moving = FALSE
+			return TRUE
 		else
-			if(mob.m_intent && mob.m_intent == MOVE_INTENT_RUN)
-				delay = delay*SW_LIGHT_FACTOR
+			delay = delay*SW_LIGHT_FACTOR
 
 	//We are now going to move
 	moving = 1

@@ -106,6 +106,7 @@ Made by Xhuis
 /datum/game_mode/shadowling/post_setup()
 	for(var/datum/mind/shadow in shadows)
 		log_game("[shadow.key] (ckey) has been selected as a Shadowling.")
+		sleep(10)
 		to_chat(shadow.current, "<br>")
 		to_chat(shadow.current, "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>")
 		greet_shadow(shadow)
@@ -270,6 +271,14 @@ Made by Xhuis
 	mutanteyes = /obj/item/organ/eyes/night_vision/sling
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
+
+/datum/species/shadow/ling/on_species_gain(mob/living/carbon/human/C)
+	C.draw_hippie_parts()
+	. = ..()
+
+/datum/species/shadow/ling/on_species_loss(mob/living/carbon/human/C)
+	C.draw_hippie_parts(TRUE)
+	. = ..()
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0

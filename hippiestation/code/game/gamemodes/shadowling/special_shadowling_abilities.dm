@@ -102,7 +102,7 @@
 
 			H.mind.RemoveSpell(src)
 
-			//do_mob(user, user, 10)
+			sleep(10)
 			to_chat(H, "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
