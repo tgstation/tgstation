@@ -1025,13 +1025,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		targets = target
 		if (!targets.len)
 			return
-	debug_usr("start")
 	if (!isicon(I))
-		debug_usr("not icon")
 		if (isfile(thing)) //special snowflake
-			debug_usr("file")
 			var/name = sanitize_filename("bicon.[thing]")
-			debug_usr("file:[name]")
 			register_asset(name, thing)
 			var/list/callbacks
 			var/list/callback_args = list()
@@ -1040,7 +1036,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 				callback_args[++callback_args.len] = list(thing2, name, TRUE)
 			callback_select(callbacks, callback_args, savereturns = FALSE)
 			return "<img class='icon misc' src=\"[url_encode(name)]\">"
-		debug_usr("not file")
 		var/atom/A
 		if (isnull(dir))
 			dir = A.dir
@@ -1048,13 +1043,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			icon_state = A.icon_state
 		I = A.icon
 		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			debug_usr("human")
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
 			dir = SOUTH
 	else
-		debug_usr("icon")
 		if (isnull(dir))
 			dir = SOUTH
 		if (isnull(icon_state))
@@ -1063,7 +1056,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	I = icon(I, icon_state, dir, frame)
 
 	key = sanitize_filename("bicon.[md5(icon2base64(I))].[icon_state].[dir].png")
-	debug_usr("key:[key]")
 	register_asset(key, I)
 	var/list/callbacks = list()
 	var/list/callback_args = list()
@@ -1084,7 +1076,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
 			var/icon_md5 = md5(icon_base64)
-			debug_admins(icon_md5)
 			icon_base64 = bicon_cache[icon_md5]
 			if (!icon_base64) // Doesn't exist yet, make it.
 				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
