@@ -59,7 +59,7 @@
         "u just did the world a little bit more sad place for someone",
         "WHERES THE SLIP REWRITE WHERE THR FUCK ID IT?",
         "@pick(semicolon)N-NYAAAAAA~",
-		"@pick(bug)"
+		"@pick(bug)",
 		"@pick(semicolon)wtf??????????? @pick(bug)",
 		"@pick(semicolon)i ran into the supermattre ten i dsappeard @pick(bug)"
     ],
@@ -126,15 +126,16 @@
         "abdoocters"
     ],
 	
-	"bug": [
-		"",
-		"IS TIS A BUG??",
-		"SI IST A BUGG/"
-	],
+    "bug": [
+        "",
+        "IS TIS A BUG??",
+        "SI IST A BUGG/"
+    ],
 	
-	"semicolon": [
-		"",
-		";"
-	]
+    "semicolon": [
+        "",
+        ";",
+		".h"
+    ]
 
 }
