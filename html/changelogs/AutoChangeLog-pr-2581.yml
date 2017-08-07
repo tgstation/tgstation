@@ -1,8 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Removed the Volt Blaster scripture."
-  - rscdel: "Ratvarian spears can no longer impale."
-  - balance: "Vitality Matrices now require a flat 150 Vitality to revive Servants, from 20 + the Servant's non-oxygen damage. Vitality Matrices are also no longer destroyed when reviving Servants."
-  - balance: "Ratvarian spear damage changed from 18 to 20, Ratvarian spears now generate 5 Vitality when attacking living targets. Ratvarian spear armour penetration changed from 0 to 10."
-  - balance: "The Judicial Visor's mark now immediately applies Belligerent and knocks down for 0.5 seconds. Mark exploding no longer mutes, mark explosion stun changed from 16 seconds to 1.5 seconds, mark explosion damage changed from 10 to 20."

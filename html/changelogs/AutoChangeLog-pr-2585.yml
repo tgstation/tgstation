@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Stun baton overlays now appear on security belts when active."

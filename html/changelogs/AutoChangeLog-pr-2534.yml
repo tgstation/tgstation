@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Guns like sniper rifles now unzoom if you unequip them or move them to another hand."

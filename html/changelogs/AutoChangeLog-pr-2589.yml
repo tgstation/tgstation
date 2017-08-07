@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Syringes now properly inject targets wearing thick clothing on different slots."
