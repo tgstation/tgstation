@@ -2370,6 +2370,7 @@
 #include "hippiestation\code\modules\research\designs\biogenerator_designs.dm"
 #include "hippiestation\code\modules\research\designs\bluespace.dm"
 #include "hippiestation\code\modules\research\designs\medical_designs.dm"
+#include "hippiestation\code\modules\research\xenobiology\xenobiology.dm"
 #include "hippiestation\code\modules\sports\bowling.dm"
 #include "hippiestation\code\modules\sports\football.dm"
 #include "hippiestation\code\modules\sports\hockey.dm"
