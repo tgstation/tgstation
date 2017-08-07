@@ -20,9 +20,8 @@
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/carbon/C in hearers(7, invoker))
-		if(C.apply_status_effect(STATUS_EFFECT_BELLIGERENT))
-			new /obj/effect/temp_visual/ratvar/belligerent(get_turf(C))
-	new /obj/effect/temp_visual/ratvar/belligerent_cast(get_turf(invoker))
+		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+	new /obj/effect/temp_visual/ratvar/belligerent(get_turf(invoker))
 	return TRUE
 
 
