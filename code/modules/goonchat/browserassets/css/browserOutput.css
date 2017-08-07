@@ -35,6 +35,7 @@ img.icon {
 	height: 1em;
 	min-height: 16px;
 	width: auto;
+	vertical-align: bottom;
 }
 
 a {color: #0000ff;}
