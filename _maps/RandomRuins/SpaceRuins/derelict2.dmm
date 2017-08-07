@@ -11,7 +11,7 @@
 "c" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "d" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -26,29 +26,29 @@ area/ruin/space/has_grav/powered/dinner_for_two)
 	dir = 8
 	},
 /turf/open/floor/plating,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "f" = (
 /turf/closed/wall,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "g" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "h" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "i" = (
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "j" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "k" = (
 /obj/structure/window/reinforced,
 /turf/open/space,
@@ -59,14 +59,14 @@ area/ruin/space/has_grav/powered/dinner_for_two)
 	dir = 1
 	},
 /turf/open/floor/plating,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "m" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "n" = (
 /obj/structure/table,
 /obj/item/candle{
@@ -79,14 +79,14 @@ area/ruin/space/has_grav/powered/dinner_for_two)
 	pixel_x = -10
 	},
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "o" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "p" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -98,11 +98,11 @@ area/ruin/space/has_grav/powered/dinner_for_two)
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 "r" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
-area/ruin/space/has_grav/powered/dinner_for_two)
+/area/ruin/space/has_grav/powered/dinner_for_two)
 
 (1,1,1) = {"
 a
