@@ -192,3 +192,5 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
+tools/IssueReporter/packages/*
+tools/IssueReporter/obj/*

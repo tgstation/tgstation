@@ -407,6 +407,8 @@
 					githuburl = value
 				if("githubrepoid")
 					githubrepoid = value
+				if("githubapikey")
+					global.github_api_key = value
 				if("guest_jobban")
 					guest_jobban = 1
 				if("guest_ban")

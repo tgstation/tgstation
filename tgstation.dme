@@ -2032,6 +2032,7 @@
 #include "code\modules\ruins\spaceruin_code\TheDerelict.dm"
 #include "code\modules\security_levels\keycard_authentication.dm"
 #include "code\modules\security_levels\security_levels.dm"
+#include "code\modules\server_tools\gh_issues.dm"
 #include "code\modules\server_tools\server_tools.dm"
 #include "code\modules\shuttle\arrivals.dm"
 #include "code\modules\shuttle\assault_pod.dm"
