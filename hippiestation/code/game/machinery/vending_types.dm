@@ -99,7 +99,8 @@ CLOTHESMATE
 		/obj/item/clothing/head/beanie/stripedred=1,
 		/obj/item/clothing/head/beanie/stripedblue=1,
 		/obj/item/clothing/head/beanie/stripedgreen=1,
-		/obj/item/clothing/suit/jacket/letterman_red=1
+		/obj/item/clothing/suit/jacket/letterman_red=1,
+		/obj/item/clothing/ears/headphones = 10,
 		)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool=1,
@@ -362,6 +363,7 @@ AUTODROBE
 		/obj/item/clothing/mask/joy = 1,
 		/obj/item/clothing/head/cueball = 1,
 		/obj/item/clothing/under/scratch = 1,
+		/obj/item/clothing/ears/headphones = 2,
 		/obj/item/clothing/under/sailor = 1
 		)
 	contraband = list(
