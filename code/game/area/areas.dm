@@ -338,7 +338,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		else
 			icon_state = "blue-red"
 	else
-		icon_state = null
+		var/weather_icon
+		for(var/V in SSweather.existing_weather)
+			var/datum/weather/W = V
+			if(src in W.impacted_areas)
+				W.update_areas()
+				weather_icon = TRUE
+		if(!weather_icon)
+			icon_state = null
 
 /area/space/updateicon()
 	icon_state = null
@@ -429,7 +436,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey)
 		return
 
-	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ)

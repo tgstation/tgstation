@@ -21,7 +21,7 @@
 	var/list/status = list()
 	status += "The law sync module is [R.lawupdate ? "on" : "off"]."
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
-	status += "The camera light is [!isnull(R.camera) && R.camera.status ? "on" : "off"]."
+	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.status ? "on" : "off"]."
 	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
 	status += "The reset module hardware light is [R.has_module() ? "on" : "off"]."
 	return status
@@ -45,9 +45,9 @@
 					else
 						R.notify_ai(TRUE)
 		if(WIRE_CAMERA) // Pulse to disable the camera.
-			if(!isnull(R.camera) && !R.scrambledcodes)
-				R.camera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lense focuses loudly.", "Your camera lense focuses loudly.")
+			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
+				R.builtInCamera.toggle_cam(usr, 0)
+				R.visible_message("[R]'s camera lens focuses loudly.", "Your camera lens focuses loudly.")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
 				R.visible_message("[R] gently chimes.", "LawSync protocol engaged.")
@@ -75,10 +75,10 @@
 			else if(!R.deployed) //AI shells must always have the same laws as the AI
 				R.lawupdate = FALSE
 		if (WIRE_CAMERA) // Disable the camera.
-			if(!isnull(R.camera) && !R.scrambledcodes)
-				R.camera.status = mend
-				R.camera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lense focuses loudly.", "Your camera lense focuses loudly.")
+			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
+				R.builtInCamera.status = mend
+				R.builtInCamera.toggle_cam(usr, 0)
+				R.visible_message("[R]'s camera lens focuses loudly.", "Your camera lens focuses loudly.")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
 		if(WIRE_RESET_MODULE)

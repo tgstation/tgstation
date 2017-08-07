@@ -456,7 +456,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		targetinfo = item
 
 		steal_target = targetinfo.targetitem
-		explanation_text = "Steal [targetinfo.name]."
+		explanation_text = "Steal [targetinfo.name]"
 		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
@@ -623,17 +623,16 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
-	if (SSticker)
-		var/n_p = 1 //autowin
-		if (SSticker.current_state == GAME_STATE_SETTING_UP)
-			for(var/mob/dead/new_player/P in GLOB.player_list)
-				if(P.client && P.ready == PLAYER_READY_TO_PLAY && P.mind!=owner)
-					n_p ++
-		else if (SSticker.IsRoundInProgress())
-			for(var/mob/living/carbon/human/P in GLOB.player_list)
-				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
-					n_p ++
-		target_amount = min(target_amount, n_p)
+	var/n_p = 1 //autowin
+	if (SSticker.current_state == GAME_STATE_SETTING_UP)
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.client && P.ready == PLAYER_READY_TO_PLAY && P.mind!=owner)
+				n_p ++
+	else if (SSticker.IsRoundInProgress())
+		for(var/mob/living/carbon/human/P in GLOB.player_list)
+			if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
+				n_p ++
+	target_amount = min(target_amount, n_p)
 
 	explanation_text = "Extract [target_amount] compatible genome\s."
 	return target_amount

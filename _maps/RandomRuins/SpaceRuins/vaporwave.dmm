@@ -19,89 +19,89 @@
 /area/ruin/unpowered/no_grav)
 "f" = (
 /turf/closed/wall,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "g" = (
 /turf/closed/wall/rust,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "h" = (
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/holofloor/beach,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "i" = (
 /obj/structure/piano,
 /obj/structure/window{
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "j" = (
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "k" = (
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "l" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "m" = (
 /obj/structure/table/reinforced,
 /obj/item/device/taperecorder,
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "n" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "o" = (
 /obj/structure/window{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "p" = (
 /obj/effect/overlay/palmtree_l,
 /turf/open/floor/holofloor/beach,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "q" = (
 /turf/open/floor/holofloor/beach,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "r" = (
 /obj/structure/window{
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "s" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/sunglasses/big{
 	name = "aesthetic sunglasses"
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "t" = (
 /obj/item/device/instrument/eguitar,
 /turf/open/floor/holofloor/beach,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "u" = (
 /turf/open/floor/holofloor/beach/coast_t,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "v" = (
 /obj/item/weapon/statuebust,
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "w" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "x" = (
 /obj/structure/closet/crate/bin,
 /obj/item/device/tape/random,
@@ -109,12 +109,12 @@
 /area/ruin/unpowered/no_grav)
 "y" = (
 /turf/open/floor/holofloor/beach/coast_b,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "z" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "A" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/astplate{
@@ -197,15 +197,15 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "P" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "Q" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vaporwave,
-/area/ruin/powered/aesthetic)
+area/ruin/space/has_grav/powered/aesthetic)
 "R" = (
 /obj/machinery/light/small{
 	dir = 1

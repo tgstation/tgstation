@@ -21,7 +21,7 @@
 	return debug_variable(var_name, vars[var_name], 0, src)
 
 //please call . = ..() first and append to the result, that way parent items are always at the top and child items are further down
-//add seperaters by doing . += "---"
+//add separaters by doing . += "---"
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
@@ -928,6 +928,26 @@
 
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
+
+		else if(href_list["hallucinate"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["hallucinate"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/hallucinations = subtypesof(/datum/hallucination)
+			var/result = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in hallucinations
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				new result(C, TRUE)
 
 		else if(href_list["makehuman"])
 			if(!check_rights(R_SPAWN))

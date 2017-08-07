@@ -21,6 +21,7 @@
 	icon_state = "wheat"
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
+	foodtype = GRAIN
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -40,6 +41,7 @@
 	icon_state = "oat"
 	filling_color = "#556B2F"
 	bitesize_mod = 2
+	foodtype = GRAIN
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -60,6 +62,7 @@
 	icon_state = "rice"
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
+	foodtype = GRAIN
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
@@ -79,6 +82,7 @@
 	filling_color = rgb(150, 0, 0)
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
+	foodtype = MEAT | GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] crushes [src] into meat.</span>", "<span class='notice'>You crush [src] into something that resembles meat.</span>")
