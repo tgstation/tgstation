@@ -22,7 +22,7 @@ area/ruin/space/has_grav/powered
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
+	ambientsounds = list('sound/ambience/ambispace.ogg')
 	blob_allowed = FALSE
 
 /////////////
