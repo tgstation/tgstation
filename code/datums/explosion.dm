@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
 	EX_PREPROCESS_EXIT_CHECK
 
@@ -275,7 +275,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	. = list()
 	var/processed = 0
-	while(!stopped && running)
+	while(running)
 		var/I
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]

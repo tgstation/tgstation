@@ -110,7 +110,7 @@
 	sparks.set_up(5, TRUE, src)
 
 /obj/machinery/power/emitter/Destroy()
-	if(SSticker && SSticker.IsRoundInProgress())
+	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
 		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
 		log_game("Emitter deleted at [COORD(T)]")

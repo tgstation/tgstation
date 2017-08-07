@@ -338,7 +338,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		else
 			icon_state = "blue-red"
 	else
-		icon_state = null
+		var/weather_icon
+		for(var/V in SSweather.existing_weather)
+			var/datum/weather/W = V
+			if(src in W.impacted_areas)
+				W.update_areas()
+				weather_icon = TRUE
+		if(!weather_icon)
+			icon_state = null
 
 /area/space/updateicon()
 	icon_state = null

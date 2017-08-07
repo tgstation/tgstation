@@ -116,7 +116,7 @@
 	update_icon()
 
 /mob/living/simple_animal/bot/Initialize()
-	..()
+	. = ..()
 	access_card = new /obj/item/weapon/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.access += ACCESS_ROBOTICS

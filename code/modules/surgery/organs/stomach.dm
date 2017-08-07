@@ -48,7 +48,7 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
 
-/obj/item/organ/stomach/Remove()
+/obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.clear_alert("disgust")

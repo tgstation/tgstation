@@ -12,7 +12,7 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
-// 
+//
 	var/id
 	// this should point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
@@ -481,7 +481,7 @@
 
 	var/rotation = 0
 	if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
-		rotation = dir2angle(new_dock)-dir2angle(dir)
+		rotation = dir2angle(new_dock.dir)-dir2angle(dir)
 		if ((rotation % 90) != 0)
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
 		rotation = SimplifyDegrees(rotation)
@@ -527,7 +527,7 @@
 		return DOCKING_AREA_EMPTY
 
 	/*******************************************All onShuttleMove procs******************************************/
-	
+
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
@@ -550,9 +550,9 @@
 			var/atom/movable/moving_atom = thing
 			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
 			moved_atoms += moving_atom
-	
+
 	/******************************************All afterShuttleMove procs****************************************/
-	
+
 	for(var/i in 1 to new_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
@@ -767,7 +767,7 @@
 		return TRUE
 	return FALSE
 
-// Losing all initial engines should get you 2 
+// Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
 /obj/docking_port/mobile/proc/alter_engines(mod)
 	if(mod == 0)
@@ -806,7 +806,7 @@
 		if(initial_engines > 0)
 			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
 		return Clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
-		
+
 
 /obj/docking_port/mobile/proc/in_flight()
 	switch(mode)
@@ -846,7 +846,7 @@
 	if(launch_status == ENDGAME_LAUNCHED)
 		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcomm
 		mode = SHUTTLE_ENDGAME
-		
+
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
 

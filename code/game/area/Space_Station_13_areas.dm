@@ -532,6 +532,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Locker Toilets"
 	icon_state = "toilet"
 
+/area/crew_quarters/toilet/fitness
+	name = "Fitness Toilets"
+	icon_state = "toilet"
 /area/crew_quarters/toilet/female
 	name = "Female Toilets"
 	icon_state = "toilet"
@@ -821,13 +824,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/solars/aux/starboard/fore
 	name = "Starboard Bow Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
-
-/area/assembly/assembly_line //Derelict Assembly Line
-	name = "Assembly Line"
-	icon_state = "ass_line"
-	power_equip = FALSE
-	power_light = FALSE
-	power_environ = FALSE
 
 //Teleporter
 
@@ -1468,7 +1464,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //SPACE STATION 13
 GLOBAL_LIST_INIT(the_station_areas, list (
-	/area/assembly,
 	/area/bridge,
 	/area/chapel,
 	/area/construction,

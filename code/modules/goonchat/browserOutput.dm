@@ -180,21 +180,24 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/bicon(thing)
 	if (!thing)
 		return
-
+	var/static/list/bicon_cache = list()
 	if (isicon(thing))
-		//Icons get pooled constantly, references are no good here.
-		/*if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
-			bicon_cache["\ref[obj]"] = icon2base64(obj)
-		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"*/
-		return "<img class='icon misc' src='data:image/png;base64,[icon2base64(thing)]'>"
+		var/icon/I = thing
+		var/icon_md5 = md5(I)
+		if (!bicon_cache[icon_md5]) // Doesn't exist yet, make it.
+			I = icon(I) //copy it
+			I.Scale(16,16) //scale it
+			bicon_cache[icon_md5] = icon2base64(thing) //base64 it
+		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache[icon_md5]]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = thing
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
 
-	var/static/list/bicon_cache = list()
+
 	if (!bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
+		I.Scale(16,16)
 		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()
