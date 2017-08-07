@@ -8,23 +8,23 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "d" = (
 /turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/template_noop,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "f" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -33,15 +33,15 @@ area/ruin/space/has_grav/powered/authorship)
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "g" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/shorts/black,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "h" = (
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "i" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
@@ -49,49 +49,49 @@ area/ruin/space/has_grav/powered/authorship)
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "j" = (
 /obj/structure/closet,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "k" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "l" = (
 /obj/structure/table/wood,
 /obj/item/clothing/shoes/sandal,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "m" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "n" = (
 /obj/structure/table/wood,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "o" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "p" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "q" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "s" = (
 /obj/machinery/door/poddoor{
 	id = "goonwizship1"
@@ -102,57 +102,57 @@ area/ruin/space/has_grav/powered/authorship)
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "t" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "u" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "v" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "w" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper,
 /obj/item/weapon/pen,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "x" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "y" = (
 /mob/living/simple_animal/bot/medbot,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "z" = (
 /turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "A" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "B" = (
 /turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 "C" = (
 /obj/machinery/light,
 /obj/structure/bed,
 /turf/open/floor/mineral/titanium/purple,
-area/ruin/space/has_grav/powered/authorship)
+/area/ruin/space/has_grav/powered/authorship)
 
 (1,1,1) = {"
 a
