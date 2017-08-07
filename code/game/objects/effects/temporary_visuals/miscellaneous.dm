@@ -408,3 +408,10 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/construction_gel_marker
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "gel_floor"
+	alpha = 50
+	duration = 100
+	color = "#00FF00"
