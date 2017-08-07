@@ -30,4 +30,8 @@
 				T.emp_act(EMP_LIGHT)
 		else if(distance <= light_range)
 			T.emp_act(EMP_LIGHT)
+<<<<<<< HEAD
 	return 1
+=======
+	return 1
+>>>>>>> bf713aa91ec82ee707ad47f519206390d47a5847

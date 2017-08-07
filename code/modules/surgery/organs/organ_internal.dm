@@ -74,6 +74,7 @@
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
 	list_reagents = list("nutriment" = 5)
+	foodtype = RAW | MEAT | GROSS
 
 
 /obj/item/organ/Destroy()

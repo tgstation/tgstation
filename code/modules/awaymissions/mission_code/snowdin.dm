@@ -207,8 +207,8 @@
 	death = FALSE
 	faction = "syndicate"
 	outfit = /datum/outfit/snowsyndie
-	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record infomation. All intruders should be
-	disposed of swirfly to assure no gathered infomation is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
+	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be
+	disposed of swirfly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
 
 /datum/outfit/snowsyndie
 	name = "Syndicate Snow Operative"

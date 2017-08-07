@@ -200,7 +200,7 @@
 	to_chat(world, text)
 
 //Landmarks
-// TODO: Split into seperate landmarks for prettier ships
+// TODO: Split into separate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1
 

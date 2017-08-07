@@ -1,19 +1,26 @@
 
 #define MEDAL_PREFIX "Colossus"
 /*
+
 COLOSSUS
+
 The colossus spawns randomly wherever a lavaland creature is able to spawn. It is powerful, ancient, and extremely deadly.
 The colossus has a degree of sentience, proving this in speech during its attacks.
+
 It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+
 The colossus' true danger lies in its ranged capabilities. It fires immensely damaging death bolts that penetrate all armor in a variety of ways:
  1. The colossus fires death bolts in alternating patterns: the cardinal directions and the diagonal directions.
  2. The colossus fires death bolts in a shotgun-like pattern, instantly downing anything unfortunate enough to be hit by all of them.
  3. The colossus fires a spiral of death bolts.
 At 33% health, the colossus gains an additional attack:
  4. The colossus fires two spirals of death bolts, spinning in opposite directions.
+
 When a colossus dies, it leaves behind a chunk of glowing crystal known as a black box. Anything placed inside will carry over into future rounds.
 For instance, you could place a bag of holding into the black box, and then kill another colossus next round and retrieve the bag of holding from inside.
+
 Difficulty: Very Hard
+
 */
 
 /mob/living/simple_animal/hostile/megafauna/colossus
@@ -71,7 +78,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			INVOKE_ASYNC(src, .proc/spiral_shoot, rand(0, 1))
+			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -135,46 +142,11 @@ Difficulty: Very Hard
 
 	sleep(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot)
-	INVOKE_ASYNC(src, .proc/spiral_shoot, 1)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = FALSE, counter_start = 8)
 	var/counter = counter_start
-	var/turf/marker
 	for(var/i in 1 to 80)
-		switch(counter)
-			if(1)
-				marker = locate(x, y - 2, z)
-			if(2)
-				marker = locate(x - 1, y - 2, z)
-			if(3)
-				marker = locate(x - 2, y - 2, z)
-			if(4)
-				marker = locate(x - 2, y - 1, z)
-			if(5)
-				marker = locate(x - 2, y, z)
-			if(6)
-				marker = locate(x - 2, y + 1, z)
-			if(7)
-				marker = locate(x - 2, y + 2, z)
-			if(8)
-				marker = locate(x - 1, y + 2, z)
-			if(9)
-				marker = locate(x, y + 2, z)
-			if(10)
-				marker = locate(x + 1, y + 2, z)
-			if(11)
-				marker = locate(x + 2, y + 2, z)
-			if(12)
-				marker = locate(x + 2, y + 1, z)
-			if(13)
-				marker = locate(x + 2, y, z)
-			if(14)
-				marker = locate(x + 2, y - 1, z)
-			if(15)
-				marker = locate(x + 2, y - 2, z)
-			if(16)
-				marker = locate(x + 1, y - 2, z)
-
 		if(negative)
 			counter--
 		else
@@ -183,25 +155,25 @@ Difficulty: Very Hard
 			counter = 1
 		if(counter < 1)
 			counter = 16
-		shoot_projectile(marker)
+		shoot_projectile(null, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
-	if(!marker || marker == loc)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
+	if(!isnum(set_angle) && (!marker || marker == loc))
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
 	P.current = startloc
 	P.starting = startloc
 	P.firer = src
-	P.yo = marker.y - startloc.y
-	P.xo = marker.x - startloc.x
+	if(marker)
+		P.yo = marker.y - startloc.y
+		P.xo = marker.x - startloc.x
+		P.original = marker
 	if(target)
 		P.original = target
-	else
-		P.original = marker
-	P.fire()
+	P.fire(set_angle)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
 	var/turf/U = get_turf(src)
@@ -220,7 +192,7 @@ Difficulty: Very Hard
 	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
 	for(var/i in colossus_shotgun_shot_angles)
 		shoot_projectile(null, angle_to_target + i)
-		
+
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
@@ -232,9 +204,11 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
 	for(var/mob/M in range(10,src))
 		if(M.client)
-			flash_color(M.client, rgb(200, 0, 0), 1)
+			flash_color(M.client, "#C80000", 1)
 			shake_camera(M, 4, 3)
 	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
+
+
 
 /obj/item/projectile/colossus
 	name ="death bolt"

@@ -22,8 +22,7 @@
 
 
 /obj/item/device/assembly/signaler/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()

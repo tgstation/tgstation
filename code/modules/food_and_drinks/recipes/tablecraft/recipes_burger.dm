@@ -248,7 +248,7 @@
 /datum/crafting_recipe/food/ratburger
 	name = "Rat burger"
 	reqs = list(
-			/obj/item/trash/deadmouse = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/deadmouse = 1,
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/rat
