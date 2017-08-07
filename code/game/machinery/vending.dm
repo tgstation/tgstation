@@ -60,7 +60,7 @@
 	var/refill_count = 3		//The number of canisters the vending machine uses
 
 /obj/machinery/vending/Initialize()
-	..()
+	. = ..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
 		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)

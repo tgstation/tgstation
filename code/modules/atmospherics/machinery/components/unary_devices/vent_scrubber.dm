@@ -49,8 +49,7 @@
 	A.air_scrub_names -= id_tag
 	A.air_scrub_info -= id_tag
 
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	radio_connection = null
 
 	for(var/I in adjacent_turfs)

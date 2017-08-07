@@ -33,7 +33,7 @@
 	var/illustration = "writing"
 
 /obj/item/weapon/storage/box/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/storage/box/update_icon()

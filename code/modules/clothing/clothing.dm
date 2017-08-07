@@ -253,6 +253,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	dynamic_hair_suffix = "+generic"
 
 /obj/item/clothing/head/Initialize()
 	. = ..()
@@ -483,6 +484,7 @@ BLIND     // can't see anything
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
+	dog_fashion = null
 
 /obj/item/clothing/suit/space
 	name = "space suit"

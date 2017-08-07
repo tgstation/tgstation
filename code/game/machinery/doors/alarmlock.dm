@@ -16,8 +16,7 @@
 	air_connection = new
 
 /obj/machinery/door/airlock/alarmlock/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,air_frequency)
+	SSradio.remove_object(src,air_frequency)
 	air_connection = null
 	return ..()
 
