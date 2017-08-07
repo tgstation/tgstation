@@ -33,6 +33,7 @@ img {
 }
 img.icon {
 	height: 1em;
+	mix-height: 16px;
 	width: auto;
 }
 
