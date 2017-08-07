@@ -513,7 +513,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			areas_all.Add(A.type)
 
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		var/area/A = get_area(APC)
+		var/area/A = APC.area
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 

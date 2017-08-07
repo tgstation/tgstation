@@ -19,6 +19,9 @@
 		return 1
 	return ..()
 
+/obj/effect/clockwork/sigil/attack_tk(mob/user)
+	return //you can't tk stomp sigils, but you can hit them with something
+
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat && !is_servant_of_ratvar(user))
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")

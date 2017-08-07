@@ -735,34 +735,33 @@
 	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
 
-	if(SSticker && !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
-	if(SSjob)
-		for(var/datum/job/job in SSjob.occupations)
-			count++
-			var/J_title = html_encode(job.title)
-			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
-			var/J_totPos = html_encode(job.total_positions)
-			if(job.total_positions < 0)
-				dat += "[J_title]: [J_opPos]   (unlimited)"
-			else
-				dat += "[J_title]: [J_opPos]/[J_totPos]"
+	for(var/datum/job/job in SSjob.occupations)
+		count++
+		var/J_title = html_encode(job.title)
+		var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
+		var/J_totPos = html_encode(job.total_positions)
+		if(job.total_positions < 0)
+			dat += "[J_title]: [J_opPos]   (unlimited)"
+		else
+			dat += "[J_title]: [J_opPos]/[J_totPos]"
 
-			if(job.title == "AI" || job.title == "Cyborg")
-				dat += "   (Cannot Late Join)<br>"
-				continue
-			if(job.total_positions >= 0)
-				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
-				if(job.total_positions > job.current_positions)
-					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
-				else
-					dat += "Remove  |  "
-				dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+		if(job.title == "AI" || job.title == "Cyborg")
+			dat += "   (Cannot Late Join)<br>"
+			continue
+		if(job.total_positions >= 0)
+			dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
+			if(job.total_positions > job.current_positions)
+				dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
 			else
-				dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
-			dat += "<br>"
+				dat += "Remove  |  "
+			dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+		else
+			dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
+		dat += "<br>"
 
 	dat += "</body>"
 	var/winheight = 100 + (count * 20)

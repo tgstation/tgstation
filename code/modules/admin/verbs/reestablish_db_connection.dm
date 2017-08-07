@@ -5,7 +5,7 @@
 		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
 		return
 
-	if (SSdbcore && SSdbcore.IsConnected())
+	if (SSdbcore.IsConnected())
 		if (!check_rights(R_DEBUG,0))
 			alert("The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
 			return
