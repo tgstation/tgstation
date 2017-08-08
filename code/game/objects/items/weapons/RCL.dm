@@ -34,7 +34,7 @@
 				return
 
 		if(loaded.amount < max_amount)
-			var/transfer_amount = min(max_amount - loaded_amount, C.amount)
+			var/transfer_amount = min(max_amount - loaded.amount, C.amount)
 			C.use(transfer_amount)
 			loaded.amount += transfer_amount
 		else
