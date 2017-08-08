@@ -60,7 +60,10 @@ GLOBAL_LIST(uplink_purchase_logs)
 	spent_telecrystals += cost
 
 /datum/uplink_purchase_log/proc/GetPurchaseLog()
-	return purchase_log.Join("")
+	. = ""
+	var/list/pl = purchase_log
+	for(var/I in pl)	//already sorted
+		. += pl[I]
 
 /datum/uplink_purchase_log/Destroy()
 	var/_owner = owner
