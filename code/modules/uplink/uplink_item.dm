@@ -1377,4 +1377,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			possible_items += I
 
 	if(possible_items.len)
-		U.MakePurchase(user, pick(possible_items))
+		var/datum/uplink_item/I = pick(possible_items)
+		U.MakePurchase(user, I)
+		SSblackbox.add_details("traitor_random_uplink_items_gotten","[I.name]")
