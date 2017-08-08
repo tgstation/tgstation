@@ -51,7 +51,7 @@
 /code/modules/mob/libing/carbon/update_icons.dm @RemieRichards
 /code/modules/mob/living/simple_animal/hostile/mecha_pilot.dm @RemieRichards
 /code/modules/procedural_mapping/* @RemieRichards
-/tools/ColonCatcher/*
-/tools/mapmerge/*
-/tools/SS13SmoothingCutter/*
-/tools/UnquotedListAssociations/*
+/tools/ColonCatcher/* @RemieRichards
+/tools/mapmerge/* @RemieRichards
+/tools/SS13SmoothingCutter/* @RemieRichards
+/tools/UnquotedListAssociations/* @RemieRichards
