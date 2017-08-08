@@ -296,7 +296,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		/client/proc/startSinglo,
 		/client/proc/set_server_fps,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/cmd_admin_areatest,
+		/client/proc/cmd_admin_areatest_all,
+		/client/proc/cmd_admin_areatest_station,
 		/client/proc/readmin
 		)
 	if(holder)
