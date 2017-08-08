@@ -350,7 +350,7 @@
 
 /obj/structure/sign/poster/contraband/free_drone
 	name = "Free Drone"
-	desc = "This poster commemorates the bravery of the rogue drone banned by CentComm."
+	desc = "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentCom."
 	icon_state = "poster35"
 
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6
