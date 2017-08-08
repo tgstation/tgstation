@@ -1,0 +1,5 @@
+author: "GuyonBroadway/gorram_swags/Banthebantz"
+delete-after: True
+changes: 
+  - rscadd: "Added new tools to the syndicate toolbox, these are all twice as fast as normal tools and the crowbar has a special hidden xenophobic feature with a little help from Banthebantz."
+  - imageadd: "Sprites for these lovely new tools by gorram_swags."
