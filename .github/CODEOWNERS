@@ -18,13 +18,13 @@
 
 # Jordie0608
 
-/SQL/*
-/code/controllers/subsystem/dbcore.dm
+/SQL/* @Jordie0608
+/code/controllers/subsystem/dbcore.dm @Jordie0608
 
 # MrStonedOne
 
-/code/__DEFINES/MC.dm
-/code/__DEFINES/tick.dm
+/code/__DEFINES/MC.dm @MrStonedOne
+/code/__DEFINES/tick.dm @MrStonedOne
 /code/controllers/admin.dm @MrStonedOne
 /code/controllers/master.dm @MrStonedOne
 /code/controllers/failsafe.dm @MrStonedOne
