@@ -12,6 +12,7 @@
 
 /code/__DATASTRUCTURES/globals.dm @Cyberboss
 /code/__DEFINES/components.dm @Cyberboss
+/code/__DEFINES/server_tools.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss
