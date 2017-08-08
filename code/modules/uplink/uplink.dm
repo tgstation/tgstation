@@ -8,6 +8,7 @@ GLOBAL_LIST_EMPTY(uplinks)
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
 /datum/component/uplink
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/lockable
 	var/telecrystals
 	var/selected_cat
@@ -18,7 +19,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/list/uplink_items
 	var/hidden_crystals
 
-/datum/component/uplink/New(datum/p, _owner, starting_tc = 20, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode)
+/datum/component/uplink/New(datum/p, _owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
 	GLOB.uplinks += src
 	..()
 	owner = _owner
@@ -26,6 +27,17 @@ GLOBAL_LIST_EMPTY(uplinks)
 	lockable = _lockable
 	telecrystals = starting_tc
 	set_gamemode(_gamemode)
+
+/datum/component/uplink/InheritComponent(datum/component/uplink/U)
+	lockable |= U.lockable
+	enabled |= U.enabled
+	if(!owner)
+		owner = U.owner
+	if(!gamemode)
+		gamemode = U.gamemode
+	spent_telecrystals += U.spent_telecrystals
+	purchase_log += U.purchase_log
+	telecrystals += U.telecrystals
 
 /datum/component/uplink/set_gamemode(gamemode)
 	src.gamemode = gamemode
@@ -36,6 +48,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 	return ..()
 
 /datum/component/OnAttackBy(obj/item/I, mob/user)
+	var/obj/item/stack/telecrystal/TC = I
+	if(istype(TC))
+		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
+		var/amount = TC.amount
+		telecrystals += amount
+		TC.use(amount)
+		return TRUE
+
 	var/static/list/uplink_items_subtypes = subtypesof(/datum/uplink_item)
 	for(var/item in uplink_items_subtypes)
 		var/datum/uplink_item/UI = item
@@ -55,7 +75,33 @@ GLOBAL_LIST_EMPTY(uplinks)
 			spent_telecrystals -= cost
 			to_chat(user, "<span class='notice'>[I] refunded.</span>")
 			qdel(I)
-			return
+			return TRUE
+
+/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/item)
+	var/tc = telecrystals
+	var/cost = item.cost
+	if(cost < tc)
+		return
+	telecrystals = tc - cost
+	spent_telecrystals += cost
+	SSblackbox.add_details("traitor_uplink_items_bought", "[item.name]|[cost]")
+	var/atom/A = new item.item(get_turf(parent), src)
+
+	var/is_item
+	if(!item.purchase_log_vis)
+		var/obj/item/weapon/storage/B = A
+		is_item = istype(B)
+		if(is_item)
+			for(var/obj/item/I in B)
+				purchase_log += "<big>[bicon(I)]</big>"
+		else
+			purchase_log += "<big>[bicon(A)]</big>"
+		
+	is_item = is_item || istype(A, /obj/item)
+
+	var/mob/living/carbon/human/H = user
+	if(is_item && istype(H))
+		to_chat(H, "[A] materializes [H.put_in_hands(A) ? "into your hands!" : "onto the floor."]")
 
 /datum/component/uplink/proc/Open(mob/user)
 	enabled = TRUE
@@ -118,9 +164,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 				buyable_items += uplink_items[category]
 
 			if(item in buyable_items)
-				var/datum/uplink_item/I = buyable_items[item]
-				I.buy(usr, src)
-				. = TRUE
+				MakePurchase(usr, buyable_items[item])
 		if("lock")
 			enabled = FALSE
 			telecrystals += hidden_crystals
@@ -128,25 +172,24 @@ GLOBAL_LIST_EMPTY(uplinks)
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
-	return 1
+	return TRUE
 
 // A collection of pre-set uplinks, for admin spawns.
-/obj/item/device/radio/uplink/Initialize()
+/obj/item/device/radio/uplink/Initialize(mapload, owner_key)
 	. = ..()
 	icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	
-	hidden_uplink.lockable = FALSE
+	AddComponent(/datum/component/uplink, owner_key, FALSE, TRUE)
 
 /obj/item/device/radio/uplink/nuclear/Initialize()
 	. = ..()
 	GET_COMPONENT(uplink, /datum/component/uplink)
 	uplink.set_gamemode(/datum/game_mode/nuclear)
 
-/obj/item/device/multitool/uplink/Initialize()
+/obj/item/device/multitool/uplink/Initialize(mapload, owner_key)
 	. = ..()
-	AddComponent(/datum/component/uplink, null, 20, FALSE, TRUE)
+	AddComponent(/datum/component/uplink, owner_key, FALSE, TRUE)
 
 /obj/item/weapon/pen/uplink/Initialize()
 	. = ..()

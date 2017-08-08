@@ -103,7 +103,7 @@
 		if(uplink && degrees == traitor_unlock_degrees)
 			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 			degrees = 0
-			uplink.interact(user)
+			uplink.Open(user)
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))

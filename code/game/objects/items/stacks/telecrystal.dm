@@ -21,19 +21,14 @@
 /obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity)
 		return
-	GET_COMPONENT_FROM(uplink, /datum/component/uplink, I)
-	if(uplink && uplink.active) //No metagaming by using this on every PDA around just to see if it gets used up.
-		uplink.telecrystals += amount
-		use(amount)
-		to_chat(user, "<span class='notice'>You slot [src] into the [I] and charge its internal uplink.</span>")
-	else if(istype(I, /obj/item/weapon/cartridge/virus/frame))
+	if(istype(I, /obj/item/weapon/cartridge/virus/frame))
 		var/obj/item/weapon/cartridge/virus/frame/cart = I
 		if(!cart.charges)
-			to_chat(user, "<span class='notice'>The [cart] is out of charges, it's refusing to accept the [src]</span>")
+			to_chat(user, "<span class='notice'>[cart] is out of charges, it's refusing to accept [src]</span>")
 			return
 		cart.telecrystals += amount
 		use(amount)
-		to_chat(user, "<span class='notice'>You slot [src] into the [cart].  The next time it's used, it will also give telecrystals</span>")
+		to_chat(user, "<span class='notice'>You slot [src] into [cart]. The next time it's used, it will also give telecrystals</span>")
 
 /obj/item/stack/telecrystal/five
 	amount = 5

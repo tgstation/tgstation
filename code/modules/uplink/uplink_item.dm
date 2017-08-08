@@ -89,46 +89,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
 
-/datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
-	if(item)
-		SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
-		return new item(loc)
-
-/datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
-	if(!istype(U))
-		return
-	if (!user || user.incapacitated())
-		return
-
-	if(U.telecrystals < cost || limited_stock == 0)
-		return
-	else
-		U.telecrystals -= cost
-		U.spent_telecrystals += cost
-
-	var/atom/A = spawn_item(get_turf(user), U)
-	var/obj/item/weapon/storage/box/B = A
-	if(istype(B) && B.contents.len > 0)
-		for(var/obj/item/I in B)
-			U.purchase_log += "<big>[bicon(I)]</big>"
-	else
-		if(purchase_log_vis)
-			U.purchase_log += "<big>[bicon(A)]</big>"
-
-	if(limited_stock > 0)
-		limited_stock -= 1
-
-	if(ishuman(user) && istype(A, /obj/item))
-		var/mob/living/carbon/human/H = user
-		if(H.put_in_hands(A))
-			to_chat(H, "[A] materializes into your hands!")
-		else
-			to_chat(H, "\The [A] materializes onto the floor.")
-	return 1
-
 /datum/uplink_item/Destroy()
-	if(src in GLOB.uplink_items)
-		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
+	GLOB.uplink_items[category] -= name	//Take us out instead of leaving a null!
 	return ..()
 
 //Discounts (dynamically filled above)

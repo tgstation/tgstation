@@ -95,11 +95,11 @@
 		GET_COMPONENT_FROM(uplink, /datum/component/uplink, target)
 		if(!uplink)
 			uplink = target.AddComponent(/datum/component/uplink)
-			uplink.lock_code = lock_code
+			target.lock_code = lock_code
 		else
 			uplink.hidden_crystals += uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		uplink.telecrystals = telecrystals
 		telecrystals = 0
-		uplink.active = TRUE
+		uplink.enabled = TRUE
 	else
 		to_chat(U, "PDA not found.")

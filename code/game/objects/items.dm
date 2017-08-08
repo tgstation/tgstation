@@ -212,8 +212,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
 	GET_COMPONENT(uplink, /datum/component/uplink)
-	if(uplink && uplink.active)
-		uplink.interact(user)
+	if(uplink && uplink.enabled)
+		uplink.Open(user)
 		return TRUE
 	ui_interact(user)
 

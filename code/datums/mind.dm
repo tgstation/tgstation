@@ -721,7 +721,7 @@
 	if(((src in SSticker.mode.head_revolutionaries) || (src in SSticker.mode.traitors) || (src in SSticker.mode.syndicates)) && ishuman(current))
 
 		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-		var/obj/item/device/uplink/U = find_syndicate_uplink()
+		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
 			text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
@@ -1398,7 +1398,7 @@
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN, 0))
-					var/obj/item/device/uplink/U = find_syndicate_uplink()
+					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
 						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null|num
 						if(!isnull(crystals))
@@ -1433,9 +1433,7 @@
 			break
 
 /datum/mind/proc/take_uplink()
-	var/obj/item/device/uplink/H = find_syndicate_uplink()
-	if(H)
-		qdel(H)
+	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_Traitor()
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))

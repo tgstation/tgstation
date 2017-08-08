@@ -118,8 +118,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	user.set_machine(src)
 
 	GET_COMPONENT(uplink, /datum/component/uplink)
-	if(uplink && uplink.active)
-		uplink.interact(user)
+	if(uplink && uplink.enabled)
+		uplink.Open(user)
 		return
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
@@ -420,7 +420,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(in_range(src, U) && loc == U && t)
 					GET_COMPONENT(uplink, /datum/component/uplink)
 					if(uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
-						uplink.interact(U)
+						uplink.Open(U)
 						to_chat(U, "The PDA softly beeps.")
 						U << browse(null, "window=pda")
 						src.mode = 0

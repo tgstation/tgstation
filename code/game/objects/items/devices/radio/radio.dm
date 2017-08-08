@@ -157,7 +157,7 @@
 				set_frequency(frequency)
 				GET_COMPONENT(uplink, /datum/component/uplink)
 				if(frequency == traitor_frequency && uplink)
-					uplink.interact(usr)
+					uplink.Open(usr)
 					ui.close()
 		if("listen")
 			listening = !listening
