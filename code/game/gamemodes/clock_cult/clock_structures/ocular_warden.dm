@@ -11,8 +11,8 @@
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/damage_per_tick = 2.7
-	var/sight_range = 3
+	var/damage_per_tick = 2.5
+	var/sight_range = 5
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
@@ -68,9 +68,9 @@
 						else
 							R.reveal(10)
 					if(prob(50))
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',50,1)
+						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',75 * get_efficiency_mod(),1)
 					else
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',50,1)
+						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',75 * get_efficiency_mod(),1)
 					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
@@ -134,3 +134,14 @@
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
+
+/obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod()
+	if(GLOB.ratvar_awakens)
+		return 2
+	. = 1
+	for(var/turf/T in getline(src, target))
+		for(var/obj/structure/O in T)
+			if(O.density)
+				. -= 0.1
+	. -= (get_dist(src, target) * 0.1)
+	. = max(., 0.1) //The lowest damage a warden can do is 10% of its normal amount (0.25 by default)
