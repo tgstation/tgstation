@@ -277,6 +277,6 @@
 	var/old_wet = wet
 	var/old_wet_time = wet_time
 	. = ..()
-	if(. && isopenturf(.))
+	if(. && isopenturf(.) && old_wet != TURF_WET_ICE && old_wet != TURF_WET_PERMAFROST)
 		var/turf/open/O = .
 		O.MakeSlippery(wet_setting = old_wet, wet_time_to_add = old_wet_time) //reapply the water
