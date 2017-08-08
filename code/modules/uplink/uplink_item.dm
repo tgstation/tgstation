@@ -89,6 +89,10 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
 
+/datum/uplink_item/proc/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
+	if(item)
+		return new item(loc)
+
 /datum/uplink_item/Destroy()
 	GLOB.uplink_items[category] -= name	//Take us out instead of leaving a null!
 	return ..()
@@ -1164,10 +1168,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/cyber_implants/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
 	if(item)
-		if(istype(item, /obj/item/organ))
-			SSblackbox.add_details("traitor_uplink_items_bought", "[item]|[cost]")
+		if(ispath(item, /obj/item/organ))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1340,7 +1343,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/surplus/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 
 	var/crate_value = 50
@@ -1356,9 +1359,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			continue
 		crate_value -= I.cost
 		new I.item(C)
-		U.purchase_log += "<big>[bicon(I.item)]</big>"
 
-	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C
 
 /datum/uplink_item/badass/random
@@ -1368,7 +1369,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 0
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/random/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
@@ -1381,9 +1382,4 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			possible_items += I
 
 	if(possible_items.len)
-		var/datum/uplink_item/I = pick(possible_items)
-		U.telecrystals -= I.cost
-		U.spent_telecrystals += I.cost
-		SSblackbox.add_details("traitor_uplink_items_bought","[name]|[I.cost]")
-		SSblackbox.add_details("traitor_random_uplink_items_gotten","[I.name]")
-		return new I.item(loc)
+		U.MakePurchase(user, pick(possible_items))

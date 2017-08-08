@@ -281,10 +281,11 @@
 		var/TC_uses = 0
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayer(syndicate)
-			for(var/obj/item/device/uplink/H in GLOB.uplinks)
-				if(H && H.owner && H.owner == syndicate.key)
-					TC_uses += H.spent_telecrystals
-					purchases += H.purchase_log
+			if(GLOB.uplink_purchase_logs)
+				for(var/I in GLOB.uplink_purchase_logs[traitor.key])
+					var/datum/uplink_purchase_log/log = I
+					TC_uses += I.spent_telecrystals
+					purchases += I.GetFlatPurchaseLog()
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
