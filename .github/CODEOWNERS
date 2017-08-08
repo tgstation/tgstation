@@ -15,3 +15,24 @@
 /code/datums/holocall.dm @Cyberboss
 /code/modules/server_tools/* @Cyberboss
 /code/modules/mapping/* @Cyberboss
+
+# MrStonedOne
+
+/code/__DEFINES/MC.dm
+/code/__DEFINES/tick.dm
+/code/controllers/admin.dm @MrStonedOne
+/code/controllers/master.dm @MrStonedOne
+/code/controllers/failsafe.dm @MrStonedOne
+/code/controllers/subsystem/air.dm @MrStonedOne
+/code/controllers/subsystem/timer.dm @MrStonedOne
+/code/modules/atmospherics/* @MrStonedOne
+
+# RemieRichards
+
+/code/__HELPERS/_lists.dm @RemieRichards
+/code/_onclick/hud/movable_screen_objects.dm @RemieRichards
+/code/modules/client/client_colour.dm @RemieRichards
+/code/modules/mob/libing/carbon/human/update_icons.dm @RemieRichards
+/code/modules/mob/libing/carbon/update_icons.dm @RemieRichards
+/code/modules/mob/living/simple_animal/hostile/mecha_pilot.dm @RemieRichards
+/code/modules/procedural_mapping/* @RemieRichards
