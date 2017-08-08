@@ -16,6 +16,11 @@
 /code/modules/server_tools/* @Cyberboss
 /code/modules/mapping/* @Cyberboss
 
+# Jordie0608
+
+/SQL/*
+/code/controllers/subsystem/dbcore.dm
+
 # MrStonedOne
 
 /code/__DEFINES/MC.dm
