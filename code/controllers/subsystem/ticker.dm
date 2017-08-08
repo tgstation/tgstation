@@ -474,7 +474,7 @@ SUBSYSTEM_DEF(ticker)
 					var/list/area/shuttle_areas
 					if(SSshuttle && SSshuttle.emergency)
 						shuttle_areas = SSshuttle.emergency.shuttle_areas
-					if(!Player.onCentcom() && !Player.onSyndieBase())
+					if(!Player.onCentCom() && !Player.onSyndieBase())
 						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
 						num_escapees++

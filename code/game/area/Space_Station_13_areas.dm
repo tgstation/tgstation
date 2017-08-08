@@ -1004,9 +1004,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Firing Range"
 	icon_state = "firingrange"
 
-/area/security/transfer
-	name = "Transfer Centre"
+/area/security/execution
 	icon_state = "execution_room"
+
+/area/security/execution/transfer
+	name = "Transfer Centre"
+	
+/area/security/execution/education
+	name = "Prisoner Education Chamber"
 
 /area/security/nuke_storage
 	name = "Vault"

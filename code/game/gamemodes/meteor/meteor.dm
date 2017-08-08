@@ -37,8 +37,8 @@
 		if(player.stat != DEAD)
 			++survivors
 
-			if(player.onCentcom())
-				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
+			if(player.onCentCom())
+				text += "<br><b><font size=2>[player.real_name] escaped to the safety of CentCom.</font></b>"
 			else if(player.onSyndieBase())
 				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
 			else

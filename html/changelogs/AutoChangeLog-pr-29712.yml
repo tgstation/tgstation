@@ -1,0 +1,4 @@
+author: "JStheguy"
+delete-after: True
+changes: 
+  - imageadd: "Laptops now have actual sprites for using the supermatter monitoring instead of defaulting to a generic one."

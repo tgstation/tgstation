@@ -220,7 +220,7 @@ update_label("John Doe", "Clowny")
 	..()
 
 /obj/item/weapon/card/id/centcom
-	name = "\improper Centcom ID"
+	name = "\improper CentCom ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
@@ -231,7 +231,7 @@ update_label("John Doe", "Clowny")
 	..()
 
 /obj/item/weapon/card/id/ert
-	name = "\improper Centcom ID"
+	name = "\improper CentCom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"

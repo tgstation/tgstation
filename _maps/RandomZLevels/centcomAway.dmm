@@ -1817,7 +1817,7 @@
 /area/awaymission/centcomAway/courtroom)
 "fT" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -1932,7 +1932,7 @@
 /area/awaymission/centcomAway/courtroom)
 "gk" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -3830,7 +3830,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "lO" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -4170,7 +4170,7 @@
 /area/awaymission/centcomAway/general)
 "mP" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},

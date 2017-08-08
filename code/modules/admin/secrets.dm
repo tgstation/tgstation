@@ -214,7 +214,7 @@
 		if("moveferry")
 			if(!check_rights(R_ADMIN))
 				return
-			SSblackbox.add_details("admin_secrets_fun_used","Send Centcom Ferry")
+			SSblackbox.add_details("admin_secrets_fun_used","Send CentCom Ferry")
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(usr)] moved the centcom ferry")
 				log_admin("[key_name(usr)] moved the centcom ferry")
@@ -457,7 +457,7 @@
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-			priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
+			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
 
 		if("guns")
 			if(!check_rights(R_FUN))

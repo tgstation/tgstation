@@ -41,7 +41,7 @@
 	var/static_environ
 
 	var/has_gravity = FALSE
-	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 

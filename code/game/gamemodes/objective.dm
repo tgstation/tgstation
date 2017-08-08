@@ -827,7 +827,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	var/list/check_names = department_real_names.Copy()
 
-	//Check each department member's mind to see if any of them made it to centcomm alive, if they did it's an automatic fail
+	//Check each department member's mind to see if any of them made it to centcom alive, if they did it's an automatic fail
 	for(var/datum/mind/M in department_minds)
 		if(M in SSticker.mode.changelings) //Lings aren't picked for this, but let's be safe
 			continue
@@ -846,11 +846,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			if(ishuman(changeling.current))
 				var/mob/living/carbon/human/H = changeling.current
 				var/turf/cloc = get_turf(changeling.current)
-				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
+				if(cloc && cloc.onCentCom() && (changeling.current.stat != DEAD)) //Living changeling on centcom....
 					for(var/name in check_names) //Is he (disguised as) one of the staff?
 						if(H.dna.real_name == name)
 							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
-							success++ //A living changeling staff member made it to centcomm
+							success++ //A living changeling staff member made it to centcom
 							continue changelings
 
 	if(success >= department_minds.len)
