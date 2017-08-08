@@ -59,9 +59,9 @@
         "u just did the world a little bit more sad place for someone",
         "WHERES THE SLIP REWRITE WHERE THR FUCK ID IT?",
         "@pick(semicolon)N-NYAAAAAA~",
-		"@pick(bug)",
-		"@pick(semicolon)wtf??????????? @pick(bug)",
-		"@pick(semicolon)i ran into the supermattre ten i dsappeard @pick(bug)"
+        "@pick(bug)",
+        "@pick(semicolon)wtf??????????? @pick(bug)",
+        "@pick(semicolon)i ran into the supermattre ten i dsappeard @pick(bug)"
     ],
 
     "mutations": [
@@ -97,7 +97,7 @@
         "g",
         "squid",
         "r",
-		"carbon dioxide"
+        "carbon dioxide"
     ],
 
     "y_replacements": [
@@ -131,13 +131,13 @@
         "",
         "IS TIS A BUG??",
         "SI IST A BUGG/",
-		"IS TIHS AN BUUG"
+		"BUG!!!"
     ],
 	
     "semicolon": [
         "",
         ";",
-		".h"
+        ".h"
     ]
 
 }
