@@ -283,9 +283,9 @@
 			text += printplayer(syndicate)
 			if(GLOB.uplink_purchase_logs)
 				for(var/I in GLOB.uplink_purchase_logs[syndicate.key])
-					var/datum/uplink_purchase_log/log = I
-					TC_uses += log.spent_telecrystals
-					purchases += log.GetFlatPurchaseLog()
+					var/datum/uplink_purchase_log/plog = I
+					TC_uses += plog.spent_telecrystals
+					purchases += plog.GetPurchaseLog()
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
@@ -343,9 +343,8 @@
 	R.freqlock = 1
 
 	if(tc)
-		var/obj/item/device/radio/uplink/nuclear/U = new(H)
+		var/obj/item/device/radio/uplink/nuclear/U = new(H, H.key)
 		GET_COMPONENT_FROM(UP, /datum/component/uplink, U)
-		UP.owner = H.key
 		UP.telecrystals = tc
 		H.equip_to_slot_or_del(U, slot_in_backpack)
 

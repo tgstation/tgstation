@@ -20,12 +20,19 @@
 /datum/component/uplink/New(datum/p, _owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
 	..()
 	if(_owner)
-		log = new(_owner)
+		log = new(_owner, src)
 	enabled = _enabled
 	lockable = _lockable
 	telecrystals = starting_tc
 	set_gamemode(_gamemode)
 	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+
+/datum/component/uplink/Destroy()
+	var/datum/uplink_purchase_log/_log = log
+	if(_log)
+		_log.owning_uplink = null
+		log = null
+	return ..()
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
@@ -35,8 +42,7 @@
 	telecrystals += U.telecrystals
 	var/datum/uplink_purchase_log/_log = log
 	var/other_log = U.log
-	if(_log && other_log)
-		_log.MergeWith(other_log)
+	if(_log && other_log && _log.MergeWith(other_log))
 		QDEL_NULL(U.log)
 
 /datum/component/uplink/proc/set_gamemode(gamemode)

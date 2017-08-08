@@ -4,15 +4,22 @@ GLOBAL_LIST(uplink_purchase_logs)
 	var/owner
 	var/spent_telecrystals = 0
 	var/list/purchase_log
+	var/datum/component/uplink/owning_uplink
 
-/datum/uplink_purchase_log/New(_owner)
+/datum/uplink_purchase_log/New(_owner, datum/component/uplink/_owning_uplink)
 	owner = _owner
+	owning_uplink = _owning_uplink
 	LAZYINITLIST(GLOB.uplink_purchase_logs)
 	LAZYINITLIST(GLOB.uplink_purchase_logs[_owner])
 	GLOB.uplink_purchase_logs[_owner] += src
 	purchase_log = list()
 
 /datum/uplink_purchase_log/proc/MergeWith(datum/uplink_purchase_log/other)
+	//only do this if the owners match
+	. = other.owner == owner
+	if(!.)
+		return
+
 	spent_telecrystals += other.spent_telecrystals
 	//don't lose ordering info
 	var/list/our_pl = purchase_log
@@ -52,7 +59,7 @@ GLOBAL_LIST(uplink_purchase_logs)
 /datum/uplink_purchase_log/proc/LogCost(cost)
 	spent_telecrystals += cost
 
-/datum/uplink_purchase_log/proc/GetFlatPurchaseLog()
+/datum/uplink_purchase_log/proc/GetPurchaseLog()
 	return purchase_log.Join("")
 
 /datum/uplink_purchase_log/Destroy()
@@ -62,4 +69,8 @@ GLOBAL_LIST(uplink_purchase_logs)
 	if(!our_list.len)
 		GLOB.uplink_purchase_logs -= _owner
 	purchase_log.Cut()
+	var/datum/component/uplink/_owning_uplink = owning_uplink
+	if(_owning_uplink)
+		_owning_uplink.log = null
+		owning_uplink = null
 	return ..()

@@ -1427,8 +1427,9 @@
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.GetAllContents()
-	for (var/obj/item/I in L)
-		. = I.GetComponent(/datum/component/uplink)
+	for (var/I in L)
+		var/atom/movable/AM = I
+		. = AM.GetComponent(/datum/component/uplink)
 		if (.)
 			break
 

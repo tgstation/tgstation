@@ -103,9 +103,9 @@
 			var/purchases = ""
 			if(GLOB.uplink_purchase_logs)
 				for(var/I in GLOB.uplink_purchase_logs[traitor.key])
-					var/datum/uplink_purchase_log/log = I
-					TC_uses += log.spent_telecrystals
-					purchases += log.GetFlatPurchaseLog()
+					var/datum/uplink_purchase_log/plog = I
+					TC_uses += plog.spent_telecrystals
+					purchases += plog.GetPurchaseLog()
 					uplink_true = TRUE
 
 			var/objectives = ""
