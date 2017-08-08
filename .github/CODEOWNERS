@@ -1,6 +1,12 @@
 # This list auto requests reviews from the specified org members
 # when a PR that modifies the file in question is opened
 
+# ChangelingRain
+
+/code/__DEFINES/clockcult.dm @ChangelingRain
+/code/datums/antagonists/datum_clockcult.dm @ChangelingRain
+/code/game/gamemodes/clock_cult/* @ChangelingRain
+
 # Cyberboss
 
 /code/__DATASTRUCTURES/globals.dm @Cyberboss
@@ -20,6 +26,10 @@
 
 /SQL/* @Jordie0608
 /code/controllers/subsystem/dbcore.dm @Jordie0608
+/tools/SQLAlertEmail/* @Jordie0608
+
+# MoreRobustThanYou
+/code/game/objects/items/weapons/RCL.dm @MoreRobustThanYou
 
 # MrStonedOne
 
@@ -41,3 +51,7 @@
 /code/modules/mob/libing/carbon/update_icons.dm @RemieRichards
 /code/modules/mob/living/simple_animal/hostile/mecha_pilot.dm @RemieRichards
 /code/modules/procedural_mapping/* @RemieRichards
+/tools/ColonCatcher/*
+/tools/mapmerge/*
+/tools/SS13SmoothingCutter/*
+/tools/UnquotedListAssociations/*
