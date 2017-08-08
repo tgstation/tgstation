@@ -368,13 +368,14 @@
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = TRUE
-	aiControlDisabled = 1
+	aiControlDisabled = TRUE
+	req_access = list(ACCESS_BLOODCULT)
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 
-/obj/machinery/door/airlock/cult/New()
-	..()
-	new openingoverlaytype(src.loc)
+/obj/machinery/door/airlock/cult/Initialize()
+	. = ..()
+	new openingoverlaytype(loc)
 
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())
@@ -435,17 +436,17 @@
 	opacity = 1
 	hackProof = TRUE
 	aiControlDisabled = TRUE
+	req_access = list(ACCESS_CLOCKCULT)
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	damage_deflection = 30
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
-/obj/machinery/door/airlock/clockwork/New()
-	..()
-	var/turf/T = get_turf(src)
-	new /obj/effect/temp_visual/ratvar/door(T)
-	new /obj/effect/temp_visual/ratvar/beam/door(T)
+/obj/machinery/door/airlock/clockwork/Initialize()
+	. = ..()
+	new /obj/effect/temp_visual/ratvar/door(loc)
+	new /obj/effect/temp_visual/ratvar/beam/door(loc)
 	change_construction_value(5)
 
 /obj/machinery/door/airlock/clockwork/Destroy()
