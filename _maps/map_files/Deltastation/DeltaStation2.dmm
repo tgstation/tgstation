@@ -16311,7 +16311,7 @@
 /area/security/prison)
 "aHy" = (
 /turf/closed/wall/r_wall,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aHz" = (
 /obj/machinery/door/poddoor{
 	id = "justiceblast";
@@ -16324,7 +16324,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aHA" = (
 /obj/structure/lattice/catwalk,
 /obj/item/weapon/wrench,
@@ -16990,12 +16990,12 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aIL" = (
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aIM" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -17009,7 +17009,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aIN" = (
 /obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
@@ -17553,14 +17553,14 @@
 /turf/open/floor/plasteel/darkred/corner{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aKd" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aKe" = (
 /obj/machinery/flasher{
 	id = "justiceflash";
@@ -17571,7 +17571,7 @@
 /turf/open/floor/plasteel/darkred/corner{
 	dir = 4
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aKf" = (
 /obj/machinery/door/poddoor{
 	id = "turbinevent";
@@ -18301,11 +18301,11 @@
 "aLK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aLL" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plasteel/vault,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aLN" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
@@ -19201,7 +19201,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aNA" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "justicechamber";
@@ -19226,7 +19226,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aNB" = (
 /obj/structure/cable/white{
 	d2 = 2;
@@ -19242,7 +19242,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aNC" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposaloutlet{
@@ -20135,7 +20135,7 @@
 	icon_state = "darkred";
 	dir = 9
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aOZ" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -20180,7 +20180,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aPa" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -20199,7 +20199,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aPb" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -20213,7 +20213,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aPc" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -20232,7 +20232,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 5
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aPd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/window/reinforced{
@@ -20242,14 +20242,14 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aPe" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aPf" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -21203,7 +21203,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aQS" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -21217,7 +21217,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aQT" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -21225,7 +21225,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aQU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -21234,7 +21234,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aQV" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -21244,7 +21244,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 4
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aQW" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -21254,7 +21254,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aQX" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -21279,7 +21279,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aQY" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 2;
@@ -22145,7 +22145,7 @@
 	icon_state = "darkred";
 	dir = 10
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aSA" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -22156,7 +22156,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkred/side,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aSB" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -22167,7 +22167,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkred/side,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aSC" = (
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -32
@@ -22176,13 +22176,13 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/darkred/side,
-/area/prison/execution_room)
+/area/security/execution/education)
 "aSD" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Education Chamber APC";
-	areastring = "/area/prison/execution_room";
+	areastring = "/area/security/execution/education";
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -22192,7 +22192,7 @@
 	icon_state = "darkred";
 	dir = 6
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aSE" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -22203,7 +22203,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aSF" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -22212,7 +22212,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aSG" = (
 /obj/structure/sign/securearea{
 	pixel_x = 32
@@ -22892,7 +22892,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/execution_room)
+/area/security/execution/education)
 "aUe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -30855,7 +30855,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bjO" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -30867,7 +30867,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bjP" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -30879,10 +30879,10 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bjQ" = (
 /turf/closed/wall/r_wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bjR" = (
 /obj/machinery/light{
 	dir = 8
@@ -31590,14 +31590,14 @@
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bll" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "blm" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/structure/cable/white{
@@ -31608,7 +31608,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bln" = (
 /obj/machinery/computer/shuttle/labor,
 /obj/machinery/status_display{
@@ -31617,7 +31617,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "blo" = (
 /obj/machinery/computer/security{
 	name = "Labor Camp Monitoring";
@@ -31628,7 +31628,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/red,
-/area/security/transfer)
+/area/security/execution/transfer)
 "blp" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/ai_status_display{
@@ -31642,7 +31642,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "blq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -31652,7 +31652,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "blr" = (
 /obj/structure/cable/white{
 	d2 = 2;
@@ -31660,7 +31660,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bls" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -32715,7 +32715,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bnh" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -32725,25 +32725,25 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bni" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bnj" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bnk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bnl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -32751,7 +32751,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bnm" = (
 /obj/structure/cable/white,
 /obj/structure/cable/white{
@@ -32763,7 +32763,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bnn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -33709,7 +33709,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpe" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -33723,7 +33723,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpf" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -33736,7 +33736,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpg" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -33747,7 +33747,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bph" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -33766,7 +33766,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpi" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/red,
@@ -33778,7 +33778,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpj" = (
 /obj/machinery/gulag_teleporter,
 /obj/structure/disposalpipe/segment{
@@ -33787,7 +33787,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpk" = (
 /obj/machinery/computer/gulag_teleporter_computer,
 /obj/structure/disposalpipe/segment{
@@ -33796,7 +33796,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpl" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -33809,7 +33809,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpm" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -33835,7 +33835,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bpn" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -34572,11 +34572,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqD" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqE" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -34590,13 +34590,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqG" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -34612,7 +34612,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqH" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -34626,7 +34626,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqI" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -34645,7 +34645,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqJ" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -34664,7 +34664,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqK" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -34677,7 +34677,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqL" = (
 /obj/structure/cable/white{
 	d2 = 2;
@@ -34689,7 +34689,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bqM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -35300,7 +35300,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bsa" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -35316,20 +35316,20 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bsb" = (
 /turf/open/floor/plasteel/red/side,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bsc" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Security Transferring APC";
-	areastring = "/area/security/transfer";
+	areastring = "/area/security/execution/transfer";
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bsd" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -35337,7 +35337,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bse" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
@@ -35350,7 +35350,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bsf" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/red/side{
@@ -36053,7 +36053,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/red,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bto" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -36061,7 +36061,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "btp" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -36727,7 +36727,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "buD" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -36743,7 +36743,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "buE" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/briefcase{
@@ -36754,7 +36754,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "buF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -36765,7 +36765,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "buG" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
@@ -36773,7 +36773,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "buH" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
@@ -36783,7 +36783,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "buI" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -37694,12 +37694,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwf" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -37713,7 +37713,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwg" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -37727,13 +37727,13 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwi" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -37741,7 +37741,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -37749,7 +37749,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -37760,7 +37760,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bwl" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/red/side{
@@ -38712,16 +38712,16 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bxY" = (
 /turf/open/floor/plasteel/neutral,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bxZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bya" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -38733,13 +38733,13 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "byb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "byc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -39990,7 +39990,7 @@
 /area/shuttle/labor)
 "bzS" = (
 /turf/closed/wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bzT" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/firealarm{
@@ -40014,7 +40014,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bzU" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -40030,7 +40030,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bzV" = (
 /obj/structure/chair{
 	dir = 1
@@ -40040,7 +40040,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bzX" = (
 /obj/structure/chair{
 	dir = 1
@@ -40050,7 +40050,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bzY" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/structure/extinguisher_cabinet{
@@ -40062,7 +40062,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bzZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -41065,7 +41065,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bBB" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -41085,7 +41085,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "bBC" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -41094,7 +41094,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "bBD" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -108412,7 +108412,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault,
-/area/prison/execution_room)
+/area/security/execution/education)
 "eff" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
@@ -108674,7 +108674,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/transfer)
+/area/security/execution/transfer)
 "efG" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -113063,7 +113063,7 @@
 "era" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
-/area/security/transfer)
+/area/security/execution/transfer)
 "erb" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
