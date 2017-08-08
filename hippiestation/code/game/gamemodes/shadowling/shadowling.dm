@@ -268,7 +268,7 @@ Made by Xhuis
 	id = "shadowling"
 	say_mod = "chitters"
 	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
-	mutanteyes = /obj/item/organ/eyes/night_vision/sling
+	mutanteyes = /obj/item/organ/eyes/night_vision/alien/sling
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 
