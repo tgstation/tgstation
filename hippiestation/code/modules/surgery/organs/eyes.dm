@@ -1,3 +1,3 @@
-/obj/item/organ/eyes/night_vision/sling
+/obj/item/organ/eyes/night_vision/alien/sling
 	name = "shadowling eyes"
-	actions_types = list()
+	desc = "The eyes of a spooky shadowling!"
