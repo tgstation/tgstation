@@ -176,6 +176,7 @@
 		move_delay = old_move_delay + delay
 	else
 		move_delay = delay + world.time
+	mob.CheckLivingCrawl()
 
 	if(mob.confused)
 		if(mob.confused > 40)

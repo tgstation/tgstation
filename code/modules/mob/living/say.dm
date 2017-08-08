@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(is_nearcrit()) //in_critical variable is handled separately.
 		if(!(message_mode in crit_allowed_modes))
-			message_mode = MODE_WHISPER
+			message_mode = MODE_WHISPER_CRIT
 
 	if(in_critical)
 		if(!(crit_allowed_modes[message_mode]))
@@ -162,7 +162,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
 			message_mode = MODE_WHISPER_CRIT
-			succumbed = TRUE
 	else
 		log_talk(src,"[name]/[key] : [message]",LOGSAY)
 
@@ -425,7 +424,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_WHISPER)
 		. = verb_whisper
 	else if(message_mode == MODE_WHISPER_CRIT)
-		. = "[verb_whisper] in [p_their()] last breath"
+		. = "painfully [verb_whisper]"
 	else if(stuttering)
 		. = "stammers"
 	else if(getBrainLoss() >= 60)
