@@ -1,0 +1,4 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - tweak: "Made shadowling eyes a subtype of xeno eyes"

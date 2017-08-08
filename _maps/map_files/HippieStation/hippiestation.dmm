@@ -64602,9 +64602,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cMD" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cME" = (
@@ -64617,13 +64615,12 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "cMH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMI" = (
@@ -67451,6 +67448,26 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
+"cWz" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWA" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWB" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWC" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWD" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -94882,7 +94899,7 @@ cpv
 cqb
 cTU
 cTW
-cqY
+cWB
 aaH
 cUc
 cUe
@@ -95139,7 +95156,7 @@ cpv
 cqb
 cTU
 cTX
-cqY
+cWC
 aaH
 cAl
 aaH
@@ -95396,7 +95413,7 @@ cpv
 cqd
 cTU
 cTW
-cqY
+cWD
 cEt
 cAl
 csA
@@ -95652,9 +95669,9 @@ ccw
 cpy
 ccw
 ccw
-cqY
+cWz
 cMD
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -95911,7 +95928,7 @@ cqf
 chX
 chX
 crs
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -96168,7 +96185,7 @@ cqh
 ciZ
 cra
 cTR
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -96682,7 +96699,7 @@ cqj
 cqH
 crb
 ciZ
-cqY
+cMD
 cAl
 csA
 cFb
@@ -96939,7 +96956,7 @@ cqi
 ciZ
 ciZ
 ciZ
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -97194,9 +97211,9 @@ ccw
 cpy
 ccw
 ccw
-cqY
-cqY
-cqY
+cWA
+cMD
+cMD
 cAl
 cEr
 cEr
@@ -97452,7 +97469,7 @@ cpD
 cDw
 cTU
 cTW
-cqY
+cMD
 cEt
 cAl
 csA
@@ -97709,7 +97726,7 @@ cpD
 cqb
 cTU
 cTW
-cqY
+cMD
 aaH
 cAl
 aaH
@@ -97966,7 +97983,7 @@ cTL
 cqb
 cTU
 cTW
-cqY
+cMD
 aaH
 cUd
 cUe

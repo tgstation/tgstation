@@ -68,7 +68,7 @@ Made by Xhuis
 	name = "shadowling"
 	config_tag = "shadowling"
 	antag_flag = ROLE_SHADOWLING
-	required_players = 30
+	required_players = 26
 	required_enemies = 3
 	recommended_enemies = 2
 	restricted_jobs = list("AI", "Cyborg")
@@ -268,7 +268,7 @@ Made by Xhuis
 	id = "shadowling"
 	say_mod = "chitters"
 	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
-	mutanteyes = /obj/item/organ/eyes/night_vision/sling
+	mutanteyes = /obj/item/organ/eyes/night_vision/alien/sling
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 

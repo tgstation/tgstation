@@ -19,7 +19,7 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "glare"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
@@ -63,7 +63,7 @@
 	clothes_req = 0
 	range = 5
 	action_icon_state = "veil"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
 	var/admin_override = 0 //Requested by Shadowlight213. Allows anyone to cast the spell, not just shadowlings.
 
@@ -119,7 +119,7 @@
 	charge_max = 250
 	human_req = 1
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "icy_veins"
 	sound = 'sound/effects/ghost2.ogg'
 
@@ -156,7 +156,7 @@
 	clothes_req = 0
 	range = 1 //Adjacent to user
 	action_icon_state = "enthrall"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	var/enthralling = 0
 
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets,mob/living/carbon/human/user = usr)
@@ -246,7 +246,7 @@
 	charge_max = 0
 	human_req = 1
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind/cast(mob/living/user,mob/user = usr)
@@ -272,7 +272,7 @@
 	charge_max = 600
 	human_req = 1
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "regen_armor"
 
 /obj/effect/proc_holder/spell/self/shadowling_regenarmor/cast(mob/living/carbon/human/user)
@@ -301,7 +301,7 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "collective_mind"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	var/blind_smoke_acquired
 	var/screech_acquired
 	var/reviveThrallAcquired
@@ -370,7 +370,7 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "black_smoke"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/effects/bamf.ogg'
 
 /obj/effect/proc_holder/spell/self/blindness_smoke/cast(mob/living/carbon/human/user) //Extremely hacky
@@ -399,7 +399,7 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "screech"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/effects/screech.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets,mob/user = usr)
@@ -439,7 +439,7 @@
 	human_req = 1
 	clothes_req = 0
 	include_user = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "revive_thrall"
 
 /obj/effect/proc_holder/spell/targeted/revive_thrall/cast(list/targets,mob/user = usr)
@@ -546,7 +546,7 @@
 	human_req = 1
 	clothes_req = 0
 	charge_max = 600
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "extend_shuttle"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle/cast(list/targets, mob/living/carbon/human/user = usr)
@@ -598,7 +598,7 @@
 	charge_max = 450
 	human_req = 1
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "glare"
 
 /obj/effect/proc_holder/spell/targeted/lesser_glare/cast(list/targets,mob/user = usr)
@@ -635,7 +635,7 @@
 	panel = "Thrall Abilities"
 	charge_max = 1200
 	human_req = 1
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	clothes_req = 0
 	action_icon_state = "shadow_walk"
 
@@ -649,6 +649,7 @@
 	addtimer(CALLBACK(src, .proc/reappear, user), 40)
 
 
+
 /obj/effect/proc_holder/spell/targeted/night_vision/thrall //Toggleable night vision for thralls
 	name = "Thrall Darksight"
 	desc = "Allows you to see in the dark!"
@@ -660,7 +661,7 @@
 	charge_max = 50
 	human_req = 1
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/cast(mob/living/carbon/human/user)
@@ -692,7 +693,7 @@
 	charge_max = 0
 	clothes_req = 0
 	action_icon_state = "annihilate"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/Staff_Chaos.ogg'
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
@@ -725,7 +726,7 @@
 	range = 7
 	charge_max = 0
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "enthrall"
 
 /obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
@@ -764,7 +765,7 @@
 	panel = "Ascendant"
 	charge_max = 15
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "shadow_walk"
 
 /obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(mob/living/simple_animal/ascendant_shadowling/user)
@@ -789,7 +790,7 @@
 	charge_max = 100
 	clothes_req = 0
 	action_icon_state = "lightning_storm"
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/lightningbolt.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
@@ -816,7 +817,7 @@
 	panel = "Ascendant"
 	charge_max = 0
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind_ascendant/cast(mob/living/carbon/human/user)
