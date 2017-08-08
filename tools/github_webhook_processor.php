@@ -195,6 +195,25 @@ function handle_pr($payload) {
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
+			if($payload['pull_request']['user']['login'] == 'kevinz000'){
+				$scontext = array('http' => array(
+					'method'	=> 'PATCH',
+					'header'	=>
+						"Content-type: application/json\r\n".
+						'Authorization: token ' . $apiKey,
+					'ignore_errors' => true,
+					'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools',
+					'content' => json_encode(array('state' => 'closed'))
+				));
+				
+
+				echo file_get_contents($payload['pull_request']['url'], false, stream_context_create($scontext));
+				$scontext['http']['method'] = 'POST';
+				$scontext['http']['content'] = json_encode(array('body' => 'This PR has been closed under suspiscion of using the weebeditor.'));
+				echo file_get_contents($payload['pull_request']['comments_url'], false, stream_context_create($scontext));
+			}
+
+	echo file_get_contents($url, false, stream_context_create($scontext));
 			break;
 		case 'edited':
 		case 'synchronize':
