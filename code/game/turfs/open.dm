@@ -272,3 +272,11 @@
 		wet_time = 0
 	if(wet)
 		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)
+
+/turf/open/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
+	var/old_wet = wet
+	var/old_wet_time = wet_time
+	. = ..()
+	if(. && isopenturf(.))
+		var/turf/open/O = .
+		O.MakeSlippery(wet_setting = old_wet, wet_time_to_add = old_wet_time) //reapply the water
