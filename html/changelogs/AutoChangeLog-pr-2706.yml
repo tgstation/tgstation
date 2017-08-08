@@ -1,0 +1,5 @@
+author: "Tortellini Tony"
+delete-after: True
+changes: 
+  - bugfix: "Speaking while in crit will no longer kill you."
+  - bugfix: "You can now crawl again while in crit."
