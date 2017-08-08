@@ -95,6 +95,8 @@ SUBSYSTEM_DEF(blackbox)
 
 	for (var/datum/feedback_variable/FV in feedback)
 		sqlrowlist += list(list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'"))
+		sqlrowlist += list(list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable(TRUE))]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details(TRUE))]'"))
+
 
 	if (!length(sqlrowlist))
 		return
@@ -216,6 +218,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/variable
 	var/value
 	var/details
+	var/details_test
 
 /datum/feedback_variable/New(param_variable, param_value = 0)
 	variable = param_variable
@@ -250,21 +253,31 @@ SUBSYSTEM_DEF(blackbox)
 		return 0
 	return value
 
-/datum/feedback_variable/proc/get_variable()
+/datum/feedback_variable/proc/get_variable(testing = FALSE)
+	if(testing)
+		return "test_"+variable
 	return variable
 
 /datum/feedback_variable/proc/set_details(text)
 	if (istext(text))
 		details = text
+		details_test = text
 
 /datum/feedback_variable/proc/add_details(text)
 	if (istext(text))
-		if (!details)
-			details = "\"[text]\""
+		if (!details_test)
+			details_test = "\"[text]\""
 		else
-			details += " | \"[text]\""
+			details_test += " | \"[text]\""
 
-/datum/feedback_variable/proc/get_details()
+		if (!details)
+			details = text
+		else
+			details += " [text]"
+
+/datum/feedback_variable/proc/get_details(testing = FALSE)
+	if(testing)
+		return details_test
 	return details
 
 /datum/feedback_variable/proc/get_parsed()
