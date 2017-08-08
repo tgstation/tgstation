@@ -26,5 +26,5 @@
 
 /obj/item/device/radio/uplink/old/Initialize(mapload, owner_key)
 	. = ..()
-	GET_COMPONENT(uplink, /datum/component/uplink, owner_key)
+	GET_COMPONENT(uplink, /datum/component/uplink)
 	uplink.telecrystals = 10
