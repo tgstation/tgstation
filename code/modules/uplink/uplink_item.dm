@@ -946,15 +946,10 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/briefcase_launchpad
 	cost = 6
 
-/datum/uplink_item/device_tools/briefcase_launchpad/buy(mob/user, obj/item/device/uplink/U)
-	var/obj/item/device/launchpad_remote/L = new(get_turf(user)) //free remote
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.put_in_hands(L))
-			to_chat(H, "[L] materializes into your hands!")
-		else
-			to_chat(H, "\The [L] materializes onto the floor.")
-	return ..()
+/datum/uplink_item/device_tools/briefcase_launchpad/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
+	. = ..()
+	if(.)
+		new /obj/item/device/launchpad_remote(loc) //free remote
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"

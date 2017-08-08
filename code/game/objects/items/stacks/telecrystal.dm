@@ -10,13 +10,15 @@
 	origin_tech = "materials=6;syndicate=1"
 
 /obj/item/stack/telecrystal/attack(mob/target, mob/user)
-	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
-		for(var/obj/item/weapon/implant/uplink/I in target)
-			if(I && I.imp_in)
-				GET_COMPONENT_FROM(uplink, /datum/component/uplink, I)
-				uplink.telecrystals += amount
-				use(amount)
+	if(target == user)
+		var/obj/item/weapon/implant/uplink/I = locate() in target
+		if(I)
+			GET_COMPONENT_FROM(uplink, /datum/component/uplink, I)
+			if(uplink && uplink.enabled) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 				to_chat(user, "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>")
+				uplink.LoadTC(user, src, TRUE)
+				return
+	return ..()
 
 /obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity)

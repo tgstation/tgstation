@@ -282,10 +282,10 @@
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayer(syndicate)
 			if(GLOB.uplink_purchase_logs)
-				for(var/I in GLOB.uplink_purchase_logs[traitor.key])
+				for(var/I in GLOB.uplink_purchase_logs[syndicate.key])
 					var/datum/uplink_purchase_log/log = I
-					TC_uses += I.spent_telecrystals
-					purchases += I.GetFlatPurchaseLog()
+					TC_uses += log.spent_telecrystals
+					purchases += log.GetFlatPurchaseLog()
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
@@ -344,7 +344,7 @@
 
 	if(tc)
 		var/obj/item/device/radio/uplink/nuclear/U = new(H)
-		GET_COMPONENT_FROM(U, /datum/component/uplink, UP)
+		GET_COMPONENT_FROM(UP, /datum/component/uplink, U)
 		UP.owner = H.key
 		UP.telecrystals = tc
 		H.equip_to_slot_or_del(U, slot_in_backpack)
