@@ -6,7 +6,7 @@
 	charge_max = 3000
 	human_req = 1
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "hatch"
 
 
@@ -120,7 +120,7 @@
 	panel = "Shadowling Evolution"
 	charge_max = 3000
 	clothes_req = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "ascend"
 
 /obj/effect/proc_holder/spell/self/shadowling_ascend/cast(list/targets,mob/user = usr)
