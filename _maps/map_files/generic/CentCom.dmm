@@ -2921,7 +2921,7 @@
 /area/centcom/prison)
 "iG" = (
 /turf/closed/indestructible/fakedoor{
-	name = "Centcom Cell"
+	name = "CentCom Cell"
 	},
 /area/centcom/prison)
 "iH" = (
@@ -2956,7 +2956,7 @@
 /area/centcom/supply)
 "iL" = (
 /turf/closed/indestructible/fakedoor{
-	name = "Centcom Warehouse"
+	name = "CentCom Warehouse"
 	},
 /area/centcom/supply)
 "iM" = (
@@ -3061,7 +3061,7 @@
 "jc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom";
+	name = "CentCom";
 	opacity = 1;
 	req_access_txt = "0"
 	},
@@ -3323,7 +3323,7 @@
 	dwidth = 5;
 	height = 7;
 	id = "supply_away";
-	name = "Centcom";
+	name = "CentCom";
 	width = 12
 	},
 /turf/open/space,
@@ -3814,7 +3814,7 @@
 /area/centcom/supply)
 "kM" = (
 /turf/closed/indestructible/fakedoor{
-	name = "Centcom"
+	name = "CentCom"
 	},
 /area/centcom/control)
 "kN" = (
@@ -3863,7 +3863,7 @@
 /area/centcom/control)
 "kT" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -3877,7 +3877,7 @@
 	base_state = "rightsecure";
 	dir = 2;
 	icon_state = "leftsecure";
-	name = "Centcom Stand";
+	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
 /obj/machinery/light{
@@ -3914,7 +3914,7 @@
 	base_state = "rightsecure";
 	dir = 2;
 	icon_state = "leftsecure";
-	name = "Centcom Stand";
+	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -3933,7 +3933,7 @@
 	base_state = "rightsecure";
 	dir = 2;
 	icon_state = "leftsecure";
-	name = "Centcom Stand";
+	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
 /obj/machinery/light{
@@ -3957,7 +3957,7 @@
 /area/centcom/supply)
 "lc" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Supply";
+	name = "CentCom Supply";
 	req_access_txt = "106"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4153,7 +4153,7 @@
 /area/centcom/control)
 "lB" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -4748,7 +4748,7 @@
 	base_state = "rightsecure";
 	dir = 2;
 	icon_state = "leftsecure";
-	name = "Centcom Stand";
+	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
 /obj/machinery/firealarm{
@@ -4764,7 +4764,7 @@
 	base_state = "rightsecure";
 	dir = 2;
 	icon_state = "leftsecure";
-	name = "Centcom Stand";
+	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
 /obj/machinery/firealarm{
@@ -5232,7 +5232,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor{
-	name = "Centcom Customs";
+	name = "CentCom Customs";
 	icon_state = "rightsecure";
 	dir = 4;
 	req_access_txt = "109";
@@ -5762,7 +5762,7 @@
 /area/centcom/ferry)
 "pu" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -5773,7 +5773,7 @@
 /area/centcom/supply)
 "pv" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom";
+	name = "CentCom";
 	opacity = 1;
 	req_access_txt = "0"
 	},
@@ -6449,7 +6449,7 @@
 /area/centcom/control)
 "qQ" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -6646,7 +6646,7 @@
 /area/centcom/ferry)
 "rw" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Supply";
+	name = "CentCom Supply";
 	req_access_txt = "106"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6900,7 +6900,7 @@
 "rW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom";
+	name = "CentCom";
 	opacity = 1;
 	req_access_txt = "0"
 	},
@@ -7317,7 +7317,7 @@
 	base_state = "rightsecure";
 	dir = 1;
 	icon_state = "rightsecure";
-	name = "Centcom Customs";
+	name = "CentCom Customs";
 	req_access_txt = "109"
 	},
 /obj/machinery/door/window,
@@ -7345,7 +7345,7 @@
 	dwidth = 25;
 	height = 50;
 	id = "emergency_away";
-	name = "Centcom Emergency Shuttle Dock";
+	name = "CentCom Emergency Shuttle Dock";
 	width = 50
 	},
 /turf/open/space,
@@ -7725,7 +7725,7 @@
 "tZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -7779,7 +7779,7 @@
 /area/centcom/ferry)
 "ug" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Customs";
+	name = "CentCom Customs";
 	opacity = 1;
 	req_access_txt = "109"
 	},
@@ -7920,7 +7920,7 @@
 	dwidth = 2;
 	height = 13;
 	id = "ferry_away";
-	name = "Centcom Ferry Dock";
+	name = "CentCom Ferry Dock";
 	width = 5
 	},
 /turf/open/space,
@@ -9158,7 +9158,7 @@
 	base_state = "rightsecure";
 	dir = 1;
 	icon_state = "rightsecure";
-	name = "Centcom Customs";
+	name = "CentCom Customs";
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/bot,
@@ -9182,7 +9182,7 @@
 	base_state = "rightsecure";
 	dir = 1;
 	icon_state = "rightsecure";
-	name = "Centcom Customs";
+	name = "CentCom Customs";
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/bot,
@@ -9749,7 +9749,7 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/pen/red,
 /obj/machinery/door/window/brigdoor{
-	name = "Centcom Customs";
+	name = "CentCom Customs";
 	icon_state = "rightsecure";
 	dir = 4;
 	req_access_txt = "109";
@@ -9764,7 +9764,7 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen/blue,
 /obj/machinery/door/window/brigdoor{
-	name = "Centcom Customs";
+	name = "CentCom Customs";
 	icon_state = "rightsecure";
 	dir = 8;
 	req_access_txt = "109";
@@ -10050,7 +10050,7 @@
 /area/tdome/tdomeobserve)
 "zT" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -13634,7 +13634,7 @@
 /area/centcom/evac)
 "Mb" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Centcom Security";
+	name = "CentCom Security";
 	opacity = 1;
 	req_access_txt = "101"
 	},
@@ -13645,7 +13645,7 @@
 /area/centcom/evac)
 "Mc" = (
 /turf/closed/indestructible/fakedoor{
-	name = "Centcom"
+	name = "CentCom"
 	},
 /area/centcom/evac)
 "Md" = (

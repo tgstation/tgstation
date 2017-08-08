@@ -68503,12 +68503,12 @@
 /obj/item/weapon/folder/blue,
 /obj/item/clothing/under/rank/centcom_commander{
 	desc = "A replica of a jumpsuit worn by the highest ranking commanders under Nanotrasen's central command.";
-	name = "Replica Centcom officer's jumpsuit"
+	name = "Replica CentCom officer's jumpsuit"
 	},
 /obj/item/clothing/head/centhat{
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
 	desc = "A replica hat of a Central Commander's attire. It has a small tag on it saying, 'It's good to be emperor.'";
-	name = "Replica Centcom hat"
+	name = "Replica CentCom hat"
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32

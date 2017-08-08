@@ -249,7 +249,7 @@
 
 /obj/structure/sign/poster/contraband/tools
 	name = "Tools"
-	desc = "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."
+	desc = "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentCom."
 	icon_state = "poster15"
 
 /obj/structure/sign/poster/contraband/power
@@ -284,7 +284,7 @@
 
 /obj/structure/sign/poster/contraband/kss13
 	name = "Kosmicheskaya Stantsiya 13 Does Not Exist"
-	desc = "A poster mocking CentComm's denial of the existence of the derelict station near Space Station 13."
+	desc = "A poster mocking CentCom's denial of the existence of the derelict station near Space Station 13."
 	icon_state = "poster22"
 
 /obj/structure/sign/poster/contraband/rebels_unite

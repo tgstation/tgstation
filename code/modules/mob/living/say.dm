@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Faction
 	"t" = "Syndicate",
-	"y" = "Centcom",
+	"y" = "CentCom",
 
 	// Species
 	"b" = "binary",
@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Faction
 	"å" = "Syndicate",
-	"í" = "Centcom",
+	"í" = "CentCom",
 
 	// Species
 	"è" = "binary",

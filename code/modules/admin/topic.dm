@@ -102,13 +102,13 @@
 					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed create gangs.")
 			if("centcom")
-				message_admins("[key_name(usr)] is creating a Centcom response team...")
+				message_admins("[key_name(usr)] is creating a CentCom response team...")
 				if(src.makeEmergencyresponseteam())
-					message_admins("[key_name(usr)] created a Centcom response team.")
-					log_admin("[key_name(usr)] created a Centcom response team.")
+					message_admins("[key_name(usr)] created a CentCom response team.")
+					log_admin("[key_name(usr)] created a CentCom response team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create a Centcom response team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a Centcom response team.")
+					message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create a CentCom response team.")
 			if("abductors")
 				message_admins("[key_name(usr)] is creating an abductor team...")
 				if(src.makeAbductorTeam())
@@ -1704,8 +1704,8 @@
 
 		usr.client.smite(H)
 
-	else if(href_list["CentcommReply"])
-		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"]) in GLOB.mob_list
+	else if(href_list["CentComReply"])
+		var/mob/living/carbon/human/H = locate(href_list["CentComReply"]) in GLOB.mob_list
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
@@ -1713,15 +1713,15 @@
 			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
 			return
 
-		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
+		message_admins("[src.owner] has started answering [key_name(H)]'s CentCom request.")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from CentCom", "")
 		if(!input)
-			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
+			message_admins("[src.owner] decided not to answer [key_name(H)]'s CentCom request.")
 			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Centcom message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
+		log_admin("[src.owner] replied to [key_name(H)]'s CentCom message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(H)]'s CentCom message with: \"[input]\"")
 		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])

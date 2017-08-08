@@ -82,7 +82,7 @@ Contains:
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"
-	desc = "An old, NASA Centcom branch designed, dark red space suit helmet."
+	desc = "An old, NASA CentCom branch designed, dark red space suit helmet."
 	icon_state = "void"
 	item_state = "void"
 
@@ -90,12 +90,12 @@ Contains:
 	name = "NASA Voidsuit"
 	icon_state = "void"
 	item_state = "void"
-	desc = "An old, NASA Centcom branch designed, dark red space suit."
+	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/device/multitool)
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "Engineering Void Helmet"
-	desc = "A Centcom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
+	desc = "A CentCom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
 	icon_state = "void"
 	item_state = "void"
 
@@ -103,7 +103,7 @@ Contains:
 	name = "Engineering Voidsuit"
 	icon_state = "void"
 	item_state = "void"
-	desc = "A Centcom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
+	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
 	slowdown = 4
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/device/multitool)
 
