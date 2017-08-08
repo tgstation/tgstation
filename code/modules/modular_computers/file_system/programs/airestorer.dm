@@ -106,6 +106,8 @@
 			var/obj/item/device/aicard/cardhold = AI.loc
 			if(cardhold.flush)
 				data["error"] = "Flush in progress"
+			else if(AI.suiciding)
+				data["error"] = "Core AI libraries permanently fragmented"
 			else
 				data["name"] = AI.name
 				data["restoring"] = restoring

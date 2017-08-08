@@ -94,11 +94,15 @@
 	if(..())
 		return
 	if(href_list["fix"])
+		add_fingerprint(usr)
+		if(occupier.suiciding)
+			to_chat(usr, "<span class='warning'>Core AI libraries have been permanently fragmented, restoration impossible.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
+			return
 		to_chat(usr, "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>")
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = TRUE
-		add_fingerprint(usr)
-
+		
 /obj/machinery/computer/aifixer/update_icon()
 	..()
 	if(stat & (NOPOWER|BROKEN))
