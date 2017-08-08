@@ -8,22 +8,24 @@ GLOBAL_LIST_EMPTY(uplinks)
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
 /datum/component/uplink
-	name = "syndicate uplink"
-	desc = "There is something wrong if you're examining this."
-	var/lockable = TRUE
-	var/telecrystals = 20
-	var/selected_cat = null
-	var/owner = null	//the owner's key
+	var/lockable
+	var/telecrystals
+	var/selected_cat
+	var/owner	//the owner's key
 	var/datum/game_mode/gamemode
 	var/spent_telecrystals = 0
 	var/purchase_log = ""
 	var/list/uplink_items
 	var/hidden_crystals
 
-/datum/component/uplink/New()
+/datum/component/uplink/New(datum/p, _owner, starting_tc = 20, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode)
 	GLOB.uplinks += src
 	..()
-	uplink_items = get_uplink_items(gamemode)
+	owner = _owner
+	enabled = _enabled
+	lockable = _lockable
+	telecrystals = starting_tc
+	set_gamemode(_gamemode)
 
 /datum/component/uplink/set_gamemode(gamemode)
 	src.gamemode = gamemode
@@ -55,13 +57,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 			qdel(I)
 			return
 
-/datum/component/uplink/proc/interact(mob/user)
-	active = TRUE
+/datum/component/uplink/proc/Open(mob/user)
+	enabled = TRUE
 	if(user)
 		ui_interact(user)
 
 /datum/component/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+	enabled = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "uplink", name, 450, 750, master_ui, state)
@@ -103,7 +106,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 
 /datum/component/ui_act(action, params)
-	if(!active)
+	if(!enabled)
 		return
 
 	switch(action)
@@ -119,7 +122,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 				I.buy(usr, src)
 				. = TRUE
 		if("lock")
-			active = FALSE
+			enabled = FALSE
 			telecrystals += hidden_crystals
 			hidden_crystals = 0
 			SStgui.close_uis(src)
@@ -138,15 +141,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /obj/item/device/radio/uplink/nuclear/Initialize()
 	. = ..()
-	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
+	GET_COMPONENT(uplink, /datum/component/uplink)
+	uplink.set_gamemode(/datum/game_mode/nuclear)
 
 /obj/item/device/multitool/uplink/Initialize()
 	. = ..()
-	hidden_uplink = new(src)
-	hidden_uplink.active = TRUE
-	hidden_uplink.lockable = FALSE
+	AddComponent(/datum/component/uplink, null, 20, FALSE, TRUE)
 
 /obj/item/weapon/pen/uplink/Initialize()
 	. = ..()
-	hidden_uplink = new(src)
+	AddComponent(/datum/component/uplink)
 	traitor_unlock_degrees = 360
