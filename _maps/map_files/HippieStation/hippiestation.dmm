@@ -33522,7 +33522,7 @@
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
-	dir = 8;
+	dir = 8
 	},
 /obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/white,
@@ -48489,6 +48489,7 @@
 	},
 /obj/item/weapon/stamp/ce,
 /obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
@@ -52364,6 +52365,8 @@
 /obj/item/weapon/electronics/apc,
 /obj/item/weapon/stock_parts/cell/high/plus,
 /obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckE" = (
@@ -106908,7 +106911,7 @@ bla
 bmY
 bhh
 boq
-brj
+cWs
 cWv
 bsL
 bum
@@ -107165,7 +107168,7 @@ bkU
 bmX
 bpE
 cWr
-brj
+cWs
 cWw
 bti
 bul
