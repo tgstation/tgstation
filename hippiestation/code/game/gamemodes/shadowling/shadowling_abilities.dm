@@ -653,6 +653,8 @@
 /obj/effect/proc_holder/spell/targeted/night_vision/thrall //Toggleable night vision for thralls
 	name = "Thrall Darksight"
 	desc = "Allows you to see in the dark!"
+	action_icon_state = "darksight"
+ 	action_icon = 'hippiestation/icons/mob/actions.dmi'
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind //Lets a thrall talk with their allies
 	name = "Lesser Commune"
