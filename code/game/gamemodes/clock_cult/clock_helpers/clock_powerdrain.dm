@@ -5,6 +5,9 @@
 		return cell.power_drain(clockcult_user)
 	return 0
 
+/obj/item/weapon/gun/power_drain(clockcult_user)	//balance memes
+	return 0
+
 /obj/machinery/power/apc/power_drain(clockcult_user)
 	if(cell && cell.charge)
 		playsound(src, "sparks", 50, 1)
