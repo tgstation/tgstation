@@ -649,28 +649,9 @@
 	addtimer(CALLBACK(src, .proc/reappear, user), 40)
 
 
-/obj/effect/proc_holder/spell/self/thrall_vision //Toggleable night vision for thralls
-	name = "Darksight"
-	desc = "Gives you night vision."
-	panel = "Thrall Abilities"
-	charge_max = 0
-	human_req = 1
-	clothes_req = 0
-	action_icon_state = "darksight"
-	active = 0
-	action_icon = "hippiestation/icons/mob/actions.dmi"
-
-/obj/effect/proc_holder/spell/self/thrall_vision/cast(mob/living/carbon/human/user)
-	var/obj/item/organ/eyes/E = user.getorganslot("eye_sight")
-	active = !active
-	if(active)
-		to_chat(user, "<span class='notice'>You shift the nerves in your eyes, allowing you to see in the dark.</span>")
-		E.sight_flags |= (SEE_MOBS|SEE_INFRA|SEE_SELF)
-	else
-		to_chat(user, "<span class='notice'>You return your vision to normal.</span>")
-		E.sight_flags -= (SEE_MOBS|SEE_INFRA|SEE_SELF)
-	user.update_sight()
-
+/obj/effect/proc_holder/spell/targeted/night_vision/thrall //Toggleable night vision for thralls
+	name = "Thrall Darksight"
+	desc = "Allows you to see in the dark!"
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind //Lets a thrall talk with their allies
 	name = "Lesser Commune"
