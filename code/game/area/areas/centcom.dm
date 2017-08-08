@@ -2,7 +2,7 @@
 // CENTCOM
 
 /area/centcom
-	name = "Centcom"
+	name = "CentCom"
 	icon_state = "centcom"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
@@ -12,16 +12,16 @@
 	flags = NONE
 
 /area/centcom/control
-	name = "Centcom Docks"
+	name = "CentCom Docks"
 
 /area/centcom/evac
-	name = "Centcom Recovery Ship"
+	name = "CentCom Recovery Ship"
 
 /area/centcom/supply
-	name = "Centcom Supply Shuttle Dock"
+	name = "CentCom Supply Shuttle Dock"
 
 /area/centcom/ferry
-	name = "Centcom Transport Shuttle Dock"
+	name = "CentCom Transport Shuttle Dock"
 
 /area/centcom/prison
 	name = "Admin Prison"

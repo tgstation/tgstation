@@ -434,3 +434,40 @@
 /obj/effect/temp_visual/curse/Initialize()
 	. = ..()
 	deltimer(timerid)
+
+
+//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active.
+/datum/status_effect/kindle
+	id = "kindle"
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 5
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/kindle
+	var/old_health
+
+/datum/status_effect/kindle/tick()
+	owner.Knockdown(15)
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.silent = max(2, C.silent)
+		C.stuttering = max(5, C.stuttering)
+	if(!old_health)
+		old_health = owner.health
+	var/health_difference = old_health - owner.health
+	if(!health_difference)
+		return
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as they're harmed!</span>", \
+	"<span class='boldannounce'>The dazzling lights dim as you're harmed!</span>")
+	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
+	duration -= health_difference
+	old_health = owner.health
+
+/datum/status_effect/kindle/on_remove()
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
+	"<span class='boldannounce'>You snap out of your daze!</span>")
+
+/obj/screen/alert/status_effect/kindle
+	name = "Dazzling Lights"
+	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
+	icon_state = "kindle"
+	alerttooltipstyle = "clockcult"

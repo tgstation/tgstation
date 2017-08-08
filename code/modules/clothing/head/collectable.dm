@@ -14,6 +14,7 @@
 	name = "collectable slime cap!"
 	desc = "It just latches right in place!"
 	icon_state = "slime"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
@@ -25,6 +26,7 @@
 	desc = "A rare chef's hat meant for hat collectors!"
 	icon_state = "chef"
 	item_state = "chef"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/chef
 
@@ -53,6 +55,7 @@
 	name = "collectable police officer's hat"
 	desc = "A collectable police officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/warden
 
@@ -95,6 +98,7 @@
 	desc = "The fur feels... a bit too realistic."
 	icon_state = "kitty"
 	item_state = "kitty"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
@@ -103,6 +107,7 @@
 	desc = "Not as lucky as the feet!"
 	icon_state = "bunny"
 	item_state = "bunny"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
@@ -125,6 +130,7 @@
 	name = "collectable HoS hat"
 	desc = "Now you too can beat prisoners, set silly sentences, and arrest for no reason!"
 	icon_state = "hoscap"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/collectable/HoP
 	name = "collectable HoP hat"
@@ -138,6 +144,7 @@
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
 	resistance_flags = 0
+	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
@@ -145,3 +152,4 @@
 	icon_state = "swat"
 	item_state = "swat"
 	resistance_flags = 0
+	flags_inv = HIDEHAIR

@@ -253,6 +253,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	dynamic_hair_suffix = "+generic"
 
 /obj/item/clothing/head/Initialize()
 	. = ..()

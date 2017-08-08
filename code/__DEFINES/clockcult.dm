@@ -8,12 +8,17 @@
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
 GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
-GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
+
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
+
+GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
 GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)) //The pool of components that caches draw from
+
+GLOBAL_VAR_INIT(ratvar_approaches, 0) //The servants can choose to "herald" Ratvar, permanently buffing them but announcing their presence to the crew.
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
 GLOBAL_VAR_INIT(ark_of_the_clockwork_justiciar, FALSE) //The Ark on the Reebe z-level
+
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 GLOBAL_VAR_INIT(script_scripture_unlocked, FALSE) //If script scripture is available, through converting at least one crewmember
 GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //If script scripture is available
@@ -91,7 +96,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define FABRICATOR_REPAIR_PER_TICK 4 //how much a fabricator repairs each tick, and also how many deciseconds each tick is
 
-#define OCULAR_WARDEN_EXCLUSION_RANGE 5 //the range at which ocular wardens cannot be placed near other ocular wardens
+#define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
 
 #define RATVARIAN_SPEAR_DURATION 1800 //how long ratvarian spears last; defaults to 3 minutes
 

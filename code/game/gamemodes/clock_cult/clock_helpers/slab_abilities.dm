@@ -21,113 +21,6 @@
 		remove_ranged_ability()
 		return TRUE
 
-//For the Geis scripture; binds a target to convert.
-/obj/effect/proc_holder/slab/geis
-	ranged_mousepointer = 'icons/effects/geis_target.dmi'
-	var/obj/structure/destructible/clockwork/geis_binding/binding //we always have a reference to the binding
-	var/obj/structure/destructible/clockwork/geis_binding/pulled_binding //we use this to see if we're pulling it or not
-
-/obj/effect/proc_holder/slab/geis/remove_ranged_ability(msg)
-	..()
-	binding = null
-	pulled_binding = null
-
-/obj/effect/proc_holder/slab/geis/InterceptClickOn(mob/living/caller, params, atom/target)
-	var/turf/T = ranged_ability_user.loc
-	if(!isturf(T))
-		return TRUE
-
-	var/target_is_binding = istype(target, /obj/structure/destructible/clockwork/geis_binding)
-
-	if((target_is_binding || isliving(target)) && ranged_ability_user.Adjacent(target))
-		if(in_progress || ..())
-			var/mob/living/L = target
-			if(!pulled_binding)
-				if(target == binding || (isliving(target) && L.buckled == binding))
-					pulled_binding = binding
-					ranged_ability_user.start_pulling(binding)
-					remove_mousepointer(ranged_ability_user.client)
-					ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
-					add_mousepointer(ranged_ability_user.client)
-			else if(target == pulled_binding || (isliving(target) && L.buckled == pulled_binding))
-				ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] dispels [pulled_binding]!</span>", "<span class='danger'>You dispel the binding!</span>")
-				binding.take_damage(obj_integrity)
-				remove_ranged_ability()
-			return TRUE
-		if(target_is_binding)
-			var/obj/structure/destructible/clockwork/geis_binding/GB = target
-			GB.repair_and_interrupt()
-			for(var/m in GB.buckled_mobs)
-				if(m)
-					add_logs(ranged_ability_user, m, "rebound with Geis")
-			successful = TRUE
-		else
-			var/mob/living/L = target
-			if(L.null_rod_check())
-				to_chat(ranged_ability_user, "<span class='sevtug'>\"A void weapon? Really, you expect me to be able to do anything?\"</span>")
-				return TRUE
-			if(is_servant_of_ratvar(L))
-				if(L != ranged_ability_user)
-					to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>")
-				return TRUE
-			if(L.stat == DEAD)
-				to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>")
-				return TRUE
-
-			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just stun them
-				var/obj/structure/destructible/clockwork/geis_binding/GB = L.buckled
-				GB.repair_and_interrupt()
-				add_logs(ranged_ability_user, L, "rebound with Geis")
-				successful = TRUE
-			else
-				in_progress = TRUE
-				clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
-				remove_mousepointer(ranged_ability_user.client)
-				ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
-				add_mousepointer(ranged_ability_user.client)
-				add_logs(ranged_ability_user, L, "bound with Geis")
-				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
-				if(slab.speed_multiplier >= 0.5) //excuse my debug...
-					ranged_ability_user.notransform = TRUE
-					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the binding immediately
-				if(L.buckled)
-					L.buckled.unbuckle_mob(target, TRUE)
-				binding = new(get_turf(target))
-				binding.setDir(target.dir)
-				binding.buckle_mob(target, TRUE)
-				pulled_binding = binding
-				ranged_ability_user.start_pulling(binding)
-				slab.busy = "sustaining Geis"
-				slab.flags |= NODROP
-				while(!QDELETED(binding) && !QDELETED(ranged_ability_user))
-					if(ranged_ability_user.pulling == binding)
-						pulled_binding = binding
-						if(ranged_ability_user.client && ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target.dmi')
-							remove_mousepointer(ranged_ability_user.client)
-							ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
-							add_mousepointer(ranged_ability_user.client)
-					else //if we're not pulling it, swap our mousepointer
-						pulled_binding = null
-						if(ranged_ability_user.client && ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target_remove.dmi')
-							remove_mousepointer(ranged_ability_user.client)
-							ranged_mousepointer = 'icons/effects/geis_target.dmi'
-							add_mousepointer(ranged_ability_user.client)
-					sleep(1)
-				if(!QDELETED(slab))
-					slab.flags &= ~NODROP
-				in_progress = FALSE
-				successful = TRUE
-
-		remove_ranged_ability()
-	else
-		..()
-
-	return TRUE
-
-/obj/effect/proc_holder/slab/geis/proc/reset_user_notransform(mob/living/user)
-	if(user)
-		user.notransform = FALSE
-
 //For the Sentinel's Compromise scripture; heals a target servant.
 /obj/effect/proc_holder/slab/compromise
 	ranged_mousepointer = 'icons/effects/compromise_target.dmi'
@@ -183,6 +76,57 @@
 
 		if(has_holy_water)
 			L.reagents.remove_reagent("holywater", 1000)
+
+		remove_ranged_ability()
+
+	return TRUE
+
+//For the Kindle scripture; stuns and mutes a target non-servant.
+/obj/effect/proc_holder/slab/kindle
+	ranged_mousepointer = 'icons/effects/volt_target.dmi'
+
+/obj/effect/proc_holder/slab/kindle/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return TRUE
+
+	var/turf/T = ranged_ability_user.loc
+	if(!isturf(T))
+		return TRUE
+
+	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
+		var/mob/living/L = target
+		if(is_servant_of_ratvar(L))
+			to_chat(ranged_ability_user, "<span class='danger'>You can't Kindle servants.</span>")
+			return TRUE
+		if(L.stat)
+			to_chat(ranged_ability_user, "<span class='danger'>You can't Kindle the dead and dying.</span>")
+			return TRUE
+		if(get_dist(ranged_ability_user, target) > 2)
+			to_chat(ranged_ability_user, "<span class='danger'>They're too far away.</span>")
+			return
+
+		successful = TRUE
+
+		to_chat(ranged_ability_user, "<span class='brass'>You release the light of Ratvar upon [L]!</span>")
+		clockwork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
+		add_logs(ranged_ability_user, L, "struck with Kindle")
+		playsound(L, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
+		var/obj/O = L.null_rod_check()
+		if(O)
+			L.visible_message("<span class='warning'>[L]'s eyes flare with dim light as they stumble!</span>", \
+			"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs some sort of power!</span>")
+			to_chat(ranged_ability_user, "<span class='boldannounce'>[L]'s [O.name] absorbs the light's power!</span>")
+			L.adjustFireLoss(5)
+			L.Stun(40)
+			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
+		else
+			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
+			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+			L.Knockdown(15)
+			L.apply_status_effect(STATUS_EFFECT_KINDLE)
+			L.flash_act(1, 1)
+			if(iscultist(L))
+				L.adjustFireLoss(15)
 
 		remove_ranged_ability()
 

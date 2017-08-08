@@ -101,12 +101,3 @@
 		icon_state = inactive_icon
 		density = TRUE
 		active = FALSE
-
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/reebe
-	name = "eminence obelisk"
-	desc = "A towering, crystalline prism hanging in midair."
-	clockwork_desc = "A type of clockwork obelisk unique to the Celestial Derelict. It can broadcast messages as well as open gateways to servants or \
-	other clockwork obelisks."
-	construction_value = 0
-	max_integrity = 250
-	needs_power = FALSE

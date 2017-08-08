@@ -27,22 +27,22 @@
 	SSshuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
-			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","Centcom Counter Intelligence")
+			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counter Intelligence")
 		if(RUSKY_PARTY)
-			priority_announce("Cargo: A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","Centcom Russian Outreach Program")
+			priority_announce("Cargo: A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
 		if(SPIDER_GIFT)
-			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","Centcom Diplomatic Corps")
+			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
 		if(DEPARTMENT_RESUPPLY)
-			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
+			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")
 			thanks_msg = "The cargo shuttle should return in 5 minutes."
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
-			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
+			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
 		if (PIZZA_DELIVERY)
-			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead", "Centcom Spacepizza Division")
+			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead", "CentCom Spacepizza Division")
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")
+	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
 	dispatched = 1
 	SSshuttle.points += bonus_points

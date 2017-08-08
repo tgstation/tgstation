@@ -50,6 +50,10 @@
 	set_security_level("delta")
 	for(var/V in GLOB.generic_event_spawns)
 		addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
+	for(var/V in SSticker.mode.servants_of_ratvar)
+		var/datum/mind/M = V
+		if(ishuman(M.current))
+			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/open_portal(turf/T)
 	new/obj/effect/clockwork/city_of_cogs_rift(T)
@@ -188,9 +192,6 @@
 			if(iswallturf(T))
 				var/turf/closed/wall/W = T
 				W.dismantle_wall()
-		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
-		if(dist < convert_dist)
-			T.ratvar_act(FALSE, TRUE, 3)
 	for(var/obj/O in orange(1, src))
 		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)

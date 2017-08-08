@@ -21,6 +21,7 @@
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/carbon/C in hearers(7, invoker))
 		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+	new /obj/effect/temp_visual/ratvar/belligerent(get_turf(invoker))
 	return TRUE
 
 
@@ -97,38 +98,69 @@
 	Click your slab to cancel.</b></span>"
 
 
-//Geis: Grants a short-range binding attack that allows you to mute and drag around a target in a very obvious manner.
-/datum/clockwork_scripture/ranged_ability/geis
-	descname = "Melee Mute & Stun"
-	name = "Geis"
-	desc = "Charges your slab with divine energy, allowing you to bind and pull a struck heretic."
-	invocations = list("Divinity, grant me strength...", "...to bind the heathen!")
+//Abscond: Used to return to Reebe.
+/datum/clockwork_scripture/abscond
+	descname = "Return to Reebe"
+	name = "Abscond"
+	desc = "Yanks you through space, returning you to home base."
+	invocations = list("As we bid farewell, and return to the stars...", "...we shall find our way home.")
 	whispered = TRUE
-	channel_time = 20
-	usage_tip = "You CANNOT TAKE ANY NON-PULL ACTIONS while the target is bound, so Sigils of Submission should be placed before use."
+	channel_time = 50
+	usage_tip = "This can't be used while on Reebe, for obvious reasons."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Allows you to bind and mute an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
-	slab_overlay = "geis"
-	ranged_type = /obj/effect/proc_holder/slab/geis
-	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
-	<b>Left-click a target within melee range to bind!\n\
-	Click your slab to cancel.</b></span>"
-	timeout_time = 100
+	quickbind_desc = "Returns you to Reebe."
 
-/datum/clockwork_scripture/ranged_ability/geis/run_scripture()
-	var/servants = 0
-	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(can_recite_scripture(M, TRUE))
-				servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		whispered = FALSE
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*3, 50)
-	return ..()
+/datum/clockwork_scripture/abscond/check_special_requirements()
+	if(invoker.z == ZLEVEL_CITYOFCOGS)
+		to_chat(invoker, "<span class='danger'>You're already at Reebe.</span>")
+		return
+	return TRUE
+
+/datum/clockwork_scripture/abscond/recital()
+	animate(invoker.client, color = "#AF0AAF", time = 50)
+	. = ..()
+
+/datum/clockwork_scripture/abscond/scripture_effects()
+	var/turf/T = get_turf(pick(GLOB.servant_spawns))
+	invoker.visible_message("<span class='warning'>[invoker] flickers and phases out of existence!</span>", \
+	"<span class='bold sevtug_small'>You feel a dizzying sense of vertigo as you're yanked back to Reebe!</span>")
+	T.visible_message("<span class='warning'>[invoker] flickers and phases into existence!</span>")
+	playsound(invoker, 'sound/magic/magic_missile.ogg', 50, TRUE)
+	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
+	do_sparks(5, TRUE, invoker)
+	do_sparks(5, TRUE, T)
+	invoker.forceMove(T)
+	if(invoker.client)
+		animate(invoker.client, color = initial(invoker.client.color), time = 25)
+
+/datum/clockwork_scripture/abscond/scripture_fail()
+	if(invoker && invoker.client)
+		animate(invoker.client, color = initial(invoker.client.color), time = 10)
+
+
+//Kindle: Charges the slab with blazing energy. It can be released to stun and silence a target.
+/datum/clockwork_scripture/ranged_ability/kindle
+	descname = "Short-Range Single-Target Stun"
+	name = "Kindle"
+	desc = "Charges your slab with divine energy, allowing you to overwhelm a target with Ratvar's light."
+	invocations = list("Divinity, show them your light!")
+	whispered = TRUE
+	channel_time = 30
+	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
+	tier = SCRIPTURE_DRIVER
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 6
+	slab_overlay = "volt"
+	ranged_type = /obj/effect/proc_holder/slab/kindle
+	ranged_message = "<span class='brass'><i>You charge the clockwork slab with divine energy.</i>\n\
+	<b>Left-click a target within melee range to stun!\n\
+	Click your slab to cancel.</b></span>"
+	timeout_time = 150
+	quickbind = TRUE
+	quickbind_desc = "Stuns and mutes a target from a short range."
 
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
@@ -146,7 +178,7 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
 
@@ -165,7 +197,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 7
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
 
@@ -186,7 +218,7 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 8
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 	var/static/prev_cost = 0
@@ -217,7 +249,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 9
+	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
 
@@ -237,6 +269,6 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
+	sort_priority = 11
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transgression, which will stun the next non-Servant to cross it."

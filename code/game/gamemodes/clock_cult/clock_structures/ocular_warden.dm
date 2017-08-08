@@ -12,7 +12,7 @@
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/damage_per_tick = 2.5
-	var/sight_range = 5
+	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
@@ -89,10 +89,10 @@
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
 				var/mob/living/L = target
-				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
+				to_chat(L, "<span class='neovgre'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
 			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
-				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
+				to_chat(M.occupant, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
@@ -112,7 +112,7 @@
 			continue
 		if(is_servant_of_ratvar(L) || (L.disabilities & BLIND) || L.null_rod_check())
 			continue
-		if(L.stat || L.restrained() || L.buckled || L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
+		if(L.stat || L.restrained() || L.buckled || L.lying)
 			continue
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L
@@ -142,6 +142,6 @@
 	for(var/turf/T in getline(src, target))
 		for(var/obj/structure/O in T)
 			if(O.density)
-				. -= 0.1
-	. -= (get_dist(src, target) * 0.1)
+				. -= 0.15
+	. -= (get_dist(src, target) * 0.05)
 	. = max(., 0.1) //The lowest damage a warden can do is 10% of its normal amount (0.25 by default)

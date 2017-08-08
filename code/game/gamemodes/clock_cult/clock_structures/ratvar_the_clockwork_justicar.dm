@@ -22,6 +22,8 @@
 	GLOB.ratvar_awakens++
 	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
+	for(var/mob/living/simple_animal/hostile/clockwork/M in GLOB.all_clockwork_mobs)
+		M.ratvar_act()
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>[text2ratvar("ONCE AGAIN MY LIGHT SHINES AMONG THESE PATHETIC STARS")]</span>")
 	sound_to_playing_players('sound/effects/ratvar_reveal.ogg')

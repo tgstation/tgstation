@@ -49,6 +49,7 @@
 /turf/closed/indestructible/reebe
 	name = "void"
 	icon_state = "reebe"
+	opacity = FALSE
 	baseturf = /turf/closed/indestructible/reebe
 
 /turf/closed/indestructible/reebe/ratvar_act()
@@ -110,7 +111,7 @@
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
 /turf/closed/indestructible/fakedoor
-	name = "Centcom Access"
+	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	icon_state = "fake_door"
 

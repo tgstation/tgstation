@@ -36,8 +36,8 @@ Credit where due:
 2. SkowronX from /vg/ for MANY of the assets
 3. FuryMcFlurry from /vg/ for many of the assets
 4. PJB3005 from /vg/ for the failed continuation PR
-5. Xhuis from /tg/ for coding the basic gamemode as it is today
-6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release
+5. Xhuis from /tg/ for coding the first iteration of the mode, and the new, reworked version
+6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release prior to its rework
 
 */
 
@@ -180,14 +180,11 @@ Credit where due:
 		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! Read it!</span>")
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
-		to_chat(L, "<span class='sevtug_small'>In your backpack is an <b>abscondence bijou</b>, your primary tool for getting to and from the station. From Reebe, you can view the \
-		station through the camera consoles and click on a tile while holding the bijou to teleport there. While on the station, you can use the bijou directly to teleport back.</span>")
-		to_chat(L, "<span class='italics alloy'>If you'd like, check out the wiki page at <b>https://tgstation13.org/wiki/Clockwork_Cult</b>, which contains additional information.</span>")
 		return TRUE
 	return FALSE
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	if(GLOB.clockwork_gateway_activated)
+	if(GLOB.clockwork_gateway_activated || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
 		SSticker.news_report = CLOCK_SUMMON
 		return TRUE
 	else
@@ -243,7 +240,7 @@ Credit where due:
 	ears = /obj/item/device/radio/headset
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/weapon/storage/belt/utility/servant
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1, /obj/item/clockwork/abscondence_bijou = 1, \
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1, \
 	/obj/item/clockwork/replica_fabricator/preloaded = 1, /obj/item/stack/tile/brass/thirty = 1, /obj/item/weapon/paper/servant_primer = 1)
 	id = /obj/item/weapon/card/id
 
@@ -268,24 +265,31 @@ Credit where due:
 	<li>Once the Ark activates, the station will be alerted. Portals to Reebe will open up in nearly every room. When they take these portals, \
 	the crewmembers will arrive in the area that you can't access, but can get through it freely - whereas you can't. Treat this as the \"spawn\" of the \
 	crew and defend it accordingly.</li>\
-	<li>You have an item called an <b>abscondence bijou</b> (just call it an absconder) in your backpack. This is what you use to get to the station and \
-	back. You can select where to warp to by using the camera observers (explained later.) <b><i>Do NOT leave the base without informing your teammates, \
-	and do NOT attempt to invade any areas by yourself. You WILL reveal the cult's presence and actively cripple your teammates.</i></b></li></ol>\
+	<li></li></ol>\
 	<hr>\
 	Here is the layout of Reebe, from left to right:\
 	<ul>\
 	<li><b>Dressing Room:</b> Contains clothing, a dresser, and a mirror. There are spare slabs and absconders here.</li>\
 	<li><b>Listening Station:</b> Contains intercoms, a telecomms relay, and a list of frequencies.</li>\
 	<li><b>Ark Chamber:</b> Houses the Ark.</li>\
-	<li><b>Observation Room:</b> Contains five camera observers. These can be used to watch the station through its cameras. You can also use your \
-	absconder to teleport onto the station with these. <b>Alt-clicking the console creates a new absconder!</b> If you go to the station, bring a spare \
-	absconder or two for any converts you manage to get while you're there.</li>\
+	<li><b>Observation Room:</b> Contains five camera observers. These can be used to watch the station through its cameras, as well as to teleport down \
+	to most areas. To do this, use the Warp action while hovering over the tile you want to warp to.</li>\
 	<li><b>Infirmary:</b> Contains sleepers and basic medical supplies for superficial wounds. The sleepers can consume Vitality to heal any occupants. \
 	This room is generally more useful during the preparation phase; when defending the Ark, scripture is more useful.</li>\
 	</ul>\
+	<hr>\
+	<h2>Things that have changed:</h2>\
+	<ul>\
+	<li><b>Servants may now vote to declare war on the station</b> by using the herald's beacon in the center of their spawn room. It requires a 66% vote, \
+	and will announce their presence to crew, but will heavily empower many of their tools and gain an extra 10 minutes to prepare.</li>\
+	<li><b>Clockwork marauders have been heavily revamped</b> and now serve as frontline fighters that are not bound to any servants.</li>\
+	<li><font size=3><b>Geis has been removed</b></font> and replaced with a new scripture called Kindle. Kindle serves as a stun and silence from short \
+	distance against one target. Note that if the target takes damage, the stun will be reduced in duration.</li>\
+	</ul>\
+	<hr>\
 	<b>Good luck!</b>"
 
 /obj/item/weapon/paper/servant_primer/examine(mob/user)
 	if(!is_servant_of_ratvar(user) && !isobserver(user))
-		to_chat(user, "<span class='danger'>You can't make out any of the words on [src].</span>")
+		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
 	..()

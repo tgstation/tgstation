@@ -213,6 +213,7 @@
 /datum/action/innate/function_call
 	name = "Function Call"
 	desc = "Allows you to summon a Ratvarian spear to fight enemies."
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS

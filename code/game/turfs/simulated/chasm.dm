@@ -130,8 +130,8 @@
 	..()
 	drop_x = x
 	drop_y = y
-	if(z+1 <= world.maxz)
-		drop_z = z+1
+	if(z-1 > ZLEVEL_STATION)
+		drop_z = z-1
 
 
 /turf/open/chasm/straight_down/lava_land_surface

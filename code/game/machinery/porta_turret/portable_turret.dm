@@ -607,7 +607,7 @@
 	cover.name = name
 	cover.desc = desc
 
-/obj/machinery/porta_turret/centcomm_shuttle
+/obj/machinery/porta_turret/centcom_shuttle
 	installation = null
 	max_integrity = 260
 	always_up = 1
@@ -624,10 +624,10 @@
 	emp_vunerable = 0
 	mode = TURRET_LETHAL
 
-/obj/machinery/porta_turret/centcomm_shuttle/assess_perp(mob/living/carbon/human/perp)
+/obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
 	return 0
 
-/obj/machinery/porta_turret/centcomm_shuttle/setup()
+/obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
 
 ////////////////////////
@@ -669,7 +669,7 @@
 		return
 
 	if(control_area)
-		control_area = locate(text2path(control_area)) in GLOB.sortedAreas
+		control_area = get_area_instance_from_text(control_area)
 		if(control_area == null)
 			control_area = get_area(src)
 			stack_trace("Bad control_area path for [src], [src.control_area]")

@@ -46,7 +46,7 @@
 	SSblackbox.add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
-/proc/Centcomm_announce(text , mob/Sender)
+/proc/CentCom_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)]:</b> [msg]</span>"
 	to_chat(GLOB.admins, msg)

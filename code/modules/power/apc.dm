@@ -178,7 +178,7 @@
 
 	//if area isn't specified use current
 	if(areastring)
-		src.area = locate(text2path(areastring)) in GLOB.sortedAreas
+		src.area = get_area_instance_from_text(areastring)
 		if(!src.area)
 			src.area = A
 			stack_trace("Bad areastring path for [src], [src.areastring]")

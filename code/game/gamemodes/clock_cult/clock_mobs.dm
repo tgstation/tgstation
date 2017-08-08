@@ -20,6 +20,11 @@
 	light_color = "#E42742"
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
+	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
+
+/mob/living/simple_animal/hostile/clockwork/Initialize()
+	. = ..()
+	update_values()
 
 /mob/living/simple_animal/hostile/clockwork/get_spans()
 	return ..() | SPAN_ROBOT
@@ -28,6 +33,8 @@
 	..()
 	add_servant_of_ratvar(src, TRUE)
 	to_chat(src, playstyle_string)
+	if(GLOB.ratvar_approaches)
+		to_chat(src, empower_string)
 
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
@@ -50,3 +57,5 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
+
+/mob/living/simple_animal/hostile/clockwork/proc/update_values() //This is called by certain things to check GLOB.ratvar_awakens and GLOB.ratvar_approaches

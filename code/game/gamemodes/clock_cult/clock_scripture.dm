@@ -87,6 +87,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 				SSblackbox.add_details("clockcult_scripture_recited", name)
 	if(slab)
 		slab.busy = null
+	post_recital()
 	qdel(src)
 	return successful
 
@@ -180,6 +181,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	for(var/invocation in invocations)
 		if(!do_after(invoker, channel_time / invocations.len, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
 			slab.busy = null
+			scripture_fail()
 			return FALSE
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
@@ -191,6 +193,11 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
 
+
+/datum/clockwork_scripture/proc/scripture_fail() //Called if the scripture fails to invoke.
+
+
+/datum/clockwork_scripture/proc/post_recital() //Called after the scripture is recited
 
 //Channeled scripture begins instantly but runs constantly
 /datum/clockwork_scripture/channeled
@@ -254,6 +261,36 @@ Applications: 8 servants, 3 caches, and 100 CV
 	if(isitem(O))
 		invoker.put_in_hands(O)
 	return TRUE
+
+
+//Used specifically to create construct shells.
+/datum/clockwork_scripture/create_object/construct
+	var/construct_type //The type of construct that the scripture is made to create, even if not directly
+	var/construct_limit = 1 //How many constructs of this type can exist
+
+/datum/clockwork_scripture/create_object/construct/check_special_requirements()
+	update_construct_limit()
+	var/constructs = get_constructs()
+	if(constructs >= construct_limit)
+		to_chat(invoker, "<span class='warning'>There are too many constructs of this type ([constructs])! You may only have [construct_limit].</span>")
+		return
+	return TRUE
+
+/datum/clockwork_scripture/create_object/construct/post_recital()
+	creation_update()
+
+/datum/clockwork_scripture/create_object/construct/proc/get_constructs()
+	var/constructs = 0
+	for(var/V in GLOB.all_clockwork_mobs)
+		if(istype(V, construct_type))
+			constructs++
+	for(var/V in GLOB.all_clockwork_objects)
+		if(istype(V, object_path)) //nice try
+			constructs++
+	return constructs
+
+/datum/clockwork_scripture/create_object/construct/proc/update_construct_limit() //Change this on a per-scripture basis, for dynamic limits
+
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
 /datum/clockwork_scripture/ranged_ability

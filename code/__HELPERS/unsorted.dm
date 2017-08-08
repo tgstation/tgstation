@@ -605,6 +605,18 @@ Turf and target are separate in case you want to teleport some distance from a t
 	GLOB.sortedAreas.Add(src)
 	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
 
+//Takes: Area type as a text string from a variable.
+//Returns: Instance for the area in the world.
+/proc/get_area_instance_from_text(areatext)
+	var/areainstance = null
+	if(istext(areatext))
+		areatext = text2path(areatext)
+	for(var/V in GLOB.sortedAreas)
+		var/area/A = V
+		if(A.type == areatext)
+			areainstance = V
+	return areainstance
+
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
 /proc/get_areas(areatype, subtypes=TRUE)

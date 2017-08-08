@@ -161,7 +161,7 @@
 
 /obj/item/clockwork/replica_fabricator/proc/can_use_power(amount)
 	if(amount == RATVAR_POWER_CHECK)
-		if(GLOB.ratvar_awakens || !uses_power)
+		if(GLOB.ratvar_awakens || GLOB.ratvar_approaches || !uses_power)
 			return TRUE
 		else
 			return FALSE

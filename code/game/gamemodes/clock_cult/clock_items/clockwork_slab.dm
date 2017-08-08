@@ -2,7 +2,6 @@
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
 	clockwork_desc = "A link between you and the Celestial Derelict. It produces components,  contains information, and is your most vital tool as a Servant.\n\
-	Use the <span class='brass'>Hierophant Network</span> action button to discreetly talk with other Servants.\n\
 	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
@@ -21,11 +20,10 @@
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
-	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis, /datum/clockwork_scripture/create_object/sigil_of_submission, \
-	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
+	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/kindle, \
+	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/abscond) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	var/recollection_category = "Default"
-	actions_types = list(/datum/action/item_action/clock/hierophant)
 
 /obj/item/clockwork/slab/starter
 	stored_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
@@ -93,6 +91,9 @@
 	update_slab_info(src)
 	START_PROCESSING(SSobj, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
+	if(GLOB.ratvar_approaches)
+		name = "supercharged [name]"
+		speed_multiplier = max(0.1, speed_multiplier - 0.25)
 
 /obj/item/clockwork/slab/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -117,6 +118,9 @@
 
 //Component Generation
 /obj/item/clockwork/slab/process()
+	if(GLOB.ratvar_approaches && speed_multiplier == initial(speed_multiplier))
+		name = "supercharged [name]"
+		speed_multiplier = max(0.1, speed_multiplier - 0.25)
 	if(!produces_components)
 		STOP_PROCESSING(SSobj, src)
 		return

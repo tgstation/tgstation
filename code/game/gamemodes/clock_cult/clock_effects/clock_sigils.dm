@@ -13,14 +13,21 @@
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
 
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
-	if(I.force && !is_servant_of_ratvar(user))
+	if(I.force)
+		if(is_servant_of_ratvar(user) && user.a_intent != INTENT_HARM)
+			return ..()
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
 		return 1
 	return ..()
 
+/obj/effect/clockwork/sigil/attack_tk(mob/user)
+	return //you can't tk stomp sigils, but you can hit them with something
+
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
-	if(iscarbon(user) && !user.stat && !is_servant_of_ratvar(user))
+	if(iscarbon(user) && !user.stat)
+		if(is_servant_of_ratvar(user) && user.a_intent != INTENT_HARM)
+			return ..()
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
 		qdel(src)
 		return 1
@@ -97,6 +104,17 @@
 	var/glow_type = /obj/effect/temp_visual/ratvar/sigil/submission
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
+	var/turf/T = get_turf(src)
+	var/has_sigil = FALSE
+	var/has_servant = FALSE
+	if(locate(/obj/effect/clockwork/sigil/transgression) in T)
+		has_sigil = TRUE
+	for(var/mob/living/M in range(3, src))
+		if(is_servant_of_ratvar(M) && !M.stat)
+			has_servant = TRUE
+	if(!has_sigil && !has_servant)
+		visible_message("<span class='danger'>[src] strains into a gentle violet color, but quietly fades...</span>")
+		return
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	var/oldcolor = color
 	animate(src, color = "#AF0AAF", time = convert_time, flags = ANIMATION_END_NOW)
