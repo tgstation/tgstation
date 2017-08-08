@@ -120,7 +120,7 @@ Made by Xhuis
 	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>")
 	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
 	to_chat(shadow.current, "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>")
-	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>")
+	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://wiki.hippiestation.com/index.php?title=Shadowling</b><br>")
 	to_chat(shadow.current, "<b>You require [required_thralls] thralls to ascend.</b><br>")
 	shadow.current.playsound_local(get_turf(shadow.current), 'hippiestation/sound/ambience/antag/sling.ogg', 100, FALSE, pressure_affected = FALSE)
 
