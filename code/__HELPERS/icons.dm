@@ -1006,7 +1006,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving)
+/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
 	if (!thing)
 		return
 	var/static/datum/callback/CB = CALLBACK(GLOBAL_PROC, .proc/send_asset)
@@ -1027,7 +1027,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			return
 	if (!isicon(I))
 		if (isfile(thing)) //special snowflake
-			var/name = sanitize_filename("bicon.[thing]")
+			var/name = sanitize_filename("[generate_asset_name(thing)].png")
 			register_asset(name, thing)
 			var/list/callbacks
 			var/list/callback_args = list()
@@ -1053,9 +1053,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if (isnull(icon_state))
 			icon_state = ""
 
-	I = icon(I, icon_state, dir, frame)
+	I = icon(I, icon_state, dir, frame, moving)
 
-	key = sanitize_filename("bicon.[md5(icon2base64(I))].[icon_state].[dir].png")
+	key = "[generate_asset_name(I)].png"
 	register_asset(key, I)
 	var/list/callbacks = list()
 	var/list/callback_args = list()
