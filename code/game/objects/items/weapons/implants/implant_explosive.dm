@@ -24,9 +24,8 @@
 				"}
 	return dat
 
-/obj/item/weapon/implant/explosive/trigger(emote, mob/source)
-	if(emote == "deathgasp")
-		activate("death")
+/obj/item/weapon/implant/explosive/on_mob_death()
+	activate("death")
 
 /obj/item/weapon/implant/explosive/activate(cause)
 	if(!cause || !imp_in || active)
