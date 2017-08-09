@@ -100,7 +100,6 @@
 		else if(attached_device)
 			if(href_list["rem_device"])
 				attached_device.forceMove(get_turf(src))
-				var/obj/item/device/assembly/A = attached_device
 				attached_device.holder = null
 				attached_device = null
 				update_icon()

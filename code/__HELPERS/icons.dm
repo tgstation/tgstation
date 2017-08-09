@@ -748,8 +748,8 @@ The _flatIcons list is a cache for generated icon files.
 		// Dimensions of overlay being added
 	var/{addX1;addX2;addY1;addY2}
 
-	for(var/A in layers)
-		var/image/I = A
+	for(var/V in layers)
+		var/image/I = V
 		if(I.alpha == 0)
 			continue
 

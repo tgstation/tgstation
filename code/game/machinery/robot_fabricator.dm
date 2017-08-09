@@ -14,7 +14,6 @@
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/living/user, params)
 	if (istype(O, /obj/item/stack/sheet/metal))
 		if (metal_amount < 150000)
-			var/count = 0
 			add_overlay("fab-load-metal")
 			addtimer(CALLBACK(src, .proc/FinishLoadingMetal, O, user), 15)
 		else
