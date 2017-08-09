@@ -237,12 +237,9 @@
 	var/datum/component/slippery/S = C
 	if(!istype(S))
 		return
-	var/mob/living/L = S.slip_victim
-	switch(wet)
-		if(TURF_WET_WATER)
-			L.inertia_dir = 0
-		if(TURF_WET_LUBE)
-			L.confused = max(L.confused, 8)
+	if(wet == TURF_WET_LUBE)
+		var/mob/living/L = S.slip_victim
+		L.confused = max(L.confused, 8)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
