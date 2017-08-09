@@ -26671,7 +26671,6 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/kitchen)
 "bgn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/chair{
 	dir = 4
 	},
@@ -30784,9 +30783,6 @@
 /area/medical/morgue)
 "bpM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -30796,6 +30792,9 @@
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
@@ -37430,6 +37429,10 @@
 /area/crew_quarters/heads/hor)
 "bCJ" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "research_shutters_2";
+	name = "research shutters"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "bCK" = (
@@ -88450,7 +88453,7 @@ baa
 beu
 bfq
 bgn
-bhe
+aJI
 aDZ
 aHN
 bjd
