@@ -547,3 +547,6 @@
 		else
 			return I
 	return I
+
+/turf/DropLocation()
+	return src

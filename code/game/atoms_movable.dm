@@ -700,3 +700,6 @@
 	if(anchored || throwing)
 		return FALSE
 	return TRUE
+
+/atom/movable/DropLocation(atom/movable/dropee = src)
+	return ..()
