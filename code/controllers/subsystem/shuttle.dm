@@ -99,8 +99,6 @@ SUBSYSTEM_DEF(shuttle)
 			T.color = "#00ffff"
 #endif
 
-	//world.log << "[transit_turfs.len] transit turfs registered"
-
 /datum/controller/subsystem/shuttle/fire()
 	for(var/thing in mobile)
 		if(!thing)

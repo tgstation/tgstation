@@ -506,10 +506,10 @@
 		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
 		GLOB.Banlist.cd = "/base/[banfolder]"
-		GLOB.Banlist["reason"] << reason
-		GLOB.Banlist["temp"] << temp
-		GLOB.Banlist["minutes"] << minutes
-		GLOB.Banlist["bannedby"] << usr.ckey
+		WRITE_FILE(GLOB.Banlist["reason"], reason)
+		WRITE_FILE(GLOB.Banlist["temp"], temp)
+		WRITE_FILE(GLOB.Banlist["minutes"], minutes)
+		WRITE_FILE(GLOB.Banlist["bannedby"], usr.ckey)
 		GLOB.Banlist.cd = "/base"
 		SSblackbox.inc("ban_edit",1)
 		unbanpanel()
@@ -1691,7 +1691,7 @@
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
 		SSblackbox.inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
-		H << 'sound/effects/pray_chaplain.ogg'
+		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
 
 	else if(href_list["adminsmite"])
 		if(!check_rights(R_ADMIN|R_FUN))

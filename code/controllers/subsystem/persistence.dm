@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(persistence)
 		satchel_string = pick_n_take(expanded_old_satchels)
 
 	old_secret_satchels = jointext(expanded_old_satchels,"#")
-	secret_satchels[SSmapping.config.map_name] << old_secret_satchels
+	WRITE_FILE(secret_satchels[SSmapping.config.map_name], old_secret_satchels)
 
 	var/list/chosen_satchel = splittext(satchel_string,"|")
 	if(!chosen_satchel || isemptylist(chosen_satchel) || chosen_satchel.len != 3) //Malformed
@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(persistence)
 		if(isemptylist(savable_obj))
 			continue
 		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
-	secret_satchels[SSmapping.config.map_name] << old_secret_satchels
+	WRITE_FILE(secret_satchels[SSmapping.config.map_name], old_secret_satchels)
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
 	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
@@ -181,14 +181,14 @@ SUBSYSTEM_DEF(persistence)
 
 	log_world("Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
-	chisel_messages_sav[SSmapping.config.map_name] << json_encode(saved_messages)
+	WRITE_FILE(chisel_messages_sav[SSmapping.config.map_name], json_encode(saved_messages))
 
 /datum/controller/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
 	saved_messages += list(M.pack()) // dm eats one list
 
 
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
-	trophy_sav << json_encode(saved_trophies)
+	WRITE_FILE(trophy_sav, json_encode(saved_trophies))
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)

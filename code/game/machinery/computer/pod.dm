@@ -21,7 +21,7 @@
 		return
 
 	if(!connected)
-		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
+		say("Cannot locate mass driver connector. Cancelling firing sequence!")
 		return
 
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
