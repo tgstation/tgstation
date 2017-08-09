@@ -829,7 +829,7 @@
 #include "code\game\objects\items\weapons\twohanded.dm"
 #include "code\game\objects\items\weapons\vending_items.dm"
 #include "code\game\objects\items\weapons\weaponry.dm"
-#include "code\game\objects\items\weapons\circuitboards\_circuitboard.dm"
+#include "code\game\objects\items\weapons\circuitboards\circuitboard.dm"
 #include "code\game\objects\items\weapons\circuitboards\computer_circuitboards.dm"
 #include "code\game\objects\items\weapons\circuitboards\machine_circuitboards.dm"
 #include "code\game\objects\items\weapons\grenades\chem_grenade.dm"

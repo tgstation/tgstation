@@ -32,10 +32,7 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/mask/gas))
 
 /obj/machinery/gulag_teleporter/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/gulag_teleporter/LateInitialize()
+	. = ..()
 	locate_reclaimer()
 
 /obj/machinery/gulag_teleporter/Destroy()
