@@ -411,34 +411,38 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			end = temp
 	return end
 
-
-/proc/parsepencode(t, mob/user=null, signfont=SIGNFONT)
+/proc/parsemarkdown(t, mob/user=null, limited=FALSE)
 	if(length(t) < 1)		//No input means nothing needs to be parsed
-		return
+		return "nothing"
 
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	if(user)
-		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+
+	t = replacetext(t, regex("(?<!\\\\)%s(?:ign)?(?=\\s|$)", "ig"), user ? "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>" : "")
+
+	t = replacetext(t, regex("(?<!\\\\)%f(?:ield)?(?=\\s|$)", "ig"), "\[field\]", "<span class=\"paper_field\">$1</span>")
+
+	if(!limited)
+		t = replacetext(t, regex("(?<!\\\\)__((?:(?!(?<!\\\\)__).)+)(?<!\\\\)\\__", "g"), "<font size=\"1\">$1</font>")
+
+		t = replacetext(t, "\[*\]", "<li>")
+		t = replacetext(t, "\[list\]", "<ul>")
+		t = replacetext(t, "\[/list\]", "</ul>")
+
+		t = replacetext(t, "---", "<hr>")
 	else
-		t = replacetext(t, "\[sign\]", "")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+		t = replacetext(t, regex("(?<!\\\\)__((?:(?!(?<!\\\\)__).)+)(?<!\\\\)\\__", "g"), "$1")
 
-	t = replacetext(t, "\[*\]", "<li>")
-	t = replacetext(t, "\[hr\]", "<HR>")
-	t = replacetext(t, "\[small\]", "<font size = \"1\">")
-	t = replacetext(t, "\[/small\]", "</font>")
-	t = replacetext(t, "\[list\]", "<ul>")
-	t = replacetext(t, "\[/list\]", "</ul>")
+	t = replacetext(t, regex("(?<!\\\\)\\|((?:(?!(?<!\\\\)\\|).)+)(?<!\\\\)\\|", "g"), "<center>$1</center>")
+	t = replacetext(t, regex("(?<!\\\\)\\*\\*((?:(?!(?<!\\\\)\\*\\*).)+)(?<!\\\\)\\*\\*", "g"), "<b>$1</b>")
+	t = replacetext(t, regex("(?<!\\\\)\\*((?:(?!(?<!\\\\)\\*).)+)(?<!\\\\)\\*", "g"), "<i>$1</i>")
+	t = replacetext(t, regex("(?<!\\\\)_((?:(?!(?<!\\\\)_).)+)(?<!\\\\)_", "g"), "<u>$1</u>")
+	t = replacetext(t, regex("(?<!\\\\)\\+((?:(?!(?<!\\\\)\\+).)+)(?<!\\\\)\\+", "g"), "<font size=\"4\">$1</font>")
+
+	t = replacetext(t, "\n", "<br>")
+
+	t = replacetext(t, "\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
+
+	t = replacetext(t, regex("(?:(?:(?<= |^) )|(?: (?=$)))+", "g"), "&nbsp;")
 
 	return t
 
@@ -560,7 +564,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/next_backslash = findtext(string, "\\")
 	if(!next_backslash)
 		return string
-	
+
 	var/leng = length(string)
 
 	var/next_space = findtext(string, " ", next_backslash + 1)
