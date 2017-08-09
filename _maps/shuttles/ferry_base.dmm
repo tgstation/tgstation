@@ -39,7 +39,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "j" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "k" = (
@@ -84,7 +84,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "q" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,

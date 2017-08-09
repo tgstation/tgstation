@@ -540,7 +540,9 @@
 	},
 /area/ai_monitored/turret_protected/ai)
 "abq" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -881,7 +883,9 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
 "acg" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -13495,7 +13499,9 @@
 	},
 /area/quartermaster/office)
 "aBr" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /obj/machinery/flasher{
@@ -37015,7 +37021,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_3)
 "brp" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/item/weapon/storage/pod{
@@ -37024,7 +37032,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_3)
 "brq" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/machinery/light/small,
@@ -57671,10 +57681,10 @@
 	},
 /area/shuttle/escape)
 "cdX" = (
-/obj/structure/chair,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 1;
@@ -57682,7 +57692,7 @@
 	},
 /area/shuttle/escape)
 "cdY" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 1;
@@ -58623,8 +58633,12 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cfX" = (
-/obj/structure/chair{
-	dir = 1
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
+	dir = 1;
+	step_x = 0;
+	step_y = 0
 	},
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
@@ -58633,8 +58647,12 @@
 	},
 /area/shuttle/escape)
 "cfY" = (
-/obj/structure/chair{
-	dir = 1
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
+	dir = 1;
+	step_x = 0;
+	step_y = 0
 	},
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
@@ -59503,7 +59521,9 @@
 	},
 /area/security/vacantoffice)
 "chJ" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
@@ -59814,7 +59834,9 @@
 /turf/open/floor/plating/asteroid,
 /area/maintenance/asteroid/aft/science)
 "ciq" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -60578,7 +60600,9 @@
 /turf/open/floor/plating/asteroid,
 /area/maintenance/asteroid/aft/science)
 "cjI" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -62156,7 +62180,9 @@
 	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
 	},
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -62172,7 +62198,9 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -69093,7 +69121,9 @@
 	},
 /area/hallway/secondary/entry)
 "cyu" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -69102,19 +69132,25 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "cyv" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "cyw" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "cyx" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -72832,7 +72868,9 @@
 	},
 /area/hallway/primary/aft)
 "cFO" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/machinery/newscaster{
@@ -73320,7 +73358,9 @@
 	},
 /area/maintenance/asteroid/central)
 "cGO" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -82757,12 +82797,13 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "cZt" = (
-/obj/structure/chair/office/light{
-	icon_state = "officechair_white";
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/shuttle/escape)
+/area/space)
 "cZu" = (
 /obj/machinery/computer/communications,
 /obj/structure/window/reinforced{
@@ -83095,7 +83136,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "dah" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 5;
@@ -83262,8 +83303,12 @@
 	},
 /area/shuttle/escape)
 "daB" = (
-/obj/structure/chair{
-	dir = 1
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
+	dir = 1;
+	step_x = 0;
+	step_y = 0
 	},
 /turf/open/floor/mineral/plastitanium/brig{
 	dir = 6;
@@ -83386,7 +83431,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "daV" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -83395,7 +83442,9 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "daW" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -94696,6 +94745,170 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"dzg" = (
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"dzh" = (
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzi" = (
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzj" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzk" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzl" = (
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzm" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzn" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzo" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzp" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzq" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzr" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzs" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzt" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzu" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dzv" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -151179,8 +151392,8 @@ daV
 daV
 chL
 daS
-daV
-daV
+dzh
+dzl
 daV
 daV
 daV
@@ -151436,7 +151649,7 @@ daW
 daW
 chL
 daS
-daW
+dzi
 daW
 daW
 daW
@@ -151950,12 +152163,12 @@ daV
 daV
 chL
 daS
-daV
-daV
-daV
-daV
-daV
-daV
+dzj
+dzm
+dzo
+dzq
+dzs
+dzu
 chL
 cds
 dbT
@@ -152207,12 +152420,12 @@ daW
 daW
 chL
 daS
-daW
-daW
-daW
-daW
-daW
-daW
+dzk
+dzn
+dzp
+dzr
+dzt
+dzv
 dbL
 cgy
 cgy
@@ -152698,7 +152911,7 @@ cFp
 cFp
 cds
 cZi
-cZt
+dzg
 cZG
 cZG
 cZZ

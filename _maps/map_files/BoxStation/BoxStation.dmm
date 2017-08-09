@@ -2433,13 +2433,15 @@
 	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
 	},
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 3;
 	pixel_y = 32
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_3)
@@ -2451,10 +2453,12 @@
 	pixel_x = 6;
 	pixel_y = -32
 	},
-/obj/structure/chair{
+/obj/machinery/light/small,
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
-/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_3)
 "afs" = (
@@ -4932,7 +4936,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "akF" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -5832,7 +5838,9 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "amB" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -6213,18 +6221,22 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anq" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "anr" = (
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/machinery/flasher{
 	id = "gulagshuttleflasher";
 	pixel_x = 25
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
@@ -13978,7 +13990,7 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aFC" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aFD" = (
@@ -13989,7 +14001,9 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aFE" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -15431,7 +15445,9 @@
 /turf/open/floor/plating,
 /area/security/warden)
 "aIG" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -37331,7 +37347,9 @@
 /turf/open/floor/plating,
 /area/science/test_area)
 "bHx" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -56283,7 +56301,9 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cwF" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -56313,7 +56333,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "cwJ" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -56345,11 +56367,13 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwO" = (
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -56483,7 +56507,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "cxi" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxj" = (
@@ -56510,13 +56534,15 @@
 	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 3;
 	pixel_y = 32
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -56545,25 +56571,31 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cxq" = (
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxr" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxs" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -56595,10 +56627,12 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/obj/structure/chair{
+/obj/machinery/light/small,
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (WEST)";
+	icon_state = "shuttlechair";
 	dir = 8
 	},
-/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "cxy" = (
@@ -56619,7 +56653,7 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "cxB" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cxC" = (
@@ -56683,7 +56717,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cxI" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
@@ -57442,13 +57478,15 @@
 	possible_destinations = "pod_lavaland4";
 	shuttleId = "pod4"
 	},
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 3;
 	pixel_y = 32
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_4)
@@ -57460,10 +57498,12 @@
 	pixel_x = 6;
 	pixel_y = -32
 	},
-/obj/structure/chair{
+/obj/machinery/light/small,
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (EAST)";
+	icon_state = "shuttlechair";
 	dir = 4
 	},
-/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_4)
 "czN" = (
@@ -62297,18 +62337,20 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
 "cLJ" = (
-/obj/structure/chair,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "cLK" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/structure/chair/shuttle{
+	tag = "icon-shuttlechair (NORTH)";
+	icon_state = "shuttlechair";
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -117278,7 +117320,7 @@ cwL
 cwX
 cwL
 cwL
-anq
+cxi
 cxj
 cwL
 cxq
