@@ -616,3 +616,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	if(!L)
 		return null
 	return L.AllowDrop() ? L : get_turf(L)
+
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
