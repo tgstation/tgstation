@@ -1,0 +1,4 @@
+author: "thefastfoodguy"
+delete-after: True
+changes: 
+  - bugfix: "Hopefully fixes shadowlings not being able to veil borg lights"
