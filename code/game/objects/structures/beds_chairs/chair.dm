@@ -329,3 +329,9 @@
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
 	item_chair = null
+
+/obj/structure/chair/shuttle
+	name = "shuttle chair"
+	desc = "You sit in this. Either by will or force. Looks comfortable."
+	icon_state = "shuttlechair"
+	item_chair = null
