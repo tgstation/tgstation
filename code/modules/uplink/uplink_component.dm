@@ -89,7 +89,7 @@
 		return
 	telecrystals = tc - cost
 	SSblackbox.add_details("traitor_uplink_items_bought", "[item.name]|[cost]")
-	var/atom/A = new item.item(get_turf(parent), src)
+	var/atom/A = item.spawn_item(get_turf(parent), src, user)
 	if(!A)
 		return
 
