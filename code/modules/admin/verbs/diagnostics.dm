@@ -78,7 +78,7 @@
 				continue
 			output += "&nbsp;&nbsp;[filters[filter]]: [f.len]<br>"
 			for (var/device in f)
-				if (isatom(device))
+				if (istype(device, /atom))
 					var/atom/A = device
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([A.x],[A.y],[A.z] in area [get_area(device)])<br>"
 				else
