@@ -347,6 +347,7 @@
 #include "code\game\shuttle_engines.dm"
 #include "code\game\skincmd.dm"
 #include "code\game\sound.dm"
+#include "code\game\world.dm"
 #include "code\game\area\ai_monitored.dm"
 #include "code\game\area\areas.dm"
 #include "code\game\area\Space_Station_13_areas.dm"
