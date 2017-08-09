@@ -262,14 +262,14 @@ Difficulty: Very Hard
 		return FALSE
 	return TRUE
 
-/obj/machinery/smartfridge/black_box/New()
+/obj/machinery/smartfridge/black_box/Initialize()
+	. = ..()
 	var/static/obj/machinery/smartfridge/black_box/current
 	if(current && current != src)
 		qdel(src, force=TRUE)
 		return
 	current = src
 	ReadMemory()
-	. = ..()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()

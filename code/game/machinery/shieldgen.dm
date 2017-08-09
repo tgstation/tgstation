@@ -10,9 +10,9 @@
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/emergency_shield/New()
-	src.setDir(pick(1,2,3,4))
-	..()
+/obj/structure/emergency_shield/Initialize()
+	. = ..()
+	setDir(pick(1,2,3,4))
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()

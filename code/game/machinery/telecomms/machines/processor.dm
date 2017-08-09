@@ -16,8 +16,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	machinetype = 3
-	//heatgen = 100
-	//delay = 5
+	circuit = /obj/item/weapon/circuitboard/machine/telecomms/processor
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
 /obj/machinery/telecomms/processor/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
@@ -34,24 +33,6 @@
 		else // no bus detected - send the signal to servers instead
 			signal.data["slow"] += rand(5, 10) // slow the signal down
 			relay_information(signal, "/obj/machinery/telecomms/server")
-
-/obj/machinery/telecomms/processor/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/processor(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/telecomms/processor
-	name = "Processor Unit (Machine Board)"
-	build_path = /obj/machinery/telecomms/processor
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 3,
-							/obj/item/weapon/stock_parts/subspace/filter = 1,
-							/obj/item/weapon/stock_parts/subspace/treatment = 2,
-							/obj/item/weapon/stock_parts/subspace/analyzer = 1,
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/subspace/amplifier = 1)
-
 
 //Preset Processors
 

@@ -17,6 +17,8 @@
 	icon_state = "pod_0"
 	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
+	circuit = /obj/item/weapon/circuitboard/machine/clonepod
+
 	var/heal_level //The clone is released once its health reaches this level.
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
@@ -46,8 +48,6 @@
 
 /obj/machinery/clonepod/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
-	B.apply_default_parts(src)
 
 	countdown = new(src)
 
@@ -59,16 +59,11 @@
 
 /obj/machinery/clonepod/Destroy()
 	go_out()
-	qdel(radio)
-	radio = null
-	qdel(countdown)
-	countdown = null
+	QDEL_NULL(radio)
+	QDEL_NULL(countdown)
 	if(connected)
 		connected.DetachCloner(src)
-	for(var/i in unattached_flesh)
-		qdel(i)
-	LAZYCLEARLIST(unattached_flesh)
-	unattached_flesh = null
+	QDEL_LIST(unattached_flesh)
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -83,16 +78,6 @@
 		heal_level = MINIMUM_HEAL_LEVEL
 	if(heal_level > 100)
 		heal_level = 100
-
-/obj/item/weapon/circuitboard/machine/clonepod
-	name = "Clone Pod (Machine Board)"
-	build_path = /obj/machinery/clonepod
-	origin_tech = "programming=2;biotech=2"
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/scanning_module = 2,
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/stack/sheet/glass = 1)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.

@@ -8,28 +8,13 @@
 	idle_power_usage = 200
 	active_power_usage = 5000
 	unique_rename = 1
+	circuit = /obj/item/weapon/circuitboard/machine/quantumpad
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
-	var/obj/machinery/quantumpad/linked_pad = null
-
-/obj/machinery/quantumpad/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/quantumpad(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/quantumpad
-	name = "Quantum Pad (Machine Board)"
-	build_path = /obj/machinery/quantumpad
-	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 1,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+	var/obj/machinery/quantumpad/linked_pad
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
