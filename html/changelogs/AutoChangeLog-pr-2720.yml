@@ -1,5 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - balance: "Veil now disables camera lights"
-  - balance: "Veil has a 10% chance to disable a camera temporarily."
