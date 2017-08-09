@@ -70,7 +70,7 @@
 		if(!H.client || !istype(H))
 			return
 		to_chat(H, "<span class='danger'>Honk...</span>")
-		H << 'sound/spookoween/scary_clown_appear.ogg'
+		SEND_SOUND(H, sound('sound/spookoween/scary_clown_appear.ogg'))
 		var/turf/T = get_turf(H)
 		if(T)
 			new /obj/effect/hallucination/simple/clown(T, H, 50)

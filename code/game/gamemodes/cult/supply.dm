@@ -29,7 +29,6 @@
 	return 0
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	world.log << "[usr], [href], [href_list]"
 	if(QDELETED(src) || usr.incapacitated() || !in_range(src, usr))
 		return
 
