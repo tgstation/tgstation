@@ -38,7 +38,7 @@
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, .proc/take_contents), 0)
-	..()
+	. = ..()
 	update_icon()
 	PopulateContents()
 

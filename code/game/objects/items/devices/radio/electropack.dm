@@ -24,8 +24,7 @@
 	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/item/device/electropack/attack_hand(mob/user)

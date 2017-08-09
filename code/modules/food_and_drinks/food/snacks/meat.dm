@@ -14,6 +14,7 @@
 	slices_num = 3
 	filling_color = "#FF0000"
 	tastes = list("meat" = 1)
+	foodtype = MEAT | RAW
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/slice, reagents_per_slice)
 	..()
@@ -36,6 +37,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human
 	tastes = list("tender meat" = 1)
+	foodtype = MEAT | RAW | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human/slice, reagents_per_slice)
 	..()
@@ -62,6 +64,7 @@
 	list_reagents = list("nutriment" = 3, "slimejelly" = 3)
 	filling_color = "#00FFFF"
 	tastes = list("slime" = 1, "jelly" = 1)
+	foodtype = MEAT | RAW | TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	icon_state = "golemmeat"
@@ -69,35 +72,41 @@
 	list_reagents = list("nutriment" = 3, "iron" = 3)
 	filling_color = "#A9A9A9"
 	tastes = list("rock" = 1)
+	foodtype = MEAT | RAW | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
 	icon_state = "agolemmeat"
 	desc = "From the slime pen to the rune to the kitchen, science."
 	filling_color = "#66CDAA"
+	foodtype = MEAT | RAW | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	icon_state = "lizardmeat"
 	desc = "Delicious dino damage"
 	filling_color = "#6B8E23"
 	tastes = list("meat" = 4, "scales" = 1)
+	foodtype = MEAT | RAW
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	icon_state = "plantmeat"
 	desc = "All the joys of healthy eating with all the fun of cannibalism."
 	filling_color = "#E9967A"
 	tastes = list("salad" = 1, "wood" = 1)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	icon_state = "shadowmeat"
 	desc = "Ow, the edge"
 	filling_color = "#202020"
 	tastes = list("darkness" = 1, "meat" = 1)
+	foodtype = MEAT | RAW
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	icon_state = "flymeat"
 	desc = "Nothing says tasty like maggot filled radioactive mutant flesh."
 	list_reagents = list("nutriment" = 3, "uranium" = 3)
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
+	foodtype = MEAT | RAW | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	name = "-bone"
@@ -106,6 +115,7 @@
 	filling_color = "#F0F0F0"
 	tastes = list("bone" = 1)
 	slice_path = null  //can't slice a bone into cutlets
+	foodtype = GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	name = " meat (rotten)"
@@ -113,6 +123,7 @@
 	desc = "Halfway to becoming fertilizer for your garden."
 	filling_color = "#6B8E23"
 	tastes = list("brains" = 1, "meat" = 1)
+	foodtype = RAW | MEAT | TOXIC
 
 
 
@@ -122,22 +133,27 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat
 	name = "synthmeat"
 	desc = "A synthetic slab of meat."
+	foodtype = RAW | MEAT //hurr durr chemicals we're harmed in the production of this meat thus its non-vegan.
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct
 	name = "meat product"
 	desc = "A slab of station reclaimed and chemically processed meat product."
+	foodtype = RAW | MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	name = "monkey meat"
+	foodtype = RAW | MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
 	name = "corgi meat"
 	desc = "Tastes like... well you know..."
 	tastes = list("meat" = 4, "a fondness for wearing hats" = 1)
+	foodtype = RAW | MEAT | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug
 	name = "pug meat"
 	desc = "Tastes like... well you know..."
+	foodtype = RAW | MEAT | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato
 	name = "killer tomato meat"
@@ -148,6 +164,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/killertomato
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/killertomato
 	tastes = list("tomato" = 1)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear
 	name = "bear meat"
@@ -158,6 +175,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/bear
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/bear
 	tastes = list("meat" = 1, "salmon" = 1)
+	foodtype = RAW | MEAT
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
@@ -170,6 +188,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/xeno
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/xeno
 	tastes = list("meat" = 1, "acid" = 1)
+	foodtype = RAW | MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider
 	name = "spider meat"
@@ -180,6 +199,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/spider
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/spider
 	tastes = list("cobwebs" = 1)
+	foodtype = RAW | MEAT | TOXIC
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath
@@ -188,6 +208,7 @@
 	list_reagents = list("nutriment" = 3, "toxin" = 5)
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
+	foodtype = RAW | MEAT | TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
 	visible_message("[src] finishes cooking!")
@@ -202,6 +223,7 @@
 	icon_state = "meatwheat_clump"
 	bitesize = 4
 	tastes = list("meat" = 1, "wheat" = 1)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
 	name = "raw piece of bacon"
@@ -212,6 +234,7 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#B22222"
 	tastes = list("bacon" = 1)
+	foodtype = RAW | MEAT 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/bacon
 	name = "piece of bacon"
@@ -221,6 +244,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#854817"
 	tastes = list("bacon" = 1)
+	foodtype = MEAT
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
@@ -233,16 +257,20 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
 	trash = /obj/item/trash/plate
 	filling_color = "#B22222"
+	foodtype = MEAT
 	tastes = list("meat" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain
+    foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human
 	tastes = list("tender meat" = 1)
+	foodtype = MEAT | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/killertomato
 	name = "killer tomato steak"
 	tastes = list("tomato" = 1)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/bear
 	name = "bear steak"
@@ -263,6 +291,7 @@
 	icon_state = "goliathsteak"
 	trash = null
 	tastes = list("meat" = 1, "rock" = 1)
+	foodtype = MEAT
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
@@ -278,6 +307,7 @@
 	filling_color = "#B22222"
 	tastes = list("meat" = 1)
 	var/meat_type = "meat"
+	foodtype = MEAT | RAW
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
 	..()
@@ -285,10 +315,12 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain
+    foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/plain/human
 	tastes = list("tender meat" = 1)
+	foodtype = MEAT | RAW | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
 	..()
@@ -301,6 +333,7 @@
 	name = "raw killer tomato cutlet"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/killertomato
 	tastes = list("tomato" = 1)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/bear
 	name = "raw bear cutlet"
@@ -328,15 +361,18 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#B22222"
 	tastes = list("meat" = 1)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/plain
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/plain/human
 	tastes = list("tender meat" = 1)
+	foodtype = MEAT | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/killertomato
 	name = "killer tomato cutlet"
 	tastes = list("tomato" = 1)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/bear
 	name = "bear cutlet"

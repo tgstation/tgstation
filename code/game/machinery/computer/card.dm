@@ -562,7 +562,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			head_subordinates += job.title
 
 /obj/machinery/computer/card/centcom
-	name = "\improper Centcom identification console"
+	name = "\improper CentCom identification console"
 	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
 	req_access = list(ACCESS_CENT_CAPTAIN)
 

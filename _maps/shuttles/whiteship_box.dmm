@@ -219,13 +219,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aL" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (

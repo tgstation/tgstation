@@ -374,6 +374,7 @@
 	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
+	set_disgust(0)
 	SetStun(0, FALSE)
 	SetKnockdown(0, FALSE)
 	SetSleeping(0, FALSE)
@@ -751,7 +752,7 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcomm
+	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcom
 		return 0
 	if(T.z >= ZLEVEL_SPACEMAX)
 		return 0

@@ -41,7 +41,7 @@
 	var/static_environ
 
 	var/has_gravity = FALSE
-	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -338,7 +338,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		else
 			icon_state = "blue-red"
 	else
-		icon_state = null
+		var/weather_icon
+		for(var/V in SSweather.existing_weather)
+			var/datum/weather/W = V
+			if(src in W.impacted_areas)
+				W.update_areas()
+				weather_icon = TRUE
+		if(!weather_icon)
+			icon_state = null
 
 /area/space/updateicon()
 	icon_state = null

@@ -100,7 +100,7 @@
 
 
 /mob/living/simple_animal/parrot/Initialize()
-	..()
+	. = ..()
 	if(!ears)
 		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
 						/obj/item/device/radio/headset/headset_eng, \

@@ -22,7 +22,7 @@
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 
 /obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
-	..()
+	. = ..()
 	if(new_amount)
 		amount = new_amount
 	if(!merge_type)

@@ -7,7 +7,7 @@
 	var/assembly_type
 
 /obj/effect/spawner/newbomb/Initialize()
-	..()
+	. = ..()
 	var/obj/item/device/transfer_valve/V = new(src.loc)
 	var/obj/item/weapon/tank/internals/plasma/full/PT = new(V)
 	var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
