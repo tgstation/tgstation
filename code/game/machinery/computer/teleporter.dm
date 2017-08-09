@@ -3,23 +3,19 @@
 	desc = "Used to control a linked teleportation Hub and Station."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
+	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/weapon/circuitboard/computer/teleporter
-	var/obj/item/device/gps/locked = null
+	var/obj/item/device/gps/locked
 	var/regime_set = "Teleporter"
-	var/id = null
+	var/id
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
-						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
-
-	light_color = LIGHT_COLOR_BLUE
-
-/obj/machinery/computer/teleporter/New()
-	src.id = "[rand(1000, 9999)]"
-	..()
+					//Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/Initialize()
 	. = ..()
+	id = "[rand(1000, 9999)]"
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -31,7 +27,7 @@
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in GLOB.cardinals)
 		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
 		if(power_station)
 			break
@@ -50,7 +46,7 @@
 		return ..()
 
 /obj/machinery/computer/teleporter/attack_ai(mob/user)
-	src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/computer/teleporter/attack_hand(mob/user)
 	if(..())
@@ -88,7 +84,6 @@
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)
 	popup.open()
-	return
 
 /obj/machinery/computer/teleporter/Topic(href, href_list)
 	if(..())
@@ -144,10 +139,10 @@
 
 /obj/machinery/computer/teleporter/proc/check_hub_connection()
 	if(!power_station)
-		return
+		return FALSE
 	if(!power_station.teleporter_hub)
-		return
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	target = null
@@ -158,7 +153,7 @@
 
 /obj/machinery/computer/teleporter/proc/eject()
 	if(locked)
-		locked.loc = loc
+		locked.forceMove(get_turf(src))
 		locked = null
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)

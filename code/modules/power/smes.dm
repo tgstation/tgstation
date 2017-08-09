@@ -46,9 +46,6 @@
 
 /obj/machinery/power/smes/Initialize()
 	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/power/smes/LateInitialize()
 	dir_loop:
 		for(var/d in GLOB.cardinals)
 			var/turf/T = get_step(src, d)

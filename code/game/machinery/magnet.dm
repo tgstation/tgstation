@@ -33,11 +33,10 @@
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
-
+	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/magnetic_module/LateInitialize()
-	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
 	magnetic_process()
 
 /obj/machinery/magnetic_module/Destroy()
@@ -224,10 +223,6 @@
 
 	if(path) // check for default path
 		filter_path() // renders rpath
-
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/magnetic_controller/LateInitialize()
 	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
 
 /obj/machinery/magnetic_controller/Destroy()

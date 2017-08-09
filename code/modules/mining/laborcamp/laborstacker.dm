@@ -16,12 +16,9 @@
 
 
 /obj/machinery/mineral/labor_claim_console/Initialize()
-	..()
+	. = ..()
 	Radio = new/obj/item/device/radio(src)
-	Radio.listening = 0
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/mineral/labor_claim_console/LateInitialize()
+	Radio.listening = FALSE
 	locate_stacking_machine()
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)

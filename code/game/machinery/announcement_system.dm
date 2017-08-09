@@ -30,6 +30,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize()
 	. = ..()
 	GLOB.announcement_systems += src
+	radio = new /obj/item/device/radio/headset/ai(src)
 	update_icon()
 
 /obj/machinery/announcement_system/update_icon()

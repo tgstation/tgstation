@@ -16,10 +16,7 @@
 	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/gulag_teleporter_computer/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/gulag_teleporter_computer/LateInitialize()
+	. = ..()
 	scan_machinery()
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()

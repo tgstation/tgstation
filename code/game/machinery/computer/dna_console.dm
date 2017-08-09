@@ -54,10 +54,7 @@
 		return ..()
 
 /obj/machinery/computer/scan_consolenew/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/scan_consolenew/LateInitialize()
+	. = ..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
 		if(!isnull(connected))

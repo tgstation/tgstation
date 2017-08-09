@@ -110,7 +110,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	circuit = /obj/item/weapon/circuitboard/machine/teleporter_station
-	var/engaged = 0
+	var/engaged = FALSE
 	var/obj/machinery/computer/teleporter/teleporter_console
 	var/obj/machinery/teleport/hub/teleporter_hub
 	var/list/linked_stations = list()

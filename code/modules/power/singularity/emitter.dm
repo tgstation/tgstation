@@ -33,7 +33,7 @@
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0
-	var/atom/target = null
+	var/atom/target
 
 /obj/machinery/power/emitter/anchored
 	anchored = TRUE

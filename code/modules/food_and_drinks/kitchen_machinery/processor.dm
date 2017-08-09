@@ -11,7 +11,7 @@
 	idle_power_usage = 5
 	active_power_usage = 50
 	circuit = /obj/item/weapon/circuitboard/machine/processor
-	var/broken = 0
+	var/broken = FALSE
 	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
