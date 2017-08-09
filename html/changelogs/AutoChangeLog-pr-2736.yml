@@ -1,0 +1,4 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - bugfix: "The knockdown during enthralling now lasts 12 seconds as opposed to 1.2 seconds"
