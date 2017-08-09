@@ -44,7 +44,8 @@
 
 		qdel(src)
 		return
-	if((istype(W, /obj/item/weapon/weldingtool) && W:welding))
+	var/obj/item/weapon/weldingtool/WT = W
+	if((istype(WT) && WT.welding))
 		if(!status)
 			status = TRUE
 			GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
