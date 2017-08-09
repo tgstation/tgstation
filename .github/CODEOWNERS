@@ -28,7 +28,6 @@
 
 # Iamgoofball
 
-/code/modules/GOAP/* @Iamgoofball
 /code/modules/reagents/* @Iamgoofball
 /code/modules/stock_market/* @Iamgoofball
 
