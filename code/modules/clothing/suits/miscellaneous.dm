@@ -210,7 +210,7 @@
 
 /obj/item/clothing/suit/poncho/ponchoshame
 	name = "poncho of shame"
-	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseperable. Literally."
+	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 	flags = NODROP

@@ -131,7 +131,7 @@
 
 /obj/machinery/mineral/stacking_machine/laborstacker
 	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.
-	var/list/ore_values = list("glass" = 1, "metal" = 2, "solid plasma" = 20, "plasteel" = 23, "reinforced glass" = 4, "gold" = 20, "silver" = 20, "uranium" = 20, "diamond" = 25, "bananium" = 50)
+	var/list/ore_values = list("glass" = 1, "metal" = 2, "reinforced glass" = 4, "gold" = 20, "silver" = 20, "uranium" = 20, "titanium" = 20, "solid plasma" = 20, "plasteel" = 23, "plasma glass" = 23, "diamond" = 25, "bluespace polycrystal" = 30, "plastitanium" = 45, "bananium" = 50)
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	if(istype(inp))

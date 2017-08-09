@@ -13,17 +13,21 @@
 	if(modifiers["shift"])
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
-		return 1
+		return TRUE
+	if(modifiers["ctrl"])
+		locked = !locked
+		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		return TRUE
 	if(usr.next_click > world.time)
 		return
 	usr.next_click = world.time + 1
 	linked_action.Trigger()
-	return 1
+	return TRUE
 
 //Hide/Show Action Buttons ... Button
 /obj/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
-	desc = "Shift-click any button to reset its position. Alt-click to reset all buttons to their default positions."
+	desc = "Shift-click any button to reset its position, and Control-click it to lock it in place. Alt-click this button to reset all buttons to their default positions."
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
@@ -37,11 +41,17 @@
 		moved = FALSE
 		usr.update_action_buttons(TRUE)
 		return TRUE
+	if(modifiers["ctrl"])
+		locked = !locked
+		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		return TRUE
 	if(modifiers["alt"])
 		for(var/V in usr.actions)
 			var/datum/action/A = V
 			var/obj/screen/movable/action_button/B = A.button
 			B.moved = FALSE
+			B.locked = usr.client.prefs.buttons_locked
+		locked = usr.client.prefs.buttons_locked
 		moved = FALSE
 		usr.update_action_buttons(TRUE)
 		to_chat(usr, "<span class='notice'>Action button positions have been reset.</span>")

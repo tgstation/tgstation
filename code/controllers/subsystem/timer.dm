@@ -1,5 +1,6 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
+#define TIMER_ID_MAX (2**24) //max float with integer precision
 
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
@@ -209,7 +210,6 @@ SUBSYSTEM_DEF(timer)
 	timer_id_dict |= SStimer.timer_id_dict
 	bucket_list |= SStimer.bucket_list
 
-/datum/var/list/active_timers
 /datum/timedevent
 	var/id
 	var/datum/callback/callBack
@@ -225,18 +225,23 @@ SUBSYSTEM_DEF(timer)
 	var/static/nextid = 1
 
 /datum/timedevent/New(datum/callback/callBack, timeToRun, flags, hash)
-	id = nextid++
+	id = TIMER_ID_NULL
 	src.callBack = callBack
 	src.timeToRun = timeToRun
 	src.flags = flags
 	src.hash = hash
 	
-	name = "Timer: [id]: TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
-	
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
-		SStimer.timer_id_dict["timerid[id]"] = src
+		do
+			if (nextid >= TIMER_ID_MAX)
+				nextid = 1
+			id = nextid++
+		while(SStimer.timer_id_dict["timerid" + num2text(id, 8)])
+		SStimer.timer_id_dict["timerid" + num2text(id, 8)] = src
+
+	name = "Timer: " + num2text(id, 8) + ", TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
 
 	if (callBack.object != GLOBAL_PROC)
 		LAZYADD(callBack.object.active_timers, src)
@@ -297,7 +302,7 @@ SUBSYSTEM_DEF(timer)
 	callBack = null
 
 	if (flags & TIMER_STOPPABLE)
-		SStimer.timer_id_dict -= "timerid[id]"
+		SStimer.timer_id_dict -= "timerid" + num2text(id, 8)
 
 	if (flags & TIMER_CLIENT_TIME)
 		SStimer.clienttime_timers -= src
@@ -378,9 +383,7 @@ SUBSYSTEM_DEF(timer)
 		timeToRun = REALTIMEOFDAY + wait
 
 	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
-	if (flags & TIMER_STOPPABLE)
-		return timer.id
-	return TIMER_ID_NULL
+	return timer.id 
 
 /proc/deltimer(id)
 	if (!id)
@@ -391,6 +394,7 @@ SUBSYSTEM_DEF(timer)
 		if (istype(id, /datum/timedevent))
 			qdel(id)
 			return TRUE
+	//id is string
 	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[id]"]
 	if (timer && !timer.spent)
 		qdel(timer)

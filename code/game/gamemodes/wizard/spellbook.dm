@@ -76,7 +76,7 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = locate()
+	var/area/wizard_station/A = locate() in GLOB.sortedAreas
 	if(!(user in A.contents))
 		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
@@ -376,7 +376,7 @@
 /datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
+		new /obj/item/weapon/paper/guides/antag/guardian/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"

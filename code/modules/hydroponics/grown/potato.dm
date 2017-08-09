@@ -25,6 +25,7 @@
 	icon_state = "potato"
 	filling_color = "#E9967A"
 	bitesize = 100
+	foodtype = VEGETABLES
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges

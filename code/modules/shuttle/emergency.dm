@@ -390,7 +390,7 @@
 					var/obj/docking_port/mobile/M = A
 					M.on_emergency_dock()
 
-				// now move the actual emergency shuttle to centcomm
+				// now move the actual emergency shuttle to centcom
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
 				if(is_hijacked())
@@ -525,6 +525,7 @@
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/weapon/storage/toolbox/emergency(src)
 
 /obj/item/weapon/storage/pod/attackby(obj/item/weapon/W, mob/user, params)
 	return

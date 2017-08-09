@@ -290,9 +290,8 @@
 	//HALLUCINATE
 	else if((findtext(message, hallucinate_words)))
 		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			new /obj/effect/hallucination/delusion(get_turf(L),L,null,150 * power_multiplier,0)
+		for(var/mob/living/carbon/C in listeners)
+			new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,0)
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))

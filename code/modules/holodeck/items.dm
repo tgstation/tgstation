@@ -14,6 +14,8 @@
 	name = "holographic energy sword"
 	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 3.0
 	throw_speed = 2
 	throw_range = 5
@@ -216,6 +218,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/paper/trek_diploma
+/obj/item/weapon/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
 	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+
+/obj/item/weapon/paper/fluff/holodeck/disclaimer
+	name = "Holodeck Disclaimer"
+	info = "Brusies sustained in the holodeck can be healed simply by sleeping."

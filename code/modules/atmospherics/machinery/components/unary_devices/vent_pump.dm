@@ -56,8 +56,7 @@
 	A.air_vent_names -= id_tag
 	A.air_vent_info -= id_tag
 
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	radio_connection = null
 	return ..()
 

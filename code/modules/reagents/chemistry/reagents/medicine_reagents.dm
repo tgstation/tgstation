@@ -52,6 +52,7 @@
 	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
+	M.disgust = 0
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.slurring = 0
@@ -684,7 +685,7 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
 	if (!eyes)
 		return
 	if(M.disabilities & BLIND)

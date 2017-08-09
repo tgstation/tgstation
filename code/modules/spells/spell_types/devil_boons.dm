@@ -8,6 +8,7 @@
 	school = "conjuration"
 	charge_max = 100
 	cooldown_min = 10
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "moneybag"
 
 
@@ -34,6 +35,7 @@
 	clothes_req = 0
 	charge_max = 50
 	cooldown_min = 10
+	action_icon = 'icons/mob/actions/actions_silicon.dmi'
 	action_icon_state = "camera_jump"
 	var/ranges = list(7,8,9,10)
 
@@ -52,6 +54,7 @@
 	clothes_req = 0
 	charge_max = 50
 	cooldown_min = 10
+	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "sacredflame"
 	var/mob/living/friend
 	var/obj/effect/mob_spawn/human/demonic_friend/friendShell

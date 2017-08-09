@@ -125,8 +125,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/New()
 	..()
 	GLOB.meteor_list += src
-	if(SSaugury)
-		SSaugury.register_doom(src, threat)
+	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	QDEL_IN(src, lifetime)
 
@@ -185,6 +184,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
+		var/sound/meteor_sound = sound(meteorsound)
+		var/random_frequency = get_rand_frequency()
+
 		for(var/mob/M in GLOB.player_list)
 			if((M.orbiting) && (SSaugury.watchers[M]))
 				continue
@@ -193,7 +195,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 				continue
 			var/dist = get_dist(M.loc, src.loc)
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, meteorsound, 50, 1, get_rand_frequency(), 10)
+			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
 
 ///////////////////////
 //Meteor types

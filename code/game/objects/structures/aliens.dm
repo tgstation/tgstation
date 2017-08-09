@@ -133,7 +133,7 @@
 		blacklisted_turfs = typecacheof(list(
 			/turf/open/space,
 			/turf/open/chasm,
-			/turf/open/floor/plating/lava))
+			/turf/open/lava))
 
 
 	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)

@@ -83,7 +83,7 @@
 
 /obj/machinery/nuclearbomb/syndicate/Initialize()
 	. = ..()
-	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
+	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
 	if(existing)
 		qdel(src)
 		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
@@ -421,8 +421,7 @@
 	yes_code = FALSE
 	safety = TRUE
 	update_icon()
-	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/alarm.ogg'
+	sound_to_playing_players('sound/machines/alarm.ogg')
 	if(SSticker && SSticker.mode)
 		SSticker.mode.explosion_in_progress = 1
 	sleep(100)
@@ -488,6 +487,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	icon = 'icons/obj/module.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
 
 /obj/item/weapon/disk/nuclear

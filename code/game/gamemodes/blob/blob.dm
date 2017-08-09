@@ -97,7 +97,8 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 
 	send_intercept(1)
 	message_sent = TRUE
+	addtimer(CALLBACK(src, .proc/SendSecondIntercept), 24000)
 
-	sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
+/datum/game_mode/blob/proc/SendSecondIntercept()
 	if(!replacementmode)
 		send_intercept(2) //if the blob has been alive this long, it's time to bomb it

@@ -432,20 +432,26 @@
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "click_catcher"
+	icon_state = "flash"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER"
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
-	screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
-	var/list/ret = list()
-	for(var/X in 0 to (view_size_x * 2))
-		for(var/Y in 0  to (view_size_y * 2))
-			var/obj/screen/click_catcher/CC = new()
-			CC.screen_loc = "EAST-[X],NORTH-[Y]"
-			ret += CC
-	return ret
+	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
+	if(view_size_x > 16 || view_size_y > 16)
+		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
+		icon = newicon
+		var/tx = view_size_x/16
+		var/ty = view_size_y/16
+		var/matrix/M = new
+		M.Scale(tx, ty)
+		transform = M
+		screen_loc = "CENTER-16,CENTER-16"
+	else
+		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
+		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
+		icon = newicon
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -453,7 +459,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
 		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)

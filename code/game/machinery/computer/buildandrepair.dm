@@ -150,6 +150,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "programming=2"
 	materials = list(MAT_GLASS=1000)
 	w_class = WEIGHT_CLASS_SMALL
@@ -210,7 +212,7 @@
 	build_path = /obj/machinery/computer/card
 	origin_tech = "programming=3"
 /obj/item/weapon/circuitboard/computer/card/centcom
-	name = "Centcom ID Console (Computer Board)"
+	name = "CentCom ID Console (Computer Board)"
 	build_path = /obj/machinery/computer/card/centcom
 
 /obj/item/weapon/circuitboard/computer/card/minor

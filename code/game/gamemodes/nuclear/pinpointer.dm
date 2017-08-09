@@ -8,6 +8,8 @@
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL = 500, MAT_GLASS = 250)
@@ -89,7 +91,7 @@
 		return
 	switch(mode)
 		if(TRACK_NUKE_DISK)
-			var/obj/item/weapon/disk/nuclear/N = locate()
+			var/obj/item/weapon/disk/nuclear/N = locate() in GLOB.poi_list
 			target = N
 		if(TRACK_MALF_AI)
 			for(var/V in GLOB.ai_list)

@@ -161,6 +161,7 @@
 
 /datum/action/innate/pai
 	name = "PAI Action"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	var/mob/living/silicon/pai/P
 
 /datum/action/innate/pai/Trigger()
@@ -197,8 +198,10 @@
 /datum/action/innate/pai/rest/Trigger()
 	..()
 	P.lay_down()
+
 /datum/action/innate/pai/light
 	name = "Toggle Integrated Lights"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "emp"
 	background_icon_state = "bg_tech"
 

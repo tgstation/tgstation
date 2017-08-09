@@ -12,7 +12,7 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
-// 
+//
 	var/id
 	// this should point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
@@ -177,7 +177,7 @@
 	for(var/i in 1 to assigned_turfs.len)
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
-			T.ChangeTurf(/turf/open/space,new_baseturf=/turf/open/space)
+			T.ChangeTurf(/turf/open/space,/turf/open/space)
 			T.flags |= UNUSED_TRANSIT_TURF
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
@@ -385,7 +385,7 @@
 
 	var/turf_type = /turf/open/space
 	var/baseturf_type = /turf/open/space
-	var/area_type = /area/space
+	var/underlying_area_type = /area/space
 	// If the shuttle is docked to a stationary port, restore its normal
 	// "empty" area and turf
 	if(current_dock)
@@ -394,28 +394,21 @@
 		if(current_dock.baseturf_type)
 			baseturf_type = current_dock.baseturf_type
 		if(current_dock.area_type)
-			area_type = current_dock.area_type
+			underlying_area_type = current_dock.area_type
 
-	var/list/shuttle_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/old_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/area/underlying_area = locate(underlying_area_type) in GLOB.sortedAreas
+	if(!underlying_area)
+		underlying_area = new underlying_area_type(null)
 
-	//remove area surrounding docking port
-	for(var/i in 1 to shuttle_areas.len)
-		var/area/shuttle_area = shuttle_areas[i]
-		if(shuttle_area.contents.len)
-			var/area/underlying_area = locate("[area_type]")
-			if(!underlying_area)
-				underlying_area = new area_type(null)
-			for(var/ii in shuttle_turfs)
-				var/turf/T = shuttle_turfs[ii]
-				var/area/old_area = T.loc
-				underlying_area.contents += T
-				T.change_area(old_area, underlying_area)
-
-	for(var/i in shuttle_turfs)
-		var/turf/T = i
-		if(!T)
+	for(var/i in 1 to old_turfs.len)
+		var/turf/oldT = old_turfs[i]
+		if(!oldT)
 			continue
-		T.empty(turf_type, baseturf_type)
+		var/area/old_area = oldT.loc
+		underlying_area.contents += oldT
+		oldT.change_area(old_area, underlying_area)
+		oldT.empty(turf_type, baseturf_type)
 
 	qdel(src, force=TRUE)
 
@@ -488,7 +481,7 @@
 
 	var/rotation = 0
 	if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
-		rotation = dir2angle(new_dock)-dir2angle(dir)
+		rotation = dir2angle(new_dock.dir)-dir2angle(dir)
 		if ((rotation % 90) != 0)
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
 		rotation = SimplifyDegrees(rotation)
@@ -534,7 +527,7 @@
 		return DOCKING_AREA_EMPTY
 
 	/*******************************************All onShuttleMove procs******************************************/
-	
+
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
@@ -557,9 +550,9 @@
 			var/atom/movable/moving_atom = thing
 			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
 			moved_atoms += moving_atom
-	
+
 	/******************************************All afterShuttleMove procs****************************************/
-	
+
 	for(var/i in 1 to new_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
@@ -575,6 +568,7 @@
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
 
+	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
 
@@ -773,7 +767,7 @@
 		return TRUE
 	return FALSE
 
-// Losing all initial engines should get you 2 
+// Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
 /obj/docking_port/mobile/proc/alter_engines(mod)
 	if(mod == 0)
@@ -812,7 +806,7 @@
 		if(initial_engines > 0)
 			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
 		return Clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
-		
+
 
 /obj/docking_port/mobile/proc/in_flight()
 	switch(mode)
@@ -844,15 +838,15 @@
 
 //Called when emergency shuttle docks at centcom
 /obj/docking_port/mobile/proc/on_emergency_dock()
-	//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+	//Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space, just let them keep flying off into the sunset for their greentext
 	if(launch_status == ENDGAME_LAUNCHED)
 		launch_status = ENDGAME_TRANSIT
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcomm
+		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
-		
+
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
 

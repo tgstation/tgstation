@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	name = "AI Action"
 	desc = "You aren't entirely sure what this does, but it's very beepy and boopy."
 	background_icon_state = "bg_tech_blue"
-	icon_icon = 'icons/mob/actions_AI.dmi'
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	var/mob/living/silicon/ai/owner_AI //The owner AI, so we don't have to typecast every time
 	var/uses //If we have multiple uses of the same power
 	var/auto_use_uses = TRUE //If we automatically use up uses on each activation
@@ -375,8 +375,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			minor_announce("[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION)
-	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/alarm.ogg'
+	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)

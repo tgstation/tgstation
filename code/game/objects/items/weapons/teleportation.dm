@@ -23,6 +23,8 @@
 	flags = CONDUCT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=400)
@@ -132,6 +134,8 @@ Frequency:
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hand_tele"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -199,6 +203,9 @@ Frequency:
 		return
 	try_move_adjacent(created[1])
 	active_portal_pairs[created[1]] = created[2]
+	var/obj/effect/portal/c1 = created[1]
+	var/obj/effect/portal/c2 = created[2]
+	investigate_log("was used by [key_name(user)] at [COORD(user)] to create a portal pair with destinations [COORD(c1)] and [COORD(c2)].", INVESTIGATE_PORTAL)
 	add_fingerprint(user)
 
 /obj/item/weapon/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)

@@ -67,11 +67,3 @@
 	icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	stamina = 25
-
-/obj/item/projectile/bullet/reusable/arrow
-	name = "arrow"
-	icon_state = "arrow"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow
-	range = 10
-	damage = 25
-	damage_type = BRUTE
