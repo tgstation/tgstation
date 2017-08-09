@@ -548,5 +548,5 @@
 			return I
 	return I
 
-/turf/DropLocation()
-	return src
+/turf/AllowDrop()
+	return TRUE

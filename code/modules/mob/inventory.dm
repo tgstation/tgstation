@@ -234,15 +234,11 @@
 
 
 /mob/proc/drop_all_held_items()
-	if(!loc || !loc.allow_drop())
-		return
 	for(var/obj/item/I in held_items)
 		dropItemToGround(I)
 
 //Drops the item in our active hand.
 /mob/proc/drop_item()
-	if(!loc || !loc.allow_drop())
-		return
 	var/obj/item/held = get_active_held_item()
 	return dropItemToGround(held)
 
@@ -272,8 +268,7 @@
 //for when you want the item to end up on the ground
 //will force move the item to the ground and call the turf's Entered
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE)
-	var/atom/L = loc
-	return doUnEquip(I, force, L ? L.DropLocation() : null, FALSE)
+	return doUnEquip(I, force, DropLocation(), FALSE)
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)

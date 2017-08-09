@@ -1047,9 +1047,6 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		return 1
 	return 0
 
-/obj/mecha/allow_drop()
-	return 0
-
 /obj/mecha/update_remote_sight(mob/living/user)
 	if(occupant_sight_flags)
 		if(user == occupant)

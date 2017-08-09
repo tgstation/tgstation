@@ -478,5 +478,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	blob_allowed = FALSE
 	addSorted()
 
+/area/AllowDrop()
+	CRASH("Ya dun fuked up")
+
 /area/DropLocation()
 	CRASH("Ya dun fuked up")

@@ -457,5 +457,5 @@
 	dump_contents()
 	..()
 
-/obj/structure/DropLocation()
-	return src
+/obj/structure/closet/AllowDrop()
+	return TRUE

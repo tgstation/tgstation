@@ -211,8 +211,8 @@
 		return TRUE
 	return container_type & DRAWABLE
 
-/atom/proc/allow_drop()
-	return 1
+/atom/proc/AllowDrop()
+	return FALSE
 
 /atom/proc/CheckExit()
 	return 1
@@ -613,4 +613,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/DropLocation()
 	var/atom/L = loc
-	return L ? L.DropLocation() : null
+	if(!L)
+		return null
+	return L.AllowDrop() ? L : get_turf(L)

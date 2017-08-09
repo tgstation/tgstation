@@ -121,8 +121,8 @@
 	T.assume_air(gas)
 	T.air_update_turf()
 
-/obj/structure/disposalholder/allow_drop()
-	return 1
+/obj/structure/disposalholder/AllowDrop()
+	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
 	return
