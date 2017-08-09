@@ -1036,7 +1036,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 				callback_args[++callback_args.len] = list(thing2, name, TRUE)
 			callback_select(callbacks, callback_args, savereturns = FALSE)
 			return "<img class='icon misc' src=\"[url_encode(name)]\">"
-		var/atom/A
+		var/atom/A = thing
 		if (isnull(dir))
 			dir = A.dir
 		if (isnull(icon_state))
