@@ -72,8 +72,9 @@
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-	//Logs all hrefs
-	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	//Logs all hrefs, except chat pings
+	if(href_list["proc"] != "ping")
+		GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
