@@ -87,6 +87,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	..()
 
 /obj/machinery/r_n_d/circuit_imprinter/ComponentActivated(datum/component/C)
+	..()
 	if(istype(C, /datum/component/material_container))
 		var/datum/component/material_container/M = C
 		if(!M.last_insert_success)

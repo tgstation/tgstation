@@ -56,7 +56,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
     * All components a datum owns are deleted with the datum
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
-1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract)
+1. `/datum/proc/ComponentActivated(datum/component/C)` (virtual)
     * Called on a component's `parent` after a signal recieved causes it to activate. `src` is the parameter
     * Will only be called if a component's callback returns `TRUE`
 1. `/datum/proc/TakeComponent(datum/component/C)` (public, final)
