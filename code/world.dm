@@ -80,7 +80,7 @@
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
 			if(query_round_last_id.NextRow())
-				GLOB.round_id = query_round_last_id.item[1]
+				GLOB.round_id = max(1, query_round_last_id.item[1])
 
 /world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
