@@ -284,7 +284,7 @@
 		L.adjustBruteLoss(bonus_value)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
-	if(!target.anchored || ismegafauna(target)) //megafauna will always be pushed
+	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target))) //megafauna will always be pushed
 		step(target, get_dir(user, target))
 
 //bubblegum
