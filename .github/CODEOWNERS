@@ -48,6 +48,7 @@
 /code/controllers/admin.dm @MrStonedOne
 /code/controllers/master.dm @MrStonedOne
 /code/controllers/failsafe.dm @MrStonedOne
+/code/controllers/subsystem.dm @MrStonedOne
 /code/controllers/subsystem/air.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
 /code/modules/atmospherics/* @MrStonedOne
