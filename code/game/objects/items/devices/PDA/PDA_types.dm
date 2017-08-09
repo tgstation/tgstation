@@ -18,7 +18,7 @@
 		return
 	var/mob/living/carbon/human/M = S.slip_victim
 	if (istype(M) && (M.real_name != src.owner))
-		var/obj/item/weapon/cartridge/virus/cart = cartridge
+		var/obj/item/weapon/cartridge/virus/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 
