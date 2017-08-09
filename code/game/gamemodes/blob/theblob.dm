@@ -235,7 +235,7 @@
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
-		user << 'sound/machines/ping.ogg'
+		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		chemeffectreport(user)
 		typereport(user)
 	else

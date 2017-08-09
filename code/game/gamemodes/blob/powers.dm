@@ -171,8 +171,8 @@
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		var/client/C = pick(candidates)
 		blobber.key = C.key
-		blobber << 'sound/effects/blobattack.ogg'
-		blobber << 'sound/effects/attackblob.ogg'
+		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
+		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
 		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed.")
 		to_chat(blobber, "You can communicate with other blobbernauts and GLOB.overminds via <b>:b</b>")
