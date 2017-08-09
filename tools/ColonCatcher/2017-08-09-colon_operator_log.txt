@@ -1,12 +1,8 @@
-..code\controllers\subsystem\shuttle.dm Lines: 402 Total Colons: 1
-..code\datums\ai_laws.dm Lines: 237 Total Colons: 1
 ..code\datums\browser.dm Lines: 134, 135, 138, 141 Total Colons: 6
 ..code\datums\datumvars.dm Lines: 342 Total Colons: 1
 ..code\datums\mind.dm Lines: 805, 806, 816, 821 Total Colons: 5
-..code\datums\riding.dm Lines: 45 Total Colons: 1
 ..code\datums\antagonists\datum_clockcult.dm Lines: 68, 69 Total Colons: 2
 ..code\game\communications.dm Lines: 295 Total Colons: 3
-..code\game\gamemodes\objective.dm Lines: 847 Total Colons: 1
 ..code\game\machinery\newscaster.dm Lines: 364, 415, 428, 478, 944 Total Colons: 5
 ..code\game\machinery\overview.dm Lines: 99, 245 Total Colons: 2
 ..code\game\machinery\robot_fabricator.dm Lines: 21, 23, 24, 25, 28 Total Colons: 5
@@ -31,23 +27,16 @@
 ..code\modules\admin\verbs\randomverbs.dm Lines: 847, 852, 858, 864, 870, 876, 882, 888, 894, 900, 906, 912, 918, 924, 930, 936, 942, 948 Total Colons: 18
 ..code\modules\admin\verbs\SDQL2\SDQL_2.dm Lines: 392, 434 Total Colons: 2
 ..code\modules\assembly\bomb.dm Lines: 47 Total Colons: 1
-..code\modules\atmospherics\gasmixtures\gas_mixture.dm Lines: 429 Total Colons: 1
 ..code\modules\client\client_procs.dm Lines: 558, 559 Total Colons: 2
 ..code\modules\clothing\spacesuits\chronosuit.dm Lines: 192, 197, 198, 199, 204, 229, 231, 232, 233 Total Colons: 9
-..code\modules\crafting\craft.dm Lines: 53, 115, 175 Total Colons: 3
-..code\modules\food_and_drinks\food\snacks.dm Lines: 169 Total Colons: 1
 ..code\modules\hydroponics\grown\chili.dm Lines: 91 Total Colons: 1
 ..code\modules\mob\dead\new_player\poll.dm Lines: 310 Total Colons: 1
 ..code\modules\mob\living\carbon\carbon.dm Lines: 49 Total Colons: 1
 ..code\modules\mob\living\silicon\pai\software.dm Lines: 508, 509, 510, 511, 512, 513, 514, 519, 520, 521, 522, 524, 622 Total Colons: 13
-..code\modules\mob\living\simple_animal\hostile\venus_human_trap.dm Lines: 100 Total Colons: 1
 ..code\modules\mob\living\simple_animal\slime\life.dm Lines: 409, 417, 419 Total Colons: 3
 ..code\modules\ninja\suit\suit_initialisation.dm Lines: 73 Total Colons: 1
 ..code\modules\paperwork\photography.dm Lines: 225, 226 Total Colons: 2
-..code\modules\power\smes.dm Lines: 52 Total Colons: 1
 ..code\modules\reagents\chemistry\reagents\food_reagents.dm Lines: 393 Total Colons: 2
 ..code\__HELPERS\icons.dm Lines: 715, 752, 757, 762, 763, 764, 765, 774, 786, 788 Total Colons: 14
-..code\__HELPERS\mobs.dm Lines: 352 Total Colons: 1
 ..code\__HELPERS\_lists.dm Lines: 323, 471 Total Colons: 2
-..code\__HELPERS\sorts\__main.dm Lines: 391, 491 Total Colons: 2
-52/2191 files have colons in them
+41/2191 files have colons in them

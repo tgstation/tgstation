@@ -59,18 +59,26 @@ def scan_dm_file(_file):
         in_singleline_comment = False #// ... \n 
         in_string = False             # " ... "
         ternarys_on_line = 0       #If there's a ? anywhere on the line, used to report "false"-positives
+        found_colon = False
 
         lines_with_colons = []
         for char in characters:
             #Line info
-            if char == "\n":
+            if char == "\n" or char == "\r":
                 line_num += 1
                 if not in_string:
                     in_embed_statement = 0
                     in_string = False
                     in_singleline_comment = False
                     ternarys_on_line = 0
+                    found_colon = False
 
+            if char != " " and found_colon:
+                colon_count += 1
+                data = str(line_num)
+                if not data in lines_with_colons: #only add the line twice if it's like: 76, 76? (eg: a "bad" colon and a ternary colon)
+                    lines_with_colons.append(data)
+                found_colon = False
             #Not in a comment
             if (not in_singleline_comment) and (in_multiline_comment == 0):
                 #Not in a string
@@ -110,10 +118,7 @@ def scan_dm_file(_file):
                     if ternarys_on_line > 0:
                         ternarys_on_line -= 1
                     else:
-                        colon_count += 1
-                        data = str(line_num)
-                        if not data in lines_with_colons: #only add the line twice if it's like: 76, 76? (eg: a "bad" colon and a ternary colon)
-                            lines_with_colons.append(data)
+                        found_colon = True
         
             #In a comment
             else:
@@ -122,11 +127,10 @@ def scan_dm_file(_file):
                         in_multiline_comment -= 1
                         in_multiline_comment = max(in_multiline_comment,0)
 
-                if char == "\n":
+                if char == "\n" or char == "\r":
                     in_singleline_comment = False
-    
 
-            if char != "": #Spaces aren't useful to us
+            if char != " ": #Spaces aren't useful to us
                 last_char = char
 
 
