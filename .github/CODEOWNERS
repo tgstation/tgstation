@@ -24,6 +24,12 @@
 /code/modules/server_tools/* @Cyberboss
 /code/modules/mapping/* @Cyberboss
 
+# Iamgoofball
+
+/code/modules/GOAP/* @Iamgoofball
+/code/modules/reagents/* @Iamgoofball
+/code/modules/stock_market/* @Iamgoofball
+
 # Jordie0608
 
 /SQL/* @Jordie0608
@@ -57,9 +63,3 @@
 /tools/mapmerge/* @RemieRichards
 /tools/SS13SmoothingCutter/* @RemieRichards
 /tools/UnquotedListAssociations/* @RemieRichards
-
-# The King
-/code/modules/GOAP/* @Iamgoofball
-/code/modules/reagents/* @Iamgoofball
-/code/modules/stock_market/* @Iamgoofball
-
