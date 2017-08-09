@@ -87,6 +87,7 @@
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
 	H.set_light(blacklistLuminosity) //I hate lightcode for making me do it this way
+	
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets,mob/user = usr)
 	if(!shadowling_check(user) && !admin_override)
@@ -112,6 +113,10 @@
 			borgie.update_headlamp(TRUE, 150)
 			borgie.lamp_recharging = TRUE
 			borgie.lamp_intensity = 0
+		for(var/obj/machinery/camera/cam in T.contents)
+			cam.set_light(0)
+			if(prob(10))
+				cam.emp_act(2)
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze //Stuns and freezes nearby people - a bit more effective than a changeling's cryosting
 	name = "Icy Veins"
