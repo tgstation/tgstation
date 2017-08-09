@@ -416,19 +416,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs
-<<<<<<< HEAD
-	S["joblessrole"]		<< joblessrole
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
-	hippie_character_pref_save(S)
-=======
 	WRITE_FILE(S["joblessrole"]		, joblessrole)
 	WRITE_FILE(S["job_civilian_high"]	, job_civilian_high)
 	WRITE_FILE(S["job_civilian_med"]	, job_civilian_med)
@@ -439,7 +426,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_high"]	, job_engsec_high)
 	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
->>>>>>> d1ae0a0c95... Adds helpers to avoid << use (#29611)
+	hippie_character_pref_save(S)
 
 	return 1
 
