@@ -21153,9 +21153,9 @@
 /area/crew_quarters/theatre)
 "aUg" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Theatre Maintenance";
-	req_access_txt = "0";
-	req_one_access_txt = "12;46"
+	name = "Bar Maintenance";
+	req_access_txt = "25";
+	req_one_access_txt = "0"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -22987,7 +22987,7 @@
 /area/hydroponics)
 "aYa" = (
 /obj/machinery/door/airlock{
-	name = "Kitchen Cold Room";
+	name = "Kitchen";
 	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -23014,7 +23014,7 @@
 "aYd" = (
 /obj/machinery/door/airlock{
 	cyclelinkeddir = 8;
-	name = "Bar Access";
+	name = "Kitchen";
 	req_access_txt = "0";
 	req_one_access_txt = "25; 28"
 	},
