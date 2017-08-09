@@ -109,7 +109,9 @@
 		for(var/mob/living/H in T.contents)
 			extinguishMob(H)
 		for(var/mob/living/silicon/robot/borgie in T.contents)
-			borgie.update_headlamp(1)
+			borgie.update_headlamp(TRUE, 150)
+			borgie.lamp_recharging = TRUE
+			borgie.lamp_intensity = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze //Stuns and freezes nearby people - a bit more effective than a changeling's cryosting
 	name = "Icy Veins"
