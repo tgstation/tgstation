@@ -16,6 +16,7 @@ GLOBAL_PROTECT(admin_datums)
 	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
 	var/admin_signature
+	var/href_token
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
@@ -28,7 +29,14 @@ GLOBAL_PROTECT(admin_datums)
 		return
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	var/tok = ""
+	for(var/I in 1 to 32)
+		tok += "[rand(10)]"
+	href_token = tok
 	GLOB.admin_datums[ckey] = src
+
+/datum/admins/proc/HrefToken()
+	return "admin_auth=[admin_token]"
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
