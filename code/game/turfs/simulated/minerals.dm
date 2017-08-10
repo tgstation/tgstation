@@ -13,18 +13,18 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
 	density = TRUE
-	blocks_air = 1
+	blocks_air = TRUE
 	layer = EDGED_TURF_LAYER
 	temperature = TCMB
 	var/environment_type = "asteroid"
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
-	var/mineralType = null
+	var/mineralType
 	var/mineralAmt = 3
-	var/spread = 0 //will the seam spread?
+	var/spread = FALSE //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
-	var/defer_change = 0
+	var/defer_change = FALSE
 
 /turf/closed/mineral/Initialize()
 	if (!canSmoothWith)
@@ -144,7 +144,6 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 
 /turf/closed/mineral/random
 	var/mineralSpawnChanceList
-		//Currently, Adamantine won't spawn as it has no uses. -Durandan // HAHA FUCK YOU IT DOES NOW BITCHES
 	var/mineralChance = 13
 	var/display_icon_state = "rock"
 
@@ -185,7 +184,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium/volcanic = 35, /turf/closed/mineral/diamond/volcanic = 30, /turf/closed/mineral/gold/volcanic = 45, /turf/closed/mineral/titanium/volcanic = 45,
 		/turf/closed/mineral/silver/volcanic = 50, /turf/closed/mineral/plasma/volcanic = 50, /turf/closed/mineral/bscrystal/volcanic = 20,
@@ -207,7 +206,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 	mineralChance = 10
 	mineralSpawnChanceList = list(
@@ -230,7 +229,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium/volcanic = 3, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 8, /turf/closed/mineral/titanium/volcanic = 8,
 		/turf/closed/mineral/silver/volcanic = 20, /turf/closed/mineral/plasma/volcanic = 30, /turf/closed/mineral/bscrystal/volcanic = 1, /turf/closed/mineral/gibtonite/volcanic = 2,
@@ -241,7 +240,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 /turf/closed/mineral/iron
 	mineralType = /obj/item/weapon/ore/iron
 	spreadChance = 20
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_Iron"
 
 /turf/closed/mineral/iron/volcanic
@@ -249,13 +248,13 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/uranium
 	mineralType = /obj/item/weapon/ore/uranium
 	spreadChance = 5
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_Uranium"
 
 /turf/closed/mineral/uranium/volcanic
@@ -263,13 +262,13 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/weapon/ore/diamond
 	spreadChance = 0
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_Diamond"
 
 /turf/closed/mineral/diamond/volcanic
@@ -277,13 +276,13 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/gold
 	mineralType = /obj/item/weapon/ore/gold
 	spreadChance = 5
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_Gold"
 
 /turf/closed/mineral/gold/volcanic
@@ -291,13 +290,13 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/silver
 	mineralType = /obj/item/weapon/ore/silver
 	spreadChance = 5
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_Silver"
 
 /turf/closed/mineral/silver/volcanic
@@ -305,13 +304,13 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/titanium
 	mineralType = /obj/item/weapon/ore/titanium
 	spreadChance = 5
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_Titanium"
 
 /turf/closed/mineral/titanium/volcanic
@@ -319,13 +318,13 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/weapon/ore/plasma
 	spreadChance = 8
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_Plasma"
 
 /turf/closed/mineral/plasma/volcanic
@@ -333,14 +332,14 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/clown
 	mineralType = /obj/item/weapon/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
-	spread = 0
+	spread = FALSE
 	scan_state = "rock_Clown"
 
 
@@ -348,7 +347,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	mineralType = /obj/item/weapon/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
-	spread = 0
+	spread = FALSE
 	scan_state = "rock_BScrystal"
 
 /turf/closed/mineral/bscrystal/volcanic
@@ -356,7 +355,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/volcanic
@@ -369,7 +368,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/lava/smooth/lava_land_surface
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/ash_rock //wall piece
 	name = "rock"
@@ -382,19 +381,19 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	environment_type = "waste"
 	turf_type = /turf/open/floor/plating/ashplanet/rocky
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/adamantine
 	mineralType = /obj/item/weapon/ore/adamantine
 	mineralAmt = 1
 	spreadChance = 0
-	spread = 0
+	spread = FALSE
 	scan_state = "rock_adamantine"
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/adamantine/gets_drilled()
 	if(!GLOB.secret_triggered)
@@ -407,13 +406,13 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 /turf/closed/mineral/clay
 	mineralType = /obj/item/stack/sheet/mineral/clay
 	spreadChance = 20
-	spread = 1
+	spread = TRUE
 	scan_state = "rock_clay"
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	defer_change = 1
+	defer_change = TRUE
 
 
 //GIBTONITE
@@ -421,12 +420,12 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
 	spreadChance = 0
-	spread = 0
+	spread = FALSE
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
-	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
-	var/activated_name = null
+	var/activated_ckey //These are to track who triggered the gibtonite deposit for logging purposes
+	var/activated_name
 	var/mutable_appearance/activated_overlay
 
 /turf/closed/mineral/gibtonite/Initialize()
@@ -516,4 +515,4 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE

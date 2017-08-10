@@ -14,7 +14,7 @@
 	..()
 	var/obj/item/weapon/mold_result/armor_plating/S = locate() in contents
 	if(S)
-		var/image/Q = image(icon, icon_state)
+		var/mutable_appearance/Q = mutable_appearance(icon, icon_state)
 		Q.color = S.color
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()
@@ -59,7 +59,7 @@
 	..()
 	var/obj/item/weapon/mold_result/helmet_plating/S = locate() in contents
 	if(S)
-		var/image/Q = image(icon, icon_state)
+		var/mutable_appearance/Q = mutable_appearance(icon, icon_state)
 		Q.color = S.color
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()

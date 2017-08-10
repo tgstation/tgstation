@@ -30,8 +30,8 @@
 	icon_state = "anvil"
 	density = TRUE
 	anchored = FALSE
-	var/obj/item/weapon/reagent_containers/glass/mold/current_mold = null
-	var/mutable_appearance/my_mold = null
+	var/obj/item/weapon/reagent_containers/glass/mold/current_mold
+	var/mutable_appearance/my_mold
 
 /obj/machinery/anvil/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
@@ -45,7 +45,7 @@
 		if(R && R.volume == 25)
 			if(user.drop_item())
 				to_chat(user, "You place [M] on [src].")
-				M.loc = src
+				M.forceMove(src)
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)
@@ -62,10 +62,9 @@
 			new current_mold.type(get_turf(src))
 			var/datum/reagent/R = current_mold.reagents.get_master_reagent()
 			if(!R)
-				QDEL_NULL(current_mold) //not sure what this does but it apparently deletes null stuff, go figure
+				QDEL_NULL(current_mold)
 				cut_overlay(my_mold)
-				my_mold = null
-				current_mold = null
+				QDEL_NULL(my_mold)
 				return
 			var/obj/item/I //what the fook is this
 			if(!istype(current_mold, /obj/item/weapon/reagent_containers/glass/mold/bar))
@@ -78,8 +77,7 @@
 				S.amount = 5
 			QDEL_NULL(current_mold)
 			cut_overlay(my_mold)
-			my_mold = null
-			current_mold = null
+			QDEL_NULL(my_mold)
 			return
 		else
 			to_chat(user, "There's nothing in the mold!")
@@ -191,7 +189,7 @@
 	..()
 	var/obj/item/weapon/mold_result/blade/B = locate() in contents
 	if(B)
-		var/image/I = image('icons/obj/blacksmithing.dmi', "sword_blade")
+		var/mutable_appearance/I = mutable_appearance('icons/obj/blacksmithing.dmi', "sword_blade")
 		I.color = B.color
 		smelted_material = new B.smelted_material.type()
 		add_overlay(I)
@@ -218,7 +216,7 @@
 	..()
 	var/obj/item/weapon/mold_result/hammer_head/M = locate() in contents
 	if(M)
-		var/image/I = image('icons/obj/blacksmithing.dmi', "hammer_head")
+		var/mutable_appearance/I = mutable_appearance('icons/obj/blacksmithing.dmi', "hammer_head")
 		I.color = M.color
 		smelted_material = new M.smelted_material.type()
 		add_overlay(I)
@@ -247,7 +245,7 @@
 	..()
 	var/obj/item/weapon/mold_result/pickaxe_head/P = locate() in contents
 	if(P)
-		var/image/O = image('icons/obj/blacksmithing.dmi', "pickaxe_head")
+		var/mutable_appearance/O = mutable_appearance('icons/obj/blacksmithing.dmi', "pickaxe_head")
 		O.color = P.color
 		add_overlay(O)
 		smelted_material = new P.smelted_material.type()
@@ -269,7 +267,7 @@
 	..()
 	var/obj/item/weapon/mold_result/shovel_head/S = locate() in contents
 	if(S)
-		var/image/Q = image('icons/obj/blacksmithing.dmi', "shovel_head")
+		var/mutable_appearance/Q = mutable_appearance('icons/obj/blacksmithing.dmi', "shovel_head")
 		Q.color = S.color
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()
@@ -296,7 +294,7 @@
 	..()
 	var/obj/item/weapon/mold_result/shield_backing/S = locate() in contents
 	if(S)
-		var/image/Q = image('icons/obj/blacksmithing.dmi', "dwarf_shield")
+		var/mutable_appearance/Q = mutable_appearance('icons/obj/blacksmithing.dmi', "dwarf_shield")
 		Q.color = S.color
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()
@@ -318,7 +316,7 @@
 	..()
 	var/obj/item/weapon/mold_result/crossbow_base/S = locate() in contents
 	if(S)
-		var/image/Q = image('icons/obj/blacksmithing.dmi', "dwarf_crossbow")
+		var/mutable_appearance/Q = mutable_appearance('icons/obj/blacksmithing.dmi', "dwarf_crossbow")
 		Q.color = S.color
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()

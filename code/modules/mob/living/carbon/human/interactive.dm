@@ -83,7 +83,7 @@
 	var/traitorType = 0
 
 	var/voice_saved = FALSE
-	var/allow_random = 1
+	var/allow_random = TRUE
 /// SNPC voice handling
 
 /mob/living/carbon/human/interactive/proc/loadVoice()
@@ -1612,7 +1612,7 @@
 	myjob = new/datum/job/clown()
 	job = myjob.title
 	myjob.equip(src)
-	allow_random = 0
+	allow_random = FALSE
 	..()
 
 /mob/living/carbon/human/interactive/greytide/clown/death()

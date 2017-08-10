@@ -45,9 +45,9 @@
 	spawn_path = /mob/living/simple_animal/hostile/faithless
 	spawn_amt_left = 30
 
-/obj/structure/rend/New()
+/obj/structure/rend/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	return
 
 /obj/structure/rend/process()
 	if(!spawn_fast)

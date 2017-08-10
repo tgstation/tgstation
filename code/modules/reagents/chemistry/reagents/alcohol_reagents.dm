@@ -85,8 +85,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A glass of ale. You feel a fey mood coming on just looking at it."
 	var/datum/reagents/contained_reagents
 
-/datum/reagent/consumable/ethanol/customizable/New()
-	. ..()
+/datum/reagent/consumable/ethanol/customizable/Initialize()
+	. = ..()
 	contained_reagents = new/datum/reagents(10000)
 
 /datum/reagent/consumable/ethanol/customizable/on_mob_life(mob/living/M)

@@ -437,10 +437,7 @@
 	volume = 25
 	amount_per_transfer_from_this = 25
 	flags = OPENCONTAINER
-	var/obj/produce_type = null
-
-
-
+	var/obj/produce_type
 
 /obj/item/weapon/reagent_containers/glass/mold/sword
 	name = "sword mold"

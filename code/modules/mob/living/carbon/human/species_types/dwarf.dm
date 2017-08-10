@@ -30,7 +30,7 @@
 	var/obj/item/organ/alcoholvessel/dwarf
 	dwarf = H.getorganslot("dwarf_organ")
 	if(!dwarf)
-		dwarf = new()
+		dwarf = new
 		dwarf.Insert(H)
 
 /datum/species/dwarf/random_name(gender,unique,lastname)

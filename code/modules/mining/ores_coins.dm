@@ -10,8 +10,8 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
-	var/refined_type = null //What this ore defaults to being refined into
-	var/reagent_id = null
+	var/refined_type //What this ore defaults to being refined into
+	var/reagent_id
 
 /obj/item/weapon/ore/on_smelt()
 	if(reagent_id)
@@ -328,7 +328,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
-	var/cmineral = null
+	var/cmineral
 	var/cooldown = 0
 	var/value = 1
 

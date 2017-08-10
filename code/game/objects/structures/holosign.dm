@@ -129,11 +129,10 @@
 
 /obj/structure/holosign/mandate
 	name = "Royal Mandate"
+	resistance_flags = INDESTRUCTIBLE
 	desc = "The mandate reads:."
 	icon_state = "mandate"
 	var/mandate = "eat shit and die"
-	obj_integrity = INFINITY // Remove with the scepter itself
-	max_integrity = INFINITY
 
 /obj/structure/holosign/mandate/examine(mob/user)
 	..()

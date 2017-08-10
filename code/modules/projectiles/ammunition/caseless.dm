@@ -41,7 +41,7 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/ammo_casing/caseless/crossbow(get_turf(src))
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/ammo_casing/caseless/crossbow
 	name = "crossbow bolt"

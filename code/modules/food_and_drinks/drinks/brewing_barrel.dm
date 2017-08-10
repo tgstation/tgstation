@@ -5,10 +5,11 @@
 	icon_state = "still"
 	density = TRUE
 	anchored = FALSE
-	var/list/brewables = list()
-	var/list/already_brewing = list()
+	var/list/brewables
+	var/list/already_brewing
 
 /obj/machinery/brewing_barrel/attackby(obj/item/weapon/W, mob/user, params)
+	LAZYINITLIST(already_brewing)
 	if(is_type_in_list(W, already_brewing))
 		to_chat(user, "You're already brewing that!")
 		return FALSE
@@ -19,13 +20,13 @@
 		return ..()
 	if(user.temporarilyRemoveItemFromInventory(W))
 		seedify(W, rand(1,4))
-		brewables += list(brewing_result)
-		already_brewing += W.type
+		LAZYADD(brewables, list(brewing_result))
+		LAZYADD(already_brewing, W.type)
 		to_chat(user, "You insert [W] into [src].")
 		qdel(W)
 
 /obj/machinery/brewing_barrel/attack_hand(mob/user)
-	if(brewables.len)
+	if(LAZYLEN(brewables))
 		to_chat(user, "You brew a batch of ale.")
 		var/obj/item/weapon/reagent_containers/food/drinks/wooden_mug/AB = new(get_turf(src))
 		var/datum/reagent/consumable/ethanol/customizable/ale = AB.reagents.add_reagent("customizable_ale", 75)
@@ -44,5 +45,5 @@
 			AB.name = "dwarven wine"
 		else
 			AB.name = "[final_name] ale"
-		brewables = list()
-		already_brewing = list()
+		LAZYCLEARLIST(brewables)
+		LAZYCLEARLIST(already_brewing)

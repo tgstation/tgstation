@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 		to_chat(user, "There's no more room at the fortress for new migrants! Wait for them to build a new dormitory.")
 
 /obj/machinery/migrant_spawner/proc/spawn_dorf(client/new_dorf)
-	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
+	var/mob/living/carbon/human/M = new (get_turf(src))
 	new_dorf.prefs.copy_to(M)
 	M.set_species(/datum/species/dwarf)
 	M.key = new_dorf.key
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	icon = 'icons/obj/drinks.dmi'
 	item_state = "manlydorfglass"
 	icon_state = "manlydorfglass"
-	spillable = 1
+	spillable = TRUE
 
 /obj/item/weapon/sword_hilt
 	name = "leather hilt"
