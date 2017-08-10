@@ -8,7 +8,7 @@
 			return TRUE
 		log_admin_private("[key_name(usr)] clicked an href with no authorization key!")
 		return FALSE
-	else if(auth != href_token)
+	else if(auth != href_token && auth != GLOB.href_token)
 		message_admins("[key_name_admin(usr)] clicked an href with a bad authorization key!")
 		log_admin_private("[key_name(usr)] clicked an href with a bad authorization key!")
 		return FALSE
