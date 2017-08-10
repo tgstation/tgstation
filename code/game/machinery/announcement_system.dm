@@ -7,7 +7,6 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "AAS_On"
-	var/obj/item/device/radio/headset/radio
 
 	verb_say = "coldly states"
 	verb_ask = "queries"
@@ -16,6 +15,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	idle_power_usage = 20
 	active_power_usage = 50
 
+	circuit = /obj/item/weapon/circuitboard/machine/announcement_system
+
+	var/obj/item/device/radio/headset/radio
 	var/arrival = "%PERSON has signed up as %RANK"
 	var/arrivalToggle = 1
 	var/newhead = "%PERSON, %RANK, is the department head."
@@ -25,23 +27,11 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/pinklight = "Light_Pink"
 	var/errorlight = "Error_Red"
 
-/obj/machinery/announcement_system/New()
-	..()
+/obj/machinery/announcement_system/Initialize()
+	. = ..()
 	GLOB.announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
-
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/announcement_system(null)
-	B.apply_default_parts(src)
-
 	update_icon()
-
-/obj/item/weapon/circuitboard/machine/announcement_system
-	name = "Announcement System (Machine Board)"
-	build_path = /obj/machinery/announcement_system
-	origin_tech = "programming=3;bluespace=3;magnets=2"
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/announcement_system/update_icon()
 	if(is_operational())

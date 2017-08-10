@@ -752,7 +752,7 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcomm
+	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcom
 		return 0
 	if(T.z >= ZLEVEL_SPACEMAX)
 		return 0

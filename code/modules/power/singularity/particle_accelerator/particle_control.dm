@@ -19,10 +19,10 @@
 	var/powered = 0
 	mouse_opacity = 2
 
-/obj/machinery/particle_accelerator/control_box/New()
+/obj/machinery/particle_accelerator/control_box/Initialize()
+	. = ..()
 	wires = new /datum/wires/particle_accelerator/control_box(src)
 	connected_parts = list()
-	..()
 
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)
@@ -31,8 +31,7 @@
 		var/obj/structure/particle_accelerator/part = CP
 		part.master = null
 	connected_parts.Cut()
-	qdel(wires)
-	wires = null
+	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)

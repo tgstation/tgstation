@@ -449,10 +449,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/one_side/west,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -554,10 +551,7 @@
 	icon_state = "fwindow";
 	dir = 8
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -878,10 +872,7 @@
 	icon_state = "fwindow";
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -1707,8 +1698,7 @@
 	icon_state = "fwindow";
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/one_side,
 /turf/open/floor/plasteel,
 /area/awaymission/wwrefine)
 "fB" = (
@@ -2167,16 +2157,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},

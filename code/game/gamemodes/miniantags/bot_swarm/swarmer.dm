@@ -29,6 +29,12 @@
 	3. Biological resources will be harvested at a later date; do not harm them.
 	"}
 
+/obj/effect/mob_spawn/swarmer/Initialize()
+	. = ..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+
 /obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
 	to_chat(user, "<span class='notice'>Picking up the swarmer may cause it to activate. You should be careful about this.</span>")
 

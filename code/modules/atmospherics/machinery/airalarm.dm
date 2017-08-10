@@ -152,8 +152,7 @@
 	update_icon()
 
 /obj/machinery/airalarm/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
 	return ..()

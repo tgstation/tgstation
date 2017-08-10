@@ -161,7 +161,7 @@
 
 
 /datum/outfit/centcom_official
-	name = "Centcom Official"
+	name = "CentCom Official"
 
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -181,13 +181,13 @@
 
 	var/obj/item/device/pda/heads/pda = H.r_store
 	pda.owner = H.real_name
-	pda.ownjob = "Centcom Official"
+	pda.ownjob = "CentCom Official"
 	pda.update_label()
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.icon_state = "centcom"
-	W.access = get_centcom_access("Centcom Official")
+	W.access = get_centcom_access("CentCom Official")
 	W.access += ACCESS_WEAPONS
-	W.assignment = "Centcom Official"
+	W.assignment = "CentCom Official"
 	W.registered_name = H.real_name
 	W.update_label()

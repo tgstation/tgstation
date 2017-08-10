@@ -22,16 +22,12 @@
 	if(last_status != new_status)
 		last_status = new_status
 		ui_header = "smmon_[last_status].gif"
-		if(istype(computer) && !(computer.hardware_flag == PROGRAM_LAPTOP))
-			program_icon_state = "smmon_[last_status]"
-			if(istype(computer))
-				computer.update_icon()
+		program_icon_state = "smmon_[last_status]"
+		if(istype(computer))
+			computer.update_icon()
 
 /datum/computer_file/program/supermatter_monitor/run_program(mob/living/user)
 	. = ..(user)
-	if(istype(computer) && (computer.hardware_flag == PROGRAM_LAPTOP))
-		program_icon_state = "engine"
-		computer.update_icon()
 	refresh()
 
 /datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)

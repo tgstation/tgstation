@@ -105,7 +105,7 @@
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	return !density
 
-/atom/proc/onCentcom()
+/atom/proc/onCentCom()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return FALSE
@@ -126,7 +126,7 @@
 	if(istype(T.loc, /area/centcom))
 		return TRUE
 
-	//Check for centcomm shuttles
+	//Check for centcom shuttles
 	for(var/A in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = A
 		if(M.launch_status == ENDGAME_LAUNCHED)
@@ -610,3 +610,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
+
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
