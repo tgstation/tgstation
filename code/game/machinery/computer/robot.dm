@@ -184,14 +184,12 @@
 				D.gib()
 				
 	else if (href_list["killpai"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/simple_animal/drone/P = locate(href_list["killpai"]) in GLOB.mob_list
 				var/turf/T = get_turf(P)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(P)][ADMIN_JMP(T)]!")
 				log_game("[key_name(usr)] detonated [key_name(P)]!")
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, P)
-				s.start()
+				do_sparks(3, TRUE, src)
 				P.visible_message("<span class='danger'>\the [P] self destructs!</span>")
 				P.death()
 
