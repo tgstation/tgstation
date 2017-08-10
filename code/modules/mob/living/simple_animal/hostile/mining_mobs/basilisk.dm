@@ -1,4 +1,4 @@
-//A beast that fire freezing blasts.
+//A beast that petrifies anyone who looks directly at it.
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
@@ -9,11 +9,9 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	move_to_delay = 20
-	projectiletype = /obj/item/projectile/temp/basilisk
-	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
-	ranged_message = "stares"
-	ranged_cooldown_time = 30
+	ranged_message = "begins to stare intensely at"
+	ranged_cooldown_time = 75
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -32,15 +30,7 @@
 	turns_per_move = 5
 	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
-
-/obj/item/projectile/temp/basilisk
-	name = "freezing blast"
-	icon_state = "ice_2"
-	damage = 0
-	damage_type = BURN
-	nodamage = 1
-	flag = "energy"
-	temperature = 50
+	var/gaze_sound = 'sound/magic/magic_missile.ogg'
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -56,6 +46,24 @@
 		if(3)
 			adjustBruteLoss(110)
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/OpenFire()
+	Gaze()
+	ranged_cooldown = world.time + ranged_cooldown_time
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/proc/Gaze()
+	if(!isliving(target))
+		return
+	var/mob/living/L = target
+	if(L.has_status_effect(STATUS_EFFECT_PETRIFICATION) || L.incapacitated())
+		return
+	visible_message("<span class='warning'>[src] [ranged_message] [target]</span>")
+	to_chat(L, "<span class='boldannounce'>Your body starts to lock up as you look at [src]!</span>")
+	if(gaze_sound)
+		playsound(src, gaze_sound, 75, FALSE)
+	L.apply_status_effect(STATUS_EFFECT_PETRIFICATION)
+	var/datum/status_effect/petrification/P = L.has_status_effect(STATUS_EFFECT_PETRIFICATION)
+	P.petrifier = src
+
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
@@ -65,6 +73,7 @@
 	icon_living = "watcher"
 	icon_aggro = "watcher"
 	icon_dead = "watcher_dead"
+	ranged_message = "rapidly waves its wings in an entrancing pattern at"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
@@ -79,6 +88,7 @@
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	gaze_sound = 'sound/magic/tail_swing.ogg'
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	fromtendril = TRUE
