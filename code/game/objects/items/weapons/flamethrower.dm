@@ -255,7 +255,7 @@
 
 /obj/item/weapon/gun/proc/can_trigger_gun(var/mob/living/user)
 
-	!user.can_use_guns(src))
+	if(!user.can_use_guns(src))
 		return 0
 
 	return 1
