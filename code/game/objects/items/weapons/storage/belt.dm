@@ -385,6 +385,8 @@
 		/obj/item/weapon/holosign_creator,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves
+		/obj/item/weapon/melee/flyswatter
+		/obj/item/weapon/crowbar
 		)
 
 /obj/item/weapon/storage/belt/bandolier
