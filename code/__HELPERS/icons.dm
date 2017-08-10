@@ -1009,7 +1009,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
 	if (!thing)
 		return
-	var/static/datum/callback/CB = CALLBACK(GLOBAL_PROC, .proc/send_asset)
 
 	var/key
 	var/icon/I = thing
@@ -1029,12 +1028,8 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if (isfile(thing)) //special snowflake
 			var/name = sanitize_filename("[generate_asset_name(thing)].png")
 			register_asset(name, thing)
-			var/list/callbacks
-			var/list/callback_args = list()
 			for (var/thing2 in targets)
-				callbacks += CB
-				callback_args[++callback_args.len] = list(thing2, name, TRUE)
-			callback_select(callbacks, callback_args, savereturns = FALSE)
+				send_asset(thing2, key, FALSE)
 			return "<img class='icon misc' src=\"[url_encode(name)]\">"
 		var/atom/A = thing
 		if (isnull(dir))
@@ -1057,13 +1052,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	key = "[generate_asset_name(I)].png"
 	register_asset(key, I)
-	var/list/callbacks = list()
-	var/list/callback_args = list()
 	for (var/thing2 in targets)
-		callbacks += CB
-		callback_args[++callback_args.len] = list(thing2, key, TRUE)
+		send_asset(thing2, key, FALSE)
 
-	callback_select(callbacks, callback_args, savereturns = FALSE)
 	return "<img class='icon [icon_state]' src=\"[url_encode(key)]\">"
 
 /proc/icon2base64html(thing)
