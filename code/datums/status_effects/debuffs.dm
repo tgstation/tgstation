@@ -438,7 +438,7 @@
 /datum/status_effect/petrification
 	id = "petrification"
 	duration = 50
-	tick_interval = 5
+	tick_interval = 2
 	alert_type = /obj/screen/alert/status_effect/petrification
 	var/petrification_percentage = 0 //How petrified are we? At 100%, we'll be stunned for 10 seconds.
 	var/mob/living/petrifier
