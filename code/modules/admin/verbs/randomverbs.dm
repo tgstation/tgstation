@@ -1148,8 +1148,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /datum/admins/proc/modify_goals()
 	var/dat = ""
 	for(var/datum/station_goal/S in SSticker.mode.station_goals)
-		dat += "[S.name] - <a href='?src=\ref[S];announce=1'>Announce</a> | <a href='?src=\ref[S];remove=1'>Remove</a><br>"
-	dat += "<br><a href='?src=\ref[src];add_station_goal=1'>Add New Goal</a>"
+		dat += "[S.name] - <a href='?src=\ref[S];[HrefToken()];announce=1'>Announce</a> | <a href='?src=\ref[S];[HrefToken()];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=\ref[src];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
 

@@ -809,7 +809,7 @@
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Make AI"] = "?_src_=vars;[usr.client.holder.HrefToken()];makeai=\ref[src]"
-	.["Modify bodypart"] = "?_src_=vars;[usr.client.holder.HrefToken()];editbodypart=\ref[src]"
-	.["Modify organs"] = "?_src_=vars;[usr.client.holder.HrefToken()];editorgans=\ref[src]"
-	.["Hallucinate"] = "?_src_=vars;[usr.client.holder.HrefToken()];hallucinate=\ref[src]"
+	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=\ref[src]"
+	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=\ref[src]"
+	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=\ref[src]"
+	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=\ref[src]"

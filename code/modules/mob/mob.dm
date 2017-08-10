@@ -938,18 +938,18 @@
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Gib"] = "?_src_=vars;[usr.client.holder.HrefToken()];gib=\ref[src]"
-	.["Give Spell"] = "?_src_=vars;[usr.client.holder.HrefToken()];give_spell=\ref[src]"
-	.["Remove Spell"] = "?_src_=vars;[usr.client.holder.HrefToken()];remove_spell=\ref[src]"
-	.["Give Disease"] = "?_src_=vars;[usr.client.holder.HrefToken()];give_disease=\ref[src]"
-	.["Toggle Godmode"] = "?_src_=vars;[usr.client.holder.HrefToken()];godmode=\ref[src]"
-	.["Drop Everything"] = "?_src_=vars;[usr.client.holder.HrefToken()];drop_everything=\ref[src]"
-	.["Regenerate Icons"] = "?_src_=vars;[usr.client.holder.HrefToken()];regenerateicons=\ref[src]"
-	.["Make Space Ninja"] = "?_src_=vars;[usr.client.holder.HrefToken()];ninja=\ref[src]"
-	.["Show player panel"] = "?_src_=vars;[usr.client.holder.HrefToken()];mob_player_panel=\ref[src]"
-	.["Toggle Build Mode"] = "?_src_=vars;[usr.client.holder.HrefToken()];build_mode=\ref[src]"
-	.["Assume Direct Control"] = "?_src_=vars;[usr.client.holder.HrefToken()];direct_control=\ref[src]"
-	.["Offer Control to Ghosts"] = "?_src_=vars;[usr.client.holder.HrefToken()];offer_control=\ref[src]"
+	.["Gib"] = "?_src_=vars;[HrefToken()];gib=\ref[src]"
+	.["Give Spell"] = "?_src_=vars;[HrefToken()];give_spell=\ref[src]"
+	.["Remove Spell"] = "?_src_=vars;[HrefToken()];remove_spell=\ref[src]"
+	.["Give Disease"] = "?_src_=vars;[HrefToken()];give_disease=\ref[src]"
+	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=\ref[src]"
+	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=\ref[src]"
+	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=\ref[src]"
+	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=\ref[src]"
+	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=\ref[src]"
+	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=\ref[src]"
+	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=\ref[src]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;[HrefToken()];offer_control=\ref[src]"
 
 /mob/vv_get_var(var_name)
 	switch(var_name)

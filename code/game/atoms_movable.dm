@@ -504,7 +504,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;[usr.client.holder.HrefToken()];adminplayerobservefollow=\ref[src]"
+	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[src]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)

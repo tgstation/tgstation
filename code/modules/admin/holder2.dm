@@ -1,6 +1,9 @@
 GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
 
+GLOBAL_VAR_INIT(href_token, GenerateToken())
+GLOBAL_PROTECT(href_token)
+
 /datum/admins
 	var/datum/admin_rank/rank
 
@@ -29,14 +32,24 @@ GLOBAL_PROTECT(admin_datums)
 		return
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
-	var/tok = ""
-	for(var/I in 1 to 32)
-		tok += "[rand(10)]"
-	href_token = tok
+	href_token = GenerateToken()
 	GLOB.admin_datums[ckey] = src
 
-/datum/admins/proc/HrefToken()
-	return "admin_auth=[admin_token]"
+/proc/GenerateToken()
+	. = ""
+	for(var/I in 1 to 32)
+		. += "[rand(10)]"
+
+/proc/HrefToken()
+	var/tok = GLOB.href_token
+	if(usr)
+		var/client/C = usr.client
+		if(!C)
+			CRASH("No client for HrefToken()!")
+		var/datum/admins/holder = C.holder
+		if(holder)
+			tok = holder.href_token
+	return "admin_auth=[tok]"
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
