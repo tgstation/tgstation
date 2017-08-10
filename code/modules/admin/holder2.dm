@@ -49,7 +49,7 @@ GLOBAL_PROTECT(href_token)
 		var/datum/admins/holder = C.holder
 		if(holder)
 			tok = holder.href_token
-	return "admin_auth=[tok]"
+	return "admin_token=[tok]"
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
