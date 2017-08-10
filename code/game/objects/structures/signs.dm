@@ -274,6 +274,11 @@
 	desc = "A sign labelling a religious area."
 	icon_state = "holy"
 
+/obj/structure/sign/restroom
+	name = "\improper RESTROOM"
+	desc = "A sign labelling a restroom."
+	icon_state = "restroom"
+
 /obj/structure/sign/xeno_warning_mining
 	name = "DANGEROUS ALIEN LIFE"
 	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
@@ -323,4 +328,4 @@
 /obj/structure/sign/logo
 	name = "station logo"
 	desc = "A sign: SPACE STATION 13."
-	icon_state = "ss13sign-1"
+	icon_state = "nanotrasen_sign1"
