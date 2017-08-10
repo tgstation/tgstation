@@ -1,7 +1,3 @@
-/**********************Mineral deposits**************************/
-GLOBAL_VAR_INIT(secret_triggered, FALSE)
-
-
 /turf/closed/mineral //wall piece
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
@@ -394,10 +390,11 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = TRUE
+	var/static/secret_triggered = FALSE
 
 /turf/closed/mineral/adamantine/gets_drilled()
-	if(!GLOB.secret_triggered)
-		GLOB.secret_triggered = TRUE
+	if(!secret_triggered)
+		secret_triggered = TRUE
 		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
 		new /obj/structure/rend/hfs(src)
 	..()

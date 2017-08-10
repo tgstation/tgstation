@@ -694,3 +694,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 
+/obj/item/proc/on_brew()
+	return
+
+/obj/item/proc/on_smelt()
+	return
+
+/obj/item/proc/on_bar_smelt()
+	return
+
+/obj/item/proc/post_smithing()
+	return

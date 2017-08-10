@@ -8,7 +8,7 @@
 
 /obj/machinery/smelter/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
-		to_chat(user, "You don't comprehend this tool well enough to use it.")
+		to_chat(user, "<span class='warning'>You don't comprehend this tool well enough to use it.</span>")
 		return
 	var/smelting_result = W.on_smelt()
 	if(!smelting_result)
@@ -43,9 +43,8 @@
 		var/obj/item/weapon/reagent_containers/glass/mold/M = W
 		var/datum/reagent/R = M.reagents.get_master_reagent()
 		if(R && R.volume == 25)
-			if(user.drop_item())
+			if(user.transferItemToLoc(M, src))
 				to_chat(user, "<span class='notice'>You place [M] on [src].</span>")
-				M.forceMove(src)
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)

@@ -65,7 +65,7 @@
 
 /datum/crafting_recipe/dwarf/bolts
 	name = "Crossbow Bolts(5)(Stand next to anvil)"
-	result = /obj/item/crossbow_bolt_spawner
+	result = /obj/effect/abstract/crossbow_bolt_spawner
 	reqs = list(/obj/item/stack/sheet/metal = 10)
 	tools = list(/obj/machinery/anvil)
 	time = 10

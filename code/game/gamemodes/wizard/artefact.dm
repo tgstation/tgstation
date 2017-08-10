@@ -35,7 +35,6 @@
 	icon_state = "rift"
 	density = TRUE
 	anchored = TRUE
-	obj_integrity = 500
 	max_integrity = 500
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
