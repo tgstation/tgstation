@@ -77,17 +77,6 @@
 		shock(user,50)
 	return
 
-<<<<<<< HEAD
-=======
-/obj/machinery/r_n_d/server/centcom
-	name = "CentCom Central R&D Database"
-	server_id = -1
-
-/obj/machinery/r_n_d/server/centcom/Initialize()
-	. = ..()
-	fix_noid_research_servers()
-
->>>>>>> tgstation/master
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
@@ -109,9 +98,6 @@
 				S.server_id = num
 				server_ids += num
 		no_id_servers -= S
-
-/obj/machinery/rnd/server/centcom/process()
-	return PROCESS_KILL	//don't need process()
 
 
 /obj/machinery/computer/rdservercontrol
