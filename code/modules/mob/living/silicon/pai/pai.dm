@@ -76,6 +76,12 @@
 /mob/living/silicon/pai/movement_delay()
 	. = ..()
 	. += slowdown
+	
+/mob/living/silicon/pai/can_unbuckle()
+	return 0
+
+/mob/living/silicon/pai/can_buckle()
+    return 0
 
 /mob/living/silicon/pai/Destroy()
 	GLOB.pai_list -= src
