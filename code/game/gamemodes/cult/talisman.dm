@@ -270,7 +270,7 @@
 			if(target.use(25))
 				new /obj/structure/constructshell(T)
 				to_chat(user, "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>")
-				user << sound('sound/effects/magic.ogg',0,1,25)
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 				invoke(user, 1)
 				qdel(src)
 			else
@@ -281,7 +281,7 @@
 			new /obj/item/stack/sheet/runed_metal(T,quantity)
 			target.use(quantity)
 			to_chat(user, "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>")
-			user << sound('sound/effects/magic.ogg',0,1,25)
+			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 			invoke(user, 1)
 			if(uses <= 0)
 				qdel(src)

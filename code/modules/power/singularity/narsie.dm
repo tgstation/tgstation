@@ -71,7 +71,7 @@
 	sleep(1150)
 	if(resolved == FALSE)
 		resolved = TRUE
-		world << sound('sound/machines/alarm.ogg')
+		sound_to_playing_players('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 

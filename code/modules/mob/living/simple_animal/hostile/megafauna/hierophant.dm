@@ -57,6 +57,7 @@ Difficulty: Hard
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/weapon/hierophant_club)
+	crusher_loot = list(/obj/item/weapon/hierophant_club)
 	wander = FALSE
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams

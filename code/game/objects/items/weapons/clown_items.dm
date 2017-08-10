@@ -23,6 +23,10 @@
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
+/obj/item/weapon/soap/Initialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
+
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
 	icon_state = "soapnt"
@@ -47,11 +51,6 @@
 	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!")
 	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
-
-/obj/item/weapon/soap/Crossed(AM as mob|obj)
-	if (istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		M.slip(80, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target))
