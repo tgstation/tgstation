@@ -7,20 +7,14 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
+	circuit = /obj/item/weapon/circuitboard/machine/recharger
 	var/obj/item/charging = null
-	var/static/list/allowed_devices = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/ammo_box/magazine/recharge, /obj/item/device/modular_computer))
 	var/recharge_coeff = 1
-
-/obj/machinery/recharger/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/recharger/B = new()
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/recharger
-	name = "Weapon Recharger (Machine Board)"
-	build_path = /obj/machinery/recharger
-	origin_tech = "powerstorage=4;engineering=3;materials=4"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	var/static/list/allowed_devices = typecacheof(list(
+		/obj/item/weapon/gun/energy,
+		/obj/item/weapon/melee/baton,
+		/obj/item/ammo_box/magazine/recharge,
+		/obj/item/device/modular_computer))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)

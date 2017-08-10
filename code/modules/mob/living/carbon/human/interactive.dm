@@ -97,7 +97,7 @@
 	if(voice_saved)
 		return
 	var/savefile/S = new /savefile("data/npc_saves/snpc.sav")
-	S["knownStrings"] << knownStrings
+	WRITE_FILE(S["knownStrings"], knownStrings)
 
 //botPool funcs
 /mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)

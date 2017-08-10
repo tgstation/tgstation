@@ -9,68 +9,68 @@
 "c" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "d" = (
 /turf/closed/wall/r_wall,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "e" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/stock_parts/cell/hyper,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "f" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "g" = (
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "h" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "i" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "j" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "k" = (
 /turf/open/floor/plating,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "l" = (
 /turf/open/floor/plating/airless,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "m" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder,
 /obj/item/device/radio,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "n" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "o" = (
 /obj/machinery/porta_turret,
 /turf/open/floor/plating/airless,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "p" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "q" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "r" = (
 /obj/machinery/power/apc{
 	dir = 0;
@@ -78,21 +78,21 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "s" = (
 /obj/structure/rack,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "t" = (
 /obj/item/weapon/rack_parts,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "u" = (
 /obj/item/weapon/rack_parts,
 /obj/machinery/light{
@@ -102,7 +102,7 @@
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "v" = (
 /obj/structure/rack,
 /obj/item/device/firing_pin,
@@ -110,26 +110,26 @@
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "w" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "x" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "y" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "z" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "A" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/ushanka,
@@ -137,14 +137,14 @@
 	dir = 4;
 	icon_state = "darkredfull"
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "B" = (
 /obj/structure/table/reinforced,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "C" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
@@ -153,11 +153,11 @@
 	},
 /obj/item/device/radio,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "D" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "E" = (
 /obj/structure/rack,
 /obj/item/ammo_box/c9mm,
@@ -165,19 +165,19 @@
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "F" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "G" = (
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "darkredfull"
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "H" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/orange,
@@ -185,7 +185,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "I" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/swat,
@@ -193,7 +193,7 @@
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "J" = (
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
@@ -202,29 +202,29 @@
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "K" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "L" = (
 /obj/structure/chair/comfy/beige{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "M" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/orange,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "N" = (
 /obj/structure/rack,
 /obj/item/weapon/grenade/chem_grenade/teargas,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "O" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper/crumpled,
@@ -232,23 +232,23 @@
 	dir = 4;
 	icon_state = "darkredfull"
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "P" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light,
 /obj/item/device/camera_bug,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "Q" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "R" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pen/blue,
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "S" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
@@ -259,7 +259,7 @@
 	pixel_x = 3
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "T" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/belt/military,
@@ -268,7 +268,7 @@
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "U" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/riot,
@@ -276,7 +276,7 @@
 	icon_state = "vault";
 	dir = 8
 	},
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 "V" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat,
@@ -284,7 +284,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ruin/turretedoutpost)
+/area/ruin/space/has_grav/turretedoutpost)
 
 (1,1,1) = {"
 a

@@ -16,7 +16,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
 	machinetype = 4
-	//heatgen = 50
+	circuit = /obj/item/weapon/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()
@@ -32,20 +32,9 @@
 	var/obj/item/device/radio/headset/server_radio = null
 	var/last_signal = 0 	// Last time it sent a signal
 
-/obj/machinery/telecomms/server/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/server(null)
-	B.apply_default_parts(src)
-	server_radio = new()
-
-/obj/item/weapon/circuitboard/machine/telecomms/server
-	name = "Telecommunication Server (Machine Board)"
-	build_path = /obj/machinery/telecomms/server
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
+/obj/machinery/telecomms/server/Initialize()
+	. = ..()
+	server_radio = new
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(signal.data["message"])
@@ -135,8 +124,8 @@
 /obj/machinery/telecomms/server/presets
 	network = "tcommsat"
 
-/obj/machinery/telecomms/server/presets/New()
-	..()
+/obj/machinery/telecomms/server/presets/Initialize()
+	. = ..()
 	name = id
 
 
@@ -167,10 +156,10 @@
 
 	//Common and other radio frequencies for people to freely use
 	// 1441 to 1489
-/obj/machinery/telecomms/server/presets/common/New()
+/obj/machinery/telecomms/server/presets/common/Initialize()
+	. = ..()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
@@ -187,6 +176,6 @@
 	freq_listening = list(GLOB.SEC_FREQ)
 	autolinkers = list("security")
 
-/obj/machinery/telecomms/server/presets/common/birdstation/New()
-	..()
+/obj/machinery/telecomms/server/presets/common/birdstation/Initialize()
+	. = ..()
 	freq_listening = list()

@@ -13,7 +13,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ac" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -22,7 +22,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ad" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -39,7 +39,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ae" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -56,7 +56,7 @@
 	d2 = 2
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "af" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -68,21 +68,21 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ag" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ah" = (
 /turf/closed/mineral,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ai" = (
 /turf/open/floor/plating/asteroid,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aj" = (
 /obj/structure/flora/rock,
 /turf/open/floor/plating/asteroid,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ak" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -91,11 +91,11 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "al" = (
 /obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "am" = (
 /mob/living/simple_animal/hostile/poison/bees,
 /mob/living/simple_animal/hostile/poison/bees,
@@ -104,50 +104,50 @@
 /mob/living/simple_animal/hostile/poison/bees,
 /mob/living/simple_animal/hostile/poison/bees,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "an" = (
 /mob/living/simple_animal/hostile/poison/bees,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ao" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ap" = (
 /mob/living/simple_animal/hostile/asteroid/goldgrub{
 	will_burrow = 0
 	},
 /turf/open/floor/plating/asteroid,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aq" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ar" = (
 /obj/structure/flora/rock/pile,
 /turf/open/floor/plating/asteroid,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "as" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk,
 /turf/open/floor/plating/asteroid,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "at" = (
 /turf/closed/wall/r_wall,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "au" = (
 /obj/structure/flora/ausbushes/leafybush,
 /mob/living/simple_animal/hostile/poison/bees,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "av" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aw" = (
 /obj/structure/flora/rock,
 /obj/machinery/light,
 /turf/open/floor/plating/asteroid,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ax" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
@@ -159,10 +159,10 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ay" = (
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "az" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/syringes{
@@ -176,20 +176,20 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aA" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aB" = (
 /obj/machinery/light,
 /mob/living/simple_animal/hostile/poison/bees,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aC" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aD" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -203,7 +203,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aE" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -230,7 +230,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aF" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -238,7 +238,7 @@
 	icon_state = "4-8"
 	},
 /turf/closed/wall/r_wall,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aG" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable{
@@ -250,7 +250,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aH" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -258,7 +258,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/med_data/laptop,
@@ -270,7 +270,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aJ" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -292,7 +292,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aK" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -303,7 +303,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aM" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -311,20 +311,20 @@
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aN" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aO" = (
 /obj/structure/chair/office/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aP" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion,
@@ -332,7 +332,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aQ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -346,7 +346,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aS" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -367,7 +367,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aT" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -385,7 +385,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aU" = (
 /obj/structure/rack,
 /obj/item/weapon/crowbar,
@@ -396,20 +396,20 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aV" = (
 /obj/machinery/smartfridge/chemistry,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aW" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/syringe,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aX" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/grenade/chem_grenade/antiweed{
@@ -429,7 +429,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aY" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/energy/temperature{
@@ -438,7 +438,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "aZ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/cultivator,
@@ -446,7 +446,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "ba" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -454,13 +454,13 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bb" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Bio-Research Station"
 	},
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bc" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -468,7 +468,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bd" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable{
@@ -477,13 +477,13 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "be" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bf" = (
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
@@ -498,21 +498,21 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bg" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bh" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bi" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,
@@ -520,7 +520,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bj" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/surgicaldrill,
@@ -534,33 +534,33 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bk" = (
 /obj/structure/table/optable,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bl" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bm" = (
 /obj/structure/closet/wardrobe/science_white,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bn" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bo" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -584,7 +584,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bp" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/green,
@@ -592,7 +592,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bq" = (
 /obj/item/stack/cable_coil/cut,
 /obj/item/stack/tile/plasteel{
@@ -601,7 +601,7 @@
 	},
 /obj/item/weapon/wirecutters,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "br" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
@@ -613,7 +613,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bs" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -631,7 +631,7 @@
 	},
 /obj/machinery/shieldwallgen,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bt" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -639,32 +639,32 @@
 	},
 /obj/machinery/shieldwallgen,
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bu" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bv" = (
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bw" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/carp,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bx" = (
 /obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "by" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/closed/wall/r_wall,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bz" = (
 /obj/machinery/space_heater,
 /obj/structure/disposalpipe/segment{
@@ -677,55 +677,55 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/juicer,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bB" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bC" = (
 /obj/structure/alien/weeds/node,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bD" = (
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bE" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bF" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bG" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bH" = (
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bI" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bJ" = (
 /mob/living/simple_animal/crab{
 	faction = list("carp")
 	},
 /turf/open/floor/plating,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
@@ -735,13 +735,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bM" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bN" = (
 /obj/structure/grille{
 	density = 0;
@@ -751,11 +751,11 @@
 	icon_state = "small"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bO" = (
 /obj/item/weapon/shard,
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bP" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -773,7 +773,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bR" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -790,21 +790,21 @@
 /obj/structure/cable,
 /obj/machinery/shieldwallgen,
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bT" = (
 /obj/structure/grille,
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bU" = (
 /obj/structure/grille{
 	density = 0;
 	icon_state = "brokengrille"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 "bV" = (
 /obj/machinery/shieldwallgen,
 /turf/template_noop,
@@ -815,7 +815,7 @@
 /area/template_noop)
 "bX" = (
 /turf/open/floor/plating/airless,
-/area/ruin/abandonedzoo)
+/area/ruin/space/has_grav/abandonedzoo)
 
 (1,1,1) = {"
 aa

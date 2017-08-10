@@ -78,14 +78,14 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	src << S
+	SEND_SOUND(src, S)
 
 /proc/sound_to_playing_players(sound, volume = 100, vary)
 	sound = get_sfx(sound)
 	for(var/M in GLOB.player_list)
 		if(ismob(M) && !isnewplayer(M))
 			var/mob/MO = M
-			MO.playsound_local(get_turf(MO), sound, volume, vary, pressure_affected = FALSE)
+			MO.playsound_local(MO, sound, volume, vary, pressure_affected = FALSE)
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
@@ -94,13 +94,13 @@
 		next_channel = 1
 
 /mob/proc/stop_sound_channel(chan)
-	src << sound(null, repeat = 0, wait = 0, channel = chan)
+	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))
 
 /client/proc/playtitlemusic()
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		src << sound(SSticker.login_music, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC) // MAD JAMS
+		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC) // MAD JAMS)
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
@@ -145,7 +145,3 @@
 			if ("can_open")
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 	return soundin
-
-/proc/playsound_global(file, repeat = 0, wait, channel, volume)
-	for(var/V in GLOB.clients)
-		V << sound(file, repeat, wait, channel, volume)

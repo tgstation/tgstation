@@ -183,7 +183,7 @@ LINEN BINS
 	dream_messages = list("black")
 
 /obj/item/weapon/bedsheet/centcom
-	name = "\improper Centcom bedsheet"
+	name = "\improper CentCom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
 	item_color = "centcom"

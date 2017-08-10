@@ -8,7 +8,7 @@
 	icon_state = "alienpod1"
 
 /turf/open/floor/plating/abductor/Initialize()
-	..()
+	. = ..()
 	icon_state = "alienpod[rand(1,9)]"
 
 
@@ -46,7 +46,7 @@
 		pixel_y = -4
 		pixel_x = -4
 		icon = smooth_icon
-	..()
+	. = ..()
 
 /turf/open/floor/plating/ashplanet/break_tile()
 	return
@@ -74,7 +74,7 @@
 
 /turf/open/floor/plating/ashplanet/wateryrock/Initialize()
 	icon_state = "[icon_state][rand(1, 9)]"
-	..()
+	. = ..()
 
 
 /turf/open/floor/plating/beach
@@ -114,7 +114,7 @@
 	desc = "Like sand, but more <i>metal</i>."
 
 /turf/open/floor/plating/ironsand/Initialize()
-	..()
+	. = ..()
 	icon_state = "ironsand[rand(1,15)]"
 
 /turf/open/floor/plating/ironsand/burn_tile()

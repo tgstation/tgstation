@@ -8,7 +8,7 @@
 /area/template_noop)
 "c" = (
 /turf/closed/wall,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "d" = (
 /obj/machinery/light{
 	dir = 1
@@ -19,7 +19,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "e" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -28,7 +28,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "f" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -42,7 +42,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "g" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -55,19 +55,19 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "h" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "i" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "j" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -77,7 +77,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "k" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -86,14 +86,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "l" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/black,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "m" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/stack/sheet/animalhide/lizard,
@@ -106,7 +106,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "n" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
@@ -122,7 +122,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "o" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
@@ -136,7 +136,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "p" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -146,7 +146,7 @@
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "q" = (
 /obj/machinery/door/window/brigdoor/northleft,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -156,19 +156,19 @@
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "r" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "s" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "t" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
@@ -184,17 +184,17 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "u" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "v" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "w" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -203,13 +203,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "x" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "y" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/kitchen/knife/butcher,
@@ -218,29 +218,29 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "z" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "A" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "B" = (
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "C" = (
 /obj/machinery/gibber,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/straight_jacket,
@@ -249,30 +249,30 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "E" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "F" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "G" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "H" = (
 /obj/machinery/door/airlock/security,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "I" = (
 /obj/item/weapon/reagent_containers/glass/bottle/morphine{
 	pixel_x = -4;
@@ -298,28 +298,28 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "J" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/drone,
 /obj/item/weapon/melee/baton/cattleprod,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "K" = (
 /obj/structure/table,
 /obj/item/weapon/pen/red,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "L" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "M" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/prisoner,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "N" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -327,14 +327,14 @@
 /obj/machinery/light,
 /obj/structure/table,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "O" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel{
 	icon_state = "bot";
 	dir = 1
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "P" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/surgicaldrill,
@@ -348,14 +348,14 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "Q" = (
 /obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "R" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/syringe,
@@ -366,26 +366,26 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "S" = (
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "T" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "U" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "V" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 "W" = (
 /turf/open/floor/plating,
-/area/ruin/gasthelizard)
+/area/ruin/space/has_grav/gasthelizard)
 
 (1,1,1) = {"
 a

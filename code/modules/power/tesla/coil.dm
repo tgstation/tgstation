@@ -11,22 +11,16 @@
 	buckle_lying = FALSE
 	buckle_requires_restraints = TRUE
 
+	circuit = /obj/item/weapon/circuitboard/machine/tesla_coil
+
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
 	var/last_zap = 0
 
-/obj/machinery/power/tesla_coil/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/tesla_coil(null)
-	B.apply_default_parts(src)
+/obj/machinery/power/tesla_coil/Initialize()
+	. = ..()
 	wires = new /datum/wires/tesla_coil(src)
-
-/obj/item/weapon/circuitboard/machine/tesla_coil
-	name = "Tesla Coil (Machine Board)"
-	build_path = /obj/machinery/power/tesla_coil
-	origin_tech = "programming=3;magnets=3;powerstorage=3"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
@@ -109,16 +103,7 @@
 	buckle_lying = FALSE
 	buckle_requires_restraints = TRUE
 
-/obj/machinery/power/grounding_rod/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/grounding_rod(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/grounding_rod
-	name = "Grounding Rod (Machine Board)"
-	build_path = /obj/machinery/power/grounding_rod
-	origin_tech = "programming=3;powerstorage=3;magnets=3;plasmatech=2"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	circuit = /obj/item/weapon/circuitboard/machine/grounding_rod
 
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	. = ..()

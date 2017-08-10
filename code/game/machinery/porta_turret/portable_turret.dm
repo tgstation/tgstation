@@ -72,8 +72,8 @@
 
 	var/obj/machinery/turretid/cp = null
 
-/obj/machinery/porta_turret/New(loc)
-	..()
+/obj/machinery/porta_turret/Initialize()
+	. = ..()
 	if(!base)
 		base = src
 	update_icon()
@@ -143,18 +143,13 @@
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
-	if(cover)
-		qdel(cover)
-		cover = null
+	QDEL_NULL(cover)
 	base = null
 	if(cp)
 		cp.turrets -= src
 		cp = null
-	if(stored_gun)
-		qdel(stored_gun)
-		stored_gun = null
-	qdel(spark_system)
-	spark_system = null
+	QDEL_NULL(stored_gun)
+	QDEL_NULL(spark_system)
 	return ..()
 
 
@@ -359,28 +354,23 @@
 			popDown()
 		return
 
-	var/list/targets = calculate_targets()
-
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
-
-/obj/machinery/porta_turret/proc/calculate_targets()
 	var/list/targets = list()
-	var/turretview = view(scan_range, base)
-	for(var/A in turretview)
+	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
+
+	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
 		var/atom/AA = A
-		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+
+		if(AA.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 
 		if(check_anomalies)//if it's set to check for simple animals
-			if(istype(A, /mob/living/simple_animal))
+			if(isanimal(A))
 				var/mob/living/simple_animal/SA = A
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
 
-		if(istype(A, /mob/living/carbon))
+		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
 			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.lying))
@@ -399,14 +389,16 @@
 				if(!in_faction(C))
 					targets += C
 
-		if(istype(A, /obj/mecha/))
+		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			//If there is a user and they're not in our faction
 			if(M.occupant && !in_faction(M.occupant))
 				if(assess_perp(M.occupant) >= 4)
 					targets += M
 
-	return targets
+	if(!tryToShootAt(targets))
+		if(!always_up)
+			popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -490,11 +482,9 @@
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
-		spawn()
-			popUp()				//pop the turret up if it's not already up.
+		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		spawn()
-			shootAt(target)
+		shootAt(target)
 		return 1
 	return
 
@@ -607,12 +597,12 @@
 /obj/machinery/porta_turret/aux_base/interact(mob/user) //Controlled solely from the base console.
 	return
 
-/obj/machinery/porta_turret/aux_base/New()
-	..()
+/obj/machinery/porta_turret/aux_base/Initialize()
+	. = ..()
 	cover.name = name
 	cover.desc = desc
 
-/obj/machinery/porta_turret/centcomm_shuttle
+/obj/machinery/porta_turret/centcom_shuttle
 	installation = null
 	max_integrity = 260
 	always_up = 1
@@ -629,10 +619,10 @@
 	emp_vunerable = 0
 	mode = TURRET_LETHAL
 
-/obj/machinery/porta_turret/centcomm_shuttle/assess_perp(mob/living/carbon/human/perp)
+/obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
 	return 0
 
-/obj/machinery/porta_turret/centcomm_shuttle/setup()
+/obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
 
 ////////////////////////
@@ -655,8 +645,8 @@
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/machinery/turretid/New(loc, ndir = 0, built = 0)
-	..()
+/obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
+	. = ..()
 	if(built)
 		setDir(ndir)
 		locked = FALSE
@@ -669,17 +659,16 @@
 	return ..()
 
 /obj/machinery/turretid/Initialize(mapload) //map-placed turrets autolink turrets
-	..()
+	. = ..()
 	if(!mapload)
 		return
-	if(control_area && istext(control_area))
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
-			if(A.name == control_area)
-				control_area = A
-				break
 
-	if(!control_area)
+	if(control_area)
+		control_area = get_area_instance_from_text(control_area)
+		if(control_area == null)
+			control_area = get_area(src)
+			stack_trace("Bad control_area path for [src], [src.control_area]")
+	else if(!control_area)
 		control_area = get_area(src)
 
 	for(var/obj/machinery/porta_turret/T in control_area)
@@ -687,7 +676,8 @@
 		T.cp = src
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
-	if(stat & BROKEN) return
+	if(stat & BROKEN)
+		return
 
 	if (istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I

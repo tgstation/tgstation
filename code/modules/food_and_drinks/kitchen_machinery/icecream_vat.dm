@@ -14,11 +14,19 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
+	container_type = OPENCONTAINER
+	max_integrity = 300
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
-	container_type = OPENCONTAINER
-	max_integrity = 300
+	var/static/list/icecream_vat_reagents = list(
+		"milk" = 5,
+		"flour" = 5,
+		"sugar" = 5,
+		"ice" = 5,
+		"cocoa" = 5,
+		"berryjuice" = 5,
+		"singulo" = 5)
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -52,19 +60,14 @@
 			return "vanilla"
 
 
-/obj/machinery/icecream_vat/New()
-	..()
+/obj/machinery/icecream_vat/Initialize()
+	. = ..()
 	while(product_types.len < 6)
 		product_types.Add(5)
 	create_reagents()
 	reagents.set_reacting(FALSE)
-	reagents.add_reagent("milk", 5)
-	reagents.add_reagent("flour", 5)
-	reagents.add_reagent("sugar", 5)
-	reagents.add_reagent("ice", 5)
-	reagents.add_reagent("cocoa", 5)
-	reagents.add_reagent("berryjuice", 5)
-	reagents.add_reagent("singulo", 5)
+	for(var/reagent in icecream_vat_reagents)
+		reagents.add_reagent(reagent, icecream_vat_reagents[reagent])
 
 /obj/machinery/icecream_vat/attack_hand(mob/user)
 	user.set_machine(src)

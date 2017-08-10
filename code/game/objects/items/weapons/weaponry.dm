@@ -540,7 +540,7 @@
 	return 1
 
 /obj/item/weapon/melee/flyswatter
-	name = "Flyswatter"
+	name = "flyswatter"
 	desc = "Useful for killing insects of all sizes."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "flyswatter"

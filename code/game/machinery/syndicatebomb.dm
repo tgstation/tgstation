@@ -82,22 +82,19 @@
 			countdown.stop()
 			STOP_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/syndicatebomb/New()
+/obj/machinery/syndicatebomb/Initialize()
+	. = ..()
 	wires = new /datum/wires/syndicatebomb(src)
-	if(src.payload)
+	if(payload)
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
-	..()
 
 /obj/machinery/syndicatebomb/Destroy()
-	qdel(wires)
-	wires = null
-	if(countdown)
-		qdel(countdown)
-		countdown = null
+	QDEL_NULL(wires)
+	QDEL_NULL(countdown)
 	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
+	return ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()

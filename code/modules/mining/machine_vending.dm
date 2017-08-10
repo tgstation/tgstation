@@ -7,6 +7,7 @@
 	icon_state = "mining"
 	density = TRUE
 	anchored = TRUE
+	circuit = /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",		/obj/item/stack/marker_beacon,											10),
@@ -66,19 +67,6 @@
 	src.equipment_name = name
 	src.equipment_path = path
 	src.cost = cost
-
-/obj/machinery/mineral/equipment_vendor/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/mining_equipment_vendor
-	name = "Mining Equipment Vendor (Machine Board)"
-	build_path = /obj/machinery/mineral/equipment_vendor
-	origin_tech = "programming=1;engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/matter_bin = 3)
 
 /obj/machinery/mineral/equipment_vendor/power_change()
 	..()
@@ -207,9 +195,10 @@
 
 /obj/machinery/mineral/equipment_vendor/golem
 	name = "golem ship equipment vendor"
+	circuit = /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem
 
-/obj/machinery/mineral/equipment_vendor/golem/New()
-	..()
+/obj/machinery/mineral/equipment_vendor/golem/Initialize()
+	. = ..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id",       			/obj/item/weapon/card/id/mining, 				                   	250),
@@ -222,14 +211,6 @@
 		new /datum/data/mining_equipment("The Liberator's Legacy",  /obj/item/weapon/storage/box/rndboards,      			      			2000),
 		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/weapon/bedsheet/rd/royal_cape, 500)
 		)
-
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem
-	name = "Golem Ship Equipment Vendor (Machine Board)"
-	build_path = /obj/machinery/mineral/equipment_vendor/golem
-
 
 /**********************Mining Equipment Vendor Items**************************/
 

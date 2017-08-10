@@ -553,7 +553,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/list/tosend = list()
 	tosend["data"] = finalized
-	log << json_encode(tosend)
+	WRITE_FILE(log, json_encode(tosend))
 
 //Used for applying byonds text macros to strings that are loaded at runtime
 /proc/apply_text_macros(string)

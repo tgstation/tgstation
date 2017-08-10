@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
+	circuit = /obj/item/weapon/circuitboard/machine/microwave
 	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
@@ -21,22 +22,9 @@
 *   Initialising
 ********************/
 
-/obj/machinery/microwave/New()
+/obj/machinery/microwave/Initialize()
+	. = ..()
 	create_reagents(100)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/microwave(null)
-	B.apply_default_parts(src)
-	..()
-
-/obj/item/weapon/circuitboard/machine/microwave
-	name = "Microwave (Machine Board)"
-	build_path = /obj/machinery/microwave
-	origin_tech = "programming=2;magnets=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 1)
 
 /obj/machinery/microwave/RefreshParts()
 	var/E

@@ -440,12 +440,12 @@ Code:
 					if(SSshuttle.supply.z != ZLEVEL_STATION)
 						menu += "station"
 					else
-						menu += "centcomm"
+						menu += "centcom"
 					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
 				else
 					menu += "At "
 					if(SSshuttle.supply.z != ZLEVEL_STATION)
-						menu += "centcomm"
+						menu += "centcom"
 					else
 						menu += "station"
 			menu += "<BR>Current approved orders: <BR><ol>"
