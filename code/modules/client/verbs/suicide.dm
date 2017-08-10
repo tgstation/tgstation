@@ -114,14 +114,14 @@
 		death(0)
 
 /mob/living/silicon/pai/verb/suicide()
-    set hidden = 1
+    set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to wipe yourself?", "Confirm data wipe", "Yes", "No")
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
 		 "<span class='notice'>[src] bleeps electronically.</span>")
 		card.removePersonality()
