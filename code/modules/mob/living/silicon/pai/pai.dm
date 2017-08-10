@@ -78,10 +78,10 @@
 	. += slowdown
 	
 /mob/living/silicon/pai/can_unbuckle()
-	return 0
+	return FALSE
 
 /mob/living/silicon/pai/can_buckle()
-    return 0
+    return FALSE
 
 /mob/living/silicon/pai/Destroy()
 	GLOB.pai_list -= src
