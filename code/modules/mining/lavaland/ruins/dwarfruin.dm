@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(dwarves_list, list())
+GLOBAL_LIST_EMPTY(dwarves_list, list())
 
 /*Dwarf Spawner*/
 /obj/machinery/migrant_spawner
@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	GLOB.poi_list += src
 
 /obj/machinery/migrant_spawner/Destroy()
-	GLOB.poi_list.Remove(src)
+	GLOB.poi_list -= src
 	return ..()
 
 /obj/machinery/migrant_spawner/attack_ghost(mob/user)
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 		var/client/new_dorf = user.client
 		spawn_dorf(new_dorf)
 	else
-		to_chat(user, "There's no more room at the fortress for new migrants! Wait for them to build a new dormitory.")
+		to_chat(user, "<span class='notice'>There's no more room at the fortress for new migrants! Wait for them to build a new dormitory.</span>")
 
 /obj/machinery/migrant_spawner/proc/spawn_dorf(client/new_dorf)
 	var/mob/living/carbon/human/M = new (get_turf(src))
@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 
 /obj/machinery/migrant_spawner/attackby(obj/item/weapon/W, mob/user, params)
 	if(isdwarf(user))
-		to_chat(user, "You wouldn't dare.")
+		to_chat(user, "<span class='warning'>You wouldn't dare.</span>")
 		return
 	else
 		..()

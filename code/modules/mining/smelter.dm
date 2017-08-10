@@ -14,7 +14,7 @@
 	if(!smelting_result)
 		return ..()
 	if(user.temporarilyRemoveItemFromInventory(W))
-		to_chat(user, "You smelt [W].")
+		to_chat(user, "<span class='notice'>You smelt [W].</span>")
 		qdel(W)
 		var/obj/item/weapon/reagent_containers/glass/bucket/dwarf/AB = new(get_turf(src)) //New bucket that holds 75u, adding snowflake sprite soon
 		AB.reagents.add_reagent(smelting_result, 75)
@@ -35,7 +35,7 @@
 
 /obj/machinery/anvil/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
-		to_chat(user, "You don't comprehend this tool well enough to use it.")
+		to_chat(user, "<span class='warning'>You don't comprehend this tool well enough to use it.</span>")
 		return
 	if(!istype(W, /obj/item/weapon/smith_hammer))
 		..()
@@ -44,21 +44,21 @@
 		var/datum/reagent/R = M.reagents.get_master_reagent()
 		if(R && R.volume == 25)
 			if(user.drop_item())
-				to_chat(user, "You place [M] on [src].")
+				to_chat(user, "<span class='notice'>You place [M] on [src].</span>")
 				M.forceMove(src)
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)
 				return FALSE
 		if(R && R.volume)
-			to_chat(user, "There's not enough in the mold to make a full cast!")
+			to_chat(user, "<span class='warning'>There's not enough in the mold to make a full cast!</span>")
 			return FALSE
 		else
-			to_chat(user, "There's nothing in the mold!")
+			to_chat(user, "<span class='warning'>There's nothing in the mold!</span>")
 			return FALSE
 	if(istype(W, /obj/item/weapon/smith_hammer))
 		if(current_mold)
-			to_chat(user, "You break the result out of the mold.")
+			to_chat(user, "<span class='notice'>You break the result out of the mold.</span>")
 			new current_mold.type(get_turf(src))
 			var/datum/reagent/R = current_mold.reagents.get_master_reagent()
 			if(!R)
