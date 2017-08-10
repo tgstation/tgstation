@@ -1,15 +1,65 @@
-"a" = (/turf/closed/wall,/area/awaymission)
-"b" = (/obj/structure/table/wood,/obj/item/weapon/hatchet,/turf/open/floor/wood,/area/awaymission)
-"c" = (/turf/open/floor/wood,/area/awaymission)
-"d" = (/obj/machinery/hydroponics/soil,/turf/open/floor/wood,/area/awaymission)
-"e" = (/obj/machinery/brewing_barrel,/turf/open/floor/wood,/area/awaymission)
-"f" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/turf/open/floor/wood,/area/awaymission)
-"g" = (/obj/structure/mineral_door/iron,/turf/open/floor/wood,/area/awaymission)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/awaymission)
+"b" = (
+/obj/structure/table/wood,
+/obj/item/weapon/hatchet,
+/turf/open/floor/wood,
+/area/awaymission)
+"c" = (
+/turf/open/floor/wood,
+/area/awaymission)
+"d" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/wood,
+/area/awaymission)
+"e" = (
+/obj/machinery/brewing_barrel,
+/turf/open/floor/wood,
+/area/awaymission)
+"f" = (
+/obj/structure/table/wood,
+/obj/item/weapon/cultivator,
+/turf/open/floor/wood,
+/area/awaymission)
+"g" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/wood,
+/area/awaymission)
 
 (1,1,1) = {"
-aaaaa
-abcda
-aecda
-aecfa
-aagaa
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+e
+e
+a
+"}
+(3,1,1) = {"
+a
+c
+c
+c
+g
+"}
+(4,1,1) = {"
+a
+d
+d
+f
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
 "}

@@ -1,45 +1,438 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/mineral/random/high_chance/volcanic,/area/mine/explored)
-"c" = (/turf/closed/wall{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/mine/explored)
-"d" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"e" = (/obj/machinery/smelter{layer = 4.4},/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"f" = (/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"g" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"h" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"i" = (/obj/structure/glowshroom/single,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"j" = (/mob/living/simple_animal/pet/cat{gender = "female"},/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"k" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"l" = (/obj/machinery/migrant_spawner,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"m" = (/obj/structure/rack,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"n" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"o" = (/obj/structure/table/wood,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/wheat,/obj/item/seeds/wheat,/obj/item/seeds/wheat,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"p" = (/turf/closed/wall{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"q" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"r" = (/obj/structure/mineral_door/iron,/obj/structure/fans/tiny/invisible,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"s" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"t" = (/obj/structure/rack,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"u" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/obj/item/weapon/shovel/spade,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants/portaseeder,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"v" = (/mob/living/simple_animal/cow,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"w" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"x" = (/obj/machinery/brewing_barrel,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"y" = (/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"z" = (/obj/structure/sink/puddle{name = "magic puddle"},/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
-"A" = (/obj/item/stack/sheet/mineral/clay,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
-"B" = (/mob/living/simple_animal/chicken,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/random/high_chance/volcanic,
+/area/mine/explored)
+"c" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/explored)
+"d" = (
+/obj/machinery/anvil,
+/obj/item/weapon/smith_hammer,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"e" = (
+/obj/machinery/smelter{
+	layer = 4.4
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"f" = (
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"g" = (
+/mob/living/simple_animal/pet/cat,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"h" = (
+/obj/structure/table/wood,
+/obj/item/weapon/reagent_containers/glass/mold/bar,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"i" = (
+/obj/structure/glowshroom/single,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"j" = (
+/mob/living/simple_animal/pet/cat{
+	gender = "female"
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"k" = (
+/turf/closed/wall/mineral/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"l" = (
+/obj/machinery/migrant_spawner,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"m" = (
+/obj/structure/rack,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"n" = (
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"o" = (
+/obj/structure/table/wood,
+/obj/item/seeds/plump,
+/obj/item/seeds/plump,
+/obj/item/seeds/plump,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"p" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"q" = (
+/obj/structure/table/wood,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"r" = (
+/obj/structure/mineral_door/iron,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"s" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"t" = (
+/obj/structure/rack,
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"u" = (
+/obj/structure/table/wood,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/storage/bag/plants/portaseeder,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"v" = (
+/mob/living/simple_animal/cow,
+/turf/open/floor/plating/asteroid{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"w" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plating/asteroid{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"x" = (
+/obj/machinery/brewing_barrel,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"y" = (
+/turf/open/floor/plating/asteroid{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"z" = (
+/obj/structure/sink/puddle{
+	name = "magic puddle"
+	},
+/turf/open/floor/plating/asteroid{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaymission)
+"A" = (
+/obj/item/stack/sheet/mineral/clay,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
+"B" = (
+/mob/living/simple_animal/chicken,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission)
 
 (1,1,1) = {"
-aabbbbbbbbbbbbaaa
-abbbcccbbbbbbbbaa
-abbcdefbfbffgbbba
-bbbhfffifffffjbba
-bbffffkkkkkkfffbb
-bbfflfkmnnokfffbb
-pppiffnnnnqkffibb
-rfsfffktnnukffbbb
-pppbffkkkkkkfbbba
-bbbvwffffxxfffbba
-bbyzyyfffffffAbba
-bbbvyyBBffibbbbba
-abbbbbbbbbbbbbbaa
-aaabbbbbbbbbaaaaa
+a
+a
+a
+b
+b
+b
+p
+r
+p
+b
+b
+b
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+b
+b
+p
+f
+p
+b
+b
+b
+b
+a
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+f
+f
+p
+s
+p
+b
+y
+b
+b
+a
+"}
+(4,1,1) = {"
+b
+b
+c
+h
+f
+f
+i
+f
+b
+v
+z
+v
+b
+b
+"}
+(5,1,1) = {"
+b
+c
+d
+f
+f
+l
+f
+f
+f
+w
+y
+y
+b
+b
+"}
+(6,1,1) = {"
+b
+c
+e
+f
+f
+f
+f
+f
+f
+f
+y
+y
+b
+b
+"}
+(7,1,1) = {"
+b
+c
+f
+f
+k
+k
+n
+k
+k
+f
+f
+B
+b
+b
+"}
+(8,1,1) = {"
+b
+b
+b
+i
+k
+m
+n
+t
+k
+f
+f
+B
+b
+b
+"}
+(9,1,1) = {"
+b
+b
+f
+f
+k
+n
+n
+n
+k
+f
+f
+f
+b
+b
+"}
+(10,1,1) = {"
+b
+b
+b
+f
+k
+n
+n
+n
+k
+x
+f
+f
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+f
+f
+k
+o
+q
+u
+k
+x
+f
+i
+b
+b
+"}
+(12,1,1) = {"
+b
+b
+f
+f
+k
+k
+k
+k
+k
+f
+f
+b
+b
+b
+"}
+(13,1,1) = {"
+b
+b
+g
+f
+f
+f
+f
+f
+f
+f
+f
+b
+b
+a
+"}
+(14,1,1) = {"
+b
+b
+b
+j
+f
+f
+f
+f
+b
+f
+A
+b
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+b
+b
+f
+f
+i
+b
+b
+b
+b
+b
+b
+a
+"}
+(16,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
 "}

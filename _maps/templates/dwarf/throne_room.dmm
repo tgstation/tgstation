@@ -1,22 +1,97 @@
-"a" = (/turf/closed/wall/mineral/gold,/area/awaymission)
-"b" = (/obj/structure/bonfire,/turf/open/floor/carpet,/area/awaymission)
-"c" = (/obj/item/weapon/bedsheet/rd/royal_cape{name = "Dwarven Leader's Cloak"},/turf/open/floor/carpet,/area/awaymission)
-"d" = (/obj/structure/chair/wood/wings,/turf/open/floor/carpet,/area/awaymission)
-"e" = (/obj/item/clothing/head/crown/fancy,/turf/open/floor/carpet,/area/awaymission)
-"f" = (/turf/open/floor/mineral/gold,/area/awaymission)
-"g" = (/obj/item/weapon/holosign_creator/mandate,/turf/open/floor/carpet,/area/awaymission)
-"h" = (/turf/open/floor/carpet,/area/awaymission)
-"i" = (/obj/structure/mineral_door/gold,/turf/open/floor/carpet,/area/awaymission)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/gold,
+/area/awaymission)
+"b" = (
+/obj/structure/bonfire,
+/turf/open/floor/carpet,
+/area/awaymission)
+"c" = (
+/obj/item/weapon/bedsheet/rd/royal_cape{
+	name = "Dwarven Leader's Cloak"
+	},
+/turf/open/floor/carpet,
+/area/awaymission)
+"d" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/carpet,
+/area/awaymission)
+"e" = (
+/obj/item/clothing/head/crown/fancy,
+/turf/open/floor/carpet,
+/area/awaymission)
+"f" = (
+/turf/open/floor/mineral/gold,
+/area/awaymission)
+"g" = (
+/obj/item/weapon/holosign_creator/mandate,
+/turf/open/floor/carpet,
+/area/awaymission)
+"h" = (
+/turf/open/floor/carpet,
+/area/awaymission)
+"i" = (
+/obj/structure/mineral_door/gold,
+/turf/open/floor/carpet,
+/area/awaymission)
 
 (1,1,1) = {"
-aaaaa
-ababa
-acdea
-afgfa
-ahhha
-afhfa
-ahhha
-afhfa
-ahhha
-aaiaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+c
+f
+h
+f
+h
+f
+h
+a
+"}
+(3,1,1) = {"
+a
+a
+d
+g
+h
+h
+h
+h
+h
+i
+"}
+(4,1,1) = {"
+a
+b
+e
+f
+h
+f
+h
+f
+h
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}
