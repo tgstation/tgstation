@@ -3,7 +3,7 @@
 
 /obj/machinery/computer/robotics
 	name = "robotics control console"
-	desc = "Used to remotely lockdown or detonate linked Cyborgs."
+	desc = "Used to remotely lockdown or detonate linked Cyborgs, Drones and pAIs."
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
 	req_access = list(ACCESS_ROBOTICS)
@@ -87,6 +87,18 @@
 
 	if(!drones)
 		dat += "No Drone Units detected within access parameters."
+		
+	var/pai = 0
+	for(var/mob/living/silicon/pai/P in GLOB.mob_list)
+		pai++
+		dat += "[P.name] |"
+		if(P.stat)
+			dat += " Not Responding |"
+		dat += "<A href='?src=\ref[src];killpAI=\ref[D]'>(<font color=red><i>Destroy</i></font>)</A>"
+		dat += "<BR>"
+
+	if(!pai)
+		dat += "No Personal Artifical Intelligence cards detected within access parameters."
 
 	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
 	popup.set_content(dat)
@@ -170,6 +182,18 @@
 				s.start()
 				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
 				D.gib()
+				
+	else if (href_list["killpai"])
+		if(src.allowed(usr))
+			var/mob/living/simple_animal/drone/P = locate(href_list["killpai"]) in GLOB.mob_list
+				var/turf/T = get_turf(P)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(P)][ADMIN_JMP(T)]!")
+				log_game("[key_name(usr)] detonated [key_name(P)]!")
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+				s.set_up(3, 1, P)
+				s.start()
+				P.visible_message("<span class='danger'>\the [P] self destructs!</span>")
+				P.death()
 
 
 	src.updateUsrDialog()
