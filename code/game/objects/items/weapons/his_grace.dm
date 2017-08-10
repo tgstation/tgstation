@@ -23,7 +23,7 @@
 /obj/item/weapon/his_grace/New()
 	..()
 	START_PROCESSING(SSprocessing, src)
-	GLOB.poi_list |= src
+	GLOB.poi_list += src
 
 /obj/item/weapon/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
