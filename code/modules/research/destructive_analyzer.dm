@@ -11,21 +11,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	name = "destructive analyzer"
 	desc = "Learn science by destroying things!"
 	icon_state = "d_analyzer"
+	circuit = /obj/item/weapon/circuitboard/machine/destructive_analyzer
 	var/decon_mod = 0
-
-/obj/machinery/r_n_d/destructive_analyzer/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/destructive_analyzer(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/destructive_analyzer
-	name = "Destructive Analyzer (Machine Board)"
-	build_path = /obj/machinery/r_n_d/destructive_analyzer
-	origin_tech = "magnets=2;engineering=2;programming=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0

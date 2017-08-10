@@ -11137,17 +11137,7 @@
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
 "CL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plasteel,
 /area/centcom/holding)
 "CM" = (
@@ -11155,17 +11145,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/holding)
 "CN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plasteel,
 /area/centcom/holding)
 "CO" = (
