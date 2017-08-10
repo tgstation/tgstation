@@ -13,7 +13,17 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << ftp(file(path))
+	//this is copypasta because making it a proc would mean locking out adminproccalls,
+	//	and that system is buggy enough with false positives that I don't want to risk locking admins out of legit calls.
+	switch(alert("View (in game), Open (in your system's text editor), or Download file [path]?", "Log File Opening", "View", "Open", "Download"))
+		if ("View")
+			src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>", list2params(list("window" = "viewfile.[path]")))
+		if ("Open")
+			src << run(file(path))
+		if ("Download")
+			src << ftp(file(path))
+		else
+			return
 	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
@@ -27,7 +37,15 @@
 	set desc = "Shows server log for this round."
 
 	if(fexists("[GLOB.world_game_log]"))
-		src << ftp(GLOB.world_game_log)
+		switch(alert("View (in game), Open (in your system's text editor), or Download file [GLOB.world_game_log]?", "Log File Opening", "View", "Open", "Download"))
+			if ("View")
+				src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(GLOB.world_game_log))]</pre>", list2params(list("window" = "viewfile.[GLOB.world_game_log]")))
+			if ("Open")
+				src << run(GLOB.world_game_log)
+			if ("Download")
+				src << ftp(GLOB.world_game_log)
+			else
+				return
 	else
 		to_chat(src, "<font color='red'>Server log not found, try using .getserverlog.</font>")
 		return
@@ -41,7 +59,15 @@
 	set desc = "Shows server attack log for this round."
 
 	if(fexists("[GLOB.world_attack_log]"))
-		src << ftp(GLOB.world_attack_log)
+		switch(alert("View (in game), Open (in your system's text editor), or Download file [GLOB.world_attack_log]?", "Log File Opening", "View", "Open", "Download"))
+			if ("View")
+				src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(GLOB.world_attack_log))]</pre>", list2params(list("window" = "viewfile.[GLOB.world_attack_log]")))
+			if ("Open")
+				src << run(GLOB.world_attack_log)
+			if ("Download")
+				src << ftp(GLOB.world_attack_log)
+			else
+				return
 	else
 		to_chat(src, "<font color='red'>Server attack log not found, try using .getserverlog.</font>")
 		return
