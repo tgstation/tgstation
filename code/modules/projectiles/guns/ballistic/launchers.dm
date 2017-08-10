@@ -55,7 +55,7 @@
 	origin_tech = "combat=4;engineering=4"
 	force = 10
 	can_suppress = 0
-	mag_type = /obj/item/ammo_box/magazine/internal/speargun
+	mag_type = /obj/item/ammo_box/magazine/internal/speargun/crossbow
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	burst_size = 1
 	fire_delay = 0

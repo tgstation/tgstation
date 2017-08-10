@@ -149,6 +149,12 @@
 	caliber = "speargun"
 	max_ammo = 1
 
+/obj/item/ammo_box/magazine/internal/speargun/crossbow
+	name = "crossbow internal magazine"
+	ammo_type = /obj/item/ammo_casing/caseless/crossbow
+	caliber = "crossbow"
+	max_ammo = 1
+
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/a357

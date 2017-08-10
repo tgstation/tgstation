@@ -160,7 +160,8 @@
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+		var/datum/reagent/fuck_this_shit = R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+		fuck_this_shit.on_transfer(T)
 		remove_reagent(T.id, transfer_amount)
 
 	update_total()
@@ -547,7 +548,7 @@
 			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
-			return TRUE
+			return R
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
 	if(D)
@@ -565,7 +566,7 @@
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
-		return TRUE
+		return R
 
 	else
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")

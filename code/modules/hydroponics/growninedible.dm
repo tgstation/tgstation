@@ -7,6 +7,13 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
+	var/booze_power = 10
+
+/obj/item/weapon/grown/on_brew()
+	var/list/my_reagents = list()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		my_reagents += R.id
+	return list("reagents" = my_reagents, "booze_power" = booze_power, "prefix" = name)
 
 /obj/item/weapon/grown/New(newloc, var/obj/item/seeds/new_seed = null)
 	..()

@@ -58,3 +58,27 @@
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)
+/datum/map_template/shelter/dwarf/throne_room
+	name = "Dwarven Throne Room"
+	shelter_id = "throne_room"
+	mappath = "_maps/templates/dwarf/throne_room.dmm"
+/datum/map_template/shelter/dwarf/smeltery
+	name = "Dwarven Smelter"
+	shelter_id = "smeltery"
+	mappath = "_maps/templates/dwarf/smeltery.dmm"
+/datum/map_template/shelter/dwarf/dining_hall
+	name = "Dwarven Dining Hall"
+	shelter_id = "dining_hall"
+	mappath = "_maps/templates/dwarf/dining_hall.dmm"
+/datum/map_template/shelter/dwarf/brewery
+	name = "Dwarven Brewery"
+	shelter_id = "brewery"
+	mappath = "_maps/templates/dwarf/brewery.dmm"
+/datum/map_template/shelter/dwarf/dorm
+	name = "Dwarven Dormitory"
+	shelter_id = "dorm"
+	mappath = "_maps/templates/dwarf/dorm.dmm"
+/datum/map_template/shelter/dwarf/farm
+	name = "Dwarven Farm"
+	shelter_id = "farm"
+	mappath = "_maps/templates/dwarf/farm.dmm"

@@ -1,0 +1,15 @@
+"a" = (/turf/closed/wall,/area/awaymission)
+"b" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/wood,/area/awaymission)
+"c" = (/obj/machinery/smelter,/turf/open/floor/wood,/area/awaymission)
+"d" = (/turf/open/floor/wood,/area/awaymission)
+"e" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/obj/item/weapon/smith_hammer,/turf/open/floor/wood,/area/awaymission)
+"f" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/wood,/area/awaymission)
+"g" = (/obj/structure/mineral_door/iron,/turf/open/floor/wood,/area/awaymission)
+
+(1,1,1) = {"
+aaaaa
+abcda
+addea
+addfa
+aagaa
+"}

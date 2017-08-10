@@ -1,0 +1,55 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/random/volcanic,/area/mine/explored)
+"c" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"d" = (/obj/machinery/smelter{layer = 4.4},/obj/item/weapon/shovel,/obj/item/weapon/shovel,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"e" = (/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"f" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/weapon/cultivator,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"g" = (/obj/machinery/brewing_barrel,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"h" = (/obj/machinery/hydroponics/soil,/obj/effect/decal/cleanable/egg_smudge,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"i" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/chicken,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"j" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/cow,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"k" = (/obj/item/device/flashlight/lantern,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"l" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"m" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"n" = (/obj/structure/table/wood,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/storage/backpack/quiver,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/weapon/shovel/spade,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"o" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"p" = (/obj/structure/sink/puddle{name = "magic puddle"},/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"q" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"r" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"s" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/weapon/grown/log,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"t" = (/obj/item/seeds/tower,/turf/closed/mineral/random/volcanic,/area/mine/explored)
+"u" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"v" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"w" = (/mob/living/simple_animal/pet/cat{gender = "female"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"x" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/bonfire,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission)
+"y" = (/turf/open/floor/carpet{initial_gas_mix = "o2=14;n2=23;TEMP=300"; name = "old carpet"},/area/awaymission)
+"z" = (/obj/structure/bonfire,/turf/open/floor/carpet{initial_gas_mix = "o2=14;n2=23;TEMP=300"; name = "old carpet"},/area/awaymission)
+"A" = (/turf/closed/wall/mineral/wood,/area/awaymission)
+"B" = (/obj/item/device/flashlight/flare/torch,/turf/open/floor/carpet{initial_gas_mix = "o2=14;n2=23;TEMP=300"; name = "old carpet"},/area/awaymission)
+"C" = (/obj/machinery/migrant_spawner,/turf/open/floor/carpet{initial_gas_mix = "o2=14;n2=23;TEMP=300"; name = "old carpet"},/area/awaymission)
+"D" = (/obj/item/weapon/bedsheet/rd/royal_cape{name = "Dwarven Leader's Cloak"},/turf/open/floor/carpet{initial_gas_mix = "o2=14;n2=23;TEMP=300"; name = "old carpet"},/area/awaymission)
+"E" = (/obj/structure/chair/wood/wings{tag = "icon-wooden_chair_wings (NORTH)"; icon_state = "wooden_chair_wings"; dir = 1},/obj/item/weapon/holosign_creator/mandate,/turf/open/floor/carpet{initial_gas_mix = "o2=14;n2=23;TEMP=300"; name = "old carpet"},/area/awaymission)
+"F" = (/obj/item/clothing/head/crown/fancy,/turf/open/floor/carpet{initial_gas_mix = "o2=14;n2=23;TEMP=300"; name = "old carpet"},/area/awaymission)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aabbbbbbbbbbbbbbbbaa
+abbcdebbbbbfgghijbaa
+abbklmbbbbbnlloipbaa
+bbbqlrbbbbbslkoojbaa
+bbbblbbbbbbblbbbbbaa
+btblllllllllllluubaa
+vlvlllllllllllluubaa
+bbbbbbbbbbbbwwlllbaa
+bbbbbbbbbbbbwwlllbaa
+bbbbbbbbbbbbblllbbaa
+aaaaaabbbbbbxllyzbaa
+aaaaaabbbbbbAlyyAbaa
+aaaaaabbbbbbzByBzbaa
+aaaaaaaabbbbAyCyAbaa
+aaaaaaaaabbbzByBzbaa
+aaaaaaaaabbbAyyyAbaa
+aaaaaaaaabbbzDEFzbaa
+aaaaaaaaaabbbbbbbbaa
+aaaaaaaaaaaaaaaaaaaa
+"}

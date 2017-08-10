@@ -1,4 +1,6 @@
 /**********************Mineral deposits**************************/
+GLOBAL_VAR_INIT(secret_triggered, FALSE)
+
 
 /turf/closed/mineral //wall piece
 	name = "rock"
@@ -66,7 +68,8 @@
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 		P.playDigSound()
 
-		if(do_after(user,P.digspeed, target = src))
+		var/adjusted_digspeed = (user.getorganslot("dwarf_organ") ? (P.digspeed * 0.5) : P.digspeed)
+		if(do_after(user,adjusted_digspeed, target = src)) //regular mining slowdown
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
@@ -141,7 +144,7 @@
 
 /turf/closed/mineral/random
 	var/mineralSpawnChanceList
-		//Currently, Adamantine won't spawn as it has no uses. -Durandan
+		//Currently, Adamantine won't spawn as it has no uses. -Durandan // HAHA FUCK YOU IT DOES NOW BITCHES
 	var/mineralChance = 13
 	var/display_icon_state = "rock"
 
@@ -150,7 +153,8 @@
 		mineralSpawnChanceList = list(
 			/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
 			/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40, /turf/closed/mineral/titanium = 11,
-			/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /turf/closed/mineral/bscrystal = 1)
+			/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /turf/closed/mineral/bscrystal = 1,
+			/turf/closed/mineral/adamantine = 1, /turf/closed/mineral/clay = 15)
 	if (display_icon_state)
 		icon_state = display_icon_state
 	..()
@@ -173,7 +177,8 @@
 	mineralChance = 25
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium = 35, /turf/closed/mineral/diamond = 30, /turf/closed/mineral/gold = 45, /turf/closed/mineral/titanium = 45,
-		/turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20)
+		/turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20,
+		/turf/closed/mineral/adamantine = 15)
 
 /turf/closed/mineral/random/high_chance/volcanic
 	environment_type = "basalt"
@@ -183,7 +188,8 @@
 	defer_change = 1
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium/volcanic = 35, /turf/closed/mineral/diamond/volcanic = 30, /turf/closed/mineral/gold/volcanic = 45, /turf/closed/mineral/titanium/volcanic = 45,
-		/turf/closed/mineral/silver/volcanic = 50, /turf/closed/mineral/plasma/volcanic = 50, /turf/closed/mineral/bscrystal/volcanic = 20)
+		/turf/closed/mineral/silver/volcanic = 50, /turf/closed/mineral/plasma/volcanic = 50, /turf/closed/mineral/bscrystal/volcanic = 20,
+		/turf/closed/mineral/adamantine = 15)
 
 
 
@@ -207,7 +213,8 @@
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium/volcanic = 5, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 10, /turf/closed/mineral/titanium/volcanic = 11,
 		/turf/closed/mineral/silver/volcanic = 12, /turf/closed/mineral/plasma/volcanic = 20, /turf/closed/mineral/iron/volcanic = 40,
-		/turf/closed/mineral/gibtonite/volcanic = 4, /turf/open/floor/plating/asteroid/airless/cave/volcanic = 1, /turf/closed/mineral/bscrystal/volcanic = 1)
+		/turf/closed/mineral/gibtonite/volcanic = 4, /turf/open/floor/plating/asteroid/airless/cave/volcanic = 1, /turf/closed/mineral/bscrystal/volcanic = 1,
+		/turf/closed/mineral/adamantine = 1, /turf/closed/mineral/clay = 15)
 
 
 /turf/closed/mineral/random/labormineral
@@ -375,6 +382,37 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	environment_type = "waste"
 	turf_type = /turf/open/floor/plating/ashplanet/rocky
+	defer_change = 1
+
+/turf/closed/mineral/adamantine
+	mineralType = /obj/item/weapon/ore/adamantine
+	mineralAmt = 1
+	spreadChance = 0
+	spread = 0
+	scan_state = "rock_adamantine"
+	environment_type = "basalt"
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	defer_change = 1
+
+/turf/closed/mineral/adamantine/gets_drilled()
+	if(!GLOB.secret_triggered)
+		GLOB.secret_triggered = TRUE
+		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
+		new /obj/structure/rend/hfs(src)
+	..()
+
+
+/turf/closed/mineral/clay
+	mineralType = /obj/item/stack/sheet/mineral/clay
+	spreadChance = 20
+	spread = 1
+	scan_state = "rock_clay"
+	environment_type = "basalt"
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = 1
 
 

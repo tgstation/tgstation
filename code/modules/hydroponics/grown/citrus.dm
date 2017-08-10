@@ -30,6 +30,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	filling_color = "#00FF00"
+	booze_power = 5
 
 // Orange
 /obj/item/seeds/orange
@@ -56,6 +57,7 @@
 	desc = "It's an tangy fruit."
 	icon_state = "orange"
 	filling_color = "#FFA500"
+	booze_power = 15
 
 // Lemon
 /obj/item/seeds/lemon
@@ -81,6 +83,7 @@
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
+	booze_power = 5
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
