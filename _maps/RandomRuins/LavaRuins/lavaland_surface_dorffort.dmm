@@ -65,15 +65,6 @@
 /area/awaymission)
 "n" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/bow,
-/obj/item/weapon/gun/ballistic/bow,
-/obj/item/weapon/gun/ballistic/bow,
-/obj/item/weapon/storage/backpack/quiver,
-/obj/item/ammo_casing/caseless/arrow,
-/obj/item/ammo_casing/caseless/arrow,
-/obj/item/ammo_casing/caseless/arrow,
-/obj/item/ammo_casing/caseless/arrow,
-/obj/item/ammo_casing/caseless/arrow,
 /obj/item/weapon/shovel/spade,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission)
