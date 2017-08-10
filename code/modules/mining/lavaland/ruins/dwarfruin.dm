@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(dwarves_list, list())
+GLOBAL_LIST_EMPTY(dwarves_list)
 
 /*Dwarf Spawner*/
 /obj/machinery/migrant_spawner
