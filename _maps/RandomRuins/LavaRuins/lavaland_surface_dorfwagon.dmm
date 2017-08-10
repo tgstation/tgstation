@@ -7,7 +7,7 @@
 /area/mine/explored)
 "c" = (
 /turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/mine/explored)
 "d" = (
