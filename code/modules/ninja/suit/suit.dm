@@ -28,7 +28,6 @@ Contents:
 	var/mob/living/carbon/human/affecting = null
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
-	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 	var/obj/item/weapon/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
@@ -44,8 +43,8 @@ Contents:
 	var/s_cost = 5//Base energy cost each ntick.
 	var/s_acost = 25//Additional cost for additional powers active.
 	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
-	var/a_transfer = 20//How much reagent is transferred when injecting.
-	var/r_maxamount = 80//How much reagent in total there is.
+	var/a_transfer = 20//How much radium is used per adrenaline boost.
+	var/a_maxamount = 7//Maximum number of adrenaline boosts.
 
 		//Support function variables.
 	var/s_active = 0//Stealth off.
@@ -71,15 +70,6 @@ Contents:
 	stored_research = new()
 	for(var/T in subtypesof(/datum/tech))//Store up on research.
 		stored_research += new T(src)
-
-	//Reagent Init
-	var/reagent_amount
-	for(var/reagent_id in reagent_list)
-		reagent_amount += reagent_id == "radium" ? r_maxamount+(a_boost*a_transfer) : r_maxamount
-	reagents = new(reagent_amount)
-	reagents.my_atom = src
-	for(var/reagent_id in reagent_list)
-		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
 
 	//Cell Init
 	cell = new/obj/item/weapon/stock_parts/cell/high
