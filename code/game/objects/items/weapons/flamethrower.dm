@@ -252,3 +252,10 @@
 
 /obj/item/device/assembly/igniter/proc/ignite_turf(obj/item/weapon/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)
+
+/obj/item/weapon/gun/proc/can_trigger_gun(var/mob/living/user)
+
+	if(!user.can_use_guns(src))
+		return 0
+
+	return 1
