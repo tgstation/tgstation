@@ -55,23 +55,7 @@
 /obj/machinery/power/rtg/advanced
 	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further."
 	power_gen = 1250 // 2500 on T1, 10000 on T4.
-<<<<<<< HEAD
-	board_path = /obj/item/weapon/circuitboard/machine/rtg/advanced
-
-/obj/item/weapon/circuitboard/machine/rtg/advanced
-	name = "Advanced RTG (Machine Board)"
-	build_path = /obj/machinery/power/rtg/advanced
-	req_components = list(
-		/obj/item/stack/cable_coil = 5,
-		/obj/item/weapon/stock_parts/capacitor = 1,
-		/obj/item/weapon/stock_parts/micro_laser = 1,
-		/obj/item/stack/sheet/mineral/uranium = 10,
-		/obj/item/stack/sheet/mineral/plasma = 5)
-
-
-=======
 	circuit = /obj/item/weapon/circuitboard/machine/rtg/advanced
->>>>>>> tgstation/master
 
 // Void Core, power source for Abductor ships and bases.
 // Provides a lot of power, but tends to explode when mistreated.
