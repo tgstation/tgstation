@@ -1,4 +1,6 @@
 
+//Used \n[\s]*origin_tech[\s]*=[\s]*"[\S]+" to delete all origin techs.
+
 //Techweb datums are meant to store unlocked research, being able to be stored on research consoles, servers, and disks. They are NOT global.
 /datum/techweb
 	var/list/datum/techweb_node/researched_nodes = list()		//Already unlocked and all designs are now available. Assoc list, id = datum
