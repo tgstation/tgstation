@@ -140,15 +140,12 @@ GLOBAL_PROTECT(exp_to_update)
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
 	if(!config.use_exp_tracking)
-		return
+		return -1
 	if(!SSdbcore.Connect())
 		return -1
 	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 	if(!exp_read.Execute())
-		var/err = exp_read.ErrorMsg()
-		log_sql("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		return
+		return -1
 	var/list/play_records = list()
 	while(exp_read.NextRow())
 		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
@@ -172,42 +169,24 @@ GLOBAL_PROTECT(exp_to_update)
 	if(!set_db_player_flags())
 		return -1
 
-	var/datum/DBQuery/flag_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[sanitizeSQL(ckey)]'")
-
-	if(!flag_read.Execute())
-		var/err = flag_read.ErrorMsg()
-		log_sql("SQL ERROR during player flags read. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during player flags read. Error : \[[err]\]\n")
-		return
-
-	var/playerflags = null
-	if(flag_read.NextRow())
-		playerflags = text2num(flag_read.item[1])
-
-	if((playerflags & newflag) && !state)
+	if((prefs.db_flags & newflag) && !state)
 		prefs.db_flags &= ~newflag
 	else
 		prefs.db_flags |= newflag
 
 	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[prefs.db_flags]' WHERE ckey='[sanitizeSQL(ckey)]'")
 
-
 	if(!flag_update.Execute())
-		var/err = flag_update.ErrorMsg()
-		log_sql("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
-		return
+		return -1
+
 
 /client/proc/update_exp_list(minutes, announce_changes = FALSE)
 	if(!config.use_exp_tracking)
-		return
+		return -1
 	if(!SSdbcore.Connect())
 		return -1
 	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 	if(!exp_read.Execute())
-		var/err = exp_read.ErrorMsg()
-		log_sql("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
 		return -1
 	var/list/play_records = list()
 	while(exp_read.NextRow())
@@ -241,9 +220,13 @@ GLOBAL_PROTECT(exp_to_update)
 							if(announce_changes)
 								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!</span>")
 				if(mob.mind.special_role && !mob.mind.var_edited)
-					play_records[mob.mind.special_role] += minutes
+					var/trackedrole = mob.mind.special_role
+					var/gangrole = lookforgangrole(mob.mind.special_role)
+					if(gangrole)
+						trackedrole = gangrole
+					play_records[trackedrole] += minutes
 					if(announce_changes)
-						to_chat(src,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!</span>")
+						to_chat(src,"<span class='notice'>You got: [minutes] [trackedrole] EXP!</span>")
 			if(!rolefound)
 				play_records["Unknown"] += minutes
 		else
@@ -276,11 +259,21 @@ GLOBAL_PROTECT(exp_to_update)
 	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[ckey]'")
 
 	if(!flags_read.Execute())
-		var/err = flags_read.ErrorMsg()
-		log_sql("SQL ERROR during player flags read. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during player flags read. Error : \[[err]\]\n")
 		return FALSE
 
 	if(flags_read.NextRow())
 		prefs.db_flags = text2num(flags_read.item[1])
+	else if(isnull(prefs.db_flags))
+		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
 	return TRUE
+
+//Since each gang is tracked as a different antag type, records need to be generalized or you get up to 57 different possible records
+/proc/lookforgangrole(rolecheck)
+	if(findtext(rolecheck,"Gangster"))
+		return "Gangster"
+	else if(findtext(rolecheck,"Gang Boss"))
+		return "Gang Boss"
+	else if(findtext(rolecheck,"Gang Lieutenant"))
+		return "Gang Lieutenant"
+	else
+		return FALSE

@@ -1246,7 +1246,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
 		return
 
-	C.set_db_player_flags()
+	if(!C.set_db_player_flags())
+		to_chat(usr, "<span class='danger'>ERROR: Unable read player flags from database. Please check logs.</span>")
 	var/dbflags = C.prefs.db_flags
 	var/newstate = FALSE
 	if(dbflags & DB_FLAG_EXEMPT)
@@ -1254,6 +1255,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		newstate = TRUE
 
-	message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
-	log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
-	C.update_flag_db(DB_FLAG_EXEMPT, newstate)
+	if(C.update_flag_db(DB_FLAG_EXEMPT, newstate))
+		to_chat(usr, "<span class='danger'>ERROR: Unable to update player flags. Please check logs.</span>")
+	else
+		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
+		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
