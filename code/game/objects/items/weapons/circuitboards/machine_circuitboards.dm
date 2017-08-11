@@ -1,6 +1,7 @@
 /obj/item/weapon/circuitboard/machine/sleeper
 	name = "Sleeper (Machine Board)"
-	build_path = /obj/machinery/sleeperrnd
+	build_path = /obj/machinery/sleeper
+	origin_tech = "programming=3;biotech=2;engineering=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -10,14 +11,16 @@
 
 /obj/item/weapon/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
-	build_path = /obj/machinery/announcement_systemrnd
+	build_path = /obj/machinery/announcement_system
+	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/machine/autolathe
 	name = "Autolathe (Machine Board)"
-	build_path = /obj/machinery/autolathernd
+	build_path = /obj/machinery/autolathe
+	origin_tech = "engineering=2;programming=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 3,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -25,7 +28,8 @@
 
 /obj/item/weapon/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
-	build_path = /obj/machinery/clonepodrnd
+	build_path = /obj/machinery/clonepod
+	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/weapon/stock_parts/scanning_module = 2,
@@ -34,7 +38,8 @@
 
 /obj/item/weapon/circuitboard/machine/abductor
 	name = "alien board (Report This)"
-	icon_state = "abductor_mod"rnd
+	icon_state = "abductor_mod"
+	origin_tech = "programming=5;abductor=3"
 
 /obj/item/weapon/circuitboard/machine/clockwork
 	name = "clockwork board (Report This)"
@@ -42,7 +47,8 @@
 
 /obj/item/weapon/circuitboard/machine/clonescanner
 	name = "Cloning Scanner (Machine Board)"
-	build_path = /obj/machinery/dna_scannernewrnd
+	build_path = /obj/machinery/dna_scannernew
+	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/scanning_module = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -52,12 +58,14 @@
 
 /obj/item/weapon/circuitboard/machine/holopad
 	name = "AI Holopad (Machine Board)"
-	build_path = /obj/machinery/holopadrnd
+	build_path = /obj/machinery/holopad
+	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/machine/launchpad
 	name = "Bluespace Launchpad (Machine Board)"
-	build_path = /obj/machinery/launchpadrnd
+	build_path = /obj/machinery/launchpad
+	origin_tech = "programming=3;engineering=3;plasmatech=2;bluespace=3"
 	req_components = list(
 		/obj/item/weapon/ore/bluespace_crystal = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
@@ -65,7 +73,8 @@
 
 /obj/item/weapon/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
-	build_path = /obj/machinery/limbgrowerrnd
+	build_path = /obj/machinery/limbgrower
+	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 1,
 		/obj/item/weapon/reagent_containers/glass/beaker = 2,
@@ -73,7 +82,8 @@
 
 /obj/item/weapon/circuitboard/machine/quantumpad
 	name = "Quantum Pad (Machine Board)"
-	build_path = /obj/machinery/quantumpadrnd
+	build_path = /obj/machinery/quantumpad
+	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
 	req_components = list(
 		/obj/item/weapon/ore/bluespace_crystal = 1,
 		/obj/item/weapon/stock_parts/capacitor = 1,
@@ -83,12 +93,14 @@
 
 /obj/item/weapon/circuitboard/machine/recharger
 	name = "Weapon Recharger (Machine Board)"
-	build_path = /obj/machinery/rechargerrnd
+	build_path = /obj/machinery/recharger
+	origin_tech = "powerstorage=4;engineering=3;materials=4"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
-	build_path = /obj/machinery/recharge_stationrnd
+	build_path = /obj/machinery/recharge_station
+	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/capacitor = 2,
 		/obj/item/weapon/stock_parts/cell = 1,
@@ -97,14 +109,16 @@
 
 /obj/item/weapon/circuitboard/machine/recycler
 	name = "Recycler (Machine Board)"
-	build_path = /obj/machinery/recyclerrnd
+	build_path = /obj/machinery/recycler
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/machine/space_heater
 	name = "Space Heater (Machine Board)"
-	build_path = /obj/machinery/space_heaterrnd
+	build_path = /obj/machinery/space_heater
+	origin_tech = "programming=2;engineering=2;plasmatech=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 		/obj/item/weapon/stock_parts/capacitor = 1,
@@ -112,7 +126,8 @@
 
 /obj/item/weapon/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster (Machine Board)"
-	build_path = /obj/machinery/telecomms/broadcasterrnd
+	build_path = /obj/machinery/telecomms/broadcaster
+	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 2,
 		/obj/item/stack/cable_coil = 1,
@@ -122,7 +137,8 @@
 
 /obj/item/weapon/circuitboard/machine/telecomms/bus
 	name = "Bus Mainframe (Machine Board)"
-	build_path = /obj/machinery/telecomms/busrnd
+	build_path = /obj/machinery/telecomms/bus
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 2,
 		/obj/item/stack/cable_coil = 1,
@@ -130,7 +146,8 @@
 
 /obj/item/weapon/circuitboard/machine/telecomms/hub
 	name = "Hub Mainframe (Machine Board)"
-	build_path = /obj/machinery/telecomms/hubrnd
+	build_path = /obj/machinery/telecomms/hub
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 2,
 		/obj/item/stack/cable_coil = 2,
@@ -138,7 +155,8 @@
 
 /obj/item/weapon/circuitboard/machine/telecomms/processor
 	name = "Processor Unit (Machine Board)"
-	build_path = /obj/machinery/telecomms/processorrnd
+	build_path = /obj/machinery/telecomms/processor
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 3,
 		/obj/item/weapon/stock_parts/subspace/filter = 1,
@@ -149,7 +167,8 @@
 
 /obj/item/weapon/circuitboard/machine/telecomms/receiver
 	name = "Subspace Receiver (Machine Board)"
-	build_path = /obj/machinery/telecomms/receiverrnd
+	build_path = /obj/machinery/telecomms/receiver
+	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
 		/obj/item/weapon/stock_parts/subspace/ansible = 1,
 		/obj/item/weapon/stock_parts/subspace/filter = 1,
@@ -158,7 +177,8 @@
 
 /obj/item/weapon/circuitboard/machine/telecomms/relay
 	name = "Relay Mainframe (Machine Board)"
-	build_path = /obj/machinery/telecomms/relayrnd
+	build_path = /obj/machinery/telecomms/relay
+	origin_tech = "programming=2;engineering=2;bluespace=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 2,
 		/obj/item/stack/cable_coil = 2,
@@ -166,7 +186,8 @@
 
 /obj/item/weapon/circuitboard/machine/telecomms/server
 	name = "Telecommunication Server (Machine Board)"
-	build_path = /obj/machinery/telecomms/serverrnd
+	build_path = /obj/machinery/telecomms/server
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 2,
 		/obj/item/stack/cable_coil = 1,
@@ -174,7 +195,8 @@
 
 /obj/item/weapon/circuitboard/machine/teleporter_hub
 	name = "Teleporter Hub (Machine Board)"
-	build_path = /obj/machinery/teleport/hubrnd
+	build_path = /obj/machinery/teleport/hub
+	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
 		/obj/item/weapon/ore/bluespace_crystal = 3,
 		/obj/item/weapon/stock_parts/matter_bin = 1)
@@ -182,7 +204,8 @@
 
 /obj/item/weapon/circuitboard/machine/teleporter_station
 	name = "Teleporter Station (Machine Board)"
-	build_path = /obj/machinery/teleport/stationrnd
+	build_path = /obj/machinery/teleport/station
+	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
 	req_components = list(
 		/obj/item/weapon/ore/bluespace_crystal = 2,
 		/obj/item/weapon/stock_parts/capacitor = 2,
@@ -191,7 +214,8 @@
 
 /obj/item/weapon/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
-	build_path = /obj/machinery/vending/boozeomatrnd
+	build_path = /obj/machinery/vending/boozeomat
+	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
@@ -230,14 +254,16 @@
 
 /obj/item/weapon/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger (Machine Board)"
-	build_path = /obj/machinery/mech_bay_recharge_portrnd
+	build_path = /obj/machinery/mech_bay_recharge_port
+	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/weapon/stock_parts/capacitor = 5)
 
 /obj/item/weapon/circuitboard/machine/mechfab
 	name = "Exosuit Fabricator (Machine Board)"
-	build_path = /obj/machinery/mecha_part_fabricatorrnd
+	build_path = /obj/machinery/mecha_part_fabricator
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 2,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -246,7 +272,8 @@
 
 /obj/item/weapon/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cellrnd
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
@@ -255,7 +282,8 @@
 
 /obj/item/weapon/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
-	desc = "You can use a screwdriver to switch between heater and freezer."rnd
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/micro_laser = 2,
@@ -305,26 +333,30 @@
 
 /obj/item/weapon/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
-	build_path = /obj/machinery/deepfryerrnd
+	build_path = /obj/machinery/deepfryer
+	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/item/weapon/circuitboard/machine/gibber
 	name = "Gibber (Machine Board)"
-	build_path = /obj/machinery/gibberrnd
+	build_path = /obj/machinery/gibber
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/machine/monkey_recycler
 	name = "Monkey Recycler (Machine Board)"
-	build_path = /obj/machinery/monkey_recyclerrnd
+	build_path = /obj/machinery/monkey_recycler
+	origin_tech = "programming=1;biotech=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/machine/processor
 	name = "Food Processor (Machine Board)"
-	build_path = /obj/machinery/processorrnd
+	build_path = /obj/machinery/processor
+	origin_tech = "programming=1"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
@@ -348,7 +380,8 @@
 
 /obj/item/weapon/circuitboard/machine/smartfridge
 	name = "Smartfridge (Machine Board)"
-	build_path = /obj/machinery/smartfridgernd
+	build_path = /obj/machinery/smartfridge
+	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
 	var/static/list/fridges_name_paths = list(/obj/machinery/smartfridge = "plant produce",
 		/obj/machinery/smartfridge/food = "food",
@@ -378,7 +411,8 @@
 
 /obj/item/weapon/circuitboard/machine/biogenerator
 	name = "Biogenerator (Machine Board)"
-	build_path = /obj/machinery/biogeneratorrnd
+	build_path = /obj/machinery/biogenerator
+	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -387,7 +421,8 @@
 
 /obj/item/weapon/circuitboard/machine/plantgenes
 	name = "Plant DNA Manipulator (Machine Board)"
-	build_path = /obj/machinery/plantgenesrnd
+	build_path = /obj/machinery/plantgenes
+	origin_tech = "programming=3;biotech=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 1,
 		/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -396,7 +431,8 @@
 
 /obj/item/weapon/circuitboard/machine/plantgenes/vault
 	name = "alien board (Plant DNA Manipulator)"
-	icon_state = "abductor_mod"rnd
+	icon_state = "abductor_mod"
+	origin_tech = "programming=5;biotech=5"
 	// It wasn't made by actual abductors race, so no abductor tech here.
 	def_components = list(
 		/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/femto,
@@ -406,7 +442,8 @@
 
 /obj/item/weapon/circuitboard/machine/hydroponics
 	name = "Hydroponics Tray (Machine Board)"
-	build_path = /obj/machinery/hydroponics/constructablernd
+	build_path = /obj/machinery/hydroponics/constructable
+	origin_tech = "programming=1;biotech=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 2,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -414,14 +451,16 @@
 
 /obj/item/weapon/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"
-	build_path = /obj/machinery/seed_extractorrnd
+	build_path = /obj/machinery/seed_extractor
+	origin_tech = "programming=1"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/machine/ore_redemption
 	name = "Ore Redemption (Machine Board)"
-	build_path = /obj/machinery/mineral/ore_redemptionrnd
+	build_path = /obj/machinery/mineral/ore_redemption
+	origin_tech = "programming=1;engineering=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/console_screen = 1,
 		/obj/item/weapon/stock_parts/matter_bin = 1,
@@ -431,7 +470,8 @@
 
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
 	name = "Mining Equipment Vendor (Machine Board)"
-	build_path = /obj/machinery/mineral/equipment_vendorrnd
+	build_path = /obj/machinery/mineral/equipment_vendor
+	origin_tech = "programming=1;engineering=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/console_screen = 1,
 		/obj/item/weapon/stock_parts/matter_bin = 3)
@@ -442,14 +482,16 @@
 
 /obj/item/weapon/circuitboard/machine/ntnet_relay
 	name = "NTNet Relay (Machine Board)"
-	build_path = /obj/machinery/ntnet_relayrnd
+	build_path = /obj/machinery/ntnet_relay
+	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/weapon/stock_parts/subspace/filter = 1)
 
 /obj/item/weapon/circuitboard/machine/pacman
 	name = "PACMAN-type Generator (Machine Board)"
-	build_path = /obj/machinery/power/port_gen/pacmanrnd
+	build_path = /obj/machinery/power/port_gen/pacman
+	origin_tech = "programming=2;powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -458,15 +500,18 @@
 
 /obj/item/weapon/circuitboard/machine/pacman/super
 	name = "SUPERPACMAN-type Generator (Machine Board)"
-	build_path = /obj/machinery/power/port_gen/pacman/superrnd
+	build_path = /obj/machinery/power/port_gen/pacman/super
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
 
 /obj/item/weapon/circuitboard/machine/pacman/mrs
 	name = "MRSPACMAN-type Generator (Machine Board)"
-	build_path = /obj/machinery/power/port_gen/pacman/mrsrnd
+	build_path = /obj/machinery/power/port_gen/pacman/mrs
+	origin_tech = "programming=3;powerstorage=4;engineering=4;plasmatech=4"
 
 /obj/item/weapon/circuitboard/machine/rtg
 	name = "RTG (Machine Board)"
-	build_path = /obj/machinery/power/rtgrnd
+	build_path = /obj/machinery/power/rtg
+	origin_tech = "programming=2;materials=4;powerstorage=3;engineering=2"
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/weapon/stock_parts/capacitor = 1,
@@ -474,7 +519,8 @@
 
 /obj/item/weapon/circuitboard/machine/rtg/advanced
 	name = "Advanced RTG (Machine Board)"
-	build_path = /obj/machinery/power/rtg/advancedrnd
+	build_path = /obj/machinery/power/rtg/advanced
+	origin_tech = "programming=3;materials=5;powerstorage=4;engineering=3;plasmatech=3"
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/weapon/stock_parts/capacitor = 1,
@@ -484,7 +530,8 @@
 
 /obj/item/weapon/circuitboard/machine/abductor/core
 	name = "alien board (Void Core)"
-	build_path = /obj/machinery/power/rtg/abductorrnd
+	build_path = /obj/machinery/power/rtg/abductor
+	origin_tech = "programming=5;abductor=5;powerstorage=8;engineering=8"
 	req_components = list(
 		/obj/item/weapon/stock_parts/capacitor = 1,
 		/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -495,14 +542,16 @@
 
 /obj/item/weapon/circuitboard/machine/emitter
 	name = "Emitter (Machine Board)"
-	build_path = /obj/machinery/power/emitterrnd
+	build_path = /obj/machinery/power/emitter
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/machine/smes
 	name = "SMES (Machine Board)"
-	build_path = /obj/machinery/power/smesrnd
+	build_path = /obj/machinery/power/smes
+	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/weapon/stock_parts/cell = 5,
@@ -511,31 +560,36 @@
 
 /obj/item/weapon/circuitboard/machine/tesla_coil
 	name = "Tesla Coil (Machine Board)"
-	build_path = /obj/machinery/power/tesla_coilrnd
+	build_path = /obj/machinery/power/tesla_coil
+	origin_tech = "programming=3;magnets=3;powerstorage=3"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/machine/grounding_rod
 	name = "Grounding Rod (Machine Board)"
-	build_path = /obj/machinery/power/grounding_rodrnd
+	build_path = /obj/machinery/power/grounding_rod
+	origin_tech = "programming=3;powerstorage=3;magnets=3;plasmatech=2"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/machine/power_compressor
 	name = "Power Compressor (Machine Board)"
-	build_path = /obj/machinery/power/compressorrnd
+	build_path = /obj/machinery/power/compressor
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/weapon/stock_parts/manipulator = 6)
 
 /obj/item/weapon/circuitboard/machine/power_turbine
 	name = "Power Turbine (Machine Board)"
-	build_path = /obj/machinery/power/turbinernd
+	build_path = /obj/machinery/power/turbine
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/weapon/stock_parts/capacitor = 6)
 
 /obj/item/weapon/circuitboard/machine/chem_dispenser
 	name = "Portable Chem Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/constructablernd
+	build_path = /obj/machinery/chem_dispenser/constructable
+	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 2,
 		/obj/item/weapon/stock_parts/capacitor = 1,
@@ -546,14 +600,16 @@
 
 /obj/item/weapon/circuitboard/machine/chem_heater
 	name = "Chemical Heater (Machine Board)"
-	build_path = /obj/machinery/chem_heaterrnd
+	build_path = /obj/machinery/chem_heater
+	origin_tech = "programming=2;engineering=2;biotech=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 		/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
-	build_path = /obj/machinery/chem_masterrnd
+	build_path = /obj/machinery/chem_master
+	origin_tech = "materials=3;programming=2;biotech=3"
 	req_components = list(
 		/obj/item/weapon/reagent_containers/glass/beaker = 2,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -580,7 +636,8 @@
 
 /obj/item/weapon/circuitboard/machine/circuit_imprinter
 	name = "Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/r_n_d/circuit_imprinterrnd
+	build_path = /obj/machinery/r_n_d/circuit_imprinter
+	origin_tech = "engineering=2;programming=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -588,7 +645,8 @@
 
 /obj/item/weapon/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer (Machine Board)"
-	build_path = /obj/machinery/r_n_d/destructive_analyzerrnd
+	build_path = /obj/machinery/r_n_d/destructive_analyzer
+	origin_tech = "magnets=2;engineering=2;programming=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/scanning_module = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -596,7 +654,8 @@
 
 /obj/item/weapon/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR (Machine Board)"
-	build_path = /obj/machinery/r_n_d/experimentorrnd
+	build_path = /obj/machinery/r_n_d/experimentor
+	origin_tech = "magnets=1;engineering=1;programming=1;biotech=1;bluespace=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/scanning_module = 1,
 		/obj/item/weapon/stock_parts/manipulator = 2,
@@ -604,7 +663,8 @@
 
 /obj/item/weapon/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
-	build_path = /obj/machinery/r_n_d/protolathernd
+	build_path = /obj/machinery/r_n_d/protolathe
+	origin_tech = "engineering=2;programming=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 2,
 		/obj/item/weapon/stock_parts/manipulator = 2,
@@ -612,35 +672,40 @@
 
 /obj/item/weapon/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
-	build_path = /obj/machinery/r_n_d/serverrnd
+	build_path = /obj/machinery/r_n_d/server
+	origin_tech = "programming=3"
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/item/weapon/circuitboard/machine/bsa/back
 	name = "Bluespace Artillery Generator (Machine Board)"
-	build_path = /obj/machinery/bsa/backrnd //No freebies!
+	build_path = /obj/machinery/bsa/back
+	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
 		/obj/item/weapon/stock_parts/capacitor/quadratic = 5,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/bsa/middle
 	name = "Bluespace Artillery Fusor (Machine Board)"
-	build_path = /obj/machinery/bsa/middlernd
+	build_path = /obj/machinery/bsa/middle
+	origin_tech = "engineering=2;combat=2;bluespace=2"
 	req_components = list(
 		/obj/item/weapon/ore/bluespace_crystal = 20,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/bsa/front
 	name = "Bluespace Artillery Bore (Machine Board)"
-	build_path = /obj/machinery/bsa/frontrnd
+	build_path = /obj/machinery/bsa/front
+	origin_tech = "engineering=2;combat=2;bluespace=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator/femto = 5,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/dna_vault
 	name = "DNA Vault (Machine Board)"
-	build_path = /obj/machinery/dna_vaultrnd //No freebies!
+	build_path = /obj/machinery/dna_vault
+	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
 		/obj/item/weapon/stock_parts/capacitor/super = 5,
 		/obj/item/weapon/stock_parts/manipulator/pico = 5,
@@ -648,7 +713,8 @@
 
 /obj/item/weapon/circuitboard/machine/microwave
 	name = "Microwave (Machine Board)"
-	build_path = /obj/machinery/microwavernd
+	build_path = /obj/machinery/microwave
+	origin_tech = "programming=2;magnets=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 		/obj/item/weapon/stock_parts/matter_bin = 1,
