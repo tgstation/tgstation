@@ -17,7 +17,7 @@ Contents:
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals, /obj/item/weapon/stock_parts/cell)
-	slowdown = 0
+	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
@@ -131,7 +131,7 @@ Contents:
 		return FALSE
 	affecting = H
 	flags |= NODROP //colons make me go all |=
-	slowdown = FALSE
+	slowdown = 0
 	n_hood = H.head
 	n_hood.flags |= NODROP
 	n_shoes = H.shoes
