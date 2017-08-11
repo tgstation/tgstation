@@ -406,19 +406,13 @@
 /datum/action/item_action/initialize_ninja_suit
 	name = "Toggle ninja suit"
 
-/datum/action/item_action/ninjajaunt
-	name = "Phase Jaunt (10E)"
-	desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "ninja_phase"
-
 /datum/action/item_action/ninjasmoke
 	name = "Smoke Bomb"
 	desc = "Blind your enemies momentarily with a well-placed smoke bomb."
 	button_icon_state = "smoke"
 
 /datum/action/item_action/ninjaboost
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_CONSCIOUS
+	check_flags = 0
 	name = "Adrenaline Boost"
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	button_icon_state = "repulse"
