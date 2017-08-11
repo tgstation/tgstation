@@ -6,9 +6,7 @@
 /turf/closed/mineral/random/high_chance/volcanic,
 /area/mine/explored)
 "c" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
-	},
+/turf/closed/wall,
 /area/mine/explored)
 "d" = (
 /obj/machinery/anvil,
