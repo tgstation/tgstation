@@ -47,6 +47,8 @@
 
 	var/max_temperature = 25000
 
+	var/internal_tank_valve = ONE_ATMOSPHERE
+
 	var/has_paint = FALSE
 
 	flags = UNACIDABLE | HEAR
@@ -1016,12 +1018,15 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 
 
 /obj/spacepod/process()
-	var/obj/spacepod/spacepod = src //fuck you paracode for making me do this
-	if(spacepod && spacepod.internal_tank)
-		var/datum/gas_mixture/tank_air = spacepod.internal_tank.return_air()
-		var/datum/gas_mixture/cabin_air = spacepod.cabin_air
+	if(internal_temp_regulation)
+		if(cabin_air && cabin_air.return_volume() > 0)
+			var/delta = cabin_air.temperature - T20C
+			cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 
-		var/release_pressure = ONE_ATMOSPHERE
+	if(internal_tank)
+		var/datum/gas_mixture/tank_air = internal_tank.return_air()
+
+		var/release_pressure = internal_tank_valve
 		var/cabin_pressure = cabin_air.return_pressure()
 		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
 		var/transfer_moles = 0
@@ -1031,7 +1036,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 				var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
 				cabin_air.merge(removed)
 		else if(pressure_delta < 0) //cabin pressure higher than release pressure
-			var/datum/gas_mixture/t_air = spacepod.get_turf_air()
+			var/datum/gas_mixture/t_air = return_air()
 			pressure_delta = cabin_pressure - release_pressure
 			if(t_air)
 				pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
@@ -1042,18 +1047,8 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 					t_air.merge(removed)
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
-	else
-		return
 
-	if(internal_temp_regulation)
-		if(cabin_air && cabin_air.return_volume() > 0)
-			var/delta = cabin_air.temperature - T20C
-			cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 
-	if(cabin_air && cabin_air.return_volume()>0)
-		cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
-		if(cabin_air.return_temperature() > max_temperature/2)
-			take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 
 #undef DAMAGE
