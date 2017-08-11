@@ -209,8 +209,8 @@
 	origin_tech = "combat=7;materials=6"
 	force_string = "INFINITE"
 
-/obj/item/weapon/melee/supermatter_sword/New()
-	..()
+/obj/item/weapon/melee/supermatter_sword/Initialize()
+	. = ..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
 	qdel(shard.countdown)
 	shard.countdown = null
