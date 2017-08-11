@@ -48,8 +48,6 @@
 	faction = list("neutral","silicon","turret")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
-	var/staticChoice = "static"
-	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
 	var/colour = "grey"	//Stored drone color, so we can go back when unhacked.
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
@@ -96,12 +94,6 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	if(seeStatic)
-		var/datum/action/generic/drone/select_filter/SF = new(src)
-		SF.Grant(src)
-	else
-		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
-
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
@@ -133,8 +125,6 @@
 
 	if(flavortext)
 		to_chat(src, "[flavortext]")
-
-	updateSeeStaticMobs()
 
 	if(!picked)
 		pickVisualAppearence()
