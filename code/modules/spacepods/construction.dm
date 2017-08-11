@@ -12,8 +12,8 @@
 
 	var/datum/pconstruction/construct
 
-/obj/structure/spacepod_frame/New()
-	..()
+/obj/structure/spacepod_frame/Initialize()
+	. = ..()
 	bound_width = 64
 	bound_height = 64
 
