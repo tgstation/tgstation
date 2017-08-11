@@ -72,20 +72,6 @@
 	pixel_y = 7
 	var/going_kaboom = FALSE // Is it about to explode?
 
-<<<<<<< HEAD
-/obj/item/weapon/circuitboard/machine/abductor/core
-	name = "alien board (Void Core)"
-	build_path = /obj/machinery/power/rtg/abductor
-	req_components = list(
-		/obj/item/weapon/stock_parts/capacitor = 1,
-		/obj/item/weapon/stock_parts/micro_laser = 1,
-		/obj/item/weapon/stock_parts/cell/infinite/abductor = 1)
-	def_components = list(
-		/obj/item/weapon/stock_parts/capacitor = /obj/item/weapon/stock_parts/capacitor/quadratic,
-		/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/quadultra)
-
-=======
->>>>>>> tgstation/master
 /obj/machinery/power/rtg/abductor/proc/overload()
 	if(going_kaboom)
 		return
