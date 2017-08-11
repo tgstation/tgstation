@@ -17,16 +17,7 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/awaymission/BMPship/Aft)
 "af" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "ag" = (
@@ -47,13 +38,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "aj" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "ak" = (
@@ -69,13 +54,7 @@
 /area/template_noop)
 "an" = (
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "ao" = (
@@ -245,16 +224,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "aQ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "aR" = (
@@ -380,13 +350,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bl" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "bm" = (
@@ -430,13 +394,7 @@
 /area/awaymission/BMPship/Aft)
 "bt" = (
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "bu" = (
@@ -1207,16 +1165,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "dG" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "dH" = (
@@ -1423,13 +1372,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "ed" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "ee" = (
@@ -1649,11 +1592,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/corner,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "eI" = (
@@ -2176,16 +2115,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "gk" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "gl" = (
@@ -2317,10 +2247,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/BMPship)
 "gF" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/one_side/east,
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
@@ -2381,11 +2308,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/BMPship)
 "gR" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/corner,
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "gS" = (
@@ -2525,16 +2448,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/BMPship)
 "ho" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "hp" = (
@@ -2561,14 +2475,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/BMPship/Aft)
 "hu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "hv" = (

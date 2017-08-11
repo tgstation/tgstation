@@ -20558,7 +20558,6 @@
 	},
 /area/hallway/primary/fore)
 "aOc" = (
-/obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
@@ -20567,14 +20566,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aOd" = (
-/obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -20583,10 +20578,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aOe" = (
@@ -23143,25 +23135,17 @@
 	},
 /area/hallway/primary/fore)
 "aSh" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aSi" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aSj" = (
@@ -25324,29 +25308,17 @@
 /turf/open/space,
 /area/space)
 "aWc" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aWd" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aWe" = (
@@ -25383,22 +25355,13 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/nuke_storage)
 "aWi" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -25407,10 +25370,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWk" = (
@@ -25499,19 +25459,13 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "aWs" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aWt" = (
@@ -25542,30 +25496,18 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aWx" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWy" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWz" = (
@@ -25854,9 +25796,6 @@
 /turf/open/space,
 /area/space)
 "aWX" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -25865,37 +25804,22 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aWY" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aWZ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aXa" = (
@@ -26381,19 +26305,13 @@
 /turf/open/floor/plating/asteroid,
 /area/maintenance/asteroid/port/west)
 "aYk" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aYl" = (
@@ -26444,22 +26362,13 @@
 	},
 /area/crew_quarters/rehab_dome)
 "aYr" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aYs" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -26468,10 +26377,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aYt" = (
@@ -26647,9 +26553,6 @@
 /turf/open/space,
 /area/space)
 "aYQ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -26658,10 +26561,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aYR" = (
@@ -34805,7 +34705,6 @@
 	},
 /area/maintenance/asteroid/port/neast)
 "bnM" = (
-/obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -34814,14 +34713,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "bnN" = (
-/obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -34830,14 +34725,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "bnO" = (
-/obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -34846,10 +34737,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "bnP" = (
@@ -34910,7 +34798,6 @@
 	},
 /area/hallway/primary/central)
 "bnV" = (
-/obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -34923,14 +34810,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "bnW" = (
-/obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -34942,14 +34825,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "bnX" = (
-/obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -34962,10 +34841,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "bnY" = (
@@ -38011,14 +37887,10 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/bridges/serv_engi)
 "btm" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "btn" = (
@@ -38310,9 +38182,6 @@
 	},
 /area/maintenance/asteroid/central)
 "btL" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -38320,28 +38189,20 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "btM" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "btN" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -38349,8 +38210,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "btO" = (
@@ -53062,9 +52922,6 @@
 	},
 /area/maintenance/asteroid/central)
 "bVb" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -53072,16 +52929,10 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVc" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
@@ -53091,10 +52942,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVd" = (
@@ -53400,21 +53248,12 @@
 	},
 /area/engine/atmos)
 "bVD" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVE" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	d1 = 1;
@@ -53422,10 +53261,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVF" = (
@@ -56398,16 +56234,10 @@
 	name = "Civilian Asteroid"
 	})
 "cbZ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -56431,9 +56261,6 @@
 	},
 /area/hallway/secondary/bridges/serv_sci)
 "ccc" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -56442,10 +56269,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -56477,9 +56301,6 @@
 /turf/open/space,
 /area/space)
 "ccf" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -56487,16 +56308,10 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "ccg" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -56506,10 +56321,7 @@
 	dir = 5
 	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "cch" = (
@@ -56557,32 +56369,20 @@
 	name = "Top Secret Clown HQ"
 	})
 "ccl" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
 "ccm" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -57703,24 +57503,15 @@
 	name = "Research Asteroid"
 	})
 "cew" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
 "cex" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -57729,10 +57520,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61655,11 +61443,7 @@
 	},
 /area/teleporter/quantum/research)
 "cme" = (
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/sci_dock)
 "cmf" = (
@@ -63709,12 +63493,8 @@
 	},
 /area/maintenance/asteroid/aft/science)
 "cpC" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/sci_dock)
 "cpD" = (
@@ -81177,14 +80957,10 @@
 	},
 /area/hallway/secondary/bridges/serv_engi)
 "cWS" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "cWT" = (
@@ -81445,30 +81221,18 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXv" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXw" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXx" = (
@@ -81527,14 +81291,10 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXE" = (
-/obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXF" = (
@@ -81544,14 +81304,10 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXG" = (
-/obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXH" = (
@@ -81647,14 +81403,10 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXS" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXT" = (
@@ -94321,13 +94073,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "dzg" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
