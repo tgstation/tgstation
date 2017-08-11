@@ -53,17 +53,13 @@
 	else
 		return ..()
 
-/obj/machinery/computer/scan_consolenew/New()
-	..()
-
-	spawn(5)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-			if(!isnull(connected))
-				break
-		injectorready = world.time + INJECTOR_TIMEOUT
-		return
-	return
+/obj/machinery/computer/scan_consolenew/Initialize()
+	. = ..()
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		if(!isnull(connected))
+			break
+	injectorready = world.time + INJECTOR_TIMEOUT
 
 /obj/machinery/computer/scan_consolenew/attack_hand(mob/user)
 	if(..())

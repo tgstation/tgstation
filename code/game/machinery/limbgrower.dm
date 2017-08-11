@@ -11,21 +11,20 @@
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
 	container_type = OPENCONTAINER
-
-	var/operating = FALSE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
-	var/disabled = 0
 	idle_power_usage = 10
 	active_power_usage = 100
+	circuit = /obj/item/weapon/circuitboard/machine/limbgrower
+
+	var/operating = FALSE
+	var/disabled = FALSE
 	var/busy = FALSE
 	var/prod_coeff = 1
-
 	var/datum/design/being_built
 	var/datum/techweb/stored_research
 	var/selected_category
 	var/screen = 1
-
 	var/list/categories = list(
 							"human",
 							"lizard",
@@ -33,20 +32,10 @@
 							"special"
 							)
 
-/obj/machinery/limbgrower/New()
-	..()
+/obj/machinery/limbgrower/Initialize()
+	. = ..()
 	create_reagents(0)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/limbgrower(null)
-	B.apply_default_parts(src)
 	stored_research = new /datum/techweb/limbgrower
-
-/obj/item/weapon/circuitboard/machine/limbgrower
-	name = "Limb Grower (Machine Board)"
-	build_path = /obj/machinery/limbgrower
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/reagent_containers/glass/beaker = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/limbgrower/interact(mob/user)
 	if(!is_operational())
@@ -238,4 +227,3 @@
 			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
 	emagged = TRUE
-	

@@ -24,8 +24,7 @@
 	wires = new /datum/wires/rnd(src)
 
 /obj/machinery/rnd/Destroy()
-	qdel(wires)
-	wires = null
+	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/rnd/proc/shock(mob/user, prb)

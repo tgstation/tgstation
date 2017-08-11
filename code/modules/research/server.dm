@@ -16,12 +16,10 @@
 	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
 	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
-/obj/item/weapon/circuitboard/machine/rdserver
-	name = "R&D Server (Machine Board)"
-	build_path = /obj/machinery/rnd/server
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/scanning_module = 1)
+/obj/machinery/rnd/server/Initialize()
+	. = ..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+	B.apply_default_parts(src)
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src

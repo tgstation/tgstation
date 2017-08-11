@@ -12,6 +12,7 @@ Note: Must be placed west/left of and R&D console to function.
 	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
 	container_type = OPENCONTAINER
+	circuit = /obj/item/weapon/circuitboard/machine/protolathe
 
 	var/datum/material_container/materials
 	var/efficiency_coeff
@@ -30,24 +31,13 @@ Note: Must be placed west/left of and R&D console to function.
 								"Computer Parts"
 								)
 
-
-/obj/machinery/rnd/protolathe/Initialize()
-	. = ..()
+/obj/machinery/r_n_d/protolathe/Initialize()
 	create_reagents(0)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/protolathe(null)
-	B.apply_default_parts(src)
+	return ..()
 
-/obj/item/weapon/circuitboard/machine/protolathe
-	name = "Protolathe (Machine Board)"
-	build_path = /obj/machinery/rnd/protolathe
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/weapon/reagent_containers/glass/beaker = 2)
-
-/obj/machinery/rnd/protolathe/Destroy()
-	qdel(materials)
+/obj/machinery/r_n_d/protolathe/Destroy()
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/rnd/protolathe/RefreshParts()
