@@ -410,17 +410,20 @@
 	name = "Smoke Bomb"
 	desc = "Blind your enemies momentarily with a well-placed smoke bomb."
 	button_icon_state = "smoke"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /datum/action/item_action/ninjaboost
 	check_flags = 0
 	name = "Adrenaline Boost"
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	button_icon_state = "repulse"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /datum/action/item_action/ninjapulse
 	name = "EM Burst (25E)"
 	desc = "Disable any nearby technology with a electro-magnetic pulse."
 	button_icon_state = "emp"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /datum/action/item_action/ninjastar
 	name = "Create Throwing Stars (1E)"
@@ -443,8 +446,8 @@
 /datum/action/item_action/ninja_stealth
 	name = "Toggle Stealth"
 	desc = "Toggles stealth mode on and off."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "ninja_cloak"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 
 /datum/action/item_action/toggle_glove
 	name = "Toggle interaction"
