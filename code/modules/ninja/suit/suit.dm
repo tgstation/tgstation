@@ -48,7 +48,6 @@ Contents:
 	var/r_maxamount = 80//How much reagent in total there is.
 
 		//Support function variables.
-	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
 	var/s_active = 0//Stealth off.
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
@@ -87,13 +86,6 @@ Contents:
 	cell.charge = 9000
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
-
-
-/obj/item/clothing/suit/space/space_ninja/Destroy()
-	if(affecting)
-		affecting << browse(null, "window=hack spideros")
-	return ..()
-
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
@@ -170,7 +162,7 @@ Contents:
 	..()
 	if(s_initialized)
 		if(user == affecting)
-			to_chat(user, "All systems operational. Current energy capacity: <B>[cell.charge]</B>.")
+			to_chat(user, "All systems operational. Current energy charge: <B>[cell.charge]</B>.")
 			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
 			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")

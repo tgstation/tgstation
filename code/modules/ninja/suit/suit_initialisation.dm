@@ -30,6 +30,7 @@
 	if(U.stat==2||U.health<=0)
 		to_chat(U, "<span class='danger'><B>FÄAL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG...</span>")
 		unlock_suit()
+		s_busy = FALSE
 		return
 	lockIcons(U)//Check for icons.
 	U.regenerate_icons()
@@ -62,7 +63,6 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_two(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>Now de-initializing...</span>")
-	spideros = 0//Spideros resets.
 	addtimer(CALLBACK(src, .proc/deinitialize_three, delay, U), delay)
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_three(delay, mob/living/carbon/human/U)
