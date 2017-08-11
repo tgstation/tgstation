@@ -121,9 +121,7 @@
 	if (!length(callback_args))
 		callback_args = list()
 	pendingcount++
-	debug_usr("calling callback")
 	var/rtn = callback.Invoke(arglist(callback_args))
-	debug_usr("callback returned")
 	pendingcount--
 	if (savereturn)
 		finished[index] = rtn
@@ -151,9 +149,8 @@
 	var/datum/callback_select/CS = new(count, savereturns)
 	for (var/i in 1 to count)
 		CS.invoke_callback(i, callbacks[i], callback_args[i], savereturns)
-	debug_usr("starting callbacks: [CS.pendingcount]")
+	
 	while(CS.pendingcount)
-		debug_usr("callbacks: [CS.pendingcount]")
 		sleep(resolution*world.tick_lag)
 	return CS.finished
 
