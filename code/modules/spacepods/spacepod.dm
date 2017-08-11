@@ -556,7 +556,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	equipment_system.installed_modules += K
 
 /obj/spacepod/random/Initialize()
-	. = .()
+	. = ..()
 	icon_state = pick("pod_civ", "pod_black", "pod_mil", "pod_synd", "pod_gold", "pod_industrial")
 	switch(icon_state)
 		if("pod_civ")
@@ -998,7 +998,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	anchored = 1
 
 /obj/effect/landmark/spacepod/random/Initialize()
-	. = .()
+	. = ..()
 
 /obj/spacepod/process()
 	var/obj/spacepod/spacepod = src //fuck you paracode for making me do this
