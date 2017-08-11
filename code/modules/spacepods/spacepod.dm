@@ -15,10 +15,10 @@
 	name = "\improper space pod"
 	desc = "A space pod meant for space travel."
 	icon = 'goon/icons/48x48/pods.dmi'
-	density = 1 //Dense. To raise the heat.
+	density = TRUE //Dense. To raise the heat.
 	opacity = 0
 
-	anchored = 1
+	anchored = TRUE
 
 	layer = 3.9
 	infra_luminosity = 15
@@ -30,24 +30,24 @@
 
 	var/datum/spacepod/equipment/equipment_system
 
+	var/internal_temp_regulation = TRUE
+
 	var/battery_type = "/obj/item/weapon/stock_parts/cell/high"
 	var/obj/item/weapon/stock_parts/cell/battery
 
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
-	var/use_internal_tank = 0
-	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
-	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
+	var/use_internal_tank = FALSE
 
 	var/datum/effect_system/trail_follow/ion/space_trail/ion_trail
 
-	var/hatch_open = 0
+	var/hatch_open = FALSE
 
 	var/next_firetime = 0
 
 	var/max_temperature = 25000
 
-	var/has_paint = 0
+	var/has_paint = FALSE
 
 	flags = UNACIDABLE | HEAR
 
@@ -57,7 +57,7 @@
 	var/health = 250
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
-	var/lights = 0
+	var/lights = FALSE
 	var/lights_power = 6
 	var/list/icon_light_color = list("pod_civ" = null, \
 									 "pod_mil" = "#BBF093", \
@@ -66,7 +66,7 @@
 									 "pod_black" = "#3B8FE5", \
 									 "pod_industrial" = "#CCCC00")
 
-	var/unlocked = 1
+	var/unlocked = TRUE
 
 	var/move_delay = 2
 	var/next_move = 0
@@ -113,9 +113,11 @@
 	src.ion_trail.set_up(src)
 	src.ion_trail.start()
 	src.use_internal_tank = 1
+	GLOB.poi_list += src
 	equipment_system = new(src)
 	equipment_system.installed_modules += battery
 	GLOB.spacepods_list += src
+	START_PROCESSING(SSobj, src)
 	cargo_hold = new/obj/item/weapon/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
@@ -128,6 +130,7 @@
 	QDEL_NULL(equipment_system)
 	QDEL_NULL(cargo_hold)
 	QDEL_NULL(battery)
+	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(internal_tank)
 	QDEL_NULL(ion_trail)
@@ -140,6 +143,7 @@
 			M.forceMove(get_turf(src))
 			passengers -= M
 	GLOB.spacepods_list -= src
+	GLOB.poi_list.Remove(src)
 	return ..()
 
 /obj/spacepod/proc/update_icons()
@@ -200,6 +204,10 @@
 		visible_message("<span class='danger'>[user]</span> [user.attacktext] [src]!")
 		log_attack("<font color='red'>attacked [src.name]</font>")
 	return
+
+/obj/spacepod/proc/fixReg()
+	internal_temp_regulation = 1
+	message_to_riders("<span class='notice'>The pod console displays 'Temperature regulation online. Have a safe day!'.</span>")
 
 /obj/spacepod/attack_alien(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -270,6 +278,11 @@
 			message_to_riders("<span class='warning'>The pod console flashes 'Heavy EMP WAVE DETECTED'.</span>")
 		if(2)
 			message_to_riders("<span class='warning'>The pod console flashes 'EMP WAVE DETECTED'.</span>")
+
+	if (prob(50/severity))
+		internal_temp_regulation = FALSE
+		message_to_riders("<span class='warning'>The pod console flashes 'TEMPERATURE REGULATION OFFLINE! REBOOTING SYSTEM.'.</span>")
+		addtimer(CALLBACK(src, .proc/fixReg), 300/severity)
 
 /obj/spacepod/proc/play_sound_to_riders(mysound)
 	if(length(passengers | pilot) == 0)
@@ -1000,6 +1013,8 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 /obj/effect/landmark/spacepod/random/Initialize()
 	. = ..()
 
+
+
 /obj/spacepod/process()
 	var/obj/spacepod/spacepod = src //fuck you paracode for making me do this
 	if(spacepod && spacepod.internal_tank)
@@ -1029,6 +1044,11 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 					qdel(removed)
 	else
 		return
+
+	if(internal_temp_regulation)
+		if(cabin_air && cabin_air.return_volume() > 0)
+			var/delta = cabin_air.temperature - T20C
+			cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 
 	if(cabin_air && cabin_air.return_volume()>0)
 		cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
