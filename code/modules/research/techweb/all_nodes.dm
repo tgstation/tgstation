@@ -116,6 +116,6 @@
 	research_cost = 20000
 	export_price = 50000
 	hidden = TRUE
-	design_ids = list("alienalloy",
+	design_ids = list("alienalloy")
 
 
