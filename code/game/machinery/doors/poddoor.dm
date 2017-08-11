@@ -64,3 +64,36 @@
 /obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)
 		open(1)
+
+/obj/machinery/door/poddoor/multi_tile // Whoever wrote the old code for multi-tile spesspod doors needs to burn in hell.
+	name = "Large Pod Door"
+
+/obj/machinery/door/poddoor/multi_tile/four_tile_ver/
+	icon = 'icons/obj/doors/1x4blast_vert.dmi'
+	var/width = 4
+	dir = NORTH
+
+/obj/machinery/door/poddoor/multi_tile/three_tile_ver/
+	icon = 'icons/obj/doors/1x3blast_vert.dmi'
+	var/width = 3
+	dir = NORTH
+
+/obj/machinery/door/poddoor/multi_tile/two_tile_ver/
+	icon = 'icons/obj/doors/1x2blast_vert.dmi'
+	var/width = 2
+	dir = NORTH
+
+/obj/machinery/door/poddoor/multi_tile/four_tile_hor/
+	icon = 'icons/obj/doors/1x4blast_hor.dmi'
+	var/width = 4
+	dir = EAST
+
+/obj/machinery/door/poddoor/multi_tile/three_tile_hor/
+	icon = 'icons/obj/doors/1x3blast_hor.dmi'
+	var/width = 3
+	dir = EAST
+
+/obj/machinery/door/poddoor/multi_tile/two_tile_hor/
+	icon = 'icons/obj/doors/1x2blast_hor.dmi'
+	var/width = 2
+	dir = EAST
