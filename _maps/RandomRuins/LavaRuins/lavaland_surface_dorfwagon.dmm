@@ -6,7 +6,9 @@
 /turf/closed/mineral/random/high_chance/volcanic,
 /area/mine/explored)
 "c" = (
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
 /area/mine/explored)
 "d" = (
 /obj/machinery/anvil,
@@ -43,7 +45,7 @@
 /area/awaymission)
 "k" = (
 /turf/closed/wall/mineral/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "l" = (
@@ -59,12 +61,12 @@
 /obj/item/weapon/storage/bag/ore,
 /obj/item/weapon/storage/bag/ore,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "n" = (
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "o" = (
@@ -76,12 +78,12 @@
 /obj/item/seeds/wheat,
 /obj/item/seeds/wheat,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "p" = (
 /turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "q" = (
@@ -90,7 +92,7 @@
 /obj/item/seeds/tower,
 /obj/item/seeds/tower,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "r" = (
@@ -111,7 +113,7 @@
 /obj/item/device/flashlight/lantern,
 /obj/item/device/flashlight/lantern,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "u" = (
@@ -121,19 +123,19 @@
 /obj/item/weapon/hatchet,
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "v" = (
 /mob/living/simple_animal/cow,
 /turf/open/floor/plating/asteroid{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "w" = (
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plating/asteroid{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "x" = (
@@ -142,7 +144,7 @@
 /area/awaymission)
 "y" = (
 /turf/open/floor/plating/asteroid{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "z" = (
@@ -150,7 +152,7 @@
 	name = "magic puddle"
 	},
 /turf/open/floor/plating/asteroid{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
 /area/awaymission)
 "A" = (
