@@ -11,9 +11,6 @@
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
 	if(!U.mind)
 		return //Not sure how this could happen.
-	if(!is_ninja(U))
-		to_chat(U, "You do not understand how this suit functions. Where the heck did it even come from?")
-		return
 	s_busy = TRUE
 	to_chat(U, "<span class='notice'>Now initializing...</span>")
 	addtimer(CALLBACK(src, .proc/ninitialize_two, delay, U), delay)
