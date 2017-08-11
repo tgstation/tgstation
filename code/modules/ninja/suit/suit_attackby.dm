@@ -63,8 +63,6 @@
 				else
 					to_chat(U, "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated.")
 			else
-				I.loc = src
-				t_disk = I
-				to_chat(U, "<span class='notice'>You slot \the [I] into \the [src].</span>")
+				to_chat(U, "No research information detected.")
 			return
 	..()
