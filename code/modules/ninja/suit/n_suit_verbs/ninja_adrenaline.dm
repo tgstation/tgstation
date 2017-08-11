@@ -7,9 +7,7 @@
 		H.SetUnconscious(0)
 		H.SetStun(0)
 		H.SetKnockdown(0)
-
-		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.
-			H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
+		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		spawn(70)
 			if(reagents.total_volume)
 				var/fraction = min(a_transfer/reagents.total_volume, 1)
