@@ -122,8 +122,8 @@
 		suiciding = TRUE
 		visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
 		 "<span class='notice'>[src] bleeps electronically.</span>")
-		card.removePersonality()
-		ghostize()
+		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		death(0)
 	else
 		to_chat(src, "Aborting clear attempt.")
 
