@@ -52,6 +52,7 @@
 	var/has_paint = FALSE
 
 	flags = UNACIDABLE | HEAR
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 	var/list/pod_overlays
 	var/list/pod_paint_effect
@@ -637,10 +638,9 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 
 
 /obj/spacepod/proc/return_temperature()
-	var/datum/gas_mixture/t_air = return_air()
-	if(t_air)
-		. = t_air.return_temperature()
-	return
+    var/datum/gas_mixture/t_air = return_air()
+    if(t_air)
+        return t_air.return_temperature()
 
 /obj/spacepod/proc/moved_other_inside(var/mob/living/carbon/human/H as mob)
 	occupant_sanity_check()
