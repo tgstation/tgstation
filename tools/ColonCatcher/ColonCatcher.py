@@ -58,18 +58,27 @@ def scan_dm_file(_file):
         in_multiline_comment = 0      #/* ... */ num due to /* /* */ */
         in_singleline_comment = False #// ... \n 
         in_string = False             # " ... "
-        ternary_on_line = False       #If there's a ? anywhere on the line, used to report "false"-positives
+        ternarys_on_line = 0       #If there's a ? anywhere on the line, used to report "false"-positives
+        found_colon = False
 
         lines_with_colons = []
-
         for char in characters:
             #Line info
             if char == "\n" or char == "\r":
+                line_num += 1
                 if not in_string:
-                    ternary_on_line = False #Stop any old ternary operation
-                    line_num += 1
                     in_embed_statement = 0
+                    in_string = False
+                    in_singleline_comment = False
+                    ternarys_on_line = 0
+                    found_colon = False
 
+            if char != " " and found_colon:
+                colon_count += 1
+                data = str(line_num)
+                if not data in lines_with_colons: #only add the line twice if it's like: 76, 76? (eg: a "bad" colon and a ternary colon)
+                    lines_with_colons.append(data)
+                found_colon = False
             #Not in a comment
             if (not in_singleline_comment) and (in_multiline_comment == 0):
                 #Not in a string
@@ -82,6 +91,14 @@ def scan_dm_file(_file):
                     if char == "\"":
                         in_string = True
 
+                    #ternary statements, True when not in_string
+                    if char == "?":
+                        ternarys_on_line += 1
+
+                    if char == "]":
+                        in_string = in_embed_statement > 0
+                        in_embed_statement -= 1
+                        in_embed_statement = max(in_embed_statement,0)
                 #In a string
                 else:
                     if char == "\"": #Only " ends a string, as byond supports multiline strings
@@ -91,39 +108,17 @@ def scan_dm_file(_file):
                     #It's not an embedded statment if it's not in a string
                     if char == "[":
                         in_embed_statement += 1
-                    if char == "]":
-                        in_embed_statement -= 1
-                        in_embed_statement = max(in_embed_statement,0)
-
-                #ternary statements, True when in_embed_statement+in_string OR when not in_string
-                if char == "?":
-                    if in_string:
-                        if in_embed_statement != 0:
-                            ternary_on_line = True
-                    else:
-                        ternary_on_line = True
+                        in_string = False
 
                 #A Colon!
-                #If we're in a string, but not embedded: Ok, it's just rawtext
-                #If we're in a string, and embedded but NOT in a ternary operation: Bad, guaranteed to be a : used to avoid typechecks
-                #If we're in a string, and embedded AND in a ternary operation: Potentially Bad, this could be a : used to avoid typechecks (bad) or the middle : of the ternary operation (generally ok)
+                #If we're not in a string, and the ternary counter is > 0. It's probably closing it out
+                #Otherwise if the ternary counter is 0. It's probably a bugger. Mark it
 
-                if char == ":":
-                    if not in_string:
-                        colon_count += 1
-                        data = str(line_num)
-                        if ternary_on_line:
-                            data += "?"
-                        if not data in lines_with_colons: #only add the line twice if it's like: 76, 76? (eg: a "bad" colon and a ternary colon)
-                            lines_with_colons.append(data)
+                if (char == ":") and (not in_string):
+                    if ternarys_on_line > 0:
+                        ternarys_on_line -= 1
                     else:
-                        if in_embed_statement != 0:
-                            colon_count += 1
-                            data = str(line_num)
-                            if ternary_on_line:
-                                data += "?"
-                            if not data in lines_with_colons:
-                                lines_with_colons.append(data)
+                        found_colon = True
         
             #In a comment
             else:
@@ -134,9 +129,8 @@ def scan_dm_file(_file):
 
                 if char == "\n" or char == "\r":
                     in_singleline_comment = False
-    
 
-            if char != "": #Spaces aren't useful to us
+            if char != " ": #Spaces aren't useful to us
                 last_char = char
 
 
