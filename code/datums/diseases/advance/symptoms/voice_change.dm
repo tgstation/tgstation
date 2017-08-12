@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/voice_change
 
 	name = "Voice Change"
+	desc = "The virus alters the pitch and tone of the host's vocal cords, changing how their voice sounds."
 	stealth = -1
 	resistance = -2
 	stage_speed = -2
@@ -44,6 +45,8 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		var/datum/language_holder/mob_language = M.get_language_holder()
 		original_language = mob_language.copy()
+		desc = "The virus affects the language section of the brain, causing the subject to speak in different pitches,\
+		 and eventually leading to the complete loss of language comprehension."
 
 /datum/symptom/voice_change/Activate(datum/disease/advance/A)
 	if(!..())

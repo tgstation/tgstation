@@ -807,7 +807,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/magnitis,
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
-					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
+					/obj/item/weapon/reagent_containers/glass/bottle/hallucigen_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/anxiety,
 					/obj/item/weapon/reagent_containers/glass/bottle/beesease,
 					/obj/item/weapon/storage/box/syringes,

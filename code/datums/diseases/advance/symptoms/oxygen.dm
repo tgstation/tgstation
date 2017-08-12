@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/oxygen
 
 	name = "Self-Respiration"
+	desc = "The virus rapidly synthesizes oxygen, effectively removing the need for breathing."
 	stealth = 1
 	resistance = -3
 	stage_speed = -3

@@ -1,5 +1,6 @@
 /datum/symptom/heal
 	name = "Basic Healing (does nothing)" //warning for adminspawn viruses
+	desc = "You should not be seeing this."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -51,6 +52,7 @@ Bonus
 
 /datum/symptom/heal/toxin
 	name = "Toxic Filter"
+	desc = "The virus synthesizes regenerative chemicals in the bloodstream, repairing damage caused by toxins."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -87,6 +89,7 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 8
+	desc = "The virus stimulates production of special stem cells in the bloodstream, causing rapid reparation of any damage caused by toxins."
 
 /datum/symptom/heal/toxin/plus/Heal(mob/living/M, datum/disease/advance/A)
 	var/heal_amt = 2 * power
@@ -115,6 +118,7 @@ Bonus
 /datum/symptom/heal/brute
 
 	name = "Regeneration"
+	desc = "The virus stimulates the regenerative process in the host, causing faster wound healing."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -158,6 +162,7 @@ Bonus
 /datum/symptom/heal/brute/plus
 
 	name = "Flesh Mending"
+	desc = "The virus rapidly mutates into body cells, effectively allowing it to quickly fix the host's wounds."
 	stealth = 0
 	resistance = 0
 	stage_speed = -2
@@ -207,6 +212,7 @@ Bonus
 /datum/symptom/heal/burn
 
 	name = "Tissue Regrowth"
+	desc = "The virus recycles dead and burnt tissues, speeding up the healing of damage caused by burns."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -248,7 +254,8 @@ Bonus
 
 /datum/symptom/heal/burn/plus
 
-	name = "Heat Resistance"
+	name = "Temperature Adaptation"
+	desc = "The virus quickly balances body heat, while also replacing tissues damaged by external sources."
 	stealth = 0
 	resistance = 0
 	stage_speed = -2
@@ -297,6 +304,7 @@ Bonus
 /datum/symptom/heal/dna
 
 	name = "Deoxyribonucleic Acid Restoration"
+	desc = "The virus repairs the host's genome, purging negative mutations."
 	stealth = -1
 	resistance = -1
 	stage_speed = 0

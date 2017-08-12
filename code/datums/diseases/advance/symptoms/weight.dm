@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/weight_gain
 
 	name = "Weight Gain"
+	desc = "The virus mutates the host's metabolism, making it gain weight much faster than normal."
 	stealth = -3
 	resistance = -3
 	stage_speed = -2
@@ -66,6 +67,7 @@ Bonus
 /datum/symptom/weight_loss
 
 	name = "Weight Loss"
+	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
@@ -116,6 +118,7 @@ Bonus
 /datum/symptom/weight_even
 
 	name = "Weight Even"
+	desc = "The virus alters the host's metabolism, making it far more efficient then normal, and synthesizing nutrients from normally unedible sources."
 	stealth = -3
 	resistance = -2
 	stage_speed = -2

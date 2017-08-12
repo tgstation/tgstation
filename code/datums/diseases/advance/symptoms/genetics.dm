@@ -16,8 +16,8 @@ Bonus
 */
 
 /datum/symptom/genetic_mutation
-
 	name = "Deoxyribonucleic Acid Saboteur"
+	desc = "The virus bonds with the DNA of the host, causing damaging mutations until removed."
 	stealth = -2
 	resistance = -3
 	stage_speed = 0

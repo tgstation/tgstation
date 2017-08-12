@@ -16,8 +16,8 @@ Bonus
 */
 
 /datum/symptom/fever
-
 	name = "Fever"
+	desc = "The virus causes a febrile response from the host, raising its body temperature."
 	stealth = 0
 	resistance = 3
 	stage_speed = 3

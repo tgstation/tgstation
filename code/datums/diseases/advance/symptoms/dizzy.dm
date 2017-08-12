@@ -18,7 +18,7 @@ Bonus
 /datum/symptom/dizzy // Not the egg
 
 	name = "Dizziness"
-	stealth = 2
+	desc = "The virus causes inflammation of the vestibular system, leading to bouts of dizziness."
 	resistance = -2
 	stage_speed = -3
 	transmittable = -1

@@ -19,6 +19,7 @@ BONUS
 /datum/symptom/itching
 
 	name = "Itching"
+	desc = "The virus irritates the skin, causing itching."
 	stealth = 0
 	resistance = 3
 	stage_speed = 3
