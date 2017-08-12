@@ -421,6 +421,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
 	if(..() && ishuman(user) && !(user in affected_targets))
+		log_admin("Anomalous crystal turned [user]([user.ckey]) into a clown at [COORD(user)].")
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/W in H)
 			H.dropItemToGround(W)
@@ -475,6 +476,7 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
 	if(..())
 		var/area/A = get_area(src)
+		log_admin("[user]([user.ckey]) at [COORD(user)] activated a theme warp anomalous crystal, changing area [A.name] to the theme [terrain_theme]")
 		if(!A.outdoors && !(A in affected_targets))
 			for(var/atom/Stuff in A)
 				if(isturf(Stuff))
@@ -554,6 +556,7 @@ Difficulty: Very Hard
 					H.revive(1,0)
 					H.disabilities |= NOCLONE //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
+					log_admin("[H]([H.ckey]) revived by anomalous crystal dark reprise, triggered by [user]([user.ckey]) at [COORD(src)]")
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
