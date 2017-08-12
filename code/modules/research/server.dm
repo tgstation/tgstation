@@ -137,8 +137,6 @@
 			dat += "Connected Servers:<BR><BR>"
 
 			for(var/obj/machinery/rnd/server/S in GLOB.machines)
-				if(istype(S, /obj/machinery/rnd/server/centcom) && !badmin)
-					continue
 				dat += "[S.name] || "
 				dat += "<BR>"
 

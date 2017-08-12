@@ -31,12 +31,12 @@ Note: Must be placed west/left of and R&D console to function.
 								"Computer Parts"
 								)
 
-/obj/machinery/r_n_d/protolathe/Initialize()
+/obj/machinery/rnd/protolathe/Initialize()
 	create_reagents(0)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
 	return ..()
 
-/obj/machinery/r_n_d/protolathe/Destroy()
+/obj/machinery/rnd/protolathe/Destroy()
 	QDEL_NULL(materials)
 	return ..()
 

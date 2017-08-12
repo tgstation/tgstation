@@ -580,7 +580,7 @@
 
 /obj/item/weapon/circuitboard/machine/circuit_imprinter
 	name = "Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/r_n_d/circuit_imprinter
+	build_path = /obj/machinery/rnd/circuit_imprinter
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -588,7 +588,7 @@
 
 /obj/item/weapon/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer (Machine Board)"
-	build_path = /obj/machinery/r_n_d/destructive_analyzer
+	build_path = /obj/machinery/rnd/destructive_analyzer
 	req_components = list(
 		/obj/item/weapon/stock_parts/scanning_module = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -596,7 +596,7 @@
 
 /obj/item/weapon/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR (Machine Board)"
-	build_path = /obj/machinery/r_n_d/experimentor
+	build_path = /obj/machinery/rnd/experimentor
 	req_components = list(
 		/obj/item/weapon/stock_parts/scanning_module = 1,
 		/obj/item/weapon/stock_parts/manipulator = 2,
@@ -604,7 +604,7 @@
 
 /obj/item/weapon/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
-	build_path = /obj/machinery/r_n_d/protolathe
+	build_path = /obj/machinery/rnd/protolathe
 	req_components = list(
 		/obj/item/weapon/stock_parts/matter_bin = 2,
 		/obj/item/weapon/stock_parts/manipulator = 2,
@@ -612,7 +612,7 @@
 
 /obj/item/weapon/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
-	build_path = /obj/machinery/r_n_d/server
+	build_path = /obj/machinery/rnd/server
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/weapon/stock_parts/scanning_module = 1)

@@ -94,6 +94,7 @@
 			return TRUE
 		return FALSE
 	return TRUE
+
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -156,7 +157,7 @@
 			H = target.current
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || (H && H.dna.species.id == "memezombies")) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return TRUE
-		if(target.current.onCentcom() || target.current.onSyndieBase())
+		if(target.current.onCentCom() || target.current.onSyndieBase())
 			return FALSE
 	return TRUE
 
@@ -356,7 +357,7 @@
 	if(istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return FALSE
 
-	if(location.onCentcom() || location.onSyndieBase())
+	if(location.onCentCom() || location.onSyndieBase())
 		return TRUE
 
 	return FALSE
@@ -566,8 +567,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(!SN.s_initialized)
 		return FALSE
 
-	var/current_amount
-	for(var/datum/techweb_node in SN.stored_research.researched_nodes)
+	var/current_amount = 0
+	for(var/datum/techweb_node/TN in SN.stored_research)
 		current_amount++
 	if(current_amount<target_amount)
 		return FALSE
@@ -834,8 +835,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 		if(M.current)
 			var/turf/mloc = get_turf(M.current)
-			if(mloc.onCentcom() && (M.current.stat != DEAD))
-				return FALSE //A Non-ling living target got to centcomm, fail
+			if(mloc.onCentCom() && (M.current.stat != DEAD))
+				return FALSE //A Non-ling living target got to centcom, fail
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
