@@ -1,18 +1,18 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall,
-/area/awaymission)
+/area/survivalpod/dorf)
 "b" = (
 /obj/structure/mineral_door/iron,
 /turf/open/floor/wood/airless,
-/area/awaymission)
+/area/survivalpod/dorf)
 "c" = (
 /turf/open/floor/wood/airless,
-/area/awaymission)
+/area/survivalpod/dorf)
 "d" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood/airless,
-/area/awaymission)
+/area/survivalpod/dorf)
 "e" = (
 /obj/structure/chair/wood{
 	tag = "icon-wooden_chair (EAST)";
@@ -20,11 +20,11 @@
 	dir = 4
 	},
 /turf/open/floor/wood/airless,
-/area/awaymission)
+/area/survivalpod/dorf)
 "f" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood/airless,
-/area/awaymission)
+/area/survivalpod/dorf)
 "g" = (
 /obj/structure/chair/wood{
 	tag = "icon-wooden_chair (WEST)";
@@ -32,7 +32,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/airless,
-/area/awaymission)
+/area/survivalpod/dorf)
 "h" = (
 /obj/structure/chair/wood{
 	tag = "icon-wooden_chair (NORTH)";
@@ -40,7 +40,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/airless,
-/area/awaymission)
+/area/survivalpod/dorf)
 
 (1,1,1) = {"
 a

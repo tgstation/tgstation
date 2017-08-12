@@ -14,44 +14,44 @@
 /obj/machinery/anvil,
 /obj/item/weapon/smith_hammer,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "e" = (
 /obj/machinery/smelter{
 	layer = 4.4
 	},
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "f" = (
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "g" = (
 /mob/living/simple_animal/pet/cat,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "h" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/glass/mold/bar,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "i" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "j" = (
 /mob/living/simple_animal/pet/cat{
 	gender = "female"
 	},
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "k" = (
 /turf/closed/wall/mineral/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "l" = (
 /obj/machinery/migrant_spawner,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "m" = (
 /obj/structure/rack,
 /obj/item/weapon/pickaxe,
@@ -63,12 +63,12 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "n" = (
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "o" = (
 /obj/structure/table/wood,
 /obj/item/seeds/plump,
@@ -80,12 +80,12 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "p" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "q" = (
 /obj/structure/table/wood,
 /obj/item/seeds/tower,
@@ -94,16 +94,16 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "r" = (
 /obj/structure/mineral_door/iron,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "s" = (
 /obj/structure/mineral_door/iron,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "t" = (
 /obj/structure/rack,
 /obj/item/weapon/shovel,
@@ -115,7 +115,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "u" = (
 /obj/structure/table/wood,
 /obj/item/weapon/cultivator,
@@ -125,28 +125,28 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "v" = (
 /mob/living/simple_animal/cow,
 /turf/open/floor/plating/asteroid{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "w" = (
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plating/asteroid{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "x" = (
 /obj/machinery/brewing_barrel,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "y" = (
 /turf/open/floor/plating/asteroid{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "z" = (
 /obj/structure/sink/puddle{
 	name = "magic puddle"
@@ -154,15 +154,15 @@
 /turf/open/floor/plating/asteroid{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "A" = (
 /obj/item/stack/sheet/mineral/clay,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 "B" = (
 /mob/living/simple_animal/chicken,
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission)
+/area/ruin/powered/dorf/wagon)
 
 (1,1,1) = {"
 a

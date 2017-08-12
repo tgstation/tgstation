@@ -9,7 +9,7 @@
 /obj/machinery/anvil,
 /obj/item/weapon/smith_hammer,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "d" = (
 /obj/machinery/smelter{
 	layer = 4.4
@@ -17,11 +17,11 @@
 /obj/item/weapon/shovel,
 /obj/item/weapon/shovel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "e" = (
 /obj/effect/decal/cleanable/molten_object/large,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "f" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
@@ -31,65 +31,65 @@
 /obj/item/seeds/plump,
 /obj/item/weapon/cultivator,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "g" = (
 /obj/machinery/brewing_barrel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "h" = (
 /obj/machinery/hydroponics/soil,
 /obj/effect/decal/cleanable/egg_smudge,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "i" = (
 /obj/machinery/hydroponics/soil,
 /mob/living/simple_animal/chicken,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "j" = (
 /obj/machinery/hydroponics/soil,
 /mob/living/simple_animal/cow,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "k" = (
 /obj/item/device/flashlight/lantern,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "l" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "m" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/glass/mold/bar,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "n" = (
 /obj/structure/table/wood,
 /obj/item/weapon/shovel/spade,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "o" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "p" = (
 /obj/structure/sink/puddle{
 	name = "magic puddle"
 	},
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "q" = (
 /obj/item/weapon/pickaxe,
 /obj/item/weapon/pickaxe,
 /obj/item/weapon/storage/bag/ore,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/weapon/smith_hammer,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "s" = (
 /obj/structure/table/wood,
 /obj/item/seeds/tower,
@@ -107,7 +107,7 @@
 /obj/item/weapon/hatchet,
 /obj/item/weapon/hatchet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "t" = (
 /obj/item/seeds/tower,
 /turf/closed/mineral/random/volcanic,
@@ -115,52 +115,52 @@
 "u" = (
 /mob/living/simple_animal/pet/cat,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "v" = (
 /obj/structure/mineral_door/iron,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "w" = (
 /mob/living/simple_animal/pet/cat{
 	gender = "female"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "x" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/bonfire,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "y" = (
 /turf/open/floor/carpet{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "old carpet"
 	},
-/area/awaymission)
+/area/ruin/powered/dorf)
 "z" = (
 /obj/structure/bonfire,
 /turf/open/floor/carpet{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "old carpet"
 	},
-/area/awaymission)
+/area/ruin/powered/dorf)
 "A" = (
 /turf/closed/wall/mineral/wood,
-/area/awaymission)
+/area/ruin/powered/dorf)
 "B" = (
 /obj/item/device/flashlight/flare/torch,
 /turf/open/floor/carpet{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "old carpet"
 	},
-/area/awaymission)
+/area/ruin/powered/dorf)
 "C" = (
 /obj/machinery/migrant_spawner,
 /turf/open/floor/carpet{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "old carpet"
 	},
-/area/awaymission)
+/area/ruin/powered/dorf)
 "D" = (
 /obj/item/weapon/bedsheet/rd/royal_cape{
 	name = "Dwarven Leader's Cloak"
@@ -169,7 +169,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "old carpet"
 	},
-/area/awaymission)
+/area/ruin/powered/dorf)
 "E" = (
 /obj/structure/chair/wood/wings{
 	tag = "icon-wooden_chair_wings (NORTH)";
@@ -181,14 +181,14 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "old carpet"
 	},
-/area/awaymission)
+/area/ruin/powered/dorf)
 "F" = (
 /obj/item/clothing/head/crown/fancy,
 /turf/open/floor/carpet{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "old carpet"
 	},
-/area/awaymission)
+/area/ruin/powered/dorf)
 
 (1,1,1) = {"
 a

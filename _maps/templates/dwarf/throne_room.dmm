@@ -1,39 +1,39 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall/mineral/gold,
-/area/awaymission)
+/area/survivalpod/dorf)
 "b" = (
 /obj/structure/bonfire,
 /turf/open/floor/carpet,
-/area/awaymission)
+/area/survivalpod/dorf)
 "c" = (
 /obj/item/weapon/bedsheet/rd/royal_cape{
 	name = "Dwarven Leader's Cloak"
 	},
 /turf/open/floor/carpet,
-/area/awaymission)
+/area/survivalpod/dorf)
 "d" = (
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet,
-/area/awaymission)
+/area/survivalpod/dorf)
 "e" = (
 /obj/item/clothing/head/crown/fancy,
 /turf/open/floor/carpet,
-/area/awaymission)
+/area/survivalpod/dorf)
 "f" = (
 /turf/open/floor/mineral/gold,
-/area/awaymission)
+/area/survivalpod/dorf)
 "g" = (
 /obj/item/weapon/holosign_creator/mandate,
 /turf/open/floor/carpet,
-/area/awaymission)
+/area/survivalpod/dorf)
 "h" = (
 /turf/open/floor/carpet,
-/area/awaymission)
+/area/survivalpod/dorf)
 "i" = (
 /obj/structure/mineral_door/gold,
 /turf/open/floor/carpet,
-/area/awaymission)
+/area/survivalpod/dorf)
 
 (1,1,1) = {"
 a

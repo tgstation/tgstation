@@ -36,6 +36,14 @@
 	name = "Secret Base"
 	icon_state = "dk_yellow"
 
+/area/ruin/powered/dorf
+	name = "Dorf Fort"
+	icon_state = "dorf_fort"
+
+/area/ruin/powered/dorf/wagon
+	name = "Dorf Wagon"
+	icon_state = "dorf_wagon"
+
 //Xeno Nest
 
 /area/ruin/unpowered/xenonest

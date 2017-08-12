@@ -6,6 +6,10 @@
 	requires_power = FALSE
 	has_gravity = TRUE
 
+/area/survivalpod/dorf
+	name = "\improper Fort-In-A-Box"
+	icon_state = "dorf_fortbox"
+
 //Survival Capsule
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
