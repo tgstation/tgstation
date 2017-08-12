@@ -133,6 +133,9 @@
 	QDEL_NULL(cargo_hold)
 	QDEL_NULL(battery)
 	STOP_PROCESSING(SSobj, src)
+	if(loc)
+		loc.assume_air(cabin_air)
+		air_update_turf()
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(internal_tank)
 	QDEL_NULL(ion_trail)
@@ -616,41 +619,28 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/spacepod/proc/get_turf_air()
-	var/turf/T = get_turf(src)
-	if(T)
-		. = T.return_air()
-
 /obj/spacepod/remove_air(amount)
 	if(use_internal_tank)
 		return cabin_air.remove(amount)
-	else
-		var/turf/T = get_turf(src)
-		if(T)
-			return T.remove_air(amount)
+	return ..()
 
 /obj/spacepod/return_air()
 	if(use_internal_tank)
 		return cabin_air
-	return get_turf_air()
+	return ..()
 
 /obj/spacepod/proc/return_pressure()
-	. = 0
-	if(use_internal_tank)
-		. =  cabin_air.return_pressure()
-	else
-		var/datum/gas_mixture/t_air = get_turf_air()
-		if(t_air)
-			. = t_air.return_pressure()
+	var/datum/gas_mixture/t_air = return_air()
+	if(t_air)
+		. = t_air.return_pressure()
+	return
+
 
 /obj/spacepod/proc/return_temperature()
-	. = 0
-	if(use_internal_tank)
-		. = cabin_air.return_temperature()
-	else
-		var/datum/gas_mixture/t_air = get_turf_air()
-		if(t_air)
-			. = t_air.return_temperature()
+	var/datum/gas_mixture/t_air = return_air()
+	if(t_air)
+		. = t_air.return_temperature()
+	return
 
 /obj/spacepod/proc/moved_other_inside(var/mob/living/carbon/human/H as mob)
 	occupant_sanity_check()
