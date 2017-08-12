@@ -460,7 +460,7 @@
 /area/ruin/powered/beach)
 "cz" = (
 /obj/effect/turf_decal/sand,
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cR" = (
