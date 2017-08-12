@@ -23,23 +23,17 @@
 				walk_to(src,0)
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
-
-	if (radiation)
-		if (radiation > 100)
-			if(!IsKnockdown())
-				emote("collapse")
-			Knockdown(200)
-			to_chat(src, "<span class='danger'>You feel weak.</span>")
-
+	if(radiation)
+		if(radiation > 25 && prob((radiation - 25) * (radiation - 25) * 0.005))
+			gorillize()
+			return
 		switch(radiation)
-
 			if(50 to 75)
 				if(prob(5))
 					if(!IsKnockdown())
 						emote("collapse")
 					Knockdown(60)
 					to_chat(src, "<span class='danger'>You feel weak.</span>")
-
 			if(75 to 100)
 				if(prob(1))
 					to_chat(src, "<span class='danger'>You mutate!</span>")
