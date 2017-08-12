@@ -5010,7 +5010,6 @@
 	name = "Detective Privacy Blast door"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "aix" = (
@@ -31907,7 +31906,6 @@
 /area/maintenance/port)
 "bcM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
