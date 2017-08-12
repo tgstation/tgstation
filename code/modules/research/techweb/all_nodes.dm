@@ -70,8 +70,8 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	research_cost = 2000
-	export_price = 2000
+	research_cost = 5000
+	export_price = 5000
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
@@ -79,8 +79,8 @@
 	description = "For the slackers on the station."
 	prereq_ids = list("datatheory", "comptech")
 	design_ids = list("arcade_battle", "arcade_orion")
-	research_cost = 2000
-	export_price = 2000
+	research_cost = 5000
+	export_price =5000
 
 /datum/techweb_node/bluespace_basic
 	id = "bluespace_basic"
@@ -89,15 +89,15 @@
 	prereq_ids = list("base")
 	design_ids = list("beacon")
 	research_cost = 5000
-	export_price = 10000
+	export_price = 5000
 
 /datum/techweb_node/telecomms
 	id = "telecomms"
 	display_name = "Telecommunications Technology"
 	description = "Subspace transmission technology for near-instant communications devices."
 	prereq_ids = list("datatheory", "bluespace_basic")
-	research_cost = 10000
-	export_price = 10000
+	research_cost = 5000
+	export_price = 5000
 	design_ids = list("s-reciever", "s-bus", "s-broadcaster", "s-processor", "s-hub", "s-server", "s-relay")
 
 /datum/techweb_node/comp_recordkeeping
@@ -114,11 +114,67 @@
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
 	prereq_ids = list("base")
-	research_cost = 20000
-	export_price = 50000
+	research_cost = 5000
+	export_price = 5000
 	hidden = TRUE
-	design_ids = list("alienalloy", "alien_scalpel", "alien_hemostat", "alien_retractor", "alien_saw", "alien_drill", "alien_cautery", "alien_wrench", "alien_wirecutters",
-	"alien_screwdriver", "alien_crowbar", "alien_welder", "alien_multitool")
+	design_ids = list("alienalloy")
+
+/datum/techweb_node/alien_bio
+	id = "alien_bio"
+	display_name = "Alien Biological Tools"
+	description = "Advanced biological tools."
+	prereq_ids = list("alientech", "biotech")
+	design_ids = list("alien_scalpel", "alien_hemostat", "alien_retractor", "alien_saw", "alien_drill", "alien_cautery")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/alien_engi
+	id = "alien_engi"
+	display_name = "Alien Engineering"
+	description = "Alien engineering tools"
+	prereq_ids = list("alientech", "adv_engi")
+	design_ids = list("alien_wrench", "alien_wirecutters", "alien_screwdriver", "alien_crowbar", "alien_welder", "alien_multitool")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/industrial_engineering
+	id = "industrial_engineering"
+	description = "Modern engineering techonlogy."
+	display_name = "Industrial Engineering"
+	prereq_ids = list("base")
+	designs_ids = list("rped", "adv_scanning", "adv_matter_bin", "high_micro_laser", "nano_mani", "weldingmask", "mesons")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/adv_engi
+	id = "adv_engi"
+	description = "Advanced engineering research"
+	display_name = "Advanced Engineering"
+	prereq_ids = list("industrial_engineering", "emp_basic")
+	design_ids = list("enginegoggles", "diagnostic_hud")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/practical_bluespace
+	id = "practical_bluespace"
+	display_name = "Applied Bluespace Research"
+	description = "Using bluespace to make things faster and better."
+	prereq_ids = list("bluespace_basic", "industrial_engineering")
+	design_ids = list("bs_rped", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/emp_basic
+	id = "emp_basic"
+	display_name = "Electromagnetic Theory"
+	description = "Study into usage of frequencies in the electromagnetic spectrum."
+	prereq_ids = list("base")
+	design_ids = list("holosign", "inducer", "tray_goggles")
+	research_cost = 5000
+	export_price = 5000
+
+
+
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
@@ -144,24 +200,12 @@
 /////////////////////////////////////////
 //////////////////Misc///////////////////
 /////////////////////////////////////////
-/datum/design/welding_mask
-	name = "Welding Gas Mask"
-	id = "weldingmask"
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
 /datum/design/air_horn
 	name = "Air Horn"
 	desc = "Damn son, where'd you find this?"
 	id = "air_horn"
-/datum/design/mesons
-	name = "Optical Meson Scanners"
-	id = "mesons"
-/datum/design/engine_goggles
-	name = "Engineering Scanner Goggles"
-	id = "engine_goggles"
-/datum/design/tray_goggles
-	name = "Optical T-Ray Scanners"
-	id = "tray_goggles"
 /datum/design/nvgmesons
 	name = "Night Vision Optical Meson Scanners"
 	id = "nvgmesons"
@@ -197,10 +241,6 @@
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"
 	id = "buffer"
-/datum/design/holosign
-	name = "Holographic Sign Projector"
-	id = "holosign"
-	build_path = /obj/item/weapon/holosign_creator
 /////////////////////////////////////////
 ////////////Tools//////////////
 /////////////////////////////////////////
@@ -256,19 +296,10 @@
 	name = "Advanced Mass-Spectrometer"
 	id = "adv_mass_spectrometer"
 	build_path = /obj/item/device/mass_spectrometer/adv
-
-/datum/design/bluespacebeaker
-	name = "Bluespace Beaker"
-	id = "bluespacebeaker"
-	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
 	id = "splitbeaker"
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
-/datum/design/bluespacesyringe
-	name = "Bluespace Syringe"
-	id = "bluespacesyringe"
-	build_path = /obj/item/weapon/reagent_containers/syringe/bluespace
 /datum/design/noreactsyringe
 	name = "Cryo Syringe"
 	id = "noreactsyringe"
@@ -277,9 +308,6 @@
 	name = "Piercing Syringe"
 	id = "piercesyringe"
 	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
-/datum/design/bluespacebodybag
-	name = "Bluespace Body Bag"
-	id = "bluespacebodybag"
 /datum/design/plasmarefiller
 	name = "Plasma-Man Jumpsuit Refill"
 	id = "plasmarefiller"
@@ -914,20 +942,6 @@
 	name = "Machine Design (Hydroponics Tray Board)"
 	id = "hydro_tray"
 	category = list ("Hydroponics Machinery")
-/datum/design/board/destructive_analyzer
-	name = "Machine Design (Destructive Analyzer Board)"
-	id = "destructive_analyzer"
-	build_path = /obj/item/weapon/circuitboard/machine/destructive_analyzer
-/datum/design/board/experimentor
-	name = "Machine Design (E.X.P.E.R.I-MENTOR Board)"
-	id = "experimentor"
-/datum/design/board/protolathe
-	name = "Machine Design (Protolathe Board)"
-	id = "protolathe"
-/datum/design/board/circuit_imprinter
-	name = "Machine Design (Circuit Imprinter Board)"
-	id = "circuit_imprinter"
-	build_path = /obj/item/weapon/circuitboard/machine/circuit_imprinter
 /datum/design/board/rdservercontrol
 	name = "Computer Design (R&D Server Control Console Board)"
 	desc = "The circuit board for an R&D Server Control Console."
@@ -1233,21 +1247,6 @@
 /datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
 	id = "paicard"
-////////////////////////////////////////
-//////////Disk Construction Disks///////
-////////////////////////////////////////
-/datum/design/design_disk
-	name = "Design Storage Disk"
-	id = "design_disk"
-	build_path = /obj/item/weapon/disk/design_disk
-/datum/design/design_disk_adv
-	name = "Advanced Design Storage Disk"
-	id = "design_disk_adv"
-	build_path = /obj/item/weapon/disk/design_disk/adv
-/datum/design/tech_disk
-	name = "Technology Data Storage Disk"
-	id = "tech_disk"
-	build_path = /obj/item/weapon/disk/tech_disk
 ///////////////////Computer Boards///////////////////////////////////
 /datum/design/board/seccamera
 	name = "Computer Design (Security Camera)"
@@ -1361,9 +1360,6 @@
 	name = "Artificial Bluespace Crystal"
 	id = "bluespace_crystal"
 	build_path = /obj/item/weapon/ore/bluespace_crystal/artificial
-/datum/design/telesci_gps
-	name = "GPS Device"
-	id = "telesci_gps"
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	id = "minerbag_holding"
@@ -1476,16 +1472,6 @@
 ////////////////////////////////////////
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
-/datum/design/RPED
-	name = "Rapid Part Exchange Device"
-	id = "rped"
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000) //hardcore
-	build_path = /obj/item/weapon/storage/part_replacer
-/datum/design/BS_RPED
-	name = "Bluespace RPED"
-	id = "bs_rped"
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500) //hardcore
-	build_path = /obj/item/weapon/storage/part_replacer/bluespace
 //Capacitors
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
@@ -1502,12 +1488,6 @@
 	id = "quadratic_capacitor"
 	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
 	lathe_time_factor = 0.2
-//Scanning modules
-/datum/design/adv_scanning
-	name = "Advanced Scanning Module"
-	id = "adv_scanning"
-	build_path = /obj/item/weapon/stock_parts/scanning_module/adv
-	lathe_time_factor = 0.2
 /datum/design/phasic_scanning
 	name = "Phasic Scanning Module"
 	id = "phasic_scanning"
@@ -1517,12 +1497,6 @@
 	name = "Triphasic Scanning Module"
 	id = "triphasic_scanning"
 	build_path = /obj/item/weapon/stock_parts/scanning_module/triphasic
-	lathe_time_factor = 0.2
-//Maipulators
-/datum/design/nano_mani
-	name = "Nano Manipulator"
-	id = "nano_mani"
-	build_path = /obj/item/weapon/stock_parts/manipulator/nano
 	lathe_time_factor = 0.2
 /datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -1534,12 +1508,6 @@
 	id = "femto_mani"
 	build_path = /obj/item/weapon/stock_parts/manipulator/femto
 	lathe_time_factor = 0.2
-//Micro-lasers
-/datum/design/high_micro_laser
-	name = "High-Power Micro-Laser"
-	id = "high_micro_laser"
-	build_path = /obj/item/weapon/stock_parts/micro_laser/high
-	lathe_time_factor = 0.2
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
 	id = "ultra_micro_laser"
@@ -1549,11 +1517,6 @@
 	name = "Quad-Ultra Micro-Laser"
 	id = "quadultra_micro_laser"
 	build_path = /obj/item/weapon/stock_parts/micro_laser/quadultra
-	lathe_time_factor = 0.2
-/datum/design/adv_matter_bin
-	name = "Advanced Matter Bin"
-	id = "adv_matter_bin"
-	build_path = /obj/item/weapon/stock_parts/matter_bin/adv
 	lathe_time_factor = 0.2
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
@@ -1675,9 +1638,6 @@
 	name = "Core Module Design (Default)"
 	id = "default_module"
 	id = "light_replacer"
-/datum/design/inducer
-	name = "Inducer"
-	id = "inducer"
 /datum/design/board/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"
 	id = "pacman"
