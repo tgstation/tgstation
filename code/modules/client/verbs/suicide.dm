@@ -114,18 +114,16 @@
 		death(0)
 
 /mob/living/silicon/pai/verb/suicide()
-    set hidden = 1
-	if(!canSuicide())
+    set hidden = TRUE
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
-	if(!canSuicide())
+	var/confirm = alert("Are you sure you want to wipe yourself?", "Confirm data wipe", "Yes", "No")
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
-		//put em at -175
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		death(0)
+		 "<span class='notice'>[src] bleeps electronically.</span>")
+		card.removePersonality()
+		ghostize()
 	else
 		to_chat(src, "Aborting clear attempt.")
 
