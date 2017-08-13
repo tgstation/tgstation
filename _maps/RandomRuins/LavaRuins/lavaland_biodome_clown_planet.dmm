@@ -895,7 +895,7 @@
 /area/ruin/powered/clownplanet)
 "dR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
