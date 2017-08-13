@@ -135,7 +135,7 @@
 		//the puller can always swap with its victim if on grab intent
 		if(M.pulledby == src && a_intent == INTENT_GRAB)
 			mob_swap = 1
-		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+		//restrained people act if they were on 'help' intent to prevent a person being pulled from being separated from their puller
 		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
 			mob_swap = 1
 		if(mob_swap)
@@ -374,6 +374,7 @@
 	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
+	set_disgust(0)
 	SetStun(0, FALSE)
 	SetKnockdown(0, FALSE)
 	SetSleeping(0, FALSE)
@@ -412,7 +413,7 @@
 		if(client)
 			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 		else
-			to_chat(src, "[src] does not have any stored infomation!")
+			to_chat(src, "[src] does not have any stored information!")
 	else
 		to_chat(src, "OOC Metadata is not supported by this server!")
 
@@ -751,7 +752,7 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcomm
+	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcom
 		return 0
 	if(T.z >= ZLEVEL_SPACEMAX)
 		return 0

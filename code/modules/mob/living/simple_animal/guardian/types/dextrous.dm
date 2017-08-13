@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)
-		var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <b>[src]</b>!\n"
+		var/msg = "<span class='info'>*---------*\nThis is [icon2html(src)] \a <b>[src]</b>!\n"
 		msg += "[desc]\n"
 
 		for(var/obj/item/I in held_items)
@@ -38,9 +38,9 @@
 
 		if(internal_storage && !(internal_storage.flags&ABSTRACT))
 			if(internal_storage.forensics && internal_storage.forensics.blood)
-				msg += "<span class='warning'>It is holding [bicon(internal_storage)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
+				msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
 			else
-				msg += "It is holding [bicon(internal_storage)] \a [internal_storage] in its internal storage.\n"
+				msg += "It is holding [icon2html(internal_storage, user)] \a [internal_storage] in its internal storage.\n"
 		msg += "*---------*</span>"
 		to_chat(user, msg)
 	else

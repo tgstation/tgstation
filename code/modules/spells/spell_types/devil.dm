@@ -10,6 +10,7 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "pitchfork"
 	action_background_icon_state = "bg_demon"
 
@@ -26,6 +27,7 @@
 	invocation = "I aint have this much fun since Georgia."
 	action_icon_state = "golden_violin"
 	name = "Summon golden violin"
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract
@@ -110,7 +112,7 @@
 						user.infernalphasein()
 					else
 						to_chat(user, "<span class='warning'>You are no longer near a potential signer.</span>")
-					
+
 			else
 				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.")
 				revert_cast()
@@ -178,6 +180,7 @@
 	cooldown_min = 0
 	overlay = null
 	include_user = 0
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "sintouch"
 	action_background_icon_state = "bg_demon"
 	phase_allowed = 0
@@ -213,6 +216,7 @@
 	school = "conjuration"
 	charge_max = 10
 	cooldown_min = 50 //5 seconds, so the smoke can't be spammed
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "funk"
 	action_background_icon_state = "bg_demon"
 

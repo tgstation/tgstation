@@ -8,6 +8,8 @@ RSF
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
@@ -115,6 +117,8 @@ RSF
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/matter = 10
 	var/toxin = 0
 	var/cooldown = 0

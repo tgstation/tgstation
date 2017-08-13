@@ -6,7 +6,7 @@
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
 	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0					//but seperated to allow items to protect but not impair vision, like space helmets
+	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
 	var/visor_flags_cover = 0	//same as above, but for flags_cover
@@ -252,6 +252,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	dynamic_hair_suffix = "+generic"
 
 /obj/item/clothing/head/Initialize()
 	. = ..()
@@ -482,6 +483,7 @@ BLIND     // can't see anything
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
+	dog_fashion = null
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -536,13 +538,15 @@ BLIND     // can't see anything
 		if(accessory_overlay)
 			. += accessory_overlay
 
-/obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
-	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = W
+/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
+	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
 		return 1
+	if(!attach_accessory(I, user))
+		return ..()
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -588,10 +592,6 @@ BLIND     // can't see anything
 				H.update_inv_wear_suit()
 
 	..()
-
-/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if(!attach_accessory(I, user))
-		..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
 	. = FALSE

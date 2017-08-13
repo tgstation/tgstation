@@ -19,19 +19,19 @@
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
 			if(U.attached_accessory)
-				accessory_msg += " with [bicon(U.attached_accessory)] \a [U.attached_accessory]"
+				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
 
 		if(w_uniform.forensics && w_uniform.forensics.blood)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(w_uniform, user)] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][accessory_msg].\n"
+			msg += "[t_He] [t_is] wearing [icon2html(w_uniform, user)] \a [w_uniform][accessory_msg].\n"
 
 	//head
 	if(head)
 		if(head.forensics && head.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(head, user)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head.\n"
+			msg += "[t_He] [t_is] wearing [icon2html(head, user)] \a [head] on [t_his] head.\n"
 
 	//suit/armor
 	if(wear_suit)
@@ -94,7 +94,7 @@
 		if(shoes.forensics && shoes.forensics.blood)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(shoes, user)] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing icon2html(shoes, user)] \a [shoes] on [t_his] feet.\n"
+			msg += "[t_He] [t_is] wearing [icon2html(shoes, user)] \a [shoes] on [t_his] feet.\n"
 
 	//mask
 	if(wear_mask && !(slot_wear_mask in obscured))
@@ -104,22 +104,22 @@
 			msg += "[t_He] [t_has] [icon2html(wear_mask, user)] \a [wear_mask] on [t_his] face.\n"
 
 	if (wear_neck && !(slot_neck in obscured))
-		msg += "[t_He] [t_is] wearing [bicon(wear_neck)] \a [src.wear_neck] around [t_his] neck.\n"
+		msg += "[t_He] [t_is] wearing [icon2html(wear_neck, user)] \a [src.wear_neck] around [t_his] neck.\n"
 
 	//eyes
 	if(glasses && !(slot_glasses in obscured))
 		if(glasses.forensics && glasses.forensics.blood)
 			msg += "<span class='warning'>[t_He] [t_has] [icon2html(glasses, user)] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
 		else
-			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
+			msg += "[t_He] [t_has] [icon2html(glasses, user)] \a [glasses] covering [t_his] eyes.\n"
 
 	//ears
 	if(ears && !(slot_ears in obscured))
-		msg += "[t_He] [t_has] [bicon(ears)] \a [ears] on [t_his] ears.\n"
+		msg += "[t_He] [t_has] [icon2html(ears, user)] \a [ears] on [t_his] ears.\n"
 
 	//ID
 	if(wear_id)
-		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
+		msg += "[t_He] [t_is] wearing [icon2html(wear_id, user)] \a [wear_id].\n"
 
 	//Jitters
 	switch(jitteriness)
@@ -224,6 +224,13 @@
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
+	switch(disgust)
+		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
+			msg += "[t_He] look[p_s()] a bit grossed out.\n"
+		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
+			msg += "[t_He] look[p_s()] really grossed out.\n"
+		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
+			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
 	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"

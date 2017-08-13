@@ -9,9 +9,10 @@
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 	layer = ABOVE_WINDOW_LAYER
+	state_open = FALSE
+	circuit = /obj/item/weapon/circuitboard/machine/cryo_tube
 
 	var/on = FALSE
-	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
 
@@ -35,24 +36,12 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/cryo_tube/B = new
-	B.apply_default_parts(src)
 
 	radio = new(src)
 	radio.keyslot = new radio_key
 	radio.subspace_transmission = 1
 	radio.canhear_range = 0
 	radio.recalculateChannels()
-
-/obj/item/weapon/circuitboard/machine/cryo_tube
-	name = "Cryotube (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
-	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 2)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
@@ -69,11 +58,8 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	qdel(radio)
-	radio = null
-	if(beaker)
-		qdel(beaker)
-		beaker = null
+	QDEL_NULL(radio)
+	QDEL_NULL(beaker)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)

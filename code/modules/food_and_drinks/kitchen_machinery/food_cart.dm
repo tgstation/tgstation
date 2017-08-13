@@ -18,17 +18,15 @@
 	container_type = OPENCONTAINER
 	var/obj/item/weapon/reagent_containers/mixer
 
-/obj/machinery/food_cart/New()
-	..()
+/obj/machinery/food_cart/Initialize()
+	. = ..()
 	create_reagents(LIQUID_CAPACIY)
 	reagents.set_reacting(FALSE)
 	mixer = new /obj/item/weapon/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
 /obj/machinery/food_cart/Destroy()
-	if(mixer)
-		qdel(mixer)
-		mixer = null
+	QDEL_NULL(mixer)
 	return ..()
 
 /obj/machinery/food_cart/attack_hand(mob/user)

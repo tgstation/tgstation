@@ -3,6 +3,8 @@
 	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags = HEAR
 	slot_flags = SLOT_BELT
@@ -238,6 +240,8 @@
 	desc = "A magnetic tape that can hold up to ten minutes of content."
 	icon_state = "tape_white"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1

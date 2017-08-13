@@ -61,11 +61,12 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!\n"
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))
+
 			if(I.forensics && I.forensics.blood)
 				msg += "<span class='warning'>It is holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else

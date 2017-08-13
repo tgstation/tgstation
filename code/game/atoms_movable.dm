@@ -215,7 +215,7 @@
 // This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
-	return
+	SendSignal(COMSIG_MOVABLE_CROSSED, AM)
 
 
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
@@ -530,7 +530,7 @@
 /* Stationloving
 *
 * A stationloving atom will always teleport back to the station
-* if it ever leaves the station z-levels or Centcom. It will also,
+* if it ever leaves the station z-levels or CentCom. It will also,
 * when Destroy() is called, will teleport to a random turf on the
 * station.
 *

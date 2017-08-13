@@ -166,6 +166,21 @@
 	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
 
+/obj/screen/alert/gross
+	name = "Grossed out."
+	desc = "That was kind of gross..."
+	icon_state = "gross"
+
+/obj/screen/alert/verygross
+	name = "Very grossed out."
+	desc = "I'm not feeling very well.."
+	icon_state = "gross2"
+
+/obj/screen/alert/disgusted
+	name = "DISGUSTED"
+	desc = "ABSOLUTELY DISGUSTIN'"
+	icon_state = "gross3"
+
 /obj/screen/alert/hot
 	name = "Too Hot"
 	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
@@ -205,7 +220,7 @@ or something covering your eyes."
 /obj/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
-If you're feeling frisky, click yourself in help intent to pull the object out."
+If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
 	icon_state = "embeddedobject"
 
 /obj/screen/alert/embeddedobject/Click()

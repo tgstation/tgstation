@@ -4,6 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0

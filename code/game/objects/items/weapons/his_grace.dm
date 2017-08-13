@@ -20,12 +20,14 @@
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
 
-/obj/item/weapon/his_grace/New()
-	..()
+/obj/item/weapon/his_grace/Initialize()
+	. = ..()
 	START_PROCESSING(SSprocessing, src)
+	GLOB.poi_list += src
 
 /obj/item/weapon/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
+	GLOB.poi_list -= src
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
 	return ..()

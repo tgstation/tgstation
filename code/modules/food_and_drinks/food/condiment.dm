@@ -115,7 +115,7 @@
 	desc = "Tasty spacey sugar!"
 	list_reagents = list("sugar" = 50)
 
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Separate from above since it's a small shaker rather then
 	name = "salt shaker"											//	a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
@@ -174,6 +174,8 @@
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
 	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	list_reagents = list("milk" = 50)
 	possible_states = list()
 
@@ -190,6 +192,8 @@
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
 	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	list_reagents = list("soymilk" = 50)
 	possible_states = list()
 

@@ -197,16 +197,15 @@ GLOBAL_LIST_EMPTY(allCasters)
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New(loc, ndir, building)
-	..()
+/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+	. = ..()
 	if(building)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 	GLOB.allCasters += src
-	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		unit_no++
+	unit_no = GLOB.allCasters.len
 	update_icon()
 
 /obj/machinery/newscaster/Destroy()
@@ -882,6 +881,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("bapped")
 	var/screen = 0

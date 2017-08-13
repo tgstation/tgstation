@@ -271,7 +271,7 @@
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+		var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
 		if (!eyes)
 			return
 		if(visual)
@@ -334,7 +334,7 @@
 					// you need earmuffs, inacusiate, or replacement
 			else if(ears.ear_damage >= 5)
 				to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
-			src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
+			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
 		return effect_amount //how soundbanged we are
 
 

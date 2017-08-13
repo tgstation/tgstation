@@ -141,6 +141,9 @@
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lantern-blue"
+	item_state = "lantern"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	var/obj/effect/wisp/wisp
 
 /obj/item/device/wisp_lantern/attack_self(mob/user)
@@ -258,6 +261,8 @@
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
 	flags = NOBLUDGEON
@@ -645,7 +650,7 @@
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(target))
 		swiping = TRUE
-		var/static/list/cleaving_saw_cleave_angles = list(0, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
+		var/static/list/cleaving_saw_cleave_angles = list(0, -45, 45) //so that the animation animates towards the target clicked and not towards a side target
 		for(var/i in cleaving_saw_cleave_angles)
 			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
 			for(var/mob/living/L in T)
@@ -683,6 +688,8 @@
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
 	icon_state = "spectral"
 	item_state = "spectral"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
@@ -785,7 +792,7 @@
 
 	switch(random)
 		if(1)
-			to_chat(user, "<span class='danger'>Your appearence morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
+			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
 			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
 			H.eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
@@ -814,7 +821,7 @@
 	severity = BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("Your bones ache.")
-	stage2	= list("Your skin feels scaley.")
+	stage2	= list("Your skin feels scaly.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
 	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")

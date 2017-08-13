@@ -27,14 +27,14 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 ### Vars
 
 1. `/datum/var/list/datum_components` (private)
-    * Lazy list of all components a datum has   (TODO: Make this a typecache with longer paths overwriting shorter ones maybe? It'd be weird)
+    * Lazy associated list of type -> component/list of components.
 1. `/datum/component/var/enabled` (protected, boolean)
     * If the component is enabled. If not, it will not react to signals
     * TRUE by default
 1. `/datum/component/var/dupe_mode` (protected, enum)
     * How multiple components of the exact same type are handled when added to the datum.
         * `COMPONENT_DUPE_HIGHLANDER` (default): Old component will be deleted, new component will first have `/datum/component/proc/InheritComponent(datum/component/old, FALSE)` on it
-        * `COMPONENT_DUPE_ALLOWED`: The components will be treated as seperate, `GetComponent()` will return the first added
+        * `COMPONENT_DUPE_ALLOWED`: The components will be treated as separate, `GetComponent()` will return the first added
         * `COMPONENT_DUPE_UNIQUE`: New component will be deleted, old component will first have `/datum/component/proc/InheritComponent(datum/component/new, TRUE)` on it
 1. `/datum/component/var/list/signal_procs` (private)
     * Associated lazy list of signals -> callbacks that will be run when the parent datum recieves that signal
@@ -75,6 +75,8 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Called on a component when a component of the same type was added to the same parent
     * See `/datum/component/var/dupe_mode`
     * `C`'s type will always be the same of the called component
+1. `/datum/component/proc/AfterComponentActivated()` (abstract)
+    * Called on a component that was activated after it's `parent`'s `ComponentActivated()` is called
 1. `/datum/component/proc/OnTransfer(datum/new_parent)` (abstract)
     * Called before the new `parent` is assigned in `TakeComponent()`, after the remove signal, before the added signal
     * Allows the component to react to ownership transfers

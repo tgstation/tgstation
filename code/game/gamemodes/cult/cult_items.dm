@@ -3,6 +3,8 @@
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon_state = "cultblade"
 	item_state = "cultblade"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
@@ -159,10 +161,14 @@
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
+	icon_state = "cult_sharpener"
 	used = 0
 	increment = 5
 	max = 40
 	prefix = "darkened"
+
+/obj/item/weapon/sharpener/cult/update_icon()
+	icon_state = "cult_sharpener[used ? "_used" : ""]"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -385,6 +391,9 @@
 
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
+		return
+	if(!iscultist(user))
+		to_chat(user, "That doesn't seem to do anything useful.")
 		return
 
 	if(istype(A, /obj/item))

@@ -48,7 +48,7 @@ Location where the teleport begins, target that will teleport, distance to go, d
 Random error in tile placement x, error in tile placement y, and block offset.
 Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
 Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
-Turf and target are seperate in case you want to teleport some distance from a turf the target is not standing on or something.
+Turf and target are separate in case you want to teleport some distance from a turf the target is not standing on or something.
 */
 
 	var/dirx = 0//Generic location finding variable.
@@ -491,17 +491,26 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents()
+/atom/proc/GetAllContents(list/ignore_typecache)
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
+	if(ignore_typecache)		//If there's a typecache, use it.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
+			if(ignore_typecache[A.type])
+				continue
+			processing_list |= (A.contents - assembled)
+			assembled |= A
 
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		processing_list -= A
+	else		//If there's none, only make this check once for performance.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
 
-		processing_list |= (A.contents - assembled)
+			processing_list |= (A.contents - assembled)
 
-		assembled |= A
+			assembled |= A
 
 	return assembled
 
@@ -595,6 +604,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /area/proc/addSorted()
 	GLOB.sortedAreas.Add(src)
 	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
+
+//Takes: Area type as a text string from a variable.
+//Returns: Instance for the area in the world.
+/proc/get_area_instance_from_text(areatext)
+	var/areainstance = null
+	if(istext(areatext))
+		areatext = text2path(areatext)
+	for(var/V in GLOB.sortedAreas)
+		var/area/A = V
+		if(A.type == areatext)
+			areainstance = V
+	return areainstance
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -836,11 +857,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on [bicon(icon)] [target].", "<span class='notice'>You use the analyzer on [bicon(icon)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)] [target].</span>")
+	to_chat(user, "<span class='notice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 	if(total_moles>0)
 		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 

@@ -82,22 +82,19 @@
 			countdown.stop()
 			STOP_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/syndicatebomb/New()
+/obj/machinery/syndicatebomb/Initialize()
+	. = ..()
 	wires = new /datum/wires/syndicatebomb(src)
-	if(src.payload)
+	if(payload)
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
-	..()
 
 /obj/machinery/syndicatebomb/Destroy()
-	qdel(wires)
-	wires = null
-	if(countdown)
-		qdel(countdown)
-		countdown = null
+	QDEL_NULL(wires)
+	QDEL_NULL(countdown)
 	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
+	return ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
@@ -210,14 +207,14 @@
 	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer_set = Clamp(new_timer, minimum_timer, maximum_timer)
-		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer_set] seconds.</span>")
+		src.loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
-				src.loc.visible_message("<span class='warning'>[bicon(src)] Device error: User intervention required.</span>")
+				src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(src))] Device error: User intervention required.</span>")
 			return
 		else
-			src.loc.visible_message("<span class='danger'>[bicon(src)] [timer_set] seconds until detonation, please clear the area.</span>")
+			src.loc.visible_message("<span class='danger'>[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area.</span>")
 			activate()
 			update_icon()
 			add_fingerprint(user)
@@ -275,6 +272,8 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
@@ -331,7 +330,7 @@
 	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
-		holder.loc.visible_message("<span class='danger'>[bicon(holder)] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...</span>")
+		holder.loc.visible_message("<span class='danger'>[icon2html(holder, viewers(holder))] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...</span>")
 		reset()
 	else
 		qdel(src)
@@ -341,7 +340,7 @@
 	if(istype(holder))
 		attempts++
 		defusals++
-		holder.loc.visible_message("<span class='notice'>[bicon(holder)] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds...</span>")
+		holder.loc.visible_message("<span class='notice'>[icon2html(holder, viewers(holder))] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds...</span>")
 		sleep(50)	//Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
 		if(istype(holder))
 			reset()
@@ -525,6 +524,8 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "syndicate=3"
 	var/timer = 0

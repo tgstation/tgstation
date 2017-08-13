@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -14,8 +14,7 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	id = "shuttleshutters";
 	name = "blast shutters"
@@ -623,7 +622,7 @@
 /obj/docking_port/mobile/emergency{
 	dwidth = 14;
 	height = 18;
-	name = "Centcomm Raven Battlecruiser";
+	name = "CentCom Raven Battlecruiser";
 	timid = 1;
 	width = 32
 	},
@@ -668,8 +667,7 @@
 	},
 /area/shuttle/escape)
 "bJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bK" = (
@@ -980,7 +978,7 @@
 /area/shuttle/escape)
 "cr" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -995,18 +993,16 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "cu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cw" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1039,12 +1035,11 @@
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
 "cA" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "shuttleshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cB" = (
@@ -1079,13 +1074,11 @@
 	},
 /area/shuttle/escape)
 "cJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cL" = (
@@ -1108,7 +1101,7 @@
 /area/shuttle/escape)
 "cR" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1123,8 +1116,7 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "cU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cV" = (
@@ -1140,31 +1132,26 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "cZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "da" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "db" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dd" = (
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "de" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "df" = (
@@ -1183,13 +1170,11 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "dk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dm" = (
@@ -1205,18 +1190,15 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "dq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ds" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dt" = (
@@ -1248,13 +1230,11 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "dB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dD" = (
@@ -1268,8 +1248,7 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "dF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dG" = (
@@ -1311,7 +1290,7 @@
 /area/shuttle/escape)
 "dQ" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1333,7 +1312,7 @@
 /area/shuttle/escape)
 "dV" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1379,7 +1358,7 @@
 /area/shuttle/escape)
 "ei" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 10
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1400,7 +1379,7 @@
 /area/shuttle/escape)
 "en" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1461,7 +1440,7 @@
 /area/shuttle/escape)
 "eA" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{

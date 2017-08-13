@@ -13,6 +13,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banner"
 	item_state = "banner"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A banner with Nanotrasen's logo on it."
 	slowdown = 2
 	throw_speed = 0
@@ -27,13 +29,11 @@
 	var/reset_path = /obj/effect/ctf/flag_reset
 
 /obj/item/weapon/twohanded/ctf/Destroy()
-	if(reset)
-		qdel(reset)
-		reset = null
-	. = ..()
+	QDEL_NULL(reset)
+	return ..()
 
 /obj/item/weapon/twohanded/ctf/Initialize()
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 	if(!reset)
 		reset = new reset_path(get_turf(src))

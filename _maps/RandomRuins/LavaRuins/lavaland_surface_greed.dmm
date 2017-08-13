@@ -123,7 +123,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "z" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "J" = (

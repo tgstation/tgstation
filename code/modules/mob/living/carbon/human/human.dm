@@ -9,11 +9,11 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/dummy/New(loc)
+INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/dummy/Destroy()
 	..()
-	if(!initialized)
-		args[1] = FALSE
-		Initialize(arglist(args))
+	return QDEL_HINT_QUEUE
 
 /mob/living/carbon/human/dummy/Life()
 	return

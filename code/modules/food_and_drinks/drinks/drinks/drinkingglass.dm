@@ -34,7 +34,7 @@
 //  The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.  //
 //  If it's a new drink, remember to add it to Chemistry-Reagents.dm  and Chemistry-Recipes.dm as well.  //
 //  You can only mix the ported-over drinks in shot glasses for now (they'll mix in a shaker, but the sprite won't change for glasses). //
-//  This is on a case-by-case basis, and you can even make a seperate sprite for shot glasses if you want. //
+//  This is on a case-by-case basis, and you can even make a separate sprite for shot glasses if you want. //
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
 	name = "shot glass"

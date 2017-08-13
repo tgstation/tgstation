@@ -101,9 +101,11 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
+		if(user.hallucinating())
+			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
 		ui.open()
 
-/obj/machinery/chem_dispenser/ui_data()
+/obj/machinery/chem_dispenser/ui_data(mob/user)
 	var/data = list()
 	data["amount"] = amount
 	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
@@ -128,10 +130,16 @@
 		data["beakerTransferAmounts"] = null
 
 	var chemicals[0]
+	var/is_hallucinating = FALSE
+	if(user.hallucinating())
+		is_hallucinating = TRUE
 	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id)))
+			var/chemname = temp.name
+			if(is_hallucinating && prob(5))
+				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
+			chemicals.Add(list(list("title" = chemname, "id" = temp.id)))
 	data["chemicals"] = chemicals
 	return data
 
@@ -221,6 +229,7 @@
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
+	circuit = /obj/item/weapon/circuitboard/machine/chem_dispenser
 	var/list/dispensable_reagent_tiers = list(
 		list(
 			"hydrogen",
@@ -263,23 +272,6 @@
 			"diethylamine"
 		)
 	)
-
-/obj/machinery/chem_dispenser/constructable/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/chem_dispenser
-	name = "Portable Chem Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/cell = 1)
-	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0

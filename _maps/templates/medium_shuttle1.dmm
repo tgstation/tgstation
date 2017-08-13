@@ -125,8 +125,7 @@
 	name = "Shuttle"
 	})
 "u" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered{
 	name = "Shuttle"

@@ -219,13 +219,13 @@ research holder datum.
 
 /datum/tech/plasmatech
 	name = "Plasma Research"
-	desc = "Research into the mysterious substance colloqually known as \"plasma\"."
+	desc = "Research into the mysterious substance colloquially known as \"plasma\"."
 	id = "plasmatech"
 	rare = 3
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
-	desc = "The various technologies behind the storage and generation of electicity."
+	desc = "The various technologies behind the storage and generation of electricity."
 	id = "powerstorage"
 
 /datum/tech/bluespace
@@ -256,7 +256,7 @@ research holder datum.
 
 /datum/tech/syndicate
 	name = "Illegal Technologies Research"
-	desc = "The study of technologies that violate Nanotrassen regulations."
+	desc = "The study of technologies that violate Nanotrasen regulations."
 	id = "syndicate"
 	rare = 4
 
@@ -349,7 +349,7 @@ research holder datum.
 	max_tech_stored = 10
 
 /obj/item/weapon/disk/tech_disk/debug
-	name = "centcomm technology disk"
+	name = "centcom technology disk"
 	desc = "A debug item for research"
 	materials = list()
 	max_tech_stored = 0

@@ -1,5 +1,5 @@
 /* How it works:
- The shuttle arrives at Centcom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
+ The shuttle arrives at CentCom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
  The loop only checks contents of storage types, see supply.dm shuttle code.
 
  Each object in the loop is checked for applies_to() of various export datums, except the invalid ones.

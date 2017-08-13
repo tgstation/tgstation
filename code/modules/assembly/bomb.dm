@@ -2,6 +2,8 @@
 	name = "bomb"
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
@@ -61,7 +63,7 @@
 	return
 
 /obj/item/device/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
+	visible_message("[icon2html(src, viewers(src))] *beep* *beep*", "*beep* *beep*")
 	sleep(10)
 	if(!src)
 		return

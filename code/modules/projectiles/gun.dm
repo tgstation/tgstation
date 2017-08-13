@@ -38,8 +38,8 @@
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
-	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 
 	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
 
@@ -446,6 +446,7 @@
 /datum/action/toggle_scope_zoom
 	name = "Toggle Scope"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	var/obj/item/weapon/gun/gun = null
 
