@@ -63,7 +63,7 @@
 	return
 
 /obj/item/device/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
+	visible_message("[icon2html(src, viewers(src))] *beep* *beep*", "*beep* *beep*")
 	sleep(10)
 	if(!src)
 		return

@@ -401,19 +401,21 @@
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
+					var/iconhtml = icon2html(cached_my_atom, seen)
 					if(cached_my_atom)
 						if(!ismob(cached_my_atom)) // No bubbling mobs
 							if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
+
 							for(var/mob/M in seen)
-								to_chat(M, "<span class='notice'>[bicon(my_atom)] [C.mix_message]</span>")
+								to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
 						if(istype(cached_my_atom, /obj/item/slime_extract))
 							var/obj/item/slime_extract/ME2 = my_atom
 							ME2.Uses--
 							if(ME2.Uses <= 0) // give the notification that the slime core is dead
 								for(var/mob/M in seen)
-									to_chat(M, "<span class='notice'>[bicon(my_atom)] \The [my_atom]'s power is consumed in the reaction.</span>")
+									to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 									ME2.name = "used slime extract"
 									ME2.desc = "This extract has been used up."
 
