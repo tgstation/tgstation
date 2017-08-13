@@ -75,3 +75,11 @@
 	new /obj/item/weapon/football(src)
 	new /obj/item/weapon/football(src)
 	new /obj/item/weapon/football(src)
+
+/obj/item/weapon/storage/box/syndie_kit/firesuit
+	name = "\improper Boxed Syndicate Firesuit set"
+	desc = "Contains one Syndicate firesuit and one Syndicate firefighting helmet. The box radiates warmth."
+
+/obj/item/weapon/storage/box/syndie_kit/firesuit/PopulateContents()
+	new /obj/item/clothing/suit/fire/atmos/syndicate(src)
+	new /obj/item/clothing/head/hardhat/atmos/syndicate(src)
