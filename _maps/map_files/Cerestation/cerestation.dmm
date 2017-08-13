@@ -59321,6 +59321,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/ore_box,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60169,7 +60170,6 @@
 	c_tag = "Aux Base Construction";
 	dir = 6
 	},
-/obj/machinery/computer/camera_advanced/base_construction,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -60188,6 +60188,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -95762,6 +95763,20 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/virology)
+"dCX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/construction/mining/aux_base)
 
 (1,1,1) = {"
 aaa
@@ -114973,7 +114988,7 @@ ceA
 ceA
 ciA
 cjg
-cjX
+dCX
 ckF
 clj
 cdI
