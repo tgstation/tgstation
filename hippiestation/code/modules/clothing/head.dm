@@ -42,4 +42,4 @@
 	alternate_worn_icon = 'hippiestation/icons/mob/head.dmi'
 	icon = 'hippiestation/icons/obj/clothing/hats.dmi'
 	name = "warm firefighting helmet"
-	desc = "There appears to be a very faint flame in the visor that's impossible to focus on..."
+	desc = "There appears to be a very faint flame in the visor that's impossible to focus on...."
