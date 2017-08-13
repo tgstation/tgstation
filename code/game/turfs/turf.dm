@@ -164,6 +164,11 @@
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
+	// If an opaque movable atom moves around we need to potentially update visibility.
+	if (AM.opacity)
+		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+		reconsider_lights()
+
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//melting
