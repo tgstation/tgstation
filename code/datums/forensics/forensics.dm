@@ -7,12 +7,6 @@
 	var/list/blood
 	var/maxSize = 5
 
-/datum/forensics/proc/enforceSize(list/templist, newthing)
-	if(templist.len >= maxSize)
-		templist.Remove(templist[1])
-		templist |= newthing
-	return newthing
-
 /datum/forensics/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already
 	var/new_blood_dna = blood
