@@ -325,12 +325,6 @@
 	cost = 10
 	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
 
-/datum/gang_item/equipment/stimpack
-	name = "Black Market Stimulants"
-	id = "stimpack"
-	cost = 12
-	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
-
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
 	id = "implant_breaker"
