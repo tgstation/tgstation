@@ -1030,7 +1030,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			register_asset(name, thing)
 			for (var/thing2 in targets)
 				send_asset(thing2, key, FALSE)
-			return "<img class='icon misc' src=\"[url_encode(name)]\">"
+			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
 		var/atom/A = thing
 		if (isnull(dir))
 			dir = A.dir
@@ -1055,7 +1055,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	for (var/thing2 in targets)
 		send_asset(thing2, key, FALSE)
 
-	return "<img class='icon [icon_state]' src=\"[url_encode(key)]\">"
+	return "<img class='icon icon-[icon_state]' src=\"[url_encode(key)]\">"
 
 /proc/icon2base64html(thing)
 	if (!thing)
@@ -1072,7 +1072,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
 
 
-		return "<img class='icon misc' src='data:image/png;base64,[icon_base64]'>"
+		return "<img class='icon icon-misc' src='data:image/png;base64,[icon_base64]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = thing
@@ -1088,7 +1088,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 		bicon_cache[key] = icon2base64(I, key)
 
-	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
+	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
 //Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_icon2html(thing, target)
