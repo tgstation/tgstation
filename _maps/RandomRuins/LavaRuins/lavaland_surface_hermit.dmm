@@ -179,7 +179,7 @@
 	},
 /area/ruin/powered)
 "L" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 
