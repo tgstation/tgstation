@@ -611,6 +611,7 @@
 #include "code\game\machinery\doors\firedoor.dm"
 #include "code\game\machinery\doors\poddoor.dm"
 #include "code\game\machinery\doors\shutters.dm"
+#include "code\game\machinery\doors\spacepod.dm"
 #include "code\game\machinery\doors\unpowered.dm"
 #include "code\game\machinery\doors\windowdoor.dm"
 #include "code\game\machinery\embedded_controller\access_controller.dm"
