@@ -34,7 +34,7 @@
 	
 /obj/item/clothing/suit/fire/atmos/syndicate
 	name = "warm firesuit"
-	desc = "A firesuit with blaze-themed colors. You can almost hear the crackling of a distant inferno..."
+	desc = "A firesuit with blaze-themed colors. You can almost hear the crackling of a distant inferno...."
 	alternate_worn_icon = 'hippiestation/icons/mob/suit.dmi'
 	icon = 'hippiestation/icons/obj/clothing/suits.dmi'
 	icon_state = "firesuit_syndicate"
