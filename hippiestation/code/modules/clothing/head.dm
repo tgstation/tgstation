@@ -37,7 +37,7 @@
 /obj/item/clothing/head/hardhat/atmos/syndicate
 	item_state = "hardhat0_syndicate"
 	icon_state = "hardhat0_syndicate"
-	item_color = syndicate
+	item_color = "syndicate"
 	armor = list(melee = 35, bullet = 10, laser = 25, energy = 20, bomb = 25, bio = 10, rad = 20, fire = 100, acid = 50)
 	alternate_worn_icon = 'hippiestation/icons/mob/head.dmi'
 	icon = 'hippiestation/icons/obj/clothing/hats.dmi'
