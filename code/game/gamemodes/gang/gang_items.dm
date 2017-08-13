@@ -225,14 +225,14 @@
 /datum/gang_item/weapon/improvised
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
-	cost = 6
+	cost = 10
 	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/improvised_ammo
-	name = "Box of Buckshot"
-	id = "buckshot"
+	name = "Box of Improvised Buckshots"
+	id = "improved"
 	cost = 5
-	item_path = /obj/item/weapon/storage/box/lethalshot
+	item_path = /obj/item/weapon/storage/box/improvisedshot
 
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
