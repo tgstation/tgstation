@@ -270,7 +270,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "[bicon(src)] That's [f_name]")
+	to_chat(user, "[icon2html(src, user)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)

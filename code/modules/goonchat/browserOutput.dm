@@ -166,6 +166,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //Global chat procs
 
+<<<<<<< HEAD
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
@@ -217,6 +218,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/icon/I = getFlatIcon(thing)
 	return bicon(I)
 
+=======
+>>>>>>> f2cf4c2f5c... [ready]Makes bIcon better (#29690)
 /proc/to_chat(target, message)
 	if(!target)
 		return
