@@ -202,6 +202,10 @@ GLOBAL_LIST(external_rsc_urls)
 		vars["fps"] = prefs.clientfps
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
+	if (!IsByondMember())
+        tochat(src, "It looks like you're not a BYOND member! Please consider supporting this wonderful engine with a membership. To encourage donation, you will be kicked in 15 minutes.")
+        QDEL_IN(src, 9000)
+
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
 	if(config.log_access)
