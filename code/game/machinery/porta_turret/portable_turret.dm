@@ -355,7 +355,7 @@
 		return
 
 	var/list/targets = list()
-	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
+	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha, /obj/spacepod))
 
 	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
 		var/atom/AA = A
@@ -395,6 +395,12 @@
 			if(M.occupant && !in_faction(M.occupant))
 				if(assess_perp(M.occupant) >= 4)
 					targets += M
+
+		if(istype(A, /obj/spacepod))
+			var/obj/spacepod/SP = A
+			if(SP.pilot && !in_faction(SP.pilot))
+				if(assess_perp(SP.pilot) >= 4)
+					targets += SP
 
 	if(!tryToShootAt(targets))
 		if(!always_up)
