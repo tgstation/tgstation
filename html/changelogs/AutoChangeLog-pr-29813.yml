@@ -1,0 +1,4 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - tweak: "The wiki button now asks what page you want to be taken to"
