@@ -310,7 +310,7 @@
 /datum/gang_item/equipment/emp
 	name = "EMP Grenade"
 	id = "EMP"
-	cost = 5
+	cost = 20
 	item_path = /obj/item/weapon/grenade/empgrenade
 
 /datum/gang_item/equipment/c4
@@ -322,7 +322,7 @@
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
-	cost = 18
+	cost = 10
 	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
 
 /datum/gang_item/equipment/stimpack
