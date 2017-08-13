@@ -213,7 +213,7 @@
 /datum/gang_item/weapon/surplus
 	name = "Surplus Rifle"
 	id = "surplus"
-	cost = 8
+	cost = 5
 	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus
 
 /datum/gang_item/weapon/ammo/surplus_ammo
@@ -230,7 +230,7 @@
 
 /datum/gang_item/weapon/ammo/improvised_ammo
 	name = "Box of Improvised Buckshots"
-	id = "improved"
+	id = "improvised_ammo"
 	cost = 5
 	item_path = /obj/item/weapon/storage/box/improvisedshot
 
