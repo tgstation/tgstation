@@ -29,6 +29,11 @@ BONUS
 	symptom_delay_min = 2
 	symptom_delay_max = 15
 	var/infective = FALSE
+	threshold_desc = "<b>Resistance 3:</b> Host will drop small items when coughing.<br>\
+					  <b>Resistance 10:</b> Occasionally causes coughing fits that stun the host.<br>\
+					  <b>Stage Speed 6:</b> Increases cough frequency.<br>\
+					  <b>If Airborne:</b> Coughing will infect bystanders.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/cough/Start(datum/disease/advance/A)
 	..()

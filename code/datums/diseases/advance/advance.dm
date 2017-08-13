@@ -171,6 +171,7 @@
 	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
 	AssignName(A.name)
 
+
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
 

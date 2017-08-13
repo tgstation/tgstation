@@ -106,5 +106,8 @@
 				<ui-section label='Stage speed'>{{stage_speed}}</ui-section>
 				<ui-section label='Transmittability'>{{transmission}}</ui-section>
 			</ui-section>
+			<ui-subdisplay title='Effect Thresholds'>
+				<ui-section>{{{threshold_desc}}}</ui-section>
+			</ui-subdisplay>
 	{{/with}}
 {{/if}}

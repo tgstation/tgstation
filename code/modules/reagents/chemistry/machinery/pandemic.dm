@@ -87,6 +87,7 @@
 	this["transmission"] = S.transmittable
 	this["level"] = S.level
 	this["neutered"] = S.neutered
+	this["threshold_desc"] = S.threshold_desc
 	. += this
 
 /obj/machinery/computer/pandemic/proc/get_resistance_data(datum/reagent/blood/B)

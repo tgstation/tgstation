@@ -28,6 +28,8 @@ Bonus
 	symptom_delay_max = 10
 	var/purge_alcohol = FALSE
 	var/brain_heal = FALSE
+	threshold_desc = "<b>Resistance 6:</b> Heals brain damage.<br>\
+					  <b>Transmission 8:</b> Purges alcohol in the bloodstream."
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
 	..()

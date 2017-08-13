@@ -10,6 +10,9 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/hide_healing = FALSE
+	threshold_desc = "<b>Stage Speed 6:</b> Doubles healing speed.<br>\
+					  <b>Stage Speed 11:</b> Triples healing speed.<br>\
+					  <b>Stealth 4:</b> Healing will no longer be visible to onlookers."
 
 /datum/symptom/heal/Start(datum/disease/advance/A)
 	..()
@@ -312,9 +315,11 @@ Bonus
 	level = 5
 	symptom_delay_min = 3
 	symptom_delay_max = 8
+	threshold_desc = "<b>Stage Speed 6:</b> Additionally heals brain damage.<br>\
+					  <b>Stage Speed 11:</b> Increases brain damage healing."
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/amt_healed = 2 * power
+	var/amt_healed = 2 * (power - 1)
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]

@@ -31,6 +31,9 @@ Bonus
 	var/scramble_language = FALSE
 	var/datum/language/current_language
 	var/datum/language_holder/original_language
+	threshold_desc = "<b>Transmission 14:</b> The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.<br>\
+					  <b>Stage Speed 7:</b> Changes voice more often.<br>\
+					  <b>Stealth 3:</b> The symptom remains hidden until active."
 
 /datum/symptom/voice_change/Start(datum/disease/advance/A)
 	..()
@@ -45,8 +48,6 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		var/datum/language_holder/mob_language = M.get_language_holder()
 		original_language = mob_language.copy()
-		desc = "The virus affects the language section of the brain, causing the subject to speak in different pitches,\
-		 and eventually leading to the complete loss of language comprehension."
 
 /datum/symptom/voice_change/Activate(datum/disease/advance/A)
 	if(!..())

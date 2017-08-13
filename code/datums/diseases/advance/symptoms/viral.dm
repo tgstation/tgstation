@@ -78,6 +78,8 @@ Bonus
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/time_to_cure
+	threshold_desc = "<b>Resistance/Stage Speed:</b> Highest between these determines the amount of time before self-curing.<br>\
+					  <b>Stealth 4:</b> Doubles the time before the virus self-cures."
 
 /datum/symptom/viralreverse/Activate(datum/disease/advance/A)
 	if(!..())

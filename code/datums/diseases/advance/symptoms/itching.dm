@@ -29,6 +29,8 @@ BONUS
 	symptom_delay_min = 5
 	symptom_delay_max = 25
 	var/scratch = FALSE
+	threshold_desc = "<b>Transmission 6:</b> Increases frequency of itching.<br>\
+					  <b>Stage Speed 7:</b> The host will scrath itself when itching, causing superficial damage."
 
 /datum/symptom/itching/Start(datum/disease/advance/A)
 	..()

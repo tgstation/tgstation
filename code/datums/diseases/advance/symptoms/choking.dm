@@ -28,6 +28,8 @@ Bonus
 	base_message_chance = 15
 	symptom_delay_min = 10
 	symptom_delay_max = 30
+	threshold_desc = "<b>Stage Speed 8:</b> Causes choking more frequently.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
 	..()

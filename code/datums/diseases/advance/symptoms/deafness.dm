@@ -28,6 +28,8 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80
+	threshold_desc = "<b>Resistance 9:</b> Causes permanent deafness, instead of intermittent.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/deafness/Start(datum/disease/advance/A)
 	..()
