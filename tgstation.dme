@@ -2056,6 +2056,7 @@
 #include "code\modules\shuttle\syndicate.dm"
 #include "code\modules\shuttle\white_ship.dm"
 #include "code\modules\space_transition\space_transition.dm"
+#include "code\modules\spacepods\actions.dm"
 #include "code\modules\spacepods\construction.dm"
 #include "code\modules\spacepods\equipment.dm"
 #include "code\modules\spacepods\lock_buster.dm"
