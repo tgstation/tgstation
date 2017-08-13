@@ -8530,6 +8530,9 @@
 	dir = 8;
 	network = list("SS13","AuxBase")
 	},
+/obj/structure/mining_shuttle_beacon{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "atl" = (
@@ -13354,6 +13357,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aEq" = (
@@ -58245,9 +58249,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cCs" = (
-/obj/structure/mining_shuttle_beacon{
-	dir = 4
-	},
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cCt" = (

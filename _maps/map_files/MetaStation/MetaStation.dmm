@@ -15276,6 +15276,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aDb" = (
@@ -17560,7 +17561,7 @@
 	c_tag = "Auxillary Mining Base";
 	dir = 1
 	},
-/obj/structure/mining_shuttle_beacon,
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aHc" = (
@@ -90843,6 +90844,10 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"dDJ" = (
+/obj/structure/mining_shuttle_beacon,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -102768,7 +102773,7 @@ cVL
 cVL
 aHb
 cWg
-cVL
+dDJ
 cVL
 cVL
 ddG

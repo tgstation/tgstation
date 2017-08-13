@@ -59447,6 +59447,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/ore_box,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60982,7 +60983,6 @@
 	},
 /area/construction/mining/aux_base)
 "cle" = (
-/obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -78084,6 +78084,7 @@
 	dir = 1;
 	network = list("SS13")
 	},
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -78150,6 +78151,7 @@
 	c_tag = "Aux Base Construction South";
 	dir = 6
 	},
+/obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -133899,7 +133901,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -134156,7 +134158,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -134413,7 +134415,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -134927,7 +134929,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -135184,7 +135186,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -135441,7 +135443,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -135698,7 +135700,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -136212,7 +136214,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -136469,7 +136471,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -136726,7 +136728,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -136983,7 +136985,7 @@ aOd
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 abC
 abC
@@ -137497,7 +137499,7 @@ cXy
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 cFp
 aaa
@@ -137754,7 +137756,7 @@ aqV
 aqV
 cXO
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -138011,7 +138013,7 @@ aqV
 aqV
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -138525,7 +138527,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -138782,7 +138784,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -139039,7 +139041,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -139296,7 +139298,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -139810,7 +139812,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -140067,7 +140069,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -140324,7 +140326,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -140581,7 +140583,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -141095,7 +141097,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -141352,7 +141354,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
@@ -141609,7 +141611,7 @@ cXE
 cXK
 aqV
 aqV
-aSi
+cXE
 aqU
 aaa
 aaa
