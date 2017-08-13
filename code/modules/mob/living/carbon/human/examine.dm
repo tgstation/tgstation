@@ -22,7 +22,7 @@
 				accessory_msg += " with [bicon(U.attached_accessory)] \a [U.attached_accessory]"
 
 		if(w_uniform.forensics && w_uniform.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(w_uniform, user)] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][accessory_msg].\n"
 
@@ -36,23 +36,23 @@
 	//suit/armor
 	if(wear_suit)
 		if(wear_suit.forensics && wear_suit.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(wear_suit, user)] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit].\n"
+			msg += "[t_He] [t_is] wearing [icon2html(wear_suit, user)] \a [wear_suit].\n"
 
 		//suit/armor storage
 		if(s_store)
 			if(s_store.forensics && s_store.forensics.blood)
-				msg += "<span class='warning'>[t_He] [t_is] carrying [bicon(s_store)] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
+				msg += "<span class='warning'>[t_He] [t_is] carrying [icon2html(s_store, user)] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
 			else
-				msg += "[t_He] [t_is] carrying [bicon(s_store)] \a [s_store] on [t_his] [wear_suit.name].\n"
+				msg += "[t_He] [t_is] carrying [icon2html(s_store, user)] \a [s_store] on [t_his] [wear_suit.name].\n"
 
 	//back
 	if(back)
 		if(back.forensics && back.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] [icon2html(back, user)] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
 		else
-			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
+			msg += "[t_He] [t_has] [icon2html(back, user)] \a [back] on [t_his] back.\n"
 
 	//Hands
 	for(var/obj/item/I in held_items)
@@ -65,9 +65,9 @@
 	//gloves
 	if(gloves && !(slot_gloves in obscured))
 		if(gloves.forensics && gloves.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] [icon2html(gloves, user)] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
 		else
-			msg += "[t_He] [t_has] [bicon(gloves)] \a [gloves] on [t_his] hands.\n"
+			msg += "[t_He] [t_has] [icon2html(gloves, user)] \a [gloves] on [t_his] hands.\n"
 	else if(forensics.blood)
 		var/hand_number = get_num_arms()
 		if(hand_number)
@@ -78,30 +78,30 @@
 	//handcuffed?
 	if(handcuffed)
 		if(istype(handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
-			msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] restrained with cable!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] restrained with cable!</span>\n"
 		else
-			msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] handcuffed!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>\n"
 
 	//belt
 	if(belt)
 		if(belt.forensics && belt.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(belt)] [belt.gender==PLURAL?"some":"a"] blood-stained [belt.name] about [t_his] waist!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] [icon2html(belt, user)] [belt.gender==PLURAL?"some":"a"] blood-stained [belt.name] about [t_his] waist!</span>\n"
 		else
-			msg += "[t_He] [t_has] [bicon(belt)] \a [belt] about [t_his] waist.\n"
+			msg += "[t_He] [t_has] [icon2html(belt, user)] \a [belt] about [t_his] waist.\n"
 
 	//shoes
 	if(shoes && !(slot_shoes in obscured))
 		if(shoes.forensics && shoes.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(shoes)] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(shoes, user)] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(shoes)] \a [shoes] on [t_his] feet.\n"
+			msg += "[t_He] [t_is] wearing icon2html(shoes, user)] \a [shoes] on [t_his] feet.\n"
 
 	//mask
 	if(wear_mask && !(slot_wear_mask in obscured))
 		if(wear_mask.forensics && wear_mask.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(wear_mask)] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] [icon2html(wear_mask, user)] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
 		else
-			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
+			msg += "[t_He] [t_has] [icon2html(wear_mask, user)] \a [wear_mask] on [t_his] face.\n"
 
 	if (wear_neck && !(slot_neck in obscured))
 		msg += "[t_He] [t_is] wearing [bicon(wear_neck)] \a [src.wear_neck] around [t_his] neck.\n"
@@ -109,7 +109,7 @@
 	//eyes
 	if(glasses && !(slot_glasses in obscured))
 		if(glasses.forensics && glasses.forensics.blood)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] [icon2html(glasses, user)] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
 		else
 			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
 
