@@ -637,7 +637,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	return
 
 
-/obj/spacepod/proc/return_temperature()
+/obj/spacepod/return_temperature()
     var/datum/gas_mixture/t_air = return_air()
     if(t_air)
         return t_air.return_temperature()
