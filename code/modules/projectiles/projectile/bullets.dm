@@ -16,6 +16,9 @@
 	damage = 15
 	knockdown = 30
 	stamina = 50
+	
+/obj/item/projectile/bullet/Sweakbullet
+	damage = 10
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
