@@ -149,7 +149,7 @@
 /atom/movable/proc/clean_on_move()
 	var/turf/tile = loc
 	if(isturf(tile))
-		tile.clean_blood()
+		tile.forensics.clean_blood()
 		for(var/A in tile)
 			if(is_cleanable(A))
 				qdel(A)
@@ -171,7 +171,7 @@
 					if(cleaned_human.shoes)
 						cleaned_human.shoes.clean_blood()
 						cleaned_human.update_inv_shoes()
-					cleaned_human.clean_blood()
+					cleaned_human.forensics.clean_blood()
 					cleaned_human.wash_cream()
 					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
@@ -221,7 +221,7 @@
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
 //to differentiate it, naturally everyone forgot about this immediately and so some things
 //would bump twice, so now it's called Collide
-/atom/movable/proc/Collide(atom/A)	
+/atom/movable/proc/Collide(atom/A)
 	if((A))
 		if(throwing)
 			throwing.hit_atom(A)

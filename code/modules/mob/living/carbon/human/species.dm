@@ -1249,7 +1249,7 @@
 				if(istype(location))
 					H.add_splatter_floor(location)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
-					user.add_mob_blood(H)
+					user.forensics.add_mob_blood(H)
 
 		switch(hit_area)
 			if("head")

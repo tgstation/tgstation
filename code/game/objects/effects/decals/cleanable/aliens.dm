@@ -8,12 +8,13 @@
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	bloodiness = MAX_SHOE_BLOODINESS
 	blood_state = BLOOD_STATE_XENO
-	var/list/viruses = list()
+	var/list/viruses
 
-/obj/effect/decal/cleanable/xenoblood/Initialize(a)
-	. = ..(a)
+/obj/effect/decal/cleanable/xenoblood/Initialize()
+	. = ..()
 	forensics.blood = list("UNKNOWN DNA" = "X*")
-	
+	viruses = list()
+
 
 /obj/effect/decal/cleanable/xenoblood/xsplatter
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
@@ -68,6 +69,6 @@
 	icon_state = "xtracks"
 	random_icon_states = null
 
-/obj/effect/decal/cleanable/blood/xtracks/Initialize(a)
-	. = ..(a)
+/obj/effect/decal/cleanable/blood/xtracks/Initialize()
+	. = ..()
 	forensics.blood = list("UNKNOWN DNA" = "X*")

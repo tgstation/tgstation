@@ -662,7 +662,7 @@
 	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
 
 	var/turf/T = get_turf(src)
-	T.add_mob_blood(H)
+	T.forensics.add_mob_blood(H)
 
 	bloodiness += 4
 

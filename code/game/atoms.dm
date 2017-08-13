@@ -86,11 +86,8 @@
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
 			AA.remove_from_hud(src)
 
-	if(reagents)
-		qdel(reagents)
-
-	if(forensics)
-		QDEL_NULL(forensics)
+	QDEL_NULL(reagents)
+	QDEL_NULL(forensics)
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
@@ -340,51 +337,8 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /mob/living/carbon/alien/get_blood_dna_list()
 	return list("UNKNOWN DNA" = "X*")
 
-//to add a mob's dna info into an object's blood_DNA list.
-/atom/proc/transfer_mob_blood_dna(mob/living/L)
-	// Returns 0 if we have that blood already
-	var/new_blood_dna = L.forensics.blood
-	if(!new_blood_dna)
-		return 0
-	if(!forensics)	//if our list of DNA doesn't exist yet, initialise it.
-		forensics = new
-	var/old_length = forensics.blood.len
-	forensics.blood |= new_blood_dna
-	if(forensics.blood.len == old_length)
-		return 0
-	return 1
-
-//to add blood dna info to the object's blood_DNA list
-/atom/proc/transfer_blood_dna(list/blood_dna)
-	if(!forensics)
-		forensics = new
-	var/old_length = forensics.blood.len
-	forensics.blood |= blood_dna
-	if(forensics.blood.len > old_length)
-		return 1//some new blood DNA was added
 
 
-//to add blood from a mob onto something, and transfer their dna info
-/atom/proc/add_mob_blood(mob/living/M)
-	var/list/blood_dna = M.forensics.blood
-	if(!blood_dna)
-		return 0
-	return add_blood(blood_dna)
-
-//to add blood onto something, with blood dna info to include.
-/atom/proc/add_blood(list/blood_dna)
-	return 0
-
-/obj/add_blood(list/blood_dna)
-	return transfer_blood_dna(blood_dna)
-
-/obj/item/add_blood(list/blood_dna)
-	var/blood_count = !forensics.blood ? 0 : forensics.blood.len
-	if(!..())
-		return 0
-	if(!blood_count)//apply the blood-splatter overlay if it isn't already in there
-		add_blood_overlay()
-	return 1 //we applied blood to the item
 
 /obj/item/proc/add_blood_overlay()
 	if(initial(icon) && initial(icon_state))
@@ -403,33 +357,29 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	. = ..()
 	transfer_blood = rand(2, 4)
 
-/turf/add_blood(list/blood_dna)
+/turf/proc/add_blood(list/blood_dna)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(src)
-	B.transfer_blood_dna(blood_dna) //give blood info to the blood decal.
+	B.forensics.transfer_blood_dna(blood_dna) //give blood info to the blood decal.
 	return 1 //we bloodied the floor
 
-/mob/living/carbon/human/add_blood(list/blood_dna)
+/mob/living/carbon/human/proc/add_blood(list/blood_dna)
 	if(wear_suit)
-		wear_suit.add_blood(blood_dna)
+		wear_suit.forensics.add_blood(blood_dna)
 		update_inv_wear_suit()
 	else if(w_uniform)
-		w_uniform.add_blood(blood_dna)
+		w_uniform.forensics.add_blood(blood_dna)
 		update_inv_w_uniform()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood(blood_dna)
+		G.forensics.add_blood(blood_dna)
 	else
-		transfer_blood_dna(blood_dna)
+		forensics.transfer_blood_dna(blood_dna)
 		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1
 
-/atom/proc/clean_blood()
-	if(islist(forensics.blood))
-		forensics.blood = null
-		return 1
 
 /atom/proc/wash_cream()
 	return 1

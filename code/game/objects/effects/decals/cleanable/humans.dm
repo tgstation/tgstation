@@ -5,8 +5,8 @@
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_HUMAN
-	var/list/viruses = list()
 	bloodiness = MAX_SHOE_BLOODINESS
+	var/list/viruses = list()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.forensics && C.forensics.blood)
