@@ -642,7 +642,7 @@
 	
 /obj/item/weapon/storage/box/improvisedshot
 	name = "box of improvised shots"
-	desc = "A box full of improvised shells"
+	desc = "A box full of low tier shots"
 	icon_state = "lethalshot_box"
 	illustration = null
 	
