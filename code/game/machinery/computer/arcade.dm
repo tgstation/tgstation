@@ -51,20 +51,16 @@
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/New()
-	..()
+/obj/machinery/computer/arcade/Initialize()
+	. = ..()
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
 		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/computer/arcade))
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
-		qdel(src)
-
-/obj/machinery/computer/arcade/Initialize()
-	. = ..()
+		return INITIALIZE_HINT_QDEL
 	Reset()
-
 
 #define PULSE_MEDAL "Jackpot"
 
@@ -78,11 +74,9 @@
 		new prizeselect(src)
 
 	var/atom/movable/prize = pick(contents)
-	visible_message(
-		"<span class='notice'>[src] dispenses a [prize]!</span>",
-		"<span class='notice'>You hear a chime and a clunk.</span>")
+	visible_message("<span class='notice'>[src] dispenses a [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
-	prize.loc = loc
+	prize.forceMove(get_turf(src))
 #undef PULSE_MEDAL
 
 /obj/machinery/computer/arcade/emp_act(severity)
@@ -157,7 +151,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())

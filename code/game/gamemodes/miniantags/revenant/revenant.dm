@@ -74,7 +74,7 @@
 		generated_objectives_and_spells = TRUE
 		mind.remove_all_antag()
 		mind.wipe_memory()
-		src << 'sound/effects/ghost.ogg'
+		SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
 		var/datum/objective/revenant/objective = new
 		objective.owner = mind
 		mind.objectives += objective

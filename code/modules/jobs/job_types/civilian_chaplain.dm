@@ -74,11 +74,9 @@ Chaplain
 		else
 			B.name = "The Holy Book of [new_religion]"
 
-
-	if(SSreligion)
-		SSreligion.religion = new_religion
-		SSreligion.bible_name = B.name
-		SSreligion.deity = B.deity_name
+	SSreligion.religion = new_religion
+	SSreligion.bible_name = B.name
+	SSreligion.deity = B.deity_name
 
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 

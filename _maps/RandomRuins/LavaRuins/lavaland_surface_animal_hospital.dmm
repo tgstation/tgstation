@@ -808,7 +808,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cF" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/animal_hospital)
 

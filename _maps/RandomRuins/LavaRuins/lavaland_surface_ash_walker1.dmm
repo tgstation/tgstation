@@ -1071,7 +1071,7 @@
 /area/ruin/unpowered/ash_walkers)
 "cE" = (
 /obj/structure/stone_tile/surrounding/cracked,
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "cF" = (

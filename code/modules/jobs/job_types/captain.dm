@@ -4,7 +4,7 @@ Captain
 /datum/job/captain
 	title = "Captain"
 	flag = CAPTAIN
-	department_head = list("Centcom")
+	department_head = list("CentCom")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1

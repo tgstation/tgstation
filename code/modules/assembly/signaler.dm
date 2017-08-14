@@ -22,8 +22,7 @@
 
 
 /obj/item/device/assembly/signaler/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
@@ -144,7 +143,7 @@ Code:
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return 0
 	pulse(1)
-	audible_message("[bicon(src)] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 	return
 
 

@@ -1,5 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "RCL and Ghetto RCLs are no longer invisible"
-  - bugfix: "RCL action button now has a sprite"

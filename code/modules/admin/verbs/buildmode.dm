@@ -101,6 +101,7 @@
 	stored = null
 	for(var/button in buttons)
 		qdel(button)
+	return ..()
 
 /datum/buildmode/proc/create_buttons()
 	buttons += new /obj/screen/buildmode/mode(src)

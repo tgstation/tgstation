@@ -22,7 +22,7 @@
 	. = ..()
 	new /obj/machinery/conveyor/auto(locate(x - 1, y, z), WEST)
 	new /obj/machinery/conveyor/auto(loc, WEST)
-	new /obj/machinery/conveyor/auto(locate(x + 1, y, z), WEST)	
+	new /obj/machinery/conveyor/auto(locate(x + 1, y, z), WEST)
 	countdown = new(src)
 	countdown.start()
 
@@ -33,9 +33,7 @@
 		to_chat(user, "It will be ready in [max(0, seconds_remaining)] seconds.")
 
 /obj/machinery/transformer/Destroy()
-	if(countdown)
-		qdel(countdown)
-	countdown = null
+	QDEL_NULL(countdown)
 	. = ..()
 
 /obj/machinery/transformer/power_change()

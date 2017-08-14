@@ -5,15 +5,15 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/obj/item/device/assembly/flash/handheld/bulb = null
+	max_integrity = 250
+	integrity_failure = 100
+	anchored = TRUE
+	var/obj/item/device/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
 	var/base_state = "mflash"
-	max_integrity = 250
-	integrity_failure = 100
-	anchored = TRUE
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -24,19 +24,17 @@
 	base_state = "pflash"
 	density = TRUE
 
-/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
-	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
+/obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
+	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
 		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	else
-		bulb = new /obj/item/device/assembly/flash/handheld(src)
+		bulb = new(src)
 
 /obj/machinery/flasher/Destroy()
-	if(bulb)
-		qdel(bulb)
-		bulb = null
+	QDEL_NULL(bulb)
 	return ..()
 
 /obj/machinery/flasher/power_change()

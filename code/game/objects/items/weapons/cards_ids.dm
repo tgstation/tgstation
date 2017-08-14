@@ -106,7 +106,7 @@
 				update_label()
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: [bicon(src)] [src.name].</span>", \
+	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
 	return
@@ -223,7 +223,7 @@ update_label("John Doe", "Clowny")
 	..()
 
 /obj/item/weapon/card/id/centcom
-	name = "\improper Centcom ID"
+	name = "\improper CentCom ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
@@ -234,7 +234,7 @@ update_label("John Doe", "Clowny")
 	..()
 
 /obj/item/weapon/card/id/ert
-	name = "\improper Centcom ID"
+	name = "\improper CentCom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
