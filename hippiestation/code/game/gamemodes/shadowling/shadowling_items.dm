@@ -56,6 +56,7 @@
 /obj/item/clothing/head/shadowling
 	name = "chitin helm"
 	desc = "A helmet-like enclosure of the head."
+	icon = 'hippiestation/icons/mob/shadowling.dmi'
 	icon_state = "shadowling_mh"
 	item_state = "shadowling_head"
 	cold_protection = HEAD
