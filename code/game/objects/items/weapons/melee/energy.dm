@@ -113,6 +113,7 @@
 	return 0
 
 /obj/item/weapon/melee/transforming/energy/sword/cyborg
+	item_color = "red"
 	var/hitcost = 50
 
 /obj/item/weapon/melee/transforming/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
