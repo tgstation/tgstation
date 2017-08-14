@@ -25,6 +25,8 @@ $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
 $featuresPerFix = 1;	//Number of allowed 'feature' PRs per merged 'fix' PR
+//TODO: 
+$maintainers = array('AnturK', 'ChangelingRain', 'Cheridan', 'Cyberboss', 'Jordie0608', 'lzimann', 'KorPhaeron', 'Razharas', 'RemieRichards', 'WJohn');
 
 //Api key for pushing changelogs.
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
@@ -286,7 +288,7 @@ function get_pr_code_friendliness($payload){
 	//doing one of these increases your positive score
 	$improvement_labels = array('Fix', 'Refactor', 'Code Improvement', 'Priority: High', 'Priority: CRITICAL', 'Atmospherics', 'Grammar and Formatting', 'Logging', 'Performance');
 	//doing one of these prevents your negative score from increasing
-	$neutral_labels = array('Tools', 'Map Edit', 'SQL', 'Documentation', 'Repository', 'Sound', 'Revert/Removal', 'UI', 'Sprites', 'Sound');
+	$neutral_labels = array('Tools', 'Map Edit', 'SQL', 'Documentation', 'Repository', 'Revert/Removal', 'UI', 'Sprites', 'Sound');
 
 	$is_neutral = FALSE;
 	foreach($labels as $l){
@@ -300,13 +302,15 @@ function get_pr_code_friendliness($payload){
 }
 
 function update_pr_balance($payload) {
+	$author = $payload['pull_request']['user']['login'];
+	if(in_array($author, $maintainers))	//immune
+		return;
 	$friendliness = get_pr_code_friendliness($payload);
 	if($friendliness === 0)
 		return;
 	else if($friendliness === 1)
 		$friendliness *= $featuresPerFix;
 
-	$author = $payload['pull_request']['user']['login'];
 	$balances = pr_balances();
 	if(!isset($balances[$author]))
 		$balances[$author] = $featuresPerFix;
