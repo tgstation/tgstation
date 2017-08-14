@@ -401,10 +401,9 @@
 				if(I == src)
 					continue
 				var/mob/M = I
-				if(M.restrained() || M.stat)
-					continue
-				last_healthy_headrev = FALSE
-				break
+				if(M.z == ZLEVEL_STATION && !M.stat)
+					last_healthy_headrev = FALSE
+					break
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
