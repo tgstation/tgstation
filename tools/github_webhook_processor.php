@@ -196,6 +196,7 @@ function tag_pr($payload, $opened) {
 }
 
 function handle_pr($payload) {
+	global $featuresPerFix;
 	$action = 'opened';
 	switch ($payload["action"]) {
 		case 'opened':
@@ -239,6 +240,7 @@ function handle_pr($payload) {
 
 //creates a comment on the payload issue
 function create_comment($payload, $comment){
+	global $apiKey;
 	$scontext = array('http' => array(
 		'method'	=> 'POST',
 		'header'	=>
@@ -253,6 +255,7 @@ function create_comment($payload, $comment){
 
 //returns the payload issue's labels as a flat array
 function get_pr_labels_array($payload){
+	global $apiKey;
 	$url = $payload['pull_request']['issue_url'];
 
 	$scontext = array('http' => array(
@@ -307,6 +310,8 @@ function get_pr_code_friendliness($payload){
 
 //payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
 function update_pr_balance($payload) {
+	global $featuresPerFix;
+	global $maintainers;
 	$author = $payload['pull_request']['user']['login'];
 	if(in_array($author, $maintainers))	//immune
 		return;
