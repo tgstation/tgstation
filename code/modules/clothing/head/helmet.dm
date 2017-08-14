@@ -12,6 +12,7 @@
 	strip_delay = 60
 	resistance_flags = 0
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
@@ -31,6 +32,11 @@
 	armor = list(melee = 15, bullet = 60, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0, fire = 50, acid = 50)
 	can_flashlight = 1
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/old
+	name = "degrading helmet"
+	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
+	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
 	icon_state = "blueshift"
@@ -84,7 +90,7 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	can_toggle = 1
 	toggle_cooldown = 20
-	active_sound = 'sound/items/WEEOO1.ogg'
+	active_sound = 'sound/items/weeoo1.ogg'
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/justice/escape

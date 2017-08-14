@@ -100,18 +100,17 @@
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "drop"
 
-/datum/martial_art/wrestling/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
-	..()
-	to_chat(H, "<span class = 'userdanger'>SNAP INTO A THIN TIM!</span>")
-	to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
-	drop.Grant(H)
-	kick.Grant(H)
-	slam.Grant(H)
-	throw_wrassle.Grant(H)
-	strike.Grant(H)
+/datum/martial_art/wrestling/teach(mob/living/carbon/human/H,make_temporary=0)
+	if(..())
+		to_chat(H, "<span class = 'userdanger'>SNAP INTO A THIN TIM!</span>")
+		to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+		drop.Grant(H)
+		kick.Grant(H)
+		slam.Grant(H)
+		throw_wrassle.Grant(H)
+		strike.Grant(H)
 
-/datum/martial_art/wrestling/remove(var/mob/living/carbon/human/H)
-	..()
+/datum/martial_art/wrestling/on_remove(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You no longer feel that the tower of power is too sweet to be sour...</span>")
 	drop.Remove(H)
 	kick.Remove(H)
@@ -134,7 +133,7 @@
 	D.forceMove(A.loc)
 	D.setDir(get_dir(D, A))
 
-	D.Stun(4)
+	D.Stun(80)
 	A.visible_message("<span class = 'danger'><B>[A] starts spinning around with [D]!</B></span>")
 	A.emote("scream")
 
@@ -192,7 +191,7 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Weaken, 2))
+			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
 	add_logs(A, D, "has thrown with wrestling")
 	return 0
 
@@ -288,18 +287,17 @@
 		playsound(A.loc, "swing_hit", 50, 1)
 		if (!D.stat)
 			D.emote("scream")
-			D.weakened += 2
-			D.stunned += 2
+			D.Knockdown(40)
 
 			switch(rand(1,3))
 				if (2)
 					D.adjustBruteLoss(rand(20,30))
 				if (3)
-					D.ex_act(3)
+					D.ex_act(EXPLODE_LIGHT)
 				else
 					D.adjustBruteLoss(rand(10,20))
 		else
-			D.ex_act(3)
+			D.ex_act(EXPLODE_LIGHT)
 
 	else
 		if (A)
@@ -331,7 +329,7 @@
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, "swing_hit", 50, 1)
-		D.Paralyse(1)
+		D.Unconscious(20)
 	add_logs(A, D, "headbutted")
 
 /datum/martial_art/wrestling/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -347,7 +345,7 @@
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
-		D.Weaken(1)
+		D.Knockdown(20)
 		D.throw_at(T, 3, 2)
 	add_logs(A, D, "roundhouse-kicked")
 
@@ -383,7 +381,7 @@
 			if (falling == 1)
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
 				A.adjustBruteLoss(rand(10,20))
-				A.Weaken(3)
+				A.Knockdown(60)
 			to_chat(A, "[D] is too far away!")
 			return 0
 
@@ -406,14 +404,13 @@
 
 		if (falling == 1)
 			if (prob(33) || D.stat)
-				D.ex_act(3)
+				D.ex_act(EXPLODE_LIGHT)
 			else
 				D.adjustBruteLoss(rand(20,30))
 		else
 			D.adjustBruteLoss(rand(20,30))
 
-		D.Weaken(1)
-		D.Stun(2)
+		D.Knockdown(40)
 
 		A.pixel_y = 0
 
@@ -437,7 +434,7 @@
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
 								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
-	D.Stun(rand(3,5))
+	D.Stun(rand(60,100))
 	add_logs(A, D, "cinched")
 	return 1
 

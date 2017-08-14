@@ -128,13 +128,13 @@
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
 	text_size = 1
-	color = "#ED84F4"
+	color = "#00ff80"
 
 /obj/effect/countdown/supermatter/get_value()
 	var/obj/machinery/power/supermatter_shard/S = attached_to
 	if(!istype(S))
 		return
-	return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[round((S.damage / S.explosion_point) * 100)]</div>"
+	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"
 
 /obj/effect/countdown/transformer
 	name = "transformer countdown"

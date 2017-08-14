@@ -7,7 +7,6 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	materials = list(MAT_GLASS=500)
-	obj_integrity = 20
 	max_integrity = 20
 	spillable = 1
 	resistance_flags = ACID_PROOF
@@ -35,7 +34,7 @@
 //  The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.  //
 //  If it's a new drink, remember to add it to Chemistry-Reagents.dm  and Chemistry-Recipes.dm as well.  //
 //  You can only mix the ported-over drinks in shot glasses for now (they'll mix in a shaker, but the sprite won't change for glasses). //
-//  This is on a case-by-case basis, and you can even make a seperate sprite for shot glasses if you want. //
+//  This is on a case-by-case basis, and you can even make a separate sprite for shot glasses if you want. //
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
 	name = "shot glass"
@@ -92,7 +91,7 @@
 	list_reagents = list("nuka_cola" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)

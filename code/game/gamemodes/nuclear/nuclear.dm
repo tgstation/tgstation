@@ -93,7 +93,7 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
-		synd_mind.current.playsound_local('sound/ambience/antag/ops.ogg',100,0)
+		synd_mind.current.playsound_local(get_turf(synd_mind.current), 'sound/ambience/antag/ops.ogg',100,0)
 	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 
 	if(nuke)
@@ -118,7 +118,7 @@
 	if(foundIDs.len)
 		for(var/obj/item/weapon/card/id/ID in foundIDs)
 			ID.name = "lead agent card"
-			ID.access += GLOB.access_syndicate_leader
+			ID.access += ACCESS_SYNDICATE_LEADER
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
@@ -187,7 +187,7 @@
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
 	for(var/obj/item/weapon/disk/nuclear/D in GLOB.poi_list)
-		if(!D.onCentcom())
+		if(!D.onCentCom())
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
@@ -275,7 +275,7 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
-	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (SSticker && istype(SSticker.mode, /datum/game_mode/nuclear)) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 		var/purchases = ""
 		var/TC_uses = 0
@@ -288,7 +288,7 @@
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
-			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
+			text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
 		to_chat(world, text)
 	return 1
 

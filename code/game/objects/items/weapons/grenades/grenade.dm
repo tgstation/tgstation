@@ -5,12 +5,13 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
-	obj_integrity = 40
 	max_integrity = 40
 	var/active = 0
 	var/det_time = 50
@@ -104,8 +105,9 @@
 /obj/item/weapon/grenade/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/grenade/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	if(damage && attack_type == PROJECTILE_ATTACK && prob(15))
+/obj/item/weapon/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/obj/item/projectile/P = hitby
+	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
 		return 1 //It hit the grenade, not them

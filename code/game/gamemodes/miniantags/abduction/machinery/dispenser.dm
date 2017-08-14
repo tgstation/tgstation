@@ -3,8 +3,8 @@
 	desc = "A tank filled with replacement organs."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/list/gland_types
 	var/list/gland_colors
 	var/list/amounts
@@ -13,8 +13,8 @@
 	//TODO : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
-/obj/machinery/abductor/gland_dispenser/New()
-	..()
+/obj/machinery/abductor/gland_dispenser/Initialize()
+	. = ..()
 	gland_types = subtypesof(/obj/item/organ/heart/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)

@@ -29,31 +29,12 @@
 	return ..()
 
 
-//Cogscarab: Creates an empty cogscarab shell, which produces a cogscarab dedicated to maintaining and defending the cult.
-/datum/clockwork_scripture/create_object/cogscarab
-	descname = "Constructor Soul Vessel Shell"
-	name = "Cogscarab"
-	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt fabricator."
-	invocations = list("Call forth...", "...the workers of Armorer.")
-	channel_time = 60
-	consumed_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
-	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
-	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
-	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
-	usage_tip = "Useless without a soul vessel and should not be created without one."
-	tier = SCRIPTURE_SCRIPT
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 2
-	quickbind = TRUE
-	quickbind_desc = "Creates a Cogscarab Shell, which produces a Cogscarab when filled with a Soul Vessel."
-
-
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
 /datum/clockwork_scripture/create_object/vitality_matrix
 	descname = "Trap, Damage to Healing"
 	name = "Vitality Matrix"
-	desc = "Places a sigil that drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much Vitality all \
-	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's non-oxygen damage."
+	desc = "Places a sigil that drains life from any living non-Servants that cross it, producing Vitality. Servants that cross it, however, will be healed using existing Vitality. \
+	Dead Servants can be revived by this sigil at a cost of 150 Vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2)
@@ -181,46 +162,6 @@
 	return TRUE
 
 
-//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
-/datum/clockwork_scripture/create_object/sigil_of_submission
-	descname = "Trap, Conversion"
-	name = "Sigil of Submission"
-	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
-	invocations = list("Divinity, enlighten...", "...those who trespass here!")
-	channel_time = 60
-	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 2)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "This is not a primary conversion method - use Geis for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
-	tier = SCRIPTURE_SCRIPT
-	one_per_tile = TRUE
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 5
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
-
-
-//Soul Vessel: Creates a soul vessel, which can seek a ghost or be used on the uncovered head of a dead or dying human to take their brain.
-/datum/clockwork_scripture/create_object/soul_vessel
-	descname = "Clockwork Posibrain"
-	name = "Soul Vessel"
-	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
-	invocations = list("Herd the souls of...", "...the blasphemous damned!")
-	channel_time = 30
-	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
-	whispered = TRUE
-	object_path = /obj/item/device/mmi/posibrain/soul_vessel
-	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
-	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
-	tier = SCRIPTURE_SCRIPT
-	space_allowed = TRUE
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
-	quickbind = TRUE
-	quickbind_desc = "Creates a Soul Vessel, which can be placed in construct shells and cyborg bodies once filled."
-
-
 //Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.
 /datum/clockwork_scripture/create_object/replica_fabricator
 	descname = "Replaces Objects with Ratvarian Versions"
@@ -245,13 +186,12 @@
 /datum/clockwork_scripture/function_call
 	descname = "Permanent Summonable Spear"
 	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
-	vanish three minutes after being summoned."
+	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every 3 minutes, with it lasting 3 minutes. The spear's attacks will generate Vitality, used for healing."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
 	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
-	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
+	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
@@ -275,7 +215,7 @@
 	desc = "Allows you to summon a Ratvarian spear to fight enemies."
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
 	var/base_cooldown = RATVARIAN_SPEAR_DURATION
@@ -345,50 +285,3 @@
 		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
 		duration = max(duration, 100)
 	return slab.procure_gateway(invoker, duration, portal_uses)
-
-
-//Volt Blaster: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
-/datum/clockwork_scripture/channeled/volt_blaster
-	descname = "Channeled, Targeted Energy Blasts"
-	name = "Volt Blaster"
-	desc = "Allows you to fire five energy rays at target locations. Channeled every fourth of a second for a maximum of ten seconds."
-	channel_time = 30
-	invocations = list("Amperage...", "...grant me your power!")
-	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
-	chant_amount = 5
-	chant_interval = 4
-	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
-	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
-	tier = SCRIPTURE_SCRIPT
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
-	quickbind = TRUE
-	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
-	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
-	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
-
-/datum/clockwork_scripture/channeled/volt_blaster/chant_effects(chant_number)
-	slab.busy = null
-	var/datum/clockwork_scripture/ranged_ability/volt_ray/ray = new
-	ray.slab = slab
-	ray.invoker = invoker
-	var/turf/T = get_turf(invoker)
-	if(!ray.run_scripture() && slab && invoker)
-		if(can_recite() && T == get_turf(invoker))
-			to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>")
-		else
-			return FALSE
-	return TRUE
-
-/obj/effect/ebeam/volt_ray
-	name = "volt_ray"
-	layer = LYING_MOB_LAYER
-
-/datum/clockwork_scripture/ranged_ability/volt_ray
-	name = "Volt Ray"
-	slab_icon = "volt"
-	allow_mobility = FALSE
-	ranged_type = /obj/effect/proc_holder/slab/volt
-	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
-	<b>Left-click a target to fire, quickly!</b></span>"
-	timeout_time = 20

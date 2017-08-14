@@ -4,16 +4,18 @@
 	flags = CONDUCT
 	origin_tech = "materials=1;engineering=1"
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
-	var/inverse = 0
-	// For inverse dir frames like light fixtures.
+	var/inverse = 0 // For inverse dir frames like light fixtures.
+	var/pixel_shift //The amount of pixels
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user)>1)
 		return
 	var/ndir = get_dir(on_wall, user)
-	if(!(ndir in GLOB.cardinal))
+	if(!(ndir in GLOB.cardinals))
 		return
 	var/turf/T = get_turf(user)
 	var/area/A = get_area(T)
@@ -40,6 +42,16 @@
 			ndir = turn(ndir, 180)
 
 		var/obj/O = new result_path(get_turf(user), ndir, TRUE)
+		if(pixel_shift)
+			switch(ndir)
+				if(NORTH)
+					O.pixel_y = pixel_shift
+				if(SOUTH)
+					O.pixel_y = -pixel_shift
+				if(EAST)
+					O.pixel_x = pixel_shift
+				if(WEST)
+					O.pixel_x = -pixel_shift
 		after_attach(O)
 
 	qdel(src)
@@ -105,6 +117,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = CONDUCT
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "engineering=2;programming=1"

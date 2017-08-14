@@ -4,7 +4,6 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
@@ -18,8 +17,7 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "e" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "f" = (
@@ -67,7 +65,6 @@
 /area/shuttle/transport)
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/shuttle{

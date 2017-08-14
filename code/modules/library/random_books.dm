@@ -1,6 +1,6 @@
 /obj/item/weapon/book/manual/random/Initialize()
-	..()
-	var/static/banned_books = list(/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
+	. = ..()
+	var/static/banned_books = list(/obj/item/weapon/book/manual/random, /obj/item/weapon/book/manual/nuclear, /obj/item/weapon/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/weapon/book/manual) - banned_books)
 	new newtype(loc)
 	qdel(src)
@@ -10,7 +10,7 @@
 	var/category = null
 
 /obj/item/weapon/book/random/Initialize()
-	..()
+	. = ..()
 	create_random_books(amount, src.loc, TRUE, category)
 	qdel(src)
 
@@ -20,11 +20,11 @@
 /obj/structure/bookcase/random
 	var/category = null
 	var/book_count = 2
-	anchored = 1
+	anchored = TRUE
 	state = 2
 
 /obj/structure/bookcase/random/Initialize(mapload)
-	..()
+	. = ..()
 	if(!book_count || !isnum(book_count))
 		update_icon()
 		return
@@ -77,7 +77,7 @@
 	var/ref_book_prob = 20
 
 /obj/structure/bookcase/random/reference/Initialize(mapload)
-	..()
+	. = ..()
 	while(book_count > 0 && prob(ref_book_prob))
 		book_count--
 		new /obj/item/weapon/book/manual/random(src)

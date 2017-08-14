@@ -33,6 +33,8 @@
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "nettle"
+	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = "fire"
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -98,8 +100,8 @@
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
 		if(prob(50))
-			user.Paralyse(5)
-			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>")
+			user.Knockdown(100)
+			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
@@ -110,6 +112,6 @@
 
 		M.adjust_blurriness(force/7)
 		if(prob(20))
-			M.Paralyse(force / 6)
-			M.Weaken(force / 15)
+			M.Unconscious(force / 0.3)
+			M.Knockdown(force / 0.75)
 		M.drop_item()

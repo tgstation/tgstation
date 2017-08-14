@@ -78,8 +78,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "as" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "at" = (
@@ -167,8 +166,7 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/syringes{
@@ -199,7 +197,6 @@
 /area/shuttle/escape)
 "aK" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -319,11 +316,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating/lava/smooth/airless,
+/turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "bf" = (
 /obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/lava/smooth/airless,
+/turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -345,7 +342,6 @@
 "bk" = (
 /obj/structure/chair/wood,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cult,

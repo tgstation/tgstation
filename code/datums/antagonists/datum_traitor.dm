@@ -5,7 +5,7 @@
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
 	var/human_datum = ANTAG_DATUM_TRAITOR_HUMAN
 	var/special_role = "traitor"
-	var/employer = "The Syndicate" 
+	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	var/list/objectives_given = list()
@@ -14,7 +14,7 @@
 	other.silent = silent
 	other.employer = employer
 	other.special_role = special_role
-	other.objectives_given = objectives_given	
+	other.objectives_given = objectives_given
 
 /datum/antagonist/traitor/custom
 	ai_datum = ANTAG_DATUM_TRAITOR_AI_CUSTOM
@@ -23,6 +23,7 @@
 /datum/antagonist/traitor/human
 	should_specialise = FALSE
 	var/should_equip = TRUE
+
 /datum/antagonist/traitor/human/custom
 	silent = TRUE
 	should_give_codewords = FALSE
@@ -31,16 +32,16 @@
 
 /datum/antagonist/traitor/AI
 	should_specialise = FALSE
+
 /datum/antagonist/traitor/AI/custom
 	silent = TRUE
 	should_give_codewords = FALSE
 	give_objectives = FALSE
-	
+
 
 /datum/antagonist/traitor/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	if(istype(new_body,/mob/living/silicon/ai)==istype(old_body,/mob/living/silicon/ai))
-		..()
-	else
+	// human <-> silicon only
+	if(old_body && issilicon(new_body) ^ issilicon(old_body))
 		silent = TRUE
 		owner.add_antag_datum(base_datum_custom)
 		for(var/datum/antagonist/traitor/new_datum in owner.antag_datums)
@@ -49,13 +50,14 @@
 			transfer_important_variables(new_datum)
 			break
 		on_removal()
-		
-		
+	else
+		..()
 
 /datum/antagonist/traitor/human/custom //used to give custom objectives
 	silent = TRUE
 	give_objectives = FALSE
 	should_give_codewords = FALSE
+
 /datum/antagonist/traitor/AI/custom //used to give custom objectives
 	silent = TRUE
 	give_objectives = FALSE
@@ -63,15 +65,15 @@
 
 /datum/antagonist/traitor/proc/specialise()
 	silent = TRUE
-	if(owner.current&&istype(owner.current,/mob/living/silicon/ai))
+	if(owner.current&&isAI(owner.current))
 		owner.add_antag_datum(ai_datum)
 	else owner.add_antag_datum(human_datum)
 	on_removal()
-	
+
 /datum/antagonist/traitor/on_gain()
 	if(should_specialise)
 		specialise()
-		return	
+		return
 	SSticker.mode.traitors+=owner
 	owner.special_role = special_role
 	if(give_objectives)
@@ -83,7 +85,8 @@
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob&&istype(traitor_mob))
-			if(!silent) to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+			if(!silent) 
+				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
 /datum/antagonist/traitor/remove_innate_effects()
@@ -91,9 +94,9 @@
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob&&istype(traitor_mob))
 			traitor_mob.dna.add_mutation(CLOWNMUT)
-			
-/datum/antagonist/traitor/on_removal() 
-	if(should_specialise) 
+
+/datum/antagonist/traitor/on_removal()
+	if(should_specialise)
 		return ..()//we never did any of this anyway
 	SSticker.mode.traitors -= owner
 	for(var/O in objectives_given)
@@ -109,7 +112,7 @@
 		var/mob/living/silicon/ai/A = owner.current
 		A.set_zeroth_law("")
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-		A.malf_picker.remove_verbs(A)
+		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
 	..()
 
@@ -247,13 +250,14 @@
 /datum/antagonist/traitor/AI/finalize_traitor()
 	..()
 	add_law_zero()
-	owner.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
 	owner.current.grant_language(/datum/language/codespeak)
 
 /datum/antagonist/traitor/human/finalize_traitor()
 	..()
-	if(should_equip) equip(silent)
-	owner.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)
+	if(should_equip)
+		equip(silent)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/traitor/proc/give_codewords()
 	if(!owner.current)

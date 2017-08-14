@@ -6,8 +6,7 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -101,7 +100,6 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 27
 	},
 /obj/structure/chair,
@@ -278,8 +276,6 @@
 "aI" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
-	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
 	},
@@ -304,8 +300,7 @@
 "aN" = (
 /obj/machinery/status_display{
 	dir = 8;
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/blue,
@@ -336,7 +331,6 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -346,7 +340,6 @@
 /obj/item/weapon/folder/blue,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 0;
 	pixel_y = -27
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -355,7 +348,6 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
 /obj/structure/chair{
@@ -528,8 +520,7 @@
 "bu" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -567,7 +558,6 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 0;
 	pixel_y = -1
 	},
 /obj/item/weapon/storage/toolbox/emergency{
@@ -594,7 +584,6 @@
 /obj/structure/table/optable,
 /obj/item/weapon/surgical_drapes,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -627,7 +616,6 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law{
@@ -677,8 +665,7 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -27;
-	pixel_y = 0
+	pixel_x = -27
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -725,7 +712,6 @@
 /obj/machinery/space_heater,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 0;
 	pixel_y = -27
 	},
 /obj/effect/turf_decal/bot,
@@ -781,7 +767,6 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -800,8 +785,6 @@
 "bS" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
-	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
 	},
@@ -906,7 +889,6 @@
 /area/shuttle/escape)
 "bX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -919,7 +901,6 @@
 /area/shuttle/escape)
 "bZ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,

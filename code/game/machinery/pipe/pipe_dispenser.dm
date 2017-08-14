@@ -2,8 +2,8 @@
 	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/wait = 0
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
@@ -53,7 +53,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
-		if(!wait)
+		if(wait < world.time)
 			var/p_type = text2path(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (src.loc, pipe_type=p_type, dir=p_dir)
@@ -83,7 +83,7 @@
 					"[user] fastens \the [src].", \
 					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
+				anchored = TRUE
 				stat &= MAINT
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
@@ -96,7 +96,7 @@
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchored = FALSE
 				stat |= ~MAINT
 				power_change()
 	else
@@ -107,8 +107,8 @@
 	name = "disposal pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
@@ -181,8 +181,8 @@ Nah
 	name = "transit tube dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())

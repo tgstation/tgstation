@@ -30,15 +30,12 @@
 /area/shuttle/abandoned)
 "ad" = (
 /obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ae" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},
@@ -84,8 +81,6 @@
 /area/shuttle/abandoned)
 "aj" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -152,8 +147,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "as" = (

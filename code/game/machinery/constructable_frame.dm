@@ -2,8 +2,7 @@
 	name = "frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
-	density = 1
-	obj_integrity = 250
+	density = TRUE
 	max_integrity = 250
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1
@@ -84,7 +83,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 					if(do_after(user, 20*P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 1)
@@ -131,7 +130,7 @@
 				var/obj/item/weapon/circuitboard/machine/B = P
 				if(!user.drop_item())
 					return
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
 				B.loc = src
@@ -221,7 +220,7 @@
 					replacer.play_rped_sound()
 				return
 
-			if(istype(P, /obj/item) && get_req_components_amt())
+			if(isitem(P) && get_req_components_amt())
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
 						if(istype(P, /obj/item/stack))
@@ -261,51 +260,3 @@
 			var/obj/item/I = X
 			I.forceMove(loc)
 	..()
-
-
-
-//Machine Frame Circuit Boards
-/*Common Parts: Parts List: Ignitor, Timer, Infra-red laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,
-micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
-*/
-
-/obj/item/weapon/circuitboard/machine
-	var/list/req_components = null
-	// Components required by the machine.
-	// Example: list(/obj/item/weapon/stock_parts/matter_bin = 5)
-	var/list/def_components = null
-	// Default replacements for req_components, to be used in apply_default_parts instead of req_components types
-	// Example: list(/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/super)
-
-/obj/item/weapon/circuitboard/machine/proc/apply_default_parts(obj/machinery/M)
-	if(!req_components)
-		return
-
-	M.component_parts = list(src) // List of components always contains a board
-	loc = null
-
-	for(var/comp_path in req_components)
-		var/comp_amt = req_components[comp_path]
-		if(!comp_amt)
-			continue
-
-		if(def_components && def_components[comp_path])
-			comp_path = def_components[comp_path]
-
-		if(ispath(comp_path, /obj/item/stack))
-			M.component_parts += new comp_path(null, comp_amt)
-		else
-			for(var/i in 1 to comp_amt)
-				M.component_parts += new comp_path(null)
-
-	M.RefreshParts()
-
-
-/obj/item/weapon/circuitboard/machine/abductor
-	name = "alien board (Report This)"
-	icon_state = "abductor_mod"
-	origin_tech = "programming=5;abductor=3"
-
-/obj/item/weapon/circuitboard/machine/clockwork
-	name = "clockwork board (Report This)"
-	icon_state = "clock_mod"

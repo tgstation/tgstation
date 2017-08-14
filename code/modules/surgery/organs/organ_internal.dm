@@ -74,6 +74,7 @@
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
 	list_reagents = list("nutriment" = 5)
+	foodtype = RAW | MEAT | GROSS
 
 
 /obj/item/organ/Destroy()
@@ -113,6 +114,26 @@
 			breathes = FALSE
 		if(NOBLOOD in dna.species.species_traits)
 			blooded = FALSE
+		var/has_liver = (!(NOLIVER in dna.species.species_traits))
+		var/has_stomach = (!(NOSTOMACH in dna.species.species_traits))
+
+		if(has_liver && !getorganslot("liver"))
+			var/obj/item/organ/liver/LI
+
+			if(dna.species.mutantliver)
+				LI = new dna.species.mutantliver()
+			else
+				LI = new()
+			LI.Insert(src)
+
+		if(has_stomach && !getorganslot("stomach"))
+			var/obj/item/organ/stomach/S
+
+			if(dna.species.mutantstomach)
+				S = new dna.species.mutantstomach()
+			else
+				S = new()
+			S.Insert(src)
 
 	if(breathes && !getorganslot("lungs"))
 		var/obj/item/organ/lungs/L = new()

@@ -190,6 +190,17 @@
 	build_path = /obj/item/organ/eyes/robotic/shield
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_gloweyes
+	name = "Luminescent Eyes"
+	desc = "A pair of cybernetic eyes that can emit multicolored light"
+	id = "ci-gloweyes"
+	req_tech = list("materials" = 3, "biotech" = 3, "engineering" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(MAT_METAL = 600, MAT_GLASS = 1000)
+	build_path = /obj/item/organ/eyes/robotic/glow
+	category = list("Misc", "Medical Designs")
+
 /datum/design/cyberimp_breather
 	name = "Breathing Tube Implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
@@ -200,6 +211,17 @@
 	materials = list(MAT_METAL = 600, MAT_GLASS = 250)
 	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
 	category = list("Misc", "Medical Designs")
+
+/datum/design/cyberimp_surgical
+    name = "Surgical Arm Implant"
+    desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+    id = "ci-surgery"
+    req_tech = list("materials" = 3, "engineering" = 3, "biotech" = 3, "programming" = 2, "magnets" = 3)
+    build_type = PROTOLATHE | MECHFAB
+    materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
+    construction_time = 200
+    build_path = /obj/item/organ/cyberimp/arm/surgery
+    category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_toolset
 	name = "Toolset Arm Implant"
@@ -375,4 +397,36 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/implantcase/track
+	category = list("Medical Designs")
+
+//Cybernetic organs
+
+/datum/design/cybernetic_liver
+	name = "Cybernetic Liver"
+	desc = "A cybernetic liver"
+	id = "cybernetic_liver"
+	req_tech = list("biotech" = 4, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/organ/liver/cybernetic
+	category = list("Medical Designs")
+
+/datum/design/cybernetic_heart
+	name = "Cybernetic Heart"
+	desc = "A cybernetic heart"
+	id = "cybernetic_heart"
+	req_tech = list("biotech" = 4, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/organ/heart/cybernetic
+	category = list("Medical Designs")
+
+/datum/design/cybernetic_liver_u
+	name = "Upgraded Cybernetic Liver"
+	desc = "An upgraded cybernetic liver"
+	id = "cybernetic_liver_u"
+	req_tech = list("biotech" = 5, "materials" = 5, "plasmatech" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/organ/liver/cybernetic/upgraded
 	category = list("Medical Designs")

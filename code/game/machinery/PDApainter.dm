@@ -3,11 +3,10 @@
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
-	obj_integrity = 200
 	max_integrity = 200
 
 
@@ -28,12 +27,16 @@
 
 	return
 
-/obj/machinery/pdapainter/New()
-	..()
-	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/heads,
-						/obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
+/obj/machinery/pdapainter/Initialize()
+	. = ..()
+	var/list/blocked = list(
+		/obj/item/device/pda/ai/pai,
+		/obj/item/device/pda/ai,
+		/obj/item/device/pda/heads,
+		/obj/item/device/pda/clear,
+		/obj/item/device/pda/syndicate)
 
-	for(var/P in typesof(/obj/item/device/pda)-blocked)
+	for(var/P in typesof(/obj/item/device/pda) - blocked)
 		var/obj/item/device/pda/D = new P
 
 		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
@@ -42,9 +45,7 @@
 		src.colorlist += D
 
 /obj/machinery/pdapainter/Destroy()
-	if(storedpda)
-		qdel(storedpda)
-		storedpda = null
+	QDEL_NULL(storedpda)
 	return ..()
 
 /obj/machinery/pdapainter/on_deconstruction()
@@ -92,7 +93,7 @@
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					stat &= ~BROKEN
 					obj_integrity = max_integrity
 					update_icon()

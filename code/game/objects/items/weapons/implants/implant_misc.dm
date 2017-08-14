@@ -16,7 +16,7 @@
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenal implant"
-	desc = "Removes all stuns and knockdowns."
+	desc = "Removes all stuns."
 	icon_state = "adrenal"
 	origin_tech = "materials=2;biotech=4;combat=3;syndicate=4"
 	uses = 3
@@ -35,9 +35,9 @@
 /obj/item/weapon/implant/adrenalin/activate()
 	uses--
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	imp_in.SetStunned(0)
-	imp_in.SetWeakened(0)
-	imp_in.SetParalysis(0)
+	imp_in.SetStun(0)
+	imp_in.SetKnockdown(0)
+	imp_in.SetUnconscious(0)
 	imp_in.adjustStaminaLoss(-75)
 	imp_in.lying = 0
 	imp_in.update_canmove()

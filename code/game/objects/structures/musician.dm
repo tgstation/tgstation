@@ -1,4 +1,7 @@
 
+#define MUSICIAN_HEARCHECK_MINDELAY 4
+#define MUSIC_MAXLINES 300
+#define MUSIC_MAXLINECHARS 50
 
 /datum/song
 	var/name = "Untitled"
@@ -14,11 +17,14 @@
 	var/instrumentDir = "piano"		// the folder with the sounds
 	var/instrumentExt = "ogg"		// the file extension
 	var/obj/instrumentObj = null	// the associated obj playing the sound
+	var/last_hearcheck = 0
+	var/list/hearing_mobs
 
-/datum/song/New(dir, obj)
+/datum/song/New(dir, obj, ext = "ogg")
 	tempo = sanitize_tempo(tempo)
 	instrumentDir = dir
 	instrumentObj = obj
+	instrumentExt = ext
 
 /datum/song/Destroy()
 	instrumentObj = null
@@ -51,17 +57,25 @@
 		return
 
 	// now generate name
-	var/soundfile = "sound/[instrumentDir]/[ascii2text(note+64)][acc][oct].[instrumentExt]"
+	var/soundfile = "sound/instruments/[instrumentDir]/[ascii2text(note+64)][acc][oct].[instrumentExt]"
 	soundfile = file(soundfile)
 	// make sure the note exists
 	if(!fexists(soundfile))
 		return
 	// and play
 	var/turf/source = get_turf(instrumentObj)
-	for(var/mob/M in get_hearers_in_view(15, source))
-		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
-			continue
-		M.playsound_local(source, soundfile, 100, falloff = 5)
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+		LAZYCLEARLIST(hearing_mobs)
+		for(var/mob/M in get_hearers_in_view(15, source))
+			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+				continue
+			LAZYADD(hearing_mobs, M)
+		last_hearcheck = world.time
+
+	var/sound/music_played = sound(soundfile)
+	for(var/i in hearing_mobs)
+		var/mob/M = i
+		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
@@ -69,10 +83,10 @@
 /datum/song/proc/shouldStopPlaying(mob/user)
 	if(instrumentObj)
 		if(!user.canUseTopic(instrumentObj))
-			return 1
+			return TRUE
 		return !instrumentObj.anchored		// add special cases to stop in subclasses
 	else
-		return 1
+		return TRUE
 
 /datum/song/proc/playsong(mob/user)
 	while(repeat >= 0)
@@ -90,9 +104,10 @@
 				for(var/note in splittext(notes[1], "-"))
 					//to_chat(world, "note: [note]")
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
-						playing = 0
+						playing = FALSE
+						hearing_mobs = null
 						return
-					if(lentext(note) == 0)
+					if(!lentext(note))
 						continue
 					//to_chat(world, "Parse: [copytext(note,1,2)]")
 					var/cur_note = text2ascii(note) - 96
@@ -122,7 +137,8 @@
 				else
 					sleep(tempo)
 		repeat--
-	playing = 0
+	hearing_mobs = null
+	playing = FALSE
 	repeat = 0
 	updateDialog(user)
 
@@ -158,7 +174,7 @@
 		if(help)
 			dat += "<B><A href='?src=\ref[src];help=1'>Hide Help</A></B><BR>"
 			dat += {"
-					Lines are a series of chords, separated by commas (,), each with notes seperated by hyphens (-).<br>
+					Lines are a series of chords, separated by commas (,), each with notes separated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
 					<br>
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
@@ -171,8 +187,8 @@
 					defined by tempo / x: <i>C,G/2,E/4</i><br>
 					Combined, an example is: <i>E-E4/4,F#/2,G#/8,B/8,E3-E4/4</i>
 					<br>
-					Lines may be up to 50 characters.<br>
-					A song may only contain up to 50 lines.<br>
+					Lines may be up to [MUSIC_MAXLINECHARS] characters.<br>
+					A song may only contain up to [MUSIC_MAXLINES] lines.<br>
 					"}
 		else
 			dat += "<B><A href='?src=\ref[src];help=2'>Show Help</A></B><BR>"
@@ -192,12 +208,12 @@
 			lines.Cut(1,2)
 		else
 			tempo = sanitize_tempo(5) // default 120 BPM
-		if(lines.len > 50)
+		if(lines.len > MUSIC_MAXLINES)
 			to_chat(usr, "Too many lines!")
-			lines.Cut(51)
+			lines.Cut(MUSIC_MAXLINES + 1)
 		var/linenum = 1
 		for(var/l in lines)
-			if(lentext(l) > 50)
+			if(lentext(l) > MUSIC_MAXLINECHARS)
 				to_chat(usr, "Line [linenum] too long!")
 				lines.Remove(l)
 			else
@@ -224,11 +240,11 @@
 			if(!in_range(instrumentObj, usr))
 				return
 
-			if(lentext(t) >= 3072)
+			if(lentext(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 				if(cont == "no")
 					break
-		while(lentext(t) > 3072)
+		while(lentext(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 		ParseSong(t)
 
 	else if(href_list["help"])
@@ -250,7 +266,7 @@
 		tempo = sanitize_tempo(tempo + text2num(href_list["tempo"]))
 
 	else if(href_list["play"])
-		playing = 1
+		playing = TRUE
 		spawn()
 			playsong(usr)
 
@@ -258,10 +274,10 @@
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
 		if(!newline || !in_range(instrumentObj, usr))
 			return
-		if(lines.len > 50)
+		if(lines.len > MUSIC_MAXLINES)
 			return
-		if(lentext(newline) > 50)
-			newline = copytext(newline, 1, 50)
+		if(lentext(newline) > MUSIC_MAXLINECHARS)
+			newline = copytext(newline, 1, MUSIC_MAXLINECHARS)
 		lines.Add(newline)
 
 	else if(href_list["deleteline"])
@@ -275,14 +291,15 @@
 		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
 		if(!content || !in_range(instrumentObj, usr))
 			return
-		if(lentext(content) > 50)
-			content = copytext(content, 1, 50)
+		if(lentext(content) > MUSIC_MAXLINECHARS)
+			content = copytext(content, 1, MUSIC_MAXLINECHARS)
 		if(num > lines.len || num < 1)
 			return
 		lines[num] = content
 
 	else if(href_list["stop"])
-		playing = 0
+		playing = FALSE
+		hearing_mobs = null
 
 	updateDialog(usr)
 	return
@@ -301,7 +318,7 @@
 	if(instrumentObj)
 		return !isliving(instrumentObj.loc)
 	else
-		return 1
+		return TRUE
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -311,8 +328,8 @@
 	name = "space minimoog"
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "minimoog"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/datum/song/song
 
 
@@ -358,22 +375,22 @@
 /obj/structure/piano/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
-			playsound(src.loc, O.usesound, 50, 1)
+			playsound(src, O.usesound, 50, 1)
 			to_chat(user, "<span class='notice'> You begin to tighten \the [src] to the floor...</span>")
 			if (do_after(user, 20*O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
 					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
+				anchored = TRUE
 		else if(anchored)
-			playsound(src.loc, O.usesound, 50, 1)
+			playsound(src, O.usesound, 50, 1)
 			to_chat(user, "<span class='notice'> You begin to loosen \the [src]'s casters...</span>")
 			if (do_after(user, 40*O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
 					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchored = FALSE
 	else
 		return ..()

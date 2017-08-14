@@ -1,13 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -26,22 +25,18 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/chair/comfy/black{
-	tag = "icon-comfychair (NORTH)";
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -96,8 +91,7 @@
 /area/shuttle/escape)
 "at" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -164,7 +158,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "aE" = (
 /obj/machinery/door/airlock/glass{
@@ -176,9 +170,6 @@
 "aF" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -254,8 +245,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/chair/comfy/beige{
-	tag = "icon-comfychair (NORTH)";
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -272,8 +261,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -294,11 +282,10 @@
 	port_angle = 90;
 	width = 18
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -320,10 +307,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/shuttle/engine/heater,
+/obj/structure/window/shuttle,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bb" = (
@@ -334,6 +319,24 @@
 "bc" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"bd" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"be" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"bf" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"bg" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"bh" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"bi" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -423,13 +426,13 @@ ab
 ab
 ab
 ab
-ab
-ao
+bf
+aI
 aL
 aL
 aL
-ao
-ab
+aT
+bh
 ab
 ab
 ab
@@ -439,7 +442,7 @@ ab
 (6,1,1) = {"
 ab
 ab
-ab
+bd
 am
 au
 aA
@@ -448,7 +451,7 @@ ao
 ao
 ao
 ao
-aT
+ao
 ab
 aV
 aY
@@ -519,7 +522,7 @@ bc
 (10,1,1) = {"
 ab
 ab
-ab
+be
 aq
 av
 aA
@@ -528,7 +531,7 @@ ao
 ao
 ao
 ao
-aT
+ao
 ab
 aW
 aZ
@@ -543,13 +546,13 @@ ab
 ab
 ab
 ab
-ab
-ao
+bg
+aI
 aK
 aK
 aK
-ao
-ab
+aT
+bi
 ab
 ab
 ab

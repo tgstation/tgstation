@@ -16,6 +16,8 @@
 
 #define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
 
+#define TIMER_ID_NULL -1
+
 //For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
 #define FLIGHTSUIT_PROCESSING_NONE 0
 #define FLIGHTSUIT_PROCESSING_FULL 1
@@ -41,7 +43,8 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_DBCORE 17
+#define INIT_ORDER_DBCORE 18
+#define INIT_ORDER_BLACKBOX 17
 #define INIT_ORDER_SERVER_MAINT 16
 #define INIT_ORDER_JOBS 15
 #define INIT_ORDER_EVENTS 14
@@ -50,12 +53,12 @@
 #define INIT_ORDER_ATOMS 11
 #define INIT_ORDER_LANGUAGE 10
 #define INIT_ORDER_MACHINES 9
-#define INIT_ORDER_SHUTTLE 3
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
-#define INIT_ORDER_MINIMAP -2
-#define INIT_ORDER_ASSETS -3
+#define INIT_ORDER_SHUTTLE -2
+#define INIT_ORDER_MINIMAP -3
+#define INIT_ORDER_ASSETS -4
 #define INIT_ORDER_ICON_SMOOTHING -5
 #define INIT_ORDER_OVERLAY -6
 #define INIT_ORDER_XKEYSCORE -10

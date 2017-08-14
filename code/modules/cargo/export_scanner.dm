@@ -3,6 +3,8 @@
 	desc = "A device used to check objects against Nanotrasen exports database."
 	icon_state = "export_scanner"
 	item_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1

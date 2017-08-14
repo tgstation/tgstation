@@ -34,7 +34,7 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
+		if(istype(I.loc, /obj/item/weapon/storage))	//in a container.
 			var/obj/item/weapon/storage/U = I.loc
 			U.remove_from_storage(I, src)
 		if(user.is_holding(I))

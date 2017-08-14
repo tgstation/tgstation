@@ -24,6 +24,13 @@
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
 
+/obj/item/weapon/gun/energy/laser/retro/old
+	name ="laser gun"
+	icon_state = "retro"
+	desc = "First generation lasergun, developed by Nanotrasen. Suffers from ammo issues but its unique ability to recharge its ammo without the need of a magazine helps compensate. You really hope someone has developed a better lasergun while you were in cyro."
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
+	ammo_x_offset = 3
+
 /obj/item/weapon/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
@@ -39,7 +46,7 @@
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
 	item_state = "laser"
-	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lense to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theorically infinite use."
+	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
 	origin_tech = "combat=5;materials=4;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
@@ -100,8 +107,8 @@
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 /obj/item/weapon/gun/energy/xray
-	name = "xray laser gun"
-	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"
+	name = "x-ray laser gun"
+	desc = "A high-power laser gun capable of expelling concentrated x-ray blasts that pass through multiple soft targets and heavier materials"
 	icon_state = "xray"
 	item_state = null
 	origin_tech = "combat=6;materials=4;magnets=4;syndicate=1"

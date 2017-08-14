@@ -68,3 +68,22 @@
 
 /obj/item/weapon/storage/internal/pocket/small/detective/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)
+
+/obj/item/weapon/storage/internal/pocket/pocketprotector
+	storage_slots = 3
+	max_w_class = WEIGHT_CLASS_TINY
+	can_hold = list( //Same items as a PDA
+		/obj/item/weapon/pen,
+		/obj/item/toy/crayon,
+		/obj/item/weapon/lipstick,
+		/obj/item/device/flashlight/pen,
+		/obj/item/clothing/mask/cigarette)
+
+/obj/item/weapon/storage/internal/pocket/pocketprotector/cosmetology/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/lipstick/random(src)
+
+/obj/item/weapon/storage/internal/pocket/pocketprotector/full/PopulateContents()
+	new /obj/item/weapon/pen/red(src)
+	new /obj/item/weapon/pen(src)
+	new /obj/item/weapon/pen/blue(src)

@@ -54,6 +54,7 @@
 	icon_state = "cabbage"
 	filling_color = "#90EE90"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 
 // Sugarcane
@@ -79,6 +80,7 @@
 	icon_state = "sugarcane"
 	filling_color = "#FFD700"
 	bitesize_mod = 2
+	foodtype = VEGETABLES | SUGAR
 
 
 // Gatfruit
@@ -109,6 +111,7 @@
 	origin_tech = "combat=6"
 	trash = /obj/item/weapon/gun/ballistic/revolver
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb
@@ -130,7 +133,6 @@
 	seed = /obj/item/seeds/cherry/bomb
 	bitesize_mod = 2
 	volume = 125 //Gives enough room for the black powder at max potency
-	obj_integrity = 40
 	max_integrity = 40
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
@@ -154,3 +156,15 @@
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
+
+// Lavaland cactus
+
+/obj/item/seeds/lavaland/cactus
+	name = "pack of fruiting cactus seeds"
+	desc = "These seeds grow into fruiting cacti."
+	icon_state = "seed-cactus"
+	species = "cactus"
+	plantname = "Fruiting Cactus"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growthstages = 2

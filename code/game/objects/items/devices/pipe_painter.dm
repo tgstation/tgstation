@@ -23,7 +23,7 @@
 	if(!proximity_flag)
 		return
 
-	if(!istype(A,/obj/machinery/atmospherics/pipe))
+	if(!istype(A, /obj/machinery/atmospherics/pipe))
 		return
 
 	var/obj/machinery/atmospherics/pipe/P = A

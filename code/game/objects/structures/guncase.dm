@@ -4,12 +4,12 @@
 	desc = "A locker that holds guns."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "shotguncase"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	opacity = 0
 	var/case_type = ""
 	var/gun_category = /obj/item/weapon/gun
-	var/open = 1
+	var/open = TRUE
 	var/capacity = 4
 
 /obj/structure/guncase/Initialize(mapload)

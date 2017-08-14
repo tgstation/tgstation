@@ -24,6 +24,23 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	QDEL_NULL(cstatclick)
 	QDEL_NULL(rstatclick)
 	return ..()
+	
+/datum/admin_help_tickets/proc/TicketByID(id)
+	var/list/lists = list(active_tickets, closed_tickets, resolved_tickets)
+	for(var/I in lists)
+		for(var/J in I)
+			var/datum/admin_help/AH = J
+			if(AH.id == id)
+				return J
+
+/datum/admin_help_tickets/proc/TicketsByCKey(ckey)
+	. = list()
+	var/list/lists = list(active_tickets, closed_tickets, resolved_tickets)
+	for(var/I in lists)
+		for(var/J in I)
+			var/datum/admin_help/AH = J
+			if(AH.initiator_ckey == ckey)
+				. += AH
 
 //private
 /datum/admin_help_tickets/proc/ListInsert(datum/admin_help/new_ticket)
@@ -177,10 +194,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		AddInteraction("<font color='blue'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>")
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
-		MessageNoRecipient(parsed_message)
-
-		//show it to the person adminhelping too
-		to_chat(C, "<span class='adminnotice'>PM to-<b>Admins</b>: [name]</span>")
+		MessageNoRecipient(msg, parsed_message)
 
 		//send it to irc if nobody is on and tell us how many were on
 		var/admin_number_present = send2irc_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
@@ -235,18 +249,22 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc
-/datum/admin_help/proc/MessageNoRecipient(msg)
+/datum/admin_help/proc/MessageNoRecipient(msg, parsed_msg)
 	var/ref_src = "\ref[src]"
-	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [msg]</span>"
+	//Message to be sent to all admins
+	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [parsed_msg]</span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
+	
 	//send this msg to all admins
-
 	for(var/client/X in GLOB.admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
-			X << 'sound/effects/adminhelp.ogg'
+			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)
-		to_chat(X, chat_msg)
+		to_chat(X, admin_msg)
+
+	//show it to the person adminhelping too
+	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: [msg]</span>")
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
@@ -329,7 +347,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-		initiator << 'sound/effects/adminhelp.ogg'
+		SEND_SOUND(initiator, sound('sound/effects/adminhelp.ogg'))
 
 		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")

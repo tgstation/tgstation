@@ -34,7 +34,7 @@
 			if(!message || !channel)
 				return
 			channel.add_message(message, username)
-			log_chat("[user]/([user.ckey]) as [username] sent to [channel.title]: [message]")
+			log_talk(user,"[key_name(user)] as [username] sent to [channel.title]: [message]",LOGCHAT)
 
 		if("PRG_joinchannel")
 			. = 1
@@ -85,7 +85,7 @@
 					channel = null
 				return 1
 			var/mob/living/user = usr
-			if(can_run(usr, 1, GLOB.access_network))
+			if(can_run(usr, 1, ACCESS_NETWORK))
 				if(channel)
 					var/response = alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
 					if(response == "Yes")
@@ -110,7 +110,7 @@
 			if(!channel)
 				return
 			var/mob/living/user = usr
-			var/logname = input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
+			var/logname = stripped_input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
 			if(!logname || !channel)
 				return 1
 			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()

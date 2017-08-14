@@ -15,13 +15,13 @@
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_opened = "secure0"
-	var/locked = 1
+	var/locked = TRUE
 	var/code = ""
 	var/l_code = null
 	var/l_set = 0
 	var/l_setshort = 0
 	var/l_hacking = 0
-	var/open = 0
+	var/open = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 14
@@ -92,7 +92,7 @@
 				src.l_code = src.code
 				src.l_set = 1
 			else if ((src.code == src.l_code) && (src.l_set == 1))
-				src.locked = 0
+				src.locked = FALSE
 				cut_overlays()
 				add_overlay(icon_opened)
 				src.code = null
@@ -100,7 +100,7 @@
 				src.code = "ERROR"
 		else
 			if ((href_list["type"] == "R") && (!src.l_setshort))
-				src.locked = 1
+				src.locked = TRUE
 				cut_overlays()
 				src.code = null
 				src.close(usr)
@@ -135,6 +135,8 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
 	item_state = "sec-case"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	desc = "A large briefcase with a digital locking system."
 	force = 8
 	hitsound = "swing_hit"
@@ -180,8 +182,8 @@
 	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
 /obj/item/weapon/storage/secure/safe/PopulateContents()

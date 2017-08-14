@@ -57,8 +57,7 @@
 "l" = (
 /obj/structure/shuttle/engine/heater{
 	color = "#FFFF00";
-	dir = 4;
-	icon_state = "heater"
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	color = "#FFFF00";
@@ -69,10 +68,9 @@
 	},
 /area/ruin/unpowered)
 "m" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/structure/shuttle/engine/propulsion/left{
 	color = "#FFFF00";
-	dir = 4;
-	icon_state = "propulsion_l"
+	dir = 4
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
@@ -105,9 +103,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "s" = (
-/obj/item/weapon/paper{
-	info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"
-	},
+/obj/item/weapon/paper/fluff/ruins/crashedclownship/true_nation,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "t" = (

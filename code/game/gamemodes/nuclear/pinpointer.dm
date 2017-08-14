@@ -8,6 +8,8 @@
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL = 500, MAT_GLASS = 250)
@@ -33,7 +35,7 @@
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
 	active = !active
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
-	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 	icon_state = "pin[active ? "onnull" : "off"]"
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
@@ -89,7 +91,7 @@
 		return
 	switch(mode)
 		if(TRACK_NUKE_DISK)
-			var/obj/item/weapon/disk/nuclear/N = locate()
+			var/obj/item/weapon/disk/nuclear/N = locate() in GLOB.poi_list
 			target = N
 		if(TRACK_MALF_AI)
 			for(var/V in GLOB.ai_list)
@@ -147,7 +149,7 @@
 		if(bomb.timing)
 			if(!nuke_warning)
 				nuke_warning = TRUE
-				playsound(src, 'sound/items/Nuke_toy_lowpower.ogg', 50, 0)
+				playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, 0)
 				if(isliving(loc))
 					var/mob/living/L = loc
 					to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")

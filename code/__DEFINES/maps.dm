@@ -5,7 +5,7 @@ Names of z-level do not matter, but order does greatly, for instances such as ch
 
 current as of 2016/6/2
 z1 = station
-z2 = centcomm
+z2 = centcom
 z5 = mining
 Everything else = randomized space
 Last space-z level = empty
@@ -16,7 +16,7 @@ Last space-z level = empty
 #define UNAFFECTED 0
 
 #define MAIN_STATION "Main Station"
-#define CENTCOMM "CentComm"
+#define CENTCOM "CentCom"
 #define EMPTY_AREA_1 "Empty Area 1"
 #define EMPTY_AREA_2 "Empty Area 2"
 #define MINING "Mining Asteroid"
@@ -38,9 +38,10 @@ Last space-z level = empty
 #define ZLEVEL_STATION 2
 #define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
-#define ZLEVEL_EMPTY_SPACE 11
+#define ZLEVEL_EMPTY_SPACE 12
+#define ZLEVEL_TRANSIT 11
 
 #define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_SPACEMAX 11
+#define ZLEVEL_SPACEMAX 12
 
 #define SPACERUIN_MAP_EDGE_PAD 15

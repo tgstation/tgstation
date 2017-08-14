@@ -8,6 +8,7 @@
 	use_power = TRUE
 	idle_power_usage = 200
 	active_power_usage = 2500
+	circuit = /obj/item/weapon/circuitboard/machine/launchpad
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
@@ -16,20 +17,6 @@
 	var/power_efficiency = 1
 	var/x_offset = 0
 	var/y_offset = 0
-
-/obj/machinery/launchpad/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/launchpad/B = new
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/launchpad
-	name = "Bluespace Launchpad (Machine Board)"
-	build_path = /obj/machinery/launchpad
-	origin_tech = "programming=3;engineering=3;plasmatech=2;bluespace=3"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = -1 //to make default parts have the base value
@@ -171,9 +158,7 @@
 		qdel(src)
 
 /obj/machinery/launchpad/briefcase/Destroy()
-	if(!QDELETED(briefcase))
-		qdel(briefcase)
-	briefcase = null
+	QDEL_NULL(briefcase)
 	return ..()
 
 /obj/machinery/launchpad/briefcase/isAvailable()
@@ -209,6 +194,8 @@
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "briefcase"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	flags = CONDUCT
 	force = 8
 	hitsound = "swing_hit"
@@ -217,7 +204,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	resistance_flags = FLAMMABLE
-	obj_integrity = 150
 	max_integrity = 150
 	var/obj/machinery/launchpad/briefcase/pad
 
@@ -260,7 +246,7 @@
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 
-/obj/item/device/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/device/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 550, 400, master_ui, state) //width, height

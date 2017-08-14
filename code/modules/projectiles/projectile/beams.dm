@@ -13,6 +13,7 @@
 	light_color = LIGHT_COLOR_RED
 	ricochets_max = 50	//Honk!
 	ricochet_chance = 80
+	is_reflectable = TRUE
 
 /obj/item/projectile/beam/laser
 
@@ -21,7 +22,7 @@
 	icon_state = "heavylaser"
 	damage = 40
 
-/obj/item/projectile/beam/laser/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/laser/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -71,10 +72,10 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isturf(target) || istype(target,/obj/structure/))
-		target.ex_act(2)
+	if(isturf(target) || istype(target, /obj/structure/))
+		target.ex_act(EXPLODE_HEAVY)
 
 /obj/item/projectile/beam/pulse/shot
 	damage = 40
@@ -84,7 +85,7 @@
 	icon_state = "pulse1_bl"
 	var/life = 20
 
-/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	life -= 10
 	if(life > 0)
 		. = -1
@@ -113,7 +114,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target

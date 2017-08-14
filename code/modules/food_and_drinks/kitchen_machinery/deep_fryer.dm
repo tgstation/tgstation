@@ -11,14 +11,14 @@ insert ascii eagle on american flag background here
 	desc = "Deep fried <i>everything</i>."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
-	var/static/list/blacklisted_items = typecacheof(list(
+	var/static/list/deepfry_blacklisted_items = typecacheof(list(
 		/obj/item/weapon/screwdriver,
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/wrench,
@@ -28,14 +28,8 @@ insert ascii eagle on american flag background here
 		/obj/item/weapon/reagent_containers/glass,
 		/obj/item/weapon/storage/part_replacer))
 
-/obj/item/weapon/circuitboard/machine/deep_fryer
-	name = "circuit board (Deep Fryer)"
-	build_path = /obj/machinery/deepfryer
-	origin_tech = "programming=1"
-	req_components = list(/obj/item/weapon/stock_parts/micro_laser = 1)
-
-/obj/machinery/deepfryer/New()
-	..()
+/obj/machinery/deepfryer/Initialize()
+	. = ..()
 	create_reagents(50)
 	reagents.add_reagent("nutriment", 25)
 	component_parts = list()
@@ -62,7 +56,7 @@ insert ascii eagle on american flag background here
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, blacklisted_items))
+		if(is_type_in_typecache(I, deepfry_blacklisted_items))
 			. = ..()
 		else if(user.drop_item() && !frying)
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
@@ -112,6 +106,7 @@ insert ascii eagle on american flag background here
 					S.name = "the physical manifestation of the very concept of fried foods"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
+			S.foodtype |= FRIED
 			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
 				qdel(frying)
 			else
@@ -131,6 +126,6 @@ insert ascii eagle on american flag background here
 		reagents.reaction(C, TOUCH)
 		C.adjustFireLoss(reagents.total_volume)
 		reagents.remove_any((reagents.total_volume/2))
-		C.Weaken(3)
+		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	..()

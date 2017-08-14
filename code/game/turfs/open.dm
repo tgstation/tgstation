@@ -18,6 +18,7 @@
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
+	..()
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
@@ -27,7 +28,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
 	baseturf = /turf/open/indestructible/necropolis
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
@@ -37,9 +38,19 @@
 /turf/open/indestructible/necropolis/air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
+/turf/open/indestructible/boss //you put stone tiles on this and use it as a base
+	name = "necropolis floor"
+	icon = 'icons/turf/boss_floors.dmi'
+	icon_state = "boss"
+	baseturf = /turf/open/indestructible/boss
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/indestructible/boss/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 
@@ -62,7 +73,7 @@
 	//cache some vars
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)
@@ -112,6 +123,8 @@
 
 /turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
+		if(I.resistance_flags & FREEZE_PROOF)
+			return
 		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
@@ -137,7 +150,7 @@
 		qdel(hotspot)
 	return 1
 
-/turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	if(C.movement_type & FLYING)
 		return 0
 	if(has_gravity(src))
@@ -147,7 +160,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
@@ -162,11 +175,10 @@
 
 		var/olddir = C.dir
 		if(!(lube & SLIDE_ICE))
-			C.Stun(s_amount)
-			C.Weaken(w_amount)
+			C.Knockdown(knockdown_amount)
 			C.stop_pulling()
 		else
-			C.Stun(1)
+			C.Stun(20)
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
@@ -183,6 +195,7 @@
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
+	UpdateSlip()
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
 			cut_overlay(wet_overlay)
@@ -205,6 +218,30 @@
 		add_overlay(wet_overlay)
 	HandleWet()
 
+/turf/open/proc/UpdateSlip()
+	switch(wet)
+		if(TURF_WET_WATER)
+			AddComponent(/datum/component/slippery, 60, NO_SLIP_WHEN_WALKING)
+		if(TURF_WET_LUBE)
+			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
+		if(TURF_WET_ICE)
+			AddComponent(/datum/component/slippery, 120, SLIDE | GALOSHES_DONT_HELP)
+		if(TURF_WET_PERMAFROST)
+			AddComponent(/datum/component/slippery, 120, SLIDE_ICE | GALOSHES_DONT_HELP)
+		if(TURF_WET_SLIDE)
+			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
+		else
+			qdel(GetComponent(/datum/component/slippery))
+
+/turf/open/ComponentActivated(datum/component/C)
+	..()
+	var/datum/component/slippery/S = C
+	if(!istype(S))
+		return
+	if(wet == TURF_WET_LUBE)
+		var/mob/living/L = S.slip_victim
+		L.confused = max(L.confused, 8)
+
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
 		return
@@ -217,6 +254,7 @@
 			wet = TURF_DRY
 			if(wet_overlay)
 				cut_overlay(wet_overlay)
+		UpdateSlip()
 
 /turf/open/proc/HandleWet()
 	if(!wet)

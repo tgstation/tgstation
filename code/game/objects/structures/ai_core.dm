@@ -1,10 +1,9 @@
 /obj/structure/AIcore
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	name = "\improper AI core"
-	icon = 'icons/mob/AI.dmi'
+	icon = 'icons/mob/ai.dmi'
 	icon_state = "0"
-	obj_integrity = 500
 	max_integrity = 500
 	var/state = 0
 	var/datum/ai_laws/laws = new()
@@ -48,7 +47,7 @@
 				if(istype(P, /obj/item/weapon/circuitboard/aicore))
 					if(!user.drop_item())
 						return
-					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					update_icon()
 					state = CIRCUIT_CORE
@@ -80,7 +79,7 @@
 				if(istype(P, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C = P
 					if(C.get_amount() >= 5)
-						playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 						to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
 							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
@@ -105,7 +104,7 @@
 				if(istype(P, /obj/item/stack/sheet/rglass))
 					var/obj/item/stack/sheet/rglass/G = P
 					if(G.get_amount() >= 2)
-						playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 						to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
 							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
@@ -232,7 +231,7 @@
 /obj/structure/AIcore/deactivated
 	name = "inactive AI"
 	icon_state = "ai-empty"
-	anchored = 1
+	anchored = TRUE
 	state = AI_READY_CORE
 
 /obj/structure/AIcore/deactivated/New()

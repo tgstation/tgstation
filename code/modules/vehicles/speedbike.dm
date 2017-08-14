@@ -38,7 +38,7 @@
 	pixel_y = -48 //to fix the offset when Initialized()
 	pixel_x = -48
 
-/obj/vehicle/space/speedbike/speedwagon/Bump(atom/movable/A)
+/obj/vehicle/space/speedbike/speedwagon/Collide(atom/movable/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/atom/throw_target = get_edge_target_turf(A, src.dir)
@@ -48,7 +48,7 @@
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
-			H.Weaken(5)
+			H.Knockdown(100)
 			H.adjustStaminaLoss(30)
 			H.apply_damage(rand(20,35), BRUTE)
 			if(!crash_all)
@@ -65,4 +65,4 @@
 	if(src.has_buckled_mobs())
 		for(var/atom/A in range(2, src))
 			if(!(A in src.buckled_mobs))
-				Bump(A)
+				Collide(A)

@@ -110,7 +110,7 @@
 	SSticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
 	SSticker.mode.update_wiz_icons_added(M.mind)
-	M << sound('sound/effects/magic.ogg')
+	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 	var/newname = copytext(sanitize(input(M, "You are [wizard_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 	if (!newname)
 		newname = randomname
@@ -251,7 +251,7 @@
 		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
-		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 		qdel(src)
 	else
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")

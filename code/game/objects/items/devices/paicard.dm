@@ -3,6 +3,8 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
@@ -69,7 +71,7 @@
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return
-			if(!istype(usr, /mob/living/carbon))
+			if(!iscarbon(usr))
 				to_chat(usr, "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>")
 			else
 				var/mob/living/carbon/M = usr

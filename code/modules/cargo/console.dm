@@ -18,26 +18,27 @@
 	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
-/obj/machinery/computer/cargo/New()
-	..()
+/obj/machinery/computer/cargo/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	emagged = board.emagged
 
-/obj/machinery/computer/cargo/emag_act(mob/living/user)
-	if(!emagged)
-		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
-		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+/obj/machinery/computer/cargo/emag_act(mob/user)
+	if(emagged)
+		return
+	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
+	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
-		emagged = TRUE
-		contraband = TRUE
+	emagged = TRUE
+	contraband = TRUE
 
-		// This also permamently sets this on the circuit board
-		var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
-		board.contraband = TRUE
-		board.emagged = TRUE
+	// This also permamently sets this on the circuit board
+	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
+	board.contraband = TRUE
+	board.emagged = TRUE
 
-/obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -121,7 +122,7 @@
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
-				say("The supply shuttle has been loaned to Centcom.")
+				say("The supply shuttle has been loaned to CentCom.")
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
@@ -144,7 +145,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = input("Reason:", name, "") as text|null
+				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 

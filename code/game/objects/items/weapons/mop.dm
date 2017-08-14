@@ -14,6 +14,7 @@
 	var/mopcount = 0
 	var/mopcap = 5
 	var/mopspeed = 30
+	force_string = "robust... against germs"
 
 /obj/item/weapon/mop/New()
 	..()
@@ -76,6 +77,8 @@
 	mopcap = 10
 	icon_state = "advmop"
 	item_state = "mop"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	origin_tech = "materials=3;engineering=3"
 	force = 6
 	throwforce = 8

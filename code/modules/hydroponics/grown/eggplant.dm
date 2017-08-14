@@ -22,6 +22,7 @@
 	icon_state = "eggplant"
 	filling_color = "#800080"
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 // Egg-Plant
 /obj/item/seeds/eggplant/eggy
@@ -42,3 +43,4 @@
 	trash = /obj/item/weapon/reagent_containers/food/snacks/egg
 	filling_color = "#F8F8FF"
 	bitesize_mod = 2
+	foodtype = MEAT

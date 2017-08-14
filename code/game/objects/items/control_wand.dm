@@ -5,6 +5,8 @@
 /obj/item/weapon/door_remote
 	icon_state = "gangtool-white"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	icon = 'icons/obj/device.dmi'
 	name = "control wand"
 	desc = "Remotely controls airlocks."
@@ -51,9 +53,9 @@
 					D.bolt()
 			if(WAND_EMERGENCY)
 				if(D.emergency)
-					D.emergency = 0
+					D.emergency = FALSE
 				else
-					D.emergency = 1
+					D.emergency = TRUE
 				D.update_icon()
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")

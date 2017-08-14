@@ -1,4 +1,4 @@
-/proc/priority_announce(text, title = "", sound = 'sound/AI/attention.ogg', type)
+/proc/priority_announce(text, title = "", sound = 'sound/ai/attention.ogg', type)
 	if(!text)
 		return
 
@@ -24,18 +24,19 @@
 	announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
 	announcement += "<br>"
 
+	var/s = sound(sound)
 	for(var/mob/M in GLOB.player_list)
 		if(!isnewplayer(M) && M.can_hear())
 			to_chat(M, announcement)
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				M << sound(sound)
+				SEND_SOUND(M, s)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
 		title = "Classified [command_name()] Update"
 
 	if(announce)
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg')
 
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
@@ -55,6 +56,6 @@
 			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
-					M << sound('sound/misc/notice1.ogg')
+					SEND_SOUND(M, sound('sound/misc/notice1.ogg'))
 				else
-					M << sound('sound/misc/notice2.ogg')
+					SEND_SOUND(M, sound('sound/misc/notice2.ogg'))

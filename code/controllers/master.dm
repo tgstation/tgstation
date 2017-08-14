@@ -18,7 +18,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	name = "Master"
 
 	// Are we processing (higher values increase the processing delay by n ticks)
-	var/processing = 1
+	var/processing = TRUE
 	// How many times have we ran
 	var/iteration = 0
 
@@ -97,7 +97,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/delay = 50 * ++Master.restart_count
 	Master.restart_timeout = world.time + delay
 	Master.restart_clear = world.time + (delay * 2)
-	Master.processing = 0 //stop ticking this one
+	Master.processing = FALSE //stop ticking this one
 	try
 		new/datum/controller/master()
 	catch
@@ -124,7 +124,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/FireHim = FALSE
 	if(istype(BadBoy))
 		msg = null
-		switch(++BadBoy.failure_strikes)
+		LAZYINITLIST(BadBoy.failure_strikes)
+		switch(++BadBoy.failure_strikes[BadBoy.type])
 			if(2)
 				msg = "The [BadBoy.name] subsystem was the last to fire for 2 controller restarts. It will be recovered now and disabled if it happens again."
 				FireHim = TRUE

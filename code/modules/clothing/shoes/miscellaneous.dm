@@ -17,6 +17,8 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	item_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
 	strip_delay = 70
 	resistance_flags = 0
@@ -34,7 +36,7 @@
 	name = "sandals"
 	icon_state = "wizard"
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -55,7 +57,7 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = 0
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
 
@@ -87,14 +89,21 @@
 	else
 		footstep++
 
+/obj/item/clothing/shoes/clown_shoes/jester
+	name = "jester shoes"
+	desc = "A court jesters shoes, updated with modern squeaking technology."
+	icon_state = "jester_shoes"
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	item_color = "hosred"
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
@@ -117,8 +126,10 @@
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
 	icon_state = "workboots"
 	item_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	strip_delay = 40
-	put_on_delay = 40
+	equip_delay_other = 40
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/workboots/mining
@@ -154,7 +165,7 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
@@ -162,7 +173,7 @@
 	icon_state = "roman"
 	item_state = "roman"
 	strip_delay = 100
-	put_on_delay = 100
+	equip_delay_other = 100
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -201,7 +212,7 @@
 
 	jumping = TRUE
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
-	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
+	usr.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
 	usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()
@@ -212,10 +223,10 @@
 	name = "yellow performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "ysing"
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/shoes/singerb
 	name = "blue performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
-	put_on_delay = 50
+	equip_delay_other = 50

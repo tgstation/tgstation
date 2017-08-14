@@ -20,12 +20,14 @@
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
 
-/obj/item/weapon/his_grace/New()
-	..()
+/obj/item/weapon/his_grace/Initialize()
+	. = ..()
 	START_PROCESSING(SSprocessing, src)
+	GLOB.poi_list += src
 
 /obj/item/weapon/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
+	GLOB.poi_list -= src
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
 	return ..()
@@ -84,7 +86,7 @@
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
 				flags &= ~NODROP
-				master.Weaken(3)
+				master.Knockdown(60)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, 0)
 			else

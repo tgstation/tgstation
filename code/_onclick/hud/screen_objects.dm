@@ -110,7 +110,7 @@
 
 	if(usr.incapacitated())
 		return 1
-	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return 1
 
 	if(hud && hud.mymob && slot_id)
@@ -167,7 +167,7 @@
 		return 1
 	if(usr.incapacitated() || isobserver(usr))
 		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return 1
 
 	if(hud.mymob.active_hand_index == held_index)
@@ -281,7 +281,7 @@
 				to_chat(H, "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>")
 				H.internal = H.r_store
 
-		//Seperate so CO2 jetpacks are a little less cumbersome.
+		//Separate so CO2 jetpacks are a little less cumbersome.
 		if(!C.internal && istype(C.back, /obj/item/weapon/tank))
 			to_chat(C, "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>")
 			C.internal = C.back
@@ -348,9 +348,9 @@
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return 1
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
 		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return 1
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()

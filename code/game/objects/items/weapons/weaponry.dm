@@ -1,4 +1,5 @@
 /obj/item/weapon
+	var/trigger_guard = TRIGGER_GUARD_NONE
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
@@ -11,7 +12,6 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
@@ -30,6 +30,8 @@
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
@@ -47,6 +49,8 @@
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
 	item_state = "claymore"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
@@ -56,7 +60,6 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -75,8 +78,8 @@
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
-/obj/item/weapon/claymore/highlander/New()
-	..()
+/obj/item/weapon/claymore/highlander/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/claymore/highlander/Destroy()
@@ -185,13 +188,15 @@
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
-	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20"
 	icon_state = "katana"
 	item_state = "katana"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
@@ -201,7 +206,6 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -256,6 +260,8 @@
 	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
 	icon_state = "throwingstar"
 	item_state = "eshield0"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	force = 2
 	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
@@ -271,6 +277,8 @@
 /obj/item/weapon/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 3
@@ -280,7 +288,7 @@
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	origin_tech = "engineering=3;combat=2"
-	hitsound = 'sound/weapons/Genhit.ogg'
+	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
 	var/extended = 0
@@ -302,7 +310,7 @@
 		throwforce = 5
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
-		hitsound = 'sound/weapons/Genhit.ogg'
+		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
@@ -335,6 +343,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -346,6 +356,8 @@
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	force = 3
 	throwforce = 5
 	throw_speed = 2
@@ -368,6 +380,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "stick"
 	item_state = "stick"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 3
 	throwforce = 5
 	throw_speed = 2
@@ -390,6 +404,8 @@
 	desc = "A chainsaw that has replaced your arm."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	flags = NODROP | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 21
@@ -440,6 +456,11 @@
 	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
+/obj/item/weapon/melee/chainofcommand/tailwhip/kitty
+	name = "cat o' nine tails"
+	desc = "A whip fashioned from the severed tails of cats."
+	icon_state = "catwhip"
+
 /obj/item/weapon/melee/skateboard
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
@@ -460,6 +481,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "baseball_bat"
 	item_state = "baseball_bat"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
@@ -493,8 +516,8 @@
 	if(homerun_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
 		target.throw_at(throw_target, rand(8,10), 14, user)
-		target.ex_act(2)
-		playsound(get_turf(src), 'sound/weapons/HOMERUN.ogg', 100, 1)
+		target.ex_act(EXPLODE_HEAVY)
+		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, 1)
 		homerun_ready = 0
 		return
 	else if(!target.anchored)
@@ -518,11 +541,13 @@
 	return 1
 
 /obj/item/weapon/melee/flyswatter
-	name = "Flyswatter"
+	name = "flyswatter"
 	desc = "Useful for killing insects of all sizes."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "flyswatter"
 	item_state = "flyswatter"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
 	throwforce = 1
 	attack_verb = list("swatted", "smacked")
@@ -531,8 +556,8 @@
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
-/obj/item/weapon/melee/flyswatter/New()
-	..()
+/obj/item/weapon/melee/flyswatter/Initialize()
+	. = ..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
@@ -551,3 +576,17 @@
 				bug.death(1)
 			else
 				qdel(target)
+
+/obj/item/weapon/circlegame
+	name = "circled hand"
+	desc = "If somebody looks at this while it's below your waist, you get to bop them."
+	icon_state = "madeyoulook"
+	force = 0
+	throwforce = 0
+	flags = DROPDEL | ABSTRACT
+	attack_verb = list("bopped")
+
+/obj/item/weapon/proc/can_trigger_gun(mob/living/user)
+	if(!user.can_use_guns(src))
+		return FALSE
+	return TRUE

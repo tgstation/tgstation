@@ -110,10 +110,10 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	var/obj/item/weapon/storage/box/B = A
 	if(istype(B) && B.contents.len > 0)
 		for(var/obj/item/I in B)
-			U.purchase_log += "<big>[bicon(I)]</big>"
+			U.purchase_log += "<big>[icon2base64html(I)]</big>"
 	else
 		if(purchase_log_vis)
-			U.purchase_log += "<big>[bicon(A)]</big>"
+			U.purchase_log += "<big>[icon2base64html(A)]</big>"
 
 	if(limited_stock > 0)
 		limited_stock -= 1
@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/weapon/melee/energy/sword/saber
+	item = /obj/item/weapon/melee/transforming/energy/sword/saber
 	cost = 8
 
 /datum/uplink_item/dangerous/doublesword
@@ -647,7 +647,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			falls asleep, they will be able to move and act."
 	item = /obj/item/weapon/pen/sleepy
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "F.R.A.M.E. PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
 			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked.  \
-			You will recieve the unlock code upon activating the virus, and the new uplink may be charged with \
+			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
 	item = /obj/item/weapon/cartridge/virus/frame
 	cost = 4
@@ -846,7 +846,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
 	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
-			fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit \
+			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
 			sightings, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
@@ -865,15 +865,17 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
-	desc = "An advanced hardsuit with superior armor and mobility to the standard Syndicate hardsuit."
+	desc = "An upgraded, elite version of the syndicate hardsuit. It features fireproofing, and also \
+			provides the user with superior armor and mobility compared to the standard syndicate hardsuit."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
 	include_modes = list(/datum/game_mode/nuclear)
 	exclude_modes = list()
 
 /datum/uplink_item/suits/hardsuit/shielded
-	name = "Shielded Hardsuit"
-	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	name = "Shielded Syndicate Hardsuit"
+	desc = "An upgraded version of the standard syndicate hardsuit. It features a built-in energy shielding system. \
+			The shields can handle up to three impacts within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
 	cost = 30
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1392,7 +1394,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			continue
 		crate_value -= I.cost
 		new I.item(C)
-		U.purchase_log += "<big>[bicon(I.item)]</big>"
+		U.purchase_log += "<big>[icon2base64html(I.item)]</big>"
 
 	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C

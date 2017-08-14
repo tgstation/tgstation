@@ -20,7 +20,7 @@
 	var/locomotion = 1
 	var/lawsync = 1
 	var/aisync = 1
-	var/panel_locked = 1
+	var/panel_locked = TRUE
 
 /obj/item/robot_suit/New()
 	..()
@@ -283,7 +283,7 @@
 				O.lockcharge = TRUE
 				O.update_canmove()
 
-	else if(istype(W,/obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
 	else
 		return ..()

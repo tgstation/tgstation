@@ -25,6 +25,7 @@
 	icon_state = "chilipepper"
 	filling_color = "#FF0000"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Ice Chili
 /obj/item/seeds/chili/ice
@@ -49,6 +50,7 @@
 	filling_color = "#0000CD"
 	bitesize_mod = 2
 	origin_tech = "biotech=4"
+	foodtype = VEGETABLES
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
@@ -75,10 +77,11 @@
 	filling_color = "#F8F8FF"
 	bitesize_mod = 4
 	origin_tech = "biotech=4;magnets=5"
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
-	if( istype(src.loc, /mob) )
+	if( ismob(src.loc) )
 		held_mob = src.loc
 		START_PROCESSING(SSobj, src)
 

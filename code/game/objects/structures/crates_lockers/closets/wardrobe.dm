@@ -137,6 +137,8 @@
 	if(prob(30))
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+	if(prob(30))
+		new /obj/item/clothing/accessory/pocketprotector(src)
 	return
 
 

@@ -121,12 +121,13 @@
 	blob_talk(message)
 
 /mob/camera/blob/proc/blob_talk(message)
-	log_say("[key_name(src)] : [message]")
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return
+
+	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
@@ -150,7 +151,7 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.obj_integrity]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-		if(SSticker && istype(SSticker.mode, /datum/game_mode/blob))
+		if(istype(SSticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/B = SSticker.mode
 			stat(null, "Blobs to Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 		else

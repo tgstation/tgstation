@@ -11,8 +11,8 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "ad" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -45,8 +45,8 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "ah" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -101,7 +101,7 @@
 	})
 "ao" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -110,7 +110,7 @@
 "ap" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -127,7 +127,7 @@
 "ar" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -136,7 +136,7 @@
 "as" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -160,7 +160,7 @@
 /obj/item/clothing/mask/gas/clown_hat,
 /obj/item/organ/heart/demon,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -172,7 +172,7 @@
 	name = "shock rune"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -181,7 +181,7 @@
 "aw" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -189,11 +189,11 @@
 	})
 "ax" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /turf/closed/wall/mineral/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 4"
@@ -206,7 +206,7 @@
 	},
 /obj/item/weapon/coin/antagtoken,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -215,7 +215,7 @@
 "az" = (
 /obj/structure/constructshell,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -225,7 +225,7 @@
 /obj/structure/girder/cult,
 /obj/item/stack/sheet/runed_metal,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -234,7 +234,7 @@
 "aB" = (
 /mob/living/simple_animal/hostile/spawner/skeleton,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -244,7 +244,7 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/cult,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -253,7 +253,7 @@
 "aD" = (
 /obj/item/stack/sheet/runed_metal,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -269,7 +269,7 @@
 	name = "an extremely flamboyant book"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -283,7 +283,7 @@
 	name = "weak forcefield"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -292,7 +292,7 @@
 "aG" = (
 /obj/item/weapon/ectoplasm,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -383,7 +383,7 @@
 	name = "rusty ladder"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -400,7 +400,7 @@
 "aR" = (
 /obj/effect/forcefield/cult,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -409,7 +409,7 @@
 "aS" = (
 /obj/structure/girder/cult,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -425,8 +425,6 @@
 	})
 "aU" = (
 /obj/machinery/light/small/built{
-	tag = "icon-bulb1 (EAST)";
-	icon_state = "bulb1";
 	dir = 4
 	},
 /obj/structure/sign/pods{
@@ -442,8 +440,8 @@
 	})
 "aV" = (
 /obj/effect/forcefield/cult,
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -490,7 +488,7 @@
 	name = "flame rune"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -500,7 +498,7 @@
 /obj/structure/destructible/cult/talisman,
 /obj/item/weapon/plasma_fist_scroll,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -527,7 +525,7 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /turf/closed/wall/mineral/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	},
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 4"
@@ -543,7 +541,7 @@
 "bf" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -570,7 +568,7 @@
 	dir = 9
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -581,7 +579,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -592,7 +590,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -603,7 +601,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -614,7 +612,7 @@
 	calibrated = 0
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -625,7 +623,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -645,7 +643,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -654,7 +652,7 @@
 "bq" = (
 /obj/machinery/gateway,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -665,7 +663,7 @@
 	dir = 6
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -711,7 +709,7 @@
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/spawner/skeleton,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -738,7 +736,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -749,7 +747,7 @@
 /obj/item/device/necromantic_stone,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -765,7 +763,7 @@
 	})
 "bC" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -774,7 +772,7 @@
 "bD" = (
 /mob/living/simple_animal/hostile/skeleton,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -784,7 +782,7 @@
 /obj/structure/destructible/cult/pylon,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -798,7 +796,7 @@
 	name = "rusty ladder"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -845,8 +843,8 @@
 /turf/closed/mineral/volcanic,
 /area/awaymission/BMPship)
 "bM" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -859,8 +857,8 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "bO" = (
-/turf/open/floor/plating/lava/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+/turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -876,8 +874,6 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/small/built{
-	tag = "icon-bulb1 (EAST)";
-	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt{
@@ -946,9 +942,7 @@
 	})
 "bX" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled{
-	info = "<center><b>WARNING</center></b><br><br><center>Majority of this area is consitered 'unsafe' past this point. Theres an outpost directly south of here where you can get your bearing and travel further down if needed. Traveling in groups is HIGHLY advised, the shit out there can be extremely deadly if you're alone.</center>"
-	},
+/obj/item/weapon/paper/crumpled/awaymissions/caves/unsafe_area,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1095,10 +1089,7 @@
 	dir = 1
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper{
-	info = "<b><center>Testing Notes</b></center><br><br><center>Subject appears unresponsive to most interactions, refusing to move away from the corners or face any scientists. Subject appears to move between the two back corners every observation. A strange humming can be heard from inside the cell, appears to be originating from the subject itself, further testing is necessary to confirm or deny this.</center>";
-	name = "Subject Omega Notes"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/omega,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1216,8 +1207,7 @@
 "cE" = (
 /obj/structure/sign/vacuum{
 	name = "\improper LOW AIR AREA";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/item/stack/rods,
 /turf/open/floor/plasteel{
@@ -1251,7 +1241,7 @@
 	})
 "cI" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -1285,8 +1275,6 @@
 	})
 "cM" = (
 /obj/machinery/light{
-	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -1409,8 +1397,7 @@
 "cZ" = (
 /obj/structure/sign/vacuum{
 	name = "\improper LOW AIR AREA";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
@@ -1495,9 +1482,7 @@
 	})
 "di" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	info = "<center> Mining is hell down here, you can feel the heat of the magma no matter how thick the suit is. Conditions are barely managble as is, restless nights and horrid work conditions. The ore maybe rich down here, but we've already lost a few men to the faults shifting, god knows how much longer till it all just collapses down and consumes everyone with it.</center>"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/magma,
 /obj/item/weapon/pen,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel{
@@ -1572,8 +1557,6 @@
 	})
 "dq" = (
 /obj/machinery/light/small/built{
-	tag = "icon-bulb1 (EAST)";
-	icon_state = "bulb1";
 	dir = 4
 	},
 /obj/structure/spider/stickyweb,
@@ -1686,8 +1669,6 @@
 /area/awaymission/northblock)
 "dE" = (
 /obj/machinery/light/small/built{
-	tag = "icon-bulb1 (WEST)";
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/wood{
@@ -1847,8 +1828,6 @@
 /area/awaymission/northblock)
 "eb" = (
 /obj/machinery/light/small/built{
-	tag = "icon-bulb1 (WEST)";
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/wood{
@@ -2022,8 +2001,6 @@
 /area/awaymission/BMPship)
 "ez" = (
 /obj/machinery/light/small/built{
-	tag = "icon-bulb1 (NORTH)";
-	icon_state = "bulb1";
 	dir = 1
 	},
 /obj/machinery/suit_storage_unit/mining{
@@ -2036,10 +2013,7 @@
 /area/awaymission/BMPship)
 "eA" = (
 /obj/structure/table,
-/obj/item/weapon/paper{
-	info = "<center><b>Survival Info For Miners</b></center><br><br><center>The caves are an unforgiving place, the only thing you'll have to traverse is the supplies in your locker and your own wit. Travel in packs when mining and try to shut down the monster dens before they overwhelm you. The job is dangerous but the haul is good, so remember this infomation and hopefully we'll all go home alive.</center>";
-	name = "work notice"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/work_notice,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2212,7 +2186,7 @@
 /area/awaymission/listeningpost)
 "eX" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2235,14 +2209,8 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper{
-	info = "<center>We were suppose to get a shipment of these special laser rifles and a couple 'nades to help combat the wildlife down here, but its been weeks since we last heard from the caravan carrying the shit down here. At this point we can only assume they fell victim to one of the monster nests or the dumbasses managed to trip into the lava. So much for that shipment, I guess.</center>";
-	name = "shipment notice"
-	},
-/obj/item/weapon/paper{
-	info = "<center>Some of the miners have gone to laying some mine traps among the lower levels of the mine to keep the monsters at bay.  This probably isn't the smartest idea in a cavern like this but the boys seem to get a chuckle out of every distant blast they hear go off, so I guess it works </center>";
-	name = "safety notice"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/shipment_notice,
+/obj/item/weapon/paper/fluff/awaymissions/caves/saftey_notice,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2257,10 +2225,7 @@
 	})
 "fc" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/paper{
-	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll";
-	name = "Shipment Receipt"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/shipment_receipt,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/weapon/gun/energy/laser,
@@ -2354,10 +2319,7 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/obj/item/weapon/paper{
-	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll";
-	name = "Shipment Receipt"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/shipment_receipt,
 /obj/item/organ/eyes/robotic/thermals,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/slimepotion/fireproof,
@@ -2397,8 +2359,6 @@
 /area/awaymission/BMPship)
 "fr" = (
 /obj/machinery/light/small/built{
-	tag = "icon-bulb1 (NORTH)";
-	icon_state = "bulb1";
 	dir = 1
 	},
 /obj/structure/spider/stickyweb,
@@ -2491,7 +2451,6 @@
 "fD" = (
 /obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
@@ -2630,7 +2589,7 @@
 "fW" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2664,7 +2623,7 @@
 /area/awaymission/BMPship)
 "fZ" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2688,7 +2647,7 @@
 "gc" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2722,14 +2681,14 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/donkpockets,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
 "gh" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2737,7 +2696,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2780,14 +2739,14 @@
 "go" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
 "gp" = (
 /obj/structure/table_frame,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -2910,10 +2869,7 @@
 "gH" = (
 /obj/structure/table,
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
-/obj/item/weapon/paper{
-	info = "<center><b>NOTICE!!</center></b><br><br><center>Although you may seem indestructible in a mech, remember, THIS SHIT ISN'T LAVA PROOF!! The boys have already had to deal with loosing the last two to salvage because the dumbass thought he could just wade through the lower lakes like it was nothing. The fact he even managed to get back without being fused with what was left of the mech is a miracle in itself. They're built to be resistant against extreme heat, not heat PROOF!</center><br><br><i>Robotics Team</i>";
-	name = "NOTICE!! paper"
-	},
+/obj/item/weapon/paper/fluff/awaymissions/caves/mech_notice,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},

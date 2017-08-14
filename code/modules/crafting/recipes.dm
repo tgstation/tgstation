@@ -112,6 +112,15 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/catwhip
+	name = "Cat O' Nine Tails"
+	result = /obj/item/weapon/melee/chainofcommand/tailwhip/kitty
+	reqs = list(/obj/item/organ/tail/cat = 1,
+	            /obj/item/stack/cable_coil = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209
@@ -220,7 +229,7 @@
 /datum/crafting_recipe/dragonsbreath
 	name = "Dragonsbreath Shell"
 	result = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,/datum/reagent/phosphorus = 5)
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1, /datum/reagent/phosphorus = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 	category = CAT_WEAPONRY
@@ -339,6 +348,14 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/kittyears
+	name = "Kitty Ears"
+	result = /obj/item/clothing/head/kitty/genuine
+	time = 10
+	reqs = list(/obj/item/organ/tail/cat = 1,
+				/obj/item/organ/ears/cat = 1)
+	category = CAT_MISC
+
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
 	result = /obj/vehicle/scooter/skateboard
@@ -371,6 +388,21 @@
 		/obj/item/device/flashlight = 2,
 		/obj/item/weapon/restraints/handcuffs/cable = 1
 	)
+	category = CAT_MISC
+
+/datum/crafting_recipe/paperframes
+	name = "Paper Frames"
+	result = /obj/item/stack/sheet/paperframes/five
+	time = 10
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5, /obj/item/weapon/paper = 20)
+	category = CAT_MISC
+
+/datum/crafting_recipe/naturalpaper
+	name = "Hand-Pressed Paper"
+	time = 30
+	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
+	tools = list(/obj/item/weapon/hatchet)
+	result = /obj/item/weapon/paper_bin/bundlenatural
 	category = CAT_MISC
 
 /datum/crafting_recipe/toysword
@@ -431,6 +463,14 @@
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/bonecodpiece
+	name = "Skull Codpiece"
+	result = /obj/item/clothing/accessory/skullcodpiece
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 2,
+				 /obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bracers
@@ -516,4 +556,13 @@
 	result = /obj/item/device/pressure_plate
 	time = 5
 	reqs = list(/obj/item/stack/sheet/plasteel = 1, /obj/item/stack/tile/plasteel = 1, /obj/item/stack/cable_coil = 2)
+	category = CAT_MISC
+
+
+/datum/crafting_recipe/rcl
+	name = "Makeshift Rapid Cable Layer"
+	result = /obj/item/weapon/twohanded/rcl/ghetto
+	time = 40
+	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver, /obj/item/weapon/wrench)
+	reqs = list(/obj/item/stack/sheet/metal = 15)
 	category = CAT_MISC

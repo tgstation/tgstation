@@ -43,7 +43,7 @@
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					ChangeTurf(/turf/open/floor/engine)
-					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
 				return
@@ -53,11 +53,11 @@
 			if(!W.use(1))
 				return
 			var/turf/open/floor/T = ChangeTurf(W.turf_type)
-			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
 				F.state = L.state
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
 	else if(istype(C, /obj/item/weapon/weldingtool))
