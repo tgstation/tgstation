@@ -26,7 +26,7 @@
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
 
-/obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
+/obj/item/weapon/storage/fancy/update_icon(itemremoved = FALSE)
 	if(fancy_open)
 		var/total_contents = src.contents.len - itemremoved
 		icon_state = "[icon_type]box[total_contents]"
