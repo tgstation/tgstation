@@ -9,7 +9,7 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
-	var/blocks_air = 0
+	var/blocks_air = FALSE
 
 	flags = CAN_BE_DIRTY
 
@@ -77,6 +77,7 @@
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
+	QDEL_LIST(blueprint_data)
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
@@ -84,15 +85,27 @@
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
+/turf/proc/handleRCL(obj/item/weapon/twohanded/rcl/C, mob/user)
+	if(C.loaded)
+		for(var/obj/structure/cable/LC in src)
+			if(!LC.d1 || !LC.d2)
+				LC.handlecable(C, user)
+				return
+		C.loaded.place_turf(src, user)
+		C.is_empty(user)
+
 /turf/attackby(obj/item/C, mob/user, params)
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
 		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
+			if(!LC.d1 || !LC.d2)
 				LC.attackby(C,user)
 				return
 		coil.place_turf(src, user)
 		return TRUE
+
+	else if(istype(C, /obj/item/weapon/twohanded/rcl))
+		handleRCL(C, user)
 
 	return FALSE
 
@@ -117,7 +130,7 @@
 				return FALSE
 
 	var/list/large_dense = list()
-	
+
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
@@ -134,7 +147,7 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	var/atom/movable/tompost_bump
-	var/top_layer = 0
+	var/top_layer = FALSE
 	for(var/atom/movable/obstacle in large_dense)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
 			if(obstacle.layer > top_layer)
@@ -147,8 +160,14 @@
 	return TRUE //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
+	..()
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
+
+	// If an opaque movable atom moves around we need to potentially update visibility.
+	if (AM.opacity)
+		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+		reconsider_lights()
 
 /turf/open/Entered(atom/movable/AM)
 	..()
@@ -197,18 +216,30 @@
 		qdel(L)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
-	return ChangeTurf(path, new_baseturf, defer_change, ignore_air)
+/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
+	return ChangeTurf(path, new_baseturf, defer_change, ignore_air, forceop)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
+/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(!path)
 		return
-	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
+	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
+
+	var/old_opacity = opacity
+	var/old_dynamic_lighting = dynamic_lighting
+	var/old_affecting_lights = affecting_lights
+	var/old_lighting_object = lighting_object
+	var/old_corners = corners
+ 
+	var/old_exl = explosion_level
+	var/old_exi = explosion_id
+	var/old_bp = blueprint_data
+	blueprint_data = null
 
 	var/old_baseturf = baseturf
 	changing_turf = TRUE
+
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
@@ -217,8 +248,30 @@
 	else
 		W.baseturf = old_baseturf
 
+	W.explosion_id = old_exi
+	W.explosion_level = old_exl
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
+
+	W.blueprint_data = old_bp
+ 
+	if(SSlighting.initialized)
+		recalc_atom_opacity()
+		lighting_object = old_lighting_object
+		affecting_lights = old_affecting_lights
+		corners = old_corners
+		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+			reconsider_lights()
+
+		if (dynamic_lighting != old_dynamic_lighting)
+			if (IS_DYNAMIC_LIGHTING(src))
+				lighting_build_overlay()
+			else
+				lighting_clear_overlay()
+
+		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+			S.update_starlight()
 
 	return W
 
@@ -338,8 +391,7 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
 
@@ -398,25 +450,23 @@
 	I.setDir(AM.dir)
 	I.alpha = 128
 
-	if(!blueprint_data)
-		blueprint_data = list()
-	blueprint_data += I
+	LAZYADD(blueprint_data, I)
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type)
+/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(),ignored_atoms)
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(ignore_typecache), ignored_atoms)
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
-	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE)
+	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop = forceop)
 
 	SSair.remove_from_active(newT)
 	newT.CalculateAdjacentTurfs()
@@ -425,13 +475,12 @@
 /turf/proc/is_transition_turf()
 	return
 
-
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1
 	var/acid_type = /obj/effect/acid
 	if(acidpwr >= 200) //alien acid power
 		acid_type = /obj/effect/acid/alien
-	var/has_acid_effect = 0
+	var/has_acid_effect = FALSE
 	for(var/obj/O in src)
 		if(intact && O.level == 1) //hidden under the floor
 			continue

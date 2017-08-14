@@ -197,7 +197,7 @@
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
-	desc = "Someone seperated our Research Director from his own head!"
+	desc = "Someone separated our Research Director from his own head!"
 	var/tele_range = 6
 	var/rad_amount= 15
 	reactivearmor_cooldown_duration = 100

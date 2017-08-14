@@ -233,7 +233,7 @@
 	. -= "reverting"
 
 	//storing these can sometimes cause sticky bans to start matching everybody
-	//	and isn't even needed for sticky ban matching, as the hub tracks these seperately
+	//	and isn't even needed for sticky ban matching, as the hub tracks these separately
 	. -= "IP"
 	. -= "computer_id"
 

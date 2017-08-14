@@ -133,7 +133,8 @@ function highlightTerms(el) {
 							newWord = words[w].replace("<", "&lt;").replace(new RegExp(opts.highlightTerms[i], 'gi'), addHighlightMarkup);
 							break;
 						}
-						console.log(newWord)
+						if (window.console)
+							console.log(newWord)
 					}
 					newText += newWord || words[w].replace("<", "&lt;");
 					newText += w >= words.length ? '' : ' ';

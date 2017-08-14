@@ -312,7 +312,6 @@
 			reagents.add_reagent("heparin", 5)
 		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
-		GLOB.cult_narsie.resize(1.1)
 		GLOB.cult_narsie.souls_needed -= src
 		GLOB.cult_narsie.souls += 1
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))

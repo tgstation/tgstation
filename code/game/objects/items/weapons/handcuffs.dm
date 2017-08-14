@@ -9,6 +9,8 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -88,6 +90,8 @@
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
 	item_state = "coil_red"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	origin_tech = "engineering=2"
 	breakouttime = 300 //Deciseconds = 30s
@@ -206,7 +210,8 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
-	item_state = "coil_white"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
@@ -214,6 +219,7 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_white_used"
+	item_state = "cuff_white"
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/used/attack()
 	return
@@ -227,6 +233,8 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags = CONDUCT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL

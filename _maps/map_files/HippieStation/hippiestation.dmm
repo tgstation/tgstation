@@ -14074,7 +14074,7 @@
 /area/ai_monitored/nuke_storage)
 "aEQ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel,
 /area/gateway)
 "aER" = (
@@ -16369,7 +16369,7 @@
 "aJN" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aJO" = (
@@ -28746,7 +28746,7 @@
 /area/quartermaster/office)
 "bmR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/morguereminder{
+/obj/item/weapon/paper/guides/jobs/medical/morgue{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -29476,10 +29476,13 @@
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "boq" = (
-/obj/structure/bed/roller,
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
 	},
+/turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bor" = (
 /obj/structure/table,
@@ -30517,7 +30520,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/gravity_gen{
+/obj/item/weapon/paper/guides/jobs/engi/gravity_gen{
 	layer = 3
 	},
 /obj/item/weapon/pen/blue,
@@ -30746,6 +30749,10 @@
 "bra" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/rxglasses,
+/obj/item/weapon/storage/box/disks{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "brb" = (
@@ -30801,10 +30808,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/whiteblue/corner{
-	dir = 2
-	},
-/area/medical/medbay/central)
+/turf/closed/wall,
+/area/medical/genetics)
 "bri" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -30817,11 +30822,10 @@
 	},
 /area/medical/medbay/central)
 "brj" = (
-/obj/structure/bed/roller,
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 6
-	},
-/area/medical/medbay/central)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
 "brk" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -32316,6 +32320,7 @@
 	dir = 4;
 	on = 1
 	},
+/obj/structure/closet/wardrobe/genetics_white,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bum" = (
@@ -32869,18 +32874,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bvn" = (
-/obj/machinery/button/door{
-	desc = "A remote control switch for the genetics doors.";
-	id = "GeneticsDoor";
-	name = "Genetics Exit Button";
-	normaldoorcontrol = 1;
-	pixel_x = 8;
-	pixel_y = 24
-	},
-/obj/structure/table,
-/obj/item/weapon/book/manual/medical_cloning{
-	pixel_y = 6
-	},
+/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bvo" = (
@@ -32899,11 +32893,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bvq" = (
-/obj/structure/chair,
-/obj/effect/landmark/start/geneticist,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/chair,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bvr" = (
@@ -33523,17 +33516,15 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/obj/structure/table,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/weapon/storage/box/rxglasses{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
 	},
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/pen,
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bwM" = (
@@ -34768,12 +34759,12 @@
 	},
 /area/medical/genetics)
 "bzn" = (
-/obj/machinery/computer/cloning,
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
 	pixel_y = -22
 	},
+/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 2
 	},
@@ -35298,6 +35289,7 @@
 "bAt" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench/medical,
+/obj/machinery/cell_charger,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bAu" = (
@@ -39142,9 +39134,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bIq" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bIr" = (
@@ -46167,7 +46157,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/item/weapon/paper/range,
+/obj/item/weapon/paper/guides/jobs/security/range,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -48499,6 +48489,7 @@
 	},
 /obj/item/weapon/stamp/ce,
 /obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
@@ -52374,6 +52365,8 @@
 /obj/item/weapon/electronics/apc,
 /obj/item/weapon/stock_parts/cell/high/plus,
 /obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckE" = (
@@ -52428,7 +52421,7 @@
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
-/obj/item/weapon/paper/solar,
+/obj/item/weapon/paper/guides/jobs/engi/solars,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckK" = (
@@ -64609,9 +64602,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cMD" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cME" = (
@@ -64624,13 +64615,12 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "cMH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cMI" = (
@@ -67404,6 +67394,80 @@
 /obj/structure/reagent_dispensers/water_cooler/honk,
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
+"cWq" = (
+/obj/structure/closet,
+/turf/closed/wall/r_wall,
+/area/medical/genetics)
+"cWr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"cWs" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
+"cWt" = (
+/obj/machinery/clonepod,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
+"cWu" = (
+/obj/machinery/button/door{
+	desc = "A remote control switch for the genetics doors.";
+	dir = 2;
+	id = "GeneticsDoor";
+	name = "Genetics Exit Button";
+	normaldoorcontrol = 1;
+	pixel_x = 24;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
+"cWv" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/bodybags,
+/obj/item/weapon/storage/box/rxglasses,
+/obj/item/weapon/pen,
+/obj/item/weapon/storage/pill_bottle/mannitol,
+/obj/item/weapon/storage/pill_bottle/mutadone,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
+"cWw" = (
+/obj/structure/table,
+/obj/item/weapon/book/manual/medical_cloning,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
+"cWx" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
+"cWy" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics)
+"cWz" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWA" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWB" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWC" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cWD" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -94835,7 +94899,7 @@ cpv
 cqb
 cTU
 cTW
-cqY
+cWB
 aaH
 cUc
 cUe
@@ -95092,7 +95156,7 @@ cpv
 cqb
 cTU
 cTX
-cqY
+cWC
 aaH
 cAl
 aaH
@@ -95349,7 +95413,7 @@ cpv
 cqd
 cTU
 cTW
-cqY
+cWD
 cEt
 cAl
 csA
@@ -95605,9 +95669,9 @@ ccw
 cpy
 ccw
 ccw
-cqY
+cWz
 cMD
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -95864,7 +95928,7 @@ cqf
 chX
 chX
 crs
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -96121,7 +96185,7 @@ cqh
 ciZ
 cra
 cTR
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -96635,7 +96699,7 @@ cqj
 cqH
 crb
 ciZ
-cqY
+cMD
 cAl
 csA
 cFb
@@ -96892,7 +96956,7 @@ cqi
 ciZ
 ciZ
 ciZ
-cqY
+cMD
 cAl
 cEr
 cEr
@@ -97147,9 +97211,9 @@ ccw
 cpy
 ccw
 ccw
-cqY
-cqY
-cqY
+cWA
+cMD
+cMD
 cAl
 cEr
 cEr
@@ -97405,7 +97469,7 @@ cpD
 cDw
 cTU
 cTW
-cqY
+cMD
 cEt
 cAl
 csA
@@ -97662,7 +97726,7 @@ cpD
 cqb
 cTU
 cTW
-cqY
+cMD
 aaH
 cAl
 aaH
@@ -97919,7 +97983,7 @@ cTL
 cqb
 cTU
 cTW
-cqY
+cMD
 aaH
 cUd
 cUe
@@ -104554,8 +104618,8 @@ bhh
 bsx
 btV
 bvh
-bwH
-bxS
+bwI
+bxV
 bzh
 bAs
 bvj
@@ -106350,12 +106414,12 @@ bkR
 bfL
 boo
 bqQ
-bhg
-bua
+cWs
+cWt
 bvn
 bwL
-bxX
 bsL
+cWy
 bua
 bBJ
 bhh
@@ -106607,9 +106671,9 @@ bkQ
 bmW
 bom
 bIq
-bri
 bsu
-bsL
+cWu
+cWx
 bsL
 bvo
 bzl
@@ -106862,11 +106926,11 @@ biz
 biz
 bla
 bmY
+bhh
 boq
-boq
-brj
-bpE
-btk
+cWs
+cWv
+bsL
 bum
 bvq
 bzn
@@ -107120,9 +107184,9 @@ biB
 bkU
 bmX
 bpE
-bpE
-bpE
-bpE
+cWr
+cWs
+cWw
 bti
 bul
 bvp
@@ -107378,7 +107442,7 @@ bla
 bmZ
 bpH
 bra
-bsK
+bpE
 bpE
 bpE
 buq
@@ -107893,7 +107957,7 @@ bmZ
 bpJ
 brc
 bsL
-bug
+brc
 btl
 but
 bvw
@@ -108403,7 +108467,7 @@ biE
 bkf
 bfS
 bKH
-bmZ
+cWq
 bpL
 bre
 bsN

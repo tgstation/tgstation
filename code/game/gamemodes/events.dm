@@ -33,7 +33,7 @@
 
 	for(var/obj/machinery/power/apc/C in GLOB.apcs_list)
 		if(C.cell && C.z == ZLEVEL_STATION)
-			var/area/A = get_area(C)
+			var/area/A = C.area
 
 			var/skip = 0
 			for(var/area_type in skipped_areas)

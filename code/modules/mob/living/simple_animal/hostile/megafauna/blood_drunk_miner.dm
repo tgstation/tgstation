@@ -45,7 +45,7 @@ Difficulty: Medium
 	blood_volume = BLOOD_VOLUME_NORMAL
 	medal_type = MEDAL_PREFIX
 	var/obj/item/weapon/melee/transforming/cleaving_saw/miner/miner_saw
-	var/time_until_next_transform
+	var/time_until_next_transform = 0
 	var/dashing = FALSE
 	var/dash_cooldown = 15
 	var/guidance = FALSE
@@ -81,7 +81,7 @@ Difficulty: Medium
 	miner_saw = new(src)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	var/adjustment_amount = amount * 0.15
+	var/adjustment_amount = amount * 0.1
 	if(world.time + adjustment_amount > next_move)
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	. = ..()
@@ -93,7 +93,7 @@ Difficulty: Medium
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
-	if(dashing || (newloc && newloc.z == z && (istype(newloc, /turf/open/floor/plating/lava) || istype(newloc, /turf/open/chasm)))) //we're not stupid!
+	if(dashing || (newloc && newloc.z == z && (istype(newloc, /turf/open/lava) || istype(newloc, /turf/open/chasm)))) //we're not stupid!
 		return FALSE
 	return ..()
 
@@ -151,7 +151,7 @@ Difficulty: Medium
 	transform_weapon()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/shoot_ka()
-	if(next_move <= world.time && ranged_cooldown <= world.time && get_dist(src, target) <= MINER_DASH_RANGE && !Adjacent(target))
+	if(ranged_cooldown <= world.time && get_dist(src, target) <= MINER_DASH_RANGE && !Adjacent(target))
 		ranged_cooldown = world.time + ranged_cooldown_time
 		visible_message("<span class='danger'>[src] fires the proto-kinetic accelerator!</span>")
 		face_atom(target)
@@ -186,7 +186,7 @@ Difficulty: Medium
 		var/turf_dist_to_target = 0
 		if(!QDELETED(dash_target))
 			turf_dist_to_target += get_dist(dash_target, O)
-		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm))
+		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/lava) && !istype(O, /turf/open/chasm))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
 				if(is_blocked_turf(T, TRUE))
@@ -236,7 +236,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dir_setting/miner_death
 	icon_state = "miner_death"
-	duration = 10
+	duration = 15
 
 /obj/effect/temp_visual/dir_setting/miner_death/Initialize(mapload, set_dir)
 	. = ..()
@@ -250,9 +250,9 @@ Difficulty: Medium
 		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
-	sleep(2)
-	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 8, easing = EASE_IN, flags = ANIMATION_PARALLEL)
-	sleep(2)
+	sleep(5)
+	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
+	sleep(4)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /obj/item/device/gps/internal/miner

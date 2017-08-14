@@ -10,6 +10,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_ID | SLOT_BELT
@@ -383,11 +385,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else if((!isnull(cartridge)) && (cartridge.access & CART_ATMOS))
 					scanmode = 5
 			if("Drone Phone")
-				var/area/A = get_area(U)
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
-				if(A && alert_s)
+				var/area/A = get_area(U)
+				if(A && alert_s && !QDELETED(U))
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
-					_alert_drones(msg, TRUE)
+					_alert_drones(msg, TRUE, U)
 					to_chat(U, msg)
 
 

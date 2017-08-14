@@ -145,7 +145,7 @@
 		return TRUE
 	return FALSE
 
-//Judicial marker: Created by the judicial visor. After three seconds, knocks down any non-Servants nearby and damages Nar-Sian cultists.
+//Judicial marker: Created by the judicial visor. Immediately applies Belligerent and briefly knocks down, then after 3 seconds does large damage and briefly knocks down again
 /obj/effect/clockwork/judicial_marker
 	name = "judicial marker"
 	desc = "You get the feeling that you shouldn't be standing here."
@@ -165,11 +165,18 @@
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
 	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
+	for(var/mob/living/carbon/C in range(1, src))
+		var/datum/status_effect/belligerent/B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+		if(!QDELETED(B))
+			B.duration = world.time + 30
+			C.Knockdown(5) //knocks down for half a second if affected
 	sleep(16)
+	name = "judicial blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)
 	set_light(1.4, 2, "#B451A1")
 	sleep(13)
+	name = "judicial explosion"
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
 	set_light(0)
@@ -181,21 +188,19 @@
 			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
 			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
+		L.Knockdown(15) //knocks down briefly when exploding
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Knockdown(160) //knocks down targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Knockdown(80) //knocks down for 6-8 seconds, but set cultist targets on fire
-			L.adjust_fire_stacks(2)
+			L.adjust_fire_stacks(2) //sets cultist targets on fire
 			L.IgniteMob()
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			C.silent += 6
+			L.adjustFireLoss(5)
 		targetsjudged++
-		L.adjustBruteLoss(10) //do a small amount of damage
+		if(!QDELETED(L))
+			L.adjustBruteLoss(20) //does a decent amount of damage
 		add_logs(user, L, "struck with a judicial blast")
 	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
 	sleep(3) //so the animation completes properly

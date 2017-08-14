@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(server_maint)
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)
-		world.visibility = 1
+		world.update_hub_visibility(TRUE)
 	..()
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
@@ -39,10 +39,16 @@ SUBSYSTEM_DEF(server_maint)
 			return
 
 /datum/controller/subsystem/server_maint/Shutdown()
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", TRUE) //second parameter ensures only afk clients are kicked
+	//kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", TRUE) //second parameter ensures only afk clients are kicked
+	var/server = config.server
 	for(var/thing in GLOB.clients)
+		if(!thing)
+			continue
 		var/client/C = thing
-		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
+		var/datum/chatOutput/co = C.chatOutput
+		if(co)
+			co.ehjax_send(data = "roundrestart")
+		if(server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+			C << link("byond://[server]")
 
 #undef PING_BUFFER_TIME

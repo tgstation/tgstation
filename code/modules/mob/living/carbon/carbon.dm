@@ -247,6 +247,12 @@
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
+/mob/living/carbon/hallucinating()
+	if(hallucination)
+		return TRUE
+	else
+		return FALSE
+
 /mob/living/carbon/resist_buckle()
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
@@ -690,7 +696,7 @@
 		if(health<= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_DEEPCRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -821,3 +827,4 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+	.["Hallucinate"] = "?_src_=vars;hallucinate=\ref[src]"

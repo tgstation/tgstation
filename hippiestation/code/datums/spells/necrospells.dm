@@ -1,13 +1,13 @@
 // Necrolord
 /obj/effect/proc_holder/spell/targeted/trigger/soulflare
 	name = "Soulflare"
-	desc = "Deals high damage to an enemy in 3 different damage types, as well as paralyzing them for 1 seconds If it hits an enemy in critical condition, it instantly kills them and lowers the cooldown permanently, to a maximum of 6."
+	desc = "Deals high damage to an enemy in 3 different damage types, causing paralysis in them for three seconds. If it hits an enemy in critical condition, it instantly kills them and lowers the cooldown permanently to a maximum of 6."
 	school = "transmutation"
 	charge_max = 300
 	clothes_req = 1
-	invocation = "NEKROSIS"
+	invocation = "NEK'ROSIS!"
 	invocation_type = "shout"
-	message = "<span class='notice'>Your head feels like it's being burned as you fall to the ground!</span>"
+	message = "<span class='notice'>You collapse in utter mind-crushing agony!</span>"
 	cooldown_min = 300
 	level_max = 0 // no upgrades because it allows you to get 0 cooldown if you wait with upgrades.
 	action_icon = 'hippiestation/icons/mob/actions.dmi'
@@ -15,7 +15,7 @@
 	action_icon_state = "soulflare"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/soulflare
-	amt_unconscious = 1
+	amt_unconscious = 30
 	amt_dam_fire = 15
 	amt_dam_brute = 15
 	amt_dam_oxy = 15
@@ -43,7 +43,7 @@
 	school = "transmutation"
 	charge_max = 200
 	clothes_req = 1
-	invocation = "BO'NES T'O BO'MS"
+	invocation = "BO'NES T'O BO'MS!"
 	invocation_type = "shout"
 	cooldown_min = 10
 	centcom_cancast = FALSE
@@ -61,25 +61,25 @@
 		explosion(target,1,2,4,2)
 		to_chat(user, "<font color=purple><b>You redirect an absurd amount of energy into [target]'s corpse, causing it to violently explode!</b></font>")
 	else
-		to_chat(user, "<span class='warning'>[target] isn't a dead corpse!</span>")
+		to_chat(user, "<span class='warning'>[target] isn't a corpse!</span>")
 		charge_counter = initial(charge_counter)
 
 /obj/effect/proc_holder/spell/self/soulsplit
 	name = "Soulsplit"
-	desc = "Enter a wraith-like form, traveling at very high speeds and moving through objects. However, maintaining this form requires you to be at full health to maintain concentration!"
+	desc = "Enter a wraith-like form, traveling at very high speeds and moving through objects. However, maintaining this form requires you to be at near-full health to maintain concentration!"
 	school = "transmutation"
 	charge_max = 300
 	clothes_req = 1
 	centcom_cancast = FALSE
-	invocation = "TRAVEL ME BONES"
+	invocation = "TRA'VEL ME BO'NES!"
 	invocation_type = "shout"
 	cooldown_min = 150
 	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "soulsplit"
 
 /obj/effect/proc_holder/spell/self/soulsplit/cast(list/targets, mob/living/user = usr)
-	if(user.health >= 100)
-		to_chat(user, "<font color=purple><b>You enter your wraith form, leaving you vulnerable yet very manoeuvrable.</b></font>")
+	if(user.health >= 80)
+		to_chat(user, "<font color=purple><b>You enter your wraith form!</b></font>")
 		user.incorporeal_move = 2
 		addtimer(CALLBACK(user, /mob/living/.proc/soulsplit_wearoff), 35)
 	else

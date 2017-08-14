@@ -261,7 +261,7 @@
 	var/turf/next = get_step(ridden, direction)
 	var/turf/current = get_turf(ridden)
 
-	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
+	if(istype(next, /turf/open/lava) || istype(current, /turf/open/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
 	else
 		to_chat(user, "Boats don't go on land!")

@@ -5,7 +5,6 @@
 	view = "15x15"
 	cache_lifespan = 7
 	hub = "Exadv1.spacestation13"
-	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 1
@@ -62,16 +61,16 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_version")]")
-			db_version.Execute()
-			if(db_version.NextRow())
-				var/db_major = db_version.item[1]
-				var/db_minor = db_version.item[2]
+			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
+			query_db_version.Execute()
+			if(query_db_version.NextRow())
+				var/db_major = text2num(query_db_version.item[1])
+				var/db_minor = text2num(query_db_version.item[2])
 				if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
-					message_admins("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					message_admins("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("Database schema ([db_major].[db_minor]) is behind latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 			else
-				message_admins("Could not get schema version from db")
+				message_admins("Could not get schema version from database")
 		else
 			log_world("Your server failed to establish a connection with the database.")
 
@@ -109,10 +108,10 @@
 
 /world/Topic(T, addr, master, key)
 	var/list/input = params2list(T)
-	
+
 	var/pinging = ("ping" in input)
 	var/playing = ("players" in input)
-	
+
 	if(!pinging && !playing && config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
@@ -163,10 +162,7 @@
 		var/list/afkmins = adm["afk"]
 		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 
-
-		s["gamestate"] = 1
-		if(SSticker)
-			s["gamestate"] = SSticker.current_state
+		s["gamestate"] = SSticker.current_state
 
 		s["map_name"] = SSmapping.config.map_name
 
@@ -287,3 +283,12 @@
 		s += "<b>STARTING</b>"
 
 	status = s
+
+/world/proc/update_hub_visibility(new_visibility)
+	if(new_visibility == GLOB.hub_visibility)
+		return
+	GLOB.hub_visibility = new_visibility
+	if(GLOB.hub_visibility)
+		hub_password = "kMZy3U5jJHSiBQjr"
+	else
+		hub_password = "SORRYNOPASSWORD"

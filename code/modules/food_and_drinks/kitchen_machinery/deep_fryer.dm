@@ -112,6 +112,7 @@ insert ascii eagle on american flag background here
 					S.name = "the physical manifestation of the very concept of fried foods"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
+			S.foodtype |= FRIED
 			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
 				qdel(frying)
 			else

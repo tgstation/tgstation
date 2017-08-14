@@ -4,6 +4,7 @@
 	name = "poolwater"
 	desc = "You're safer here than in the deep."
 	icon_state = "deep"
+	heat_capacity = INFINITY
 	var/next_splash = 1
 	var/obj/effect/overlay/water/watereffect
 

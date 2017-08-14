@@ -203,7 +203,7 @@
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
 		return
-	if(setAngle)
+	if(isnum(setAngle))
 		Angle = setAngle
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
@@ -223,10 +223,10 @@
 				Angle=round(Get_Angle(src,current))
 			if(spread)
 				Angle += (rand() - 0.5) * spread
-			var/matrix/M = new
 			if(!nondirectional_sprite)
+				var/matrix/M = new
 				M.Turn(Angle)
-			transform = M
+				transform = M
 
 			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
 			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)

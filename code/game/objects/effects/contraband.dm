@@ -115,7 +115,7 @@
 	forceMove(P)
 	return P
 
-//seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
+//separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.poster_structure)
 		to_chat(user, "<span class='warning'>[P] has no poster... inside it? Inform a coder!</span>")
@@ -350,7 +350,7 @@
 
 /obj/structure/sign/poster/contraband/free_drone
 	name = "Free Drone"
-	desc = "This poster commemorates the bravery of the rogue drone banned by CentComm."
+	desc = "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentCom."
 	icon_state = "poster35"
 
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6

@@ -12,72 +12,72 @@
 	return 1
 
 /datum/objective_item/steal/caplaser
-	name = "the captain's antique laser gun"
+	name = "the captain's antique laser gun."
 	targetitem = /obj/item/weapon/gun/energy/laser/captain
 	difficulty = 5
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/hoslaser
-	name = "the head of security's personal laser gun"
+	name = "the head of security's personal laser gun."
 	targetitem = /obj/item/weapon/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
 
 /datum/objective_item/steal/handtele
-	name = "a hand teleporter"
+	name = "a hand teleporter."
 	targetitem = /obj/item/weapon/hand_tele
 	difficulty = 5
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/jetpack
-	name = "the Captain's jetpack"
+	name = "the Captain's jetpack."
 	targetitem = /obj/item/weapon/tank/jetpack/oxygen/captain
 	difficulty = 5
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/magboots
-	name = "the chief engineer's advanced magnetic boots"
+	name = "the chief engineer's advanced magnetic boots."
 	targetitem =  /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
 	excludefromjob = list("Chief Engineer")
 
 /datum/objective_item/steal/capmedal
-	name = "the medal of captaincy"
+	name = "the medal of captaincy."
 	targetitem = /obj/item/clothing/accessory/medal/gold/captain
 	difficulty = 5
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/hypo
-	name = "the hypospray"
+	name = "the hypospray."
 	targetitem = /obj/item/weapon/reagent_containers/hypospray/CMO
 	difficulty = 5
 	excludefromjob = list("Chief Medical Officer")
 
 /datum/objective_item/steal/nukedisc
-	name = "the nuclear authentication disk"
+	name = "the nuclear authentication disk."
 	targetitem = /obj/item/weapon/disk/nuclear
 	difficulty = 5
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/reflector
-	name = "a reflector vest"
+	name = "a reflector vest."
 	targetitem = /obj/item/clothing/suit/armor/laserproof
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")
 
 /datum/objective_item/steal/reactive
-	name = "the reactive teleport armor"
+	name = "the reactive teleport armor."
 	targetitem = /obj/item/clothing/suit/armor/reactive
 	difficulty = 5
 	excludefromjob = list("Research Director")
 
 /datum/objective_item/steal/documents
-	name = "any set of secret documents of any organization"
+	name = "any set of secret documents of any organization."
 	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
 	difficulty = 5
 
 /datum/objective_item/steal/nuke_core
-	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core"
+	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core!"
 	targetitem = /obj/item/nuke_core
 	difficulty = 15
 
@@ -96,7 +96,7 @@
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
-	name = "28 moles of plasma (full tank)"
+	name = "28 moles of plasma (full tank)."
 	targetitem = /obj/item/weapon/tank
 	difficulty = 3
 	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
@@ -109,7 +109,7 @@
 
 
 /datum/objective_item/steal/functionalai
-	name = "a functional AI"
+	name = "a functional AI."
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
@@ -120,7 +120,7 @@
 	return 0
 
 /datum/objective_item/steal/blueprints
-	name = "the station blueprints"
+	name = "the station blueprints."
 	targetitem = /obj/item/areaeditor/blueprints
 	difficulty = 10
 	excludefromjob = list("Chief Engineer")
@@ -136,7 +136,7 @@
 	return 0
 
 /datum/objective_item/steal/slime
-	name = "an unused sample of slime extract"
+	name = "an unused sample of slime extract."
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
 	excludefromjob = list("Research Director","Scientist")
@@ -148,54 +148,54 @@
 
 //Unique Objectives
 /datum/objective_item/unique/docs_red
-	name = "the \"Red\" secret documents"
+	name = "the \"Red\" secret documents."
 	targetitem = /obj/item/documents/syndicate/red
 	difficulty = 10
 
 /datum/objective_item/unique/docs_blue
-	name = "the \"Blue\" secret documents"
+	name = "the \"Blue\" secret documents."
 	targetitem = /obj/item/documents/syndicate/blue
 	difficulty = 10
 
 //Old ninja objectives.
 /datum/objective_item/special/pinpointer
-	name = "the captain's pinpointer"
+	name = "the captain's pinpointer."
 	targetitem = /obj/item/weapon/pinpointer
 	difficulty = 10
 
 /datum/objective_item/special/aegun
-	name = "an advanced energy gun"
+	name = "an advanced energy gun."
 	targetitem = /obj/item/weapon/gun/energy/e_gun/nuclear
 	difficulty = 10
 
 /datum/objective_item/special/ddrill
-	name = "a diamond drill"
+	name = "a diamond drill."
 	targetitem = /obj/item/weapon/pickaxe/drill/diamonddrill
 	difficulty = 10
 
 /datum/objective_item/special/boh
-	name = "a bag of holding"
+	name = "a bag of holding."
 	targetitem = /obj/item/weapon/storage/backpack/holding
 	difficulty = 10
 
 /datum/objective_item/special/hypercell
-	name = "a hyper-capacity cell"
+	name = "a hyper-capacity power cell."
 	targetitem = /obj/item/weapon/stock_parts/cell/hyper
 	difficulty = 5
 
 /datum/objective_item/special/laserpointer
-	name = "a laser pointer"
+	name = "a laser pointer."
 	targetitem = /obj/item/device/laser_pointer
 	difficulty = 5
 
 /datum/objective_item/special/corgimeat
-	name = "a piece of corgi meat"
+	name = "a piece of corgi meat."
 	targetitem = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
 	difficulty = 5
 
 //Stack objectives get their own subtype
 /datum/objective_item/stack
-	name = "5 cardboards"
+	name = "5 cardboard."
 	targetitem = /obj/item/stack/sheet/cardboard
 	difficulty = 9001
 
@@ -208,16 +208,16 @@
 	return found_amount>=target_amount
 
 /datum/objective_item/stack/diamond
-	name = "10 diamonds"
+	name = "10 diamonds."
 	targetitem = /obj/item/stack/sheet/mineral/diamond
 	difficulty = 10
 
 /datum/objective_item/stack/gold
-	name = "50 gold bars"
+	name = "50 gold bars."
 	targetitem = /obj/item/stack/sheet/mineral/gold
 	difficulty = 15
 
 /datum/objective_item/stack/uranium
-	name = "25 refined uranium bars"
+	name = "25 refined uranium bars."
 	targetitem = /obj/item/stack/sheet/mineral/uranium
 	difficulty = 10

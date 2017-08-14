@@ -9,6 +9,8 @@
 #define INVESTIGATE_SUPERMATTER      "supermatter"
 #define INVESTIGATE_TELESCI          "telesci"
 #define INVESTIGATE_WIRES            "wires"
+#define INVESTIGATE_PORTAL			"portals"
+#define INVESTIGATE_HALLUCINATIONS   "hallucinations"
 
 //Individual logging defines
 #define INDIVIDUAL_ATTACK_LOG   "Attack log"

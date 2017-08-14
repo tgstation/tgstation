@@ -114,12 +114,3 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
-
-/obj/item/ammo_casing/caseless/arrow
-	name = "arrow"
-	desc = "Stab, stab, stab."
-	icon_state = "arrow"
-	force = 10
-	sharpness = IS_SHARP
-	projectile_type = /obj/item/projectile/bullet/reusable/arrow
-	caliber = "arrow"

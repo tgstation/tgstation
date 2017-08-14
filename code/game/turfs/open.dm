@@ -18,6 +18,7 @@
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
+	..()
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
@@ -122,6 +123,8 @@
 
 /turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
+		if(I.resistance_flags & FREEZE_PROOF)
+			return
 		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)

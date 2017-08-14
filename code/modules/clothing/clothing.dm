@@ -6,7 +6,7 @@
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
 	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0					//but seperated to allow items to protect but not impair vision, like space helmets
+	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
 	var/visor_flags_cover = 0	//same as above, but for flags_cover
@@ -254,6 +254,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	dynamic_hair_suffix = "+generic"
 
 /obj/item/clothing/head/Initialize()
 	. = ..()
@@ -331,11 +332,6 @@ BLIND     // can't see anything
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_wear_mask()
-
-
-//Override this to modify speech like luchador masks.
-/obj/item/clothing/mask/proc/speechModification(message)
-	return message
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(mob/living/user)
@@ -489,6 +485,7 @@ BLIND     // can't see anything
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
+	dog_fashion = null
 
 /obj/item/clothing/suit/space
 	name = "space suit"

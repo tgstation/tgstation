@@ -11,6 +11,8 @@
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
 
+	var/disgust = 0
+
 //inventory slots
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null

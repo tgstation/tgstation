@@ -2,6 +2,8 @@
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	origin_tech = "materials=2;combat=3"
 
 /obj/item/weapon/grenade/flashbang/prime()

@@ -1,6 +1,8 @@
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE

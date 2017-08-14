@@ -27,7 +27,7 @@
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
-	loc = M
+	loc = null
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -74,6 +74,7 @@
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
 	list_reagents = list("nutriment" = 5)
+	foodtype = RAW | MEAT | GROSS
 
 
 /obj/item/organ/Destroy()

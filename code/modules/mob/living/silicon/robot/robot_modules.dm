@@ -4,6 +4,8 @@
 	icon_state = "std_module"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = CONDUCT
 
 	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
@@ -389,6 +391,7 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/weapon/storage/bag/trash/cyborg,
+		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/mop/cyborg,
 		/obj/item/device/lightreplacer/cyborg,
 		/obj/item/weapon/holosign_creator,
@@ -435,6 +438,7 @@
 		/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 		/obj/item/weapon/pen,
 		/obj/item/toy/crayon/spraycan/borg,
+		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/hand_labeler/borg,
 		/obj/item/weapon/razor,
 		/obj/item/device/instrument/violin,

@@ -4,6 +4,8 @@
 	desc = "An odd, L-shaped device that hums with energy."
 	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires power to function."
 	icon_state = "replica_fabricator"
+	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	flags = NOBLUDGEON
