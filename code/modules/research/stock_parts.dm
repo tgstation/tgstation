@@ -14,7 +14,6 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	use_to_pickup = 1
 	allow_quick_gather = 1
 	allow_quick_empty = 1
-	collection_mode = 1
 	display_contents_with_number = 1
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 100

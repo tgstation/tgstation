@@ -317,12 +317,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
+			if(S.collection_mode == COLLECTION_MODE_ALL || S.collection_mode == COLLECTION_MODE_TYPE) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
 				if(isturf(loc))
 					var/list/rejections = list()
 
 					var/list/things = loc.contents.Copy()
-					if (S.collection_mode == 2)
+					if (S.collection_mode == COLLECTION_MODE_TYPE)
 						things = typecache_filter_list(things, typecacheof(type))
 
 					var/len = things.len

@@ -22,7 +22,7 @@
 	var/display_contents_with_number	//Set this to make the storage item group contents of the same type and display them as a number.
 	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
-	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
+	var/collection_mode = COLLECTION_MODE_ALL;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
 	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
 	var/rustle_jimmies = TRUE	//Play the rustle sound on insertion
 
@@ -455,13 +455,15 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
-	collection_mode = (collection_mode+1)%3
 	switch (collection_mode)
-		if(2)
+		if(COLLECTION_MODE_ALL)
+			collection_mode = COLLECTION_MODE_TYPE
 			to_chat(usr, "[src] now picks up all items of a single type at once.")
-		if(1)
+		if(COLLECTION_MODE_ONE)
+			collection_mode = COLLECTION_MODE_ALL
 			to_chat(usr, "[src] now picks up all items in a tile at once.")
-		if(0)
+		if(COLLECTION_MODE_TYPE)
+			collection_mode = COLLECTION_MODE_ONE
 			to_chat(usr, "[src] now picks up one item at a time.")
 
 // Empty all the contents onto the current turf
