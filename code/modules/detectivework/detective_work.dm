@@ -111,14 +111,8 @@
 		forensics.hiddenprints = list()
 
 	// Transfer
-	if(forensics && forensics.prints)
+	if(LAZYLEN(forensics.prints))
 		A.forensics.prints |= forensics.prints.Copy()            //detective
-	if(forensics.hiddenprints)
+	if(LAZYLEN(forensics.hiddenprints))
 		A.forensics.hiddenprints |= forensics.hiddenprints.Copy()    //admin
 	A.fingerprintslast = fingerprintslast
-
-/atom/proc/add_gsr(mob/living/carbon/human/M, gsrtype)
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
-		var/obj/item/clothing/gloves/G = M.gloves
-		G.forensics.gsr |= gsrtype
-
