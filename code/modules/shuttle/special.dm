@@ -10,9 +10,9 @@
 	icon = 'icons/obj/machines/magic_emitter.dmi'
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
+	active = FALSE
 	var/list/active_tables = list()
 	var/tables_required = 2
-	active = FALSE
 
 /obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()

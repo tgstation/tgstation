@@ -123,12 +123,18 @@ Class Procs:
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
+	var/obj/item/weapon/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 /obj/machinery/Initialize()
 	if(!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	. = ..()
 	GLOB.machines += src
+
+	if(ispath(circuit, /obj/item/weapon/circuitboard))
+		circuit = new circuit
+		circuit.apply_default_parts(src)
+
 	if(!speed_process)
 		START_PROCESSING(SSmachines, src)
 	else
@@ -439,7 +445,7 @@ Class Procs:
 /obj/machinery/proc/display_parts(mob/user)
 	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[bicon(C)] [C.name]</span>")
+		to_chat(user, "<span class='notice'>[icon2html(C, user)] [C.name]</span>")
 
 /obj/machinery/examine(mob/user)
 	..()

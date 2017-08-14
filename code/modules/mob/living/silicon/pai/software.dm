@@ -173,7 +173,7 @@
 			if(href_list["send"])
 
 				sradio.send_signal("ACTIVATE")
-				audible_message("[bicon(src)] *beep* *beep*")
+				audible_message("[icon2html(src, world)] *beep* *beep*")
 
 			if(href_list["freq"])
 
@@ -331,7 +331,7 @@
 /mob/living/silicon/pai/proc/downloadSoftware()
 	var/dat = ""
 
-	dat += "<h2>Centcom pAI Module Subversion Network</h2><br>"
+	dat += "<h2>CentCom pAI Module Subversion Network</h2><br>"
 	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
 	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 

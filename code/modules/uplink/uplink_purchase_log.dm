@@ -51,7 +51,7 @@ GLOBAL_LIST(uplink_purchase_logs)
 	while(TRUE)
 		var/str_access = "[target_time]"
 		if(!pl[str_access])
-			pl[str_access] = "<big>[bicon(A)]</big>"
+			pl[str_access] = "<big>[icon2base64html(A)]</big>"
 			break
 		++target_time
 	LogCost(cost)

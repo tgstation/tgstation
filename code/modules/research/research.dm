@@ -349,7 +349,7 @@ research holder datum.
 	max_tech_stored = 10
 
 /obj/item/weapon/disk/tech_disk/debug
-	name = "centcomm technology disk"
+	name = "centcom technology disk"
 	desc = "A debug item for research"
 	materials = list()
 	max_tech_stored = 0

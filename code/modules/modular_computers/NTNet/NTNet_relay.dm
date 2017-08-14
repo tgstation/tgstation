@@ -9,6 +9,7 @@
 	icon_state = "bus"
 	anchored = TRUE
 	density = TRUE
+	circuit = /obj/item/weapon/circuitboard/machine/ntnet_relay
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
 	var/enabled = 1				// Set to 0 if the relay was turned off
 	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
@@ -95,18 +96,16 @@
 /obj/machinery/ntnet_relay/attack_hand(mob/living/user)
 	ui_interact(user)
 
-/obj/machinery/ntnet_relay/New()
+/obj/machinery/ntnet_relay/Initialize()
 	uid = gl_uid
 	gl_uid++
 	component_parts = list()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ntnet_relay(null)
-	B.apply_default_parts(src)
 
 	if(GLOB.ntnet_global)
 		GLOB.ntnet_global.relays.Add(src)
 		NTNet = GLOB.ntnet_global
 		GLOB.ntnet_global.add_log("New quantum relay activated. Current amount of linked relays: [NTNet.relays.len]")
-	..()
+	. = ..()
 
 /obj/machinery/ntnet_relay/Destroy()
 	if(GLOB.ntnet_global)
@@ -119,11 +118,3 @@
 		D.error = "Connection to quantum relay severed"
 
 	return ..()
-
-/obj/item/weapon/circuitboard/machine/ntnet_relay
-	name = "NTNet Relay (Machine Board)"
-	build_path = /obj/machinery/ntnet_relay
-	origin_tech = "programming=3;bluespace=3;magnets=2"
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
