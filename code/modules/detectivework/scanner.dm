@@ -96,7 +96,7 @@
 				fingerprints = A.forensics.prints.Copy()
 
 			// Only get reagents from non-mobs.
-			if(LAZYLEN(reagents.reagent_list))
+			if(LAZYLEN(A.reagents.reagent_list))
 
 				for(var/datum/reagent/R in A.reagents.reagent_list)
 					reagents[R.name] = R.volume
