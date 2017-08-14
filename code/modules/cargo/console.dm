@@ -145,11 +145,7 @@
 
 			var/reason = ""
 			if(requestonly)
-<<<<<<< HEAD
-				reason = input("Reason:", name, "") as text|null
-=======
 				reason = stripped_input("Reason:", name, "")
->>>>>>> 2c1e105bbc... Merge pull request #29886 from MrStonedOne/patch-408
 				if(isnull(reason) || ..())
 					return
 
