@@ -11,12 +11,12 @@
 	// Returns 0 if we have that blood already
 	var/new_blood_dna = blood
 	if(!new_blood_dna)
-		return 0
+		return FALSE
 	var/old_length = blood.len
 	blood |= new_blood_dna
 	if(blood.len == old_length)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/proc/transfer_mob_blood_dna(mob/living/L)
 	. = forensics.transfer_mob_blood_dna(L)
@@ -43,7 +43,7 @@
 
 
 /datum/forensics/proc/add_blood(list/blood_dna)
-	return 0
+	return FALSE
 
 /obj/proc/add_blood(list/blood_dna)
 	. = forensics.transfer_blood_dna(blood_dna)
@@ -67,3 +67,4 @@
 
 /obj/proc/clean_blood()
 	. = forensics.clean_blood()
+

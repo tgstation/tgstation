@@ -43,7 +43,7 @@
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 
 
-/atom/proc/add_hiddenprint(mob/living/M)
+/datum/forensics/proc/add_hiddenprint(mob/living/M)
 	if(!M || !M.key)
 		return
 
