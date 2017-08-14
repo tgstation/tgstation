@@ -105,7 +105,7 @@
 "s" = (
 /obj/structure/table/optable/abductor,
 /obj/item/weapon/cautery/alien,
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},

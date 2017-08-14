@@ -1281,7 +1281,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "dd" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},

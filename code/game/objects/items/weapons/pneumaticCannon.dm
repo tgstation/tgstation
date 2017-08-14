@@ -37,10 +37,10 @@
 		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		out += "<span class='info'>[bicon(I)] It has \the [I] loaded.</span>"
+		out += "<span class='info'>[icon2html(I, user)] It has \the [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		out += "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>"
+		out += "<span class='notice'>[icon2html(tank, user)] It has \the [tank] mounted onto it.</span>"
 	to_chat(user, out.Join("<br>"))
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)

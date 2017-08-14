@@ -1,5 +1,6 @@
 language: generic
 sudo: false
+dist: precise
 
 env:
     global:

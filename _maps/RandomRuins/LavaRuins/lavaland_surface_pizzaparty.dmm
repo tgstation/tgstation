@@ -342,7 +342,7 @@
 /area/ruin/unpowered)
 "S" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
