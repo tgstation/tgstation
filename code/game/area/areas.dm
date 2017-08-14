@@ -479,7 +479,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	addSorted()
 
 /area/AllowDrop()
-	CRASH("Ya dun fuked up")
+	CRASH("Bad op: area/AllowDrop() called")
 
 /area/DropLocation()
-	CRASH("Ya dun fuked up")
+	CRASH("Bad op: area/DropLocation() called")
