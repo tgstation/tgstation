@@ -175,7 +175,7 @@
 		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
 		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed.")
-		to_chat(blobber, "You can communicate with other blobbernauts and GLOB.overminds via <b>:b</b>")
+		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
 		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!")
 		to_chat(blobber, "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]")
 	if(blobber)
