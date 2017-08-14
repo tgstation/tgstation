@@ -452,40 +452,19 @@
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "bA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "bB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "bC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "bD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "bE" = (
@@ -534,32 +513,15 @@
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "bK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/corner/northwest,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "bL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "bM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "bN" = (
@@ -579,13 +541,7 @@
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "bP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "bQ" = (
@@ -598,13 +554,7 @@
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "bS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
@@ -660,16 +610,7 @@
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "cc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "cd" = (
@@ -692,11 +633,7 @@
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "ch" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/corner/southwest,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "ci" = (
@@ -818,25 +755,11 @@
 /turf/template_noop,
 /area/template_noop)
 "cA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "cB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "cC" = (

@@ -25,20 +25,6 @@
 		board.moved = TRUE
 	..()
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle
-	name = "Syndicate Shuttle (Computer Board)"
-	build_path = /obj/machinery/computer/shuttle/syndicate
-	var/challenge = FALSE
-	var/moved = FALSE
-
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Initialize()
-	. = ..()
-	GLOB.syndicate_shuttle_boards += src
-
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Destroy()
-	GLOB.syndicate_shuttle_boards -= src
-	return ..()
-
 /obj/machinery/computer/shuttle/syndicate/drop_pod
 	name = "syndicate assault pod control"
 	icon = 'icons/obj/terminals.dmi'

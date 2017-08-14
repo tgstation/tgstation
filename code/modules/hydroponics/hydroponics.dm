@@ -6,6 +6,7 @@
 	anchored = TRUE
 	pixel_y = 8
 	unique_rename = 1
+	circuit = /obj/item/weapon/circuitboard/machine/hydroponics
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
@@ -36,20 +37,6 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
-
-/obj/machinery/hydroponics/constructable/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/hydroponics(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/hydroponics
-	name = "Hydroponics Tray (Machine Board)"
-	build_path = /obj/machinery/hydroponics/constructable
-	origin_tech = "programming=1;biotech=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0

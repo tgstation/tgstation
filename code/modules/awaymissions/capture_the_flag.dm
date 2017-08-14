@@ -29,13 +29,11 @@
 	var/reset_path = /obj/effect/ctf/flag_reset
 
 /obj/item/weapon/twohanded/ctf/Destroy()
-	if(reset)
-		qdel(reset)
-		reset = null
-	. = ..()
+	QDEL_NULL(reset)
+	return ..()
 
 /obj/item/weapon/twohanded/ctf/Initialize()
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 	if(!reset)
 		reset = new reset_path(get_turf(src))

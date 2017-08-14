@@ -41,9 +41,9 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/computer/communications/New()
+/obj/machinery/computer/communications/Initialize()
+	. = ..()
 	GLOB.shuttle_caller_list += src
-	..()
 
 /obj/machinery/computer/communications/process()
 	if(..())

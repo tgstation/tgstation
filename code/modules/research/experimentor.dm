@@ -25,6 +25,7 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
+	circuit = /obj/item/weapon/circuitboard/machine/experimentor
 	var/recentlyExperimented = 0
 	var/mob/trackedIan
 	var/mob/trackedRuntime
@@ -84,21 +85,10 @@
 
 /obj/machinery/r_n_d/experimentor/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/experimentor(null)
-	B.apply_default_parts(src)
 
 	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_list
 	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_list
 	SetTypeReactions()
-
-/obj/item/weapon/circuitboard/machine/experimentor
-	name = "E.X.P.E.R.I-MENTOR (Machine Board)"
-	build_path = /obj/machinery/r_n_d/experimentor
-	origin_tech = "magnets=1;engineering=1;programming=1;biotech=1;bluespace=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module = 1,
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/weapon/stock_parts/micro_laser = 2)
 
 /obj/machinery/r_n_d/experimentor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)

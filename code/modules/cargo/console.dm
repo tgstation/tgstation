@@ -18,8 +18,8 @@
 	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
-/obj/machinery/computer/cargo/New()
-	..()
+/obj/machinery/computer/cargo/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	emagged = board.emagged
@@ -145,7 +145,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = input("Reason:", name, "") as text|null
+				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 
