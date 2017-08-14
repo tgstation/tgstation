@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/riveted/boss,
 /area/lavaland/surface/outdoors)
@@ -1240,6 +1240,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dy" = (
@@ -3398,17 +3399,27 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Wt" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/laborcamp/security)
 "Wu" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/laborcamp)
 "Ww" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"Wx" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel/brown{
+	dir = 4
+	},
+/area/mine/eva)
+"Wy" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel,
+/area/mine/production)
 
 (1,1,1) = {"
 aa
@@ -19056,7 +19067,7 @@ cI
 cP
 cn
 bP
-bP
+Wy
 bP
 bP
 eD
@@ -19569,7 +19580,7 @@ bf
 cK
 bq
 bq
-dt
+br
 bq
 dV
 el
@@ -20334,7 +20345,7 @@ bf
 bp
 bu
 bI
-bW
+Wx
 cr
 bf
 ad
