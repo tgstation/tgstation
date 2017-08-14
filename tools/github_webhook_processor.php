@@ -25,7 +25,7 @@ $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
 $featuresPerFix = 1;	//Number of allowed 'feature' PRs per merged 'fix' PR
-//TODO: 
+//TODO: configure to pull from an org team maybe?
 $maintainers = array('AnturK', 'ChangelingRain', 'Cheridan', 'Cyberboss', 'Jordie0608', 'lzimann', 'KorPhaeron', 'Razharas', 'RemieRichards', 'WJohn');
 
 //Api key for pushing changelogs.
@@ -237,6 +237,7 @@ function handle_pr($payload) {
 	sendtoallservers('?announce='.urlencode($msg), $payload);
 }
 
+//creates a comment on the payload issue
 function create_comment($payload, $comment){
 	$scontext = array('http' => array(
 		'method'	=> 'POST',
@@ -250,6 +251,7 @@ function create_comment($payload, $comment){
 	echo file_get_contents($payload['pull_request']['comments_url'], false, stream_context_create($scontext));
 }
 
+//returns the payload issue's labels as a flat array
 function get_pr_labels_array($payload){
 	$url = $payload['pull_request']['issue_url'];
 
@@ -270,10 +272,12 @@ function get_pr_labels_array($payload){
 	return $result;
 }
 
+//helper for getting the path the the balance json file
 function pr_balance_json_path(){
 	return $prBalanceJson != '' ? $prBalanceJson : 'pr_balances.json';
 }
 
+//return the assoc array of login -> balance for prs
 function pr_balances(){
 	$path = pr_balance_json_path();
 	if(file_exists($path))
@@ -301,6 +305,7 @@ function get_pr_code_friendliness($payload){
 	return $is_neutral ? 0 : -1;
 }
 
+//payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
 function update_pr_balance($payload) {
 	$author = $payload['pull_request']['user']['login'];
 	if(in_array($author, $maintainers))	//immune
