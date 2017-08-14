@@ -47009,7 +47009,7 @@
 	pixel_x = 0;
 	pixel_y = -28
 	},
-/obj/structure/chair/stool,
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bXV" = (
@@ -58278,6 +58278,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"cBj" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 
 (1,1,1) = {"
 aaa
@@ -82599,7 +82603,7 @@ bUa
 bva
 bVv
 bSw
-bDi
+bPC
 bXU
 bva
 bZt
@@ -84142,7 +84146,7 @@ bva
 bva
 bva
 bDi
-bDi
+cBj
 bva
 bZv
 cad

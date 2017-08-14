@@ -1244,12 +1244,19 @@
 	},
 /area/construction/mining/aux_base)
 "acy" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/packageWrap,
+/obj/item/stack/cable_coil/white{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/cable_coil/white,
+/obj/item/weapon/stock_parts/cell/high,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 26
 	},
-/obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -113524,6 +113531,26 @@
 	dir = 4
 	},
 /area/construction/mining/aux_base)
+"esw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"esx" = (
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 4
+	},
+/area/construction/mining/aux_base)
+"esy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -155980,11 +156007,11 @@ epT
 acf
 aaG
 acy
-acO
 adf
 adl
+esx
 abK
-adS
+abK
 aeg
 aep
 aeC
@@ -156493,7 +156520,7 @@ abM
 abf
 aaf
 aaG
-acz
+esw
 acP
 acP
 acP
@@ -156501,7 +156528,7 @@ edj
 acP
 acP
 acP
-aeq
+esy
 aaG
 afc
 afr
