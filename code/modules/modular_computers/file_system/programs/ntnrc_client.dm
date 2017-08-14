@@ -110,7 +110,7 @@
 			if(!channel)
 				return
 			var/mob/living/user = usr
-			var/logname = input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
+			var/logname = stripped_input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
 			if(!logname || !channel)
 				return 1
 			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()

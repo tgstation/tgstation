@@ -473,7 +473,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
