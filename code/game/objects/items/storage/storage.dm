@@ -47,7 +47,7 @@
 
 		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
-				return content_can_dump(over_object, M)
+				return dump_content_at(over_object, M)
 
 			if(loc != usr || (loc && loc.loc == usr))
 				return
