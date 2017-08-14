@@ -120,8 +120,8 @@
 	if(auto_name)
 		name = "\improper [get_area(src)] APC"
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
+	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -25)
+	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 23 : -24) : 0
 	if (building)
 		area = get_area(src)
 		opened = 1
