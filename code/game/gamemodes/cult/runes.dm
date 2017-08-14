@@ -538,7 +538,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
 	else
 		mob_to_revive = potential_revive_mobs[1]
-	if(!src || QDELETED(src) || !validness_checks(mob_to_revive, user))
+	if(QDELETED(src) || !validness_checks(mob_to_revive, user))
 		rune_in_use = FALSE
 		return
 	if(user.name == "Herbert West")
