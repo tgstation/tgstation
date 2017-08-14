@@ -1,4 +1,5 @@
 /obj/item/weapon
+	var/trigger_guard = TRIGGER_GUARD_NONE
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
@@ -584,3 +585,8 @@
 	throwforce = 0
 	flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
+
+/obj/item/weapon/proc/can_trigger_gun(mob/living/user)
+	if(!user.can_use_guns(src))
+		return FALSE
+	return TRUE

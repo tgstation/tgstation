@@ -140,7 +140,7 @@
 		return 0
 	return 1
 
-/mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
+/mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/G)
 	return 1
 
 /mob/living/carbon/monkey/angry

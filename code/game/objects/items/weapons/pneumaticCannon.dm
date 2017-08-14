@@ -26,6 +26,7 @@
 	var/fire_mode = PCANNON_FIREALL
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
+	trigger_guard = TRIGGER_GUARD_NORMAL
 
 /obj/item/weapon/pneumatic_cannon/CanItemAutoclick()
 	return automatic
@@ -108,11 +109,7 @@
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
-	if(user.dna.check_mutation(HULK))
-		to_chat(user, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
-		return
-	if(NOGUNS in user.dna.species.species_traits)
-		to_chat(user, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
+	if(!can_trigger_gun(user))
 		return
 	if(!loadedItems || !loadedWeightClass)
 		to_chat(user, "<span class='warning'>\The [src] has nothing loaded.</span>")
