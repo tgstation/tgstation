@@ -40,9 +40,9 @@ GLOBAL_PROTECT(href_token)
 	for(var/I in 1 to 32)
 		. += "[rand(10)]"
 
-/proc/HrefToken()
+/proc/HrefToken(forceGlobal = FALSE)
 	var/tok = GLOB.href_token
-	if(usr)
+	if(!forceGlobal && usr)
 		var/client/C = usr.client
 		if(!C)
 			CRASH("No client for HrefToken()!")
