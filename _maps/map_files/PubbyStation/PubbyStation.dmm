@@ -49720,7 +49720,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cdF" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cdG" = (
