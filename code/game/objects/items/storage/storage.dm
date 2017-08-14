@@ -71,10 +71,15 @@
 					handle_item_insertion(I, 0 , L)
 
 
+/obj/item/weapon/storage/get_dumping_location(obj/item/weapon/storage/source,mob/user)
+	return src
+
 //Check if this storage can dump the items
+
 /obj/item/storage/proc/content_can_dump(atom/dest_object, mob/user)
-	if(Adjacent(user) && dest_object.Adjacent(user))
-		if(dest_object.storage_contents_dump_act(src, user))
+	var/atom/dump_destination = dest_object.get_dumping_location()
+	if(Adjacent(user) && dump_destination && user.Adjacent(dump_destination))
+		if(dump_destination.storage_contents_dump_act(src, user))
 			playsound(loc, "rustle", 50, 1, -5)
 			return 1
 	return 0
