@@ -269,7 +269,7 @@
 "W" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 

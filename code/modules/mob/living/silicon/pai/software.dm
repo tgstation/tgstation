@@ -173,7 +173,7 @@
 			if(href_list["send"])
 
 				sradio.send_signal("ACTIVATE")
-				audible_message("[bicon(src)] *beep* *beep*")
+				audible_message("[icon2html(src, world)] *beep* *beep*")
 
 			if(href_list["freq"])
 

@@ -61,11 +61,13 @@
 	var/refill_count = 3		//The number of canisters the vending machine uses
 
 /obj/machinery/vending/Initialize()
-	if(refill_canister)
+	var/build_inv = FALSE
+	if(!refill_canister)
 		circuit = null
+		build_inv = TRUE
 	. = ..()
 	wires = new /datum/wires/vending(src)
-	if(!refill_canister) //constructable vending machine
+	if(build_inv) //non-constructable vending machine
 		build_inventory(products)
 		build_inventory(contraband, 1)
 		build_inventory(premium, 0, 1)
@@ -85,9 +87,7 @@
 
 /obj/machinery/vending/snack/Destroy()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
-		S.loc = get_turf(src)
-	qdel(wires)
-	wires = null
+		S.forceMove(get_turf(src))
 	return ..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child

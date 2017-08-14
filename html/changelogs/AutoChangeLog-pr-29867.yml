@@ -1,0 +1,4 @@
+author: "kingofkosmos"
+delete-after: True
+changes: 
+  - tweak: "Canisters don't flash red lights anymore when empty."
