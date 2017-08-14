@@ -1,4 +1,4 @@
-//CONTAINS: Suit fibers, GSR, and Detective's Scanning Computer
+//CONTAINS: Suit fibers,  and Detective's Scanning Computer
 
 /atom/var/list/suit_fibers
 

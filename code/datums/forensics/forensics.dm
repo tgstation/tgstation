@@ -26,7 +26,7 @@
 	var/old_length = blood.len
 	blood |= blood_dna
 	if(blood.len > old_length)
-		return 1//some new blood DNA was added
+		return TRUE //some new blood DNA was added
 
 /obj/proc/transfer_blood_dna(list/blood_dna)
 	. = forensics.transfer_blood_dna(blood_dna)
@@ -35,7 +35,7 @@
 /datum/forensics/proc/add_mob_blood(mob/living/M)
 	var/list/blood_dna = M.forensics.blood
 	if(!blood_dna)
-		return 0
+		return FALSE
 	return add_blood(blood_dna)
 
 /obj/proc/add_mob_blood(mob/living/M)
@@ -54,15 +54,16 @@
 /obj/item/add_blood(list/blood_dna)
 	var/blood_count = !forensics.blood ? 0 : forensics.blood.len
 	if(!..())
-		return 0
+		return FALSE
 	if(!blood_count)//apply the blood-splatter overlay if it isn't already in there
 		add_blood_overlay()
-	return 1 //we applied blood to the item
+	return TRUE //we applied blood to the item
 
 /datum/forensics/proc/clean_blood()
 	if(islist(blood))
 		blood = null
-		return 1
+		return TRUE
+	return FALSE
 
 /obj/proc/clean_blood()
 	. = forensics.clean_blood()

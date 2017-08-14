@@ -159,6 +159,9 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
+		if(istype(A, /datum/forensics))
+			if(!forensics)
+				forensics = new()
 		else if(ismovableatom(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
@@ -261,7 +264,7 @@
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(forensics.blood > 0 && !istype(src, /obj/effect/decal))
+	if(forensics.blood.len > 0 && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else
