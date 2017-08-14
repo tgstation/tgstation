@@ -23,6 +23,9 @@
 //This is required as otherwise somebody could trick the script into leaking the api key.
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
+$prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
+$featuresPerFix = 1;	//Number of allowed 'feature' PRs per merged 'fix' PR
+
 //Api key for pushing changelogs.
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 
@@ -168,7 +171,7 @@ function tag_pr($payload, $opened) {
 	if(strpos($lowertitle, '[wip]') !== FALSE)
 		$tags[] = 'Work In Progress';
 
-	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
+	$url = $payload['pull_request']['issue_url'] . '/labels';
 
 	$existing_labels = file_get_contents($url, false, stream_context_create($scontext));
 	$existing_labels = json_decode($existing_labels, true);
@@ -195,6 +198,12 @@ function handle_pr($payload) {
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
+			if(get_pr_code_friendliness($payload) === -1){
+				$balances = pr_balances();
+				$author = $payload['pull_request']['user']['login'];
+				if(isset($balances[$author]) && $balances[$author] < 0)
+					create_comment($payload, "You currently have a higher Feature/Fix pull request ratio than the configured rate of " . $featuresPerFix . ". Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.");
+			}
 			break;
 		case 'edited':
 		case 'synchronize':
@@ -210,6 +219,7 @@ function handle_pr($payload) {
 			else {
 				$action = 'merged';
 				checkchangelog($payload, true, true);
+				update_pr_balance($payload);
 			}
 			break;
 		default:
@@ -223,7 +233,89 @@ function handle_pr($payload) {
 	
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 	sendtoallservers('?announce='.urlencode($msg), $payload);
+}
 
+function create_comment($payload, $comment){
+	$scontext = array('http' => array(
+		'method'	=> 'POST',
+		'header'	=>
+			"Content-type: application/json\r\n".
+			'Authorization: token ' . $apiKey,
+		'ignore_errors' => true,
+		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools',
+		'content' => json_encode(array('body' => $comment))
+	));
+	echo file_get_contents($payload['pull_request']['comments_url'], false, stream_context_create($scontext));
+}
+
+function get_pr_labels_array($payload){
+	$url = $payload['pull_request']['issue_url'];
+
+	$scontext = array('http' => array(
+		'method'	=> 'GET',
+		'header'	=>
+			"Content-type: application/json\r\n".
+			'Authorization: token ' . $apiKey,
+		'ignore_errors' => true,
+		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
+	));
+
+	$issue = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
+	$result = array();
+	if(isset($issue['labels']))
+		foreach($issue['labels'] as $l)
+			$result[] = $l['name'];
+	return $result;
+}
+
+function pr_balance_json_path(){
+	return $prBalanceJson != '' ? $prBalanceJson : 'pr_balances.json';
+}
+
+function pr_balances(){
+	$path = pr_balance_json_path();
+	if(file_exists($path))
+		return json_decode(file_get_contents($path), true);
+	else
+		return array();
+}
+
+//returns 1 if it's a fix/feature/etc, 0 if it's a neutral, -1 if it's a Feature/Tweak/Balance
+function get_pr_code_friendliness($payload){
+	$labels = get_pr_labels_array($payload);
+	//doing one of these increases your positive score
+	$improvement_labels = array('Fix', 'Refactor', 'Code Improvement', 'Priority: High', 'Priority: CRITICAL', 'Atmospherics', 'Grammar and Formatting', 'Logging', 'Performance');
+	//doing one of these prevents your negative score from increasing
+	$neutral_labels = array('Tools', 'Map Edit', 'SQL', 'Documentation', 'Repository', 'Sound', 'Revert/Removal', 'UI', 'Sprites', 'Sound');
+
+	$is_neutral = FALSE;
+	foreach($labels as $l){
+		if(in_array($l, $improvement_labels))
+			return 1;
+		if(in_array($l, $neutral_labels))
+			$is_neutral = TRUE;
+	}
+
+	return $is_neutral ? 0 : -1;
+}
+
+function update_pr_balance($payload) {
+	$friendliness = get_pr_code_friendliness($payload);
+	if($friendliness === 0)
+		return;
+	else if($friendliness === 1)
+		$friendliness *= $featuresPerFix;
+
+	$author = $payload['pull_request']['user']['login'];
+	$balances = pr_balances();
+	if(!isset($balances[$author]))
+		$balances[$author] = $featuresPerFix;
+	$balances[$author] += $friendliness;
+	if($balances[$author] < 0)
+		create_comment($payload, "Your Fix/Feature pull request ratio has just gone below the configured amout of " . $featuresPerFix . " features per fix. Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or improving the codebase will improve this score.");
+	$balances_file = fopen(pr_balance_json_path(), "w");
+	fwrite($balances_file, json_encode($balances));
+	fclose($balances_file);
 }
 
 function has_tree_been_edited($payload, $tree){
