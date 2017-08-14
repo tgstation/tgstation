@@ -4,7 +4,7 @@
 	var/obj/machinery/camera/current = null
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
