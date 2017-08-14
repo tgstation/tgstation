@@ -74,9 +74,8 @@
 /obj/item/weapon/storage/get_dumping_location(obj/item/weapon/storage/source,mob/user)
 	return src
 
-//Check if this storage can dump the items
-
-/obj/item/storage/proc/content_can_dump(atom/dest_object, mob/user)
+//Tries to dump content
+/obj/item/storage/proc/dump_content_at(atom/dest_object, mob/user)
 	var/atom/dump_destination = dest_object.get_dumping_location()
 	if(Adjacent(user) && dump_destination && user.Adjacent(dump_destination))
 		if(dump_destination.storage_contents_dump_act(src, user))
