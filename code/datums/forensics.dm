@@ -60,12 +60,21 @@
 
 /datum/forensics/proc/clean_blood()
 	if(islist(blood))
-		blood = null
+		blood = list()
 		return TRUE
 	return FALSE
 
 /obj/proc/clean_blood()
 	. = forensics.clean_blood()
+
+/datum/forensics/proc/clean_prints()
+	if(islist(prints))
+		prints = list()
+		return TRUE
+	return FALSE
+
+/obj/proc/clean_prints()
+	. = forensics.clean_prints()
 
 
 /datum/forensics/proc/add_hiddenprint(mob/living/M)
