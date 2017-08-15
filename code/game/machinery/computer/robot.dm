@@ -3,7 +3,7 @@
 
 /obj/machinery/computer/robotics
 	name = "robotics control console"
-	desc = "Used to remotely lockdown or detonate linked Cyborgs."
+	desc = "Used to remotely lockdown or detonate linked Cyborgs and Drones."
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
 	req_access = list(ACCESS_ROBOTICS)
@@ -87,7 +87,7 @@
 
 	if(!drones)
 		dat += "No Drone Units detected within access parameters."
-
+	
 	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -170,7 +170,7 @@
 				s.start()
 				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
 				D.gib()
-
-
+	
+	
 	src.updateUsrDialog()
 	return

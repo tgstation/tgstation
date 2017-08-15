@@ -114,17 +114,18 @@
 		death(0)
 
 /mob/living/silicon/pai/verb/suicide()
-	set category = "pAI Commands"
-	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
-	set name = "pAI Suicide"
-	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
-	if(answer == "Yes")
-		var/turf/T = get_turf(src.loc)
-		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
+    set hidden = TRUE
+		return
+	var/confirm = alert("Are you sure you want to wipe yourself?", "Confirm data wipe", "Yes", "No")
+		return
+	if(confirm == "Yes")
+		suiciding = TRUE
+		visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
 		 "<span class='notice'>[src] bleeps electronically.</span>")
+		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
 	else
-		to_chat(src, "Aborting suicide attempt.")
+		to_chat(src, "Aborting clear attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = 1
