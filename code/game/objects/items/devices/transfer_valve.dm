@@ -8,7 +8,7 @@
 	desc = "Regulates the transfer of air between two tanks"
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
-	var/obj/item/device/attached_device
+	var/obj/item/device/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/toggle = 1
@@ -99,8 +99,8 @@
 			toggle_valve()
 		else if(attached_device)
 			if(href_list["rem_device"])
-				attached_device.loc = get_turf(src)
-				attached_device:holder = null
+				attached_device.forceMove(get_turf(src))
+				attached_device.holder = null
 				attached_device = null
 				update_icon()
 			if(href_list["device"])

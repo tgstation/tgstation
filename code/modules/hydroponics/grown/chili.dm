@@ -73,7 +73,7 @@
 	name = "ghost chili"
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
-	var/mob/held_mob
+	var/mob/living/carbon/human/held_mob
 	filling_color = "#F8F8FF"
 	bitesize_mod = 4
 	origin_tech = "biotech=4;magnets=5"
@@ -81,14 +81,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
-	if( ismob(src.loc) )
-		held_mob = src.loc
+	if( ismob(loc) )
+		held_mob = loc
 		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
-	if(held_mob && src.loc == held_mob)
+	if(held_mob && loc == held_mob)
 		if(held_mob.is_holding(src))
-			if(hasvar(held_mob,"gloves") && held_mob:gloves)
+			if(istype(held_mob) && held_mob.gloves)
 				return
 			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(10))
