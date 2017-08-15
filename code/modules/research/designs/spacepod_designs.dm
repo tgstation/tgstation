@@ -116,7 +116,7 @@
 	id = "podarmor_dark"
 	build_type = PODFAB
 	req_tech = list("materials" = 6, "engineering" = 6, "combat" = 6, "syndicate" = 6)
-	build_path = /obj/item/pod_parts/armor/industrial
+	build_path = /obj/item/pod_parts/armor/syndicate
 	category = list("Pod Armor")
 	materials = list(MAT_METAL=15000,MAT_GLASS=5000,MAT_PLASMA=10000,MAT_DIAMOND=5000,MAT_SILVER=7500)
 

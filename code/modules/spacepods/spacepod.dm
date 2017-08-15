@@ -379,6 +379,9 @@
 			if(istype(W, /obj/item/device/spacepod_equipment/lock))
 				add_equipment(user, W, "lock_system")
 				return
+			if(istype(W, /obj/item/device/spacepod_equipment/thruster/vtec))
+				add_equipment(user, W, "thruster_system")
+				return
 
 		if(istype(W, /obj/item/device/spacepod_key) && istype(equipment_system.lock_system, /obj/item/device/spacepod_equipment/lock/keyed))
 			var/obj/item/device/spacepod_key/key = W
@@ -490,6 +493,8 @@
 		possible.Add("Secondary Cargo System")
 	if(equipment_system.lock_system)
 		possible.Add("Lock System")
+	if(equipment_system.thruster_system)
+		possible.Add("Thruster System")
 	switch(input(user, "Remove which equipment?", null, null) as null|anything in possible)
 		if("Energy Cell")
 			if(user.put_in_hands(cell))
@@ -512,6 +517,8 @@
 			return
 		if("Lock System")
 			remove_equipment(user, equipment_system.lock_system, "lock_system")
+		if("Thruster System")
+			remove_equipment(user, equipment_system.thruster_system, "thruster_system")
 
 /obj/spacepod/proc/remove_equipment(mob/user, var/obj/item/device/spacepod_equipment/SPE, var/slot)
 
@@ -935,7 +942,11 @@
 	if(world.time < next_move)
 		return FALSE
 	var/moveship = 1
-	if(cell && cell.charge >= 1 && obj_integrity && empcounter == 0)
+	if( istype(equipment_system.thruster_system, /obj/item/device/spacepod_equipment/thruster/vtec) )
+		move_delay = 1.5
+	else
+		move_delay = 2
+	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)
 		src.dir = direction
 		switch(direction)
 			if(NORTH)

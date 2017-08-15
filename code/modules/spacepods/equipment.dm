@@ -51,6 +51,7 @@
 	var/obj/item/device/spacepod_equipment/cargo/cargo_system // cargo system
 	var/obj/item/device/spacepod_equipment/cargo/sec_cargo_system // secondary cargo system
 	var/obj/item/device/spacepod_equipment/lock/lock_system // lock system
+	var/obj/item/device/spacepod_equipment/thruster/thruster_system
 
 /datum/spacepod/equipment/New(var/obj/spacepod/SP)
 	..()
@@ -85,15 +86,15 @@
 
 /obj/item/device/spacepod_equipment/weaponry/taser
 	name = "disabler system"
-	desc = "A weak taser system for space pods, fires disabler beams."
+	desc = "A weak disabler system for space pods, fires disabler beams."
 	icon_state = "weapon_taser"
 	projectile_type = /obj/item/projectile/beam/disabler
 	shot_cost = 400
 	fire_sound = 'sound/weapons/Taser.ogg'
 
 /obj/item/device/spacepod_equipment/weaponry/burst_taser
-	name = "burst taser system"
-	desc = "A weak taser system for space pods, this one fires 3 at a time."
+	name = "burst disabler system"
+	desc = "A weak disabler system for space pods, this one fires 3 at a time."
 	icon_state = "weapon_burst_taser"
 	projectile_type = /obj/item/projectile/beam/disabler
 	shot_cost = 1200
@@ -111,8 +112,8 @@
 
 // MINING LASERS
 /obj/item/device/spacepod_equipment/weaponry/mining_laser_basic
-	name = "weak mining laser system"
-	desc = "A weak mining laser system for space pods, fires bursts of energy that cut through rock."
+	name = "weak kinetic accelerator"
+	desc = "A weak kinetic accelerator for space pods, fires bursts of energy that cut through rock."
 	icon = 'goon/icons/pods/ship.dmi'
 	icon_state = "pod_taser"
 	projectile_type = /obj/item/projectile/kinetic/pod
@@ -121,8 +122,8 @@
 	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /obj/item/device/spacepod_equipment/weaponry/mining_laser
-	name = "mining laser system"
-	desc = "A mining laser system for space pods, fires bursts of energy that cut through rock."
+	name = "kinetic accelerator system"
+	desc = "A kinetic accelerator system for space pods, fires bursts of energy that cut through rock."
 	icon = 'goon/icons/pods/ship.dmi'
 	icon_state = "pod_m_laser"
 	projectile_type = /obj/item/projectile/kinetic/pod/regular
@@ -304,3 +305,10 @@
 			to_chat(user, "<span class='warning'>This key is already ground!</span>")
 	else
 		..()
+
+/obj/item/device/spacepod_equipment/thruster/vtec
+	name = "vtec thruster upgrade"
+	w_class = WEIGHT_CLASS_BULKY
+	desc = "An upgrade to the thrusters in a spacepod, allowing it to move faster."
+	icon_state = "pod_vtec"
+	icon = 'goon/icons/pods/pod_parts.dmi'
