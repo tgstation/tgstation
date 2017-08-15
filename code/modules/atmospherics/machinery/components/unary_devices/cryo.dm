@@ -377,6 +377,6 @@
 
 	if(G.total_moles() > 10)
 		return G.temperature
-	..()
+	return ..()
 
 #undef CRYOMOBS

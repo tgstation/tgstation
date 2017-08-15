@@ -1,6 +1,6 @@
 /obj/structure/spacepoddoor
 	name = "Podlock"
-	desc = "Why it no open!!!"
+	desc = "An air-tight holodoor that only lets spacepods through."
 	icon = 'icons/effects/beam.dmi'
 	icon_state = "n_beam"
 	var/id = 1.0

@@ -119,7 +119,7 @@
 		in_use = is_in_use
 
 /obj/proc/return_temperature()
-	return 0
+	return
 
 /obj/proc/updateDialog()
 	// Check that people are actually using the machine. If not, don't update anymore.
