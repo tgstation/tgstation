@@ -443,11 +443,16 @@
 	var/petrification_percentage = 0 //How petrified are we? At 100%, we'll be stunned for 10 seconds.
 	var/mob/living/petrifier
 
+/datum/status_effect/petrification/on_creation(mob/living/new_owner, mob/living/gazer)
+	. = ..()
+	if(.)
+		petrifier = gazer
+
 /datum/status_effect/petrification/tick()
 	if(QDELETED(petrifier) || petrifier.stat)
 		qdel(src)
 		return
-	if(get_dist(owner, petrifier) < 7 && owner.dir == get_dir(owner, petrifier)) //we're looking at it
+	if((petrifier in view(7, get_turf(owner))) && owner.dir == get_dir(owner, petrifier)) //we're looking at it
 		playsound(owner, 'sound/magic/fleshtostone.ogg', 50, TRUE, frequency = 2)
 		petrification_percentage += 20
 	else
@@ -457,7 +462,6 @@
 		playsound(owner, 'sound/effects/break_stone.ogg', 75, TRUE, frequency = 0.5)
 		owner.Stun(100)
 		qdel(src)
-		return
 
 /obj/screen/alert/status_effect/petrification
 	name = "Petrification"
@@ -476,5 +480,5 @@
 			slow_text = "grinding still"
 		if(75 to 100)
 			slow_text = "hardening like stone"
-	desc = "You feel your body [slow_text]...<br>You are <b>[P.petrification_percentage]</b> petrified."
+	desc = "You feel your body [slow_text]...<br>You are <b>[P.petrification_percentage]%</b> petrified."
 	..()

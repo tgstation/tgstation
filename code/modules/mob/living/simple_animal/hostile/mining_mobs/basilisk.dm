@@ -60,9 +60,7 @@
 	to_chat(L, "<span class='boldannounce'>Your body starts to lock up as you look at [src]!</span>")
 	if(gaze_sound)
 		playsound(src, gaze_sound, 75, FALSE)
-	L.apply_status_effect(STATUS_EFFECT_PETRIFICATION)
-	var/datum/status_effect/petrification/P = L.has_status_effect(STATUS_EFFECT_PETRIFICATION)
-	P.petrifier = src
+	L.apply_status_effect(STATUS_EFFECT_PETRIFICATION, src)
 
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
