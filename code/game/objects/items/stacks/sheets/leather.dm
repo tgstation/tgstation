@@ -12,7 +12,7 @@
 	novariants = FALSE
 
 GLOBAL_LIST_INIT(human_recipes, list( \
-	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
+	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5), \
 	))
 
 /obj/item/stack/sheet/animalhide/human/Initialize(mapload, new_amount, merge = TRUE)
@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	icon_state = "sheet-corgi"
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
-	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3), \
 	))
 
 /obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, new_amount, merge = TRUE)
@@ -53,8 +53,8 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	icon_state = "sheet-monkey"
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
-	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, on_floor = 1), \
-	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2, on_floor = 1), \
+	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1), \
+	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, new_amount, merge = TRUE)
@@ -74,8 +74,8 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	icon_state = "sheet-xeno"
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
-	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1, on_floor = 1), \
-	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2, on_floor = 1), \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/xeno/Initialize(mapload, new_amount, merge = TRUE)
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
-	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
+	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1), \
 ))
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)
