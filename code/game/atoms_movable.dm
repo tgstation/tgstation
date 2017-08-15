@@ -221,7 +221,7 @@
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
 //to differentiate it, naturally everyone forgot about this immediately and so some things
 //would bump twice, so now it's called Collide
-/atom/movable/proc/Collide(atom/A)	
+/atom/movable/proc/Collide(atom/A)
 	if((A))
 		if(throwing)
 			throwing.hit_atom(A)
@@ -250,15 +250,15 @@
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
-
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
+			if(!(get_turf(oldloc) == get_turf(destination)))
+				for(var/atom/movable/AM in destination)
+					if(AM == src)
+						continue
+					AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
