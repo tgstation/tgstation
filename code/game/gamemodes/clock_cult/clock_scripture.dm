@@ -243,7 +243,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/turf/T = get_turf(invoker)
 	if(istype(T, /turf/open/clock_spawn_room) || ispath(T.baseturf, /turf/open/clock_spawn_room))
 		return FALSE
-	if(!space_allowed && (isspaceturf(T) || istype(T, /turf/open/indestructible/reebe_void))
+	if(!space_allowed && (isspaceturf(T) || istype(T, /turf/open/indestructible/reebe_void)))
 		to_chat(invoker, "<span class='warning'>You need solid ground to place this object!</span>")
 		return FALSE
 	if(one_per_tile && (locate(prevent_path) in T))
