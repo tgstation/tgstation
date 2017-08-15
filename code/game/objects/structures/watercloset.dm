@@ -209,7 +209,7 @@
 	icon_state = "mist"
 	layer = FLY_LAYER
 	anchored = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
 /obj/machinery/shower/attack_hand(mob/M)
