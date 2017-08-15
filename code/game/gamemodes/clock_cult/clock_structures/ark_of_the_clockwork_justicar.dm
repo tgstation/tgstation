@@ -41,9 +41,9 @@
 		countdown = null
 	for(var/mob/L in GLOB.player_list)
 		if(L.z == z)
-			var/turf/T = get_turf(pick(GLOB.generic_event_spawns)))
+			var/turf/T = get_turf(pick(GLOB.generic_event_spawns))
 			quick_spatial_gate(L.loc, T, L)
-	for(var/obj/effect/clockwork/city_of_cogs_rift/R in GLOB.all_clockwork_objects)
+	for(var/obj/effect/clockwork/reebe_rift/R in GLOB.all_clockwork_objects)
 		qdel(R)
 	if(GLOB.ark_of_the_clockwork_justiciar == src)
 		GLOB.ark_of_the_clockwork_justiciar = null
