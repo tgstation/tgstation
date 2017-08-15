@@ -1283,6 +1283,7 @@
 				</b></span>")
 				SSticker.mode.finalize_shadowling(src)
 				SSticker.mode.update_shadow_icons_added(src)
+				current.playsound_local(get_turf(current), 'hippiestation/sound/ambience/antag/sling.ogg', 100, FALSE, pressure_affected = FALSE)
 			if("thrall")
 				if(!ishuman(current))
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
