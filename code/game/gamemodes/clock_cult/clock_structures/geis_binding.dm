@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/geis_binding
 	name = "glowing ring"
 	desc = "A flickering, glowing purple ring around a target."
-	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
+	clockwork_desc = "A binding ring around a target, preventing them from taking action."
 	max_integrity = 25
 	light_range = 2
 	light_power = 0.8
@@ -18,6 +18,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	var/mob_layer = MOB_LAYER
+	var/last_mob_health = 0
 
 /obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, obj/item/clockwork/slab/the_slab)
 	. = ..()
@@ -33,20 +34,38 @@
 	icon_state = "geisbinding"
 
 /obj/structure/destructible/clockwork/geis_binding/process()
+	var/tick_damage = 1
 	if(LAZYLEN(buckled_mobs))
 		for(var/V in buckled_mobs)
 			var/mob/living/L = V
+			if(last_mob_health < L.health)
+				tick_damage += last_mob_health - L.health
+				last_mob_health = L.health
+			if(L.layer != mob_layer)
+				mob_layer = L.layer
+				layer = mob_layer - 0.01
+				cut_overlays()
+				add_overlay(mutable_appearance('icons/effects/clockwork_effects.dmi', "geisbinding_top", mob_layer + 0.01))
 			if(is_servant_of_ratvar(L)) //servants are freed automatically
 				take_damage(obj_integrity)
 				return
-	var/tick_damage = 1
-	if(!is_servant_of_ratvar(pulledby))
-		tick_damage++
+			break
+	if(anchored)
+		tick_damage *= 0.5
 	take_damage(tick_damage, sound_effect = FALSE)
-	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 20, TRUE)
+	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 40, TRUE, -5)
 
 /obj/structure/destructible/clockwork/geis_binding/attack_hand(mob/living/user)
 	return
+
+/obj/structure/destructible/clockwork/geis_binding/attackby(obj/item/I, mob/user, params)
+	if(is_servant_of_ratvar(user) && istype(I, /obj/item/clockwork/slab))
+		user.visible_message("<span class='warning'>[user] starts to dispel [src]...</span>", "<span class='danger'>You start to dispel [src]...</span>")
+		if(do_after(user, 30, target = src))
+			user.visible_message("<span class='warning'>[user] dispels [src]!</span>", "<span class='danger'>You dispel [src]!</span>")
+			take_damage(obj_integrity)
+		return 1
+	return ..()
 
 /obj/structure/destructible/clockwork/geis_binding/emp_act(severity)
 	new /obj/effect/temp_visual/emp(loc)
@@ -56,11 +75,12 @@
 	..()
 	if(M.buckled == src)
 		desc = "A flickering, glowing purple ring around [M]."
-		clockwork_desc = "A binding ring around [M], preventing [M.p_them()] from taking action while [M.p_theyre()] being converted."
+		clockwork_desc = "A binding ring around [M], preventing [M.p_them()] from taking action."
 		icon_state = "geisbinding"
 		mob_layer = M.layer
-		layer = M.layer - 0.01
-		add_overlay(mutable_appearance('icons/effects/clockwork_effects.dmi', "geisbinding_top", M.layer + 0.01))
+		layer = mob_layer - 0.01
+		add_overlay(mutable_appearance('icons/effects/clockwork_effects.dmi', "geisbinding_top", mob_layer + 0.01))
+		last_mob_health = M.health
 		for(var/obj/item/I in M.held_items)
 			M.dropItemToGround(I)
 		for(var/i in M.get_empty_held_indexes())

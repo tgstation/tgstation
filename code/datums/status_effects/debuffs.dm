@@ -100,6 +100,7 @@
 	alert_type = /obj/screen/alert/status_effect/belligerent
 	var/leg_damage_on_toggle = 2 //damage on initial application and when the owner tries to toggle to run
 	var/cultist_damage_on_toggle = 10 //damage on initial application and when the owner tries to toggle to run, but to cultists
+	var/does_damage_on_first_application = TRUE
 
 /obj/screen/alert/status_effect/belligerent
 	name = "Belligerent"
@@ -107,31 +108,39 @@
 	icon_state = "belligerent"
 	alerttooltipstyle = "clockcult"
 
+/datum/status_effect/belligerent/on_creation(mob/living/new_owner, set_first_damage)
+	if(isnum(set_first_damage))
+		does_damage_on_first_application = set_first_damage
+	. = ..()
+
 /datum/status_effect/belligerent/on_apply()
-	return do_movement_toggle(TRUE)
+	return do_movement_toggle(does_damage_on_first_application)
 
 /datum/status_effect/belligerent/tick()
 	if(!do_movement_toggle())
 		qdel(src)
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
-	var/number_legs = owner.get_num_legs()
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
-		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
-			if(GLOB.ratvar_awakens)
-				owner.Knockdown(20)
-			if(iscultist(owner))
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "r_leg")
-			else
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "l_leg")
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "r_leg")
-		if(owner.m_intent != MOVE_INTENT_WALK)
-			if(!iscultist(owner))
-				to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
-			else //Cultists take extra burn damage
-				to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
-			owner.toggle_move_intent()
+	if(!is_servant_of_ratvar(owner) && !owner.null_rod_check())
+		var/number_legs = owner.get_num_legs()
+		if(iscarbon(owner))
+			if(!number_legs)
+				return FALSE
+			if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
+				if(GLOB.ratvar_awakens)
+					owner.Knockdown(20)
+				if(iscultist(owner)) //Cultists take extra burn damage
+					owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
+					owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "r_leg")
+				else
+					owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "l_leg")
+					owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "r_leg")
+			if(owner.m_intent != MOVE_INTENT_WALK)
+				if(iscultist(owner))
+					to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
+				else
+					to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
+				owner.toggle_move_intent()
 		return TRUE
 	return FALSE
 
@@ -231,6 +240,21 @@
 				owner.confused = min(owner.confused + round(severity * 0.025, 1), 25) //2.5% of severity per second above 20 severity
 			owner.adjustToxLoss(severity * 0.02, TRUE, TRUE) //2% of severity per second
 		severity--
+
+/datum/status_effect/geis_tracker
+	id = "geis_tracker"
+	duration = -1
+	alert_type = null
+	var/obj/structure/destructible/clockwork/geis_binding/binding
+
+/datum/status_effect/geis_tracker/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/geis_binding/new_binding)
+	. = ..()
+	if(.)
+		binding = new_binding
+
+/datum/status_effect/geis_tracker/tick()
+	if(QDELETED(binding))
+		qdel(src)
 
 /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
 	id = "cult_ghost"
