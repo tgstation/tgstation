@@ -131,15 +131,23 @@
 	fire_delay = 10
 	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
-/obj/item/device/spacepod_equipment/weaponry/mining_laser_hyper
-	name = "enhanced mining laser system"
-	desc = "An enhanced mining laser system for space pods, fires bursts of energy that cut through rock."
+/obj/item/device/spacepod_equipment/weaponry/plasma_cutter
+	name = "plasma cutter laser system"
+	desc = "A plasma cutter system for space pods. It is capable of expelling concentrated plasma bursts to mine or cut off xeno limbs!"
 	icon = 'goon/icons/pods/ship.dmi'
-	icon_state = "pod_w_laser"
-	projectile_type = /obj/item/projectile/kinetic/pod/enhanced
+	icon_state = "pod_p_cutter"
+	projectile_type = /obj/item/projectile/plasma
+	shot_cost = 250
+	fire_delay = 10
+	fire_sound = 'sound/weapons/plasma_cutter.ogg'
+
+/obj/item/device/spacepod_equipment/weaponry/plasma_cutter/adv
+	name = "enhanced plasma cutter system"
+	desc = "An enhanced plasma cutter system for space pods. It is capable of expelling concentrated plasma bursts to mine or cut off xeno faces!"
+	icon_state = "pod_ap_cutter"
+	projectile_type = /obj/item/projectile/plasma/adv
 	shot_cost = 200
 	fire_delay = 8
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /*
 ///////////////////////////////////////

@@ -135,26 +135,26 @@
 	build_path = /obj/item/device/spacepod_equipment/weaponry/mining_laser_basic
 	category = list("Pod Weaponry")
 
-/datum/design/pod_mining_laser
+/datum/design/pod_plasma_cutter
 	construction_time = 200
-	name = "Mining Laser"
-	desc = "Allows for the construction of a mining laser."
-	id = "pod_mining_laser"
-	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4)
+	name = "Plasma Cutter"
+	desc = "Allows for the construction of a plasma cutter."
+	id = "pod_plasma_cutter"
+	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4, "plasmatech" = 3)
 	build_type = PODFAB
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/device/spacepod_equipment/weaponry/mining_laser
+	build_path = /obj/item/device/spacepod_equipment/weaponry/plasma_cutter
 	category = list("Pod Weaponry")
 
-/datum/design/pod_mining_laser_hyper
+/datum/design/pod_adv_plasma_cutter
 	construction_time = 200
-	name = "Enhanced Mining Laser"
-	desc = "Allows for the construction of an enhanced mining laser."
-	id = "pod_mining_laser_hyper"
-	req_tech = list("materials" = 7, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4)
+	name = "Advanced Plasma cutter"
+	desc = "Allows for the construction of an advanced plasma cutter."
+	id = "pod_adv_plasma_cutter"
+	req_tech = list("materials" = 7, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4, "plasmatech" = 4)
 	build_type = PODFAB
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_DIAMOND = 4000)
-	build_path = /obj/item/device/spacepod_equipment/weaponry/mining_laser_hyper
+	build_path = /obj/item/device/spacepod_equipment/weaponry/plasma_cutter/adv
 	category = list("Pod Weaponry")
 
 //////////////////////////////////////////
