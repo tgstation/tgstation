@@ -64,6 +64,9 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 
+	if(!forensics)
+		forensics = new
+
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
@@ -161,7 +164,7 @@
 			reagents.conditional_update()
 		if(istype(A, /datum/forensics))
 			if(!forensics)
-				forensics = new()
+				forensics = new
 		else if(ismovableatom(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
