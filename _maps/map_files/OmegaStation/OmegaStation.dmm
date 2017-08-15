@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -583,17 +583,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/bridge)
-"abb" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2882,22 +2871,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"aeY" = (
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock";
-	req_access_txt = "31"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "aeZ" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Supply Shuttle Airlock";
@@ -3349,15 +3322,6 @@
 /obj/machinery/computer/cargo,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"afJ" = (
-/obj/structure/cable/white{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/cable/white,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/quartermaster/storage)
 "afK" = (
 /obj/machinery/button/door{
@@ -4361,29 +4325,6 @@
 	},
 /obj/structure/plasticflaps,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/quartermaster/storage)
-"ahs" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoload"
-	},
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/poddoor{
-	id = "cargoload";
-	name = "supply dock loading door"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -5862,12 +5803,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"ajP" = (
-/obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
 "ajQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/ore/iron,
@@ -10297,12 +10232,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
-"aqB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/wall/r_wall,
-/area/engine/atmos)
 "aqC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -11942,25 +11871,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/storage/primary)
-"ata" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "atb" = (
@@ -15944,16 +15854,6 @@
 	dir = 9
 	},
 /area/engine/atmos)
-"aAl" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "aAm" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 9
@@ -19902,20 +19802,6 @@
 /area/hallway/primary/central{
 	name = "Primary Hallway"
 	})
-"aGY" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 4
-	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
 "aHe" = (
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -21899,17 +21785,6 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
-"aKl" = (
-/obj/structure/cable/white{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/vacuum,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
 "aKm" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Cargo"
@@ -22551,15 +22426,6 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
-"aLn" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
 	})
@@ -24315,19 +24181,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"aOA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "aOB" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -25175,23 +25028,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"aPH" = (
-/obj/machinery/door/airlock/command{
-	cyclelinkeddir = 2;
-	name = "Telecomms Server Room";
-	req_access = null;
-	req_access_txt = "61"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/turf/open/floor/plasteel,
-/area/tcommsat/server)
 "aPI" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -25712,14 +25548,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"aQF" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/tcommsat/server)
 "aQG" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
@@ -25748,14 +25576,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/server)
-"aQI" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/tcommsat/server)
 "aQJ" = (
 /obj/machinery/meter,
 /obj/effect/turf_decal/stripes/corner{
@@ -25772,15 +25592,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"aQL" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -26089,10 +25900,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research)
-"aRw" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/science/research)
 "aRx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -26135,16 +25942,6 @@
 "aRB" = (
 /turf/open/floor/plasteel/vault/telecomms{
 	dir = 5
-	},
-/area/tcommsat/server)
-"aRC" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
 	},
 /area/tcommsat/server)
 "aRD" = (
@@ -26748,10 +26545,6 @@
 /obj/item/weapon/lighter,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"aSL" = (
-/obj/machinery/telecomms/server/presets/common/birdstation,
-/turf/open/floor/circuit/green,
-/area/tcommsat/server)
 "aSM" = (
 /obj/machinery/door/airlock/command{
 	cyclelinkeddir = 2;
@@ -33173,15 +32966,6 @@
 	dir = 4
 	},
 /area/maintenance/port)
-"beX" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "beY" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -35322,12 +35106,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
-"biK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main)
 "biL" = (
 /obj/machinery/light_switch{
 	pixel_x = 24;
@@ -36319,9 +36097,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"bkA" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/arrival)
 "bkB" = (
 /obj/structure/chair{
 	dir = 4
@@ -36401,12 +36176,6 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/shuttle/arrival)
-"bkL" = (
-/obj/effect/landmark{
-	name = "Observer-Start"
-	},
-/turf/open/floor/plasteel/neutral,
 /area/shuttle/arrival)
 "bkM" = (
 /obj/structure/table/reinforced,
@@ -36983,18 +36752,6 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
-"bmx" = (
-/turf/closed/wall,
-/area/space)
-"bmy" = (
-/turf/open/floor/plasteel,
-/area/space)
-"bmz" = (
-/turf/open/floor/plasteel,
-/area/space)
-"bmB" = (
-/turf/closed/wall,
-/area/space)
 "bmC" = (
 /obj/machinery/light{
 	dir = 8
@@ -37003,12 +36760,6 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
-"bmD" = (
-/turf/open/floor/plasteel,
-/area/space)
-"bmF" = (
-/turf/closed/wall,
-/area/space)
 "bmG" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -37017,21 +36768,6 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
-"bmH" = (
-/turf/open/floor/plasteel,
-/area/space)
-"bmJ" = (
-/turf/closed/wall,
-/area/space)
-"bmK" = (
-/turf/closed/wall,
-/area/space)
-"bmL" = (
-/turf/closed/wall,
-/area/space)
-"bmM" = (
-/turf/closed/wall,
-/area/space)
 "bmN" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -37053,41 +36789,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
-"bmQ" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "blast shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bmR" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "blast shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bmS" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "blast shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bmT" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "blast shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bmU" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bmV" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -37098,9 +36799,6 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate)
-"bmW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bmX" = (
 /obj/machinery/computer/med_data/syndie,
 /turf/open/floor/plasteel/vault{
@@ -37109,13 +36807,6 @@
 /area/shuttle/syndicate)
 "bmY" = (
 /obj/machinery/computer/crew/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"bmZ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -37138,36 +36829,6 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"bnd" = (
-/obj/structure/frame/computer,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bne" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnf" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bng" = (
-/obj/structure/table/reinforced,
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/obj/item/weapon/clipboard,
-/obj/item/toy/figure/syndie,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"bnh" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bni" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bnj" = (
 /obj/structure/chair/office/dark{
 	dir = 1;
@@ -37182,68 +36843,13 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
-"bnk" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnl" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnm" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnn" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bno" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bnp" = (
 /turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"bnq" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnr" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bns" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnt" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_y = -32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnu" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnv" = (
-/obj/structure/closet/syndicate/personal,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnw" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnx" = (
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/syndicate)
-"bny" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnz" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnA" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnB" = (
 /obj/machinery/door/airlock/hatch{
@@ -37254,26 +36860,11 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"bnC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bnF" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/syndicate)
-"bnG" = (
-/turf/open/space,
-/area/shuttle/syndicate)
-"bnH" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnI" = (
 /obj/structure/table/reinforced,
@@ -37283,9 +36874,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/shuttle/syndicate)
-"bnJ" = (
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bnK" = (
 /obj/structure/table/reinforced,
@@ -37298,24 +36886,6 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"bnL" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnM" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"bnN" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnO" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnP" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bnQ" = (
 /obj/structure/chair{
 	dir = 8;
@@ -37325,54 +36895,10 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"bnR" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnS" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 9
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"bnT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnU" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnV" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnX" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnY" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bnZ" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boa" = (
-/obj/structure/chair{
-	dir = 8;
-	name = "tactical chair"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bob" = (
 /obj/machinery/porta_turret/syndicate{
 	dir = 4
 	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boc" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bod" = (
@@ -37381,46 +36907,11 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"boe" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bof" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bog" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/shuttle/syndicate)
-"boh" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boi" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boj" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bok" = (
-/obj/structure/chair{
-	dir = 8;
-	name = "tactical chair"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bol" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bom" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bon" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boo" = (
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bop" = (
 /turf/open/floor/plasteel/vault{
@@ -37432,28 +36923,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/shuttle/syndicate)
-"bor" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bos" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bot" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bou" = (
-/obj/structure/chair{
-	dir = 8;
-	name = "tactical chair"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bov" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bow" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "box" = (
 /obj/machinery/door/poddoor{
@@ -37501,29 +36970,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
-"boz" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"boA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boB" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boC" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boD" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "boE" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light{
@@ -37532,9 +36978,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/shuttle/syndicate)
-"boF" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "boG" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -37549,41 +36992,6 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"boI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"boJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boK" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boL" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boM" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boN" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boP" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boQ" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boR" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boS" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "boT" = (
 /obj/machinery/door/airlock/external{
 	name = "E.V.A. Gear Storage";
@@ -37593,166 +37001,17 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"boU" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boV" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boW" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "boX" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
-"boY" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"boZ" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpa" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpb" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpc" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpd" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpe" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpf" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpg" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bph" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "EVA Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpi" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpj" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpk" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bpm" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpn" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpo" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpp" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bpq" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/syndicate)
-"bpr" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 9
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"bps" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpt" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpu" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpv" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpw" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpx" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpy" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = -32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpz" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpA" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpB" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpH" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"bpI" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bpJ" = (
 /obj/machinery/sleeper/syndie{
@@ -37820,21 +37079,6 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"bpO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpP" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpQ" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpR" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpS" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bpT" = (
 /obj/item/weapon/stock_parts/cell/high{
 	pixel_x = -3;
@@ -37895,91 +37139,12 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"bpY" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bpZ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bqa" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/shuttle/syndicate)
-"bqb" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqc" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqd" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqe" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqf" = (
-/obj/structure/sign/bluecross_2,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqg" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqh" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqi" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqj" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqk" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bql" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqm" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqn" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqo" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/item/weapon/crowbar/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqp" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqq" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqr" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqs" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqt" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqu" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqv" = (
-/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "bqw" = (
 /obj/machinery/door/airlock/hatch{
@@ -37989,111 +37154,11 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"bqx" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqy" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqz" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqA" = (
-/obj/machinery/door/window/westright{
-	name = "Tool Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqB" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqC" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqD" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqE" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqF" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqI" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqJ" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqK" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqL" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqM" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqN" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Infirmary";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"bqO" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqP" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqQ" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqR" = (
-/obj/machinery/door/window{
-	dir = 8;
-	name = "Tool Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqS" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqT" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqU" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqV" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "bqW" = (
 /obj/structure/closet/syndicate/nuclear,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/shuttle/syndicate)
-"bqX" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bqY" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "bqZ" = (
 /obj/structure/window/reinforced{
@@ -38147,21 +37212,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate)
-"bre" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brf" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brg" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brh" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bri" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "brj" = (
 /obj/item/device/sbeacondrop/bomb{
 	pixel_y = 5
@@ -38193,25 +37243,6 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"brl" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brm" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brn" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bro" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 4
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brp" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "brq" = (
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw,
@@ -38222,9 +37253,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/shuttle/syndicate)
-"brr" = (
-/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "brs" = (
 /obj/structure/sink{
@@ -38238,19 +37266,6 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"brt" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bru" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brv" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
 "brx" = (
 /obj/machinery/nuclearbomb/syndicate,
 /obj/machinery/door/window{
@@ -38259,37 +37274,6 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
-"bry" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"brz" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brA" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brB" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brC" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brD" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brE" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brG" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "brH" = (
 /obj/item/weapon/cautery,
@@ -38314,12 +37298,6 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"brK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brL" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "brM" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -38327,29 +37305,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/shuttle/syndicate)
-"brN" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"brO" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"brP" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brQ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brR" = (
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "brS" = (
 /obj/machinery/recharge_station,
@@ -38360,47 +37315,6 @@
 	intercept = 1
 	},
 /turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
-"brU" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/black/red,
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brV" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"brX" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"brY" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"brZ" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bsa" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bsb" = (
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
 /area/shuttle/syndicate)
 "bsc" = (
 /obj/structure/shuttle/engine/propulsion/left,
@@ -38416,56 +37330,6 @@
 /obj/structure/shuttle/engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/shuttle/syndicate)
-"bsf" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"bsg" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bsh" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bsi" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bsj" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bsk" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"bsl" = (
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"bsm" = (
-/obj/structure/shuttle/engine/propulsion/left,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bsn" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bso" = (
-/obj/structure/shuttle/engine/propulsion/right,
-/turf/open/floor/plating,
 /area/shuttle/syndicate)
 "bsp" = (
 /turf/open/space,
@@ -38483,24 +37347,6 @@
 	dir = 10
 	},
 /turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"bsr" = (
-/obj/structure/shuttle/engine/propulsion/left,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bss" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bst" = (
-/obj/structure/shuttle/engine/propulsion/right,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"bsu" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate)
@@ -38551,19 +37397,6 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
-"bsy" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/bot,
-/obj/structure/cable/white{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -38665,50 +37498,6 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
-"bsF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
-"bsG" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
-"bsH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
-"bsI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
 "bsJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38720,28 +37509,6 @@
 /obj/structure/cable/white{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
-"bsK" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
-"bsL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38867,12 +37634,6 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
-"bsU" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/space)
 "bsV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -38884,12 +37645,6 @@
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
 	})
-"bsW" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/space)
 "bsX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_mining{
@@ -38996,26 +37751,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"btf" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/space)
-"btg" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/space)
-"bth" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/space)
-"bti" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/space)
 "btj" = (
 /obj/docking_port/mobile/arrivals{
 	dir = 2;
@@ -39055,31 +37790,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"btm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
-	name = "External Docking Port"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
-"btn" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
-	name = "External Docking Port"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
 "bto" = (
 /obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
@@ -39094,9 +37804,6 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
 "btq" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"btr" = (
 /turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
 "bts" = (
@@ -39123,11 +37830,6 @@
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
-"btv" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
 "btw" = (
 /obj/structure/chair{
 	dir = 4;
@@ -39136,9 +37838,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/shuttle/syndicate)
-"btx" = (
-/turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
 "bty" = (
 /obj/structure/chair{
@@ -39152,9 +37851,6 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"btz" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
 "btA" = (
 /obj/structure/chair{
 	dir = 8;
@@ -39167,49 +37863,7 @@
 	dir = 5
 	},
 /area/shuttle/syndicate)
-"btB" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"btC" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"btD" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"btE" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
 "btF" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/shuttle/syndicate)
-"btG" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"btH" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"btI" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
 	dir = 4
@@ -39237,17 +37891,6 @@
 	dir = 6
 	},
 /area/shuttle/syndicate)
-"btM" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/shuttle/syndicate)
-"btN" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
 "btO" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
@@ -39260,19 +37903,7 @@
 	dir = 8
 	},
 /area/shuttle/syndicate)
-"btQ" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
 "btR" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"btS" = (
 /obj/structure/chair{
 	dir = 1;
 	name = "tactical chair"
@@ -39293,16 +37924,6 @@
 /obj/machinery/ai_status_display,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
-"btV" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"btW" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"btX" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
 "btY" = (
 /obj/machinery/light{
 	dir = 8
@@ -39310,9 +37931,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/shuttle/syndicate)
-"btZ" = (
-/turf/open/floor/plasteel/black,
 /area/shuttle/syndicate)
 "bua" = (
 /obj/machinery/light{
@@ -39328,36 +37946,6 @@
 	},
 /area/shuttle/syndicate)
 "buc" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"bud" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"bue" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"buf" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"bug" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"buh" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"bui" = (
 /turf/open/floor/plasteel/podhatch{
 	dir = 1
 	},
@@ -39387,27 +37975,6 @@
 	dir = 10
 	},
 /area/shuttle/syndicate)
-"bun" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"buo" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"bup" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"buq" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"bur" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"bus" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"but" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
 "buu" = (
 /turf/open/floor/plasteel/podhatch{
 	dir = 6
@@ -39428,14 +37995,6 @@
 /obj/structure/table/reinforced,
 /obj/item/device/aicard,
 /turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"bux" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
 /area/shuttle/syndicate)
 "buy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -39470,15 +38029,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/arrival)
 "buC" = (
-/turf/open/floor/plasteel/grimy,
-/area/tcommsat/server)
-"buD" = (
-/turf/open/floor/plasteel/grimy,
-/area/tcommsat/server)
-"buE" = (
-/turf/open/floor/plasteel/grimy,
-/area/tcommsat/server)
-"buF" = (
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/server)
 "buG" = (
@@ -39525,14 +38075,6 @@
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"buM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault/telecomms{
-	dir = 5
-	},
-/area/tcommsat/server)
 "buN" = (
 /obj/machinery/announcement_system,
 /obj/machinery/ai_status_display{
@@ -39570,14 +38112,6 @@
 	dir = 5
 	},
 /area/tcommsat/server)
-"buT" = (
-/obj/machinery/status_display{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/vault/telecomms{
-	dir = 5
-	},
-/area/tcommsat/server)
 "buU" = (
 /obj/machinery/camera{
 	c_tag = "Communications Relay";
@@ -39601,12 +38135,6 @@
 "buW" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"buX" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"buY" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "buZ" = (
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
@@ -39615,29 +38143,9 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
-"bva" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/open/floor/circuit/green,
-/area/engine/supermatter)
-"bvb" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"bvc" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "bvd" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
-/area/engine/supermatter)
-"bve" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"bvf" = (
-/turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "bvg" = (
 /turf/open/floor/plating/airless/astplate,
@@ -39650,183 +38158,15 @@
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
-"bvi" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvj" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvk" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvl" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvm" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvn" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
 "bvo" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
-"bvp" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvq" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvr" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvs" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvt" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvu" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvv" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvw" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvx" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvy" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvz" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvA" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvB" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvC" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvD" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvE" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvF" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvG" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvH" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
 "bvI" = (
 /obj/item/weapon/pickaxe/emergency,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvJ" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvK" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvL" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvM" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bvN" = (
-/turf/open/floor/plating/airless/astplate,
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
@@ -39869,28 +38209,9 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
-"bvU" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bvV" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "bvW" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bvX" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bvY" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bvZ" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"bwa" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bwb" = (
 /obj/structure/shuttle/engine/propulsion/left{
@@ -39905,17 +38226,7 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"bwd" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bwe" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "bwf" = (
-/obj/structure/chair,
-/turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bwg" = (
 /obj/structure/chair,
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
@@ -39928,27 +38239,6 @@
 "bwi" = (
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
-"bwj" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"bwk" = (
-/obj/structure/chair,
-/turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bwl" = (
-/obj/structure/chair,
-/turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bwm" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"bwn" = (
-/obj/structure/shuttle/engine/propulsion/left{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/transport)
 "bwo" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -39958,9 +38248,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"bwp" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
 "bwq" = (
 /obj/machinery/light/small,
 /turf/open/floor/pod/light,
@@ -39969,27 +38256,9 @@
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
-"bws" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"bwt" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"bwu" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
 "bwv" = (
 /obj/machinery/computer/shuttle/ferry/request,
 /turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bww" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"bwx" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"bwy" = (
-/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "bwz" = (
 /obj/machinery/door/airlock/titanium,
@@ -40015,12 +38284,6 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
-"bwA" = (
-/obj/structure/shuttle/engine/propulsion/left{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/transport)
 "bwB" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -40031,79 +38294,19 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"bwC" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bwD" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "bwE" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
-"bwF" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bwG" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
-"bwH" = (
-/turf/open/floor/pod/light,
-/area/shuttle/transport)
 "bwI" = (
 /obj/machinery/light,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
-"bwJ" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bwK" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/transport)
-"bwL" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"bwM" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bwN" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"bwO" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bwP" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "bwQ" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/pod/light,
-/area/shuttle/transport)
-"bwR" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bwS" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"bwT" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"bwU" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bwV" = (
 /obj/structure/cable/white{
@@ -40134,12 +38337,6 @@
 "bwY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/gravity_generator)
-"bwZ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
 	},
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
@@ -40179,40 +38376,6 @@
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
-"bxe" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/mineral/random/labormineral,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bxf" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/mineral/random/labormineral,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
-"bxg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/wall/r_wall,
-/area/engine/gravity_generator)
-"bxh" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/wall/r_wall,
-/area/engine/gravity_generator)
-"bxi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/wall/r_wall,
-/area/engine/gravity_generator)
 "bxj" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -40229,45 +38392,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
-"bxm" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/tcommsat/server)
-"bxn" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/tcommsat/server)
-"bxo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/closed/wall/r_wall,
-/area/tcommsat/server)
 "bxp" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/turf/open/floor/plating,
-/area/tcommsat/server)
-"bxq" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/tcommsat/server)
-"bxr" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/tcommsat/server)
-"bxs" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
@@ -40465,12 +38593,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
-"bxO" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
 "bxP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
@@ -40558,6 +38680,27 @@
 	heat_capacity = 1e+006
 	},
 /area/hallway/secondary/entry)
+"BGk" = (
+/obj/structure/table/reinforced,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/obj/item/weapon/clipboard,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/weapon/folder/red,
+/obj/item/toy/figure/syndie,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/shuttle/syndicate)
+"XBg" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -68695,7 +66838,7 @@ bxj
 bxl
 bxl
 bxl
-bxo
+aSO
 aMJ
 aMJ
 aMJ
@@ -69634,12 +67777,12 @@ btF
 btF
 btO
 bmO
-btN
+bpK
 bnp
-btv
-btv
+bop
+bop
 bra
-btv
+bop
 brI
 brM
 bsd
@@ -69885,11 +68028,11 @@ aaa
 aaa
 aaa
 bmO
-btv
-btv
-btv
-btv
-btv
+bop
+bop
+bop
+bop
+bop
 btU
 bpL
 bnp
@@ -70142,11 +68285,11 @@ bnx
 aaa
 aaa
 bmO
-btv
-btv
-btv
-btv
-btv
+bop
+bop
+bop
+bop
+bop
 bmO
 bpM
 bnp
@@ -70393,7 +68536,7 @@ aaa
 aaa
 bmO
 bmX
-bng
+BGk
 bnp
 bmO
 bsq
@@ -70402,7 +68545,7 @@ bmO
 bog
 boq
 boE
-btN
+bpK
 btP
 bmO
 bpN
@@ -70906,7 +69049,7 @@ aaa
 aaa
 aaa
 bmP
-bmZ
+XBg
 btq
 bnp
 btu
@@ -70916,10 +69059,10 @@ bty
 btw
 btw
 boG
-btv
-btv
-btv
-btv
+bop
+bop
+bop
+bop
 btY
 buc
 btK
@@ -71167,13 +69310,13 @@ bna
 bnj
 bnp
 bnB
-btv
+bop
 btq
 btq
 btq
-btv
+bop
 boH
-btv
+bop
 btq
 btq
 btq
@@ -71430,10 +69573,10 @@ btA
 bnQ
 bnQ
 boG
-btv
-btv
-btv
-btv
+bop
+bop
+bop
+bop
 bua
 buc
 btK
@@ -71944,7 +70087,7 @@ aaa
 aaa
 bmO
 btJ
-btv
+bop
 btR
 bmO
 bpT
@@ -72201,7 +70344,7 @@ aaa
 aaa
 box
 btK
-btv
+bop
 btR
 bmO
 bpU
@@ -72458,7 +70601,7 @@ aaa
 aaa
 boy
 btL
-btv
+bop
 btT
 btu
 bpV
@@ -72466,7 +70609,7 @@ bnp
 buj
 buu
 brb
-btv
+bop
 brS
 brM
 bsc
@@ -72720,10 +70863,10 @@ bmO
 bmO
 bpW
 bnp
-btv
-btv
+bop
+bop
 buv
-btv
+bop
 brT
 brM
 bsd

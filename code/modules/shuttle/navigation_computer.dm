@@ -39,7 +39,7 @@
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.origin = src
 	the_eye.dir = M.dir
-	var/area/A = M.areaInstance
+	var/area/A = get_area(M)
 	if(!A)
 		return
 	var/turf/origin = locate(M.x + x_offset, M.y + y_offset, M.z)
@@ -177,6 +177,7 @@
 
 /datum/action/innate/shuttledocker_rotate
 	name = "Rotate"
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/shuttledocker_rotate/Activate()
@@ -189,6 +190,7 @@
 
 /datum/action/innate/shuttledocker_place
 	name = "Place"
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/innate/shuttledocker_place/Activate()
