@@ -6,25 +6,25 @@
 /datum/clockwork_scripture/create_object/ocular_warden
 	descname = "Structure, Turret"
 	name = "Ocular Warden"
-	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
+	desc = "Forms an automatic short-range turret which will automatically attack and apply Belligerent to nearby non-Servants."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	consumed_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
+	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
-	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
+	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack and apply Belligerent to nearby non-Servants.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
-	usage_tip = "Although powerful, the warden is very fragile and should optimally be placed behind barricades."
+	usage_tip = "The warden will also produce Vitality gradually while attacking."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 	space_allowed = TRUE
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
 	quickbind = TRUE
-	quickbind_desc = "Creates an Ocular Warden, which will automatically attack nearby unrestrained non-Servants that can see it."
+	quickbind_desc = "Creates an Ocular Warden, which will automatically attack and apply Belligerent to nearby non-Servants."
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
 	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(OCULAR_WARDEN_EXCLUSION_RANGE, invoker))
-		to_chat(invoker, "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" )
+		to_chat(invoker, "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>")
 		return FALSE
 	return ..()
 
@@ -37,7 +37,7 @@
 	Dead Servants can be revived by this sigil at a cost of 150 Vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2)
+	consumed_components = list(GEIS_CAPACITOR = 1, VANGUARD_COGWHEEL = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
@@ -248,7 +248,7 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 2)
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
