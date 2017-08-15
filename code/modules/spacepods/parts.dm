@@ -34,7 +34,7 @@
 	neededparts -= src
 	//log_admin("Starting with [src]")
 	linked = src
-	for(var/i = 1; i <= 4; i++)
+	for(var/i in 1 to 4)
 		T = get_turf(get_step(linked, turn(linked.dir, -linked.link_angle))) //get the next place that we want to look at
 		var/link_to_in_t = locate(linked.link_to) in T
 		if(link_to_in_t)

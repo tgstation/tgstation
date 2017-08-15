@@ -50,7 +50,7 @@
 	else if(istype(used_atom, /obj/item/weapon/wrench))
 		var/obj/item/weapon/wrench/W = used_atom
 		playsound(holder, W.usesound, 50, 1)
-		else if(istype(used_atom, /obj/item/weapon/screwdriver))
+	else if(istype(used_atom, /obj/item/weapon/screwdriver))
 		var/obj/item/weapon/screwdriver/S = used_atom
 		playsound(holder, S.usesound, 50, 1)
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))

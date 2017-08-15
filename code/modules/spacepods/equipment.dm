@@ -4,10 +4,6 @@
 		return
 	var/turf/firstloc
 	var/turf/secondloc
-	if(!my_atom.equipment_system || !my_atom.equipment_system.weapon_system)
-		to_chat(usr, "<span class='warning'>Missing equipment or weapons.</span>")
-		my_atom.verbs -= text2path("[type]/proc/fire_weapons")
-		return
 	if(!my_atom.cell.use(shot_cost))
 		to_chat(usr, "<span class='warning'>Insufficient charge to fire the weapons</span>")
 		return

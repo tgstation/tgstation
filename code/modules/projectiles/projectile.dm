@@ -351,5 +351,5 @@
 
 
 /obj/item/projectile/proc/dumbfire(var/dir)
-	current = get_ranged_target_turf(src, dir, world.maxx) //world.maxx is the range. Not sure how to handle this better.
+	current = get_ranged_target_turf(src, dir, max(world.maxx, world.maxy)) //world.maxx is the range. Not sure how to handle this better.
 	fire()
