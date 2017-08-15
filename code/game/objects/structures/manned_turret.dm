@@ -12,7 +12,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
 	var/cooldown = 0
-	var/projectile_type = /obj/item/projectile/bullet/Sweakbullet
+	var/projectile_type = /obj/item/projectile/bullet/weakbullet4
 	var/rate_of_fire = 1
 	var/number_of_shots = 40
 	var/cooldown_duration = 90
