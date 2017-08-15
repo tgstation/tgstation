@@ -81,7 +81,7 @@
 
 
 /obj/machinery/spod_part_fabricator/proc/output_parts_list(set_name)
-	var/list/output = list()
+	var/output
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
 		if(D.build_type & PODFAB)
@@ -91,7 +91,7 @@
 			if(check_resources(D))
 				output += "<a href='?src=\ref[src];part=[D.id]'>Build</a> | "
 			output += "<a href='?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
-	return output.Join()
+	return output
 
 /obj/machinery/spod_part_fabricator/proc/output_part_info(datum/design/D)
 	var/output = "[initial(D.name)] (Cost: [output_part_cost(D)]) [get_construction_time_w_coeff(D)/10]sec"
@@ -99,14 +99,14 @@
 
 /obj/machinery/spod_part_fabricator/proc/output_part_cost(datum/design/D)
 	var/i = 0
-	var/list/output = list()
+	var/output
 	for(var/c in D.materials)
 		output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
 		i++
-	return output.Join()
+	return output
 
 /obj/machinery/spod_part_fabricator/proc/output_available_resources()
-	var/list/output = list()
+	var/output
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
@@ -116,7 +116,7 @@
 				output += " | \[<a href='?src=\ref[src];remove_mat=10;material=[mat_id]'>10</a>\]"
 			output += " | \[<a href='?src=\ref[src];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
 		output += "<br/>"
-	return output.Join()
+	return output
 
 /obj/machinery/spod_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
 	var/list/resources = list()
@@ -201,7 +201,7 @@
 	say("Queue processing finished successfully.")
 
 /obj/machinery/spod_part_fabricator/proc/list_queue()
-	var/list/output = list("<B>Queue contains:</b>")
+	var/output = "<B>Queue contains:</b>"
 	if(!istype(queue) || !queue.len)
 		output += "<br>Nothing"
 	else
@@ -218,7 +218,7 @@
 
 		output += "</ol>"
 		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
-	return output.Join()
+	return output
 
 /obj/machinery/spod_part_fabricator/proc/sync()
 	temp = "Updating local R&D database..."
