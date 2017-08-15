@@ -110,19 +110,10 @@
 	update_icons()
 
 
-/obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/_armor = /datum/pod_armor/civ)
+/obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/_armor)
 	. = ..(mapload)
-	pod_armor = _armor
-	if(!pod_overlays)
-		pod_overlays = new/list(2)
-		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
-		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
-	if(!pod_paint_effect)
-		pod_paint_effect = new/list(4)
-		pod_paint_effect[LIGHT] = image(icon,icon_state = "LIGHTS")
-		pod_paint_effect[WINDOW] = image(icon,icon_state = "Windows")
-		pod_paint_effect[RIM] = image(icon,icon_state = "RIM")
-		pod_paint_effect[PAINT] = image(icon,icon_state = "PAINT")
+	if (_armor)
+		pod_armor = _armor
 	dir = EAST
 	cell = new cell_type(src)
 	add_cabin()
@@ -147,8 +138,6 @@
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
 	cargo_hold.max_w_class = 5		//fit almost anything
 	cargo_hold.max_combined_w_class = 0 //you can optimize your stash with larger items
-	bound_width = 64
-	bound_height = 64
 	update_icons()
 
 /obj/spacepod/Destroy()
@@ -187,7 +176,6 @@
 		pod_overlays = new/list(2)
 		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
 		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
-
 	if(!pod_paint_effect)
 		pod_paint_effect = new/list(4)
 		pod_paint_effect[LIGHT] = image(icon,icon_state = "LIGHTS")
@@ -218,10 +206,7 @@
 		overlays += pod_overlays[DAMAGE]
 		if(obj_integrity <= round(max_integrity/4))
 			overlays += pod_overlays[FIRE]
-
-
 	light_color = icon_light_color[src.icon_state]
-
 	bound_width = 64
 	bound_height = 64
 
@@ -572,11 +557,6 @@
 	pod_armor = /datum/pod_armor/civ
 	desc = "A sleek civilian space pod."
 
-/obj/spacepod/civilian/Initialize()
-	. = ..()
-	pod_armor = /datum/pod_armor/security
-	update_icons()
-
 /obj/spacepod/civilian/attackby(obj/item/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/weapon/pod_paint_bucket))
@@ -587,41 +567,6 @@
 	icon_state = "pod_civ"
 	pod_armor = /datum/pod_armor/civ
 // placeholder
-
-/obj/spacepod/sec
-	name = "\improper security spacepod"
-	desc = "An armed security spacepod with reinforced armor plating."
-	icon_state = "pod_mil"
-	pod_armor = /datum/pod_armor/security
-	max_integrity = 400
-
-/obj/spacepod/sec/Initialize()
-	. = ..()
-	var/obj/item/device/spacepod_equipment/weaponry/burst_taser/T = new /obj/item/device/spacepod_equipment/weaponry/taser
-	T.loc = equipment_system
-	equipment_system.weapon_system = T
-	equipment_system.weapon_system.my_atom = src
-	equipment_system.installed_modules += T
-	var/obj/item/device/spacepod_equipment/misc/tracker/L = new /obj/item/device/spacepod_equipment/misc/tracker
-	L.loc = equipment_system
-	equipment_system.misc_system = L
-	equipment_system.misc_system.my_atom = src
-	equipment_system.misc_system.enabled = 1
-	equipment_system.installed_modules += L
-	var/obj/item/device/spacepod_equipment/sec_cargo/chair/C = new /obj/item/device/spacepod_equipment/sec_cargo/chair
-	C.loc = equipment_system
-	equipment_system.sec_cargo_system = C
-	equipment_system.sec_cargo_system.my_atom = src
-	equipment_system.installed_modules += C
-	max_passengers = 1
-	var/obj/item/device/spacepod_equipment/lock/keyed/K = new /obj/item/device/spacepod_equipment/lock/keyed
-	K.loc = equipment_system
-	equipment_system.lock_system = K
-	equipment_system.lock_system.my_atom = src
-	equipment_system.lock_system.id = 100000
-	equipment_system.installed_modules += K
-	pod_armor = /datum/pod_armor/security
-	update_icons()
 
 /obj/spacepod/random/Initialize()
 	. = ..()
