@@ -8,7 +8,7 @@
 		to_chat(usr, "<span class='warning'>Missing equipment or weapons.</span>")
 		my_atom.verbs -= text2path("[type]/proc/fire_weapons")
 		return
-	if(!my_atom.battery.use(shot_cost))
+	if(!my_atom.cell.use(shot_cost))
 		to_chat(usr, "<span class='warning'>Insufficient charge to fire the weapons</span>")
 		return
 	var/olddir

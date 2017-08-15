@@ -461,7 +461,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 				to_chat(user, "<span class='notice'>The storage compartment is locked</span>")
 		return ..()
 	if(!equipment_system || !istype(equipment_system))
-		to_chat(user, "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at IK3I.</span>")
+		to_chat(user, "<span class='warning'>The pod has no equipment datum, or is the wrong type, yell at MoreRobustThanYou.</span>")
 		return
 	var/list/possible = list()
 	if(cell)
