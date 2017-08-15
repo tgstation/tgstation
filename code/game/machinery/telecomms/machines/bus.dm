@@ -17,8 +17,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	machinetype = 2
-	//heatgen = 20
 	netspeed = 40
+	circuit = /obj/item/weapon/circuitboard/machine/telecomms/bus
 	var/change_frequency = 0
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
@@ -49,24 +49,6 @@
 			if(can_send)
 				break
 
-/obj/machinery/telecomms/bus/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/bus(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/telecomms/bus
-	name = "Bus Mainframe (Machine Board)"
-	build_path = /obj/machinery/telecomms/bus
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
-
-
-
-
-
 //Preset Buses
 
 /obj/machinery/telecomms/bus/preset_one
@@ -93,10 +75,10 @@
 	freq_listening = list(GLOB.ENG_FREQ)
 	autolinkers = list("processor4", "engineering", "common")
 
-/obj/machinery/telecomms/bus/preset_four/New()
+/obj/machinery/telecomms/bus/preset_four/Initialize()
+	. = ..()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
 
 /obj/machinery/telecomms/bus/preset_one/birdstation
 	name = "Bus"

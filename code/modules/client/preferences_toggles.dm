@@ -229,7 +229,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	set name = "Stop Sounds"
 	set category = "Preferences"
 	set desc = "Stop Current Sounds"
-	usr << sound(null)
+	SEND_SOUND(usr, sound(null))
 	SSblackbox.add_details("preferences_verb","Stop Self Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

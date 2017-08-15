@@ -160,29 +160,17 @@
 	return TRUE //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
+	..()
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
+	// If an opaque movable atom moves around we need to potentially update visibility.
+	if (AM.opacity)
+		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+		reconsider_lights()
+
 /turf/open/Entered(atom/movable/AM)
 	..()
-	//slipping
-	if (istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		if(M.movement_type & FLYING)
-			return
-		switch(wet)
-			if(TURF_WET_WATER)
-				if(!M.slip(60, null, NO_SLIP_WHEN_WALKING))
-					M.inertia_dir = 0
-			if(TURF_WET_LUBE)
-				if(M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP)))
-					M.confused = max(M.confused, 8)
-			if(TURF_WET_ICE)
-				M.slip(120, null, (SLIDE|GALOSHES_DONT_HELP))
-			if(TURF_WET_PERMAFROST)
-				M.slip(120, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
-			if(TURF_WET_SLIDE)
-				M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP))
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM

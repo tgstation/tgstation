@@ -120,8 +120,8 @@
 	if(auto_name)
 		name = "\improper [get_area(src)] APC"
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
+	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -25)
+	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 23 : -24) : 0
 	if (building)
 		area = get_area(src)
 		opened = 1
@@ -895,7 +895,7 @@
 	transfer_in_progress = TRUE
 	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
-	occupier << sound('sound/misc/notice2.ogg') //To alert the AI that someone's trying to card them if they're tabbed out
+	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
 	if(alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", "Yes - Transfer Me", "No - Keep Me Here") == "No - Keep Me Here")
 		to_chat(user, "<span class='danger'>AI denied transfer request. Process terminated.</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
@@ -988,9 +988,6 @@
 		main_status = 1
 	else
 		main_status = 2
-
-	//if(debug)
-	//	world.log << "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]"
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area

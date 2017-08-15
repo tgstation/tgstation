@@ -15,7 +15,7 @@
 									/obj/item/weapon/reagent_containers/glass)
 
 /obj/machinery/iv_drip/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	drip_containers = typecacheof(drip_containers)
 

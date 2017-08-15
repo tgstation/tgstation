@@ -12,13 +12,14 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
+	circuit = /obj/item/weapon/circuitboard/machine/smartfridge
 	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 	var/list/initial_contents
 
 /obj/machinery/smartfridge/Initialize()
-	..()
+	. = ..()
 	create_reagents()
 	reagents.set_reacting(FALSE)
 
@@ -29,40 +30,6 @@
 				amount = 1
 			for(var/i in 1 to amount)
 				load(new typekey(src))
-
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smartfridge(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/smartfridge
-	name = "Smartfridge (Machine Board)"
-	build_path = /obj/machinery/smartfridge
-	origin_tech = "programming=1"
-	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
-	var/static/list/fridges = list(/obj/machinery/smartfridge = "plant produce",
-							/obj/machinery/smartfridge/food = "food",
-							/obj/machinery/smartfridge/drinks = "drinks",
-							/obj/machinery/smartfridge/extract = "slimes",
-							/obj/machinery/smartfridge/chemistry = "chems",
-							/obj/machinery/smartfridge/chemistry/virology = "viruses",
-							/obj/machinery/smartfridge/disks = "disks")
-
-/obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
-	if(new_type)
-		build_path = new_type
-	..()
-
-/obj/item/weapon/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		var/position = fridges.Find(build_path, fridges)
-		position = (position == fridges.len) ? 1 : (position + 1)
-		build_path = fridges[position]
-		to_chat(user, "<span class='notice'>You set the board to [fridges[build_path]].</span>")
-	else
-		return ..()
-
-/obj/item/weapon/circuitboard/machine/smartfridge/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>[src] is set to [fridges[build_path]]. You can use a screwdriver to reconfigure it.</span>")
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -255,8 +222,8 @@
 	icon_off = "drying_rack"
 	var/drying = FALSE
 
-/obj/machinery/smartfridge/drying_rack/New()
-	..()
+/obj/machinery/smartfridge/drying_rack/Initialize()
+	. = ..()
 	if(component_parts && component_parts.len)
 		component_parts.Cut()
 	component_parts = null

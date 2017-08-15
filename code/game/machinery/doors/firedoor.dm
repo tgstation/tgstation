@@ -26,7 +26,7 @@
 	var/list/affecting_areas
 
 /obj/machinery/door/firedoor/Initialize()
-	..()
+	. = ..()
 	CalculateAffectingAreas()
 
 /obj/machinery/door/firedoor/examine(mob/user)
