@@ -11,7 +11,7 @@
 /*
  * Locator
  */
-/obj/item/weapon/locator
+/obj/item/locator
 	name = "locator"
 	desc = "Used to track those with locater implants."
 	icon = 'icons/obj/device.dmi'
@@ -30,7 +30,7 @@
 	materials = list(MAT_METAL=400)
 	origin_tech = "magnets=3;bluespace=2"
 
-/obj/item/weapon/locator/attack_self(mob/user)
+/obj/item/locator/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if (src.temp)
@@ -49,7 +49,7 @@ Frequency:
 	onclose(user, "radio")
 	return
 
-/obj/item/weapon/locator/Topic(href, href_list)
+/obj/item/locator/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained())
 		return
@@ -84,7 +84,7 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in GLOB.tracked_implants)
+				for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
 					if (!W.imp_in || !ismob(W.loc))
 						continue
 					else
@@ -128,7 +128,7 @@ Frequency:
 /*
  * Hand-tele
  */
-/obj/item/weapon/hand_tele
+/obj/item/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology."
 	icon = 'icons/obj/device.dmi'
@@ -147,18 +147,18 @@ Frequency:
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
 
-/obj/item/weapon/hand_tele/Initialize()
+/obj/item/hand_tele/Initialize()
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/weapon/hand_tele/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/hand_tele/afterattack(atom/target, mob/user, proximity, params)
 	if(is_parent_of_portal(target))
 		qdel(target)
 		to_chat(user, "<span class='notice'>You dispel [target] remotely with \the [src]!</span>")
 	return ..()
 
 
-/obj/item/weapon/hand_tele/attack_self(mob/user)
+/obj/item/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	var/area/current_area = current_location.loc
 	if(!current_location || current_area.noteleport || current_location.z > ZLEVEL_SPACEMAX || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
@@ -208,10 +208,10 @@ Frequency:
 	investigate_log("was used by [key_name(user)] at [COORD(user)] to create a portal pair with destinations [COORD(c1)] and [COORD(c2)].", INVESTIGATE_PORTAL)
 	add_fingerprint(user)
 
-/obj/item/weapon/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
+/obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	active_portal_pairs -= P	//If this portal pair is made by us it'll be erased along with the other portal by the portal.
 
-/obj/item/weapon/hand_tele/proc/is_parent_of_portal(obj/effect/portal/P)
+/obj/item/hand_tele/proc/is_parent_of_portal(obj/effect/portal/P)
 	if(!istype(P))
 		return FALSE
 	if(active_portal_pairs[P])

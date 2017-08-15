@@ -81,8 +81,8 @@
 				P.add_fingerprint(user)
 				update_icon()
 
-	else if(istype(O, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weapon/weldingtool/WT = O
+	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		var/obj/item/weldingtool/WT = O
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))
 				user.visible_message("[user] is repairing [src].", \

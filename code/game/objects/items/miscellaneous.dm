@@ -1,4 +1,4 @@
-/obj/item/weapon/caution
+/obj/item/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"
 	icon = 'icons/obj/janitor.dmi'
@@ -12,7 +12,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 
-/obj/item/weapon/skub
+/obj/item/skub
 	desc = "It's skub."
 	name = "skub"
 	icon = 'icons/obj/items.dmi'

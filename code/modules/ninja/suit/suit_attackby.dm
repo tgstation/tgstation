@@ -3,7 +3,7 @@
 /obj/item/clothing/suit/space/space_ninja/attackby(obj/item/I, mob/U, params)
 	if(U==affecting)//Safety, in case you try doing this without wearing the suit/being the person with the suit.
 
-		if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
+		if(istype(I, /obj/item/reagent_containers/glass))//If it's a glass beaker.
 			var/total_reagent_transfer//Keep track of this stuff.
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/R = I.reagents.has_reagent(reagent_id)//Mostly to pull up the name of the reagent after calculating. Also easier to use than writing long proc paths.
@@ -19,15 +19,15 @@
 			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")
 			return
 
-		else if(istype(I, /obj/item/weapon/stock_parts/cell))
-			var/obj/item/weapon/stock_parts/cell/CELL = I
+		else if(istype(I, /obj/item/stock_parts/cell))
+			var/obj/item/stock_parts/cell/CELL = I
 			if(CELL.maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
 				to_chat(U, "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>")
 				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = src))
 					U.drop_item()
 					CELL.loc = src
 					CELL.charge = min(CELL.charge+cell.charge, CELL.maxcharge)
-					var/obj/item/weapon/stock_parts/cell/old_cell = cell
+					var/obj/item/stock_parts/cell/old_cell = cell
 					old_cell.charge = 0
 					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
@@ -39,8 +39,8 @@
 					to_chat(U, "<span class='danger'>Procedure interrupted. Protocol terminated.</span>")
 			return
 
-		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			var/obj/item/weapon/disk/tech_disk/TD = I
+		else if(istype(I, /obj/item/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
+			var/obj/item/disk/tech_disk/TD = I
 			var/has_research = 0
 			for(var/V in  TD.tech_stored)
 				if(V)

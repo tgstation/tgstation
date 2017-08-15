@@ -65,7 +65,7 @@
 			if(length(raw_message))
 				. = 1
 
-/obj/item/device/assembly/voice/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/voice/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		mode %= modes.len
 		mode++

@@ -18,7 +18,7 @@
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(QDELETED(src) && !transfer)
-		new /obj/item/weapon/c_tube(T)
+		new /obj/item/c_tube(T)
 
 
 /*
@@ -38,10 +38,10 @@
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
 	return 1
 
-/obj/item/weapon/storage/can_be_package_wrapped()
+/obj/item/storage/can_be_package_wrapped()
 	return 0
 
-/obj/item/weapon/storage/box/can_be_package_wrapped()
+/obj/item/storage/box/can_be_package_wrapped()
 	return 1
 
 /obj/item/smallDelivery/can_be_package_wrapped()
@@ -104,9 +104,9 @@
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(QDELETED(src) && !transfer)
-		new /obj/item/weapon/c_tube(T)
+		new /obj/item/c_tube(T)
 
-/obj/item/weapon/c_tube
+/obj/item/c_tube
 	name = "cardboard tube"
 	desc = "A tube... of cardboard."
 	icon = 'icons/obj/items.dmi'

@@ -1,7 +1,7 @@
 //NEVER USE THIS IT SUX	-PETETHEGOAT
 //IT SUCKS A BIT LESS -GIACOM
 
-/obj/item/weapon/paint
+/obj/item/paint
 	gender= PLURAL
 	name = "paint"
 	desc = "Used to recolor floors and walls. Can be removed by the janitor."
@@ -14,48 +14,48 @@
 	max_integrity = 100
 	var/paintleft = 10
 
-/obj/item/weapon/paint/red
+/obj/item/paint/red
 	name = "red paint"
 	item_color = "C73232" //"FF0000"
 	icon_state = "paint_red"
 
-/obj/item/weapon/paint/green
+/obj/item/paint/green
 	name = "green paint"
 	item_color = "2A9C3B" //"00FF00"
 	icon_state = "paint_green"
 
-/obj/item/weapon/paint/blue
+/obj/item/paint/blue
 	name = "blue paint"
 	item_color = "5998FF" //"0000FF"
 	icon_state = "paint_blue"
 
-/obj/item/weapon/paint/yellow
+/obj/item/paint/yellow
 	name = "yellow paint"
 	item_color = "CFB52B" //"FFFF00"
 	icon_state = "paint_yellow"
 
-/obj/item/weapon/paint/violet
+/obj/item/paint/violet
 	name = "violet paint"
 	item_color = "AE4CCD" //"FF00FF"
 	icon_state = "paint_violet"
 
-/obj/item/weapon/paint/black
+/obj/item/paint/black
 	name = "black paint"
 	item_color = "333333"
 	icon_state = "paint_black"
 
-/obj/item/weapon/paint/white
+/obj/item/paint/white
 	name = "white paint"
 	item_color = "FFFFFF"
 	icon_state = "paint_white"
 
 
-/obj/item/weapon/paint/anycolor
+/obj/item/paint/anycolor
 	gender= PLURAL
 	name = "any color"
 	icon_state = "paint_neutral"
 
-/obj/item/weapon/paint/anycolor/attack_self(mob/user)
+/obj/item/paint/anycolor/attack_self(mob/user)
 	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
 	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
 		return
@@ -78,7 +78,7 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paint/afterattack(turf/target, mob/user, proximity)
+/obj/item/paint/afterattack(turf/target, mob/user, proximity)
 	if(!proximity) return
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
@@ -88,13 +88,13 @@
 	var/newcolor = "#" + item_color
 	target.add_atom_colour(newcolor, WASHABLE_COLOUR_PRIORITY)
 
-/obj/item/weapon/paint/paint_remover
+/obj/item/paint/paint_remover
 	gender =  PLURAL
 	name = "paint remover"
 	desc = "Used to remove color from floors and walls."
 	icon_state = "paint_neutral"
 
-/obj/item/weapon/paint/paint_remover/afterattack(turf/target, mob/user, proximity)
+/obj/item/paint/paint_remover/afterattack(turf/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(istype(target) && target.color != initial(target.color))

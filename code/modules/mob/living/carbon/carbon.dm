@@ -45,7 +45,7 @@
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand, /obj/item/weapon/twohanded))
+		if(istype(item_in_hand, /obj/item/twohanded))
 			if(item_in_hand:wielded == 1)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
@@ -190,7 +190,7 @@
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
-	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
+	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	if(handcuffed)
@@ -212,14 +212,14 @@
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
 								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
 						update_internals_hud_icon(0)
-					else if(ITEM && istype(ITEM, /obj/item/weapon/tank))
+					else if(ITEM && istype(ITEM, /obj/item/tank))
 						if((wear_mask && (wear_mask.flags & MASKINTERNALS)) || getorganslot("breathing_tube"))
 							internal = ITEM
 							update_internals_hud_icon(1)
@@ -313,7 +313,7 @@
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
-		var/obj/item/weapon/W = handcuffed
+		var/obj/item/W = handcuffed
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
@@ -328,7 +328,7 @@
 				W.plane = initial(W.plane)
 		changeNext_move(0)
 	if (legcuffed)
-		var/obj/item/weapon/W = legcuffed
+		var/obj/item/W = legcuffed
 		legcuffed = null
 		update_inv_legcuffed()
 		if (client)
@@ -724,7 +724,7 @@
 		regenerate_limbs()
 		regenerate_organs()
 		handcuffed = initial(handcuffed)
-		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
+		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
 		update_handcuffed()
 		if(reagents)

@@ -300,7 +300,7 @@
 	update_canmove()
 
 //Recursive function to find everything a mob is holding.
-/mob/living/get_contents(obj/item/weapon/storage/Storage = null)
+/mob/living/get_contents(obj/item/storage/Storage = null)
 	var/list/L = list()
 
 	if(Storage) //If it called itself
@@ -308,11 +308,11 @@
 		return L
 	else
 		L += src.contents
-		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+		for(var/obj/item/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
 		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
 			L += U.contents
-		for(var/obj/item/weapon/folder/F in src.contents)	//Check for folders
+		for(var/obj/item/folder/F in src.contents)	//Check for folders
 			L += F.contents
 		return L
 
@@ -793,7 +793,7 @@
 	else
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
-/mob/living/proc/can_use_guns(var/obj/item/weapon/G)
+/mob/living/proc/can_use_guns(var/obj/item/G)
 	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
@@ -828,7 +828,7 @@
 	var/datum/antagonist/devil/devilInfo = is_devil(src)
 	return devilInfo && banetype == devilInfo.bane
 
-/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+/mob/living/proc/check_weakness(obj/item, mob/living/attacker)
 	if(mind && mind.has_antag_datum(ANTAG_DATUM_DEVIL))
 		return check_devil_bane_multiplier(weapon, attacker)
 	return 1

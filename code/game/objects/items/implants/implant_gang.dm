@@ -1,15 +1,15 @@
-/obj/item/weapon/implant/gang
+/obj/item/implant/gang
 	name = "gang implant"
 	desc = "Makes you a gangster or such."
 	activated = 0
 	origin_tech = "materials=2;biotech=4;programming=4;syndicate=3"
 	var/datum/gang/gang
 
-/obj/item/weapon/implant/gang/New(loc,var/setgang)
+/obj/item/implant/gang/New(loc,var/setgang)
 	..()
 	gang = setgang
 
-/obj/item/weapon/implant/gang/get_data()
+/obj/item/implant/gang/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Criminal brainwash implant<BR>
 				<b>Life:</b> A few seconds after injection.<BR>
@@ -21,9 +21,9 @@
 				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
 	return dat
 
-/obj/item/weapon/implant/gang/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/gang/implant(mob/living/target, mob/user, silent = 0)
 	if(..())
-		for(var/obj/item/weapon/implant/I in target.implants)
+		for(var/obj/item/implant/I in target.implants)
 			if(I != src)
 				qdel(I)
 
@@ -44,12 +44,12 @@
 		qdel(src)
 		return 0
 
-/obj/item/weapon/implanter/gang
+/obj/item/implanter/gang
 	name = "implanter (gang)"
 
-/obj/item/weapon/implanter/gang/New(loc, gang)
+/obj/item/implanter/gang/New(loc, gang)
 	if(!gang)
 		qdel(src)
 		return
-	imp = new /obj/item/weapon/implant/gang(src,gang)
+	imp = new /obj/item/implant/gang(src,gang)
 	..()

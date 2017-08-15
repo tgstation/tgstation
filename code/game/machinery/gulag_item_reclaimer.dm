@@ -10,7 +10,7 @@
 	idle_power_usage = 100
 	active_power_usage = 2500
 	var/list/stored_items = list()
-	var/obj/item/weapon/card/id/prisoner/inserted_id = null
+	var/obj/item/card/id/prisoner/inserted_id = null
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
 /obj/machinery/gulag_item_reclaimer/Destroy()
@@ -31,7 +31,7 @@
 	emagged = TRUE
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/id/prisoner))
+	if(istype(I, /obj/item/card/id/prisoner))
 		if(!inserted_id)
 			if(!user.drop_item())
 				return
@@ -90,7 +90,7 @@
 					inserted_id = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/weapon/card/id/prisoner))
+				if(istype(I, /obj/item/card/id/prisoner))
 					if(!usr.drop_item())
 						return
 					I.forceMove(src)

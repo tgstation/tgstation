@@ -255,7 +255,7 @@
 
 ///////////////BOATS////////////
 /datum/riding/boat
-	keytype = /obj/item/weapon/oar
+	keytype = /obj/item/oar
 
 /datum/riding/boat/handle_ride(mob/user, direction)
 	var/turf/next = get_step(ridden, direction)

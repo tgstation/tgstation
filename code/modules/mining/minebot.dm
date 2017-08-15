@@ -36,9 +36,9 @@
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/gunshot4.ogg'
 	speak_emote = list("states")
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/bananium, /obj/item/weapon/ore/titanium)
+	wanted_objects = list(/obj/item/ore/diamond, /obj/item/ore/gold, /obj/item/ore/silver,
+						  /obj/item/ore/plasma,  /obj/item/ore/uranium,    /obj/item/ore/iron,
+						  /obj/item/ore/bananium, /obj/item/ore/titanium)
 	healable = 0
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
@@ -63,8 +63,8 @@
 	check_friendly_fire = 0
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(W.welding && !stat)
 			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
 				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
@@ -124,13 +124,13 @@
 	to_chat(src, "<span class='info'>You are set to attack mode. You can now attack from range.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore) && mode ==  MINEDRONE_COLLECT)
+	if(istype(target, /obj/item/ore) && mode ==  MINEDRONE_COLLECT)
 		CollectOre()
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	var/obj/item/weapon/ore/O
+	var/obj/item/ore/O
 	for(O in src.loc)
 		O.loc = src
 	for(var/dir in GLOB.alldirs)
@@ -146,7 +146,7 @@
 		return
 	if(message)
 		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
-	for(var/obj/item/weapon/ore/O in contents)
+	for(var/obj/item/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
 	return

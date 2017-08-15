@@ -24,10 +24,10 @@
 	return
 
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		default_unfasten_wrench(user, I, 10)
 		return 1
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/screwdriver))
 		if(anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>")
 		else

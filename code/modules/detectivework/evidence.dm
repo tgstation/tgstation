@@ -1,6 +1,6 @@
 //CONTAINS: Evidence bags
 
-/obj/item/weapon/evidencebag
+/obj/item/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."
 	icon = 'icons/obj/storage.dmi'
@@ -8,20 +8,20 @@
 	item_state = ""
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user,proximity)
+/obj/item/evidencebag/afterattack(obj/item/I, mob/user,proximity)
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
 
-/obj/item/weapon/evidencebag/attackby(obj/item/I, mob/user, params)
+/obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
 	if(evidencebagEquip(I, user))
 		return 1
 
-/obj/item/weapon/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
+/obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
 	if(!istype(I) || I.anchored == 1)
 		return
 
-	if(istype(I, /obj/item/weapon/evidencebag))
+	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return 1 //now this is podracing
 
@@ -34,8 +34,8 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(istype(I.loc, /obj/item/weapon/storage))	//in a container.
-			var/obj/item/weapon/storage/U = I.loc
+		if(istype(I.loc, /obj/item/storage))	//in a container.
+			var/obj/item/storage/U = I.loc
 			U.remove_from_storage(I, src)
 		if(user.is_holding(I))
 			user.dropItemToGround(I)
@@ -60,7 +60,7 @@
 	w_class = I.w_class
 	return 1
 
-/obj/item/weapon/evidencebag/attack_self(mob/user)
+/obj/item/evidencebag/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
@@ -76,16 +76,16 @@
 		icon_state = "evidenceobj"
 	return
 
-/obj/item/weapon/storage/box/evidence
+/obj/item/storage/box/evidence
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
 
-/obj/item/weapon/storage/box/evidence/New()
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
-	new /obj/item/weapon/evidencebag(src)
+/obj/item/storage/box/evidence/New()
+	new /obj/item/evidencebag(src)
+	new /obj/item/evidencebag(src)
+	new /obj/item/evidencebag(src)
+	new /obj/item/evidencebag(src)
+	new /obj/item/evidencebag(src)
+	new /obj/item/evidencebag(src)
 	..()
 	return

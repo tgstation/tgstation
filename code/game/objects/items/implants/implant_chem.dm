@@ -1,11 +1,11 @@
-/obj/item/weapon/implant/chem
+/obj/item/implant/chem
 	name = "chem implant"
 	desc = "Injects things."
 	icon_state = "reagents"
 	origin_tech = "materials=3;biotech=4"
 	container_type = OPENCONTAINER
 
-/obj/item/weapon/implant/chem/get_data()
+/obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
 				<b>Life:</b> Deactivates upon death but remains within the body.<BR>
@@ -21,20 +21,20 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
-/obj/item/weapon/implant/chem/New()
+/obj/item/implant/chem/New()
 	..()
 	create_reagents(50)
 	GLOB.tracked_chem_implants += src
 
-/obj/item/weapon/implant/chem/Destroy()
+/obj/item/implant/chem/Destroy()
 	. = ..()
 	GLOB.tracked_chem_implants -= src
 
-/obj/item/weapon/implant/chem/trigger(emote, mob/source)
+/obj/item/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")
 		activate(reagents.total_volume)
 
-/obj/item/weapon/implant/chem/activate(cause)
+/obj/item/implant/chem/activate(cause)
 	if(!cause || !imp_in)
 		return 0
 	var/mob/living/carbon/R = imp_in
@@ -50,13 +50,13 @@
 		qdel(src)
 
 
-/obj/item/weapon/implantcase/chem
+/obj/item/implantcase/chem
 	name = "implant case - 'Remote Chemical'"
 	desc = "A glass case containing a remote chemical implant."
-	imp_type = /obj/item/weapon/implant/chem
+	imp_type = /obj/item/implant/chem
 
-/obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe) && imp)
+/obj/item/implantcase/chem/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/reagent_containers/syringe) && imp)
 		W.afterattack(imp, user, TRUE, params)
 		return TRUE
 	else

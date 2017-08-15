@@ -1,4 +1,4 @@
-/obj/item/weapon/storage/toolbox
+/obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
 	icon_state = "red"
@@ -18,7 +18,7 @@
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
-/obj/item/weapon/storage/toolbox/Initialize()
+/obj/item/storage/toolbox/Initialize()
 	..()
 	if(has_latches)
 		if(prob(10))
@@ -27,26 +27,26 @@
 				latches = "triple_latch"
 	update_icon()
 
-/obj/item/weapon/storage/toolbox/update_icon()
+/obj/item/storage/toolbox/update_icon()
 	..()
 	cut_overlays()
 	if(has_latches)
 		add_overlay(latches)
 
 
-/obj/item/weapon/storage/toolbox/suicide_act(mob/user)
+/obj/item/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/storage/toolbox/emergency
+/obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"
 	item_state = "toolbox_red"
 
-/obj/item/weapon/storage/toolbox/emergency/PopulateContents()
-	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/weldingtool/mini(src)
-	new /obj/item/weapon/extinguisher/mini(src)
+/obj/item/storage/toolbox/emergency/PopulateContents()
+	new /obj/item/crowbar/red(src)
+	new /obj/item/weldingtool/mini(src)
+	new /obj/item/extinguisher/mini(src)
 	switch(rand(1,3))
 		if(1)
 			new /obj/item/device/flashlight(src)
@@ -56,40 +56,40 @@
 			new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/radio/off(src)
 
-/obj/item/weapon/storage/toolbox/emergency/old
+/obj/item/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
 
-/obj/item/weapon/storage/toolbox/mechanical
+/obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
 
-/obj/item/weapon/storage/toolbox/mechanical/PopulateContents()
-	new /obj/item/weapon/screwdriver(src)
-	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool(src)
-	new /obj/item/weapon/crowbar(src)
+/obj/item/storage/toolbox/mechanical/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool(src)
+	new /obj/item/crowbar(src)
 	new /obj/item/device/analyzer(src)
-	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/wirecutters(src)
 
-/obj/item/weapon/storage/toolbox/mechanical/old
+/obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
 
-/obj/item/weapon/storage/toolbox/electrical
+/obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
 
-/obj/item/weapon/storage/toolbox/electrical/PopulateContents()
+/obj/item/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
-	new /obj/item/weapon/screwdriver(src)
-	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
-	new /obj/item/weapon/crowbar(src)
+	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	if(prob(5))
@@ -97,7 +97,7 @@
 	else
 		new /obj/item/stack/cable_coil(src,30,pickedcolor)
 
-/obj/item/weapon/storage/toolbox/syndicate
+/obj/item/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
@@ -106,31 +106,31 @@
 	force = 15
 	throwforce = 18
 
-/obj/item/weapon/storage/toolbox/syndicate/PopulateContents()
-	new /obj/item/weapon/screwdriver/nuke(src)
-	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool/largetank(src)
-	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/wirecutters(src, "red")
+/obj/item/storage/toolbox/syndicate/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar/red(src)
+	new /obj/item/wirecutters(src, "red")
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
-/obj/item/weapon/storage/toolbox/drone
+/obj/item/storage/toolbox/drone
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
 
-/obj/item/weapon/storage/toolbox/drone/PopulateContents()
+/obj/item/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
-	new /obj/item/weapon/screwdriver(src)
-	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool(src)
-	new /obj/item/weapon/crowbar(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool(src)
+	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
-	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
-/obj/item/weapon/storage/toolbox/brass
+/obj/item/storage/toolbox/brass
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
@@ -144,27 +144,27 @@
 	attack_verb = list("robusted", "crushed", "smashed")
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/PopulateContents()
+/obj/item/storage/toolbox/brass/prefilled/PopulateContents()
 	new fabricator_type(src)
-	new /obj/item/weapon/screwdriver/brass(src)
-	new /obj/item/weapon/wirecutters/brass(src)
-	new /obj/item/weapon/wrench/brass(src)
-	new /obj/item/weapon/crowbar/brass(src)
-	new /obj/item/weapon/weldingtool/experimental/brass(src)
+	new /obj/item/screwdriver/brass(src)
+	new /obj/item/wirecutters/brass(src)
+	new /obj/item/wrench/brass(src)
+	new /obj/item/crowbar/brass(src)
+	new /obj/item/weldingtool/experimental/brass(src)
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
+/obj/item/storage/toolbox/brass/prefilled/ratvar
 	var/slab_type = /obj/item/clockwork/slab
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
+/obj/item/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
 	..()
 	new slab_type(src)
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
+/obj/item/storage/toolbox/brass/prefilled/ratvar/admin
 	slab_type = /obj/item/clockwork/slab/debug
 	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
 
 
-/obj/item/weapon/storage/toolbox/artistic
+/obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
@@ -173,9 +173,9 @@
 	storage_slots = 10
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 
-/obj/item/weapon/storage/toolbox/artistic/PopulateContents()
-	new/obj/item/weapon/storage/crayons(src)
-	new/obj/item/weapon/crowbar(src)
+/obj/item/storage/toolbox/artistic/PopulateContents()
+	new/obj/item/storage/crayons(src)
+	new/obj/item/crowbar(src)
 	new/obj/item/stack/cable_coil/red(src)
 	new/obj/item/stack/cable_coil/yellow(src)
 	new/obj/item/stack/cable_coil/blue(src)

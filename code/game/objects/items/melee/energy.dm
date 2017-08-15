@@ -1,4 +1,4 @@
-/obj/item/weapon/melee/transforming/energy
+/obj/item/melee/transforming/energy
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	heat = 3500
 	max_integrity = 200
@@ -6,30 +6,30 @@
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 3
 
-/obj/item/weapon/melee/transforming/energy/Initialize()
+/obj/item/melee/transforming/energy/Initialize()
 	. = ..()
 	if(active)
 		set_light(brightness_on)
 		START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/melee/transforming/energy/Destroy()
+/obj/item/melee/transforming/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/melee/transforming/energy/suicide_act(mob/user)
+/obj/item/melee/transforming/energy/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/melee/transforming/energy/add_blood(list/blood_dna)
+/obj/item/melee/transforming/energy/add_blood(list/blood_dna)
 	return 0
 
-/obj/item/weapon/melee/transforming/energy/is_sharp()
+/obj/item/melee/transforming/energy/is_sharp()
 	return active * sharpness
 
-/obj/item/weapon/melee/transforming/energy/process()
+/obj/item/melee/transforming/energy/process()
 	open_flame()
 
-/obj/item/weapon/melee/transforming/energy/transform_weapon(mob/living/user, supress_message_text)
+/obj/item/melee/transforming/energy/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
 	if(.)
 		if(active)
@@ -41,10 +41,10 @@
 			STOP_PROCESSING(SSobj, src)
 			set_light(0)
 
-/obj/item/weapon/melee/transforming/energy/is_hot()
+/obj/item/melee/transforming/energy/is_hot()
 	return active * heat
 
-/obj/item/weapon/melee/transforming/energy/ignition_effect(atom/A, mob/user)
+/obj/item/melee/transforming/energy/ignition_effect(atom/A, mob/user)
 	if(!active)
 		return ""
 
@@ -57,7 +57,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/transforming/energy/axe
+/obj/item/melee/transforming/energy/axe
 	name = "energy axe"
 	desc = "An energized battle axe."
 	icon_state = "axe0"
@@ -79,11 +79,11 @@
 	attack_verb_on = list()
 	light_color = "#40ceff"
 
-/obj/item/weapon/melee/transforming/energy/axe/suicide_act(mob/user)
+/obj/item/melee/transforming/energy/axe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/melee/transforming/energy/sword
+/obj/item/melee/transforming/energy/sword
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
@@ -102,30 +102,30 @@
 	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
 
-/obj/item/weapon/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)
+/obj/item/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
 	if(. && active && item_color)
 		icon_state = "sword[item_color]"
 
-/obj/item/weapon/melee/transforming/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/transforming/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(active)
 		return ..()
 	return 0
 
-/obj/item/weapon/melee/transforming/energy/sword/cyborg
+/obj/item/melee/transforming/energy/sword/cyborg
 	item_color = "red"
 	var/hitcost = 50
 
-/obj/item/weapon/melee/transforming/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
+/obj/item/melee/transforming/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
 	if(R.cell)
-		var/obj/item/weapon/stock_parts/cell/C = R.cell
+		var/obj/item/stock_parts/cell/C = R.cell
 		if(active && !(C.use(hitcost)))
 			attack_self(R)
 			to_chat(R, "<span class='notice'>It's out of charge!</span>")
 			return
 		return ..()
 
-/obj/item/weapon/melee/transforming/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
+/obj/item/melee/transforming/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
 	icon_state = "esaw"
@@ -140,40 +140,40 @@
 	sharpness = IS_SHARP
 	light_color = "#40ceff"
 
-/obj/item/weapon/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
 
-/obj/item/weapon/melee/transforming/energy/sword/saber
+/obj/item/melee/transforming/energy/sword/saber
 	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/Initialize(mapload)
+/obj/item/melee/transforming/energy/sword/saber/Initialize(mapload)
 	. = ..()
 	if(LAZYLEN(possible_colors))
 		var/set_color = pick(possible_colors)
 		item_color = set_color
 		light_color = possible_colors[set_color]
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/process()
+/obj/item/melee/transforming/energy/sword/saber/process()
 	. = ..()
 	if(hacked)
 		var/set_color = pick(possible_colors)
 		light_color = possible_colors[set_color]
 		update_light()
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/red
+/obj/item/melee/transforming/energy/sword/saber/red
 	possible_colors = list("red" = LIGHT_COLOR_RED)
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/blue
+/obj/item/melee/transforming/energy/sword/saber/blue
 	possible_colors = list("blue" = LIGHT_COLOR_LIGHT_CYAN)
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/green
+/obj/item/melee/transforming/energy/sword/saber/green
 	possible_colors = list("green" = LIGHT_COLOR_GREEN)
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/purple
+/obj/item/melee/transforming/energy/sword/saber/purple
 	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
 
-/obj/item/weapon/melee/transforming/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
+/obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		if(!hacked)
 			hacked = TRUE
@@ -188,7 +188,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/melee/transforming/energy/sword/pirate
+/obj/item/melee/transforming/energy/sword/pirate
 	name = "energy cutlass"
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
@@ -197,7 +197,7 @@
 	icon_state_on = "cutlass1"
 	light_color = "#ff0000"
 
-/obj/item/weapon/melee/transforming/energy/blade
+/obj/item/melee/transforming/energy/blade
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
@@ -214,16 +214,16 @@
 	sharpness = IS_SHARP
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
-/obj/item/weapon/melee/transforming/energy/blade/Initialize()
+/obj/item/melee/transforming/energy/blade/Initialize()
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/weapon/melee/transforming/energy/blade/transform_weapon(mob/living/user, supress_message_text)
+/obj/item/melee/transforming/energy/blade/transform_weapon(mob/living/user, supress_message_text)
 	return
 
-/obj/item/weapon/melee/transforming/energy/blade/hardlight
+/obj/item/melee/transforming/energy/blade/hardlight
 	name = "hardlight blade"
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"

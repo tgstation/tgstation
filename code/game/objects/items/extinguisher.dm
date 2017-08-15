@@ -1,4 +1,4 @@
-/obj/item/weapon/extinguisher
+/obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
 	icon = 'icons/obj/items.dmi'
@@ -24,7 +24,7 @@
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
 
-/obj/item/weapon/extinguisher/mini
+/obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
@@ -39,39 +39,39 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 
-/obj/item/weapon/extinguisher/New()
+/obj/item/extinguisher/New()
 	..()
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
-/obj/item/weapon/extinguisher/attack_self(mob/user)
+/obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
-/obj/item/weapon/extinguisher/attack(mob/M, mob/user)
+/obj/item/extinguisher/attack(mob/M, mob/user)
 	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
 		return FALSE
 	else
 		return ..()
 
-/obj/item/weapon/extinguisher/attack_obj(obj/O, mob/living/user)
+/obj/item/extinguisher/attack_obj(obj/O, mob/living/user)
 	if(AttemptRefill(O, user))
 		refilling = TRUE
 		return FALSE
 	else
 		return ..()
 
-/obj/item/weapon/extinguisher/examine(mob/user)
+/obj/item/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
 		to_chat(user, "It contains [round(reagents.total_volume)] units.")
 	else
 		to_chat(user, "It is empty.")
 
-/obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
+/obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
 		var/safety_save = safety
 		safety = TRUE
@@ -93,7 +93,7 @@
 	else
 		return 0
 
-/obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
+/obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
 	if (target.loc == user)
 		return
@@ -173,10 +173,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/extinguisher/AltClick(mob/user)
+/obj/item/extinguisher/AltClick(mob/user)
 	EmptyExtinguisher(user)
 
-/obj/item/weapon/extinguisher/proc/EmptyExtinguisher(var/mob/user)
+/obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)
 	if(loc == user && reagents.total_volume)
 		reagents.clear_reagents()
 
