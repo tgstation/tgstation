@@ -169,15 +169,15 @@
 	name = "\improper spacepod tracking system"
 	desc = "A tracking device for spacepods."
 	icon_state = "pod_locator"
-	enabled = 0
+	enabled = TRUE
 
 /obj/item/device/spacepod_equipment/misc/tracker/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(enabled)
-			enabled = 0
+			enabled = FALSE
 			user.show_message("<span class='notice'>You disable \the [src]'s power.")
 			return
-		enabled = 1
+		enabled = TRUE
 		user.show_message("<span class='notice'>You enable \the [src]'s power.</span>")
 	else
 		..()
