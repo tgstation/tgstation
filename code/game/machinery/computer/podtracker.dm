@@ -1,4 +1,4 @@
-/obj/machinery/computer/pod
+/obj/machinery/computer/podtracker
 	name = "spacepod tracking console"
 	desc = "Used to remotely locate spacepods"
 	icon_screen = "mecha"
@@ -9,7 +9,7 @@
 	var/screen = 0
 	var/stored_data
 
-/obj/machinery/computer/pod/attack_hand(mob/user)
+/obj/machinery/computer/podtracker/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -35,7 +35,7 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/pod/Topic(href, href_list)
+/obj/machinery/computer/podtracker/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["return"])

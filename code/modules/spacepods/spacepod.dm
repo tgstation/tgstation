@@ -89,7 +89,6 @@
 
 	var/datum/pod_armor/pod_armor = /datum/pod_armor/civ
 
-	icon_state = "pod_civ"
 
 /obj/spacepod/proc/apply_paint(mob/user as mob)
 	var/part_type
@@ -114,7 +113,6 @@
 /obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/_armor = /datum/pod_armor/civ)
 	. = ..(mapload)
 	pod_armor = _armor
-	icon_state = _armor.icon_state
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
 		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
@@ -151,6 +149,7 @@
 	cargo_hold.max_combined_w_class = 0 //you can optimize your stash with larger items
 	bound_width = 64
 	bound_height = 64
+	update_icons()
 
 /obj/spacepod/Destroy()
 	if(equipment_system.cargo_system)
@@ -182,7 +181,7 @@
 	return ..()
 
 /obj/spacepod/proc/update_icons()
-	if(!icon_state)
+	if (!icon_state)
 		icon_state = pod_armor.icon_state
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
@@ -573,6 +572,11 @@
 	pod_armor = /datum/pod_armor/civ
 	desc = "A sleek civilian space pod."
 
+/obj/spacepod/civilian/Initialize()
+	. = ..()
+	pod_armor = /datum/pod_armor/security
+	update_icons()
+
 /obj/spacepod/civilian/attackby(obj/item/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/weapon/pod_paint_bucket))
@@ -616,6 +620,8 @@
 	equipment_system.lock_system.my_atom = src
 	equipment_system.lock_system.id = 100000
 	equipment_system.installed_modules += K
+	pod_armor = /datum/pod_armor/security
+	update_icons()
 
 /obj/spacepod/random/Initialize()
 	. = ..()

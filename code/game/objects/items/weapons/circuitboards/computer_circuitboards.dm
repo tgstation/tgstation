@@ -195,7 +195,7 @@
 
 /obj/item/weapon/circuitboard/computer/pod_tracking
 	name = "Spacepod Tracking Console (Computer Board)"
-	build_path = /obj/machinery/computer/pod
+	build_path = /obj/machinery/computer/podtracker
 
 /obj/item/weapon/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"
