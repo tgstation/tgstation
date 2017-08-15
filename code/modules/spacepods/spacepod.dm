@@ -161,6 +161,8 @@
 	if(pilot)
 		pilot.forceMove(get_turf(src))
 		RemoveActions(pilot)
+		pilot.clear_alert("charge")
+		pilot.clear_alert("mech damage")
 		pilot = null
 	if(passengers)
 		for(var/mob/living/M in passengers)
@@ -423,7 +425,7 @@
 		if(cargo_hold.storage_slots > 0 && !hatch_open && unlocked) // must be the last option as all items not listed prior will be stored
 			cargo_hold.attackby(W, user, params)
 
-obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment/SPE, var/slot)
+/obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment/SPE, var/slot)
 	if(equipment_system.vars[slot])
 		to_chat(user, "<span class='notice'>The pod already has a [slot], remove it first.</span>")
 		return
@@ -813,6 +815,8 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		pilot = null
 		to_chat(user, "<span class='notice'>You climb out of [src].</span>")
 		RemoveActions(user)
+		user.clear_alert("charge")
+		user.clear_alert("mech damage")
 	if(user in passengers)
 		user.forceMove(get_turf(src))
 		passengers -= user
@@ -1036,6 +1040,33 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 					t_air.merge(removed)
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
+
+	if(pilot)
+		if(cell)
+			var/cellcharge = cell.charge/cell.maxcharge
+			switch(cellcharge)
+				if(0.75 to INFINITY)
+					pilot.clear_alert("charge")
+				if(0.5 to 0.75)
+					pilot.throw_alert("charge", /obj/screen/alert/lowcell, 1)
+				if(0.25 to 0.5)
+					pilot.throw_alert("charge", /obj/screen/alert/lowcell, 2)
+				if(0.01 to 0.25)
+					pilot.throw_alert("charge", /obj/screen/alert/lowcell, 3)
+				else
+					pilot.throw_alert("charge", /obj/screen/alert/emptycell)
+
+		var/integrity = obj_integrity/max_integrity*100
+		switch(integrity)
+			if(30 to 45)
+				pilot.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
+			if(15 to 35)
+				pilot.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
+			if(-INFINITY to 15)
+				pilot.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
+			else
+				pilot.clear_alert("mech damage")
+
 
 	diag_hud_set_podcharge()
 	diag_hud_set_podhealth()
