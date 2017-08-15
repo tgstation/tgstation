@@ -87,6 +87,51 @@
 	category = list("Pod Armor")
 	materials = list(MAT_METAL=15000,MAT_GLASS=5000,MAT_PLASMA=10000)
 
+/datum/design/pod_armor_black
+	construction_time = 400 //more time than frames, less than pod core
+	name = "Pod Armor (dark)"
+	desc = "Allows for the construction of spacepod armor. This is the dark civillian version."
+	id = "podarmor_dark"
+	build_type = PODFAB
+	req_tech = list("materials" = 1)
+	build_path = /obj/item/pod_parts/armor/black
+	category = list("Pod Armor")
+	materials = list(MAT_METAL=15000,MAT_GLASS=5000,MAT_PLASMA=10000)
+
+/datum/design/pod_armor_industrial
+	construction_time = 400 //more time than frames, less than pod core
+	name = "Pod Armor (industrial)"
+	desc = "Allows for the construction of spacepod armor. This is the industrial grade version."
+	id = "podarmor_dark"
+	build_type = PODFAB
+	req_tech = list("materials" = 6, "engineering" = 5)
+	build_path = /obj/item/pod_parts/armor/industrial
+	category = list("Pod Armor")
+	materials = list(MAT_METAL=15000,MAT_GLASS=5000,MAT_PLASMA=10000,MAT_DIAMOND=5000,MAT_SILVER=7500)
+
+/datum/design/pod_armor_syndicate
+	construction_time = 400 //more time than frames, less than pod core
+	name = "Pod Armor (syndicate)"
+	desc = "Allows for the construction of spacepod armor. This is the industrial grade version."
+	id = "podarmor_dark"
+	build_type = PODFAB
+	req_tech = list("materials" = 6, "engineering" = 6, "combat" = 6, "syndicate" = 6)
+	build_path = /obj/item/pod_parts/armor/industrial
+	category = list("Pod Armor")
+	materials = list(MAT_METAL=15000,MAT_GLASS=5000,MAT_PLASMA=10000,MAT_DIAMOND=5000,MAT_SILVER=7500)
+
+
+/datum/design/pod_armor_gold
+	construction_time = 400 //more time than frames, less than pod core
+	name = "Pod Armor (golden)"
+	desc = "Allows for the construction of spacepod armor. This is the golden version."
+	id = "podarmor_gold"
+	build_type = PODFAB
+	req_tech = list("materials" = 5, "engineering" = 3) //Slightly higher than gold, due to the requirement of getting actual protection from gold.
+	build_path = /obj/item/pod_parts/armor/gold
+	category = list("Pod Armor")
+	materials = list(MAT_METAL=5000,MAT_GLASS=2500,MAT_PLASMA=7500,MAT_GOLD=10000)
+
 //////////////////////////////////////////
 //////SPACEPOD GUNS///////////////////////
 //////////////////////////////////////////
