@@ -314,10 +314,7 @@
 /mob/living/carbon/handle_status_effects()
 	..()
 	if(staminaloss)
-		if(IsKnockdown() || IsUnconscious())
-			adjustStaminaLoss(-8)
-		else
-			adjustStaminaLoss(-3)
+		adjustStaminaLoss(-3)
 
 	var/restingpwr = 1 + 4 * resting
 
