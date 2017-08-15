@@ -259,20 +259,20 @@
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision.
 /datum/clockwork_scripture/create_object/wraith_spectacles
-	descname = "Limited Xray Vision Glasses"
+	descname = "Xray Vision Glasses"
 	name = "Wraith Spectacles"
-	desc = "Fabricates a pair of glasses which grant true sight."
+	desc = "Fabricates a pair of glasses which grant xray vision but gradually decay vision."
 	invocations = list("Show the truth of this world to me!")
 	channel_time = 10
 	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/wraith_spectacles
-	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant true sight.</span>"
-	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
+	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant xray vision but gradually decay vision.</span>"
+	usage_tip = "The vision decay takes over 5 minutes to set in, allowing for relatively long stretches of use."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight."
+	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant xray vision but gradually decay vision."
 
