@@ -13,7 +13,7 @@ Chief Medical Officer
 	supervisors = "the captain"
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
-	minimal_player_age = 7
+	minimal_player_age = 14
 
 	outfit = /datum/outfit/job/cmo
 
