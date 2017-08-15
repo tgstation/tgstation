@@ -658,7 +658,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		passengers += H
 		H.forceMove(src)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-		return 1
+		return TRUE
 
 /obj/spacepod/MouseDrop_T(atom/A, mob/user)
 	if(user == pilot || user in passengers)
@@ -674,7 +674,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		if(M != user && unlocked && (M.stat == DEAD || M.incapacitated()))
 			if(passengers.len >= max_passengers && !pilot)
 				to_chat(usr, "<span class='danger'><b>That person can't fly the pod!</b></span>")
-				return 0
+				return FALSE
 			if(passengers.len < max_passengers)
 				visible_message("<span class='danger'>[user.name] starts loading [M.name] into the pod!</span>")
 				if(do_after(user, 50, target = M))
@@ -707,34 +707,34 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 
 /obj/spacepod/proc/enter_pod(mob/user)
 	if(usr.stat != CONSCIOUS)
-		return 0
+		return FALSE
 
 	if(equipment_system.lock_system && !unlocked)
 		to_chat(user, "<span class='warning'>[src]'s doors are locked!</span>")
-		return 0
+		return FALSE
 
 	if(get_dist(src, user) > 2 || get_dist(usr, user) > 1)
 		to_chat(usr, "They are too far away to put inside")
-		return 0
+		return FALSE
 
 	if(!istype(user))
-		return 0
+		return FALSE
 
 	var/fukkendisk = locate(/obj/item/weapon/disk/nuclear) in GetAllContents(user)
 
 	if(user.incapacitated()) //are you cuffed, dying, lying, stunned or other
-		return 0
+		return FALSE
 	if(!ishuman(user))
-		return 0
+		return FALSE
 
 	if(fukkendisk)
 		to_chat(user, "<span class='danger'><B>The nuke-disk is locking the door every time you try to open it. You get the feeling that it doesn't want to go into the spacepod.</b></span>")
-		return 0
+		return FALSE
 
 	for(var/mob/living/simple_animal/slime/S in range(1,usr))
 		if(S.Target == user)
 			to_chat(user, "You're too busy getting your life sucked out of you.")
-			return 0
+			return FALSE
 
 	move_inside(user)
 
@@ -833,18 +833,18 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		if(P.check_access(L.get_active_held_item()) || P.check_access(L.wear_id))
 			if(P.density)
 				P.open()
-				return 1
+				return TRUE
 			else
 				P.close()
-				return 1
+				return TRUE
 		for(var/mob/living/carbon/human/O in passengers)
 			if(P.check_access(O.get_active_held_item()) || P.check_access(O.wear_id))
 				if(P.density)
 					P.open()
-					return 1
+					return TRUE
 				else
 					P.close()
-					return 1
+					return TRUE
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 
@@ -925,9 +925,9 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
 		if(!src || !user || !user.canmove || !(user.loc == T))
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 
 
@@ -938,7 +938,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 
 /obj/spacepod/proc/handlerelaymove(mob/user, direction)
 	if(world.time < next_move)
-		return 0
+		return FALSE
 	var/moveship = 1
 	if(cell && cell.charge >= 1 && health && empcounter == 0)
 		src.dir = direction
@@ -977,7 +977,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 			to_chat(user, "<span class='warning'>The pod control interface isn't responding. The console indicates [empcounter] seconds before reboot.</span>")
 		else
 			to_chat(user, "<span class='warning'>Unknown error has occurred, yell at the coders.</span>")
-		return 0
+		return FALSE
 	cell.charge = max(0, cell.charge - 1)
 	next_move = world.time + move_delay
 
@@ -1023,7 +1023,6 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 					t_air.merge(removed)
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
-
 
 
 

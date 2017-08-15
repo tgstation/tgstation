@@ -36,17 +36,17 @@
 	linked = src
 	for(var/i = 1; i <= 4; i++)
 		T = get_turf(get_step(linked, turn(linked.dir, -linked.link_angle))) //get the next place that we want to look at
-		if(locate(linked.link_to) in T)
-			pointer = locate(linked.link_to) in T
-			//log_admin("Looking at [pointer.type]")
+		var/link_to_in_t = locate(linked.link_to) in T
+		if(link_to_in_t)
+			pointer = link_to_in_t
 		if(istype(pointer, linked.link_to) && pointer.dir == linked.dir && pointer.anchored)
 			if(!(pointer in connectedparts))
 				connectedparts += pointer
 			linked = pointer
 			pointer = null
 	if(connectedparts.len < 4)
-		return 0
-	for(var/i = 1; i <=4; i++)
+		return
+	for(var/i in 1 to 4)
 		var/obj/item/pod_parts/pod_frame/F = connectedparts[i]
 		if(F.type in neededparts) //if one of the items can be founded in neededparts
 			neededparts -= F.type

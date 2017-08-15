@@ -21,13 +21,13 @@
 	var/screen = "main"
 	var/temp
 	var/list/part_sets = list(
-								"Pod Weaponry",
-								"Pod Armor",
-								"Pod Cargo",
-								"Pod Parts",
-								"Pod Frame",
-								"Misc",
-								)
+		"Pod Weaponry",
+		"Pod Armor",
+		"Pod Cargo",
+		"Pod Parts",
+		"Pod Frame",
+		"Misc",
+	)
 
 /obj/machinery/spod_part_fabricator/Initialize()
 	files = new /datum/research(src) //Setup the research data holder.
@@ -60,11 +60,11 @@
 		var/obj/item/device/pda/pda = I
 		I = pda.id
 	if(!istype(I) || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/machinery/spod_part_fabricator/emag_act()
 	if(emagged)
@@ -81,7 +81,7 @@
 
 
 /obj/machinery/spod_part_fabricator/proc/output_parts_list(set_name)
-	var/output = ""
+	var/list/output = list()
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
 		if(D.build_type & PODFAB)
@@ -91,7 +91,7 @@
 			if(check_resources(D))
 				output += "<a href='?src=\ref[src];part=[D.id]'>Build</a> | "
 			output += "<a href='?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
-	return output
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/output_part_info(datum/design/D)
 	var/output = "[initial(D.name)] (Cost: [output_part_cost(D)]) [get_construction_time_w_coeff(D)/10]sec"
@@ -99,14 +99,14 @@
 
 /obj/machinery/spod_part_fabricator/proc/output_part_cost(datum/design/D)
 	var/i = 0
-	var/output
+	var/list/output = list()
 	for(var/c in D.materials)
 		output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
 		i++
-	return output
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/output_available_resources()
-	var/output
+	var/list/output = list()
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
@@ -116,7 +116,7 @@
 				output += " | \[<a href='?src=\ref[src];remove_mat=10;material=[mat_id]'>10</a>\]"
 			output += " | \[<a href='?src=\ref[src];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
 		output += "<br/>"
-	return output
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
 	var/list/resources = list()
@@ -126,10 +126,10 @@
 
 /obj/machinery/spod_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
-		return 0
+		return FALSE
 	if(materials.has_materials(get_resources_w_coeff(D)))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/spod_part_fabricator/proc/build_part(datum/design/D)
 	being_built = D
@@ -152,11 +152,10 @@
 	being_built = null
 
 	updateUsrDialog()
-	return 1
+	return TRUE
 
 /obj/machinery/spod_part_fabricator/proc/update_queue_on_page()
 	send_byjax(usr,"mecha_fabricator.browser","queue",list_queue())
-	return
 
 /obj/machinery/spod_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
@@ -175,9 +174,9 @@
 
 /obj/machinery/spod_part_fabricator/proc/remove_from_queue(index)
 	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
-		return 0
+		return FALSE
 	queue.Cut(index,++index)
-	return 1
+	return TRUE
 
 /obj/machinery/spod_part_fabricator/proc/process_queue()
 	var/datum/design/D = queue[1]
@@ -190,19 +189,20 @@
 	temp = null
 	while(D)
 		if(stat&(NOPOWER|BROKEN))
-			return 0
+			return FALSE
 		if(!check_resources(D))
 			say("Not enough resources. Queue processing stopped.")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
-			return 0
+			return FALSE
 		remove_from_queue(1)
 		build_part(D)
 		D = listgetindex(queue, 1)
 	say("Queue processing finished successfully.")
 
 /obj/machinery/spod_part_fabricator/proc/list_queue()
-	var/output = "<b>Queue contains:</b>"
+	var/list/output = list()
+	output += "<b>Queue contains:</b>"
 	if(!istype(queue) || !queue.len)
 		output += "<br>Nothing"
 	else
@@ -219,7 +219,7 @@
 
 		output += "</ol>"
 		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
-	return output
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/sync()
 	temp = "Updating local R&D database..."
@@ -358,7 +358,7 @@
 	if(href_list["process_queue"])
 		spawn(0)
 			if(processing_queue || being_built)
-				return 0
+				return FALSE
 			processing_queue = 1
 			process_queue()
 			processing_queue = 0
@@ -403,23 +403,23 @@
 
 /obj/machinery/spod_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
-		return 1
+		return TRUE
 
 	if(exchange_parts(user, W))
-		return 1
+		return TRUE
 
 	if(default_deconstruction_crowbar(W))
-		return 1
+		return TRUE
 
 	if(istype(W, /obj/item/stack/sheet))
 
 		if(!is_insertion_ready(user))
-			return 1
+			return TRUE
 
 		var/material_amount = materials.get_item_material_amount(W)
 
 		if(!try_insert(user, W, material_amount))
-			return 1
+			return TRUE
 
 		var/inserted = materials.insert_item(W)
 		if(inserted)
@@ -438,12 +438,12 @@
 	else if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
 
 		if(!is_insertion_ready(user))
-			return 1
+			return TRUE
 
 		var/material_amount = materials.get_item_material_amount(W)
 
 		if(!try_insert(user, W, material_amount))
-			return 1
+			return TRUE
 
 		var/inserted = materials.insert_item(W)
 		if(inserted)

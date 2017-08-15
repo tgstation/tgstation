@@ -2,7 +2,7 @@
 	name = "pod lock buster"
 	desc = "Destroys a podlock in mere seconds once applied. Waranty void if used."
 	icon_state = "lock_buster_off"
-	var/on = 0
+	var/on = FALSE
 
 /obj/item/device/lock_buster/attack_self(mob/user as mob)
 	on = !on

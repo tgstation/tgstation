@@ -12,7 +12,7 @@
 		to_chat(usr, "<span class='warning'>Insufficient charge to fire the weapons</span>")
 		return
 	var/olddir
-	for(var/i = 0; i < shots_per; i++)
+	for(var/i in 0 to shots_per-1)
 		if(olddir != my_atom.dir)
 			switch(my_atom.dir)
 				if(NORTH)
@@ -36,12 +36,15 @@
 		projtwo.starting = get_turf(my_atom)
 		projtwo.firer = usr
 		projtwo.def_zone = "chest"
-		spawn()
-			playsound(src, fire_sound, 50, 1)
-			projone.dumbfire(my_atom.dir)
-			projtwo.dumbfire(my_atom.dir)
+		INVOKE_ASYNC(src, .proc/do_fire, projone, projtwo)
 		sleep(2)
 	my_atom.next_firetime = world.time + fire_delay
+
+
+/obj/item/device/spacepod_equipment/weaponry/proc/do_fire(obj/item/projectile/projone, obj/item/projectile/projtwo)
+    playsound(src, fire_sound, 50, 1)
+    projone.dumbfire(my_atom.dir)
+    projtwo.dumbfire(my_atom.dir)
 
 /datum/spacepod/equipment
 	var/obj/spacepod/my_atom
@@ -132,7 +135,7 @@
 	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /obj/item/device/spacepod_equipment/weaponry/plasma_cutter
-	name = "plasma cutter laser system"
+	name = "plasma cutter system"
 	desc = "A plasma cutter system for space pods. It is capable of expelling concentrated plasma bursts to mine or cut off xeno limbs!"
 	icon = 'goon/icons/pods/ship.dmi'
 	icon_state = "pod_p_cutter"
