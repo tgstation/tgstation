@@ -45,8 +45,8 @@
 			quick_spatial_gate(L.loc, T, L)
 	for(var/obj/effect/clockwork/reebe_rift/R in GLOB.all_clockwork_objects)
 		qdel(R)
-	if(GLOB.ark_of_the_clockwork_justiciar == src)
-		GLOB.ark_of_the_clockwork_justiciar = null
+	if(GLOB.ark_of_the_clockwork_justicar == src)
+		GLOB.ark_of_the_clockwork_justicar = null
 	. = ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
