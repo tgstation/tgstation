@@ -41,6 +41,36 @@
 	return 0
 
 /datum/construction/proc/custom_action(step, used_atom, user)
+	if(istype(used_atom, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/W = used_atom
+		if(W.remove_fuel(0, user))
+			playsound(holder, W.usesound, 50, 1)
+		else
+			return 0
+	else if(istype(used_atom, /obj/item/weapon/wrench))
+		var/obj/item/weapon/wrench/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
+		else if(istype(used_atom, /obj/item/weapon/screwdriver))
+		var/obj/item/weapon/screwdriver/S = used_atom
+		playsound(holder, S.usesound, 50, 1)
+	else if(istype(used_atom, /obj/item/weapon/wirecutters))
+		var/obj/item/weapon/wirecutters/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
+	else if(istype(used_atom, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = used_atom
+		if(C.amount<4)
+			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task.</span>"))
+			return 0
+		else
+			C.use(4)
+			playsound(holder, C.usesound, 50, 1)
+	else if(istype(used_atom, /obj/item/stack))
+		var/obj/item/stack/S = used_atom
+		if(S.amount < 5)
+			to_chat(user, ("<span class='warning'>There's not enough material in this stack.</span>"))
+			return 0
+		else
+			S.use(5)
 	return 1
 
 /datum/construction/proc/check_all_steps(atom/used_atom,mob/user) //check all steps, remove matching one.

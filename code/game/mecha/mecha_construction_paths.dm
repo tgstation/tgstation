@@ -2,41 +2,6 @@
 ///// Construction datums //////
 ////////////////////////////////
 
-/datum/construction/mecha/custom_action(step, atom/used_atom, mob/user)
-	if(istype(used_atom, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = used_atom
-		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
-		else
-			return 0
-	else if(istype(used_atom, /obj/item/weapon/wrench))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
-
-	else if(istype(used_atom, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = used_atom
-		if(C.use(4))
-			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
-		else
-			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
-			return 0
-	else if(istype(used_atom, /obj/item/stack))
-		var/obj/item/stack/S = used_atom
-		if(S.get_amount() < 5)
-			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
-			return 0
-		else
-			S.use(5)
-	return 1
-
 /datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom

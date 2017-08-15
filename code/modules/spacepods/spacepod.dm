@@ -540,6 +540,9 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		L += S.return_inv()
 	return L
 
+/obj/spacepod/get_cell()
+	return cell
+
 /obj/spacepod/civilian
 	icon_state = "pod_civ"
 	desc = "A sleek civilian space pod."
