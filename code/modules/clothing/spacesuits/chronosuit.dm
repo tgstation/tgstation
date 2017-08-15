@@ -245,7 +245,7 @@
 	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/mob/holder = null
 	var/phase_time = 0
 	var/phase_time_length = 3

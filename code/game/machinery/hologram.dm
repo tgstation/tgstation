@@ -292,7 +292,7 @@ Possible to do for anyone motivated enough:
 			Hologram.Impersonation = user
 
 		Hologram.copy_known_languages_from(user,replace = TRUE)
-		Hologram.mouse_opacity = 0//So you can't click on it.
+		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.anchored = TRUE//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.

@@ -122,7 +122,7 @@
 		I.forceMove(src)
 	modules += I
 	I.flags |= NODROP
-	I.mouse_opacity = 2
+	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I
 	if(requires_rebuild)

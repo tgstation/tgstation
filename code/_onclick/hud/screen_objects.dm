@@ -33,7 +33,7 @@
 /obj/screen/text
 	icon = null
 	icon_state = null
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "CENTER-7,CENTER-7"
 	maptext_height = 480
 	maptext_width = 480
@@ -468,7 +468,7 @@
 	name = "dmg"
 	blend_mode = BLEND_MULTIPLY
 	screen_loc = "CENTER-7,CENTER-7"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = UI_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
@@ -494,7 +494,7 @@
 	name = "blob health"
 	icon_state = "block"
 	screen_loc = ui_internal
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/blob/naut
 	name = "health"
@@ -511,13 +511,13 @@
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "base"
 	screen_loc = ui_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/clock
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_clock"
 	screen_loc = ui_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/clock/gear
 	icon = 'icons/mob/clockwork_mobs.dmi'
@@ -529,13 +529,13 @@
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_revenant"
 	screen_loc = ui_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/construct
 	icon = 'icons/mob/screen_construct.dmi'
 	icon_state = "artificer_health0"
 	screen_loc = ui_construct_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll
 	name = "health doll"

@@ -319,7 +319,7 @@
 	desc = "A compacted ball of expansive resin, used to repair the atmosphere in a room, or seal off breaches."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "frozen_smoke_capsule"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pass_flags = PASSTABLE
 
 /obj/effect/resin_container/proc/Smoke()

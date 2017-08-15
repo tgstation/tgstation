@@ -314,7 +314,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = SPACEVINE_LAYER
-	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
+	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0

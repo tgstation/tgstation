@@ -197,7 +197,7 @@ Difficulty: Medium
 			return
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	sleep(7)
 	var/list/flame_hit = list()
 	while(swoop_duration > 0)

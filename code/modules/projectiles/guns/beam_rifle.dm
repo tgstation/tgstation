@@ -714,7 +714,7 @@
 	light_power = 1
 	light_range = 2
 	light_color = "#00ffff"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	flags = ABSTRACT
 	appearance_flags = 0
 

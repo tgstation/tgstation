@@ -49,7 +49,7 @@ Difficulty: Medium
 	elimination = 1
 	idle_vision_range = 13
 	appearance_flags = 0
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()
