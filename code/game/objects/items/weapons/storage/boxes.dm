@@ -646,7 +646,7 @@
 	icon_state = "lethalshot_box"
 	illustration = null
 	
-/obj/item/weapon/storage/box/improvisedhsot/PopuateContents()
+/obj/item/weapon/storage/box/improvisedhsot/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/improvised
 
