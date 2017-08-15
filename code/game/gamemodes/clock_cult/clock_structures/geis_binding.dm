@@ -40,7 +40,7 @@
 			var/mob/living/L = V
 			if(last_mob_health < L.health)
 				tick_damage += last_mob_health - L.health
-				last_mob_health = L.health
+			last_mob_health = L.health
 			if(L.layer != mob_layer)
 				mob_layer = L.layer
 				layer = mob_layer - 0.01
@@ -53,7 +53,7 @@
 	if(anchored)
 		tick_damage *= 0.5
 	take_damage(tick_damage, sound_effect = FALSE)
-	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 40, TRUE, -5)
+	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 40, TRUE, -4)
 
 /obj/structure/destructible/clockwork/geis_binding/attack_hand(mob/living/user)
 	return
