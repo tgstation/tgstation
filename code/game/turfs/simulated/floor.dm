@@ -166,7 +166,9 @@
 		if(user && !silent)
 			to_chat(user, "<span class='danger'>You remove the floor tile.</span>")
 		if(floor_tile && make_tile)
-			new floor_tile(src)
+			var/obj/item/I = new floor_tile(src)
+			if(wet == TURF_WET_PERMAFROST)
+				I.make_frozen_visual()
 	return make_plating()
 
 /turf/open/floor/singularity_pull(S, current_size)
