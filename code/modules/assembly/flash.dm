@@ -224,7 +224,7 @@
 /obj/item/device/assembly/flash/shield
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "flashshield"
 	item_state = "flashshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'

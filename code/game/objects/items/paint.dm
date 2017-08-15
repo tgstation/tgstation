@@ -5,7 +5,7 @@
 	gender= PLURAL
 	name = "paint"
 	desc = "Used to recolor floors and walls. Can be removed by the janitor."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "paint_neutral"
 	item_color = "FFFFFF"
 	item_state = "paintcan"

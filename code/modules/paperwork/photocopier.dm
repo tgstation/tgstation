@@ -168,7 +168,7 @@
 					p.pixel_y = rand(-10, 10)
 					p.img = temp_img
 					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
-					var/icon/ic = icon('icons/obj/items.dmi',"photo")
+					var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
 					small_img.Scale(8, 8)
 					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 					p.icon = ic

@@ -202,7 +202,7 @@
 /obj/item/multisword
 	name = "multiverse sword"
 	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
