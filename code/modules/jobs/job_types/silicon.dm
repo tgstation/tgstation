@@ -11,7 +11,7 @@ AI
 	selection_color = "#ccffcc"
 	supervisors = "your laws"
 	req_admin_notify = 1
-	minimal_player_age = 30
+	minimal_player_age = 14
 
 /datum/job/ai/equip(mob/living/carbon/human/H)
 	return H.AIize(FALSE)
@@ -43,7 +43,7 @@ Cyborg
 	spawn_positions = 1
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
-	minimal_player_age = 21
+	minimal_player_age = 5
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H)
 	return H.Robotize(FALSE, FALSE)
