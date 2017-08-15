@@ -7,16 +7,20 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
-/obj/item/device/pda/clown/Crossed(AM as mob|obj)
-	if (istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		if(M.slip(120, src, NO_SLIP_WHEN_WALKING))
-			if (ishuman(M) && (M.real_name != src.owner))
-				if (istype(src.cartridge, /obj/item/weapon/cartridge/virus/clown))
-					var/obj/item/weapon/cartridge/virus/cart = src.cartridge
-					if(cart.charges < 5)
-						cart.charges++
+/obj/item/device/pda/clown/Initialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING)
 
+/obj/item/device/pda/clown/ComponentActivated(datum/component/C)
+	..()
+	var/datum/component/slippery/S = C
+	if(!istype(S))
+		return
+	var/mob/living/carbon/human/M = S.slip_victim
+	if (istype(M) && (M.real_name != src.owner))
+		var/obj/item/weapon/cartridge/virus/clown/cart = cartridge
+		if(istype(cart) && cart.charges < 5)
+			cart.charges++
 
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/device/pda/ai

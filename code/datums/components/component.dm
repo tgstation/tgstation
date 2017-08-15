@@ -110,6 +110,9 @@
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
 
+/datum/component/proc/AfterComponentActivated()
+	return
+
 /datum/component/proc/_GetInverseTypeList(current_type)
 	. = list(current_type)
 	while (current_type != /datum/component)
@@ -126,6 +129,7 @@
 		var/datum/component/C = target
 		if(C.enabled && C.ReceiveSignal(arglist(args)))
 			ComponentActivated(C)
+			C.AfterComponentActivated()
 			return TRUE
 	else
 		for(var/I in target)

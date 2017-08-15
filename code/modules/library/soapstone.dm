@@ -1,6 +1,6 @@
 /obj/item/soapstone
 	name = "soapstone"
-	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include beatings, bannings and orbital bombardment.)"
+	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include prompt beatings, psychotic clown incursions, and/or orbital bombardment.)"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soapstone"
 	throw_speed = 3

@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","ˇ"="&#255;"))
+/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","—è"="&#255;"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -45,7 +45,8 @@
 			index = findtext(t, char, index+1)
 	return t
 
-
+/proc/sanitize_filename(t)
+	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)
 	t = strip_macros(t)
@@ -629,7 +630,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/list/tosend = list()
 	tosend["data"] = finalized
-	log << json_encode(tosend)
+	WRITE_FILE(log, json_encode(tosend))
 
 //Used for applying byonds text macros to strings that are loaded at runtime
 /proc/apply_text_macros(string)

@@ -229,6 +229,7 @@
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
+	circuit = /obj/item/weapon/circuitboard/machine/chem_dispenser
 	var/list/dispensable_reagent_tiers = list(
 		list(
 			"hydrogen",
@@ -271,23 +272,6 @@
 			"diethylamine"
 		)
 	)
-
-/obj/machinery/chem_dispenser/constructable/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/chem_dispenser
-	name = "Portable Chem Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/cell = 1)
-	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0

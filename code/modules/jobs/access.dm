@@ -111,7 +111,7 @@
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 		if("Thunderdome Overseer")
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER)
-		if("Centcom Official")
+		if("CentCom Official")
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
 		if("Medical Officer")
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_MEDICAL)
@@ -123,7 +123,7 @@
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 		if("Admiral")
 			return get_all_centcom_access()
-		if("Centcom Commander")
+		if("CentCom Commander")
 			return get_all_centcom_access()
 		if("Emergency Response Team Commander")
 			return get_ert_access("commander")
@@ -133,7 +133,7 @@
 			return get_ert_access("eng")
 		if("Medical Response Officer")
 			return get_ert_access("med")
-		if("Centcom Bartender")
+		if("CentCom Bartender")
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
 
 /proc/get_all_accesses()
@@ -370,7 +370,7 @@
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","CentCom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","CentCom Bartender")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/weapon/card/id/I = GetID()
@@ -379,6 +379,6 @@
 	var/jobName = I.assignment
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName
-	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
-		return "Centcom"
+	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a CentCom job
+		return "CentCom"
 	return "Unknown" //Return unknown if none of the above apply

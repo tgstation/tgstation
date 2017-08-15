@@ -29,6 +29,8 @@ var opts = {
 	'messageLimit': 2053, //A limit...for the messages...
 	'scrollSnapTolerance': 10, //If within x pixels of bottom
 	'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
+	'imageRetryDelay': 50, //how long between attempts to reload images (in ms)
+	'imageRetryLimit': 50, //how many attempts should we make? 
 	'popups': 0, //Amount of popups opened ever
 	'wasd': false, //Is the user in wasd mode?
 	'chatMode': 'default', //The mode the chat is in
@@ -146,6 +148,23 @@ function highlightTerms(el) {
 		el.innerHTML = newText;
 	}
 }
+
+function iconError(E) {
+	var that = this;
+	setTimeout(function() {
+		var attempts = $(that).data('reload_attempts');
+		if (typeof attempts === 'undefined' || !attempts) {
+			attempts = 1;
+		}
+		if (attempts > opts.imageRetryLimit)
+			return;
+		var src = that.src;
+		that.src = null;
+		that.src = src+'#'+attempts;
+		$(that).data('reload_attempts', ++attempts);
+	}, opts.imageRetryDelay);
+}
+
 //Send a message to the client
 function output(message, flag) {
 	if (typeof message === 'undefined') {
@@ -271,7 +290,7 @@ function output(message, flag) {
 
 	entry.innerHTML = message.trim();
 	$messages[0].appendChild(entry);
-
+	$(entry).find("img.icon").error(iconError);
 	//Actually do the snap
 	if (!filteredOut && atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
@@ -861,7 +880,11 @@ $(function() {
 		$messages.empty();
 		opts.messageCount = 0;
 	});
-
+	
+	$('img.icon').error(iconError);
+	
+	
+		
 
 	/*****************************************
 	*

@@ -4,31 +4,16 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner"
 	density = TRUE
-	var/locked = FALSE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
+	circuit = /obj/item/weapon/circuitboard/machine/clonescanner
+	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
-
-/obj/machinery/dna_scannernew/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonescanner(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/clonescanner
-	name = "Cloning Scanner (Machine Board)"
-	build_path = /obj/machinery/dna_scannernew
-	origin_tech = "programming=2;biotech=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/stack/sheet/glass = 1,
-							/obj/item/stack/cable_coil = 2)
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	scan_level = 0

@@ -9,6 +9,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(ACCESS_ROBOTICS)
+	circuit = /obj/item/weapon/circuitboard/machine/mechfab
 	var/time_coeff = 1
 	var/component_coeff = 1
 	var/datum/material_container/materials
@@ -34,22 +35,10 @@
 								"Misc"
 								)
 
-/obj/machinery/mecha_part_fabricator/New()
-	..()
+/obj/machinery/mecha_part_fabricator/Initialize()
 	files = new /datum/research(src) //Setup the research data holder.
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/mechfab
-	name = "Exosuit Fabricator (Machine Board)"
-	build_path = /obj/machinery/mecha_part_fabricator
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0

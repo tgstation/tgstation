@@ -26,6 +26,7 @@
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/device/assembly/igniter
+	trigger_guard = TRIGGER_GUARD_NORMAL
 
 /obj/item/weapon/flamethrower/Destroy()
 	if(weldtool)
@@ -69,12 +70,7 @@
 	if(flag)
 		return // too close
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK))
-			to_chat(user, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
-			return
-		if(NOGUNS in H.dna.species.species_traits)
-			to_chat(user, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
+		if(!can_trigger_gun(user))
 			return
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)

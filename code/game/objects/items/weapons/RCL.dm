@@ -23,17 +23,20 @@
 /obj/item/weapon/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
-		if(user.transferItemToLoc(W, src))
-			loaded = W
-			loaded.max_amount = max_amount //We store a lot.
-		else
-			to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
-			return
+		
+		if(!loaded)
+			if(!user.transferItemToLoc(W, src))
+				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
+				return
+			else
+				loaded = W //W.loc is src at this point.
+				loaded.max_amount = max_amount //We store a lot.
+				return
 
 		if(loaded.amount < max_amount)
-			var/amount = min(loaded.amount + C.amount, max_amount)
-			C.use(amount - loaded.amount)
-			loaded.amount = amount
+			var/transfer_amount = min(max_amount - loaded.amount, C.amount)
+			C.use(transfer_amount)
+			loaded.amount += transfer_amount
 		else
 			return
 		update_icon()

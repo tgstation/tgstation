@@ -52,7 +52,7 @@
 			break
 
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
-	..()
+	. = ..()
 	regenerate_icons()
 
 
@@ -295,7 +295,7 @@
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
-	..()
+	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
@@ -343,14 +343,14 @@
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
 	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
 	if(!dead)
-		S["age"] 				<< age + 1
+		WRITE_FILE(S["age"], age + 1)
 		if((age + 1) > record_age)
-			S["record_age"]		<< record_age + 1
+			WRITE_FILE(S["record_age"], record_age + 1)
 		if(inventory_head)
-			S["saved_head"] << inventory_head.type
+			WRITE_FILE(S["saved_head"], inventory_head.type)
 	else
-		S["age"] 		<< 0
-		S["saved_head"] << null
+		WRITE_FILE(S["age"], 0)
+		WRITE_FILE(S["saved_head"], null)
 	memory_saved = 1
 
 

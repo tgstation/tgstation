@@ -473,7 +473,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
@@ -562,7 +561,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			head_subordinates += job.title
 
 /obj/machinery/computer/card/centcom
-	name = "\improper Centcom identification console"
+	name = "\improper CentCom identification console"
 	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
 	req_access = list(ACCESS_CENT_CAPTAIN)
 
@@ -572,8 +571,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_screen = "idminor"
 	circuit = /obj/item/weapon/circuitboard/computer/card/minor
 
-/obj/machinery/computer/card/minor/New()
-	..()
+/obj/machinery/computer/card/minor/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/computer/card/minor/typed_circuit = circuit
 	if(target_dept)
 		typed_circuit.target_dept = target_dept

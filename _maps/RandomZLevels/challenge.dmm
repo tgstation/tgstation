@@ -248,25 +248,11 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "ba" = (
@@ -470,11 +456,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/challenge/main)
 "bA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bB" = (
@@ -892,41 +874,19 @@
 /turf/open/space,
 /area/space)
 "cM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/corner/northwest,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/corner/northeast,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cQ" = (
@@ -1034,14 +994,7 @@
 /turf/open/space,
 /area/space)
 "de" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "df" = (
@@ -1091,16 +1044,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/challenge/end)
 "dl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "dm" = (

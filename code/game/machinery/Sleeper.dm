@@ -13,6 +13,7 @@
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
+	circuit = /obj/item/weapon/circuitboard/machine/sleeper
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -26,23 +27,10 @@
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 
-/obj/machinery/sleeper/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/sleeper(null)
-	B.apply_default_parts(src)
+/obj/machinery/sleeper/Initialize()
+	. = ..()
 	update_icon()
 	reset_chem_buttons()
-
-/obj/item/weapon/circuitboard/machine/sleeper
-	name = "Sleeper (Machine Board)"
-	build_path = /obj/machinery/sleeper
-	origin_tech = "programming=3;biotech=2;engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 1)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
