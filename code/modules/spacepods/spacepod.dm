@@ -57,7 +57,9 @@
 	var/list/pod_overlays
 	var/list/pod_paint_effect
 	var/list/colors = new/list(4)
-	var/health = 250
+
+	max_integrity = 250
+
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
 	var/lights = FALSE
@@ -196,9 +198,9 @@
 			to_add = pod_paint_effect[PAINT]
 			to_add.color = colors[PAINT]
 			overlays += to_add
-	if(health <= round(initial(health)/2))
+	if(obj_integrity <= round(max_integrity/2))
 		overlays += pod_overlays[DAMAGE]
-		if(health <= round(initial(health)/4))
+		if(obj_integrity <= round(max_integrity/4))
 			overlays += pod_overlays[FIRE]
 
 
@@ -236,29 +238,28 @@
 	return
 
 /obj/spacepod/proc/deal_damage(var/damage)
-	var/oldhealth = health
-	health = max(0, health - damage)
-	var/percentage = (health / initial(health)) * 100
+	var/oldhealth = obj_integrity
+	obj_integrity = max(0, obj_integrity - damage)
+	var/percentage = (obj_integrity / max_integrity) * 100
 	occupant_sanity_check()
-	if(oldhealth > health && percentage <= 25 && percentage > 0)
+	if(oldhealth > obj_integrity && percentage <= 25 && percentage > 0)
 		play_sound_to_riders('sound/effects/alert.ogg')
-	if(oldhealth > health && !health)
+	if(oldhealth > obj_integrity && !health)
 		play_sound_to_riders('sound/effects/alert.ogg')
-	if(!health)
-		spawn(0)
-			message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
-			for(var/i = 10, i >= 0; --i)
-				message_to_riders("<span class='warning'>[i]</span>")
-				if(i == 0)
-					explosion(loc, 2, 4, 8)
-					qdel(src)
-				sleep(10)
+	if(!obj_integrity)
+		message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
+		for(var/i = 10, i >= 0; --i)
+			message_to_riders("<span class='warning'>[i]</span>")
+			if(i == 0)
+				explosion(loc, 2, 4, 8)
+				qdel(src)
+			sleep(10)
 
 	update_icons()
 
 /obj/spacepod/proc/repair_damage(var/repair_amount)
-	if(health)
-		health = min(initial(health), health + repair_amount)
+	if(obj_integrity)
+		obj_integrity = min(max_integrity, obj_integrity + repair_amount)
 		update_icons()
 
 
@@ -383,7 +384,7 @@
 			if(!WT.isOn())
 				to_chat(user, "<span class='warning'>The welder must be on for this task.</span>")
 				return
-			if(health < initial(health))
+			if(obj_integrity < max_integrity)
 				to_chat(user, "<span class='notice'>You start welding the spacepod...</span>")
 				playsound(loc, W.usesound, 50, 1)
 				if(do_after(user, 20 * W.toolspeed, target = src))
@@ -561,7 +562,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	name = "\improper security spacepod"
 	desc = "An armed security spacepod with reinforced armor plating."
 	icon_state = "pod_mil"
-	health = 400
+	max_integrity = 400
 
 /obj/spacepod/sec/Initialize()
 	. = ..()
@@ -943,7 +944,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	if(world.time < next_move)
 		return FALSE
 	var/moveship = 1
-	if(cell && cell.charge >= 1 && health && empcounter == 0)
+	if(cell && cell.charge >= 1 && obj_integrity && empcounter == 0)
 		src.dir = direction
 		switch(direction)
 			if(NORTH)
@@ -974,7 +975,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 			to_chat(user, "<span class='warning'>No energy cell detected.</span>")
 		else if(cell.charge < 1)
 			to_chat(user, "<span class='warning'>Not enough charge left.</span>")
-		else if(!health)
+		else if(!obj_integrity)
 			to_chat(user, "<span class='warning'>She's dead, Jim</span>")
 		else if(empcounter != 0)
 			to_chat(user, "<span class='warning'>The pod control interface isn't responding. The console indicates [empcounter] seconds before reboot.</span>")
