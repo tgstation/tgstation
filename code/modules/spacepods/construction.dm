@@ -41,9 +41,7 @@
 
 /datum/construction/reversible2/pod/spawn_result()
 	if(result)
-		var/obj/spacepod/A = new /obj/spacepod(get_turf(holder))
-		A.armor_type = armor
-		A.icon_state = armor.icon_state
+		new result(get_turf(holder), pod_armor)
 		qdel(holder)
 	return
 
@@ -51,7 +49,7 @@
 /datum/construction/reversible2/pod
 	result = /obj/spacepod
 	base_icon="pod"
-	var/datum/pod_armor/armor
+	var/datum/pod_armor/pod_armor
 	//taskpath = /datum/job_objective/make_pod
 	steps = list(
 				// 1. Initial state
@@ -244,7 +242,7 @@
 /datum/construction/reversible2/pod/custom_action(index, diff, used_atom, var/mob/user)
 	if(index == 10 && istype(used_atom, /obj/item/pod_parts/armor))
 		var/obj/item/pod_parts/armor/A = used_atom
-		armor = A.armor_type
+		pod_armor = A.armor_type
 	. = ..()
 
 /obj/item/weapon/circuitboard/mecha/pod
