@@ -114,10 +114,8 @@
 	. = ..(mapload)
 	if (p_armor)
 		pod_armor = p_armor
-		icon_state = p_armor.icon_state
 	else
 		pod_armor = /datum/pod_armor/civ
-		icon_state = "pod_civ"
 	update_icons()
 	dir = EAST
 	cell = new cell_type(src)
