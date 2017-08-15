@@ -113,9 +113,10 @@
 /obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/p_armor)
 	. = ..(mapload)
 	if (p_armor)
-		pod_armor = p_armor
+		pod_armor = new p_armor
+
 	else
-		pod_armor = /datum/pod_armor/civ
+		pod_armor = new
 	update_icons()
 	dir = EAST
 	cell = new cell_type(src)

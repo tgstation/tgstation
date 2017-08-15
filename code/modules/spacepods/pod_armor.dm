@@ -1,7 +1,7 @@
 /datum/pod_armor
 	var/armor_multiplier = 1 //max_integrity is multiplied by this
-	var/name = "black"
-	var/icon_state = "pod_black"
+	var/name = "civ"
+	var/icon_state = "pod_civ"
 	var/light_color = null
 
 /datum/pod_armor/New()
