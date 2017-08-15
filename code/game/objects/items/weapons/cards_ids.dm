@@ -158,6 +158,7 @@ update_label("John Doe", "Clowny")
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
+	throwforce = 15 //emergency weapon
 
 /obj/item/weapon/card/id/syndicate/Initialize()
 	..()
