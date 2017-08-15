@@ -85,6 +85,7 @@
 	var/datum/action/innate/spacepod/checkseat/seat_action = new
 	var/datum/action/innate/spacepod/airtank/tank_action = new
 
+	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
 /obj/spacepod/proc/apply_paint(mob/user as mob)
 	var/part_type
@@ -133,6 +134,10 @@
 	equipment_system.installed_modules += cell
 	GLOB.spacepods_list += src
 	START_PROCESSING(SSobj, src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud_set_podhealth()
+	diag_hud_set_podcharge()
+	diag_hud.add_to_hud(src)
 	cargo_hold = new/obj/item/weapon/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
@@ -244,7 +249,7 @@
 	occupant_sanity_check()
 	if(oldhealth > obj_integrity && percentage <= 25 && percentage > 0)
 		play_sound_to_riders('sound/effects/alert.ogg')
-	if(oldhealth > obj_integrity && !health)
+	if(oldhealth > obj_integrity && !obj_integrity)
 		play_sound_to_riders('sound/effects/alert.ogg')
 	if(!obj_integrity)
 		message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
@@ -256,11 +261,13 @@
 			sleep(10)
 
 	update_icons()
+	diag_hud_set_podhealth()
 
 /obj/spacepod/proc/repair_damage(var/repair_amount)
 	if(obj_integrity)
 		obj_integrity = min(max_integrity, obj_integrity + repair_amount)
 		update_icons()
+		diag_hud_set_podhealth()
 
 
 /obj/spacepod/ex_act(severity)
@@ -302,6 +309,8 @@
 		internal_temp_regulation = FALSE
 		message_to_riders("<span class='warning'>The pod console flashes 'TEMPERATURE REGULATION OFFLINE! REBOOTING SYSTEM.'.</span>")
 		addtimer(CALLBACK(src, .proc/fixReg), 300/severity)
+
+	diag_hud_set_podcharge()
 
 /obj/spacepod/proc/play_sound_to_riders(mysound)
 	if(length(passengers | pilot) == 0)
@@ -1027,6 +1036,9 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 					t_air.merge(removed)
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
+
+	diag_hud_set_podcharge()
+	diag_hud_set_podhealth()
 
 
 
