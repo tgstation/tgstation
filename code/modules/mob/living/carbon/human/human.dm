@@ -870,7 +870,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	src.mind.objectives += O
 	src.mind.announce_objectives()
 
-/mob/living/carbon/human/check_weakness(obj/item, mob/living/attacker)
+/mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
 	if (dna && dna.species)
 		. += dna.species.check_weakness(weapon, attacker)

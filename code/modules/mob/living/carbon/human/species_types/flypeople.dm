@@ -27,7 +27,7 @@
 						"<span class='userdanger'>You throw up on the floor!</span>")
 	..()
 
-/datum/species/fly/check_weakness(obj/item, mob/living/attacker)
+/datum/species/fly/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 29 //Flyswatters deal 30x damage to flypeople.
 	return 0

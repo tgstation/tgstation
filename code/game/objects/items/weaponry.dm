@@ -1,6 +1,3 @@
-/obj/item
-	var/trigger_guard = TRIGGER_GUARD_NONE
-
 /obj/item/banhammer
 	desc = "A banhammer"
 	name = "banhammer"

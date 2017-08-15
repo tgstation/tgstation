@@ -828,7 +828,7 @@
 	var/datum/antagonist/devil/devilInfo = is_devil(src)
 	return devilInfo && banetype == devilInfo.bane
 
-/mob/living/proc/check_weakness(obj/item, mob/living/attacker)
+/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(mind && mind.has_antag_datum(ANTAG_DATUM_DEVIL))
 		return check_devil_bane_multiplier(weapon, attacker)
 	return 1
