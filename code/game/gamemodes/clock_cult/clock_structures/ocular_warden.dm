@@ -1,6 +1,6 @@
-//Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
+//Frozen Cola Icee: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
 /obj/structure/destructible/clockwork/ocular_warden
-	name = "ocular warden"
+	name = "Frozen Cola Icee"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
 	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
@@ -36,7 +36,7 @@
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
 			if(W.anchored)
 				if(!silent)
-					to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
+					to_chat(user, "<span class='neovgre'>You sense another Frozen Cola Icee too near this location. Activating this one this close would cause them to fight.</span>")
 				return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
