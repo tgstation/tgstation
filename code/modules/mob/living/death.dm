@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(loc, viruses)
+	new /obj/effect/gibspawner/generic(get_turf(src))
 
 /mob/living/proc/spill_organs()
 	return
@@ -61,6 +61,7 @@
 	if(!gibbed)
 		GLOB.dead_mob_list += src
 	set_drugginess(0)
+	set_disgust(0)
 	SetSleeping(0, 0)
 	blind_eyes(1)
 	reset_perspective(null)

@@ -4,6 +4,28 @@
  *		Meat Grinder
  */
 
+ ////////// wildwest papers
+ 
+/obj/item/weapon/paper/fluff/awaymissions/wildwest/grinder
+	info = "meat grinder requires sacri"
+
+
+/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page1
+	name = "Planer Saul's Journal: Page 1"
+	info = "We've discovered something floating in space. We can't really tell how old it is, but it is scraped and bent to hell. There object is the size of about a room with double doors that we have yet to break into.   It is a lot sturdier than we could have imagined.  We have decided to call it 'The Vault' "
+
+/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page4
+	name = "Planer Saul's Journal: Page 4"
+	info = " The miners in the town have become sick and almost all production has stopped. They, in a fit of delusion, tossed all of their mining equipment into the furnaces.  They all claimed the same thing. A voice beckoning them to lay down their arms. Stupid miners."
+
+/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page7
+	name = "Planer Sauls' Journal: Page 7"
+	info = "The Vault...it just keeps growing and growing.  I went on my daily walk through the garden and now its just right outside the mansion... a few days ago it was only barely visible. But whatever is inside...its calling to me."
+
+/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page8
+	name = "Planer Saul's Journal: Page 8"
+	info = "The syndicate have invaded.  Their ships appeared out of nowhere and now they likely intend to kill us all and take everything.  On the off-chance that the Vault may grant us sanctuary, many of us have decided to force our way inside and bolt the door, taking as many provisions with us as we can carry.  In case you find this, send for help immediately and open the Vault. Find us inside."
+
 
 /*
  * Wish Granter
@@ -14,9 +36,9 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	anchored = 1
-	density = 1
-	use_power = 0
+	anchored = TRUE
+	density = TRUE
+	use_power = NO_POWER_USE
 
 	var/chargesa = 1
 	var/insistinga = 0
@@ -85,22 +107,25 @@
 /obj/effect/meatgrinder
 	name = "Meat Grinder"
 	desc = "What is that thing?"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	var/triggered = 0
 
-/obj/effect/meatgrinder/Crossed(AM)
-	Bumped(AM)
+/obj/effect/meatgrinder/Crossed(atom/movable/AM)
+	CollidedWith(AM)
 
-/obj/effect/meatgrinder/Bumped(mob/M)
+/obj/effect/meatgrinder/CollidedWith(atom/movable/AM)
 
 	if(triggered)
 		return
+	if(!ishuman(AM))
+		return
 
-	if(ishuman(M) && M.stat != DEAD && M.ckey)
-		for(var/mob/O in viewers(world.view, src.loc))
+	var/mob/living/carbon/human/M = AM
+
+	if(M.stat != DEAD && M.ckey)
 		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
 		triggered = 1
 

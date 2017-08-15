@@ -6,19 +6,20 @@
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
-	req_access = list(GLOB.access_mineral_storeroom)
-	var/req_access_reclaim = GLOB.access_mining_station
+	req_access = list(ACCESS_MINERAL_STOREROOM)
+	speed_process = 1
+	circuit = /obj/item/weapon/circuitboard/machine/ore_redemption
+	var/req_access_reclaim = ACCESS_MINING_STATION
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
 	var/point_upgrade = 1
 	var/list/ore_values = list(MAT_GLASS = 1, MAT_METAL = 1, MAT_PLASMA = 15, MAT_SILVER = 16, MAT_GOLD = 18, MAT_TITANIUM = 30, MAT_URANIUM = 30, MAT_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_BANANIUM = 60)
-	speed_process = 1
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
 	var/datum/material_container/materials
@@ -27,8 +28,6 @@
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/ore_redemption/B = new
-	B.apply_default_parts(src)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
 	files = new /datum/research/smelter(src)
 
@@ -36,17 +35,6 @@
 	QDEL_NULL(materials)
 	QDEL_NULL(files)
 	return ..()
-
-/obj/item/weapon/circuitboard/machine/ore_redemption
-	name = "Ore Redemption (Machine Board)"
-	build_path = /obj/machinery/mineral/ore_redemption
-	origin_tech = "programming=1;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/device/assembly/igniter = 1)
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
@@ -173,7 +161,7 @@
 
 	if(!powered())
 		return
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
@@ -211,7 +199,7 @@
 		return
 	interact(user)
 
-/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 440, 550, master_ui, state)

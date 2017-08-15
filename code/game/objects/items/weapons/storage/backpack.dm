@@ -14,13 +14,14 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 21
 	storage_slots = 21
 	resistance_flags = 0
-	obj_integrity = 300
 	max_integrity = 300
 
 /*
@@ -279,11 +280,11 @@
 /obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
 	if(intact)
 		invisibility = INVISIBILITY_MAXIMUM
-		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
 	else
 		invisibility = initial(invisibility)
-		anchored = 0
+		anchored = FALSE
 		icon_state = initial(icon_state)
 
 /obj/item/weapon/storage/backpack/satchel/flat/Initialize(mapload)
@@ -306,7 +307,7 @@
 /obj/item/weapon/storage/backpack/satchel/flat/secret/Initialize()
 	..()
 
-	if(isfloorturf(loc) && !istype(loc,/turf/open/floor/plating/))
+	if(isfloorturf(loc) && !istype(loc, /turf/open/floor/plating/))
 		hide(1)
 
 /obj/item/weapon/storage/backpack/satchel/flat/secret/hide(intact)
@@ -418,7 +419,7 @@
 	slowdown = 0
 
 /obj/item/weapon/storage/backpack/duffelbag/syndie/hitman
-	desc = "A large duffel bag for holding extra things. There is a NanoTrasen logo on the back."
+	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
 	icon_state = "duffel-syndieammo"
 	item_state = "duffel-syndieammo"
 

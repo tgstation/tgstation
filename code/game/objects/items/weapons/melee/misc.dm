@@ -14,6 +14,8 @@
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
 	item_state = "chain"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 10
@@ -47,6 +49,8 @@
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
 	icon_state = "sabre"
 	item_state = "sabre"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags = CONDUCT
 	unique_rename = 1
 	force = 15
@@ -65,17 +69,31 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
+/obj/item/weapon/melee/sabre/on_exit_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+
+/obj/item/weapon/melee/sabre/on_enter_storage(obj/item/weapon/storage/S)
+	..()
+	var/obj/item/weapon/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 0
-	var/on = 1
+	var/on = TRUE
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
@@ -126,12 +144,14 @@
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	item_state = null
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	needs_permit = 0
 	force = 0
-	on = 0
+	on = FALSE
 
 /obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -148,7 +168,7 @@
 		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
-		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(get_turf(H), H.dna)
 		return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
@@ -178,6 +198,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "supermatter_sword"
 	item_state = "supermatter_sword"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
@@ -187,8 +209,8 @@
 	origin_tech = "combat=7;materials=6"
 	force_string = "INFINITE"
 
-/obj/item/weapon/melee/supermatter_sword/New()
-	..()
+/obj/item/weapon/melee/supermatter_sword/Initialize()
+	. = ..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
 	qdel(shard.countdown)
 	shard.countdown = null
@@ -244,13 +266,13 @@
 /obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.drop_item()
-	shard.Bumped(user)
+	shard.CollidedWith(user)
 
 /obj/item/weapon/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
 		shard.Consume()
 	else if(!isturf(target))
-		shard.Bumped(target)
+		shard.CollidedWith(target)
 	else
 		consume_turf(target)
 
@@ -272,6 +294,8 @@
 	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
 	icon_state = "whip"
 	item_state = "chain"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL

@@ -141,8 +141,7 @@
 	},
 /area/engine/gravity_generator)
 "au" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
 	icon_state = "radiation";
@@ -259,8 +258,7 @@
 	},
 /area/engine/gravity_generator)
 "aI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "aJ" = (
@@ -403,9 +401,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "ba" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bb" = (
@@ -505,9 +501,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/table,
 /obj/item/weapon/screwdriver/power,
 /obj/item/weapon/wirecutters/power,
@@ -549,8 +543,7 @@
 /turf/closed/wall/r_wall,
 /area/bridge)
 "bv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/bridge)
 "bw" = (
@@ -604,9 +597,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -746,13 +738,11 @@
 	},
 /area/hallway/secondary/entry)
 "bY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "bZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "ca" = (
@@ -786,8 +776,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -829,8 +818,7 @@
 	},
 /area/bridge)
 "ch" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -896,9 +884,7 @@
 /area/hallway/primary/central)
 "cp" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/blue/side{
 	dir = 10
 	},
@@ -1010,9 +996,8 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
 "cH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 8
@@ -1078,8 +1063,7 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "cR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction)
 "cS" = (
@@ -1116,9 +1100,8 @@
 /obj/effect/turf_decal/stripes/corner,
 /area/construction)
 "cX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
@@ -1147,9 +1130,8 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "db" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/storage/primary)

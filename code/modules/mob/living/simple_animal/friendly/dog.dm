@@ -52,7 +52,7 @@
 			break
 
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
-	..()
+	. = ..()
 	regenerate_icons()
 
 
@@ -177,13 +177,13 @@
 						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
 						return
 
-					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+					if(istype(item_to_add, /obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
 					//The objects that corgis can wear on their backs.
 					var/allowed = FALSE
-					if(ispath(item_to_add.dog_fashion,/datum/dog_fashion/back))
+					if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/back))
 						allowed = TRUE
 
 					if(!allowed)
@@ -213,7 +213,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
-	if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+	if(istype(item_to_add, /obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)
 		return
 
@@ -295,7 +295,7 @@
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
-	..()
+	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
@@ -343,14 +343,14 @@
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
 	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
 	if(!dead)
-		S["age"] 				<< age + 1
+		WRITE_FILE(S["age"], age + 1)
 		if((age + 1) > record_age)
-			S["record_age"]		<< record_age + 1
+			WRITE_FILE(S["record_age"], record_age + 1)
 		if(inventory_head)
-			S["saved_head"] << inventory_head.type
+			WRITE_FILE(S["saved_head"], inventory_head.type)
 	else
-		S["age"] 		<< 0
-		S["saved_head"] << null
+		WRITE_FILE(S["age"], 0)
+		WRITE_FILE(S["saved_head"], null)
 	memory_saved = 1
 
 
@@ -473,7 +473,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 

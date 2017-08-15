@@ -2,23 +2,17 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/carbon/Initialize()
+	. = ..()
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
-	..()
 
 /mob/living/carbon/Destroy()
-	for(var/guts in internal_organs)
-		qdel(guts)
-	for(var/atom/movable/food in stomach_contents)
-		qdel(food)
-	for(var/BP in bodyparts)
-		qdel(BP)
-	for(var/imp in implants)
-		qdel(imp)
-	bodyparts = list()
+	QDEL_LIST(internal_organs)
+	QDEL_LIST(stomach_contents)
+	QDEL_LIST(bodyparts)
+	QDEL_LIST(implants)
 	remove_from_all_data_huds()
-	if(dna)
-		qdel(dna)
+	QDEL_NULL(dna)
 	return ..()
 
 /mob/living/carbon/relaymove(mob/user, direction)
@@ -51,7 +45,7 @@
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand,/obj/item/weapon/twohanded))
+		if(istype(item_in_hand, /obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
@@ -239,6 +233,12 @@
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+
+/mob/living/carbon/hallucinating()
+	if(hallucination)
+		return TRUE
+	else
+		return FALSE
 
 /mob/living/carbon/resist_buckle()
 	if(restrained())
@@ -716,8 +716,9 @@
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
-	for(var/datum/disease/D in viruses)
-		if (D.severity != NONTHREAT)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(D.severity != NONTHREAT)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
@@ -811,3 +812,4 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+	.["Hallucinate"] = "?_src_=vars;hallucinate=\ref[src]"

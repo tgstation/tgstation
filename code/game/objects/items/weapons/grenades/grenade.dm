@@ -5,12 +5,13 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
-	obj_integrity = 40
 	max_integrity = 40
 	var/active = 0
 	var/det_time = 50

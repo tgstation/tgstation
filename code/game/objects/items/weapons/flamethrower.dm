@@ -4,6 +4,8 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
+	lefthand_file = 'icons/mob/inhands/weapons/flamethrower_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/flamethrower_righthand.dmi'
 	flags = CONDUCT
 	force = 3
 	throwforce = 10
@@ -13,17 +15,18 @@
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	resistance_flags = FIRE_PROOF
-	var/status = 0
-	var/lit = 0	//on or off
-	var/operating = 0//cooldown
+	var/status = FALSE
+	var/lit = FALSE	//on or off
+	var/operating = FALSE//cooldown
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/internals/plasma/ptank = null
-	var/warned_admins = 0 //for the message_admins() when lit
+	var/warned_admins = FALSE //for the message_admins() when lit
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/device/assembly/igniter
+	trigger_guard = TRIGGER_GUARD_NORMAL
 
 /obj/item/weapon/flamethrower/Destroy()
 	if(weldtool)
@@ -67,12 +70,7 @@
 	if(flag)
 		return // too close
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK))
-			to_chat(user, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
-			return
-		if(NOGUNS in H.dna.species.species_traits)
-			to_chat(user, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
+		if(!can_trigger_gun(user))
 			return
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
@@ -115,7 +113,7 @@
 		update_icon()
 		return
 
-	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
+	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			if(user.transferItemToLoc(W,src))
 				ptank.forceMove(get_turf(src))
@@ -161,7 +159,7 @@
 		START_PROCESSING(SSobj, src)
 		if(!warned_admins)
 			message_admins("[ADMIN_LOOKUPFLW(user)] has lit a flamethrower.")
-			warned_admins = 1
+			warned_admins = TRUE
 	else
 		STOP_PROCESSING(SSobj,src)
 	update_icon()
@@ -170,16 +168,16 @@
 	..()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
-	weldtool.status = 0
-	igniter.secured = 0
-	status = 1
+	weldtool.status = FALSE
+	igniter.secured = FALSE
+	status = TRUE
 	update_icon()
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
 	if(!lit || operating)
 		return
-	operating = 1
+	operating = TRUE
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/T in turflist)
 		if(T == previousturf)
@@ -193,7 +191,7 @@
 			default_ignite(T)
 		sleep(1)
 		previousturf = T
-	operating = 0
+	operating = FALSE
 	for(var/mob/M in viewers(1, loc))
 		if((M.client && M.machine == src))
 			attack_self(M)
@@ -217,11 +215,11 @@
 	if(create_full)
 		if(!weldtool)
 			weldtool = new /obj/item/weapon/weldingtool(src)
-		weldtool.status = 0
+		weldtool.status = FALSE
 		if(!igniter)
 			igniter = new igniter_type(src)
-		igniter.secured = 0
-		status = 1
+		igniter.secured = FALSE
+		status = TRUE
 		if(create_with_tank)
 			ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 		update_icon()

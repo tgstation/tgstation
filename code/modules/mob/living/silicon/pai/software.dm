@@ -173,7 +173,7 @@
 			if(href_list["send"])
 
 				sradio.send_signal("ACTIVATE")
-				audible_message("[bicon(src)] *beep* *beep*")
+				audible_message("[icon2html(src, world)] *beep* *beep*")
 
 			if(href_list["freq"])
 
@@ -331,7 +331,7 @@
 /mob/living/silicon/pai/proc/downloadSoftware()
 	var/dat = ""
 
-	dat += "<h2>Centcom pAI Module Subversion Network</h2><br>"
+	dat += "<h2>CentCom pAI Module Subversion Network</h2><br>"
 	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
 	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 
@@ -513,7 +513,8 @@
 		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
-		for(var/datum/disease/D in M.viruses)
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
 			dat += {"<h4>Infection Detected.</h4><br>
 					 Name: [D.name]<br>
 					 Type: [D.spread_text]<br>

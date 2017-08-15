@@ -21,6 +21,8 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
 	var/obj/item/radio/integrated/radio = null
@@ -48,9 +50,10 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
-/obj/item/weapon/cartridge/Initialize(var/obj/item/device/pda/pda)
-	..()
-	if(pda)
+/obj/item/weapon/cartridge/Initialize()
+	. = ..()
+	var/obj/item/device/pda/pda = loc
+	if(istype(pda))
 		host_pda = pda
 
 /obj/item/weapon/cartridge/engineering
@@ -437,12 +440,12 @@ Code:
 					if(SSshuttle.supply.z != ZLEVEL_STATION)
 						menu += "station"
 					else
-						menu += "centcomm"
+						menu += "centcom"
 					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
 				else
 					menu += "At "
 					if(SSshuttle.supply.z != ZLEVEL_STATION)
-						menu += "centcomm"
+						menu += "centcom"
 					else
 						menu += "station"
 			menu += "<BR>Current approved orders: <BR><ol>"

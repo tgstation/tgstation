@@ -52,7 +52,7 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber
+	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber
 
 /datum/outfit/ert/security
 	name = "ERT Security"
@@ -161,7 +161,7 @@
 
 
 /datum/outfit/centcom_official
-	name = "Centcom Official"
+	name = "CentCom Official"
 
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -181,13 +181,13 @@
 
 	var/obj/item/device/pda/heads/pda = H.r_store
 	pda.owner = H.real_name
-	pda.ownjob = "Centcom Official"
+	pda.ownjob = "CentCom Official"
 	pda.update_label()
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.icon_state = "centcom"
-	W.access = get_centcom_access("Centcom Official")
-	W.access += GLOB.access_weapons
-	W.assignment = "Centcom Official"
+	W.access = get_centcom_access("CentCom Official")
+	W.access += ACCESS_WEAPONS
+	W.assignment = "CentCom Official"
 	W.registered_name = H.real_name
 	W.update_label()

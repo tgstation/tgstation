@@ -199,18 +199,9 @@
 	max_n_of_items = 10
 	pixel_y = -4
 	flags = NODECONSTRUCT
+	var/empty = FALSE
 
-/obj/machinery/smartfridge/survival_pod/empty
-	name = "dusty survival pod storage"
-	desc = "A heated storage unit. This one's seen better days."
-
-/obj/machinery/smartfridge/survival_pod/empty/Initialize(mapload)
-	..(mapload, TRUE)
-
-/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	return isitem(O)
-
-/obj/machinery/smartfridge/survival_pod/Initialize(mapload, empty)
+/obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	. = ..()
 	if(empty)
 		return
@@ -223,6 +214,14 @@
 	else
 		var/obj/item/device/instrument/guitar/G = new(src)
 		load(G)
+
+/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
+	return isitem(O)
+
+/obj/machinery/smartfridge/survival_pod/empty
+	name = "dusty survival pod storage"
+	desc = "A heated storage unit. This one's seen better days."
+	empty = TRUE
 
 //Fans
 /obj/structure/fans
@@ -307,7 +306,7 @@
 						/obj/item/weapon/melee/supermatter_sword,
 						/obj/item/weapon/shield/changeling,
 						/obj/item/weapon/lava_staff,
-						/obj/item/weapon/katana/energy,
+						/obj/item/weapon/dash/energy_katana,
 						/obj/item/weapon/hierophant_club,
 						/obj/item/weapon/his_grace,
 						/obj/item/weapon/gun/ballistic/minigun,

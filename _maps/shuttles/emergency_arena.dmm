@@ -10,7 +10,7 @@
 /turf/open/indestructible/necropolis/air,
 /area/shuttle_arena)
 "d" = (
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/shuttle_arena)
 "e" = (
 /obj/effect/landmark/shuttle_arena_entrance,

@@ -9,11 +9,11 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/dummy/New(loc)
+INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/dummy/Destroy()
 	..()
-	if(!initialized)
-		args[1] = FALSE
-		Initialize(arglist(args))
+	return QDEL_HINT_QUEUE
 
 /mob/living/carbon/human/dummy/Life()
 	return
@@ -51,6 +51,18 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 
+	if(!(NOLIVER in dna.species.species_traits))
+		if(dna.species.mutantliver)
+			internal_organs += new dna.species.mutantliver()
+		else
+			internal_organs += new /obj/item/organ/liver()
+
+	if(!(NOSTOMACH in dna.species.species_traits))
+		if(dna.species.mutantstomach)
+			internal_organs += new dna.species.mutantstomach()
+		else
+			internal_organs += new /obj/item/organ/stomach()
+
 	internal_organs += new dna.species.mutanteyes
 	internal_organs += new dna.species.mutantears
 	internal_organs += new dna.species.mutanttongue
@@ -84,10 +96,6 @@
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
 
-		var/mob/living/simple_animal/borer/B = has_brain_worms()
-		if(B && B.controlling)
-			stat("Chemicals", B.chemicals)
-
 		if(mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
@@ -119,7 +127,8 @@
 				//Virsuses
 				if(viruses.len)
 					stat("Viruses:", null)
-					for(var/datum/disease/D in viruses)
+					for(var/thing in viruses)
+						var/datum/disease/D = thing
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
@@ -389,7 +398,7 @@
 						if (!G.emagged)
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
-								if(GLOB.access_sec_doors in access)
+								if(ACCESS_SEC_DOORS in access)
 									allowed_access = H.get_authentification_name()
 						else
 							allowed_access = "@%&ERROR_%$*"
@@ -582,7 +591,7 @@
 
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck)
-		if(!idcard || !(GLOB.access_weapons in idcard.access))
+		if(!idcard || !(ACCESS_WEAPONS in idcard.access))
 			for(var/obj/item/I in held_items)
 				if(weaponcheck.Invoke(I))
 					threatcount += 4
@@ -886,7 +895,7 @@
 		return 1
 	..()
 
-/mob/living/carbon/human/Bump(atom/A)
+/mob/living/carbon/human/Collide(atom/A)
 	..()
 	var/crashdir = get_dir(src, A)
 	var/obj/item/device/flightpack/FP = get_flightpack()

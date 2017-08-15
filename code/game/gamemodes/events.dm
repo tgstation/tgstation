@@ -26,14 +26,14 @@
 					skip = 1
 				break
 		if(skip) continue
-		A.power_light = 0
-		A.power_equip = 0
-		A.power_environ = 0
+		A.power_light = FALSE
+		A.power_equip = FALSE
+		A.power_environ = FALSE
 		A.power_change()
 
 	for(var/obj/machinery/power/apc/C in GLOB.apcs_list)
 		if(C.cell && C.z == ZLEVEL_STATION)
-			var/area/A = get_area(C)
+			var/area/A = C.area
 
 			var/skip = 0
 			for(var/area_type in skipped_areas)
@@ -60,10 +60,10 @@
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
-		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A,/area/arrival))
-			A.power_light = 1
-			A.power_equip = 1
-			A.power_environ = 1
+		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A, /area/arrival))
+			A.power_light = TRUE
+			A.power_equip = TRUE
+			A.power_environ = TRUE
 			A.power_change()
 
 /proc/power_restore_quick()

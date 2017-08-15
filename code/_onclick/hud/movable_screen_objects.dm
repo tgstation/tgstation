@@ -11,6 +11,7 @@
 /obj/screen/movable
 	var/snap2grid = FALSE
 	var/moved = FALSE
+	var/locked = FALSE
 
 //Snap Screen Object
 //Tied to the grid, snaps to the nearest turf
@@ -20,6 +21,8 @@
 
 
 /obj/screen/movable/MouseDrop(over_object, src_location, over_location, src_control, over_control, params)
+	if(locked) //no! I am locked! begone!
+		return
 	var/list/PM = params2list(params)
 
 	//No screen-loc information? abort.

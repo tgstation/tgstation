@@ -14,6 +14,8 @@
 	name = "holographic energy sword"
 	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 3.0
 	throw_speed = 2
 	throw_range = 5
@@ -97,8 +99,8 @@
 	desc = "Boom, shakalaka!"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(get_dist(src,user)<2)
@@ -118,7 +120,7 @@
 	else
 		..()
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
@@ -145,10 +147,10 @@
 	icon_state = "auth_off"
 	var/ready = 0
 	var/area/currentarea = null
-	var/eventstarted = 0
+	var/eventstarted = FALSE
 
-	anchored = 1.0
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
@@ -199,7 +201,7 @@
 
 /obj/machinery/readybutton/proc/begin_event()
 
-	eventstarted = 1
+	eventstarted = TRUE
 
 	for(var/obj/structure/window/W in currentarea)
 		if(W.flags&NODECONSTRUCT) // Just in case: only holo-windows
@@ -216,6 +218,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/paper/trek_diploma
+/obj/item/weapon/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
 	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+
+/obj/item/weapon/paper/fluff/holodeck/disclaimer
+	name = "Holodeck Disclaimer"
+	info = "Brusies sustained in the holodeck can be healed simply by sleeping."

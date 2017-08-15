@@ -106,12 +106,23 @@
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
+	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
 	var/grill = FALSE
 	var/fire_stack_strength = 5
+
+/obj/structure/bonfire/dense
+	density = TRUE
+
+/obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+	if(mover.throwing)
+		return TRUE
+	return ..()
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -130,8 +141,7 @@
 				R.use(1)
 				grill = TRUE
 				to_chat(user, "<span class='italics'>You add a grill to \the [src].")
-				var/mutable_appearance/grill_overlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_grill")
-				overlays += grill_overlay
+				add_overlay("bonfire_grill")
 			else
 				return ..()
 	if(W.is_hot())
@@ -160,6 +170,8 @@
 			var/obj/item/weapon/grown/log/L = new /obj/item/weapon/grown/log(src.loc)
 			L.pixel_x += rand(1,4)
 			L.pixel_y += rand(1,4)
+		if(can_buckle || grill)
+			new /obj/item/stack/rods(loc, 1)
 		qdel(src)
 		return
 	..()

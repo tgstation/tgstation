@@ -29,7 +29,7 @@
 		qdel(H.gloves)
 
 	var/obj/item/clothing/suit/space/space_ninja/theSuit = new(H)
-	var/obj/item/weapon/katana/energy/EK = new(H)
+	var/obj/item/weapon/dash/energy_katana/EK = new(H)
 	theSuit.energyKatana = EK
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
@@ -141,7 +141,7 @@
 
 
 /datum/antagonist/ninja/greet()
-	owner.current << sound('sound/effects/ninja_greeting.ogg')
+	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
 	to_chat(owner.current, "I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	to_chat(owner.current, "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")

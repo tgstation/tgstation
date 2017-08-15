@@ -2,28 +2,6 @@
 // APPLICATIONS //
 //////////////////
 
-//Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
-/datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Trap, Permanent Conversion"
-	name = "Sigil of Accession"
-	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
-	It will penetrate mindshield implants once before disappearing."
-	invocations = list("Divinity, enslave...", "...all who trespass here!")
-	channel_time = 70
-	consumed_components = list(BELLIGERENT_EYE = 4, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 2)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission/accession
-	prevent_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. All non-servants to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "It will remain after converting a target, unless that target has a mindshield implant, which it will break to convert them, but consume itself in the process."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 1
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Accession, which can convert a mindshielded non-Servant that remains on it."
-
-
 //Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
 /datum/clockwork_scripture/fellowship_armory
 	descname = "Area Servant Armor"
@@ -151,66 +129,24 @@
 	return TRUE
 
 
-//Anima Fragment: Creates an empty anima fragment, which produces an anima fragment that moves at extreme speed and does high damage.
-/datum/clockwork_scripture/create_object/anima_fragment
-	descname = "Fast Soul Vessel Shell"
-	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health and slight regeneration, notable melee power, \
-	and exceptional speed, though taking damage will temporarily slow it down."
-	invocations = list("Call forth...", "...the soldiers of Armorer.")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 4)
-	object_path = /obj/structure/destructible/clockwork/shell/fragment
-	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
-	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
-	usage_tip = "Useless without a soul vessel and should not be created without one."
-	tier = SCRIPTURE_APPLICATION
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 4
-	quickbind = TRUE
-	quickbind_desc = "Creates a Fragment Shell, which produces an Anima Fragment when filled with a Soul Vessel."
-
-
-//Sigil of Transmission: Creates a sigil of transmission that can store power for clockwork structures.
+//Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
 /datum/clockwork_scripture/create_object/sigil_of_transmission
-	descname = "Structure Battery"
+	descname = "Structure Power Generator & Battery"
 	name = "Sigil of Transmission"
-	desc = "Places a sigil that stores energy to power clockwork structures."
+	desc = "Places a sigil that can drain and will store energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
 	consumed_components = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 4)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
-	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it.</span>"
+	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it and will drain power when activated.</span>"
 	usage_tip = "Cyborgs can charge from this sigil by remaining over it for 5 seconds."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transmission, which stores power for clockwork structures."
-
-
-//Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils of transmission.
-/datum/clockwork_scripture/create_object/interdiction_lens
-	descname = "Structure, Area Sabotage, Power Generator"
-	name = "Interdiction Lens"
-	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
-	invocations = list("May this totem...", "...shroud the false suns!")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 5, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
-	object_path = /obj/structure/destructible/clockwork/powered/interdiction_lens
-	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
-	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission or the area's APC and fails to disable even one thing, it will disable itself for two minutes."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 6
-	quickbind = TRUE
-	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
+	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
 
 //Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
@@ -226,7 +162,7 @@
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "The power cost to delay a shuttle increases based on CV and the number of times activated."
+	usage_tip = "The power cost to delay a shuttle increases based on the number of times activated."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = VANGUARD_COGWHEEL

@@ -35,8 +35,7 @@
 /area/shuttle/escape)
 "g" = (
 /obj/machinery/sleeper{
-	dir = 8;
-	icon_state = "sleeper-open"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -79,8 +78,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (

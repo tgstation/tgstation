@@ -16,7 +16,7 @@
 	response_disarm = "shoos"
 	response_harm   = "splats"
 	speak_emote = list("chitters")
-	density = 0
+	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
 	verb_say = "chitters"
@@ -42,7 +42,7 @@
 				else
 					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 	else
-		if(istype(AM,/obj/structure))
+		if(istype(AM, /obj/structure))
 			if(prob(squish_chance))
 				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
 				adjustBruteLoss(1)

@@ -6,8 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -827,7 +826,6 @@
 /area/shuttle/escape)
 "cu" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -890,7 +888,6 @@
 /area/shuttle/escape)
 "cD" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -979,7 +976,6 @@
 /area/shuttle/escape)
 "cL" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side,
@@ -993,7 +989,6 @@
 /area/shuttle/escape)
 "cN" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{

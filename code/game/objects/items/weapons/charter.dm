@@ -23,7 +23,7 @@
 		var/names = jointext(GLOB.station_names, "|")
 		var/suffixes = jointext(GLOB.station_suffixes, "|")
 		var/numerals = jointext(GLOB.station_numerals, "|")
-		var/regexstr = "(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])"
+		var/regexstr = "^(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])$"
 		standard_station_regex = new(regexstr)
 
 /obj/item/weapon/station_charter/attack_self(mob/living/user)
@@ -100,6 +100,8 @@
 	name_type = "planet"
 	icon_state = "banner"
 	item_state = "banner"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A cunning device used to claim ownership of planets."
 	w_class = 5
 	force = 15

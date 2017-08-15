@@ -42,9 +42,6 @@
 	if(user && Adjacent(user))
 		teleport(user)
 
-/obj/effect/portal/make_frozen_visual()
-	return
-
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
 	if(get_turf(oldloc) == get_turf(linked))
 		return ..()
@@ -58,7 +55,7 @@
 	if(Adjacent(user))
 		teleport(user)
 
-/obj/effect/portal/Initialize(mapload, _creator, _lifespan = 300, obj/effect/portal/_linked, automatic_link = TRUE, hard_target_override, atmos_link_override)
+/obj/effect/portal/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
 	GLOB.portals += src
 	if(!istype(_linked) && automatic_link)
@@ -71,6 +68,8 @@
 	link_portal(_linked)
 	hardlinked = automatic_link
 	creator = _creator
+	if(isturf(hard_target_override))
+		hard_target = hard_target_override
 
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink

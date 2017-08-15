@@ -1,7 +1,6 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
-	obj_integrity = 300
 	max_integrity = 300
 	var/climb_time = 20
 	var/climb_stun = 20
@@ -17,12 +16,10 @@
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 		icon_state = ""
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
@@ -64,9 +61,9 @@
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
-		density = 0
+		density = FALSE
 		. = step(A,get_dir(A,src.loc))
-		density = 1
+		density = TRUE
 
 /obj/structure/proc/climb_structure(mob/living/user)
 	src.add_fingerprint(user)

@@ -615,7 +615,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
 	if(isobserver(M))
-		new /obj/effect/gibspawner/generic(M.loc, M.viruses)
+		new /obj/effect/gibspawner/generic(get_turf(M))
 		return
 	if(confirm == "Yes")
 		M.gib()
@@ -649,9 +649,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "switches between 1x and custom views"
 
 	if(view == world.view)
-		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
+		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
-		view = world.view
+		change_view(world.view)
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
@@ -1157,14 +1157,14 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set category = "Server"
 	set name = "Toggle Hub"
 
-	world.visibility = (!world.visibility)
+	world.update_hub_visibility(!GLOB.hub_visibility)
 
-	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
-	message_admins("[key_name_admin(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
-	if (world.visibility && !world.reachable)
+	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
+	message_admins("[key_name_admin(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
+	if (GLOB.hub_visibility && !world.reachable)
 		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
 
-	SSblackbox.add_details("admin_toggle","Toggled Hub Visibility|[world.visibility]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggled Hub Visibility|[GLOB.hub_visibility]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
@@ -1208,6 +1208,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!message)
 		return
 
-	message_admins("[key_name_admin(usr)] triggered a Centcom recall, with the admiral message of: [message]")
-	log_game("[key_name(usr)] triggered a Centcom recall, with the message of: [message]")
+	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
+	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)

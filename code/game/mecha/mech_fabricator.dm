@@ -3,12 +3,13 @@
 	icon_state = "fab-idle"
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
-	req_access = list(GLOB.access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
+	circuit = /obj/item/weapon/circuitboard/machine/mechfab
 	var/time_coeff = 1
 	var/component_coeff = 1
 	var/datum/material_container/materials
@@ -34,22 +35,10 @@
 								"Misc"
 								)
 
-/obj/machinery/mecha_part_fabricator/New()
-	..()
+/obj/machinery/mecha_part_fabricator/Initialize()
 	files = new /datum/research(src) //Setup the research data holder.
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/mechfab
-	name = "Exosuit Fabricator (Machine Board)"
-	build_path = /obj/machinery/mecha_part_fabricator
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -86,8 +75,8 @@
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(emagged)
 		return
-
-	emagged = 0.5
+	emagged = TRUE
+	req_access = null
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)
 	say("Attempting auto-repair...")
@@ -95,8 +84,7 @@
 	say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
 	sleep(30)
 	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
-	req_access = null
-	emagged = 1
+
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -156,10 +144,10 @@
 
 	materials.use_amount(res_coef)
 	add_overlay("fab-active")
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	cut_overlay("fab-active")
 	desc = initial(desc)
 

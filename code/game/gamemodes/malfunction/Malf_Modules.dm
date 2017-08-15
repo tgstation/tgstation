@@ -1,11 +1,26 @@
 #define DEFAULT_DOOMSDAY_TIMER 4500
 
+GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
+		/obj/machinery/field/containment,
+		/obj/machinery/power/supermatter_shard,
+		/obj/machinery/doomsday_device,
+		/obj/machinery/nuclearbomb,
+		/obj/machinery/nuclearbomb/selfdestruct,
+		/obj/machinery/nuclearbomb/syndicate,
+		/obj/machinery/syndicatebomb,
+		/obj/machinery/syndicatebomb/badmin,
+		/obj/machinery/syndicatebomb/badmin/clown,
+		/obj/machinery/syndicatebomb/empty,
+		/obj/machinery/syndicatebomb/self_destruct,
+		/obj/machinery/syndicatebomb/training
+	)))
+
 //The malf AI action subtype. All malf actions are subtypes of this.
 /datum/action/innate/ai
 	name = "AI Action"
 	desc = "You aren't entirely sure what this does, but it's very beepy and boopy."
 	background_icon_state = "bg_tech_blue"
-	icon_icon = 'icons/mob/actions_AI.dmi'
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	var/mob/living/silicon/ai/owner_AI //The owner AI, so we don't have to typecast every time
 	var/uses //If we have multiple uses of the same power
 	var/auto_use_uses = TRUE //If we automatically use up uses on each activation
@@ -360,8 +375,7 @@
 			minor_announce("[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION)
-	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/alarm.ogg'
+	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
@@ -562,6 +576,9 @@
 	if(!istype(target))
 		to_chat(ranged_ability_user, "<span class='warning'>You can only overload machines!</span>")
 		return
+	if(is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
+		to_chat(ranged_ability_user, "<span class='warning'>You cannot overload that device!</span>")
+		return
 	ranged_ability_user.playsound_local(ranged_ability_user, "sparks", 50, 0)
 	attached_action.adjust_uses(-1)
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
@@ -606,7 +623,7 @@
 	if(!istype(target))
 		to_chat(ranged_ability_user, "<span class='warning'>You can only animate machines!</span>")
 		return
-	if(!target.can_be_overridden())
+	if(!target.can_be_overridden() || is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
 		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overriden!</span>")
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0)

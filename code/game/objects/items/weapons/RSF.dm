@@ -8,9 +8,11 @@ RSF
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	opacity = 0
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	flags = NOBLUDGEON
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/matter = 0
@@ -115,11 +117,13 @@ RSF
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/matter = 10
 	var/toxin = 0
 	var/cooldown = 0
 	var/cooldowndelay = 10
-	var/emagged = 0
+	var/emagged = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/cookiesynth/examine(mob/user)

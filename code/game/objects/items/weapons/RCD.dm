@@ -10,8 +10,8 @@ ARCD
 
 obj/item/weapon/construction
 	opacity = 0
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	flags = CONDUCT | NOBLUDGEON
 	force = 0
 	throwforce = 10
@@ -120,6 +120,8 @@ obj/item/weapon/construction
 	desc = "A device used to rapidly build and deconstruct walls and floors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
 	var/mode = 1
 	var/canRturf = 0
@@ -405,6 +407,8 @@ obj/item/weapon/construction
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	origin_tech = "materials=3"
 	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
@@ -452,6 +456,8 @@ obj/item/weapon/construction
 	desc = "A device used to rapidly provide lighting sources to an area."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 200
 	max_matter = 200
 	var/mode = LIGHT_MODE
@@ -534,7 +540,7 @@ obj/item/weapon/construction
 						var/list/candidates = list()
 						var/turf/open/winner = null
 						var/winning_dist = null
-						for(var/direction in GLOB.cardinal)
+						for(var/direction in GLOB.cardinals)
 							var/turf/C = get_step(W, direction)
 							var/list/dupes = checkdupes(C)
 							if(start.CanAtmosPass(C) && !dupes.len)

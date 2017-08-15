@@ -6,8 +6,8 @@
 
 /obj/machinery/doorButtons
 	power_channel = ENVIRON
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -27,12 +27,13 @@
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		req_access = list()
-		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
-		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	req_access = list()
+	req_one_access = list()
+	playsound(src, "sparks", 100, 1)
+	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
 
@@ -67,7 +68,7 @@
 	if(controller && !controller.busy && door)
 		if(controller.stat & NOPOWER)
 			return
-		busy = 1
+		busy = TRUE
 		update_icon()
 		if(door.density)
 			if(!controller.exteriorAirlock || !controller.interiorAirlock)
@@ -80,7 +81,7 @@
 		else
 			controller.onlyClose(door)
 		sleep(20)
-		busy = 0
+		busy = FALSE
 		update_icon()
 
 /obj/machinery/doorButtons/access_button/update_icon()
@@ -218,7 +219,7 @@
 
 /obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
 	lostPower = 0
-	busy = 0
+	busy = FALSE
 	if(update)
 		update_icon()
 	updateUsrDialog()

@@ -28,7 +28,7 @@
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
 	B.item_state = "melted"
-	new /obj/item/weapon/paper/sc_safehint_paper_bible(B)
+	new /obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
 	new /obj/item/weapon/pen(B)
 	qdel(src)
 
@@ -79,30 +79,30 @@ GLOBAL_VAR_INIT(sc_safecode4, "[rand(0,9)]")
 GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 
 //Pieces of paper actually containing the hints
-/obj/item/weapon/paper/sc_safehint_paper_prison
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_prison
 	name = "smudged paper"
 
-/obj/item/weapon/paper/sc_safehint_paper_prison/New()
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_prison/New()
 	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
 
-/obj/item/weapon/paper/sc_safehint_paper_hydro
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro
 	name = "shredded paper"
-/obj/item/weapon/paper/sc_safehint_paper_hydro/New()
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro/New()
 	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
 
-/obj/item/weapon/paper/sc_safehint_paper_caf
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_caf
 	name = "blood-soaked paper"
 	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
 	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
-/obj/item/weapon/paper/sc_safehint_paper_bible
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_bible
 	name = "hidden paper"
-/obj/item/weapon/paper/sc_safehint_paper_bible/New()
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_bible/New()
 	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
 			However you can make out the last three digits:</i>'[GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]'
 			"}
 
-/obj/item/weapon/paper/sc_safehint_paper_shuttle
+/obj/item/weapon/paper/fluff/awaymissions/stationcollision/safehint_paper_shuttle
 	info = {"<b>Target:</b> Research-station Epsilon<br>
 			<b>Objective:</b> Prototype weaponry. The captain likely keeps them locked in her safe.<br>
 			<br>
@@ -154,9 +154,9 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	if(isliving(A))
 		var/mob/living/L = A
 		L.gib()
-	else if(istype(A,/obj/))
+	else if(istype(A, /obj/))
 		var/obj/O = A
-		O.ex_act(1)
+		O.ex_act(EXPLODE_DEVASTATE)
 		if(O) qdel(O)
 	else if(isturf(A))
 		var/turf/T = A

@@ -5,9 +5,9 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 0
-	use_power = 1
+	density = TRUE
+	anchored = FALSE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	pass_flags = PASSTABLE
@@ -41,8 +41,8 @@
 /obj/machinery/juicer/attackby(obj/item/O, mob/user, params)
 	if(default_unfasten_wrench(user, O))
 		return
-	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
-		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
+	if (istype(O, /obj/item/weapon/reagent_containers/glass) || \
+		istype(O, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
 			return 1
 		else

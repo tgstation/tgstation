@@ -11,8 +11,8 @@
 	icon = 'icons/obj/pneumaticCannon.dmi'
 	icon_state = "pneumaticCannon"
 	item_state = "bulldog"
-	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
@@ -26,6 +26,7 @@
 	var/fire_mode = PCANNON_FIREALL
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
+	trigger_guard = TRIGGER_GUARD_NORMAL
 
 /obj/item/weapon/pneumatic_cannon/CanItemAutoclick()
 	return automatic
@@ -37,10 +38,10 @@
 		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		out += "<span class='info'>[bicon(I)] It has \the [I] loaded.</span>"
+		out += "<span class='info'>[icon2html(I, user)] It has \the [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		out += "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>"
+		out += "<span class='notice'>[icon2html(tank, user)] It has \the [tank] mounted onto it.</span>"
 	to_chat(user, out.Join("<br>"))
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)
@@ -108,11 +109,7 @@
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
-	if(user.dna.check_mutation(HULK))
-		to_chat(user, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
-		return
-	if(NOGUNS in user.dna.species.species_traits)
-		to_chat(user, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
+	if(!can_trigger_gun(user))
 		return
 	if(!loadedItems || !loadedWeightClass)
 		to_chat(user, "<span class='warning'>\The [src] has nothing loaded.</span>")

@@ -9,7 +9,6 @@
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE
-	obj_integrity = 40
 	max_integrity = 40
 	novariants = FALSE
 	var/heal_brute = 0
@@ -108,6 +107,8 @@
 	singular_name = "bruise pack"
 	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_brute = 40
 	origin_tech = "biotech=2"
 	self_delay = 20
@@ -139,6 +140,8 @@
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_burn = 40
 	origin_tech = "biotech=2"
 	self_delay = 20

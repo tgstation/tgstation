@@ -9,13 +9,12 @@
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/weapon/noz
-	var/on = 0
+	var/on = FALSE
 	var/volume = 500
 
 /obj/item/weapon/watertank/New()
@@ -47,7 +46,7 @@
 
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
-			on = 0
+			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
 		noz.loc = user
@@ -104,6 +103,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
@@ -165,6 +166,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 
@@ -183,7 +186,7 @@
 
 /obj/item/weapon/watertank/atmos
 	name = "backpack firefighter tank"
-	desc = "A refridgerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
+	desc = "A refrigerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
 	item_state = "waterbackpackatmos"
 	icon_state = "waterbackpackatmos"
 	volume = 200
@@ -209,6 +212,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "atmos_nozzle"
 	item_state = "nozzleatmos"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	safety = 0
 	max_water = 200
 	power = 8
@@ -216,7 +221,7 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	flags = NODROP //Necessary to ensure that the nozzle and tank never seperate
+	flags = NODROP //Necessary to ensure that the nozzle and tank never separate
 	var/obj/item/weapon/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -295,6 +300,10 @@
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
 			return
+		for(var/S in target)
+			if(istype(S, /obj/effect/particle_effect/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
+				to_chat(user, "<span class='warning'>There's already resin here!</span>")
+				return
 		if(metal_synthesis_cooldown < 5)
 			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
 			F.amount = 0
@@ -334,7 +343,7 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
 
-	var/on = 0
+	var/on = FALSE
 	volume = 300
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
@@ -400,13 +409,13 @@
 		. += filling
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
-	on = 1
+	on = TRUE
 	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		to_chat(loc, "<span class='notice'>[src] turns on.</span>")
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
-	on = 0
+	on = FALSE
 	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		to_chat(loc, "<span class='notice'>[src] turns off.</span>")
@@ -455,6 +464,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)

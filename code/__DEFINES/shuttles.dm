@@ -22,7 +22,7 @@
 #define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
 #define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
 
-//Launching Shuttles to Centcomm
+//Launching Shuttles to CentCom
 #define NOLAUNCH -1
 #define UNLAUNCHED 0
 #define ENDGAME_LAUNCHED 1
@@ -47,3 +47,15 @@
 #define HYPERSPACE_END 3
 
 #define CALL_SHUTTLE_REASON_LENGTH 12
+
+//Engine related
+#define ENGINE_COEFF_MIN 0.5
+#define ENGINE_COEFF_MAX 2
+#define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+
+//Docking error flags
+#define DOCKING_SUCCESS 0
+#define DOCKING_COMPLETE 1
+#define DOCKING_BLOCKED 2
+#define DOCKING_IMMOBILIZED 4
+#define DOCKING_AREA_EMPTY 8

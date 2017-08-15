@@ -52,19 +52,18 @@
 	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
+	M.disgust = 0
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.slurring = 0
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
-	for(var/datum/disease/D in M.viruses)
+	for(var/thing in M.viruses)
+		var/datum/disease/D = thing
 		if(D.severity == NONTHREAT)
 			continue
-		D.spread_text = "Remissive"
-		D.stage--
-		if(D.stage < 1)
-			D.cure()
+		D.cure()
 	..()
 	. = 1
 
@@ -686,6 +685,9 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	if (!eyes)
+		return
 	if(M.disabilities & BLIND)
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
@@ -697,11 +699,10 @@
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted()
 		M.blur_eyes(10)
-
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(M.eye_damage > 0)
+	else if(eyes.eye_damage > 0)
 		M.adjust_eye_damage(-1)
 	..()
 
@@ -1127,7 +1128,7 @@
 	..()
 
 /datum/reagent/medicine/corazone
-	// Heart attack code will not do as damage if corazone is present
+	// Heart attack code will not do damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
 	name = "Corazone"
 	id = "corazone"

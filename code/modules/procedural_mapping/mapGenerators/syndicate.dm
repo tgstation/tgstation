@@ -1,3 +1,4 @@
+
 // Modules
 
 /turf/open/floor/plasteel/shuttle/red/syndicate
@@ -28,21 +29,24 @@
 // Generators
 
 /datum/mapGenerator/syndicate/empty //walls and floor only
-		modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
+	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
 		/datum/mapGeneratorModule/border/syndieWalls,\
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate"
 
 /datum/mapGenerator/syndicate/mobsonly
 	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
 		/datum/mapGeneratorModule/border/syndieWalls,\
 		/datum/mapGeneratorModule/splatterLayer/syndieMobs, \
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate: Mobs"
 
 /datum/mapGenerator/syndicate/furniture
 	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
 		/datum/mapGeneratorModule/border/syndieWalls,\
 		/datum/mapGeneratorModule/syndieFurniture, \
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate: Furniture"
 
 /datum/mapGenerator/syndicate/full
 	modules = list(/datum/mapGeneratorModule/bottomLayer/syndieFloor, \
@@ -50,3 +54,4 @@
 		/datum/mapGeneratorModule/syndieFurniture, \
 		/datum/mapGeneratorModule/splatterLayer/syndieMobs, \
 		/datum/mapGeneratorModule/bottomLayer/repressurize)
+	buildmode_name = "Pattern: Shuttle Room: Syndicate: All"

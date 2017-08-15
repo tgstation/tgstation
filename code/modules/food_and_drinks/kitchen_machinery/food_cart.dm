@@ -7,9 +7,9 @@
 	desc = "New generation hot dog stand."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "foodcart"
-	density = 1
-	anchored = 0
-	use_power = 0
+	density = TRUE
+	anchored = FALSE
+	use_power = NO_POWER_USE
 	var/food_stored = 0
 	var/glasses = 0
 	var/portion = 10
@@ -18,17 +18,15 @@
 	container_type = OPENCONTAINER
 	var/obj/item/weapon/reagent_containers/mixer
 
-/obj/machinery/food_cart/New()
-	..()
+/obj/machinery/food_cart/Initialize()
+	. = ..()
 	create_reagents(LIQUID_CAPACIY)
 	reagents.set_reacting(FALSE)
 	mixer = new /obj/item/weapon/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
 /obj/machinery/food_cart/Destroy()
-	if(mixer)
-		qdel(mixer)
-		mixer = null
+	QDEL_NULL(mixer)
 	return ..()
 
 /obj/machinery/food_cart/attack_hand(mob/user)

@@ -133,7 +133,6 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
-.borer					{color: #543354;	font-style: italic;}
 .changeling				{color: #800080;	font-style: italic;}
 
 .interface				{color: #330033;}
@@ -151,7 +150,7 @@ h1.alert, h2.alert		{color: #000000;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 
-BIG IMG.icon 			{width: 32px; height: 32px;}
+.icon 					{height: 1em;	width: auto;}
 
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 2;}

@@ -6,6 +6,7 @@
 
 /datum/action/neck_chop
 	name = "Neck Chop - Injures the neck, stopping the victim from speaking for a while."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "neckchop"
 
 /datum/action/neck_chop/Trigger()
@@ -22,6 +23,7 @@
 
 /datum/action/leg_sweep
 	name = "Leg Sweep - Trips the victim, knocking them down for a brief moment."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "legsweep"
 
 /datum/action/leg_sweep/Trigger()
@@ -38,6 +40,7 @@
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
 	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "lungpunch"
 
 /datum/action/lung_punch/Trigger()
@@ -52,16 +55,15 @@
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
-/datum/martial_art/krav_maga/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
-	..()
-	to_chat(H, "<span class = 'userdanger'>You know the arts of Krav Maga!</span>")
-	to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
-	neckchop.Grant(H)
-	legsweep.Grant(H)
-	lungpunch.Grant(H)
+/datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
+	if(..())
+		to_chat(H, "<span class = 'userdanger'>You know the arts of Krav Maga!</span>")
+		to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+		neckchop.Grant(H)
+		legsweep.Grant(H)
+		lungpunch.Grant(H)
 
-/datum/martial_art/krav_maga/remove(var/mob/living/carbon/human/H)
-	..()
+/datum/martial_art/krav_maga/on_remove(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You suddenly forget the arts of Krav Maga...</span>")
 	neckchop.Remove(H)
 	legsweep.Remove(H)

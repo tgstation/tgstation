@@ -42,24 +42,12 @@
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	circuit = /obj/item/weapon/circuitboard/machine/seed_extractor
 	var/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
-
-/obj/machinery/seed_extractor/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/seed_extractor(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/seed_extractor
-	name = "Seed Extractor (Machine Board)"
-	build_path = /obj/machinery/seed_extractor
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -84,7 +72,7 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if (istype(O,/obj/item/weapon/storage/bag/plants))
+	if (istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
 		for(var/obj/item/seeds/G in P.contents)
@@ -101,7 +89,7 @@
 	else if(seedify(O,-1, src, user))
 		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
 		return
-	else if (istype(O,/obj/item/seeds))
+	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
 			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 			updateUsrDialog()
@@ -195,7 +183,7 @@
 		var/mob/M = O.loc
 		if(!M.drop_item())
 			return 0
-	else if(istype(O.loc,/obj/item/weapon/storage))
+	else if(istype(O.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
 

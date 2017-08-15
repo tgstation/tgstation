@@ -10,7 +10,7 @@
 	pixel_y = -32
 	opacity = 0
 	layer = FLY_LAYER
-	anchored = 1
+	anchored = TRUE
 	mouse_opacity = 0
 	animate_movement = 0
 	var/amount = 4
@@ -84,7 +84,7 @@
 			smoke_mob(L)
 		var/obj/effect/particle_effect/smoke/S = new type(T)
 		reagents.copy_to(S, reagents.total_volume)
-		S.setDir(pick(GLOB.cardinal))
+		S.setDir(pick(GLOB.cardinals))
 		S.amount = amount-1
 		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
@@ -133,8 +133,7 @@
 		M.emote("cough")
 		return 1
 
-/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
@@ -176,7 +175,7 @@
 					G.garbage_collect()
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
-				U.welded = 1
+				U.welded = TRUE
 				U.update_icon()
 				U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
 		for(var/mob/living/L in T)

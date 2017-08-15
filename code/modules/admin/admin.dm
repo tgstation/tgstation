@@ -181,9 +181,9 @@
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
-	if (!istype(src,/datum/admins))
+	if (!istype(src, /datum/admins))
 		src = usr.client.holder
-	if (!istype(src,/datum/admins))
+	if (!istype(src, /datum/admins))
 		to_chat(usr, "Error: you are not an admin!")
 		return
 	var/dat
@@ -425,19 +425,27 @@
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
 	if(world.RunningService())
 		options += "Service Restart (Force restart DD)";
-	var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
-	if(result)
-		SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		switch(result)
-			if("Regular Restart")
-				SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
-			if("Hard Restart (No Delay, No Feeback Reason)")
-				world.Reboot()
-			if("Hardest Restart (No actions, just reboot)")
-				world.Reboot(fast_track = TRUE)
-			if("Service Restart (Force restart DD)")
-				GLOB.reboot_mode = REBOOT_MODE_HARD
-				world.ServiceReboot()
+
+	var/rebootconfirm
+	if(SSticker.admin_delay_notice)
+		if(alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") == "Yes")
+			rebootconfirm = TRUE
+	else
+		rebootconfirm = TRUE
+	if(rebootconfirm)
+		var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+		if(result)
+			SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			switch(result)
+				if("Regular Restart")
+					SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+				if("Hard Restart (No Delay, No Feeback Reason)")
+					world.Reboot()
+				if("Hardest Restart (No actions, just reboot)")
+					world.Reboot(fast_track = TRUE)
+				if("Service Restart (Force restart DD)")
+					GLOB.reboot_mode = REBOOT_MODE_HARD
+					world.ServiceReboot()
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -587,7 +595,7 @@
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
 			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
-			world << 'sound/ai/attention.ogg'
+			SEND_SOUND(world, sound('sound/ai/attention.ogg'))
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
 		SSblackbox.add_details("admin_verb","Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -633,7 +641,7 @@
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
-	if(ispath(chosen,/turf))
+	if(ispath(chosen, /turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
@@ -727,34 +735,33 @@
 	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
 
-	if(SSticker && !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
-	if(SSjob)
-		for(var/datum/job/job in SSjob.occupations)
-			count++
-			var/J_title = html_encode(job.title)
-			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
-			var/J_totPos = html_encode(job.total_positions)
-			if(job.total_positions < 0)
-				dat += "[J_title]: [J_opPos]   (unlimited)"
-			else
-				dat += "[J_title]: [J_opPos]/[J_totPos]"
+	for(var/datum/job/job in SSjob.occupations)
+		count++
+		var/J_title = html_encode(job.title)
+		var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
+		var/J_totPos = html_encode(job.total_positions)
+		if(job.total_positions < 0)
+			dat += "[J_title]: [J_opPos]   (unlimited)"
+		else
+			dat += "[J_title]: [J_opPos]/[J_totPos]"
 
-			if(job.title == "AI" || job.title == "Cyborg")
-				dat += "   (Cannot Late Join)<br>"
-				continue
-			if(job.total_positions >= 0)
-				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
-				if(job.total_positions > job.current_positions)
-					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
-				else
-					dat += "Remove  |  "
-				dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+		if(job.title == "AI" || job.title == "Cyborg")
+			dat += "   (Cannot Late Join)<br>"
+			continue
+		if(job.total_positions >= 0)
+			dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
+			if(job.total_positions > job.current_positions)
+				dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
 			else
-				dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
-			dat += "<br>"
+				dat += "Remove  |  "
+			dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+		else
+			dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
+		dat += "<br>"
 
 	dat += "</body>"
 	var/winheight = 100 + (count * 20)

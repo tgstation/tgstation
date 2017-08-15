@@ -1,6 +1,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
 	name = "mushroom"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 
 // Reishi
@@ -22,13 +23,15 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
 
+
+
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
 	filling_color = "#FF4500"
-
 
 // Fly Amanita
 /obj/item/seeds/amanita
@@ -240,7 +243,7 @@
 		return FALSE
 	var/count = 0
 	var/maxcount = 1
-	for(var/tempdir in GLOB.cardinal)
+	for(var/tempdir in GLOB.cardinals)
 		var/turf/closed/wall = get_step(user.loc, tempdir)
 		if(istype(wall))
 			maxcount++

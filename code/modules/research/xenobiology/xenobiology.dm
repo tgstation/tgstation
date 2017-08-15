@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
+	container_type = INJECTABLE
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -424,7 +425,7 @@
 
 /obj/item/clothing/suit/golem
 	name = "adamantine shell"
-	desc = "a golem's thick outter shell"
+	desc = "a golem's thick outer shell"
 	icon_state = "golem"
 	item_state = "golem"
 	w_class = WEIGHT_CLASS_BULKY
@@ -474,7 +475,7 @@
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "a strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -533,6 +534,7 @@
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 	Serve [user], and assist [user.p_them()] in completing their goals at any cost.")
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
+	G.mind.assigned_role = "Servant Golem"
 
 	G.mind.enslave_mind_to_creator(user)
 
@@ -544,7 +546,7 @@
 
 
 /obj/effect/timestop
-	anchored = 1
+	anchored = TRUE
 	name = "chronofield"
 	desc = "ZA WARUDO"
 	icon = 'icons/effects/160x160.dmi'
@@ -561,16 +563,16 @@
 
 /obj/effect/timestop/Initialize()
 	. = ..()
-	for(var/M in GLOB.living_mob_list)
+	for(var/M in GLOB.player_list)
 		var/mob/living/L = M
-		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in L.mind.spell_list) //People who can stop time are immune to timestop
-			immune |= L
+		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
+			immune += L
 	timestop()
 
 
 /obj/effect/timestop/proc/timestop()
 	set waitfor = FALSE
-	playsound(get_turf(src), 'sound/magic/timeparadox2.ogg', 100, 1, -1)
+	playsound(src, 'sound/magic/timeparadox2.ogg', 75, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
 			if(isliving(A))
@@ -578,7 +580,7 @@
 				if(M in immune)
 					continue
 				M.Stun(200, 1, 1)
-				M.anchored = 1
+				M.anchored = TRUE
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
@@ -596,6 +598,7 @@
 		stoplag()
 
 	//End
+	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
 	for(var/mob/living/M in stopped_atoms)
 		unfreeze_mob(M)
 
@@ -608,7 +611,7 @@
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
 	M.AdjustStun(-200, 1, 1)
-	M.anchored = 0
+	M.anchored = FALSE
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)

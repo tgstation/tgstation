@@ -3,9 +3,9 @@
 	desc = "A large delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	density = 1
+	density = TRUE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/giftwrapped = 0
+	var/giftwrapped = FALSE
 	var/sortTag = 0
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
@@ -44,7 +44,7 @@
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
 			user.visible_message("[user] wraps the package in festive paper!")
-			giftwrapped = 1
+			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
@@ -144,6 +144,8 @@
 
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 

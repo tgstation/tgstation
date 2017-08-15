@@ -259,11 +259,10 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/feedback_variable/proc/add_details(text)
 	if (istext(text))
-		text = replacetext(text, " ", "_")
 		if (!details)
-			details = text
+			details = "\"[text]\""
 		else
-			details += " [text]"
+			details += " | \"[text]\""
 
 /datum/feedback_variable/proc/get_details()
 	return details

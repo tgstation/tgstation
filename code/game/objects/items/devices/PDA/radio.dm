@@ -4,7 +4,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "power_mod"
 
-	var/on = 0 //Are we currently active??
+	var/on = FALSE //Are we currently active??
 	var/menu_message = ""
 
 /obj/item/radio/integrated/Initialize()
@@ -25,8 +25,7 @@
 	var/datum/radio_frequency/radio_connection
 
 /obj/item/radio/integrated/signal/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	radio_connection = null
 	return ..()
 

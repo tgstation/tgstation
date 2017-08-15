@@ -12,6 +12,8 @@
 	name = "first-aid kit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "firstaid"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	var/empty = 0
@@ -144,7 +146,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	w_class = WEIGHT_CLASS_SMALL
-	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice)
+	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/dice)
 	allow_quick_gather = 1
 	use_to_pickup = 1
 

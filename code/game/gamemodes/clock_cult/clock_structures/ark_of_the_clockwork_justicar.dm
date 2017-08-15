@@ -3,14 +3,13 @@
 	name = "ark of the Clockwork Justicar"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 500
 	max_integrity = 500
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
 	density = FALSE
 	invisibility = INVISIBILITY_MAXIMUM
-	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE | FREEZE_PROOF
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
@@ -160,7 +159,7 @@
 			to_chat(user, "<span class='big'><b>Components required until activation:</b></span>")
 			for(var/i in required_components)
 				if(required_components[i])
-					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
+					to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
 					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
 			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
@@ -201,6 +200,11 @@
 		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
 		if(dist < convert_dist)
 			T.ratvar_act(FALSE, TRUE, 3)
+	for(var/obj/O in orange(1, src))
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
+			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
+				O.take_damage(50, BURN, "bomb")
+			O.update_icon()
 	if(still_needs_components())
 		if(!first_sound_played)
 			priority_announce("Massive energy anomaly detected on short-range scanners. Attempting to triangulate location...", "Anomaly Alert")
@@ -220,11 +224,6 @@
 			update_slab_info()
 		if(still_needs_components())
 			return
-	for(var/obj/O in orange(1, src))
-		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
-			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
-				O.take_damage(50, BURN, "bomb")
-			O.update_icon()
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)

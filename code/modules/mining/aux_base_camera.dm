@@ -27,7 +27,7 @@
 	delay_mod = 0.5
 
 /obj/machinery/computer/camera_advanced/base_construction
-	name = "base contruction console"
+	name = "base construction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("SS13")
 	var/obj/item/weapon/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
@@ -49,9 +49,9 @@
 
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/camera_advanced/base_construction/New()
-	..()
-	RCD = new /obj/item/weapon/construction/rcd/internal(src)
+/obj/machinery/computer/camera_advanced/base_construction/Initialize()
+	. = ..()
+	RCD = new(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	..()
@@ -128,6 +128,7 @@
 	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
 
 /datum/action/innate/aux_base //Parent aux base action
+	icon_icon = 'icons/mob/actions/actions_construction.dmi'
 	var/mob/living/C //Mob using the action
 	var/mob/camera/aiEye/remote/base_construction/remote_eye //Console's eye mob
 	var/obj/machinery/computer/camera_advanced/base_construction/B //Console itself
@@ -267,7 +268,7 @@ datum/action/innate/aux_base/install_turret/Activate()
 	var/turf/turret_turf = get_turf(remote_eye)
 
 	if(is_blocked_turf(turret_turf))
-		to_chat(owner, "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>")
+		to_chat(owner, "<span class='warning'>Location is obstructed by something. Please clear the location and try again.</span>")
 		return
 
 	var/obj/machinery/porta_turret/aux_base/T = new /obj/machinery/porta_turret/aux_base(turret_turf)

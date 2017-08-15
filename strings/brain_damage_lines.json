@@ -1,17 +1,17 @@
 {
     "brain_damage": [
-        "IM A PONY NEEEEEEIIIIIIIIIGH",
+        "@pick(semicolon)IM A PONY NEEEEEEIIIIIIIIIGH",
         "without oxigen blob don't evoluate?",
-        "CAPTAINS A COMDOM",
-        "@pick(faggot_traitor) @pick(george) @pick(mellens) is grifing me HALP!!!",
+        "@pick(semicolon)CAPTAINS A COMDOM",
+        "@pick(semicolon)@pick(faggot_traitor) @pick(george) @pick(mellens) is grifing me HALP!!!",
         "can u give me @pick(mutations)?",
         "THe saiyans screwed",
         "Bi is THE BEST OF BOTH WORLDS>",
-        "I WANNA PET TEH monkeyS",
+        "@pick(semicolon)I WANNA PET TEH monkeyS",
         "stop grifing me!!!!",
         "SOTP IT#",
         "shiggey diggey!!",
-        "A PIRATE APPEAR",
+        "@pick(semicolon)A PIRATE APPEAR",
         "FUS RO DAH",
         "fucking 4rries!",
         "stat me",
@@ -31,34 +31,37 @@
         "REVIRT GON CHEM!!!!!!!!",
         "youed call her a toeugh bithc",
         "closd for merbegging",
-        "pray can u @pick(create_verbs) @pick(create_nouns)???",
+        "@pick(semicolon)pray can u @pick(create_verbs) @pick(create_nouns)???",
         "GEY AWAY FROM ME U GREIFING PRICK!!!!",
         "ur a fuckeing autist!",
-        ";HELP SHITECIRTY MURDERIN  MEE!!!",
+        "@pick(semicolon)HELP SHITECIRTY MURDERIN  MEE!!!",
         "hwat dose tha @pick(random_gibberish) mean?????",
-        "CAL; TEH SHUTTLE!!!!!",
+        "@pick(semicolon)CAL; TEH SHUTTLE!!!!!",
         "wearnig siNGUARLTY IS .... FIne xDDDDDDDDD",
-        "AI laW 22 Open door",
-        "this SI mY stATIon......",
+        "@pick(semicolon)AI laW 22 Open door",
+        "@pick(semicolon)this SI mY stATIon......",
         "who the HELL do u thenk u r?!!!!",
         "geT THE FUCK OUTTTT",
         "H U G B O X",
-        "CRASHING THIS STTAYTION WITH NIO SURVIVROS",
-        "@pick(servers) is down!!",
+        "@pick(semicolon)CRASHING THIS STTAYTION WITH NIO SURVIVROS",
+        "@pick(servers) is down!! @pick(bug)",
         "PSHOOOM",
         "REMOVE SINGULARITY",
         "INSTLL TEG",
         "TURBIN IS BEST ENGIENE",
-        "SOLIRS CAN POWER THE HOLE STATION ANEWAY",
+        "SOLIRS CAN POWER THE HOLE STATION ANEWAY @pick(bug)",
         "parasteng was best",
-        "Tajaran has warrrres, if you have coin",
-        "I'VE GOT BALLS OF STEEL",
+        "@pick(semicolon)Tajaran has warrrres, if you have coin",
+        "@pick(semicolon)I'VE GOT BALLS OF STEEL",
         "NO I'M ONNA KILL YOU MOTHERFUCKER OLD STYLE",
         "i will snatch erry motherfucker birthday",
-        "the ai and borgs are mettacomming I think",
+        "@pick(semicolon)the ai and borgs are mettacomming I think",
         "u just did the world a little bit more sad place for someone",
         "WHERES THE SLIP REWRITE WHERE THR FUCK ID IT?",
-        "N-NYAAAAAA~"
+        "@pick(semicolon)N-NYAAAAAA~",
+        "@pick(bug)",
+        "@pick(semicolon)wtf??????????? @pick(bug)",
+        "@pick(semicolon)i ran into the supermattre ten i dsappeard @pick(bug)"
     ],
 
     "mutations": [
@@ -93,7 +96,8 @@
     "random_gibberish": [
         "g",
         "squid",
-        "r"
+        "r",
+        "carbon dioxide"
     ],
 
     "y_replacements": [
@@ -121,6 +125,19 @@
         "treaitors",
         "sheadow lings",
         "abdoocters"
+    ],
+	
+    "bug": [
+        "",
+        "IS TIS A BUG??",
+        "SI IST A BUGG/",
+        "BUG!!!"
+    ],
+	
+    "semicolon": [
+        "",
+        ";",
+        ".h"
     ]
 
 }

@@ -102,32 +102,38 @@
 /atom/proc/handle_ricochet(obj/item/projectile/P)
 	return
 
-/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
-	return (!density || !height)
+/atom/proc/CanPass(atom/movable/mover, turf/target)
+	return !density
 
-/atom/proc/onCentcom()
+/atom/proc/onCentCom()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return FALSE
 
-
 	if(T.z == ZLEVEL_TRANSIT)
 		for(var/A in SSshuttle.mobile)
 			var/obj/docking_port/mobile/M = A
-			if(M.launch_status == ENDGAME_TRANSIT && T in M.areaInstance)
-				return TRUE
+			if(M.launch_status == ENDGAME_TRANSIT)
+				for(var/place in M.shuttle_areas)
+					var/area/shuttle/shuttle_area = place
+					if(T in shuttle_area)
+						return TRUE
 
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
 		return FALSE
 
-	//check for centcomm shuttles
+	//Check for centcom itself
+	if(istype(T.loc, /area/centcom))
+		return TRUE
+
+	//Check for centcom shuttles
 	for(var/A in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = A
-		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
-			return TRUE
-
-	//finally check for centcom itself
-	return istype(T.loc,/area/centcom)
+		if(M.launch_status == ENDGAME_LAUNCHED)
+			for(var/place in M.shuttle_areas)
+				var/area/shuttle/shuttle_area = place
+				if(T in shuttle_area)
+					return TRUE
 
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
@@ -137,7 +143,7 @@
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
 		return 0
 
-	if(istype(T.loc,/area/shuttle/syndicate) || istype(T.loc,/area/syndicate_mothership))
+	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership))
 		return 1
 
 	return 0
@@ -180,7 +186,7 @@
 	return
 
 
-/atom/proc/Bumped(AM as mob|obj)
+/atom/proc/CollidedWith(atom/movable/AM)
 	return
 
 // Convenience proc to see if a container is open for chemistry handling
@@ -191,6 +197,19 @@
 
 /atom/proc/is_transparent()
 	return container_type & TRANSPARENT
+
+/atom/proc/is_injectable(allowmobs = TRUE)
+	if(isliving(src) && allowmobs)
+		var/mob/living/L = src
+		return L.can_inject()
+	if(container_type & OPENCONTAINER)
+		return TRUE
+	return container_type & INJECTABLE
+
+/atom/proc/is_drawable(allowmobs = TRUE)
+	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
+		return TRUE
+	return container_type & DRAWABLE
 
 /atom/proc/allow_drop()
 	return 1
@@ -251,7 +270,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "[bicon(src)] That's [f_name]")
+	to_chat(user, "[icon2html(src, user)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)
@@ -591,3 +610,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
+
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)

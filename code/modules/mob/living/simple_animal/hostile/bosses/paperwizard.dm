@@ -27,6 +27,7 @@
 //Lets the wizard summon his art to fight for him
 /datum/action/boss/wizard_summon_minions
 	name = "Summon Minions"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 	usage_probability = 40
 	boss_cost = 30
@@ -41,7 +42,7 @@
 		/mob/living/simple_animal/hostile/stickman,
 		/mob/living/simple_animal/hostile/stickman/ranged,
 		/mob/living/simple_animal/hostile/stickman/dog)
-		var/list/directions = GLOB.cardinal.Copy()
+		var/list/directions = GLOB.cardinals.Copy()
 		for(var/i in 1 to 3)
 			var/minions_chosen = pick_n_take(minions)
 			new minions_chosen (get_step(boss,pick_n_take(directions)), 1)
@@ -54,6 +55,7 @@
 //Hitting the wizard himself destroys all decoys
 /datum/action/boss/wizard_mimic
 	name = "Craft Mimicry"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
 	usage_probability = 30
 	boss_cost = 40
@@ -71,7 +73,7 @@
 				target = pick(threats)
 		if(target)
 			var/mob/living/simple_animal/hostile/boss/paper_wizard/wiz = boss
-			var/directions = GLOB.cardinal.Copy()
+			var/directions = GLOB.cardinals.Copy()
 			for(var/i in 1 to 3)
 				var/mob/living/simple_animal/hostile/boss/paper_wizard/copy/C = new (get_step(target,pick_n_take(directions)))
 				wiz.copies += C
