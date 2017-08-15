@@ -17,9 +17,9 @@
 	if(A && construct_type)
 		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ORBIT, flashwindow = FALSE)
 	GLOB.poi_list += src
-	if(w_class >= WEIGHT_CLASS_HUGE && isliving(loc))
+	if(isliving(loc))
 		var/mob/living/L = loc
-		L.dropItemToGround(src) //We're too big to carry!
+		L.dropItemToGround(src) //Prevent the shells from starting in hands
 
 /obj/item/clockwork/construct_chassis/Destroy()
 	GLOB.poi_list -= src
@@ -49,12 +49,24 @@
 	qdel(src)
 
 
-//Marauder armor, used to create clockwork marauders.
+//Marauder armor, used to create clockwork marauders - sturdy frontline combatants that can deflect projectiles.
 /obj/item/clockwork/construct_chassis/clockwork_marauder
 	name = "marauder armor"
 	desc = "A pile of sleek and well-polished brass armor. A small red gemstone sits in its faceplate."
 	icon_state = "marauder_armor"
 	construct_name = "clockwork marauder"
 	construct_desc = "<span class='neovgre_small'>It will become a <b>clockwork marauder,</b> a well-rounded frontline combatant.</span>"
-	creation_message = "<span class='neovgre_small'>Crimson fire begins to rage in the armor as it rises into the air with its arnaments!</span>"
+	creation_message = "<span class='neovgre_small bold'>Crimson fire begins to rage in the armor as it rises into the air with its arnaments!</span>"
 	construct_type = /mob/living/simple_animal/hostile/clockwork/marauder
+
+
+//Cogscarab shell, used to create cogcarabs - fragile but zippy little drones that build and maintain the base.
+/obj/item/clockwork/construct_chassis/cogscarab
+	name = "cogscarab shell"
+	desc = "A small, complex shell that resembles a repair drone, but much larger and made out of brass."
+	icon_state = "clockdrone_shell"
+	construct_name = "cogscarab"
+	construct_desc = "<span class='alloy'>It will become a <b>cogscarab,</b> a small and fragile drone that builds, repairs, and maintains.</span>"
+	creation_message = "<span class='alloy bold'>The cogscarab clicks and whirrs as it hops up and springs to life!</span>"
+	construct_type = /mob/living/simple_animal/drone/cogscarab
+	w_class = WEIGHT_CLASS_SMALL

@@ -65,7 +65,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)
 	var/final_deflection_chance = deflect_chance
-	var/energy_projectile = istype(P, /obj/item/projectile/energy)
+	var/energy_projectile = istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam)
 	if(P.nodamage || P.damage_type == STAMINA)
 		final_deflection_chance = 100
 	else if(!energy_projectile) //Flat 40% chance against energy projectiles; ballistic projectiles are 40% - (damage of projectile)%, min. 10%
