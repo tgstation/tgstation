@@ -52,7 +52,7 @@
 			neededparts -= F.type
 			log_admin("Found [F.type]")
 		else //because neededparts has 4 distinct items, this must be called if theyre not all in place and wrenched
-			return 0
+			return
 	return connectedparts
 
 /obj/item/pod_parts/pod_frame/attackby(var/obj/item/O, mob/user)
@@ -67,7 +67,7 @@
 		to_chat(user, "<span class='notice'>You strut the pod frame together.</span>")
 		R.use(10)
 		for(var/obj/item/pod_parts/pod_frame/F in linkedparts)
-			if(1 == turn(F.dir, -F.link_angle)) //if the part links north during construction, as the bottom left part always does
+			if(NORTH == turn(F.dir, -F.link_angle)) //if the part links north during construction, as the bottom left part always does
 				//log_admin("Repositioning")
 				pod.loc = F.loc
 			qdel(F)
@@ -84,9 +84,9 @@
 	set src in oview(1)
 	if(anchored)
 		to_chat(usr, "\The [src] is securely bolted!")
-		return 0
+		return FALSE
 	dir = turn(dir, -90)
-	return 1
+	return TRUE
 
 /obj/item/pod_parts/pod_frame/attack_hand()
 	rotate()

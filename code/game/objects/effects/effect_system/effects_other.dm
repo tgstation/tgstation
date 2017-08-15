@@ -27,6 +27,8 @@
 /datum/effect_system/trail_follow/steam
 	effect_type = /obj/effect/particle_effect/steam
 
+/datum/effect_system/trail_follow/steam/proc/Iter_Number()
+
 /datum/effect_system/trail_follow/steam/start()
 	if(!on)
 		on = TRUE
@@ -59,8 +61,13 @@
 /datum/effect_system/trail_follow/ion
 	effect_type = /obj/effect/particle_effect/ion_trails
 	var/fadetype = "ion_fade"
-	var/fade = 1
-	var/nograv_required = 1
+	var/fade = TRUE
+	var/nograv_required = TRUE
+
+/datum/effect_system/trail_follow/ion/proc/Restart_Processing()
+	if(on)
+		processing = TRUE
+		start()
 
 /datum/effect_system/trail_follow/ion/start() //Whoever is responsible for this abomination of code should become an hero
 	if(!on)
@@ -78,13 +85,9 @@
 				if(fade)
 					flick(fadetype, I)
 					I.icon_state = ""
-				spawn(20)
-					qdel(I)
+				QDEL_IN(I, 20)
 			oldposition = T
-		spawn(2)
-			if(on)
-				processing = TRUE
-				start()
+		addtimer(CALLBACK(src, .proc/Restart_Processing), 2)
 
 /datum/effect_system/trail_follow/ion/proc/set_dir(obj/effect/particle_effect/ion_trails/I)
 	I.setDir(holder.dir)
@@ -92,7 +95,7 @@
 /datum/effect_system/trail_follow/ion/flight
 	effect_type = /obj/effect/particle_effect/ion_trails/flight
 	fadetype = "ion_fade_flight"
-	nograv_required = 0
+	nograv_required = FALSE
 
 /datum/effect_system/trail_follow/ion/flight/set_dir(obj/effect/particle_effect/ion_trails/I)
 	if(istype(holder, /obj/item/device/flightpack))
@@ -104,7 +107,7 @@
 
 /datum/effect_system/reagents_explosion
 	var/amount 						// TNT equivalent
-	var/flashing = 0			// does explosion creates flash effect?
+	var/flashing = FALSE			// does explosion creates flash effect?
 	var/flashing_factor = 0		// factor of how powerful the flash effect relatively to the explosion
 	var/explosion_message = 1				//whether we show a message to mobs.
 
@@ -145,46 +148,46 @@
 	currloc = null
 	return ..()
 
+/datum/effect_system/trail_follow/ion/space_trail/proc/Do_Spesstrail()
+	var/turf/T = get_turf(holder)
+	if(currloc != T)
+		switch(holder.dir)
+			if(NORTH)
+				oldposition = T
+				oldposition = get_step(oldposition, SOUTH)
+				oldloc = get_step(oldposition,EAST)
+			if(SOUTH) // More difficult, offset to the north!
+				oldposition = get_step(holder,NORTH)
+				oldposition = get_step(oldposition,NORTH)
+				oldloc = get_step(oldposition,EAST)
+			if(EAST) // Just one to the north should suffice
+				oldposition = T
+				oldposition = get_step(oldposition, WEST)
+				oldloc = get_step(oldposition,NORTH)
+			if(WEST) // One to the east and north from there
+				oldposition = get_step(holder,EAST)
+				oldposition = get_step(oldposition,EAST)
+				oldloc = get_step(oldposition,NORTH)
+		if(istype(T, /turf/open/space))
+			var/obj/effect/particle_effect/ion_trails/I = new /obj/effect/particle_effect/ion_trails(oldposition)
+			var/obj/effect/particle_effect/ion_trails/II = new /obj/effect/particle_effect/ion_trails(oldloc)
+			I.dir = holder.dir
+			II.dir = holder.dir
+			flick("ion_fade", I)
+			flick("ion_fade", II)
+			I.icon_state = ""
+			II.icon_state = ""
+			QDEL_IN(I, 20)
+			QDEL_IN(II, 20)
+	addtimer(CALLBACK(src, .proc/Restart_Processing), 2)
+	currloc = T
+
+
+
 /datum/effect_system/trail_follow/ion/space_trail/start() //fuck whoever put 20 src's in here making me remove them
 	if(!on)
-		on = 1
-		processing = 1
+		on = FALSE
+		processing = TRUE
 	if(processing)
-		processing = 0
-		spawn(0)
-			var/turf/T = get_turf(holder)
-			if(currloc != T)
-				switch(holder.dir)
-					if(NORTH)
-						oldposition = T
-						oldposition = get_step(oldposition, SOUTH)
-						oldloc = get_step(oldposition,EAST)
-					if(SOUTH) // More difficult, offset to the north!
-						oldposition = get_step(holder,NORTH)
-						oldposition = get_step(oldposition,NORTH)
-						oldloc = get_step(oldposition,EAST)
-					if(EAST) // Just one to the north should suffice
-						oldposition = T
-						oldposition = get_step(oldposition, WEST)
-						oldloc = get_step(oldposition,NORTH)
-					if(WEST) // One to the east and north from there
-						oldposition = get_step(holder,EAST)
-						oldposition = get_step(oldposition,EAST)
-						oldloc = get_step(oldposition,NORTH)
-				if(istype(T, /turf/open/space))
-					var/obj/effect/particle_effect/ion_trails/I = new /obj/effect/particle_effect/ion_trails(oldposition)
-					var/obj/effect/particle_effect/ion_trails/II = new /obj/effect/particle_effect/ion_trails(oldloc)
-					I.dir = holder.dir
-					II.dir = holder.dir
-					flick("ion_fade", I)
-					flick("ion_fade", II)
-					I.icon_state = ""
-					II.icon_state = ""
-					spawn( 20 )
-						if(I) qdel(I)
-						if(II) qdel(I)
-			spawn(2)
-				if(on)
-					processing = 1
-					start()
-			currloc = T
+		processing = FALSE
+		INVOKE_ASYNC(src, .proc/Do_Spesstrail)

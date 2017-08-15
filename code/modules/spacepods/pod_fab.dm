@@ -91,8 +91,7 @@
 			if(check_resources(D))
 				output += "<a href='?src=\ref[src];part=[D.id]'>Build</a> | "
 			output += "<a href='?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
-	var/result = output.Join("")
-	return result
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/output_part_info(datum/design/D)
 	var/output = "[initial(D.name)] (Cost: [output_part_cost(D)]) [get_construction_time_w_coeff(D)/10]sec"
@@ -104,8 +103,7 @@
 	for(var/c in D.materials)
 		output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
 		i++
-	var/result = output.Join("")
-	return result
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/output_available_resources()
 	var/list/output = list()
@@ -118,8 +116,7 @@
 				output += " | \[<a href='?src=\ref[src];remove_mat=10;material=[mat_id]'>10</a>\]"
 			output += " | \[<a href='?src=\ref[src];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
 		output += "<br/>"
-	var/result = output.Join("")
-	return result
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
 	var/list/resources = list()
@@ -221,8 +218,7 @@
 
 		output += "</ol>"
 		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
-	var/result = output.Join("")
-	return result
+	return output.Join()
 
 /obj/machinery/spod_part_fabricator/proc/sync()
 	temp = "Updating local R&D database..."
