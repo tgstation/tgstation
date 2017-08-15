@@ -48,5 +48,5 @@
 		pass_through_gateway(AM, FALSE)
 
 /obj/effect/clockwork/reebe_exit/proc/pass_through_gateway(atom/movable/A)
-	var/turf/T = get_turf(pick(GLOB.generic_event_spawns)))
+	var/turf/T = get_turf(pick(GLOB.generic_event_spawns))
 	quick_spatial_gate(A.loc, T, A)
