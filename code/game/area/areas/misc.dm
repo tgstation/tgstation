@@ -99,7 +99,7 @@
 /area/prison/solitary
 	name = "Solitary Confinement"
 	icon_state = "brig"
-	
+
 /area/prison/execution_room
 	name = "Prisoner Education Chamber"
 	icon_state = "execution_room"
@@ -118,3 +118,10 @@
 //	/area/prison/cell_block/C
 	name = "Prison Cell Block C"
 	icon_state = "brig"
+
+//Reebe
+/area/reebe
+	name = "Reebe"
+	icon_state = "yellow"
+	requires_power = FALSE
+	has_gravity = TRUE

@@ -137,6 +137,9 @@
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
+		if(!uses)
+			density = FALSE
+			linked_gateway.density = FALSE
 	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
@@ -221,3 +224,11 @@
 	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
 	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
 	return TRUE
+
+/proc/quick_spatial_gate(atom/source, atom/target, atom/teleported)
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(source)
+	var/obj/effect/clockwork/spatial_gateway/S2 = new(target)
+
+	S1.setup_gateway(S2, 10, 1, FALSE)
+	S2.visible_message("<span class='warning'>The air ripples before suddenly tearing open!</span>")
+	S1.pass_through_gateway(teleported) //bloop.

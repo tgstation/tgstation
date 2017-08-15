@@ -447,11 +447,6 @@
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/door(loc)
 	new /obj/effect/temp_visual/ratvar/beam/door(loc)
-	change_construction_value(5)
-
-/obj/machinery/door/airlock/clockwork/Destroy()
-	change_construction_value(-5)
-	return ..()
 
 /obj/machinery/door/airlock/clockwork/examine(mob/user)
 	..()

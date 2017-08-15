@@ -68,3 +68,10 @@
 	hide = 1
 	toggled = FALSE
 	autolinkers = list("r_relay")
+
+/obj/machinery/telecomms/relay/preset/reebe
+	name = "hierophant relay"
+	desc = "You're either a very curious spirit or someone with far too much time on their hands.."
+	id = "Hierophant Relay"
+	hide = TRUE
+	autolinkers = list("h_relay")

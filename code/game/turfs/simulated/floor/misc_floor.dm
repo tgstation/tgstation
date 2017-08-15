@@ -134,23 +134,16 @@
 /turf/open/floor/clockwork
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
-	icon_state = "plating"
-	var/obj/effect/clockwork/overlay/floor/realappearence
+	icon_state = "clockwork_floor"
+	baseturf = /turf/open/floor/clockwork
 
 /turf/open/floor/clockwork/Initialize()
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/ratvar/floor(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
-	realappearence = new /obj/effect/clockwork/overlay/floor(src)
-	realappearence.linked = src
-	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	change_construction_value(-1)
-	if(realappearence)
-		qdel(realappearence)
-		realappearence = null
 	return ..()
 
 /turf/open/floor/clockwork/ReplaceWithLattice()
@@ -209,6 +202,31 @@
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+
+/turf/open/clock_spawn_room
+	name = "clockwork floor"
+	desc = "Tightly-pressed brass tiles. They emit minute vibration."
+	icon_state = "clockwork_floor"
+	baseturf = /turf/open/clock_spawn_room
+
+/turf/open/clock_spawn_room/Entered()
+	..()
+	START_PROCESSING(SSfastprocess, src)
+
+/turf/open/clock_spawn_room/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	. = ..()
+
+/turf/open/clock_spawn_room/process()
+	if(!port_servants())
+		STOP_PROCESSING(SSfastprocess, src)
+
+/turf/open/clock_spawn_room/proc/port_servants()
+	. = FALSE
+	for(var/mob/living/L in GetAllContents())
+		if(is_servant_of_ratvar(L))
+			. = TRUE
+			quick_spatial_gate(src, pick(GLOB.servant_spawns), L)
 
 
 /turf/open/floor/bluespace

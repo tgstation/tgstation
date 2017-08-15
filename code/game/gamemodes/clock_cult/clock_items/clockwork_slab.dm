@@ -84,15 +84,7 @@
 		return
 	if(production_time > world.time)
 		return
-	var/servants = 0
-	var/production_slowdown = 0
-	for(var/mob/living/M in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		production_slowdown = min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM) //SLAB_SERVANT_SLOWDOWN additional seconds for each servant above 5, up to SLAB_SLOWDOWN_MAXIMUM
-	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
+	production_time = world.time + SLAB_PRODUCTION_TIME
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
 	if(istype(L) && (no_cost || can_recite_scripture(L)))
@@ -272,32 +264,6 @@
 			textlist += "HONOR RATVAR "
 		textlist += "</b></font>"
 	else
-		var/servants = 0
-		var/production_time = SLAB_PRODUCTION_TIME
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-				servants++
-		if(servants > SCRIPT_SERVANT_REQ)
-			servants -= SCRIPT_SERVANT_REQ
-			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-		var/production_text_addon = ""
-		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-		production_time = production_time/600
-		var/list/production_text
-		if(round(production_time))
-			production_text = list("<b>[round(production_time)] minute\s")
-		if(production_time != round(production_time))
-			production_time -= round(production_time)
-			production_time *= 60
-			if(!LAZYLEN(production_text))
-				production_text = list("<b>[round(production_time, 1)] second\s")
-			else
-				production_text += " and [round(production_time, 1)] second\s"
-		production_text += "</b>"
-		production_text += production_text_addon
-		production_text = production_text.Join()
-
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
 		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \
@@ -393,31 +359,6 @@
 			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create additional power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
-			var/servants = 0 //Calculate the current production time for slab components
-			var/production_time = SLAB_PRODUCTION_TIME
-			for(var/mob/living/M in GLOB.living_mob_list)
-				if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-					servants++
-			if(servants > SCRIPT_SERVANT_REQ)
-				servants -= SCRIPT_SERVANT_REQ
-				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-			var/production_text_addon = ""
-			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-				production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-			production_time = production_time/600
-			var/list/production_text
-			if(round(production_time))
-				production_text = list("<b>[round(production_time)] minute\s")
-			if(production_time != round(production_time))
-				production_time -= round(production_time)
-				production_time *= 60
-				if(!LAZYLEN(production_text))
-					production_text = list("<b>[round(production_time, 1)] second\s")
-				else
-					production_text += " and [round(production_time, 1)] second\s"
-			production_text += "</b>"
-			production_text += production_text_addon
-			production_text = production_text.Join()
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
@@ -428,9 +369,8 @@
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
-			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>[production_text]</b>. This number will increase \
-			as the amount of Servants in the covenant increase; additionally, slabs can only produce components when held by a Servant, and holding more than one slab will cause both \
-			of them to halt progress until one of them is removed from their person.<br><br>"
+			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>[SLAB_PRODUCTION_TIME * 0.1] seconds</b>.<br>\
+			Slabs can only produce components when held by a Servant, and holding more than one slab will cause all but one of them to halt progress.<br><br>"
 			dat += "Your slab has an internal storage of components, but it isn't meant to be the main one. Instead, there's a <b>global storage</b> of components that can be \
 			added to through various ways. Anything that needs components will first draw them from the global storage before attempting to draw them from the slab. Most methods of \
 			component production add to the global storage. You can also offload components from your slab into the global storage by using it on a Tinkerer's Cache, a structure whose \
@@ -556,17 +496,12 @@
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and <b>[SCRIPT_CACHE_REQ]</b> Tinkerer's Cache.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures will be unlocked once the Ark is halfway to activating.</i></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, <b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
-		if(SCRIPTURE_JUDGEMENT)
-			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
-				data["tier_info"] = "<font color=#B18B25><b>This scripture is permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[GLOB.application_servants_needed]</b> Servants.</i></font>"
 
 	data["selected"] = selected_scripture
 

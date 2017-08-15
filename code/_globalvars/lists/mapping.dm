@@ -45,6 +45,8 @@ GLOBAL_LIST_EMPTY(secequipment)
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
+GLOBAL_LIST_EMPTY(servant_spawns) //Servants of Ratvar spawn here
+GLOBAL_LIST_EMPTY(reebe_spawns) //Anyone entering Reebe spawns here
 
 	//away missions
 GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can take you to

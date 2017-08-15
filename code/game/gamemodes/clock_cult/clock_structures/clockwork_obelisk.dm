@@ -7,7 +7,6 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	unanchored_icon = "obelisk_unwrenched"
-	construction_value = 20
 	max_integrity = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 4, \

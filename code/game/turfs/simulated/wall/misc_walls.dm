@@ -49,22 +49,22 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall"
 	explosion_block = 2
 	hardness = 10
 	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
-	var/obj/effect/clockwork/overlay/wall/realappearence
+	baseturf = /turf/open/floor/clockwork
+	var/plating_type = /turf/open/floor/clockwork
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/Initialize()
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/ratvar/wall(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
-	realappearence = new /obj/effect/clockwork/overlay/wall(src)
-	realappearence.linked = src
-	change_construction_value(5)
 
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
@@ -75,10 +75,6 @@
 	if(linkedcache)
 		linkedcache.linkedwall = null
 		linkedcache = null
-	change_construction_value(-5)
-	if(realappearence)
-		qdel(realappearence)
-		realappearence = null
 	return ..()
 
 /turf/closed/wall/clockwork/ReplaceWithLattice()
@@ -97,13 +93,13 @@
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
-		ChangeTurf(/turf/open/floor/plating)
+		ChangeTurf(plating_type)
 	else
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
-		ChangeTurf(/turf/open/floor/clockwork)
+		ChangeTurf(plating_type)
 
 	for(var/obj/O in src) //Eject contents!
 		if(istype(O, /obj/structure/sign/poster))
@@ -113,13 +109,15 @@
 			O.loc = src
 
 /turf/closed/wall/clockwork/devastate_wall()
-	for(var/i in 1 to 2)
-		new/obj/item/clockwork/alloy_shards/large(src)
+	new/obj/item/clockwork/alloy_shards/large(src)
 	for(var/i in 1 to 2)
 		new/obj/item/clockwork/alloy_shards/medium(src)
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 4)
 		new/obj/item/clockwork/alloy_shards/small(src)
 
+/turf/closed/wall/clockwork/spawn_room
+	plating_type = /turf/open/clock_spawn_room
+	baseturf = /turf/open/clock_spawn_room
 
 /turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'

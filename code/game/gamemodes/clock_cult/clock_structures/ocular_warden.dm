@@ -6,7 +6,6 @@
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
 	max_integrity = 60
-	construction_value = 10
 	layer = WALL_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's lens flickers madly before the entire construct shatters!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \

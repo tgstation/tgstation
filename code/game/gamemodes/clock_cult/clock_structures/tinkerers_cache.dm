@@ -6,7 +6,6 @@
 	Shares components with all other caches and will gradually generate components if near a Clockwork Wall."
 	icon_state = "tinkerers_cache"
 	unanchored_icon = "tinkerers_cache_unwrenched"
-	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	max_integrity = 80
 	light_color = "#C2852F"

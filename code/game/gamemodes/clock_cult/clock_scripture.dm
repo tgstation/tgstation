@@ -158,7 +158,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
 	var/turf/T = get_turf(invoker)
-	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND))
+	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_REEBE))
 		channel_time *= 2
 		for(var/i in consumed_components)
 			if(consumed_components[i])
@@ -241,7 +241,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/create_object/check_special_requirements()
 	var/turf/T = get_turf(invoker)
-	if(!space_allowed && isspaceturf(T))
+	if(istype(T, /turf/open/clock_spawn_room) || ispath(T.baseturf, /turf/open/clock_spawn_room))
+		return FALSE
+	if(!space_allowed && (isspaceturf(T) || istype(T, /turf/open/indestructible/reebe_void))
 		to_chat(invoker, "<span class='warning'>You need solid ground to place this object!</span>")
 		return FALSE
 	if(one_per_tile && (locate(prevent_path) in T))

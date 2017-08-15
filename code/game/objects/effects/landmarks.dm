@@ -331,3 +331,22 @@
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+//Servant spawn locations
+/obj/effect/landmark/servant_of_ratvar
+	name = "servant of ratvar spawn"
+
+/obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
+	..()
+	GLOB.servant_spawns += loc
+	return INITIALIZE_HINT_QDEL
+
+//Reebe entrances
+/obj/effect/landmark/reebe
+	name = "reebe entrance"
+	icon_state = "x4"
+
+/obj/effect/landmark/reebe/Initialize(mapload)
+	..()
+	GLOB.reebe_spawns += loc
+	return INITIALIZE_HINT_QDEL

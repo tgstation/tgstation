@@ -4,6 +4,7 @@
 	var/armory_bound = FALSE
 	var/datum/action/innate/summon_spear/spear = new()
 	var/datum/action/innate/call_cuirass/cuirass = new()
+	var/mutable_appearance/gold_glow
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
@@ -82,6 +83,7 @@
 	current.faction |= "ratvar"
 	current.grant_language(/datum/language/ratvar)
 	current.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
+	hierophant_network.Grant(current)
 	if(issilicon(current))
 		var/mob/living/silicon/S = current
 		if(iscyborg(S))
@@ -108,26 +110,32 @@
 		S.laws.associate(S)
 		S.update_icons()
 		S.show_laws()
-		hierophant_network.Grant(S)
 		hierophant_network.title = "Silicon"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	else if(isbrain(current))
-		hierophant_network.Grant(current)
 		hierophant_network.title = "Vessel"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "alloy"
 	else if(isclockmob(current))
-		hierophant_network.Grant(current)
 		hierophant_network.title = "Construct"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
-	else if(current.can_hold_items() && armory_bound)
+	else
+		hierophant_network.title = initial(hierophant_network.title)
+		hierophant_network.span_for_name = initial(hierophant_network.span_for_name)
+		hierophant_network.span_for_message = initial(hierophant_network.span_for_message)
+	if(current.can_hold_items() && armory_bound)
 		spear.Grant(current)
 		cuirass.Grant(current)
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	if(!GLOB.clockwork_gateway_activated)
-		current.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
+	apply_glow()
+
+/datum/antagonist/clockcult/proc/apply_glow()
+	if(GLOB.ark_of_the_clockwork_justicar.active && ishuman(owner.current))
+		if(!gold_glow)
+			gold_glow = mutable_appearance('icons/effects/genetics.dmi', "goldenglow", -MUTATIONS_LAYER)
+		owner.current.add_overlay(gold_glow)
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current = owner.current
@@ -155,6 +163,7 @@
 		R.module.rebuild_modules()
 	if(temp_owner)
 		temp_owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+		temp_owner.cut_overlay(gold_glow)
 
 /datum/antagonist/clockcult/on_removal()
 	SSticker.mode.servants_of_ratvar -= owner

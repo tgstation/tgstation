@@ -45,6 +45,7 @@
 	if(!input || !IsAvailable())
 		return
 
+	clockwork_say(owner, "[text2ratvar("Servants, hear my words: [input]")]", TRUE)
 	log_talk(owner,"CLOCK:[key_name(owner)] : [input]",LOGSAY)
 	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)
 
