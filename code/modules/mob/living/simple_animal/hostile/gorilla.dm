@@ -26,18 +26,19 @@
 	minbodytemp = 270
 	maxbodytemp = 350
 
-	proc/target_bodyparts(atom/the_target)
-		var/list/parts = list()
-		if(iscarbon(the_target))
-			var/mob/living/carbon/C = the_target
-			if(C.stat >= UNCONSCIOUS)
-				for(var/X in C.bodyparts)
-					var/obj/item/bodypart/BP = X
-					if(BP.body_part != HEAD && BP.body_part != CHEST)
-						if(BP.dismemberable)
-							parts += BP
-				return parts
-		return null
+// Gorillas like to dismember limbs from unconcious mobs.
+// Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
+/mob/living/simple_animal/hostile/gorilla/proc/target_bodyparts(atom/the_target)
+	var/list/parts = list()
+	if(iscarbon(the_target))
+		var/mob/living/carbon/C = the_target
+		if(C.stat >= UNCONSCIOUS)
+			for(var/X in C.bodyparts)
+				var/obj/item/bodypart/BP = X
+				if(BP.body_part != HEAD && BP.body_part != CHEST)
+					if(BP.dismemberable)
+						parts += BP
+			return parts
 
 /mob/living/simple_animal/hostile/gorilla/AttackingTarget()
 	var/list/parts = target_bodyparts(target)

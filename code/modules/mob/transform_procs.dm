@@ -505,7 +505,7 @@
 	canmove = FALSE
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new /mob/living/simple_animal/hostile/gorilla(loc)
+	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
 	new_gorilla.a_intent = INTENT_HARM
 	if(mind)
 		mind.transfer_to(new_gorilla)

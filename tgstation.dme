@@ -1720,6 +1720,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\faithless.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider.dm"
 #include "code\modules\mob\living\simple_animal\hostile\gorilla.dm"
+#include "code\modules\mob\living\simple_animal\hostile\gorilla_emotes.dm"
 #include "code\modules\mob\living\simple_animal\hostile\headcrab.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hivebot.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hostile.dm"

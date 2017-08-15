@@ -188,14 +188,6 @@
 	new /mob/living/carbon/monkey(get_turf(src))
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/gorilla
-	name = "gorilla cube"
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/gorilla/Expand()
-	visible_message("<span class='notice'>[src] expands!</span>")
-	new /mob/living/simple_animal/hostile/gorilla(get_turf(src))
-	qdel(src)
-
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"
 	desc = "Viva La Mexico!"

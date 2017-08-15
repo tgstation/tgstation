@@ -24,7 +24,7 @@
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
-		if(radiation > 25 && prob((radiation - 25) * (radiation - 25) * 0.005))
+		if(radiation > 30 && prob((radiation - 30) * (radiation - 30) * 0.002))
 			gorillize()
 			return
 		switch(radiation)
