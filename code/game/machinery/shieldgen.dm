@@ -58,7 +58,7 @@
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
 	color = "#FF0000"
 	max_integrity = 20
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/structure/emergency_shield/invoker/emp_act(severity)
 	return
