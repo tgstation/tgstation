@@ -13354,6 +13354,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aEq" = (
@@ -60546,9 +60547,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/black,
 /area/science/robotics/lab)
 "cHZ" = (
@@ -63965,6 +63963,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
+"cTE" = (
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 4
+	},
+/area/construction/mining/aux_base)
 
 (1,1,1) = {"
 aaa
@@ -75369,8 +75373,8 @@ aaa
 apJ
 apJ
 apJ
-apJ
 ajZ
+asF
 atp
 asF
 asF
@@ -75625,9 +75629,9 @@ aaa
 aaa
 aaa
 aaf
-aaf
 apJ
 asH
+atI
 atI
 arE
 ayq
@@ -75882,9 +75886,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
 asF
 asI
+auQ
 auQ
 auQ
 auQ
@@ -76139,9 +76143,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
 apJ
 asJ
+cTE
 avQ
 axc
 aCT
@@ -76396,7 +76400,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+apJ
 apJ
 apJ
 apJ

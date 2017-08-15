@@ -15276,6 +15276,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aDb" = (
@@ -22695,10 +22696,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "aRD" = (
-/obj/structure/closet/toolcloset,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -22709,10 +22710,20 @@
 	},
 /area/construction/mining/aux_base)
 "aRF" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/weapon/pipe_dispenser,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -23234,7 +23245,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "aSJ" = (
-/obj/structure/closet/toolcloset,
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -23243,20 +23254,6 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
 "aSL" = (
-/obj/structure/rack{
-	dir = 4
-	},
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
-/obj/item/wallframe/camera,
-/obj/item/wallframe/camera,
-/obj/item/wallframe/camera,
-/obj/item/wallframe/camera,
-/obj/item/device/assault_pod/mining,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -23270,17 +23267,6 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
 "aSM" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/weapon/pipe_dispenser,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -81221,7 +81207,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cYE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -81271,7 +81257,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cYK" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "4-8";
 	d1 = 4;
@@ -81284,7 +81269,7 @@
 	network = list("AuxBase");
 	pixel_y = -28
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
 "cYL" = (
@@ -90843,6 +90828,31 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"dDJ" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 1
+	},
+/area/construction/mining/aux_base)
+"dDK" = (
+/obj/structure/rack{
+	dir = 4
+	},
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/device/assault_pod/mining,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 1
+	},
+/area/construction/mining/aux_base)
 
 (1,1,1) = {"
 aaa
@@ -103287,7 +103297,7 @@ cVL
 cVL
 cWJ
 cWK
-aRE
+dDJ
 aSL
 aDb
 cZq
@@ -103544,7 +103554,7 @@ cVL
 cVL
 cWJ
 cWK
-aRE
+dDK
 aSM
 aDb
 cZq

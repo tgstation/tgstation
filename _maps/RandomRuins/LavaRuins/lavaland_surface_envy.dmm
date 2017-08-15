@@ -104,7 +104,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "r" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall/rust,
 /area/ruin/unpowered)
 

@@ -345,6 +345,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //debug printing macros
 #define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "DEBUG: [msg]")
 #define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 

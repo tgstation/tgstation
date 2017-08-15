@@ -100,7 +100,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
 			if(product_types[dispense_flavour] > 0)
-				src.visible_message("[bicon(src)] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
+				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
 				I.add_ice_cream(flavour_name)
 			//	if(beaker)
