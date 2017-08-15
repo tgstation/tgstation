@@ -4,6 +4,7 @@
 	icon_state = "plastic-explosive0"
 	item_state = "plastic-explosive"
 	flags = NOBLUDGEON
+	flags_2 = NO_EMP_WIRES_2
 	det_time = 10
 	display_timer = 0
 	var/atom/target = null
@@ -17,10 +18,6 @@
 /obj/item/weapon/grenade/plastic/New()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2")
 	..()
-
-/obj/item/weapon/grenade/plastic/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
 
 /obj/item/weapon/grenade/plastic/Destroy()
 	qdel(nadeassembly)

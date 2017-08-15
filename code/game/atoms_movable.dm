@@ -176,8 +176,8 @@
 					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
-	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
-	var/stationloving = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+	var/inform_admins = (flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
+	var/stationloving = (flags_2 & STATIONLOVING_2)
 
 	if(inform_admins && force)
 		var/turf/T = get_turf(src)
@@ -221,7 +221,7 @@
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
 //to differentiate it, naturally everyone forgot about this immediately and so some things
 //would bump twice, so now it's called Collide
-/atom/movable/proc/Collide(atom/A)	
+/atom/movable/proc/Collide(atom/A)
 	if((A))
 		if(throwing)
 			throwing.hit_atom(A)
@@ -550,21 +550,21 @@
 */
 
 /atom/movable/proc/set_stationloving(state, inform_admins=FALSE)
-	var/currently = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+	var/currently = (flags_2 & STATIONLOVING_2)
 
 	if(inform_admins)
-		SET_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+		flags_2 |= INFORM_ADMINS_ON_RELOCATE_2
 	else
-		CLEAR_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+		flags_2 &= ~INFORM_ADMINS_ON_RELOCATE_2
 
 	if(state == currently)
 		return
 	else if(!state)
 		STOP_PROCESSING(SSinbounds, src)
-		CLEAR_SECONDARY_FLAG(src, STATIONLOVING)
+		flags_2 &= ~STATIONLOVING_2
 	else
 		START_PROCESSING(SSinbounds, src)
-		SET_SECONDARY_FLAG(src, STATIONLOVING)
+		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
 	var/targetturf = find_safe_turf(ZLEVEL_STATION)
@@ -593,7 +593,7 @@
 		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
 		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
-		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
+		if(flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()

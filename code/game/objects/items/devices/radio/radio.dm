@@ -547,10 +547,10 @@
 	name = "cyborg radio"
 	subspace_switchable = 1
 	dog_fashion = null
+	flags_2 = NO_EMP_WIRES_2
 
 /obj/item/device/radio/borg/Initialize(mapload)
 	..()
-	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1

@@ -253,7 +253,7 @@
 					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
-				if(!HAS_SECONDARY_FLAG(src, OMNITONGUE))
+				if(!(flags_2 & OMNITONGUE_2))
 					grant_all_languages(TRUE)
 					// this is PERMAMENT.
 		if("doorjack")
@@ -313,7 +313,7 @@
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
-			var/translator_on = HAS_SECONDARY_FLAG(src, OMNITONGUE)
+			var/translator_on = (flags_2 & OMNITONGUE_2)
 			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[translator_on ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
@@ -465,7 +465,7 @@
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
-	var/translator_on = HAS_SECONDARY_FLAG(src, OMNITONGUE)
+	var/translator_on = (flags_2 & OMNITONGUE_2)
 	. = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
 				The device is currently [translator_on ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[translator_on ? "" : "<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}

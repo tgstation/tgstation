@@ -529,10 +529,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor_headset"
 	item_state = "abductor_headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/abductor/Initialize(mapload)
 	..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 	make_syndie()
 
 /obj/item/device/radio/headset/abductor/attackby(obj/item/weapon/W, mob/user, params)

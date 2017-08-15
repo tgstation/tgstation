@@ -108,16 +108,15 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	casing_ejector = 0
+	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/obj/item/weapon/minigunpack/ammo_pack
 
 /obj/item/weapon/gun/ballistic/minigun/Initialize()
-	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
-
 	if(istype(loc, /obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
 		ammo_pack = loc
 	else
 		return INITIALIZE_HINT_QDEL //No pack, no gun
-	
+
 	return ..()
 
 /obj/item/weapon/gun/ballistic/minigun/attack_self(mob/living/user)

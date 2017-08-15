@@ -30,28 +30,28 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
 #define PREVENT_CLICK_UNDER 32768 //Prevent clicking things below it on the same turf eg. doors/ fulltile windows
 
-/* Secondary atom flags, access using the SECONDARY_FLAG macros */
+/* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 
-#define SLOWS_WHILE_IN_HAND "slows_while_in_hand"
-#define NO_EMP_WIRES "no_emp_wires"
-#define HOLOGRAM "hologram"
-#define FROZEN "frozen"
-#define STATIONLOVING "stationloving"
-#define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
-#define BANG_PROTECT "bang_protect"
+#define SLOWS_WHILE_IN_HAND_2	1
+#define NO_EMP_WIRES_2			2
+#define HOLOGRAM_2				4
+#define FROZEN_2				8
+#define STATIONLOVING_2			16
+#define INFORM_ADMINS_ON_RELOCATE_2	32
+#define BANG_PROTECT_2			64
 
 // An item worn in the ear slot with HEALS_EARS will heal your ears each
 // Life() tick, even if normally your ears would be too damaged to heal.
-#define HEALS_EARS "heals_ears"
+#define HEALS_EARS_2			128
 
 // A mob with OMNITONGUE has no restriction in the ability to speak
 // languages that they know. So even if they wouldn't normally be able to
 // through mob or tongue restrictions, this flag allows them to ignore
 // those restrictions.
-#define OMNITONGUE "omnitongue"
+#define OMNITONGUE_2			256
 
 // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
-#define TESLA_IGNORE "tesla_ignore"
+#define TESLA_IGNORE_2			512
 
 //turf-only flags
 #define NOJAUNT		1

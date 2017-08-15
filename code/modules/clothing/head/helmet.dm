@@ -13,13 +13,13 @@
 	resistance_flags = 0
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
+	flags_2 = BANG_PROTECT_2
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
 
 /obj/item/clothing/head/helmet/Initialize()
 	..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
@@ -191,11 +191,11 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	// old knight helmets do not offer protection against loud noises
+	flags_2 = NONE
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
 	..()
-	// old knight helmets do not offer protection against loud noises
-	CLEAR_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"

@@ -372,10 +372,10 @@
 	slot_flags = null
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	flags_2 = SLOWS_WHILE_IN_HAND_2
 
 /obj/item/weapon/nullrod/tribal_knife/Initialize(mapload)
 	..()
-	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()

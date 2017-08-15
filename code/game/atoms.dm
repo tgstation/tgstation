@@ -4,7 +4,7 @@
 	var/level = 2
 
 	var/flags = 0
-	var/list/secondary_flags
+	var/flags_2 = 0
 
 	var/list/fingerprints
 	var/list/fingerprintshidden
@@ -221,7 +221,7 @@
 	return
 
 /atom/proc/emp_act(severity)
-	if(istype(wires) && !HAS_SECONDARY_FLAG(src, NO_EMP_WIRES))
+	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
