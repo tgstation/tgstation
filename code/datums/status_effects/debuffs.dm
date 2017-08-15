@@ -65,7 +65,7 @@
 
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.staminaloss)
-		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+		owner.adjustStaminaLoss(-0.5)
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
