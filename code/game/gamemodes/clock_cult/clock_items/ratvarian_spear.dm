@@ -16,10 +16,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	var/bonus_burn = 5
-	var/timerid
+	var/datum/action/innate/summon_spear/summon_action
 
 /obj/item/clockwork/ratvarian_spear/Destroy()
-	deltimer(timerid)
+	summon_action = null
 	return ..()
 
 /obj/item/clockwork/ratvarian_spear/ratvar_act()
@@ -29,20 +29,15 @@
 		throwforce = 40
 		armour_penetration = 50
 		clockwork_desc = initial(clockwork_desc)
-		deltimer(timerid)
 	else
 		force = initial(force)
 		bonus_burn = initial(bonus_burn)
 		throwforce = initial(throwforce)
 		armour_penetration = initial(armour_penetration)
-		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
-		deltimer(timerid)
-		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
+		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons."
 
-/obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
+/obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act()
 	..()
-	clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons."
-	deltimer(timerid)
 
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
@@ -79,6 +74,10 @@
 				else
 					L.Knockdown(40)
 				GLOB.clockwork_vitality += L.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar
+			if(summon_action)
+				summon_action.cooldown = world.time + summon_action.break_cooldown
+				summon_action.owner.update_action_buttons_icon()
+				addtimer(CALLBACK(summon_action.owner, /mob.proc/update_action_buttons_icon), summon_action.break_cooldown)
 			break_spear(T)
 	else
 		..()

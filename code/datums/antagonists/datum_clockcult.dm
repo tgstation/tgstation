@@ -1,12 +1,17 @@
 //CLOCKCULT PROOF OF CONCEPT
 /datum/antagonist/clockcult
 	var/datum/action/innate/hierophant/hierophant_network = new()
+	var/armory_bound = FALSE
+	var/datum/action/innate/summon_spear/spear = new()
+	var/datum/action/innate/call_cuirass/cuirass = new()
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
 
 /datum/antagonist/clockcult/Destroy()
-	qdel(hierophant_network)
+	QDEL_NULL(hierophant_network)
+	QDEL_NULL(spear)
+	QDEL_NULL(cuirass)
 	return ..()
 
 /datum/antagonist/clockcult/can_be_owned(datum/mind/new_owner)
@@ -117,6 +122,9 @@
 		hierophant_network.title = "Construct"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
+	else if(current.can_hold_items() && armory_bound)
+		spear.Grant(current)
+		cuirass.Grant(current)
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	if(!GLOB.clockwork_gateway_activated)
 		current.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
@@ -130,8 +138,6 @@
 	current.remove_language(/datum/language/ratvar)
 	current.clear_alert("clockinfo")
 	current.clear_alert("scripturereq")
-	for(var/datum/action/innate/function_call/F in owner.current.actions) //Removes any bound Ratvarian spears
-		qdel(F)
 	if(issilicon(current))
 		var/mob/living/silicon/S = current
 		if(isAI(S))
