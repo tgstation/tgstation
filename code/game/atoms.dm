@@ -611,7 +611,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
 
-/atom/proc/DropLocation()
+/atom/proc/drop_location()
 	var/atom/L = loc
 	if(!L)
 		return null
