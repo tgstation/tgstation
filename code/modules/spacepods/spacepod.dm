@@ -87,7 +87,7 @@
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
-	var/datum/pod_armor/pod_armor = /datum/pod_armor/civ
+	var/datum/pod_armor/pod_armor
 
 
 /obj/spacepod/proc/apply_paint(mob/user as mob)
@@ -110,23 +110,29 @@
 	update_icons()
 
 
-/obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/_armor)
+/obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/p_armor)
 	. = ..(mapload)
-	if (_armor)
-		pod_armor = _armor
+	if (p_armor)
+		pod_armor = p_armor
+		icon_state = p_armor.icon_state
+	else
+		pod_armor = /datum/pod_armor/civ
+		icon_state = "pod_civ"
+	update_icons()
 	dir = EAST
 	cell = new cell_type(src)
 	add_cabin()
 	add_airtank()
-	src.ion_trail = new /datum/effect_system/trail_follow/ion/space_trail()
-	src.ion_trail.set_up(src)
-	src.ion_trail.start()
-	src.use_internal_tank = 1
+	ion_trail = new /datum/effect_system/trail_follow/ion/space_trail()
+	ion_trail.set_up(src)
+	ion_trail.start()
+	use_internal_tank = 1
 	GLOB.poi_list += src
 	equipment_system = new(src)
 	equipment_system.installed_modules += cell
 	GLOB.spacepods_list += src
 	START_PROCESSING(SSobj, src)
+	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_podhealth()
@@ -138,7 +144,6 @@
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
 	cargo_hold.max_w_class = 5		//fit almost anything
 	cargo_hold.max_combined_w_class = 0 //you can optimize your stash with larger items
-	update_icons()
 
 /obj/spacepod/Destroy()
 	if(equipment_system.cargo_system)
@@ -170,8 +175,9 @@
 	return ..()
 
 /obj/spacepod/proc/update_icons()
-	if (!icon_state)
-		icon_state = pod_armor.icon_state
+	bound_width = 64
+	bound_height = 64
+	icon_state = pod_armor.icon_state
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
 		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")

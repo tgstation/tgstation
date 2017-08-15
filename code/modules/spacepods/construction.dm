@@ -41,7 +41,10 @@
 
 /datum/construction/reversible2/pod/spawn_result()
 	if(result)
-		new result(get_turf(holder), pod_armor)
+		var/obj/spacepod/A = new result(get_turf(holder), pod_armor)
+		A.bound_width = 64
+		A.bound_height = 64
+
 		qdel(holder)
 	return
 
