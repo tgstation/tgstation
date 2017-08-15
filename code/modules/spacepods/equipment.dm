@@ -53,8 +53,8 @@
 	var/obj/item/device/spacepod_equipment/cargo/sec_cargo_system // secondary cargo system
 	var/obj/item/device/spacepod_equipment/lock/lock_system // lock system
 
-/datum/spacepod/equipment/New(var/obj/spacepod/SP)
-	..()
+/datum/spacepod/equipment/Initialize(var/obj/spacepod/SP)
+	. = ..()
 	if(istype(SP))
 		my_atom = SP
 
@@ -259,8 +259,8 @@
 	icon_state = "lock_tumbler"
 	var/static/id_source = 0
 
-/obj/item/device/spacepod_equipment/lock/keyed/New()
-	..()
+/obj/item/device/spacepod_equipment/lock/keyed/Initialize()
+	. = ..()
 	id = ++id_source
 
 // The key
