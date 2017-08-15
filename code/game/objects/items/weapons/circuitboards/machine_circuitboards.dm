@@ -723,7 +723,7 @@
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/weapon/circuitboard/machine/podfab
-	name = "Exosuit Fabricator (Machine Board)"
+	name = "Spacepod Fabricator (Machine Board)"
 	build_path = /obj/machinery/spod_part_fabricator
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
