@@ -60,6 +60,8 @@
 #define CURSE_WASTING	4 //causes gradual damage
 #define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
+#define STATUS_EFFECT_PETRIFICATION /datum/status_effect/petrification //Used by basilisks; "petrifies" anyone who looks in their direction for too long.
+
 /////////////
 // NEUTRAL //
 /////////////

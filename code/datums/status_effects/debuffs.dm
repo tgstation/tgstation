@@ -434,3 +434,51 @@
 /obj/effect/temp_visual/curse/Initialize()
 	. = ..()
 	deltimer(timerid)
+
+/datum/status_effect/petrification
+	id = "petrification"
+	duration = 50
+	tick_interval = 2
+	alert_type = /obj/screen/alert/status_effect/petrification
+	var/petrification_percentage = 0 //How petrified are we? At 100%, we'll be stunned for 10 seconds.
+	var/mob/living/petrifier
+
+/datum/status_effect/petrification/on_creation(mob/living/new_owner, mob/living/gazer)
+	. = ..()
+	if(.)
+		petrifier = gazer
+
+/datum/status_effect/petrification/tick()
+	if(QDELETED(petrifier) || petrifier.stat)
+		qdel(src)
+		return
+	if((petrifier in view(7, get_turf(owner))) && owner.dir == get_dir(owner, petrifier)) //we're looking at it
+		playsound(owner, 'sound/magic/fleshtostone.ogg', 50, TRUE, frequency = 2)
+		petrification_percentage += 20
+	else
+		petrification_percentage = max(0, petrification_percentage - 1)
+	if(petrification_percentage >= 100)
+		owner.visible_message("<span class='warning'>[owner]'s body locks up!</span>", "<span class='userdanger'>Your limbs lock up! You can't move!</span>")
+		playsound(owner, 'sound/effects/break_stone.ogg', 75, TRUE, frequency = 0.5)
+		owner.Stun(100)
+		qdel(src)
+
+/obj/screen/alert/status_effect/petrification
+	name = "Petrification"
+	desc = "You feel your body slowing down..."
+	icon_state = "petrification"
+
+/obj/screen/alert/status_effect/petrification/MouseEntered(location, control, params)
+	var/datum/status_effect/petrification/P = attached_effect
+	if(!P)
+		return ..()
+	var/slow_text = "slowing down"
+	switch(P.petrification_percentage)
+		if(25 to 50)
+			slow_text = "locking up"
+		if(50 to 75)
+			slow_text = "grinding still"
+		if(75 to 100)
+			slow_text = "hardening like stone"
+	desc = "You feel your body [slow_text]...<br>You are <b>[P.petrification_percentage]%</b> petrified."
+	..()
