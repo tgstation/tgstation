@@ -34,11 +34,9 @@
 	if(!purpose_fulfilled)
 		SSticker.force_ending = TRUE
 	if(glow)
-		qdel(glow)
-		glow = null
+		QDEL_NULL(glow)
 	if(countdown)
-		qdel(countdown)
-		countdown = null
+		QDEL_NULL(countdown)
 	for(var/mob/L in GLOB.player_list)
 		if(L.z == z)
 			var/turf/T = get_turf(pick(GLOB.generic_event_spawns))
