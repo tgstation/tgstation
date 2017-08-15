@@ -32,8 +32,8 @@
 
 	var/internal_temp_regulation = TRUE
 
-	var/battery_type = "/obj/item/weapon/stock_parts/cell/high"
-	var/obj/item/weapon/stock_parts/cell/battery
+	var/cell_type = "/obj/item/weapon/stock_parts/cell/high"
+	var/obj/item/weapon/stock_parts/cell/cell
 
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
@@ -119,7 +119,7 @@
 	bound_width = 64
 	bound_height = 64
 	dir = EAST
-	battery = new battery_type(src)
+	cell = new cell_type(src)
 	add_cabin()
 	add_airtank()
 	src.ion_trail = new /datum/effect_system/trail_follow/ion/space_trail()
@@ -128,7 +128,7 @@
 	src.use_internal_tank = 1
 	GLOB.poi_list += src
 	equipment_system = new(src)
-	equipment_system.installed_modules += battery
+	equipment_system.installed_modules += cell
 	GLOB.spacepods_list += src
 	START_PROCESSING(SSobj, src)
 	cargo_hold = new/obj/item/weapon/storage/internal(src)
@@ -142,7 +142,7 @@
 		equipment_system.cargo_system.removed(null)
 	QDEL_NULL(equipment_system)
 	QDEL_NULL(cargo_hold)
-	QDEL_NULL(battery)
+	QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	if(loc)
 		loc.assume_air(cabin_air)
@@ -285,8 +285,8 @@
 	occupant_sanity_check()
 	cargo_hold.emp_act(severity)
 
-	if(battery && battery.charge > 0)
-		battery.use((battery.charge/3)/(severity*2))
+	if(cell && cell.charge > 0)
+		cell.use((cell.charge/3)/(severity*2))
 	deal_damage(80 / severity)
 	if(empcounter < (40 / severity))
 		empcounter = 40 / severity
@@ -335,12 +335,12 @@
 			if(!hatch_open)
 				to_chat(user, "<span class='warning'>The maintenance hatch is closed!</span>")
 				return
-			if(battery)
-				to_chat(user, "<span class='notice'>The pod already has a battery.</span>")
+			if(cell)
+				to_chat(user, "<span class='notice'>The pod already has a power cell.</span>")
 				return
 			to_chat(user, "<span class='notice'>You insert [W] into the pod.</span>")
 			user.drop_item(W)
-			battery = W
+			cell = W
 			W.forceMove(src)
 			return
 		if(istype(W, /obj/item/device/spacepod_equipment))
@@ -464,7 +464,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		to_chat(user, "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at IK3I.</span>")
 		return
 	var/list/possible = list()
-	if(battery)
+	if(cell)
 		possible.Add("Energy Cell")
 	if(equipment_system.weapon_system)
 		possible.Add("Weapon System")
@@ -478,9 +478,9 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		possible.Add("Lock System")
 	switch(input(user, "Remove which equipment?", null, null) as null|anything in possible)
 		if("Energy Cell")
-			if(user.put_in_hands(battery))
-				to_chat(user, "<span class='notice'>You remove [battery] from the space pod</span>")
-				battery = null
+			if(user.put_in_hands(cell))
+				to_chat(user, "<span class='notice'>You remove [cell] from the space pod</span>")
+				cell = null
 			else
 				to_chat(user, "<span class='warning'>You need an open hand to do that.</span>")
 			return
@@ -903,7 +903,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 
 	to_chat(user, "<span class='notice'>You start rooting around under the seat for lost items</span>")
 	if(do_after(user, 40, target = src))
-		var/obj/badlist = list(internal_tank, cargo_hold, pilot, battery) + passengers + equipment_system.installed_modules
+		var/obj/badlist = list(internal_tank, cargo_hold, pilot, cell) + passengers + equipment_system.installed_modules
 		var/list/true_contents = contents - badlist
 		if(true_contents.len > 0)
 			var/obj/I = pick(true_contents)
@@ -940,7 +940,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 	if(world.time < next_move)
 		return 0
 	var/moveship = 1
-	if(battery && battery.charge >= 1 && health && empcounter == 0)
+	if(cell && cell.charge >= 1 && health && empcounter == 0)
 		src.dir = direction
 		switch(direction)
 			if(NORTH)
@@ -967,9 +967,9 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 						equipment_system.cargo_system.passover(I)
 
 	else
-		if(!battery)
+		if(!cell)
 			to_chat(user, "<span class='warning'>No energy cell detected.</span>")
-		else if(battery.charge < 1)
+		else if(cell.charge < 1)
 			to_chat(user, "<span class='warning'>Not enough charge left.</span>")
 		else if(!health)
 			to_chat(user, "<span class='warning'>She's dead, Jim</span>")
@@ -978,7 +978,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment
 		else
 			to_chat(user, "<span class='warning'>Unknown error has occurred, yell at the coders.</span>")
 		return 0
-	battery.charge = max(0, battery.charge - 1)
+	cell.charge = max(0, cell.charge - 1)
 	next_move = world.time + move_delay
 
 /obj/effect/landmark/spacepod/random
