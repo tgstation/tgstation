@@ -120,7 +120,29 @@
 	link_angle = 270
 
 /obj/item/pod_parts/armor
-	name = "civilian pod armor"
+	var/datum/pod_armor/armor_type = /datum/pod_armor/civ
+	name = "civillian pod armor"
 	icon = 'goon/icons/pods/pod_parts.dmi'
 	icon_state = "pod_armor_civ"
 	desc = "Spacepod armor. This is the civilian version. It looks rather flimsy."
+
+/obj/item/pod_parts/armor/syndicate
+	armor_type = /datum/pod_armor/syndicate
+	name = "syndicate pod armor"
+	desc = "Tough-looking spacepod armor, with a bold \"FUCK NT\" stenciled directly into it."
+
+/obj/item/pod_parts/armor/black
+	armor_type = /datum/pod_armor/black
+	name = "black pod armor"
+	desc = "Plain black spacepod armor, with no logos or insignias anywhere on it."
+
+/obj/item/pod_parts/armor/gold
+	armor_type = /datum/pod_armor/gold
+	name = "golden pod armor"
+	desc = "Golden spacepod armor. Looks like what a rich spessmen put on their spacepod."
+
+/obj/item/pod_parts/armor/industrial
+	armor_type = /datum/pod_armor/industrial
+	name = "industrial pod armor"
+	desc = "Tough industrial-grade spacepod armor. While meant for construction work, it is commonly used in spacepod battles, too."
+

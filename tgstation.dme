@@ -2062,6 +2062,7 @@
 #include "code\modules\spacepods\lock_buster.dm"
 #include "code\modules\spacepods\parts.dm"
 #include "code\modules\spacepods\pod_fab.dm"
+#include "code\modules\spacepods\podarmor.dm"
 #include "code\modules\spacepods\spacepod.dm"
 #include "code\modules\spells\spell.dm"
 #include "code\modules\spells\spell_types\aimed.dm"

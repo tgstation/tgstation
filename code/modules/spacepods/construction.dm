@@ -39,11 +39,19 @@
 //     CONSTRUCTION STEPS     ///
 /////////////////////////////////
 
+/datum/construction/reversible2/pod/spawn_result()
+	if(result)
+		var/obj/spacepod/A = new /obj/spacepod(get_turf(holder))
+		A.armor_type = armor
+		A.icon_state = armor.icon_state
+		qdel(holder)
+	return
 
 
 /datum/construction/reversible2/pod
-	result = /obj/spacepod/civilian
+	result = /obj/spacepod
 	base_icon="pod"
+	var/datum/pod_armor/armor
 	//taskpath = /datum/job_objective/make_pod
 	steps = list(
 				// 1. Initial state
@@ -232,6 +240,12 @@
 		..()
 		SSblackbox.add_details("spacepod_created",1)
 		return
+
+/datum/construction/reversible2/pod/custom_action(index, diff, used_atom, var/mob/user)
+	if(index == 10 && istype(used_atom, /obj/item/pod_parts/armor))
+		var/obj/item/pod_parts/armor/A = used_atom
+		armor = A.armor_type
+	. = ..()
 
 /obj/item/weapon/circuitboard/mecha/pod
 	name = "spacepod circuit board"

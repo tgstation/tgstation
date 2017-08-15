@@ -416,7 +416,7 @@
 ~~~~~~~~~~~~~*/
 
 /obj/spacepod/proc/diag_hud_set_podhealth()
-	var/image/holder = hud_list[DIAG_MECH_HUD]
+	var/image/holder = hud_list[DIAG_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"

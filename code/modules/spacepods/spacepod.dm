@@ -87,6 +87,8 @@
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
+	var/datum/pod_armor/armor_type = /datum/pod_armor/civ
+
 /obj/spacepod/proc/apply_paint(mob/user as mob)
 	var/part_type
 	var/part = input(user, "Choose part", null) as null|anything in list("Lights","Rim","Paint","Windows")
@@ -109,6 +111,7 @@
 
 /obj/spacepod/Initialize()
 	. = ..()
+	icon_state = armor_type.icon_state
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
 		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
@@ -135,9 +138,11 @@
 	GLOB.spacepods_list += src
 	START_PROCESSING(SSobj, src)
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
 	diag_hud_set_podhealth()
 	diag_hud_set_podcharge()
-	diag_hud.add_to_hud(src)
+	max_integrity *= armor_type.armor_multiplier
+	obj_integrity *= armor_type.armor_multiplier
 	cargo_hold = new/obj/item/weapon/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
@@ -557,6 +562,7 @@
 
 /obj/spacepod/civilian
 	icon_state = "pod_civ"
+	armor_type = /datum/pod_armor/civ
 	desc = "A sleek civilian space pod."
 
 /obj/spacepod/civilian/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -567,12 +573,14 @@
 
 /obj/spacepod/random
 	icon_state = "pod_civ"
+	armor_type = /datum/pod_armor/civ
 // placeholder
 
 /obj/spacepod/sec
 	name = "\improper security spacepod"
 	desc = "An armed security spacepod with reinforced armor plating."
 	icon_state = "pod_mil"
+	armor_type = /datum/pod_armor/security
 	max_integrity = 400
 
 /obj/spacepod/sec/Initialize()
@@ -607,16 +615,22 @@
 	switch(icon_state)
 		if("pod_civ")
 			desc = "A sleek civilian space pod."
+			armor_type = /datum/pod_armor/civ
 		if("pod_black")
 			desc = "An all black space pod with no insignias."
+			armor_type = /datum/pod_armor/black
 		if("pod_mil")
 			desc = "A dark grey space pod brandishing the Nanotrasen Military insignia"
+			armor_type = /datum/pod_armor/security
 		if("pod_synd")
 			desc = "A menacing military space pod with Fuck NT stenciled onto the side"
+			armor_type = /datum/pod_armor/syndicate
 		if("pod_gold")
 			desc = "A civilian space pod with a gold body, must have cost somebody a pretty penny"
+			armor_type = /datum/pod_armor/gold
 		if("pod_industrial")
 			desc = "A rough looking space pod meant for industrial work"
+			armor_type = /datum/pod_armor/industrial
 	update_icons()
 
 /obj/spacepod/proc/toggle_internal_tank(var/mob/usr)
