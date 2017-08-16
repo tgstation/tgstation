@@ -6,64 +6,27 @@
 	icon_state = "grinder"
 	density = TRUE
 	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 2
+	active_power_usage = 500
+	circuit = /obj/item/circuitboard/machine/gibber
+
 	var/operating = FALSE //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/meat_produced = 0
 	var/ignore_clothing = 0
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 500
-
-//auto-gibs anything that bumps into it
-/obj/machinery/gibber/autogibber
-	var/turf/input_plate
-
-/obj/machinery/gibber/autogibber/Initialize()
-	. = ..()
-	for(var/i in GLOB.cardinals)
-		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
-		if(input_obj)
-			if(isturf(input_obj.loc))
-				input_plate = input_obj.loc
-				qdel(input_obj)
-				break
-
-	if(!input_plate)
-		CRASH("Didn't find an input plate.")
-		return
-
-/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
-	if(!input_plate)
-		return
-
-	if(ismob(AM))
-		var/mob/M = AM
-
-		if(M.loc == input_plate)
-			M.loc = src
-			M.gib()
 
 
 /obj/machinery/gibber/Initialize()
 	. = ..()
 	add_overlay("grjam")
-	var/obj/item/weapon/circuitboard/machine/gibber/B = new
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/gibber
-	name = "Gibber (Machine Board)"
-	build_path = /obj/machinery/gibber
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
 		if(M.rating >= 2)
@@ -176,10 +139,10 @@
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
 	var/typeofskin = /obj/item/stack/sheet/animalhide/human
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
 	var/obj/item/stack/sheet/animalhide/allskin
 
 	if(ishuman(occupant))
@@ -199,7 +162,7 @@
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 
 	for (var/i=1 to meat_produced)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
@@ -234,3 +197,32 @@
 		pixel_x = initial(pixel_x) //return to its spot after shaking
 		operating = FALSE
 		update_icon()
+
+//auto-gibs anything that bumps into it
+/obj/machinery/gibber/autogibber
+	var/turf/input_plate
+
+/obj/machinery/gibber/autogibber/Initialize()
+	. = ..()
+	for(var/i in GLOB.cardinals)
+		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
+		if(input_obj)
+			if(isturf(input_obj.loc))
+				input_plate = input_obj.loc
+				qdel(input_obj)
+				break
+
+	if(!input_plate)
+		CRASH("Didn't find an input plate.")
+		return
+
+/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
+	if(!input_plate)
+		return
+
+	if(ismob(AM))
+		var/mob/M = AM
+
+		if(M.loc == input_plate)
+			M.forceMove(src)
+			M.gib()

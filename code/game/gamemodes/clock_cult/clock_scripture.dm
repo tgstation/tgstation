@@ -149,7 +149,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
 			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
-			invoker << 'sound/magic/clockwork/invoke_general.ogg'
+			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
 	return TRUE
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()

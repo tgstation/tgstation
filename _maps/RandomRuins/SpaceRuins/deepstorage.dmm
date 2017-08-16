@@ -127,7 +127,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "as" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -261,11 +261,11 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aH" = (
 /obj/structure/closet/cardboard,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/toolbox/drone,
-/obj/item/weapon/storage/toolbox/drone,
+/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
+/obj/item/storage/toolbox/drone,
+/obj/item/storage/toolbox/drone,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -286,11 +286,11 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aJ" = (
 /obj/structure/closet/cardboard,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/storage/box/zipties,
-/obj/item/weapon/switchblade,
+/obj/item/storage/box/mousetraps,
+/obj/item/storage/box/mousetraps,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/zipties,
+/obj/item/switchblade,
 /obj/effect/turf_decal/delivery,
 /obj/item/device/gps{
 	gpstag = "DEEP"
@@ -422,10 +422,10 @@
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
-/obj/item/weapon/shovel,
-/obj/item/weapon/pickaxe/drill,
-/obj/item/weapon/pickaxe/drill,
-/obj/item/weapon/pickaxe/drill,
+/obj/item/shovel,
+/obj/item/pickaxe/drill,
+/obj/item/pickaxe/drill,
+/obj/item/pickaxe/drill,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -437,9 +437,9 @@
 /obj/item/device/tape/random,
 /obj/item/device/tape/random,
 /obj/item/device/tape/random,
-/obj/item/weapon/storage/box/rxglasses,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/extinguisher,
+/obj/item/storage/box/rxglasses,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
 /obj/item/clothing/glasses/night,
 /obj/item/clothing/glasses/night,
 /obj/effect/turf_decal/delivery,
@@ -447,12 +447,12 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aT" = (
 /obj/structure/closet/cardboard,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/storage/box/beakers,
-/obj/item/weapon/storage/box/beakers,
-/obj/item/weapon/storage/box/matches,
-/obj/item/weapon/storage/box/bodybags,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/matches,
+/obj/item/storage/box/bodybags,
 /obj/item/clothing/glasses/meson/engine,
 /obj/item/clothing/glasses/meson/engine,
 /obj/effect/turf_decal/delivery,
@@ -460,18 +460,18 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aU" = (
 /obj/structure/closet/cardboard,
-/obj/item/weapon/kitchen/knife,
-/obj/item/weapon/kitchen/knife,
-/obj/item/weapon/cultivator,
-/obj/item/weapon/hatchet,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/knife,
+/obj/item/kitchen/knife,
+/obj/item/cultivator,
+/obj/item/hatchet,
+/obj/item/kitchen/rollingpin,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aV" = (
 /obj/structure/closet/cardboard,
-/obj/item/weapon/defibrillator,
-/obj/item/weapon/storage/box/medipens,
+/obj/item/defibrillator,
+/obj/item/storage/box/medipens,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -491,16 +491,16 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/storage/box/cups,
-/obj/item/weapon/reagent_containers/glass/beaker,
+/obj/item/storage/box/cups,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "aY" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme,
-/obj/item/weapon/reagent_containers/food/condiment/soysauce{
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/soysauce{
 	pixel_x = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
@@ -530,15 +530,15 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ba" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = 4;
 	pixel_y = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 9
 	},
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -597,8 +597,8 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bh" = (
 /obj/structure/table,
-/obj/item/weapon/storage/bag/plants/portaseeder,
-/obj/item/weapon/storage/bag/plants,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/plants,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
@@ -705,7 +705,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -778,8 +778,8 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bB" = (
 /obj/structure/table,
-/obj/item/weapon/cultivator,
-/obj/item/weapon/hatchet,
+/obj/item/cultivator,
+/obj/item/hatchet,
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -828,9 +828,9 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "bI" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/obj/item/weapon/storage/box/ingredients/wildcard,
-/obj/item/weapon/storage/box/ingredients/wildcard,
-/obj/item/weapon/storage/box/ingredients/wildcard,
+/obj/item/storage/box/ingredients/wildcard,
+/obj/item/storage/box/ingredients/wildcard,
+/obj/item/storage/box/ingredients/wildcard,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -948,12 +948,12 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -966,12 +966,12 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1126,9 +1126,9 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper/fluff/ruins/deepstorage/water_concern,
-/obj/item/weapon/paper/fluff/ruins/deepstorage/hydro_notice,
-/obj/item/weapon/paper/fluff/ruins/deepstorage/recycling_notice,
+/obj/item/paper/fluff/ruins/deepstorage/water_concern,
+/obj/item/paper/fluff/ruins/deepstorage/hydro_notice,
+/obj/item/paper/fluff/ruins/deepstorage/recycling_notice,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1149,7 +1149,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cl" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -1206,7 +1206,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1268,11 +1268,11 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/item/weapon/reagent_containers/glass/bucket{
+/obj/item/reagent_containers/glass/bucket{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1291,7 +1291,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1319,12 +1319,12 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1403,7 +1403,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cJ" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1580,22 +1580,22 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "dc" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/space/has_grav/deepstorage/armory)
 "dd" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -1816,18 +1816,18 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/vending_refill/coffee,
-/obj/item/weapon/vending_refill/cigarette,
-/obj/item/weapon/vending_refill/cigarette,
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/cigarette,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1837,15 +1837,15 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/vending_refill/coffee,
-/obj/item/weapon/vending_refill/cigarette,
-/obj/item/weapon/vending_refill/cigarette,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/cigarette,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2253,7 +2253,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "eh" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/duffelbag/sec/surgery{
+/obj/item/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
 /obj/structure/cable/yellow{
@@ -2291,7 +2291,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2422,11 +2422,11 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ex" = (
 /obj/structure/table,
-/obj/item/weapon/gun/ballistic/automatic/wt550{
+/obj/item/gun/ballistic/automatic/wt550{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/weapon/gun/ballistic/automatic/wt550{
+/obj/item/gun/ballistic/automatic/wt550{
 	pixel_x = 2
 	},
 /obj/structure/reagent_dispensers/peppertank{
@@ -2438,7 +2438,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
 /obj/structure/closet/cabinet,
-/obj/item/weapon/card/id/away{
+/obj/item/card/id/away{
 	desc = "A specialized ID meant for accessing some sort of specific door.";
 	icon_state = "centcom";
 	name = "bunker access ID"
@@ -2634,12 +2634,12 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "eN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/pill_bottle/charcoal,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/pill_bottle/charcoal,
 /obj/machinery/light,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2664,7 +2664,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "eP" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/drone,
+/obj/item/storage/toolbox/drone,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight/flare,
@@ -3001,7 +3001,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3560,17 +3560,17 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gy" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3806,22 +3806,22 @@
 	dir = 9
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/space/has_grav/deepstorage/power)
 "gW" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},

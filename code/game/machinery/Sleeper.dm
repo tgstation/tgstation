@@ -13,6 +13,7 @@
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
+	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -27,30 +28,17 @@
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
-/obj/machinery/sleeper/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/sleeper(null)
-	B.apply_default_parts(src)
+/obj/machinery/sleeper/Initialize()
+	. = ..()
 	update_icon()
 	reset_chem_buttons()
 
-/obj/item/weapon/circuitboard/machine/sleeper
-	name = "Sleeper (Machine Board)"
-	build_path = /obj/machinery/sleeper
-	origin_tech = "programming=3;biotech=2;engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 1)
-
 /obj/machinery/sleeper/RefreshParts()
 	var/E
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
 	var/I
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
 	efficiency = initial(efficiency)* E

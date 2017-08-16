@@ -51,23 +51,23 @@
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
 	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 	if(gibbed)
-		S["ancestor_name"] 		<< null
-		S["ancestor_chain"]		<< 1
-		S["relic_hat"]			<< null
-		S["relic_mask"]			<< null
+		WRITE_FILE(S["ancestor_name"], null)
+		WRITE_FILE(S["ancestor_chain"], 1)
+		WRITE_FILE(S["relic_hat"], null)
+		WRITE_FILE(S["relic_mask"], null)
 		return
 	if(dead)
-		S["ancestor_name"] 		<< ancestor_name
-		S["ancestor_chain"]		<< ancestor_chain + 1
+		WRITE_FILE(S["ancestor_name"], ancestor_name)
+		WRITE_FILE(S["ancestor_chain"], ancestor_chain + 1)
 	if(!ancestor_name)	//new monkey name this round
-		S["ancestor_name"] 		<< name
+		WRITE_FILE(S["ancestor_name"], name)
 	if(head)
-		S["relic_hat"]			<< head.type
+		WRITE_FILE(S["relic_hat"], head.type)
 	else
-		S["relic_hat"]			<< null
+		WRITE_FILE(S["relic_hat"], null)
 	if(wear_mask)
-		S["relic_mask"]			<< wear_mask.type
+		WRITE_FILE(S["relic_mask"], wear_mask.type)
 	else
-		S["relic_mask"]			<< null
+		WRITE_FILE(S["relic_mask"], null)
 	if(!dead)
 		memory_saved = 1

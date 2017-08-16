@@ -173,7 +173,7 @@
 			if(href_list["send"])
 
 				sradio.send_signal("ACTIVATE")
-				audible_message("[bicon(src)] *beep* *beep*")
+				audible_message("[icon2html(src, world)] *beep* *beep*")
 
 			if(href_list["freq"])
 
@@ -265,7 +265,7 @@
 				src.hackdoor = null
 			if(href_list["cable"])
 				var/turf/T = get_turf(src.loc)
-				cable = new /obj/item/weapon/pai_cable(T)
+				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
@@ -619,7 +619,8 @@
 			src.paiInterface()
 		if(hackprogress >= 100)
 			src.hackprogress = 0
-			src.cable.machine:open()
+			var/obj/machinery/door/D = cable.machine
+			D.open()
 		sleep(50)			// Update every 5 seconds
 
 // Digital Messenger

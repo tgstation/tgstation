@@ -1,4 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - tweak: "Mulligan and non-continuous completion checks will not consider afk/logged out people to be \"living crew\"."

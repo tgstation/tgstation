@@ -142,7 +142,7 @@ MASS SPECTROMETER
 	if (M.getCloneLoss())
 		to_chat(user, "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>")
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
-		to_chat(user, "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>")
+		to_chat(user, "\t<span class='info'>Bloodstream analysis located [M.reagents.get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>")
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		to_chat(user, "\t<span class='alert'>Subject brain function is non-existent.</span>")
 	else if (M.getBrainLoss() >= 60)

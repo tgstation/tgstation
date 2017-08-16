@@ -220,7 +220,7 @@
 	var/sanitize_external
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 

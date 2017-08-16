@@ -4,7 +4,7 @@
 	icon_state = "mycelium-tower"
 	species = "towercap"
 	plantname = "Tower Caps"
-	product = /obj/item/weapon/grown/log
+	product = /obj/item/grown/log
 	lifespan = 80
 	endurance = 50
 	maturation = 15
@@ -23,14 +23,14 @@
 	icon_state = "mycelium-steelcap"
 	species = "steelcap"
 	plantname = "Steel Caps"
-	product = /obj/item/weapon/grown/log/steel
+	product = /obj/item/grown/log/steel
 	mutatelist = list()
 	rarity = 20
 
 
 
 
-/obj/item/weapon/grown/log
+/obj/item/grown/log
 	seed = /obj/item/seeds/tower
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
@@ -44,17 +44,17 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
-	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
+	var/list/accepted = list(/obj/item/reagent_containers/food/snacks/grown/tobacco,
+	/obj/item/reagent_containers/food/snacks/grown/tea,
+	/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+	/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
+	/obj/item/reagent_containers/food/snacks/grown/wheat)
 
-/obj/item/weapon/grown/log/Initialize()
+/obj/item/grown/log/Initialize()
 	. = ..()
 	accepted = typecacheof(accepted)
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/seed_modifier = 0
@@ -70,7 +70,7 @@
 		qdel(src)
 
 	if(is_type_in_typecache(W,accepted))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
+		var/obj/item/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
@@ -84,12 +84,12 @@
 	else
 		return ..()
 
-/obj/item/weapon/grown/log/tree
+/obj/item/grown/log/tree
 	seed = null
 	name = "wood log"
 	desc = "TIMMMMM-BERRRRRRRRRRR!"
 
-/obj/item/weapon/grown/log/steel
+/obj/item/grown/log/steel
 	seed = /obj/item/seeds/tower/steel
 	name = "steel-cap log"
 	desc = "It's made of metal."
@@ -167,7 +167,7 @@
 		return
 	if(!has_buckled_mobs() && do_after(user, 50, target = src))
 		for(var/I in 1 to 5)
-			var/obj/item/weapon/grown/log/L = new /obj/item/weapon/grown/log(src.loc)
+			var/obj/item/grown/log/L = new /obj/item/grown/log(src.loc)
 			L.pixel_x += rand(1,4)
 			L.pixel_y += rand(1,4)
 		if(can_buckle || grill)

@@ -5,7 +5,7 @@
 	return 0
 
 /mob/living/carbon/isloyal()
-	for(var/obj/item/weapon/implant/mindshield/L in implants)
+	for(var/obj/item/implant/mindshield/L in implants)
 		return 1
 
 
@@ -387,7 +387,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)
-				O << sound(ghost_sound)
+				SEND_SOUND(O, sound(ghost_sound))
 			if(flashwindow)
 				window_flash(O.client)
 			if(source)

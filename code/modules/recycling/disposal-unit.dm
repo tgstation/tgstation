@@ -77,13 +77,13 @@
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/screwdriver))
 			panel_open = !panel_open
 			playsound(get_turf(src), I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I, /obj/item/weapon/weldingtool) && panel_open)
-			var/obj/item/weapon/weldingtool/W = I
+		else if(istype(I, /obj/item/weldingtool) && panel_open)
+			var/obj/item/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
@@ -248,7 +248,7 @@
 	..()
 
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/obj/machinery/disposal/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
 		if(user.s_active != src_object)
 			if(I.on_found(user))
@@ -270,8 +270,8 @@
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/storage/bag/trash))
-		var/obj/item/weapon/storage/bag/trash/T = I
+	if(istype(I, /obj/item/storage/bag/trash))
+		var/obj/item/storage/bag/trash/T = I
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)

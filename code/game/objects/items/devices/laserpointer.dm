@@ -16,7 +16,7 @@
 	var/effectchance = 33
 	var/recharging = 0
 	var/recharge_locked = FALSE
-	var/obj/item/weapon/stock_parts/micro_laser/diode //used for upgrading!
+	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
 
 /obj/item/device/laser_pointer/red
@@ -36,10 +36,10 @@
 
 /obj/item/device/laser_pointer/upgraded/New()
 	..()
-	diode = new /obj/item/weapon/stock_parts/micro_laser/ultra
+	diode = new /obj/item/stock_parts/micro_laser/ultra
 
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
+	if(istype(W, /obj/item/stock_parts/micro_laser))
 		if(!diode)
 			if(!user.transferItemToLoc(W, src))
 				return
@@ -48,7 +48,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/screwdriver))
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
 			diode.loc = get_turf(src.loc)

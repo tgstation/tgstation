@@ -24,7 +24,7 @@
 			playsound(loc, 'sound/items/welder.ogg', 80, 1)
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/wrench) && buildable_sign)
+	if(istype(O, /obj/item/wrench) && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 							 "<span class='notice'>You start unfastening [src].</span>")
 		playsound(src, O.usesound, 50, 1)
@@ -37,7 +37,7 @@
 		SB.icon_state = icon_state
 		SB.sign_path = type
 		qdel(src)
-	else if(istype(O, /obj/item/weapon/pen) && buildable_sign)
+	else if(istype(O, /obj/item/pen) && buildable_sign)
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
@@ -274,6 +274,11 @@
 	desc = "A sign labelling a religious area."
 	icon_state = "holy"
 
+/obj/structure/sign/restroom
+	name = "\improper RESTROOM"
+	desc = "A sign labelling a restroom."
+	icon_state = "restroom"
+
 /obj/structure/sign/xeno_warning_mining
 	name = "DANGEROUS ALIEN LIFE"
 	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
@@ -321,6 +326,6 @@
 	icon_state = "direction_bridge"
 
 /obj/structure/sign/logo
-	name = "station logo"
-	desc = "A sign: SPACE STATION 13."
-	icon_state = "ss13sign-1"
+	name = "nanotrasen logo"
+	desc = "The Nanotrasen corporate logo."
+	icon_state = "nanotrasen_sign1"

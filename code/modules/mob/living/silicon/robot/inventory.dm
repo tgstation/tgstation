@@ -11,13 +11,13 @@
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0
-	O.mouse_opacity = 2
+	O.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(istype(O, /obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
 		update_sight()
-	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
-		var/obj/item/weapon/storage/bag/tray/T = O
+	else if(istype(O, /obj/item/storage/bag/tray/))
+		var/obj/item/storage/bag/tray/T = O
 		T.do_quick_empty()
 	if(client)
 		client.screen -= O

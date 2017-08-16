@@ -1,5 +1,5 @@
 //Pinpointers are used to track atoms from a distance as long as they're on the same z-level. The captain and nuke ops have ones that track the nuclear authentication disk.
-/obj/item/weapon/pinpointer
+/obj/item/pinpointer
 	name = "pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals."
 	icon = 'icons/obj/device.dmi'
@@ -23,16 +23,16 @@
 	var/nuke_warning = FALSE // If we've set off a miniature alarm about an armed nuke
 	var/mode = TRACK_NUKE_DISK //What are we looking for?
 
-/obj/item/weapon/pinpointer/New()
+/obj/item/pinpointer/New()
 	..()
 	GLOB.pinpointer_list += src
 
-/obj/item/weapon/pinpointer/Destroy()
+/obj/item/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	GLOB.pinpointer_list -= src
 	return ..()
 
-/obj/item/weapon/pinpointer/attack_self(mob/living/user)
+/obj/item/pinpointer/attack_self(mob/living/user)
 	active = !active
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
@@ -43,14 +43,14 @@
 		target = null //Restarting the pinpointer forces a target reset
 		STOP_PROCESSING(SSfastprocess, src)
 
-/obj/item/weapon/pinpointer/attackby(obj/item/I, mob/living/user, params)
+/obj/item/pinpointer/attackby(obj/item/I, mob/living/user, params)
 	if(mode != TRACK_ATOM)
 		return ..()
 	user.visible_message("<span class='notice'>[user] tunes [src] to [I].</span>", "<span class='notice'>You fine-tune [src]'s tracking to track [I].</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
 	constant_target = I
 
-/obj/item/weapon/pinpointer/examine(mob/user)
+/obj/item/pinpointer/examine(mob/user)
 	..()
 	var/msg = "Its tracking indicator reads "
 	switch(mode)
@@ -73,7 +73,7 @@
 		if(bomb.timing)
 			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]")
 
-/obj/item/weapon/pinpointer/process()
+/obj/item/pinpointer/process()
 	if(!active)
 		STOP_PROCESSING(SSfastprocess, src)
 		return
@@ -82,7 +82,7 @@
 	my_god_jc_a_bomb()
 	addtimer(CALLBACK(src, .proc/refresh_target), 50, TIMER_UNIQUE)
 
-/obj/item/weapon/pinpointer/proc/scan_for_target() //Looks for whatever it's tracking
+/obj/item/pinpointer/proc/scan_for_target() //Looks for whatever it's tracking
 	if(target)
 		if(isliving(target))
 			var/mob/living/L = target
@@ -91,7 +91,7 @@
 		return
 	switch(mode)
 		if(TRACK_NUKE_DISK)
-			var/obj/item/weapon/disk/nuclear/N = locate() in GLOB.poi_list
+			var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
 			target = N
 		if(TRACK_MALF_AI)
 			for(var/V in GLOB.ai_list)
@@ -121,7 +121,7 @@
 			var/turf/T = get_turf(src)
 			target = locate(target_x, target_y, T.z)
 
-/obj/item/weapon/pinpointer/proc/point_to_target() //If we found what we're looking for, show the distance and direction
+/obj/item/pinpointer/proc/point_to_target() //If we found what we're looking for, show the distance and direction
 	if(!active)
 		return
 	if(!target || (mode == TRACK_ATOM && !constant_target))
@@ -144,7 +144,7 @@
 			if(16 to INFINITY)
 				icon_state = "pinon[nuke_warning ? "alert" : "far"]"
 
-/obj/item/weapon/pinpointer/proc/my_god_jc_a_bomb() //If we should get the hell back to the ship
+/obj/item/pinpointer/proc/my_god_jc_a_bomb() //If we should get the hell back to the ship
 	for(var/obj/machinery/nuclearbomb/bomb in GLOB.nuke_list)
 		if(bomb.timing)
 			if(!nuke_warning)
@@ -154,7 +154,7 @@
 					var/mob/living/L = loc
 					to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")
 
-/obj/item/weapon/pinpointer/proc/switch_mode_to(new_mode) //If we shouldn't be tracking what we are
+/obj/item/pinpointer/proc/switch_mode_to(new_mode) //If we shouldn't be tracking what we are
 	if(isliving(loc))
 		var/mob/living/L = loc
 		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>")
@@ -162,14 +162,14 @@
 	mode = new_mode
 	target = null //Switch modes so we can find the new target
 
-/obj/item/weapon/pinpointer/proc/refresh_target() //Periodically removes the target to allow the pinpointer to update (i.e. malf AI shunts, an operative dies)
+/obj/item/pinpointer/proc/refresh_target() //Periodically removes the target to allow the pinpointer to update (i.e. malf AI shunts, an operative dies)
 	target = null
 
-/obj/item/weapon/pinpointer/syndicate //Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
+/obj/item/pinpointer/syndicate //Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
 	name = "syndicate pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
 
-/obj/item/weapon/pinpointer/syndicate/cyborg //Cyborg pinpointers just look for a random operative.
+/obj/item/pinpointer/syndicate/cyborg //Cyborg pinpointers just look for a random operative.
 	name = "cyborg syndicate pinpointer"
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
 	mode = TRACK_OPERATIVES

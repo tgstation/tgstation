@@ -9,8 +9,8 @@
 /datum/round_event/spooky/start()
 	..()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
-		new /obj/item/weapon/storage/spooky(b)
+		var/obj/item/storage/backpack/b = locate() in H.contents
+		new /obj/item/storage/spooky(b)
 		if(ishuman(H) || islizard(H))
 			if(prob(50))
 				H.set_species(/datum/species/skeleton)
@@ -18,7 +18,7 @@
 				H.set_species(/datum/species/zombie)
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
-		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
+		Ian.place_on_head(new /obj/item/bedsheet(Ian))
 	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_list)
 		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
 		qdel(Poly)
@@ -70,7 +70,7 @@
 		if(!H.client || !istype(H))
 			return
 		to_chat(H, "<span class='danger'>Honk...</span>")
-		H << 'sound/spookoween/scary_clown_appear.ogg'
+		SEND_SOUND(H, sound('sound/spookoween/scary_clown_appear.ogg'))
 		var/turf/T = get_turf(H)
 		if(T)
 			new /obj/effect/hallucination/simple/clown(T, H, 50)
@@ -99,13 +99,13 @@
 	priority_announce("Honk... Honk... honk... HONK! HONK! HONKHONKHONKHONKHONK", "HONK!", 'sound/spookoween/scary_horn.ogg')
 
 //spooky foods (you can't actually make these when it's not halloween)
-/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
+/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
 	name = "skull cookie"
 	desc = "Spooky! It's got delicious calcium flavouring!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "skeletoncookie"
 
-/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
+/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
 	name = "coffin cookie"
 	desc = "Spooky! It's got delicious coffee flavouring!"
 	icon = 'icons/obj/halloween_items.dmi'
@@ -114,25 +114,25 @@
 
 //spooky items
 
-/obj/item/weapon/storage/spooky
+/obj/item/storage/spooky
 	name = "trick-o-treat bag"
 	desc = "A pumpkin-shaped bag that holds all sorts of goodies!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
-/obj/item/weapon/storage/spooky/New()
+/obj/item/storage/spooky/New()
 	..()
 	for(var/distrobuteinbag=0 to 5)
-		var/type = pick(/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull,
-		/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin,
-		/obj/item/weapon/reagent_containers/food/snacks/candy_corn,
-		/obj/item/weapon/reagent_containers/food/snacks/candy,
-		/obj/item/weapon/reagent_containers/food/snacks/candiedapple,
-		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		var/type = pick(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
+		/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
+		/obj/item/reagent_containers/food/snacks/candy_corn,
+		/obj/item/reagent_containers/food/snacks/candy,
+		/obj/item/reagent_containers/food/snacks/candiedapple,
+		/obj/item/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)
 
-/obj/item/weapon/card/emag/halloween
+/obj/item/card/emag/halloween
 	name = "hack-o'-lantern"
 	desc = "It's a pumpkin with a cryptographic sequencer sticking out."
 	icon_state = "hack_o_lantern"
