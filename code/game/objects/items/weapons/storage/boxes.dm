@@ -648,7 +648,7 @@
 	
 /obj/item/weapon/storage/box/improvisedhsot/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/ammo_casing/shotgun/improvised
+		new /obj/item/ammo_casing/shotgun/improvised(src)
 
 /obj/item/weapon/storage/box/actionfigure
 	name = "box of action figures"
