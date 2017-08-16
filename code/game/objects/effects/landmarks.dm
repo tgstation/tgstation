@@ -346,7 +346,7 @@
 	name = "right reebe entrance"
 	icon_state = "x"
 
-/obj/effect/landmark/reebe/Initialize(mapload)
+/obj/effect/landmark/reeberight/Initialize(mapload)
 	..()
 	GLOB.right_reebe_spawns += loc
 	return INITIALIZE_HINT_QDEL
@@ -355,7 +355,7 @@
 	name = "left reebe entrance"
 	icon_state = "x3"
 
-/obj/effect/landmark/reebe/Initialize(mapload)
+/obj/effect/landmark/reebeleft/Initialize(mapload)
 	..()
 	GLOB.left_reebe_spawns += loc
 	return INITIALIZE_HINT_QDEL

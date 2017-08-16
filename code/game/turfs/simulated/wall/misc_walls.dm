@@ -56,6 +56,8 @@
 	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
+	canSmoothWith = list(/turf/closed/wall/clockwork)
+	smooth = SMOOTH_MORE
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	baseturf = /turf/open/floor/clockwork
 	var/plating_type = /turf/open/floor/clockwork

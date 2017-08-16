@@ -9,24 +9,18 @@
 	light_range = 2
 	light_power = 3
 	light_color = "#6A4D2F"
-	var/rift_target
+	var/leftwards = FALSE
 
 /obj/effect/clockwork/reebe_rift/Initialize(mapload)
 	. = ..()
-	if(!rift_target)
-		rift_target = pick(GLOB.right_reebe_spawns, GLOB.left_reebe_spawns)
 	if(!mapload)
-		visible_message("<span class='warning'>The air above [loc] shimmers and pops as a [name] forms there!</span>")
+		visible_message("<span class='warning'>The air above [loc] ripples before suddenly tearing open!</span>")
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				if(get_dist(src, M) >= 7)
 					M.playsound_local(src, 'sound/magic/blink.ogg', 10, FALSE, falloff = 10)
 				else
 					M.playsound_local(src, 'sound/magic/blink.ogg', 50, FALSE)
-
-/obj/effect/clockwork/reebe_rift/Destroy()
-	rift_target = null
-	return ..()
 
 /obj/effect/clockwork/reebe_rift/attack_hand(mob/living/user)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -54,23 +48,27 @@
 	if(!QDELETED(AM))
 		pass_through_gateway(AM, FALSE)
 
-/obj/effect/clockwork/reebe_rift/proc/pass_through_gateway(atom/movable/A)
-	quick_spatial_gate(loc, pick(is_servant_of_ratvar(A) ? GLOB.servant_spawns : rift_target), A)
+/obj/effect/clockwork/reebe_rift/proc/pass_through_gateway(atom/movable/A, force_left)
+	if(!isnum(force_left))
+		leftwards = prob(50)
+	else
+		leftwards = force_left
+	quick_spatial_gate(loc, pick(is_servant_of_ratvar(A) ? GLOB.servant_spawns : leftwards ? GLOB.left_reebe_spawns : GLOB.right_reebe_spawns), A)
 
 /obj/effect/clockwork/reebe_rift/right
 	name = "rightwards celestial rift"
 	desc = "A stable bluespace rip. It looks like it'll lead to the other side of this place."
 	clockwork_desc = "A rift to the right side of Reebe."
 
-/obj/effect/clockwork/reebe_rift/right/Initialize(mapload)
-	rift_target = GLOB.right_reebe_spawns
-	. = ..()
+/obj/effect/clockwork/reebe_rift/right/pass_through_gateway(atom/movable/A, force_left)
+	force_left = FALSE
+	..()
 
 /obj/effect/clockwork/reebe_rift/left
 	name = "leftwards celestial rift"
 	desc = "A stable bluespace rip. It looks like it'll lead to the other side of this place."
 	clockwork_desc = "A rift to the left side of Reebe."
 
-/obj/effect/clockwork/reebe_rift/left/Initialize(mapload)
-	rift_target = GLOB.left_reebe_spawns
-	. = ..()
+/obj/effect/clockwork/reebe_rift/left/pass_through_gateway(atom/movable/A, force_left)
+	force_left = TRUE
+	..()

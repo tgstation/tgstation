@@ -230,5 +230,5 @@
 	var/obj/effect/clockwork/spatial_gateway/S2 = new(target)
 
 	S1.setup_gateway(S2, 10, 1, FALSE)
-	S2.visible_message("<span class='warning'>The air ripples before suddenly tearing open!</span>")
+	S2.visible_message("<span class='warning'>The air above [target] ripples before suddenly tearing open!</span>")
 	S1.pass_through_gateway(teleported) //bloop.
