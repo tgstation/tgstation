@@ -4,7 +4,7 @@
 	icon_screen = "mecha"
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_ENGINE)
-	circuit = /obj/item/weapon/circuitboard/computer/mecha_control
+	circuit = /obj/item/circuitboard/computer/mecha_control
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data

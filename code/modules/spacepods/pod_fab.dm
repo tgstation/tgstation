@@ -55,7 +55,7 @@
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 
-/obj/machinery/spod_part_fabricator/check_access(obj/item/weapon/card/id/I)
+/obj/machinery/spod_part_fabricator/check_access(obj/item/card/id/I)
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
