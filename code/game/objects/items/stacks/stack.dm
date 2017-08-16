@@ -232,8 +232,8 @@
 	update_weight()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
-	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
-		return
+	if(QDELETED(S) || QDELETED(src) || S == src || (HAS_SECONDARY_FLAG(src, FROZEN) && !HAS_SECONDARY_FLAG(R, FROZEN)) //amusingly this can cause a stack to consume itself, let's not allow that.
+		return FALSE
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
@@ -244,6 +244,7 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
+	return TRUE
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
@@ -287,6 +288,8 @@
 /obj/item/stack/proc/change_stack(mob/user,amount)
 	var/obj/item/stack/F = new type(user, amount, FALSE)
 	. = F
+	if(HAS_SECONDARY_FLAG(src, FROZEN))
+		F.make_frozen_visual()
 	F.copy_evidences(src)
 	user.put_in_hands(F)
 	add_fingerprint(user)
@@ -298,8 +301,8 @@
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
-		merge(S)
-		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+		if(merge(S))
+			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
 		. = ..()
 
