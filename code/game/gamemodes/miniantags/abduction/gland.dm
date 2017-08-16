@@ -108,7 +108,7 @@
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly,/datum/species/jelly))
+	var/species = pick(list(/datum/species/lizard, /datum/species/jelly/slime, /datum/species/pod, /datum/species/fly, /datum/species/jelly))
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
@@ -166,10 +166,12 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
+	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
 

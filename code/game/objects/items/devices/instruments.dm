@@ -4,6 +4,8 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	icon = 'icons/obj/musician.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/instruments_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/instruments_righthand.dmi'
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "mid"
@@ -92,6 +94,7 @@
 	attack_verb = list("played metal on", "shredded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	instrumentId = "eguitar"
+	instrumentExt = "ogg"
 
 /obj/item/device/instrument/glockenspiel
 	name = "glockenspiel"
@@ -139,11 +142,19 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
+/obj/item/device/instrument/harmonica/speechModification(message)
+	if(song.playing && ismob(loc))
+		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
+		song.playing = FALSE
+	return message
+
 /obj/item/device/instrument/bikehorn
 	name = "gilded bike horn"
 	desc = "An exquisitely decorated bike horn, capable of honking in a variety of notes."
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
+	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	attack_verb = list("beautifully honks")
 	instrumentId = "bikehorn"
 	instrumentExt = "ogg"

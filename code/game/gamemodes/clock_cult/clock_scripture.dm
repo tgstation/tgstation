@@ -150,7 +150,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
 			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
-			invoker << 'sound/magic/clockwork/invoke_general.ogg'
+			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
 	return TRUE
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
@@ -259,7 +259,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
 /datum/clockwork_scripture/ranged_ability
-	var/slab_icon = "dread_ipad"
+	var/slab_overlay
 	var/ranged_type = /obj/effect/proc_holder/slab
 	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
 	var/timeout_time = 0
@@ -271,7 +271,12 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	return ..()
 
 /datum/clockwork_scripture/ranged_ability/scripture_effects()
-	slab.icon_state = slab_icon
+	if(slab_overlay)
+		slab.add_overlay(slab_overlay)
+		slab.item_state = "clockwork_slab"
+		slab.lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+		slab.righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+		slab.inhand_overlay = slab_overlay
 	slab.slab_ability = new ranged_type(slab)
 	slab.slab_ability.slab = slab
 	slab.slab_ability.add_ranged_ability(invoker, ranged_message)
@@ -294,7 +299,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			successful = slab.slab_ability.successful
 			if(!slab.slab_ability.finished)
 				slab.slab_ability.remove_ranged_ability()
-		slab.icon_state = "dread_ipad"
+		slab.cut_overlays()
+		slab.item_state = initial(slab.item_state)
+		slab.item_state = initial(slab.lefthand_file)
+		slab.item_state = initial(slab.righthand_file)
+		slab.inhand_overlay = null
 		if(invoker)
 			invoker.update_inv_hands()
 	return successful //slab doesn't look like a word now.

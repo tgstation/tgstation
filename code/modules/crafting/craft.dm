@@ -94,8 +94,8 @@
 			var/obj/item/stack/S = I
 			.[I.type] += S.amount
 		else
-			if(istype(I, /obj/item/weapon/reagent_containers))
-				var/obj/item/weapon/reagent_containers/RC = I
+			if(istype(I, /obj/item/reagent_containers))
+				var/obj/item/reagent_containers/RC = I
 				if(RC.container_type & OPENCONTAINER)
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
 						.[A.type] += A.volume
@@ -106,7 +106,7 @@
 		return 1
 	var/list/possible_tools = list()
 	for(var/obj/item/I in user.contents)
-		if(istype(I, /obj/item/weapon/storage))
+		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
 				possible_tools += SI.type
 		possible_tools += I.type
@@ -181,7 +181,7 @@
 				var/datum/reagent/RG = new A
 				var/datum/reagent/RGNT
 				while(amt > 0)
-					var/obj/item/weapon/reagent_containers/RC = locate() in surroundings
+					var/obj/item/reagent_containers/RC = locate() in surroundings
 					RG = RC.reagents.get_reagent(A)
 					if(RG)
 						if(!locate(RG.type) in Deletion)

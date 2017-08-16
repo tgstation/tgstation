@@ -44,7 +44,7 @@
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
-	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
+	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -94,14 +94,6 @@
 				OpenFire()
 		else
 			devour(L)
-
-/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
-	var/turf/oldloc = loc
-	. = ..()
-	if(!.)
-		return
-	var/turf/newloc = loc
-	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)

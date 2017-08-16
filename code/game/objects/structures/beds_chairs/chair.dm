@@ -40,8 +40,8 @@
 	W.setDir(dir)
 	qdel(src)
 
-/obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+/obj/structure/chair/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
@@ -225,6 +225,8 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	item_state = "chair"
+	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
@@ -245,7 +247,7 @@
 
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
-		if(istype(A,/obj/structure/chair))
+		if(istype(A, /obj/structure/chair))
 			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))

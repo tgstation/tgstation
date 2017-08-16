@@ -12,12 +12,12 @@
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	var/sand_type = /obj/item/weapon/ore/glass
+	var/sand_type = /obj/item/ore/glass
 	var/floor_variance = 20 //probability floor has a different icon state
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
-	..()
+	. = ..()
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
@@ -42,16 +42,16 @@
 		if(1)
 			src.gets_dug()
 
-/turf/open/floor/plating/asteroid/attackby(obj/item/weapon/W, mob/user, params)
+/turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
 	var/digging_speed = 0
-	if (istype(W, /obj/item/weapon/shovel))
-		var/obj/item/weapon/shovel/S = W
+	if (istype(W, /obj/item/shovel))
+		var/obj/item/shovel/S = W
 		digging_speed = S.digspeed
-	else if (istype(W, /obj/item/weapon/pickaxe))
-		var/obj/item/weapon/pickaxe/P = W
+	else if (istype(W, /obj/item/pickaxe))
+		var/obj/item/pickaxe/P = W
 		digging_speed = P.digspeed
 	if (digging_speed)
 		var/turf/T = user.loc
@@ -71,10 +71,10 @@
 				gets_dug()
 				SSblackbox.add_details("pick_used_mining","[W.type]")
 
-	if(istype(W,/obj/item/weapon/storage/bag/ore))
-		var/obj/item/weapon/storage/bag/ore/S = W
+	if(istype(W, /obj/item/storage/bag/ore))
+		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
-			for(var/obj/item/weapon/ore/O in src.contents)
+			for(var/obj/item/ore/O in src.contents)
 				O.attackby(W,user)
 				return
 
@@ -83,7 +83,7 @@
 		if(!Z.use(1))
 			return
 		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
-		if(istype(Z,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = Z
 			var/turf/open/floor/light/F = T
 			F.state = L.state
@@ -114,17 +114,17 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	sand_type = /obj/item/weapon/ore/glass/basalt
+	sand_type = /obj/item/ore/glass/basalt
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
-	..()
+	. = ..()
 	set_basalt_light(src)
 
 /proc/set_basalt_light(turf/open/floor/B)
@@ -145,7 +145,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 
 
 
@@ -248,7 +248,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,TRUE)
+				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,FALSE,TRUE)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
@@ -274,7 +274,7 @@
 	SpawnFlora(T)
 
 	SpawnMonster(T)
-	T.ChangeTurf(turf_type,FALSE,TRUE)
+	T.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))

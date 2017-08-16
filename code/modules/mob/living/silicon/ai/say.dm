@@ -163,9 +163,9 @@
 				if(M.client && M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
-						M << voice
+						SEND_SOUND(M, voice)
 		else
-			only_listener << voice
+			SEND_SOUND(only_listener, voice)
 		return 1
 	return 0
 

@@ -24,6 +24,7 @@
 	M.changeNext_move(CLICK_CD_MELEE)
 	var/a = pick("gently stroke", "nuzzle", "affectionatly pet", "cuddle")
 	M.visible_message("<span class='notice'>[M] [a]s [src]!</span>", "<span class='notice'>You [a] [src]!</span>")
+	to_chat(overmind, "<span class='notice'>[M] [a]s you!</span>")
 	playsound(src, 'sound/effects/blobattack.ogg', 50, 1) //SQUISH SQUISH
 	
 
@@ -235,7 +236,7 @@
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
-		user << 'sound/machines/ping.ogg'
+		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		chemeffectreport(user)
 		typereport(user)
 	else

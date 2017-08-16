@@ -263,22 +263,45 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/asteroid/central
 	name = "Central Asteroid Maintenance"
 	icon_state = "maintcentral"
-	
-/area/maintenance/asteroid/disposal/east
-	name = "Eastern External Waste Belt"
+
+/area/maintenance/asteroid/disposal
 	icon_state = "disposal"
-	
+
 /area/maintenance/asteroid/disposal/north
-	name = "Northern External Waste Belt"
-	icon_state = "disposal"
-	
-/area/maintenance/asteroid/disposal/southeast
-	name = "South-Eastern Disposal"
-	icon_state = "disposal"
-	
-/area/maintenance/asteroid/disposal/southwest
+	name = "Northern Disposal"
+
+/area/maintenance/asteroid/disposal/north/east
+	name = "North-Eastern Disposal"
+
+/area/maintenance/asteroid/disposal/north/west
+	name = "North-Western Disposal"
+
+/area/maintenance/asteroid/disposal/east
+	name = "Eastern Disposal"
+
+/area/maintenance/asteroid/disposal/west
+	name = "Western Disposal"
+
+/area/maintenance/asteroid/disposal/west/secondary
+	name = "Secondary Western Disposal"
+
+/area/maintenance/asteroid/disposal/south
+	name = "Southern Disposal"
+
+/area/maintenance/asteroid/disposal/south/west
 	name = "South-Western Disposal"
-	icon_state = "disposal"
+
+/area/maintenance/asteroid/disposal/external/east
+	name = "Eastern External Waste Belt"
+	
+/area/maintenance/asteroid/disposal/external/north
+	name = "Northern External Waste Belt"
+	
+/area/maintenance/asteroid/disposal/external/southeast
+	name = "South-Eastern External Waste Belt"
+	
+/area/maintenance/asteroid/disposal/external/southwest
+	name = "South-Western External Waste Belt"
 	
 /area/maintenance/asteroid/fore/cargo_west
 	name = "Fore Asteroid Maintenance"
@@ -530,6 +553,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/crew_quarters/toilet/locker
 	name = "Locker Toilets"
+	icon_state = "toilet"
+
+/area/crew_quarters/toilet/fitness
+	name = "Fitness Toilets"
 	icon_state = "toilet"
 	
 /area/crew_quarters/toilet/female
@@ -817,13 +844,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Starboard Bow Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
-/area/assembly/assembly_line //Derelict Assembly Line
-	name = "Assembly Line"
-	icon_state = "ass_line"
-	power_equip = FALSE
-	power_light = FALSE
-	power_environ = FALSE
-
 //Teleporter
 
 /area/teleporter
@@ -1007,9 +1027,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Firing Range"
 	icon_state = "firingrange"
 
-/area/security/transfer
-	name = "Transfer Centre"
+/area/security/execution
 	icon_state = "execution_room"
+
+/area/security/execution/transfer
+	name = "Transfer Centre"
+	
+/area/security/execution/education
+	name = "Prisoner Education Chamber"
 
 /area/security/nuke_storage
 	name = "Vault"
@@ -1240,7 +1265,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = FALSE
 	
 /area/storage/tcom
-	name = "Telecoms Storage"
+	name = "Telecomms Storage"
 	icon_state = "green"
 	valid_territory = FALSE
 
@@ -1416,7 +1441,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/entrance
-	name = "Telecoms Teleporter"
+	name = "Telecomms Teleporter"
 	icon_state = "tcomsatentrance"
 
 /area/tcommsat/chamber
@@ -1424,12 +1449,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "tcomsatcham"
 
 /area/ai_monitored/turret_protected/tcomsat
-	name = "Telecoms Satellite"
+	name = "Telecomms Satellite"
 	icon_state = "tcomsatlob"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/ai_monitored/turret_protected/tcomfoyer
-	name = "Telecoms Foyer"
+	name = "Telecomms Foyer"
 	icon_state = "tcomsatentrance"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
@@ -1444,11 +1469,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/computer
-	name = "Telecoms Control Room"
+	name = "Telecomms Control Room"
 	icon_state = "tcomsatcomp"
 
 /area/tcommsat/server
-	name = "Telecoms Server Room"
+	name = "Telecomms Server Room"
 	icon_state = "tcomsatcham"
 
 /area/tcommsat/lounge
@@ -1463,7 +1488,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //SPACE STATION 13
 GLOBAL_LIST_INIT(the_station_areas, list (
-	/area/assembly,
 	/area/bridge,
 	/area/chapel,
 	/area/construction,

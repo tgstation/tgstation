@@ -10,9 +10,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_screen = "id"
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
-	circuit = /obj/item/weapon/circuitboard/computer/card
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/card/id/modify = null
+	circuit = /obj/item/circuitboard/computer/card
+	var/obj/item/card/id/scan = null
+	var/obj/item/card/id/modify = null
 	var/authenticated = 0
 	var/mode = 0
 	var/printing = null
@@ -51,8 +51,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	change_position_cooldown = config.id_console_jobslot_delay
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = O
+	if(istype(O, /obj/item/card/id))
+		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
 				if(!usr.drop_item())
@@ -258,7 +258,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		var/jobs_all = ""
 		var/list/alljobs = list("Unassigned")
-		alljobs += (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
+		alljobs += (istype(src, /obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
 		for(var/job in alljobs)
 			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 
@@ -303,7 +303,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=\ref[src];choice=demote'>Demote</a>)</span>"
 
 			var/accesses = ""
-			if(istype(src,/obj/machinery/computer/card/centcom))
+			if(istype(src, /obj/machinery/computer/card/centcom))
 				accesses += "<h5>Central Command:</h5>"
 				for(var/A in get_all_centcom_access())
 					if(A in modify.access)
@@ -364,7 +364,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				head_subordinates = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
+				if (istype(I, /obj/item/card/id))
 					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -380,7 +380,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
+				if (istype(I, /obj/item/card/id))
 					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -433,7 +433,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if(authenticated)
 					var/access_type = text2num(href_list["access_target"])
 					var/access_allowed = text2num(href_list["allowed"])
-					if(access_type in (istype(src,/obj/machinery/computer/card/centcom)?get_all_centcom_access() : get_all_accesses()))
+					if(access_type in (istype(src, /obj/machinery/computer/card/centcom)?get_all_centcom_access() : get_all_accesses()))
 						modify.access -= access_type
 						if(access_allowed == 1)
 							modify.access += access_type
@@ -460,7 +460,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
 						return
 
-					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					modify.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
 					modify.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -473,7 +473,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
@@ -543,7 +542,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (!( printing ))
 				printing = 1
 				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
+				var/obj/item/paper/P = new /obj/item/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
 				for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
@@ -562,19 +561,19 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			head_subordinates += job.title
 
 /obj/machinery/computer/card/centcom
-	name = "\improper Centcom identification console"
-	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
+	name = "\improper CentCom identification console"
+	circuit = /obj/item/circuitboard/computer/card/centcom
 	req_access = list(ACCESS_CENT_CAPTAIN)
 
 /obj/machinery/computer/card/minor
 	name = "department management console"
 	desc = "You can use this to change ID's for specific departments."
 	icon_screen = "idminor"
-	circuit = /obj/item/weapon/circuitboard/computer/card/minor
+	circuit = /obj/item/circuitboard/computer/card/minor
 
-/obj/machinery/computer/card/minor/New()
-	..()
-	var/obj/item/weapon/circuitboard/computer/card/minor/typed_circuit = circuit
+/obj/machinery/computer/card/minor/Initialize()
+	. = ..()
+	var/obj/item/circuitboard/computer/card/minor/typed_circuit = circuit
 	if(target_dept)
 		typed_circuit.target_dept = target_dept
 	else

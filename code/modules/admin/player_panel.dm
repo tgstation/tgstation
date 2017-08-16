@@ -396,7 +396,7 @@
 					dat += "<tr><td><i><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a> Nuclear Operative Body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 			dat += "</table><br><table><tr><td><B>Nuclear Disk(s)</B></td></tr>"
-			for(var/obj/item/weapon/disk/nuclear/N in GLOB.poi_list)
+			for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
 				dat += "<tr><td>[N.name], "
 				var/atom/disk_loc = N.loc
 				while(!isturf(disk_loc))
@@ -598,7 +598,7 @@
 
 		if(istype(SSticker.mode, /datum/game_mode/blob) || blob_minds.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			if(istype(SSticker.mode,/datum/game_mode/blob))
+			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/mode = SSticker.mode
 				blob_minds |= mode.blob_overminds
 				dat += "<tr><td><i>Progress: [GLOB.blobs_legit.len]/[mode.blobwincount]</i></td></tr>"

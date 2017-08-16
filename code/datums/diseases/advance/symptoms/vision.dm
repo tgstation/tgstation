@@ -101,7 +101,7 @@ Bonus
 	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
 	if (!eyes)
 		return
 	switch(A.stage)

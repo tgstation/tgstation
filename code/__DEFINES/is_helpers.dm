@@ -1,6 +1,6 @@
 // simple is_type and similar inline helpers
 
-#define islist(L) (istype(L,/list))
+#define islist(L) (istype(L, /list))
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
@@ -23,7 +23,7 @@
 
 #define ismineralturf(A) (istype(A, /turf/closed/mineral))
 
-#define islava(A) (istype(A, /turf/open/floor/plating/lava))
+#define islava(A) (istype(A, /turf/open/lava))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
@@ -135,10 +135,10 @@
 #define isorgan(A) (istype(A, /obj/item/organ))
 
 GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/weapon/pen,
-	/obj/item/weapon/screwdriver,
-	/obj/item/weapon/reagent_containers/syringe,
-	/obj/item/weapon/kitchen/fork)))
+	/obj/item/pen,
+	/obj/item/screwdriver,
+	/obj/item/reagent_containers/syringe,
+	/obj/item/kitchen/fork)))
 
 #define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
 

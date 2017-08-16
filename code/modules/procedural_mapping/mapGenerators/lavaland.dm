@@ -22,9 +22,12 @@
 
 /datum/mapGenerator/lavaland/ground_only
 	modules = list(/datum/mapGeneratorModule/bottomLayer/lavaland_default)
+	buildmode_name = "Block: Lavaland Floor"
 
 /datum/mapGenerator/lavaland/dense_ores
 	modules = list(/datum/mapGeneratorModule/bottomLayer/lavaland_mineral/dense)
+	buildmode_name = "Block: Lavaland Ores: Dense"
 
 /datum/mapGenerator/lavaland/normal_ores
 	modules = list(/datum/mapGeneratorModule/bottomLayer/lavaland_mineral)
+	buildmode_name = "Block: Lavaland Ores"

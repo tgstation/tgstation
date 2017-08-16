@@ -4,6 +4,8 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "electropack0"
 	item_state = "electropack"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
@@ -22,8 +24,7 @@
 	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
@@ -34,7 +35,7 @@
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'

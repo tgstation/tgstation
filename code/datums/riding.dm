@@ -255,13 +255,13 @@
 
 ///////////////BOATS////////////
 /datum/riding/boat
-	keytype = /obj/item/weapon/oar
+	keytype = /obj/item/oar
 
 /datum/riding/boat/handle_ride(mob/user, direction)
 	var/turf/next = get_step(ridden, direction)
 	var/turf/current = get_turf(ridden)
 
-	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
+	if(istype(next, /turf/open/lava) || istype(current, /turf/open/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
 	else
 		to_chat(user, "Boats don't go on land!")
@@ -416,7 +416,7 @@
 
 /obj/item/riding_offhand
 	name = "offhand"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	flags = ABSTRACT | DROPDEL | NOBLUDGEON

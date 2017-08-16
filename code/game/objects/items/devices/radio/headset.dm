@@ -196,7 +196,7 @@
 	keyslot = new /obj/item/device/encryptionkey/headset_service
 
 /obj/item/device/radio/headset/headset_cent
-	name = "\improper Centcom headset"
+	name = "\improper CentCom headset"
 	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the centcom channel, use :y."
 	icon_state = "cent_headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
@@ -206,7 +206,7 @@
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
 
 /obj/item/device/radio/headset/headset_cent/alt
-	name = "\improper Centcom bowman headset"
+	name = "\improper CentCom bowman headset"
 	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the centcom channel, use :y."
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
@@ -224,10 +224,10 @@
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(keyslot || keyslot2)
 
 

@@ -15,17 +15,15 @@
 	speed_process = 1
 
 
-/obj/machinery/mineral/mint/New()
-	..()
+/obj/machinery/mineral/mint/Initialize()
+	. = ..()
 	materials = new /datum/material_container(src,
 		list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM),
 		max_amt = MINERAL_MATERIAL_AMOUNT*50)
 
 /obj/machinery/mineral/mint/Destroy()
-	qdel(materials)
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
-
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
@@ -102,8 +100,8 @@
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new P(src)
-		var/obj/item/weapon/storage/bag/money/M = locate(/obj/item/weapon/storage/bag/money, T)
+		var/obj/item/storage/bag/money/M = locate(/obj/item/storage/bag/money, T)
 		if(!M)
-			M = new /obj/item/weapon/storage/bag/money(src)
+			M = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
 		O.loc = M

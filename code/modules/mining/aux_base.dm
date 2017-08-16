@@ -24,12 +24,11 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/possible_destinations
 	clockwork = TRUE
 	var/obj/item/device/gps/internal/base/locator
-	circuit = /obj/item/weapon/circuitboard/computer/auxillary_base
+	circuit = /obj/item/circuitboard/computer/auxillary_base
 
-/obj/machinery/computer/auxillary_base/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
-	..()
-	locator = new /obj/item/device/gps/internal/base(src)
-
+/obj/machinery/computer/auxillary_base/Initialize()
+	. = ..()
+	locator = new(src)
 
 /obj/machinery/computer/auxillary_base/attack_hand(mob/user)
 	if(..(user))
@@ -128,12 +127,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	updateUsrDialog()
 
-
-/obj/machinery/computer/auxillary_base/onShuttleMove(turf/T1, rotation)
-	..()
-	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
-		SSblackbox.add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
-
 /obj/machinery/computer/auxillary_base/proc/set_mining_mode()
 	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.
 		req_one_access = list()
@@ -183,6 +176,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	name = "Landing Field Designator"
 	icon_state = "gangtool-purple"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
 	w_class = WEIGHT_CLASS_SMALL
@@ -244,11 +239,6 @@ obj/docking_port/stationary/public_mining_dock
 	dwidth = 3
 	width = 7
 	height = 5
-
-obj/docking_port/stationary/public_mining_dock/onShuttleMove()
-	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
-	return 0
-
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"

@@ -16,7 +16,7 @@
 	volume = 1000
 
 /obj/machinery/portable_atmospherics/pump/Initialize()
-	..()
+	. = ..()
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
@@ -26,8 +26,7 @@
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
 	air_update_turf()
-	qdel(pump)
-	pump = null
+	QDEL_NULL(pump)
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon()

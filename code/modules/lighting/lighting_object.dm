@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 	icon_state       = "transparent"
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
-	mouse_opacity    = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
@@ -138,10 +138,6 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 
 /atom/movable/lighting_object/blob_act()
 	return
-
-// Nope nope nope!
-/atom/movable/lighting_object/onShuttleMove(turf/T1, rotation)
-	return FALSE
 
 // Override here to prevent things accidentally moving around overlays.
 /atom/movable/lighting_object/forceMove(atom/destination, var/no_tp=FALSE, var/harderforce = FALSE)

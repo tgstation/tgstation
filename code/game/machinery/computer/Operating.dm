@@ -3,9 +3,9 @@
 	desc = "Used to monitor the vitals of a patient during surgery."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	circuit = /obj/item/weapon/circuitboard/computer/operating
-	var/mob/living/carbon/human/patient = null
-	var/obj/structure/table/optable/table = null
+	circuit = /obj/item/circuitboard/computer/operating
+	var/mob/living/carbon/human/patient
+	var/obj/structure/table/optable/table
 
 	light_color = LIGHT_COLOR_BLUE
 

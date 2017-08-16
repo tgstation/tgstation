@@ -37,7 +37,7 @@
 	icon_state = "shadow_mend"
 
 /datum/status_effect/void_price/tick()
-	owner << sound('sound/magic/summon_karp.ogg', volume = 25)
+	SEND_SOUND(owner, sound('sound/magic/summon_karp.ogg', volume = 25))
 	owner.adjustBruteLoss(3)
 
 
@@ -192,7 +192,7 @@
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG in owner.held_items)
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
 		if(HG.awakened)
@@ -247,7 +247,7 @@
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))
 			var/mob/living/M = B.current
-			M << 'sound/hallucinations/veryfar_noise.ogg'
+			SEND_SOUND(M, sound('sound/hallucinations/veryfar_noise.ogg'))
 			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in \the [A]!</span>")
 
 /datum/status_effect/cult_master/tick()
@@ -286,6 +286,12 @@
 		owner.maxHealth *= 10
 		owner.bruteloss *= 10
 		owner.fireloss *= 10
+		if(iscarbon(owner))
+			var/mob/living/carbon/C = owner
+			for(var/X in C.bodyparts)
+				var/obj/item/bodypart/BP = X
+				BP.brute_dam *= 10
+				BP.burn_dam *= 10
 		owner.toxloss *= 10
 		owner.oxyloss *= 10
 		owner.cloneloss *= 10
@@ -363,6 +369,12 @@
 	owner.maxHealth *= 0.1
 	owner.bruteloss *= 0.1
 	owner.fireloss *= 0.1
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		for(var/X in C.bodyparts)
+			var/obj/item/bodypart/BP = X
+			BP.brute_dam *= 0.1
+			BP.burn_dam *= 0.1
 	owner.toxloss *= 0.1
 	owner.oxyloss *= 0.1
 	owner.cloneloss *= 0.1

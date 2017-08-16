@@ -32,10 +32,10 @@
 		atoms += B
 		for(var/A in B)
 			atoms += A
-			if(istype(A,/obj/structure/cable))
+			if(istype(A, /obj/structure/cable))
 				cables += A
 				continue
-			if(istype(A,/obj/machinery/atmospherics))
+			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
 
 	SSatoms.InitializeAtoms(atoms)

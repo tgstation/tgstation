@@ -49,6 +49,9 @@
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
+/turf/open/floor/circuit/telecomms/mainframe
+	name = "Mainframe Base"
+
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
 	icon_normal = "gcircuit"
@@ -69,6 +72,9 @@
 
 /turf/open/floor/circuit/green/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
+
+/turf/open/floor/circuit/green/telecomms/mainframe
+	name = "Mainframe Base"
 
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"
@@ -181,7 +187,7 @@
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, I.usesound, 20, 1)
 		if(!do_after(user, 70*I.toolspeed, target = src))

@@ -6,7 +6,7 @@
 	icon_state = "seed-kudzu"
 	species = "kudzu"
 	plantname = "Kudzu"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
+	product = /obj/item/reagent_containers/food/snacks/grown/kudzupod
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	lifespan = 20
 	endurance = 10
@@ -93,10 +93,11 @@
 		adjust_potency(rand(15, -5))
 
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
+/obj/item/reagent_containers/food/snacks/grown/kudzupod
 	seed = /obj/item/seeds/kudzu
 	name = "kudzu pod"
 	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
 	icon_state = "kudzupod"
 	filling_color = "#6B8E23"
 	bitesize_mod = 2
+	foodtype = VEGETABLES | GROSS

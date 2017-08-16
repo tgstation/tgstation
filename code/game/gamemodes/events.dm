@@ -33,7 +33,7 @@
 
 	for(var/obj/machinery/power/apc/C in GLOB.apcs_list)
 		if(C.cell && C.z == ZLEVEL_STATION)
-			var/area/A = get_area(C)
+			var/area/A = C.area
 
 			var/skip = 0
 			for(var/area_type in skipped_areas)
@@ -60,7 +60,7 @@
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
-		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A,/area/arrival))
+		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A, /area/arrival))
 			A.power_light = TRUE
 			A.power_equip = TRUE
 			A.power_environ = TRUE

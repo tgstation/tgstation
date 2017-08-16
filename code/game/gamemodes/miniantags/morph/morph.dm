@@ -30,7 +30,7 @@
 	wander = 0
 	attacktext = "glomps"
 	attack_sound = 'sound/effects/blobattack.ogg'
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 
 	var/morphed = 0
 	var/atom/movable/form = null
@@ -224,7 +224,7 @@
 	player_mind.special_role = "Morph"
 	SSticker.mode.traitors |= player_mind
 	to_chat(S, S.playstyle_string)
-	S << 'sound/magic/mutate.ogg'
+	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
 	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S

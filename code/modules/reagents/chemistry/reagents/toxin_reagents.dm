@@ -196,12 +196,12 @@
 	taste_mult = 1
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/structure/alien/weeds))
+	if(istype(O, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
-	else if(istype(O,/obj/structure/glowshroom)) //even a small amount is enough to kill it
+	else if(istype(O, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-	else if(istype(O,/obj/structure/spacevine))
+	else if(istype(O, /obj/structure/spacevine))
 		var/obj/structure/spacevine/SV = O
 		SV.on_chem_effect(src)
 
@@ -283,13 +283,17 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/chloralhydrate/delayed
+/datum/reagent/toxin/chloralhydratedelayed
+	name = "Chloral Hydrate"
 	id = "chloralhydrate2"
+	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
+	reagent_state = SOLID
+	color = "#000067" // rgb: 0, 0, 103
+	toxpwr = 0
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/chloralhydrate/delayed/on_mob_life(mob/living/M)
+/datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/M)
 	switch(current_cycle)
-		if(1 to 10)
-			return
 		if(10 to 20)
 			M.confused += 1
 			M.drowsyness += 1

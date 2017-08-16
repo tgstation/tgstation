@@ -53,10 +53,10 @@
 	icon_state = "borg_chest"
 	status = BODYPART_ROBOTIC
 	var/wired = 0
-	var/obj/item/weapon/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/cell/cell = null
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(W, /obj/item/stock_parts/cell))
 		if(src.cell)
 			to_chat(user, "<span class='warning'>You have already inserted a cell!</span>")
 			return
@@ -124,7 +124,7 @@
 			else
 				src.flash1 = F
 			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/crowbar))
 		if(flash1 || flash2)
 			playsound(src.loc, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")
@@ -165,27 +165,27 @@
 /obj/item/bodypart/l_arm/robot/surplus
 	name = "surplus prosthetic left arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/surplus_augments.dmi'
+	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "l_arm"
 	max_damage = 20
 
 /obj/item/bodypart/r_arm/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/surplus_augments.dmi'
+	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "r_arm"
 	max_damage = 20
 
 /obj/item/bodypart/l_leg/robot/surplus
 	name = "surplus prosthetic left leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/surplus_augments.dmi'
+	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "l_leg"
 	max_damage = 20
 
 /obj/item/bodypart/r_leg/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/surplus_augments.dmi'
+	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "r_leg"
 	max_damage = 20
