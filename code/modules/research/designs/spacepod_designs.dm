@@ -112,7 +112,7 @@
 /datum/design/pod_armor_syndicate
 	construction_time = 400 //more time than frames, less than pod core
 	name = "Pod Armor (syndicate)"
-	desc = "Allows for the construction of spacepod armor. This is the industrial grade version."
+	desc = "Allows for the construction of spacepod armor. This is the syndicate version."
 	id = "podarmor_dark"
 	build_type = PODFAB
 	req_tech = list("materials" = 6, "engineering" = 6, "combat" = 6, "syndicate" = 6)
