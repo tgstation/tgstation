@@ -128,8 +128,10 @@
 	current.faction -= "ratvar"
 	current.remove_language(/datum/language/ratvar)
 	current.clear_alert("clockinfo")
-	for(var/datum/action/innate/function_call/F in owner.current.actions) //Removes any bound Ratvarian spears
-		qdel(F)
+	for(var/datum/action/innate/clockwork_arnaments/C in owner.current.actions) //Removes any bound clockwork armor
+		qdel(C)
+	for(var/datum/action/innate/call_weapon/W in owner.current.actions) //and weapons too
+		qdel(W)
 	if(issilicon(current))
 		var/mob/living/silicon/S = current
 		if(isAI(S))

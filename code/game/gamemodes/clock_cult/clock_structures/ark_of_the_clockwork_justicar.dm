@@ -167,9 +167,9 @@
 			countdown = new(src)
 			countdown.start()
 		seconds_until_activation--
-		if(!GLOB.application_scripture_unlocked && initial_activation_delay * 0.5 > seconds_until_activation)
-			GLOB.application_scripture_unlocked = TRUE
-			hierophant_message("<span class='large_brass bold'>The Ark is halfway prepared. Application scripture has been unlocked!</span>")
+		if(!GLOB.script_scripture_unlocked && initial_activation_delay * 0.5 > seconds_until_activation)
+			GLOB.script_scripture_unlocked = TRUE
+			hierophant_message("<span class='large_brass bold'>The Ark is halfway prepared. Script scripture is now available!</span>")
 		if(!seconds_until_activation)
 			cry_havoc()
 			seconds_until_activation = -1 //we'll set this after cry_havoc()

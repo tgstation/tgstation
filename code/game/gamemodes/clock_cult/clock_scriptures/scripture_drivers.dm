@@ -25,24 +25,24 @@
 	return TRUE
 
 
-//Judicial Visor: Creates a judicial visor, which can smite an area.
-/datum/clockwork_scripture/create_object/judicial_visor
-	descname = "Delayed Area Knockdown Glasses"
-	name = "Judicial Visor"
-	desc = "Creates a visor that can smite an area, applying Belligerent and briefly stunning. The smote area will explode after 3 seconds."
-	invocations = list("Grant me the flames of Engine!")
-	channel_time = 10
+//Sigil of Transgression: Creates a sigil of transgression, which briefly stuns and applies Belligerent to the first non-servant to cross it.
+/datum/clockwork_scripture/create_object/sigil_of_transgression
+	descname = "Trap, Stunning"
+	name = "Sigil of Transgression"
+	desc = "Wards a tile with a sigil, which will briefly stun the next non-Servant to cross it and apply Belligerent to them."
+	invocations = list("Divinity, smite...", "...those who tresspass here!")
+	channel_time = 50
 	consumed_components = list(BELLIGERENT_EYE = 1)
 	whispered = TRUE
-	object_path = /obj/item/clothing/glasses/judicial_visor
-	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting a small area.</span>"
-	usage_tip = "The visor has a thirty-second cooldown once used."
+	object_path = /obj/effect/clockwork/sigil/transgression
+	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be smitten.</span>"
+	usage_tip = "The sigil does not silence its victim, and is generally used to soften potential converts or would-be invaders."
 	tier = SCRIPTURE_DRIVER
-	space_allowed = TRUE
+	one_per_tile = TRUE
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
 	quickbind = TRUE
-	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
+	quickbind_desc = "Creates a Sigil of Transgression, which will briefly stun and slow the next non-Servant to cross it."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
@@ -252,23 +252,3 @@
 	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
-
-
-//Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.
-/datum/clockwork_scripture/create_object/sigil_of_transgression
-	descname = "Trap, Stunning"
-	name = "Sigil of Transgression"
-	desc = "Wards a tile with a sigil, which will stun the next non-Servant to cross it."
-	invocations = list("Divinity, smite...", "...those who tresspass here!")
-	channel_time = 50
-	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/transgression
-	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be stunned.</span>"
-	usage_tip = "The sigil, while fairly powerful in its stun, does not induce muteness in its victim."
-	tier = SCRIPTURE_DRIVER
-	one_per_tile = TRUE
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 11
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transgression, which will stun the next non-Servant to cross it."

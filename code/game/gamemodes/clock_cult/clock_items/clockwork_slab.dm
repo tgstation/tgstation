@@ -56,7 +56,7 @@
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armory)
+	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
 
 /obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
@@ -70,7 +70,7 @@
 
 /obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
+	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
@@ -598,12 +598,12 @@
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>Convert a new servant to unlock these scriptures.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready.</i></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures will unlock halfway until the Ark's activation.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant.</i></font>"
 
 	data["selected"] = selected_scripture
 

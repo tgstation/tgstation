@@ -98,6 +98,8 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
 
-#define RATVARIAN_SPEAR_DURATION 1800 //how long ratvarian spears last; defaults to 3 minutes
+#define CLOCKWORK_ARMOR_COOLDOWN 1800 //The cooldown period between summoning suits of clockwork armor
+
+#define RATVARIAN_SPEAR_COOLDOWN 300 //The cooldown period between summoning another Ratvarian spear
 
 #define PRISM_DELAY_DURATION 1200 //how long prolonging prisms delay the shuttle for; defaults to 2 minutes
