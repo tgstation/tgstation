@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate
 
 /obj/item/weapon/storage/box/syndicate/PopulateContents()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "sabotage" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "darklord" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "sabotage" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "sniper" = 1, "darklord" = 1, "metaops" = 1, "ninja" = 1)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -15,6 +15,15 @@
 			new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/device/flashlight/emp(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
+			
+			if("bond") // 29 tc		
+ 			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)		
+ 			new /obj/item/weapon/suppressor(src)		
+ 			new /obj/item/ammo_box/magazine/m10mm(src)		
+ 			new /obj/item/ammo_box/magazine/m10mm(src)		
+ 			new /obj/item/clothing/under/chameleon(src)		
+ 			new /obj/item/weapon/card/id/syndicate(src)		
+ 			new /obj/item/weapon/reagent_containers/syringe/stimulants(src)
 
 		if("stealth") // 31 tc
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
@@ -99,6 +108,15 @@
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/card/emag(src) // 6 tc
+			
+			if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks		
+ 			new /obj/item/weapon/gun/ballistic/automatic/sniper_rifle(src) // 12 tc		
+ 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)		
+ 			new /obj/item/clothing/glasses/thermal/syndi(src)		
+ 			new /obj/item/clothing/gloves/color/latex/nitrile(src)		
+ 			new /obj/item/clothing/mask/gas/clown_hat(src)		
+ 			new /obj/item/clothing/under/suit_jacket/really_black(src)		
+ 
 
 		if("ninja") // 33 tc worth
 			new /obj/item/weapon/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
