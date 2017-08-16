@@ -137,13 +137,13 @@
 	chemical_cost = 20
 	dna_cost = 2
 	req_human = 1
-	weapon_type = /obj/item/weapon/melee/arm_blade
+	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
 
-/obj/item/weapon/melee/arm_blade
+/obj/item/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -159,14 +159,14 @@
 	sharpness = IS_SHARP
 	var/can_drop = FALSE
 
-/obj/item/weapon/melee/arm_blade/Initialize(mapload,silent,synthetic)
+/obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
 		can_drop = TRUE
 
-/obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
+/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(istype(target, /obj/structure/table))
@@ -197,10 +197,10 @@
 		"<span class='italics'>You hear a metal screeching sound.</span>")
 		A.open(2)
 
-/obj/item/weapon/melee/arm_blade/dropped(mob/user)
+/obj/item/melee/arm_blade/dropped(mob/user)
 	..()
 	if(can_drop)
-		new /obj/item/weapon/melee/synthetic_arm_blade(get_turf(user))
+		new /obj/item/melee/synthetic_arm_blade(get_turf(user))
 
 /***************************************\
 |***********COMBAT TENTACLES*************|
@@ -215,14 +215,14 @@
 	chemical_cost = 10
 	dna_cost = 2
 	req_human = 1
-	weapon_type = /obj/item/weapon/gun/magic/tentacle
+	weapon_type = /obj/item/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
 
-/obj/item/weapon/gun/magic/tentacle
+/obj/item/gun/magic/tentacle
 	name = "tentacle"
 	desc = "A fleshy tentacle that can stretch out and grab things or people."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "tentacle"
 	item_state = "tentacle"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -237,7 +237,7 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/gun/magic/tentacle/Initialize(mapload, silent)
+/obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
 	if(ismob(loc))
 		if(!silent)
@@ -246,10 +246,10 @@
 			to_chat(loc, "<span class='notice'>You prepare to extend a tentacle.</span>")
 
 
-/obj/item/weapon/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] is not ready yet.<span>")
 
-/obj/item/weapon/gun/magic/tentacle/suicide_act(mob/user)
+/obj/item/gun/magic/tentacle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
@@ -261,7 +261,7 @@
 	caliber = "tentacle"
 	icon_state = "tentacle_end"
 	firing_effect_type = null
-	var/obj/item/weapon/gun/magic/tentacle/gun //the item that shot it
+	var/obj/item/gun/magic/tentacle/gun //the item that shot it
 
 /obj/item/ammo_casing/magic/tentacle/Initialize()
 	gun = loc
@@ -380,7 +380,7 @@
 	dna_cost = 1
 	req_human = 1
 
-	weapon_type = /obj/item/weapon/shield/changeling
+	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
 
 /obj/effect/proc_holder/changeling/weapon/shield/sting_action(mob/user)
@@ -388,15 +388,15 @@
 	if(!changeling)
 		return
 
-	var/obj/item/weapon/shield/changeling/S = ..(user)
+	var/obj/item/shield/changeling/S = ..(user)
 	S.remaining_uses = round(changeling.absorbedcount * 3)
 	return TRUE
 
-/obj/item/weapon/shield/changeling
+/obj/item/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	flags = ABSTRACT | NODROP | DROPDEL
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "ling_shield"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
@@ -404,12 +404,12 @@
 
 	var/remaining_uses //Set by the changeling ability.
 
-/obj/item/weapon/shield/changeling/Initialize()
+/obj/item/shield/changeling/Initialize()
 	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/weapon/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -444,7 +444,7 @@
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
-	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armor at all.
 
 /obj/item/clothing/suit/space/changeling/Initialize()

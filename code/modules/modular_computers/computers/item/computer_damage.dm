@@ -8,7 +8,7 @@
 			component_probability = damage_amount * 0.66
 	if(component_probability)
 		for(var/I in all_components)
-			var/obj/item/weapon/computer_hardware/H = all_components[I]
+			var/obj/item/computer_hardware/H = all_components[I]
 			if(prob(component_probability))
 				H.take_damage(round(damage_amount*0.5), damage_type, damage_flag, 0)
 
@@ -22,7 +22,7 @@
 		var/turf/newloc = get_turf(src)
 		new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
 		for(var/C in all_components)
-			var/obj/item/weapon/computer_hardware/H = all_components[C]
+			var/obj/item/computer_hardware/H = all_components[C]
 			uninstall_component(H)
 			H.forceMove(newloc)
 			if(prob(25))

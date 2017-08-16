@@ -3,7 +3,7 @@
 
 ///////////////////////////Veil Render//////////////////////
 
-/obj/item/weapon/veilrender
+/obj/item/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
@@ -20,7 +20,7 @@
 	var/rend_desc = "You should run now."
 	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
 
-/obj/item/weapon/veilrender/attack_self(mob/user)
+/obj/item/veilrender/attack_self(mob/user)
 	if(charges > 0)
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
@@ -57,14 +57,14 @@
 		qdel(src)
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/nullrod))
+	if(istype(I, /obj/item/nullrod))
 		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
 		qdel(src)
 		return
 	else
 		return ..()
 
-/obj/item/weapon/veilrender/vealrender
+/obj/item/veilrender/vealrender
 	name = "veal render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
 	spawn_type = /mob/living/simple_animal/cow
@@ -72,7 +72,7 @@
 	activate_descriptor = "hunger"
 	rend_desc = "Reverberates with the sound of ten thousand moos."
 
-/obj/item/weapon/veilrender/honkrender
+/obj/item/veilrender/honkrender
 	name = "honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
 	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
@@ -101,7 +101,7 @@
 	return
 /////////////////////////////////////////Scrying///////////////////
 
-/obj/item/weapon/scrying
+/obj/item/scrying
 	name = "scrying orb"
 	desc = "An incandescent orb of otherworldly energy, staring into it gives you vision beyond mortal means."
 	icon = 'icons/obj/projectiles.dmi'
@@ -113,7 +113,7 @@
 	force = 15
 	hitsound = 'sound/items/welder2.ogg'
 
-/obj/item/weapon/scrying/attack_self(mob/user)
+/obj/item/scrying/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
@@ -191,18 +191,18 @@
 	H.equip_to_slot_or_del(new hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
-	H.put_in_hands_or_del(new /obj/item/weapon/shield/riot/roman(H))
-	H.put_in_hands_or_del(new /obj/item/weapon/claymore(H))
-	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
+	H.put_in_hands_or_del(new /obj/item/shield/riot/roman(H))
+	H.put_in_hands_or_del(new /obj/item/claymore(H))
+	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), slot_back)
 
 
 
 /////////////////////Multiverse Blade////////////////////
 
-/obj/item/weapon/multisword
+/obj/item/multisword
 	name = "multiverse sword"
 	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -220,16 +220,16 @@
 	var/assigned = "unassigned"
 	var/static/list/multiverse = list()
 
-/obj/item/weapon/multisword/New()
+/obj/item/multisword/New()
 	..()
 	multiverse += src
 
 
-/obj/item/weapon/multisword/Destroy()
+/obj/item/multisword/Destroy()
 	multiverse.Remove(src)
 	return ..()
 
-/obj/item/weapon/multisword/attack_self(mob/user)
+/obj/item/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")
 		to_chat(user, "<span class='warning'>You know better than to touch your teacher's stuff.</span>")
 		return
@@ -265,7 +265,7 @@
 				spawn_copy(C, get_turf(user.loc), user)
 				to_chat(user, "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>")
 				cooldown = world.time + 400
-				for(var/obj/item/weapon/multisword/M in multiverse)
+				for(var/obj/item/multisword/M in multiverse)
 					if(M.assigned == assigned)
 						M.cooldown = cooldown
 
@@ -275,7 +275,7 @@
 		to_chat(user, "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>")
 
 
-/obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T, mob/user)
+/obj/item/multisword/proc/spawn_copy(var/client/C, var/turf/T, mob/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key
@@ -298,9 +298,9 @@
 	M.dna.update_dna_identity()
 	equip_copy(M)
 
-/obj/item/weapon/multisword/proc/equip_copy(var/mob/living/carbon/human/M)
+/obj/item/multisword/proc/equip_copy(var/mob/living/carbon/human/M)
 
-	var/obj/item/weapon/multisword/sword = new /obj/item/weapon/multisword
+	var/obj/item/multisword/sword = new /obj/item/multisword
 	sword.assigned = assigned
 	sword.faction = list("[assigned]")
 
@@ -321,7 +321,7 @@
 			M.equip_to_slot_or_del(new hat(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/roman(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(M), slot_shoes)
-			M.put_in_hands_or_del(new /obj/item/weapon/shield/riot/roman(M))
+			M.put_in_hands_or_del(new /obj/item/shield/riot/roman(M))
 			M.put_in_hands_or_del(sword)
 
 		if("wizard")
@@ -380,7 +380,7 @@
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
-			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/bikehorn(M), slot_l_store)
 			M.put_in_hands_or_del(sword)
 
 		if("killer")
@@ -391,8 +391,8 @@
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/welding(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/apron(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife(M), slot_l_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/kitchen/knife(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/scalpel(M), slot_r_store)
 			M.put_in_hands_or_del(sword)
 			for(var/obj/item/carried_item in M.get_equipped_items())
 				carried_item.add_mob_blood(M)
@@ -439,7 +439,7 @@
 
 	M.update_body_parts()
 
-	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
+	var/obj/item/card/id/W = new /obj/item/card/id
 	W.icon_state = "centcom"
 	W.access += ACCESS_MAINT_TUNNELS
 	W.assignment = "Multiverse Traveller"
@@ -474,7 +474,7 @@
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Knockdown(40)
 			GiveHint(target)
-		else if(istype(I, /obj/item/weapon/bikehorn))
+		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			SEND_SOUND(target, 'sound/items/airhorn.ogg')
 			target.adjustEarDamage(0,3)

@@ -1,5 +1,5 @@
 /**********************Resonator**********************/
-/obj/item/weapon/resonator
+/obj/item/resonator
 	name = "resonator"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
@@ -16,7 +16,7 @@
 	var/quick_burst_mod = 0.8
 	origin_tech = "magnets=3;engineering=3"
 
-/obj/item/weapon/resonator/upgraded
+/obj/item/resonator/upgraded
 	name = "upgraded resonator"
 	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
@@ -25,7 +25,7 @@
 	fieldlimit = 6
 	quick_burst_mod = 1
 
-/obj/item/weapon/resonator/attack_self(mob/user)
+/obj/item/resonator/attack_self(mob/user)
 	if(burst_time == 50)
 		burst_time = 30
 		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>")
@@ -33,7 +33,7 @@
 		burst_time = 50
 		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>")
 
-/obj/item/weapon/resonator/proc/CreateResonance(target, mob/user)
+/obj/item/resonator/proc/CreateResonance(target, mob/user)
 	var/turf/T = get_turf(target)
 	var/obj/effect/temp_visual/resonance/R = locate(/obj/effect/temp_visual/resonance) in T
 	if(R)
@@ -44,7 +44,7 @@
 		new /obj/effect/temp_visual/resonance(T, user, src, burst_time)
 		user.changeNext_move(CLICK_CD_MELEE)
 
-/obj/item/weapon/resonator/pre_attackby(atom/target, mob/user, params)
+/obj/item/resonator/pre_attackby(atom/target, mob/user, params)
 	if(check_allowed_items(target, 1))
 		CreateResonance(target, user)
 	return TRUE
@@ -59,7 +59,7 @@
 	var/resonance_damage = 20
 	var/damage_multiplier = 1
 	var/creator
-	var/obj/item/weapon/resonator/res
+	var/obj/item/resonator/res
 
 /obj/effect/temp_visual/resonance/Initialize(mapload, set_creator, set_resonator, set_duration)
 	duration = set_duration

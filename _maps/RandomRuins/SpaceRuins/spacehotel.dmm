@@ -157,7 +157,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 3"
@@ -197,7 +197,7 @@
 	name = "Hotel Guest Room 3"
 	})
 "aD" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-02"
 	},
 /turf/open/floor/wood,
@@ -214,7 +214,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -254,7 +254,7 @@
 	name = "Hotel Guest Room 4"
 	})
 "aL" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -271,7 +271,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 5"
@@ -311,7 +311,7 @@
 	name = "Hotel Guest Room 5"
 	})
 "aT" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -328,7 +328,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 6"
@@ -368,7 +368,7 @@
 	name = "Hotel Guest Room 6"
 	})
 "bb" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-18"
 	},
 /turf/open/floor/wood,
@@ -405,8 +405,8 @@
 	})
 "bg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 3"
@@ -425,7 +425,7 @@
 	})
 "bj" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
+/obj/item/bedsheet/red,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 3"
@@ -449,8 +449,8 @@
 	})
 "bm" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -469,7 +469,7 @@
 	})
 "bp" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -493,8 +493,8 @@
 	})
 "bs" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 5"
@@ -513,7 +513,7 @@
 	})
 "bv" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 5"
@@ -537,8 +537,8 @@
 	})
 "by" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 6"
@@ -557,7 +557,7 @@
 	})
 "bB" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/purple,
+/obj/item/bedsheet/purple,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 6"
@@ -765,7 +765,7 @@
 	})
 "bX" = (
 /obj/structure/table/wood,
-/obj/item/weapon/lipstick,
+/obj/item/lipstick,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -1351,7 +1351,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 2"
@@ -1416,7 +1416,7 @@
 	name = "Hotel Guest Room 2"
 	})
 "dq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
@@ -1433,7 +1433,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 1"
@@ -1498,7 +1498,7 @@
 	name = "Hotel Guest Room 1"
 	})
 "dy" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-14"
 	},
 /turf/open/floor/wood,
@@ -1540,7 +1540,7 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "dE" = (
 /obj/structure/table,
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "dF" = (
@@ -1568,8 +1568,8 @@
 	})
 "dJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 2"
@@ -1593,7 +1593,7 @@
 	})
 "dN" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/yellow,
+/obj/item/bedsheet/yellow,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 2"
@@ -1614,8 +1614,8 @@
 	})
 "dQ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 1"
@@ -1639,7 +1639,7 @@
 	})
 "dU" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/ian,
+/obj/item/bedsheet/ian,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 1"
@@ -1838,7 +1838,7 @@
 	})
 "eu" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom{
 	name = "Hotel Guest Room 2"
@@ -1900,13 +1900,13 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "eE" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/bedsheet/patriot,
+/obj/item/bedsheet/patriot,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "eF" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/card/id/away/hotel,
+/obj/item/card/id/away/hotel,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
@@ -2220,8 +2220,8 @@
 /area/ruin/space/has_grav/hotel/bar)
 "fF" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/book/manual/barman_recipes,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/has_grav/hotel/bar)
 "fG" = (
@@ -2232,7 +2232,7 @@
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/has_grav/hotel/bar)
 "fI" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-02"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -2289,29 +2289,29 @@
 /area/ruin/space/has_grav/hotel/bar)
 "fR" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/carrot,
+/obj/item/reagent_containers/food/snacks/grown/carrot,
+/obj/item/reagent_containers/food/snacks/grown/carrot,
+/obj/item/reagent_containers/food/snacks/grown/carrot,
+/obj/item/reagent_containers/food/snacks/grown/carrot,
+/obj/item/reagent_containers/food/snacks/grown/carrot,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/bar)
 "fS" = (
@@ -2329,7 +2329,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "fU" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/has_grav/hotel/bar)
 "fV" = (
@@ -2354,7 +2354,7 @@
 /area/ruin/space/has_grav/hotel/dock)
 "fY" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -2371,19 +2371,19 @@
 /area/ruin/space/has_grav/hotel/bar)
 "gb" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "gc" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "gd" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/has_grav/hotel/bar)
 "ge" = (
@@ -2404,7 +2404,7 @@
 	},
 /area/ruin/space/has_grav/hotel/dock)
 "gh" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/wood,
@@ -2460,7 +2460,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "gq" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "gr" = (
@@ -2513,9 +2513,9 @@
 /area/ruin/space/has_grav/hotel/dock)
 "gx" = (
 /obj/structure/table,
-/obj/item/weapon/screwdriver,
+/obj/item/screwdriver,
 /obj/item/device/multitool,
-/obj/item/weapon/wirecutters,
+/obj/item/wirecutters,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2547,16 +2547,16 @@
 /area/ruin/space/has_grav/hotel/bar)
 "gD" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "gE" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce,
-/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce,
-/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup,
-/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup,
-/obj/item/weapon/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/food/condiment/pack/hotsauce,
+/obj/item/reagent_containers/food/condiment/pack/hotsauce,
+/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "gF" = (
@@ -2571,14 +2571,14 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/hotel/workroom)
 "gI" = (
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper/fluff/ruins/spacehotel/notice,
+/obj/item/paper/fluff/ruins/spacehotel/notice,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/hotel/workroom)
 "gJ" = (
@@ -2592,7 +2592,7 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "gL" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/structure/sign/nosmoking_1{
 	pixel_y = 32
 	},
@@ -2632,9 +2632,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
 /obj/structure/closet/secure_closet/freezer/fridge{
 	req_access_txt = "200"
 	},
@@ -2667,10 +2667,10 @@
 /area/ruin/space/has_grav/hotel/bar)
 "gY" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = 4
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = -4
 	},
 /turf/open/floor/plasteel/bar,
@@ -2695,16 +2695,16 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
-/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
-/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
-/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
-/obj/item/weapon/paper/pamphlet/ruin/spacehotel,
+/obj/item/paper/pamphlet/ruin/spacehotel,
+/obj/item/paper/pamphlet/ruin/spacehotel,
+/obj/item/paper/pamphlet/ruin/spacehotel,
+/obj/item/paper/pamphlet/ruin/spacehotel,
+/obj/item/paper/pamphlet/ruin/spacehotel,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hotel/dock)
 "hd" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/mug/tea,
+/obj/item/reagent_containers/food/drinks/mug/tea,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
 "he" = (
@@ -2766,10 +2766,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/bar)
 "hm" = (
-/obj/item/weapon/reagent_containers/food/condiment/rice,
-/obj/item/weapon/reagent_containers/food/condiment/rice,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/rice,
+/obj/item/reagent_containers/food/condiment/rice,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
 /obj/structure/closet/secure_closet/freezer/kitchen{
 	req_access = null;
 	req_access_txt = "200"
@@ -2792,7 +2792,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "hq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/black,
@@ -2807,57 +2807,57 @@
 /area/ruin/space/has_grav/hotel/dock)
 "ht" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/bar)
 "hu" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/bar)
 "hv" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/bar)
 "hw" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/bar)
 "hx" = (
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = 4
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = -4
 	},
 /obj/structure/table,
@@ -2865,7 +2865,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "hy" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/book/manual/chef_recipes,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "hz" = (
@@ -2908,17 +2908,17 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "hE" = (
 /obj/structure/table,
-/obj/item/weapon/card/id/away/hotel,
-/obj/item/weapon/card/id/away/hotel,
-/obj/item/weapon/card/id/away/hotel,
-/obj/item/weapon/card/id/away/hotel,
-/obj/item/weapon/card/id/away/hotel,
-/obj/item/weapon/card/id/away/hotel,
+/obj/item/card/id/away/hotel,
+/obj/item/card/id/away/hotel,
+/obj/item/card/id/away/hotel,
+/obj/item/card/id/away/hotel,
+/obj/item/card/id/away/hotel,
+/obj/item/card/id/away/hotel,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/hotel/workroom)
 "hF" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/hotel/workroom)
 "hG" = (
@@ -2946,7 +2946,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "hJ" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/soysauce,
+/obj/item/reagent_containers/food/condiment/soysauce,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "hK" = (
@@ -3346,7 +3346,7 @@
 /area/ruin/space/has_grav/hotel/dock)
 "iH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /obj/item/clothing/gloves/color/yellow,
 /obj/machinery/light{
 	dir = 8
@@ -3384,7 +3384,7 @@
 	},
 /area/ruin/space/has_grav/hotel/power)
 "iM" = (
-/obj/item/weapon/twohanded/required/kirbyplants,
+/obj/item/twohanded/required/kirbyplants,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel)
 "iN" = (
@@ -3414,7 +3414,7 @@
 /area/ruin/space/has_grav/hotel/dock)
 "iR" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/head/welding,
 /turf/open/floor/plasteel/yellow/side{
 	icon_state = "yellow";
@@ -3598,8 +3598,8 @@
 "ji" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/yellow/side{
 	icon_state = "yellow";
 	dir = 8
@@ -3728,8 +3728,8 @@
 "jA" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -3828,7 +3828,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "jO" = (
 /obj/structure/closet,
-/obj/item/weapon/dice/d20,
+/obj/item/dice/d20,
 /turf/open/floor/plasteel/darkyellow,
 /area/ruin/space/has_grav/hotel/security)
 "jP" = (
@@ -4083,14 +4083,14 @@
 /area/ruin/space/has_grav/hotel/security)
 "kz" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/folder/blue,
+/obj/item/folder/red,
+/obj/item/folder/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
 "kA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
 "kB" = (
@@ -4153,7 +4153,7 @@
 /area/ruin/space/has_grav/hotel/power)
 "kK" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
 	dir = 8
@@ -4161,14 +4161,14 @@
 /area/ruin/space/has_grav/hotel/security)
 "kL" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
 "kM" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
 "kN" = (
@@ -4279,7 +4279,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "lc" = (
 /obj/structure/table,
-/obj/item/weapon/papercutter,
+/obj/item/papercutter,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -4287,7 +4287,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "ld" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
 "le" = (
@@ -4371,8 +4371,8 @@
 /area/ruin/space/has_grav/hotel/power)
 "lr" = (
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
 	dir = 8
@@ -4424,7 +4424,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "lA" = (
 /obj/structure/closet,
-/obj/item/weapon/dice/d1,
+/obj/item/dice/d1,
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -4541,7 +4541,7 @@
 /turf/open/floor/plasteel/darkred,
 /area/ruin/space/has_grav/hotel/security)
 "lP" = (
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/plating/beach/water{
 	baseturf = /turf/open/space
 	},
@@ -4556,7 +4556,7 @@
 /area/ruin/space/has_grav/hotel/pool)
 "lS" = (
 /obj/structure/table,
-/obj/item/weapon/card/id/away/hotel/securty,
+/obj/item/card/id/away/hotel/securty,
 /turf/open/floor/plasteel/darkred,
 /area/ruin/space/has_grav/hotel/security)
 "lT" = (
@@ -4564,7 +4564,7 @@
 	req_access = null;
 	req_access_txt = "203"
 	},
-/obj/item/weapon/gun/energy/laser/scatter/shotty,
+/obj/item/gun/energy/laser/scatter/shotty,
 /obj/item/clothing/head/helmet/justice,
 /turf/open/floor/plasteel/darkred,
 /area/ruin/space/has_grav/hotel/security)
@@ -4640,7 +4640,7 @@
 /area/ruin/space/has_grav/hotel)
 "mb" = (
 /obj/structure/table,
-/obj/item/weapon/lipstick,
+/obj/item/lipstick,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/pool)
 "mc" = (
@@ -4668,7 +4668,7 @@
 /area/ruin/space/has_grav/hotel/custodial)
 "mg" = (
 /obj/structure/janitorialcart,
-/obj/item/weapon/mop,
+/obj/item/mop,
 /turf/open/floor/plasteel/neutral,
 /area/ruin/space/has_grav/hotel/custodial)
 "mh" = (
@@ -4677,15 +4677,15 @@
 /area/ruin/space/has_grav/hotel/custodial)
 "mi" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/neutral,
 /area/ruin/space/has_grav/hotel/custodial)
 "mj" = (
 /obj/structure/table,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
 /turf/open/floor/plasteel/neutral,
 /area/ruin/space/has_grav/hotel/custodial)
 "mk" = (
@@ -4831,7 +4831,7 @@
 	},
 /area/ruin/space/has_grav/hotel/pool)
 "mD" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -4854,7 +4854,7 @@
 /area/ruin/space/has_grav/hotel/custodial)
 "mI" = (
 /obj/structure/table,
-/obj/item/weapon/storage/bag/trash,
+/obj/item/storage/bag/trash,
 /turf/open/floor/plasteel/neutral,
 /area/ruin/space/has_grav/hotel/custodial)
 "mJ" = (

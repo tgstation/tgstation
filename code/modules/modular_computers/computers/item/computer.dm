@@ -61,7 +61,7 @@
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	for(var/H in all_components)
-		var/obj/item/weapon/computer_hardware/CH = all_components[H]
+		var/obj/item/computer_hardware/CH = all_components[H]
 		if(CH.holder == src)
 			CH.on_remove(src)
 			CH.holder = null
@@ -97,7 +97,7 @@
 
 	if(issilicon(usr))
 		return
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(usr.canUseTopic(src))
 		card_slot.try_eject(null, usr)
 
@@ -108,7 +108,7 @@
 
 	if(issilicon(usr))
 		return
-	var/obj/item/weapon/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
+	var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
 	if(usr.canUseTopic(src))
 		ai_slot.try_eject(null, usr,1)
 
@@ -122,7 +122,7 @@
 		return
 
 	if(usr.canUseTopic(src))
-		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
+		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(uninstall_component(portable_drive, usr))
 			portable_drive.verb_pickup()
 
@@ -132,9 +132,9 @@
 		return
 
 	if(user.canUseTopic(src))
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		var/obj/item/weapon/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
-		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
+		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+		var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
+		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(portable_drive)
 			if(uninstall_component(portable_drive, user))
 				portable_drive.verb_pickup()
@@ -147,13 +147,13 @@
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/device/modular_computer/GetAccess()
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(card_slot)
 		return card_slot.GetAccess()
 	return ..()
 
 /obj/item/device/modular_computer/GetID()
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(card_slot)
 		return card_slot.GetID()
 	return ..()
@@ -224,7 +224,7 @@
 		return
 
 	// If we have a recharger, enable it automatically. Lets computer without a battery work.
-	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
+	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 	if(recharger)
 		recharger.enabled = 1
 
@@ -282,8 +282,8 @@
 /obj/item/device/modular_computer/proc/get_header_data()
 	var/list/data = list()
 
-	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components[MC_CELL]
-	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
+	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
+	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 
 	if(battery_module && battery_module.battery)
 		switch(battery_module.battery.percent())
@@ -348,7 +348,7 @@
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/device/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components[MC_NET]
+	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
@@ -357,7 +357,7 @@
 /obj/item/device/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return FALSE
-	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components[MC_NET]
+	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
 	return GLOB.ntnet_global.add_log(text, network_card)
 
 /obj/item/device/modular_computer/proc/shutdown_computer(loud = 1)
@@ -371,19 +371,19 @@
 	update_icon()
 
 
-/obj/item/device/modular_computer/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
 	// Insert items into the components
 	for(var/h in all_components)
-		var/obj/item/weapon/computer_hardware/H = all_components[h]
+		var/obj/item/computer_hardware/H = all_components[h]
 		if(H.try_insert(W, user))
 			return
 
 	// Insert new hardware
-	if(istype(W, /obj/item/weapon/computer_hardware))
+	if(istype(W, /obj/item/computer_hardware))
 		if(install_component(W, user))
 			return
 
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(all_components.len)
 			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
 			return
@@ -393,8 +393,8 @@
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(!WT.isOn())
 			to_chat(user, "<span class='warning'>\The [W] is off.</span>")
 			return
@@ -410,13 +410,13 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(!all_components.len)
 			to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
 			return
 		var/list/component_names = list()
 		for(var/h in all_components)
-			var/obj/item/weapon/computer_hardware/H = all_components[h]
+			var/obj/item/computer_hardware/H = all_components[h]
 			component_names.Add(H.name)
 
 		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
@@ -427,7 +427,7 @@
 		if(!Adjacent(user))
 			return
 
-		var/obj/item/weapon/computer_hardware/H = find_hardware_by_name(choice)
+		var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
 
 		if(!H)
 			return

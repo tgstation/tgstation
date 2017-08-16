@@ -250,17 +250,17 @@
 		else
 			to_chat(user, "<span class='warning'>The [src] isn't accepting the [sheets].</span>")
 
-	else if(istype(O, /obj/item/weapon/crowbar))
+	else if(istype(O, /obj/item/crowbar))
 		materials.retrieve_all()
 		playsound(loc, O.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
-	else if(istype(O, /obj/item/weapon/weldingtool))
+	else if(istype(O, /obj/item/weldingtool))
 		if(!(stat & BROKEN))
 			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
-		var/obj/item/weapon/weldingtool/WT = O
+		var/obj/item/weldingtool/WT = O
 
 		if(!WT.isOn())
 			return

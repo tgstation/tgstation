@@ -30,8 +30,8 @@
 /obj/structure/bed/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+/obj/structure/bed/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 	else
@@ -48,7 +48,7 @@
 	resistance_flags = 0
 	var/foldabletype = /obj/item/roller
 
-/obj/structure/bed/roller/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
 		if(R.loaded)

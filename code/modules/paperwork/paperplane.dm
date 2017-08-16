@@ -1,4 +1,4 @@
-/obj/item/weapon/paperplane
+/obj/item/paperplane
 	name = "paper plane"
 	desc = "Paper, folded in the shape of a plane"
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -10,9 +10,9 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 
-	var/obj/item/weapon/paper/internalPaper
+	var/obj/item/paper/internalPaper
 
-/obj/item/weapon/paperplane/Initialize(mapload, obj/item/weapon/paper/newPaper)
+/obj/item/paperplane/Initialize(mapload, obj/item/paper/newPaper)
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
@@ -22,16 +22,16 @@
 		color = newPaper.color
 		newPaper.forceMove(src)
 	else
-		internalPaper = new /obj/item/weapon/paper(src)
+		internalPaper = new /obj/item/paper(src)
 	update_icon()
 
-/obj/item/weapon/paperplane/Destroy()
+/obj/item/paperplane/Destroy()
 	if(internalPaper)
 		qdel(internalPaper)
 		internalPaper = null
 	return ..()
 
-/obj/item/weapon/paperplane/suicide_act(mob/living/user)
+/obj/item/paperplane/suicide_act(mob/living/user)
 	user.Stun(200)
 	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
@@ -39,14 +39,14 @@
 	sleep(10)
 	return (BRUTELOSS)
 
-/obj/item/weapon/paperplane/update_icon()
+/obj/item/paperplane/update_icon()
 	cut_overlays()
 	var/list/stamped = internalPaper.stamped
 	if(stamped)
 		for(var/S in stamped)
 			add_overlay("paperplane_[S]")
 
-/obj/item/weapon/paperplane/attack_self(mob/user)
+/obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
 	var/atom/movable/internal_paper_tmp = internalPaper
 	internal_paper_tmp.forceMove(loc)
@@ -54,13 +54,13 @@
 	qdel(src)
 	user.put_in_hands(internal_paper_tmp)
 
-/obj/item/weapon/paperplane/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
+/obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	..()
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		to_chat(user, "<span class='notice'>You should unfold [src] before changing it.</span>")
 		return
 
-	else if(istype(P, /obj/item/weapon/stamp)) 	//we don't randomize stamps on a paperplane
+	else if(istype(P, /obj/item/stamp)) 	//we don't randomize stamps on a paperplane
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
 		update_icon()
 
@@ -82,10 +82,10 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
-/obj/item/weapon/paperplane/throw_impact(atom/hit_atom)
+/obj/item/paperplane/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
 	var/mob/living/carbon/human/H = hit_atom
@@ -98,13 +98,13 @@
 		H.Knockdown(40)
 		H.emote("scream")
 
-/obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)
+/obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
 	if ( istype(user) )
 		if( (!in_range(src, user)) || user.stat || user.restrained() )
 			return
 		to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
 		user.temporarilyRemoveItemFromInventory(src)
-		I = new /obj/item/weapon/paperplane(user, src)
+		I = new /obj/item/paperplane(user, src)
 		user.put_in_hands(I)
 	else
 		to_chat(user, "<span class='notice'> You lack the dexterity to fold \the [src]. </span>")

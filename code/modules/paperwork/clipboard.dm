@@ -1,4 +1,4 @@
-/obj/item/weapon/clipboard
+/obj/item/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "clipboard"
@@ -7,21 +7,21 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
-	var/obj/item/weapon/pen/haspen		//The stored pen.
-	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
+	var/obj/item/pen/haspen		//The stored pen.
+	var/obj/item/paper/toppaper	//The topmost piece of paper.
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
 
-/obj/item/weapon/clipboard/Initialize()
+/obj/item/clipboard/Initialize()
 	update_icon()
 	. = ..()
 
-/obj/item/weapon/clipboard/Destroy()
+/obj/item/clipboard/Destroy()
 	QDEL_NULL(haspen)
 	QDEL_NULL(toppaper)	//let movable/Destroy handle the rest
 	return ..()
 
-/obj/item/weapon/clipboard/update_icon()
+/obj/item/clipboard/update_icon()
 	cut_overlays()
 	if(toppaper)
 		add_overlay(toppaper.icon_state)
@@ -31,8 +31,8 @@
 	add_overlay("clipboard_over")
 
 
-/obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/paper))
+/obj/item/clipboard/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/paper))
 		if(!user.transferItemToLoc(W, src))
 			return
 		toppaper = W
@@ -43,7 +43,7 @@
 		update_icon()
 
 
-/obj/item/weapon/clipboard/attack_self(mob/user)
+/obj/item/clipboard/attack_self(mob/user)
 	var/dat = "<title>Clipboard</title>"
 	if(haspen)
 		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
@@ -52,7 +52,7 @@
 
 	//The topmost paper. You can't organise contents directly in byond, so this is what we're stuck with.	-Pete
 	if(toppaper)
-		var/obj/item/weapon/paper/P = toppaper
+		var/obj/item/paper/P = toppaper
 		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR><HR>"
 
 		for(P in src)
@@ -64,7 +64,7 @@
 	add_fingerprint(usr)
 
 
-/obj/item/weapon/clipboard/Topic(href, href_list)
+/obj/item/clipboard/Topic(href, href_list)
 	..()
 	if(usr.stat || usr.restrained())
 		return
@@ -80,8 +80,8 @@
 		if(href_list["addpen"])
 			if(!haspen)
 				var/obj/item/held = usr.get_active_held_item()
-				if(istype(held, /obj/item/weapon/pen))
-					var/obj/item/weapon/pen/W = held
+				if(istype(held, /obj/item/pen))
+					var/obj/item/pen/W = held
 					if(!usr.transferItemToLoc(W, src))
 						return
 					haspen = W
@@ -100,14 +100,14 @@
 				usr.put_in_hands(P)
 				if(P == toppaper)
 					toppaper = null
-					var/obj/item/weapon/paper/newtop = locate(/obj/item/weapon/paper) in src
+					var/obj/item/paper/newtop = locate(/obj/item/paper) in src
 					if(newtop && (newtop != P))
 						toppaper = newtop
 					else
 						toppaper = null
 
 		if(href_list["read"])
-			var/obj/item/weapon/paper/P = locate(href_list["read"])
+			var/obj/item/paper/P = locate(href_list["read"])
 			if(istype(P) && P.loc == src)
 				usr.examinate(P)
 

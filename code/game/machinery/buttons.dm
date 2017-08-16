@@ -6,7 +6,7 @@
 	var/skin = "doorctrl"
 	power_channel = ENVIRON
 	var/obj/item/device/assembly/device
-	var/obj/item/weapon/electronics/airlock/board
+	var/obj/item/electronics/airlock/board
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
@@ -57,7 +57,7 @@
 			icon_state = skin
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
 			update_icon()
@@ -74,7 +74,7 @@
 			device = W
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!board && istype(W, /obj/item/weapon/electronics/airlock))
+		if(!board && istype(W, /obj/item/electronics/airlock))
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
 				return
@@ -85,7 +85,7 @@
 				req_access = board.accesses
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!device && !board && istype(W, /obj/item/weapon/wrench))
+		if(!device && !board && istype(W, /obj/item/wrench))
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
