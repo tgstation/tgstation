@@ -9,7 +9,7 @@
 	display_name = "Basic Research Technology"
 	description = "NT default research technologies."
 	design_ids = list("basic_matter_bin", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
-	"destructive_analyzer", "protolathe", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk")			//Default research tech, prevents bricking
+	"destructive_analyzer", "protolathe", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab")			//Default research tech, prevents bricking
 
 /datum/techweb_node/biotech
 	id = "biotech"
@@ -78,7 +78,7 @@
 	display_name = "Arcade Games"
 	description = "For the slackers on the station."
 	prereq_ids = list("datatheory", "comptech")
-	design_ids = list("arcade_battle", "arcade_orion")
+	design_ids = list("arcade_battle", "arcade_orion", "slotmachine")
 	research_cost = 5000
 	export_price =5000
 
@@ -173,30 +173,25 @@
 	research_cost = 5000
 	export_price = 5000
 
+/datum/techweb_node/integrated_HUDs
+	id = "integrated_HUDs"
+	display_name = "Integrated HUDs"
+	description = "The usefulness of computerized records, projected straight onto your eyepiece!"
+	prereq_ids = list("comp_recordkeeping", "emp_basic", "datatheory")
+	design_ids = list("health_hud", "security+hud", "diagnostic_hud")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/NVGtech
+	id = "NVGtech"
+	display_name = "Night Vision Technology"
+	description = "Allows seeing in the dark without actual light!"
+	prereq_ids = list("integrated_HUDs", "adv_engi")
+	design_ids = list("health_hud_night", "security_hud_night", "diagnostic_hud_night", "night_visision_goggles", "nvgmesons")
+	research_cost = 5000
+	export_price = 5000
 
 
-
-/////////////////////////////////////////
-/////////////////HUDs////////////////////
-/////////////////////////////////////////
-/datum/design/health_hud
-	name = "Health Scanner HUD"
-	id = "health_hud"
-/datum/design/health_hud_night
-	name = "Night Vision Health Scanner HUD"
-	id = "health_hud_night"
-/datum/design/security_hud
-	name = "Security HUD"
-	id = "security_hud"
-/datum/design/security_hud_night
-	name = "Night Vision Security HUD"
-	id = "security_hud_night"
-/datum/design/diagnostic_hud
-	name = "Diagnostic HUD"
-	id = "dianostic_hud"
-/datum/design/diagnostic_hud_night
-	name = "Night Vision Diagnostic HUD"
-	id = "dianostic_hud_night"
 /////////////////////////////////////////
 //////////////////Misc///////////////////
 /////////////////////////////////////////
@@ -206,12 +201,6 @@
 	name = "Air Horn"
 	desc = "Damn son, where'd you find this?"
 	id = "air_horn"
-/datum/design/nvgmesons
-	name = "Night Vision Optical Meson Scanners"
-	id = "nvgmesons"
-/datum/design/night_vision_goggles
-	name = "Night Vision Goggles"
-	id = "night_visision_goggles"
 /datum/design/magboots
 	name = "Magnetic Boots"
 	id = "magboots"
@@ -224,8 +213,6 @@
 /datum/design/jawsoflife
 	name = "Jaws of Life"
 	id = "jawsoflife"
-	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
-
 /datum/design/diskplantgene
 	name = "Plant Data Disk"
 	id = "diskplantgene"
@@ -942,17 +929,6 @@
 	name = "Machine Design (Hydroponics Tray Board)"
 	id = "hydro_tray"
 	category = list ("Hydroponics Machinery")
-/datum/design/board/rdservercontrol
-	name = "Computer Design (R&D Server Control Console Board)"
-	desc = "The circuit board for an R&D Server Control Console."
-	id = "rdservercontrol"
-/datum/design/board/rdserver
-	name = "Machine Design (R&D Server Board)"
-	desc = "The circuit board for an R&D Server."
-	id = "rdserver"
-/datum/design/board/mechfab
-	name = "Machine Design (Exosuit Fabricator Board)"
-	id = "mechfab"
 /datum/design/board/cyborgrecharger
 	name = "Machine Design (Cyborg Recharger Board)"
 	id = "cyborgrecharger"
@@ -1290,10 +1266,6 @@
 /datum/design/board/robocontrol
 	name = "Computer Design (Robotics Control Console)"
 	id = "robocontrol"
-/datum/design/board/slot_machine
-	name = "Computer Design (Slot Machine)"
-	id = "slotmachine"
-	build_path = /obj/item/weapon/circuitboard/computer/slot_machine
 /datum/design/board/powermonitor
 	name = "Computer Design (Power Monitor)"
 	id = "powermonitor"
