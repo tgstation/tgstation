@@ -1,5 +1,5 @@
 /*********************Hivelord stabilizer****************/
-/obj/item/weapon/hivelordstabilizer
+/obj/item/hivelordstabilizer
 	name = "stabilizing serum"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=3"
 
-/obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
+/obj/item/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/regenerative_core/C = M
 	if(!istype(C, /obj/item/organ/regenerative_core))
 		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")

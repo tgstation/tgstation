@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks.
 ////////////////////////////////////////////////////////////////////////////////
-/obj/item/weapon/reagent_containers/food/drinks
+/obj/item/reagent_containers/food/drinks
 	name = "drink"
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
@@ -14,11 +14,11 @@
 	volume = 50
 	resistance_flags = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/on_reagent_change()
 	if (gulp_size < 5) gulp_size = 5
 	else gulp_size = max(round(reagents.total_volume / 5), 5)
 
-/obj/item/weapon/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
@@ -50,7 +50,7 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
-/obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
+/obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
@@ -86,7 +86,7 @@
 			bro.cell.use(30)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
-/obj/item/weapon/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot())
 		var/added_heat = (I.is_hot() / 100) //ishot returns a temperature
 		if(reagents)
@@ -105,7 +105,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-/obj/item/weapon/reagent_containers/food/drinks/trophy
+/obj/item/reagent_containers/food/drinks/trophy
 	name = "pewter cup"
 	desc = "Everyone gets a trophy."
 	icon_state = "pewter_cup"
@@ -121,7 +121,7 @@
 	spillable = 1
 	resistance_flags = FIRE_PROOF
 
-/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup
 	name = "gold cup"
 	desc = "You're winner!"
 	icon_state = "golden_cup"
@@ -132,7 +132,7 @@
 	materials = list(MAT_GOLD=1000)
 	volume = 150
 
-/obj/item/weapon/reagent_containers/food/drinks/trophy/silver_cup
+/obj/item/reagent_containers/food/drinks/trophy/silver_cup
 	name = "silver cup"
 	desc = "Best loser!"
 	icon_state = "silver_cup"
@@ -144,7 +144,7 @@
 	volume = 100
 
 
-/obj/item/weapon/reagent_containers/food/drinks/trophy/bronze_cup
+/obj/item/reagent_containers/food/drinks/trophy/bronze_cup
 	name = "bronze cup"
 	desc = "At least you ranked!"
 	icon_state = "bronze_cup"
@@ -160,7 +160,7 @@
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 //	Formatting is the same as food.
 
-/obj/item/weapon/reagent_containers/food/drinks/coffee
+/obj/item/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
@@ -168,32 +168,32 @@
 	spillable = 1
 	resistance_flags = FREEZE_PROOF
 
-/obj/item/weapon/reagent_containers/food/drinks/ice
+/obj/item/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
 	list_reagents = list("ice" = 30)
 	spillable = 1
 
-/obj/item/weapon/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
+/obj/item/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
 	desc = "A drink served in a classy mug."
 	icon_state = "tea"
 	item_state = "coffee"
 	spillable = 1
 
-/obj/item/weapon/reagent_containers/food/drinks/mug/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/mug/on_reagent_change()
 	if(reagents.total_volume)
 		icon_state = "tea"
 	else
 		icon_state = "tea_empty"
 
-/obj/item/weapon/reagent_containers/food/drinks/mug/tea
+/obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list("tea" = 30)
 
-/obj/item/weapon/reagent_containers/food/drinks/mug/coco
+/obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
@@ -202,21 +202,21 @@
 	resistance_flags = FREEZE_PROOF
 
 
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen
+/obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
 	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
 	list_reagents = list("dry_ramen" = 30)
 	foodtype = GRAIN
 
-/obj/item/weapon/reagent_containers/food/drinks/beer
+/obj/item/reagent_containers/food/drinks/beer
 	name = "Space Beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
 	list_reagents = list("beer" = 30)
 	foodtype = GRAIN | ALCOHOL
 
-/obj/item/weapon/reagent_containers/food/drinks/ale
+/obj/item/reagent_containers/food/drinks/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
@@ -224,7 +224,7 @@
 	list_reagents = list("ale" = 30)
 	foodtype = GRAIN | ALCOHOL
 
-/obj/item/weapon/reagent_containers/food/drinks/sillycup
+/obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
 	desc = "A paper water cup."
 	icon_state = "water_cup_e"
@@ -232,19 +232,19 @@
 	volume = 10
 	spillable = 1
 
-/obj/item/weapon/reagent_containers/food/drinks/sillycup/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change()
 	if(reagents.total_volume)
 		icon_state = "water_cup"
 	else
 		icon_state = "water_cup_e"
 
-/obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
-/obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change()
 	if (reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
 			if("orangejuice")
@@ -289,7 +289,7 @@
 //	itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
 //	icon states.
 
-/obj/item/weapon/reagent_containers/food/drinks/shaker
+/obj/item/reagent_containers/food/drinks/shaker
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
@@ -297,26 +297,26 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 
-/obj/item/weapon/reagent_containers/food/drinks/flask
+/obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	icon_state = "flask"
 	materials = list(MAT_METAL=250)
 	volume = 60
 
-/obj/item/weapon/reagent_containers/food/drinks/flask/gold
+/obj/item/reagent_containers/food/drinks/flask/gold
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
 	materials = list(MAT_GOLD=500)
 
-/obj/item/weapon/reagent_containers/food/drinks/flask/det
+/obj/item/reagent_containers/food/drinks/flask/det
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
 	list_reagents = list("hearty_punch" = 30)
 
-/obj/item/weapon/reagent_containers/food/drinks/britcup
+/obj/item/reagent_containers/food/drinks/britcup
 	name = "cup"
 	desc = "A cup with the british flag emblazoned on it."
 	icon_state = "britcup"
@@ -325,7 +325,7 @@
 
 ///Lavaland bowls and bottles///
 
-/obj/item/weapon/reagent_containers/food/drinks/mushroom_bowl
+/obj/item/reagent_containers/food/drinks/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
@@ -335,16 +335,16 @@
 
 
 //////////////////////////soda_cans//
-//These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
+//These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans
+/obj/item/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	container_type = 0
 	spillable = FALSE
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
+/obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
@@ -354,7 +354,7 @@
 	..()
 
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
+/obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_open_container())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
 		container_type = OPENCONTAINER
@@ -363,86 +363,86 @@
 		return
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
+/obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
 	list_reagents = list("cola" = 30)
 	foodtype = SUGAR
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic
+/obj/item/reagent_containers/food/drinks/soda_cans/tonic
 	name = "T-Borg's Tonic Water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
 	list_reagents = list("tonic" = 50)
 	foodtype = ALCOHOL
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater
+/obj/item/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "Soda Water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
 	list_reagents = list("sodawater" = 50)
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime
 	name = "Orange Soda"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
 	list_reagents = list("lemon_lime" = 30)
 	foodtype = FRUIT
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
 	..()
 	name = "Lemon-Lime Soda"
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up
+/obj/item/reagent_containers/food/drinks/soda_cans/space_up
 	name = "Space-Up!"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
 	list_reagents = list("space_up" = 30)
 	foodtype = SUGAR | JUNKFOOD
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist
+/obj/item/reagent_containers/food/drinks/soda_cans/starkist
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
 	list_reagents = list("cola" = 15, "orangejuice" = 15)
 	foodtype = SUGAR | FRUIT | JUNKFOOD
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind
+/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
 	list_reagents = list("spacemountainwind" = 30)
 	foodtype = SUGAR | JUNKFOOD
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko
+/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
 	list_reagents = list("thirteenloko" = 30)
 	foodtype = SUGAR | JUNKFOOD
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb
+/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
 	foodtype = SUGAR | JUNKFOOD
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game
+/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game
 	name = "Pwr Game"
 	desc = "The only drink with the PWR that true gamers crave."
 	icon_state = "purple_can"
 	list_reagents = list("pwr_game" = 30)
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers
+/obj/item/reagent_containers/food/drinks/soda_cans/shamblers
 	name = "Shambler's Juice"
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
 	foodtype = SUGAR | JUNKFOOD
 
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/air
+/obj/item/reagent_containers/food/drinks/soda_cans/air
 	name = "Canned Air"
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"

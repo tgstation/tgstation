@@ -29,7 +29,7 @@
 		qdel(H.gloves)
 
 	var/obj/item/clothing/suit/space/space_ninja/theSuit = new(H)
-	var/obj/item/weapon/dash/energy_katana/EK = new(H)
+	var/obj/item/dash/energy_katana/EK = new(H)
 	theSuit.energyKatana = EK
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
@@ -42,12 +42,12 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night(H), slot_glasses)
 	H.equip_to_slot_or_del(EK, slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight(H), slot_r_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/grenade/plastic/x4(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(H), slot_s_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/grenade/plastic/x4(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/tank/internals/emergency_oxygen(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/tank/jetpack/carbondioxide(H), slot_back)
 	theSuit.randomize_param()
 
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(H)
+	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
 	E.implant(H)
 	return 1
 

@@ -22,7 +22,7 @@
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
 	strip_delay = 70
 	resistance_flags = 0
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	pockets = /obj/item/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -80,7 +80,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes/clown
+	pockets = /obj/item/storage/internal/pocket/shoes/clown
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -105,7 +105,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = 0
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	pockets = /obj/item/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -119,7 +119,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	pockets = /obj/item/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -130,7 +130,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	strip_delay = 40
 	equip_delay_other = 40
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	pockets = /obj/item/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -180,7 +180,7 @@
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	pockets = /obj/item/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
@@ -189,7 +189,7 @@
 	item_state = "jetboots"
 	item_color = "hosred"
 	resistance_flags = FIRE_PROOF
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	pockets = /obj/item/storage/internal/pocket/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3

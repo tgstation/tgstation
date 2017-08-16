@@ -95,14 +95,14 @@
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags & NODECONSTRUCT))
-		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
+		if(istype(I, /obj/item/screwdriver) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 20*I.toolspeed, target = src))
 				deconstruct(TRUE)
 			return
 
-		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
+		if(istype(I, /obj/item/wrench) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
@@ -110,8 +110,8 @@
 				deconstruct(TRUE, 1)
 			return
 
-	if(istype(I, /obj/item/weapon/storage/bag/tray))
-		var/obj/item/weapon/storage/bag/tray/T = I
+	if(istype(I, /obj/item/storage/bag/tray))
+		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
 			var/list/obj/item/oldContents = T.contents.Copy()
 			T.quick_empty()
@@ -167,7 +167,7 @@
 /obj/structure/table/glass/New()
 	. = ..()
 	debris += new frame
-	debris += new /obj/item/weapon/shard
+	debris += new /obj/item/shard
 
 /obj/structure/table/glass/Destroy()
 	for(var/i in debris)
@@ -203,7 +203,7 @@
 		var/atom/movable/AM = I
 		AM.forceMove(T)
 		debris -= AM
-		if(istype(AM, /obj/item/weapon/shard))
+		if(istype(AM, /obj/item/shard))
 			AM.throw_impact(L)
 	L.Knockdown(100)
 	qdel(src)
@@ -224,7 +224,7 @@
 
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
-	for(var/obj/item/weapon/shard/S in debris)
+	for(var/obj/item/shard/S in debris)
 		S.color = NARSIE_WINDOW_COLOUR
 
 /*
@@ -295,9 +295,9 @@
 	integrity_failure = 50
 	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			playsound(src.loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
@@ -420,7 +420,7 @@
 		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
+	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
 	if(!user.drop_item())
 		return
@@ -428,8 +428,8 @@
 		step(O, get_dir(O, src))
 
 
-/obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+/obj/structure/rack/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 		return
@@ -468,7 +468,7 @@
 /obj/structure/rack/deconstruct(disassembled = TRUE)
 	if(!(flags&NODECONSTRUCT))
 		density = FALSE
-		var/obj/item/weapon/rack_parts/newparts = new(loc)
+		var/obj/item/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
 	qdel(src)
 
@@ -477,23 +477,23 @@
  * Rack Parts
  */
 
-/obj/item/weapon/rack_parts
+/obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "rack_parts"
 	flags = CONDUCT
 	materials = list(MAT_METAL=2000)
 	var/building = FALSE
 
-/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
+/obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/wrench))
 		new /obj/item/stack/sheet/metal(user.loc)
 		qdel(src)
 	else
 		. = ..()
 
-/obj/item/weapon/rack_parts/attack_self(mob/user)
+/obj/item/rack_parts/attack_self(mob/user)
 	if(building)
 		return
 	building = TRUE

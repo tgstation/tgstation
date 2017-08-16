@@ -126,7 +126,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=4"
 
-/obj/item/slimepotion/afterattack(obj/item/weapon/reagent_containers/target, mob/user , proximity)
+/obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
 	if (istype(target))
 		to_chat(user, "<span class='notice'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
 		return
@@ -554,7 +554,7 @@
 	layer = FLY_LAYER
 	pixel_x = -64
 	pixel_y = -64
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/list/stopped_atoms = list()
 	var/freezerange = 2

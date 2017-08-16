@@ -27,7 +27,7 @@
 	icon_state = "explosion"
 	opacity = 1
 	anchored = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
 	pixel_y = -32
 

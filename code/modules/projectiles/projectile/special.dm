@@ -161,7 +161,7 @@
 	icon_state = "spark"
 	hitsound = "sparks"
 	damage = 3
-	var/obj/item/weapon/gun/energy/wormhole_projector/gun
+	var/obj/item/gun/energy/wormhole_projector/gun
 	color = "#33CCFF"
 
 /obj/item/projectile/beam/wormhole/orange
@@ -172,7 +172,7 @@
 	if(casing)
 		gun = casing.gun
 
-/obj/item/ammo_casing/energy/wormhole/New(var/obj/item/weapon/gun/energy/wormhole_projector/wh)
+/obj/item/ammo_casing/energy/wormhole/New(var/obj/item/gun/energy/wormhole_projector/wh)
 	gun = wh
 
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)

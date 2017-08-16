@@ -119,8 +119,8 @@
 		update_item(chameleon_list[picked_name])
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
-	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon))
-		var/obj/item/weapon/gun/energy/laser/chameleon/CG = target
+	if(istype(target, /obj/item/gun/energy/laser/chameleon))
+		var/obj/item/gun/energy/laser/chameleon/CG = target
 		CG.get_chameleon_projectile(picked_item)
 	if(isliving(user))
 		var/mob/living/C = user
@@ -153,7 +153,7 @@
 	return 1
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise()
-	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon))
+	if(istype(target, /obj/item/gun/energy/laser/chameleon))
 		return	//Please no crash!
 	START_PROCESSING(SSprocessing, src)
 	random_look(owner)
@@ -387,7 +387,7 @@
 	flags = NOSLIP
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	pockets = /obj/item/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -403,14 +403,14 @@
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/weapon/gun/energy/laser/chameleon
+/obj/item/gun/energy/laser/chameleon
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/chameleon)
 	clumsy_check = 0
 	needs_permit = 0
 	pin = /obj/item/device/firing_pin
-	cell_type = /obj/item/weapon/stock_parts/cell/bluespace
+	cell_type = /obj/item/stock_parts/cell/bluespace
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	var/list/chameleon_projectile_vars
@@ -422,15 +422,15 @@
 	var/badmin_mode = FALSE
 	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
 
-/obj/item/weapon/gun/energy/laser/chameleon/Initialize()
+/obj/item/gun/energy/laser/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/gun
+	chameleon_action.chameleon_type = /obj/item/gun
 	chameleon_action.chameleon_name = "Gun"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/weapon/gun/magic, ignore_root_path = FALSE)
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/magic, ignore_root_path = FALSE)
 	chameleon_action.initialize_disguises()
 
-/obj/item/weapon/gun/energy/laser/chameleon/Initialize()
+/obj/item/gun/energy/laser/chameleon/Initialize()
 	..()
 	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags")
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
@@ -439,12 +439,12 @@
 	ammo_copy_vars = list("firing_effect_type")
 	chameleon_ammo_vars = list()
 	recharge_newshot()
-	get_chameleon_projectile(/obj/item/weapon/gun/energy/laser)
+	get_chameleon_projectile(/obj/item/gun/energy/laser)
 
-/obj/item/weapon/gun/energy/laser/chameleon/emp_act(severity)
+/obj/item/gun/energy/laser/chameleon/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/laser/chameleon/proc/reset_chameleon_vars()
+/obj/item/gun/energy/laser/chameleon/proc/reset_chameleon_vars()
 	chameleon_ammo_vars = list()
 	chameleon_gun_vars = list()
 	chameleon_projectile_vars = list()
@@ -460,7 +460,7 @@
 	QDEL_NULL(chambered.BB)
 	chambered.newshot()
 
-/obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
 	if(!istype(AC))
 		CRASH("[AC] is not /obj/item/ammo_casing!")
 		return FALSE
@@ -473,7 +473,7 @@
 		var/obj/item/projectile/P = AC.BB
 		set_chameleon_projectile(P)
 
-/obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/item/projectile/P)
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/item/projectile/P)
 	if(!istype(P))
 		CRASH("[P] is not /obj/item/projectile!")
 		return FALSE
@@ -489,17 +489,17 @@
 		chambered.projectile_type = P.type
 		chambered.newshot()
 
-/obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/weapon/gun/G , passthrough = TRUE)
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/G , passthrough = TRUE)
 	if(!istype(G))
-		CRASH("[G] is not /obj/item/weapon/gun!")
+		CRASH("[G] is not /obj/item/gun!")
 		return FALSE
 	for(var/V in gun_copy_vars)
 		if(vars[V] && G.vars[V])
 			chameleon_gun_vars[V] = G.vars[V]
 			vars[V] = G.vars[V]
 	if(passthrough)
-		if(istype(G, /obj/item/weapon/gun/ballistic))
-			var/obj/item/weapon/gun/ballistic/BG = G
+		if(istype(G, /obj/item/gun/ballistic))
+			var/obj/item/gun/ballistic/BG = G
 			var/obj/item/ammo_box/AB = new BG.mag_type(G)
 			qdel(BG)
 			if(!istype(AB)||!AB.ammo_type)
@@ -507,53 +507,53 @@
 				return FALSE
 			var/obj/item/ammo_casing/AC = new AB.ammo_type(G)
 			set_chameleon_ammo(AC)
-		else if(istype(G, /obj/item/weapon/gun/magic))
-			var/obj/item/weapon/gun/magic/MG = G
+		else if(istype(G, /obj/item/gun/magic))
+			var/obj/item/gun/magic/MG = G
 			var/obj/item/ammo_casing/AC = new MG.ammo_type(G)
 			set_chameleon_ammo(AC)
-		else if(istype(G, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/EG = G
+		else if(istype(G, /obj/item/gun/energy))
+			var/obj/item/gun/energy/EG = G
 			if(islist(EG.ammo_type) && EG.ammo_type.len)
 				var/obj/item/ammo_casing/AC = EG.ammo_type[1]
 				set_chameleon_ammo(AC)
-		else if(istype(G, /obj/item/weapon/gun/syringe))
+		else if(istype(G, /obj/item/gun/syringe))
 			var/obj/item/ammo_casing/AC = new /obj/item/ammo_casing/syringegun(src)
 			set_chameleon_ammo(AC)
 
-/obj/item/weapon/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
+/obj/item/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
 	reset_chameleon_vars()
-	var/obj/item/weapon/gun/G = new guntype(src)
+	var/obj/item/gun/G = new guntype(src)
 	set_chameleon_gun(G)
 	qdel(G)
 
-/obj/item/weapon/storage/backpack/chameleon
+/obj/item/storage/backpack/chameleon
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/weapon/storage/backpack/chameleon/New()
+/obj/item/storage/backpack/chameleon/New()
 	..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/storage/backpack
+	chameleon_action.chameleon_type = /obj/item/storage/backpack
 	chameleon_action.chameleon_name = "Backpack"
 	chameleon_action.initialize_disguises()
 
-/obj/item/weapon/storage/backpack/chameleon/emp_act(severity)
+/obj/item/storage/backpack/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/weapon/storage/belt/chameleon
+/obj/item/storage/belt/chameleon
 	name = "toolbelt"
 	desc = "Holds tools."
 	silent = 1
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/weapon/storage/belt/chameleon/New()
+/obj/item/storage/belt/chameleon/New()
 	..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/storage/belt
+	chameleon_action.chameleon_type = /obj/item/storage/belt
 	chameleon_action.chameleon_name = "Belt"
 	chameleon_action.initialize_disguises()
 
-/obj/item/weapon/storage/belt/chameleon/emp_act(severity)
+/obj/item/storage/belt/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
 /obj/item/device/radio/headset/chameleon

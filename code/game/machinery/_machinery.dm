@@ -119,11 +119,11 @@ Class Procs:
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache = list(/mob/living) // turned into typecache in Initialize
 	var/atom/movable/occupant = null
-	var/unsecuring_tool = /obj/item/weapon/wrench
+	var/unsecuring_tool = /obj/item/wrench
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
-	var/obj/item/weapon/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -131,7 +131,7 @@ Class Procs:
 	. = ..()
 	GLOB.machines += src
 
-	if(ispath(circuit, /obj/item/weapon/circuitboard))
+	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit
 		circuit.apply_default_parts(src)
 
@@ -306,7 +306,7 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
-/obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
+/obj/machinery/proc/default_pry_open(obj/item/crowbar/C)
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
 		playsound(loc, C.usesound, 50, 1)
@@ -314,7 +314,7 @@ Class Procs:
 		open_machine()
 		return 1
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
 		playsound(loc, C.usesound, 50, 1)
@@ -353,7 +353,7 @@ Class Procs:
 		update_icon()
 		updateUsrDialog()
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(loc, S.usesound, 50, 1)
 		if(!panel_open)
@@ -367,7 +367,7 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	if(panel_open && istype(W))
 		playsound(loc, W.usesound, 50, 1)
 		setDir(turn(dir,-90))
@@ -381,7 +381,7 @@ Class Procs:
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
 	if(istype(W) && !(flags & NODECONSTRUCT))
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
@@ -406,7 +406,7 @@ Class Procs:
 		return FALSE
 	return TRUE
 
-/obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
+/obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
 		return
 	if((flags & NODECONSTRUCT) && !W.works_from_distance)
@@ -414,16 +414,16 @@ Class Procs:
 	var/shouldplaysound = 0
 	if(component_parts)
 		if(panel_open || W.works_from_distance)
-			var/obj/item/weapon/circuitboard/machine/CB = locate(/obj/item/weapon/circuitboard/machine) in component_parts
+			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
 			var/P
 			if(W.works_from_distance)
 				display_parts(user)
-			for(var/obj/item/weapon/stock_parts/A in component_parts)
+			for(var/obj/item/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
 						P = D
 						break
-				for(var/obj/item/weapon/stock_parts/B in W.contents)
+				for(var/obj/item/stock_parts/B in W.contents)
 					if(istype(B, P) && istype(A, P))
 						if(B.rating > A.rating)
 							W.remove_from_storage(B, src)
