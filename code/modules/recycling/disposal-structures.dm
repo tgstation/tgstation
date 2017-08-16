@@ -296,8 +296,8 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
@@ -690,7 +690,7 @@
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		if(mode==0)
 			mode=1
 			playsound(src.loc, I.usesound, 50, 1)
@@ -700,8 +700,8 @@
 			playsound(src.loc, I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
 
-	else if(istype(I, /obj/item/weapon/weldingtool) && mode==1)
-		var/obj/item/weapon/weldingtool/W = I
+	else if(istype(I, /obj/item/weldingtool) && mode==1)
+		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")

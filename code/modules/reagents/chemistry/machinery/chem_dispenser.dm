@@ -9,14 +9,14 @@
 	idle_power_usage = 40
 	interact_offline = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/cell_type = /obj/item/weapon/stock_parts/cell/high
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/cell_type = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.01
 	var/amount = 30
 	var/recharged = 0
 	var/recharge_delay = 5
 	var/mutable_appearance/beaker_overlay
-	var/obj/item/weapon/reagent_containers/beaker = null
+	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
 		"lithium",
@@ -178,8 +178,8 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
-		var/obj/item/weapon/reagent_containers/B = I
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER))
+		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into the machine!</span>")
@@ -195,7 +195,7 @@
 		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
 		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
 		add_overlay(beaker_overlay)
-	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
+	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
 		return ..()
 	else
@@ -229,7 +229,7 @@
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
-	circuit = /obj/item/weapon/circuitboard/machine/chem_dispenser
+	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	var/list/dispensable_reagent_tiers = list(
 		list(
 			"hydrogen",
@@ -276,14 +276,14 @@
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
 	var/i
-	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
+	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		time += M.rating
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		time += C.rating
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
 	dispensable_reagents = sortList(dispensable_reagents)

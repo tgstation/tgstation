@@ -48,7 +48,7 @@
 /area/ruin/space/oldteleporter)
 "l" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/cell{
+/obj/item/stock_parts/cell{
 	charge = 100;
 	maxcharge = 15000
 	},

@@ -33,10 +33,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	name = "R&D Console"
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/computer/rdconsole
+	circuit = /obj/item/circuitboard/computer/rdconsole
 	var/datum/research/files							//Stores all the collected research data.
-	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
-	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/obj/item/disk/tech_disk/t_disk = null	//Stores the technology disk.
+	var/obj/item/disk/design_disk/d_disk = null	//Stores the design disk.
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
@@ -112,17 +112,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	griefProtection()
 */
 
-/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
+/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
 
 	//Loading a disk into it.
-	if(istype(D, /obj/item/weapon/disk))
+	if(istype(D, /obj/item/disk))
 		if(t_disk || d_disk)
 			to_chat(user, "A disk is already loaded into the machine.")
 			return
 
-		if(istype(D, /obj/item/weapon/disk/tech_disk))
+		if(istype(D, /obj/item/disk/tech_disk))
 			t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk))
+		else if (istype(D, /obj/item/disk/design_disk))
 			d_disk = D
 		else
 			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
@@ -447,9 +447,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/already_logged = 0
 					for(var/i = 0, i<amount, i++)
 						var/obj/item/new_item = new P(src)
-						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+						if( new_item.type == /obj/item/storage/backpack/holding )
 							new_item.investigate_log("built by [key]", INVESTIGATE_SINGULO)
-						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/weapon/ore/bluespace_crystal)) // To avoid materials dupe glitches
+						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/ore/bluespace_crystal)) // To avoid materials dupe glitches
 							new_item.materials = efficient_mats.Copy()
 						new_item.loc = linked_lathe.loc
 						if(!already_logged)

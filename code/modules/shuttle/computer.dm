@@ -4,7 +4,7 @@
 	icon_keyboard = "tech_key"
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list( )
-	circuit = /obj/item/weapon/circuitboard/computer/shuttle
+	circuit = /obj/item/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled
@@ -15,8 +15,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/shuttle/LateInitialize()
-	if(istype(circuit, /obj/item/weapon/circuitboard/computer/shuttle))
-		var/obj/item/weapon/circuitboard/computer/shuttle/C = circuit
+	if(istype(circuit, /obj/item/circuitboard/computer/shuttle))
+		var/obj/item/circuitboard/computer/shuttle/C = circuit
 		possible_destinations = C.possible_destinations
 		shuttleId = C.shuttleId
 

@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(ticker)
 		SSshuttle.lockdown = TRUE
 
 	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
 
 	for(var/mob/M in GLOB.mob_list)
 		M.notransform = TRUE //stop everything moving
