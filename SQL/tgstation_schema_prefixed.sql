@@ -148,6 +148,7 @@ CREATE TABLE `SS13_death` (
   `toxloss` smallint(5) unsigned NOT NULL,
   `cloneloss` smallint(5) unsigned NOT NULL,
   `staminaloss` smallint(5) unsigned NOT NULL,
+  `last_words` varchar(96) DEFAULT NULL
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
