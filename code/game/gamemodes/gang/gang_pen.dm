@@ -1,17 +1,17 @@
 /*
  * Gang Boss Pens
  */
-/obj/item/weapon/pen/gang
+/obj/item/pen/gang
 	origin_tech = "materials=2;syndicate=3"
 	var/cooldown
 	var/last_used = 0
 	var/charges = 1
 
-/obj/item/weapon/pen/gang/New()
+/obj/item/pen/gang/New()
 	..()
 	last_used = world.time
 
-/obj/item/weapon/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE)
+/obj/item/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE)
 	if(!istype(M))
 		return
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
@@ -44,7 +44,7 @@
 			return
 	..()
 
-/obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
+/obj/item/pen/gang/proc/cooldown(datum/gang/gang)
 	set waitfor = FALSE
 	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
 
@@ -66,4 +66,4 @@
 	cooldown = 0
 	icon_state = "pen"
 	var/mob/M = get(src, /mob)
-	to_chat(M, "<span class='notice'>[bicon(src)] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")
+	to_chat(M, "<span class='notice'>[icon2html(src, M)] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")

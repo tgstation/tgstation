@@ -119,10 +119,10 @@ It is rarely allowed to put type paths in a text format, as there are no compile
 
 ```DM
 //Good
-var/path_type = /obj/item/weapon/baseball_bat
+var/path_type = /obj/item/baseball_bat
 
 //Bad
-var/path_type = "/obj/item/weapon/baseball_bat"
+var/path_type = "/obj/item/baseball_bat"
 ```
 
 ### Tabs, not spaces

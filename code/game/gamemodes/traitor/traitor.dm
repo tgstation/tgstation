@@ -124,7 +124,7 @@
 				text += " (used [TC_uses] TC) [purchases]"
 				if(TC_uses==0 && traitorwin)
 					var/static/icon/badass = icon('icons/badass.dmi', "badass")
-					text += "<BIG>[bicon(badass)]</BIG>"
+					text += "<BIG>[icon2html(badass, world)]</BIG>"
 
 			text += objectives
 

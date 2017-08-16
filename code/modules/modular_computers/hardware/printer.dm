@@ -1,4 +1,4 @@
-/obj/item/weapon/computer_hardware/printer
+/obj/item/computer_hardware/printer
 	name = "printer"
 	desc = "Computer-integrated printer with paper recycling module."
 	power_usage = 100
@@ -9,22 +9,22 @@
 	var/stored_paper = 20
 	var/max_paper = 30
 
-/obj/item/weapon/computer_hardware/printer/diagnostics(mob/living/user)
+/obj/item/computer_hardware/printer/diagnostics(mob/living/user)
 	..()
 	to_chat(user, "Paper level: [stored_paper]/[max_paper]")
 
-/obj/item/weapon/computer_hardware/printer/examine(mob/user)
+/obj/item/computer_hardware/printer/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper]</span>")
 
 
-/obj/item/weapon/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")
+/obj/item/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")
 	if(!stored_paper)
 		return FALSE
 	if(!check_functionality())
 		return FALSE
 
-	var/obj/item/weapon/paper/P = new/obj/item/weapon/paper(get_turf(holder))
+	var/obj/item/paper/P = new/obj/item/paper(get_turf(holder))
 
 	// Damaged printer causes the resulting paper to be somewhat harder to read.
 	if(damage > damage_malfunction)
@@ -39,8 +39,8 @@
 	P = null
 	return TRUE
 
-/obj/item/weapon/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
-	if(istype(I, /obj/item/weapon/paper))
+/obj/item/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
+	if(istype(I, /obj/item/paper))
 		if(stored_paper >= max_paper)
 			to_chat(user, "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>")
 			return FALSE
@@ -53,7 +53,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/computer_hardware/printer/mini
+/obj/item/computer_hardware/printer/mini
 	name = "miniprinter"
 	desc = "A small printer with paper recycling module."
 	power_usage = 50

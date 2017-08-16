@@ -28,7 +28,7 @@
 		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		if(!moving)
 			playsound(src.loc, I.usesound, 50, 1)
 			if(contents.len)

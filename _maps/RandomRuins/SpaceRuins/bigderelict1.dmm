@@ -83,7 +83,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aq" = (
@@ -171,29 +171,29 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aE" = (
 /obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/o2,
+/obj/item/storage/firstaid/o2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aF" = (
 /obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aG" = (
 /obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aH" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aI" = (
 /obj/structure/closet/crate/engineering/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/weapon/stock_parts/cell/hyper,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/storage/toolbox/electrical,
+/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aJ" = (
@@ -226,10 +226,10 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aP" = (
 /obj/structure/closet/crate/internals,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /obj/item/clothing/mask/breath,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
@@ -258,7 +258,7 @@
 	name = "critter crate - mr.tiggles";
 	opened = 1
 	},
-/obj/item/weapon/paper/crumpled/ruins/snowdin{
+/obj/item/paper/crumpled/ruins/snowdin{
 	info = "<i>A crumpled piece of manifest paper, out of the barely legible pen writing,  you can see something about a warning involving whatever was originally in the crate.</i>"
 	},
 /obj/structure/alien/weeds{
@@ -270,7 +270,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aV" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
@@ -280,8 +280,8 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aW" = (
 /obj/structure/closet/crate/engineering/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/weapon/stock_parts/cell/hyper,
+/obj/item/storage/toolbox/electrical,
+/obj/item/stock_parts/cell/hyper,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aX" = (
@@ -310,7 +310,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bc" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/cell/hyper,
+/obj/item/stock_parts/cell/hyper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -454,7 +454,7 @@
 	name = "Tradeport Officer";
 	random = 1
 	},
-/obj/item/weapon/paper/crumpled/ruins/snowdin{
+/obj/item/paper/crumpled/ruins/snowdin{
 	icon_state = "scrap_bloodied";
 	info = "If anyone finds this, please, don't let my kids know I died a coward.."
 	},
@@ -595,7 +595,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bI" = (
-/obj/item/weapon/gun/ballistic/automatic/pistol/m1911{
+/obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
 /turf/open/floor/plasteel,
@@ -633,7 +633,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bO" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
@@ -658,7 +658,7 @@
 /turf/open/floor/plasteel/darkred,
 /area/ruin/space/has_grav/derelictoutpost)
 "bR" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
@@ -776,7 +776,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "cd" = (
 /obj/structure/grille/broken,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "trails_1";
 	name = "dried blood trail"
@@ -809,7 +809,7 @@
 /turf/open/floor/plasteel/darkred,
 /area/ruin/space/has_grav/derelictoutpost)
 "cg" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/item/stack/cable_coil{
 	amount = 2;
 	icon_state = "coil_red2";
@@ -886,13 +886,13 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "cn" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /obj/item/stack/cable_coil,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "co" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cp" = (
@@ -1135,7 +1135,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/mop,
+/obj/item/mop,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cK" = (
@@ -1211,7 +1211,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cP" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cQ" = (
@@ -1435,7 +1435,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dk" = (
@@ -1544,7 +1544,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/obj/item/weapon/gun/ballistic/automatic/pistol/m1911{
+/obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
 /obj/item/ammo_box/magazine/m45,
@@ -1737,7 +1737,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "dJ" = (
-/obj/item/weapon/gun/ballistic/automatic/pistol/m1911{
+/obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
 /obj/structure/alien/weeds{
@@ -1910,7 +1910,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ea" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/pill_bottle/stimulant,
+/obj/item/storage/pill_bottle/stimulant,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1929,7 +1929,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ec" = (
 /obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
@@ -1938,11 +1938,11 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ed" = (
 /obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/weapon/storage/firstaid/o2,
+/obj/item/storage/firstaid/o2,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -2037,14 +2037,14 @@
 /area/ruin/unpowered/no_grav)
 "eo" = (
 /obj/structure/closet/crate/internals,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /obj/item/clothing/mask/breath,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ep" = (
 /obj/structure/closet/crate/engineering/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -2054,24 +2054,24 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "er" = (
 /obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "es" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "et" = (
 /obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/fire,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -2163,9 +2163,9 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eE" = (
 /obj/structure/closet/crate/internals,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/storage/firstaid/toxin,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
