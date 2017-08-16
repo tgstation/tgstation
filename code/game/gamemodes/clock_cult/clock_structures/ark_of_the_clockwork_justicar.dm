@@ -109,20 +109,34 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!obj_integrity || !GLOB.initial_ark_time)
 		return
+	var/turf/own_turf = get_turf(src)
+	var/list/open_turfs = list()
+	for(var/t in RANGE_TURFS(1, own_turf))
+		var/turf/T = t
+		if(T && !is_blocked_turf(T, TRUE))
+			open_turfs += T
+	if(LAZYLEN(open_turfs))
+		for(var/a in own_turf)
+			var/atom/movable/A = a
+			if(!A.anchored || isliving(A))
+				A.forceMove(pick(open_turfs))
+	for(var/obj/O in orange(1, src))
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
+			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
+				O.take_damage(50, BURN, "bomb")
+			O.update_icon()
 	if(!active)
 		if(!activating && GLOB.initial_ark_time - 300 <= world.time)
-			visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
-			hierophant_message("<span class='bold large_brass'>The Ark is activating! Get back to the base!</span>")
+			visible_message("<span class='boldwarning'>[src] whirrs to life!</span>")
+			hierophant_message("<span class='bold large_brass'>The Ark is activating! Return to Reebe!</span>")
 			for(var/mob/M in GLOB.player_list)
 				if(is_servant_of_ratvar(M) || isobserver(M) || M.z == z)
 					M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 30, FALSE, pressure_affected = FALSE)
 			activating = TRUE
 		if(activating && GLOB.initial_ark_time <= world.time)
 			active = TRUE
-			priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
-			@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
-			not a drill.", \
-			"Central Command Higher Dimensional Affairs", 'sound/ambience/antag/new_clock.ogg')
+			priority_announce("Massive bluespace anomaly detected on all frequencies. All crew are directed to @!$, [Gibberish(text2ratvar("PURGE ALL UNTRUTHS"), 100)] <&. the anomalies and \
+			destroy their source to prevent further damage to corporate property. This is not a drill.", "Central Command Higher Dimensional Affairs")
 			set_security_level("delta")
 			SSshuttle.registerHostileEnvironment(src)
 			for(var/V in GLOB.generic_event_spawns)
@@ -139,29 +153,6 @@
 					to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 				else
 					to_chat(M, "<span class='boldwarning'>You hear otherworldly sounds from all around you...</span>")
-	var/turf/own_turf = get_turf(src)
-	var/convert_dist = 1 + (Floor(Floor(progress_in_seconds, 15) * 0.067))
-	var/list/open_turfs = list()
-	for(var/t in RANGE_TURFS(convert_dist, own_turf))
-		var/turf/T = t
-		if(!T)
-			continue
-		if(get_dist(T, src) < 2)
-			if(!is_blocked_turf(T, TRUE))
-				open_turfs += T
-		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
-		if(dist < convert_dist)
-			T.ratvar_act(FALSE, TRUE, 3)
-	if(LAZYLEN(open_turfs))
-		for(var/a in own_turf)
-			var/atom/movable/A = a
-			if(!A.anchored || isliving(A))
-				A.forceMove(pick(open_turfs))
-	for(var/obj/O in orange(1, src))
-		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
-			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
-				O.take_damage(50, BURN, "bomb")
-			O.update_icon()
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)

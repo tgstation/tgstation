@@ -50,3 +50,10 @@
 /obj/effect/clockwork/reebe_exit/proc/pass_through_gateway(atom/movable/A)
 	var/turf/T = get_turf(pick(GLOB.generic_event_spawns))
 	quick_spatial_gate(A.loc, T, A)
+
+/obj/effect/clockwork/reebe_exit/invisible
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "nothing"
+	pixel_x = 0
+	pixel_y = 0
+	light_range = 0

@@ -132,16 +132,19 @@ Credit where due:
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
+	var/list/removed_spawns = list()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
 		var/turf/T = pick(GLOB.servant_spawns)
 		L.forceMove(T)
+		removed_spawns += T
 		GLOB.servant_spawns -= T
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
+	GLOB.servant_spawns += removed_spawns
 	..()
 	return 1
 
