@@ -1,5 +1,5 @@
 /*****************Pickaxes & Drills & Shovels****************/
-/obj/item/pickaxe
+/obj/item/weapon/pickaxe
 	name = "pickaxe"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
@@ -17,7 +17,7 @@
 	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
-/obj/item/pickaxe/mini
+/obj/item/weapon/pickaxe/mini
 	name = "compact pickaxe"
 	desc = "A smaller, compact version of the standard pickaxe."
 	icon_state = "minipick"
@@ -27,10 +27,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1000)
 
-/obj/item/pickaxe/proc/playDigSound()
+/obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
 
-/obj/item/pickaxe/silver
+/obj/item/weapon/pickaxe/silver
 	name = "silver-plated pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
@@ -39,7 +39,7 @@
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
 
-/obj/item/pickaxe/diamond
+/obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
@@ -48,7 +48,7 @@
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
-/obj/item/pickaxe/drill
+/obj/item/weapon/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
@@ -59,24 +59,24 @@
 	origin_tech = "materials=2;powerstorage=2;engineering=3"
 	desc = "An electric mining drill for the especially scrawny."
 
-/obj/item/pickaxe/drill/cyborg
+/obj/item/weapon/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
 	flags = NODROP
 
-/obj/item/pickaxe/drill/diamonddrill
+/obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	digspeed = 7
 	origin_tech = "materials=6;powerstorage=4;engineering=4"
 	desc = "Yours is the drill that will pierce the heavens!"
 
-/obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
+/obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
 	digspeed = 7
 
-/obj/item/pickaxe/drill/jackhammer
+/obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
@@ -86,7 +86,7 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 
-/obj/item/shovel
+/obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/mining.dmi'
@@ -105,7 +105,7 @@
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 
-/obj/item/shovel/spade
+/obj/item/weapon/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
