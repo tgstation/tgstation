@@ -67,7 +67,7 @@
 /area/shuttle/abandoned)
 "al" = (
 /obj/structure/table,
-/obj/item/weapon/screwdriver,
+/obj/item/screwdriver,
 /obj/structure/light_construct{
 	dir = 1
 	},
@@ -174,7 +174,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aE" = (
-/obj/item/weapon/stock_parts/cell{
+/obj/item/stock_parts/cell{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -187,11 +187,11 @@
 /area/shuttle/abandoned)
 "aG" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aH" = (
@@ -213,7 +213,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aK" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/titanium,
@@ -232,7 +232,7 @@
 /area/shuttle/abandoned)
 "aO" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -245,7 +245,7 @@
 /area/shuttle/abandoned)
 "aQ" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aR" = (
@@ -269,7 +269,7 @@
 /area/shuttle/abandoned)
 "aV" = (
 /obj/structure/table,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aW" = (
@@ -282,7 +282,7 @@
 /area/shuttle/abandoned)
 "aY" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -319,12 +319,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bf" = (
-/obj/item/weapon/scalpel,
+/obj/item/scalpel,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bg" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 6;
 	pixel_y = -5
 	},

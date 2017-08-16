@@ -16,7 +16,7 @@
 	var/network = "NULL"		// the network to probe
 
 	var/temp = ""				// temporary feedback messages
-	circuit = /obj/item/weapon/circuitboard/computer/comm_monitor
+	circuit = /obj/item/circuitboard/computer/comm_monitor
 
 /obj/machinery/computer/telecomms/monitor/attack_hand(mob/user)
 	if(..())

@@ -508,7 +508,7 @@
 	})
 "aV" = (
 /obj/structure/table/wood,
-/obj/item/weapon/newspaper,
+/obj/item/newspaper,
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
 	},
@@ -518,7 +518,7 @@
 	})
 "aW" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
 	},
@@ -577,7 +577,7 @@
 	})
 "bb" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/ripley_build_and_repair,
+/obj/item/book/manual/ripley_build_and_repair,
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
 	},
@@ -610,10 +610,10 @@
 	name = "botanist's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/plants/portaseeder,
 /obj/item/device/plant_analyzer,
 /obj/item/clothing/mask/bandana,
-/obj/item/weapon/hatchet,
+/obj/item/hatchet,
 /turf/open/floor/plasteel/vault{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -623,7 +623,7 @@
 	name = "UO45 Central Hall"
 	})
 "bf" = (
-/obj/item/weapon/storage/belt/security,
+/obj/item/storage/belt/security,
 /obj/item/device/assembly/flash/handheld,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
@@ -730,10 +730,10 @@
 	})
 "bo" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/cigarettes{
+/obj/item/storage/fancy/cigarettes{
 	pixel_y = 2
 	},
-/obj/item/weapon/lighter{
+/obj/item/lighter{
 	pixel_x = 4;
 	pixel_y = 2
 	},
@@ -1391,7 +1391,7 @@
 	})
 "cv" = (
 /obj/structure/closet,
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1442,9 +1442,9 @@
 	req_access_txt = "201"
 	},
 /obj/item/clothing/suit/apron,
-/obj/item/weapon/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/plants/portaseeder,
 /obj/item/clothing/mask/bandana,
-/obj/item/weapon/cultivator,
+/obj/item/cultivator,
 /turf/open/floor/plasteel/vault{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -1600,7 +1600,7 @@
 	dir = 1
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -1613,7 +1613,7 @@
 	dir = 1
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -1837,7 +1837,7 @@
 	dir = 5
 	},
 /obj/structure/closet,
-/obj/item/weapon/poster/random_contraband,
+/obj/item/poster/random_contraband,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1971,7 +1971,7 @@
 	name = "UO45 Central Hall"
 	})
 "do" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2226,7 +2226,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/green/side{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -2281,10 +2281,10 @@
 	name = "UO45 Central Hall"
 	})
 "dM" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
 /obj/structure/closet/secure_closet{
 	icon_state = "freezer";
 	locked = 0;
@@ -2311,10 +2311,10 @@
 	name = "UO45 Central Hall"
 	})
 "dO" = (
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/storage/fancy/egg_box,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/storage/fancy/egg_box,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
 	icon_state = "freezer";
@@ -2738,11 +2738,11 @@
 "ex" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /obj/machinery/door/window/southleft{
 	base_state = "right";
 	dir = 8;
@@ -2820,8 +2820,8 @@
 	})
 "eE" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/guides/jobs/hydroponics,
+/obj/item/book/manual/hydroponics_pod_people,
+/obj/item/paper/guides/jobs/hydroponics,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 1;
@@ -2924,7 +2924,7 @@
 "eM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /obj/machinery/door/window/southleft{
 	base_state = "left";
 	dir = 8;
@@ -2998,7 +2998,7 @@
 	})
 "eS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -3018,18 +3018,18 @@
 	})
 "eU" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/plantbgone{
+/obj/item/reagent_containers/spray/plantbgone{
 	pixel_x = 13;
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/spray/plantbgone{
+/obj/item/reagent_containers/spray/plantbgone{
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/spray/plantbgone{
+/obj/item/reagent_containers/spray/plantbgone{
 	pixel_y = 3
 	},
-/obj/item/weapon/watertank,
+/obj/item/watertank,
 /turf/open/floor/plasteel/vault{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -3058,7 +3058,7 @@
 "eW" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
 	dir = 10;
 	heat_capacity = 1e+006
@@ -3071,7 +3071,7 @@
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/device/radio/off,
-/obj/item/weapon/screwdriver{
+/obj/item/screwdriver{
 	pixel_y = 10
 	},
 /obj/structure/sign/poster/official/safety_report{
@@ -3350,10 +3350,10 @@
 	})
 "ft" = (
 /obj/structure/closet/crate/hydroponics,
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/wrench,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/shovel/spade,
+/obj/item/wrench,
+/obj/item/screwdriver,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/black{
 	heat_capacity = 1e+006
 	},
@@ -3680,7 +3680,7 @@
 	})
 "fS" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -3689,7 +3689,7 @@
 	name = "UO45 Central Hall"
 	})
 "fT" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3918,7 +3918,7 @@
 	desc = "It's a storage unit for kitchen clothes and equipment.";
 	name = "Kitchen Crate"
 	},
-/obj/item/weapon/storage/box/mousetraps,
+/obj/item/storage/box/mousetraps,
 /obj/item/clothing/under/waiter,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor{
@@ -3929,7 +3929,7 @@
 	name = "UO45 Crew Quarters"
 	})
 "gn" = (
-/obj/item/weapon/tank/internals/air,
+/obj/item/tank/internals/air,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -4112,11 +4112,11 @@
 	})
 "gF" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/glass/beaker{
 	pixel_x = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4204,7 +4204,7 @@
 	})
 "gN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/white/side{
 	dir = 2;
 	heat_capacity = 1e+006
@@ -4300,7 +4300,7 @@
 	})
 "gV" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/folder/white,
 /turf/open/floor/plasteel/black{
 	heat_capacity = 1e+006
 	},
@@ -4310,11 +4310,11 @@
 	})
 "gW" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/black{
 	heat_capacity = 1e+006
 	},
@@ -4378,15 +4378,15 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/glass/beaker{
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -4523,7 +4523,7 @@
 "hn" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -4558,7 +4558,7 @@
 "hq" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/food/condiment/enzyme{
 	layer = 5
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -4680,7 +4680,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4755,12 +4755,12 @@
 	})
 "hG" = (
 /obj/structure/table/glass,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/capacitor,
-/obj/item/weapon/stock_parts/capacitor,
-/obj/item/weapon/stock_parts/micro_laser,
-/obj/item/weapon/stock_parts/micro_laser,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/micro_laser,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
 	dir = 8;
@@ -4822,7 +4822,7 @@
 	})
 "hM" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -4885,10 +4885,10 @@
 	})
 "hR" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -3
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -4901,7 +4901,7 @@
 	})
 "hS" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/mint,
+/obj/item/reagent_containers/food/snacks/mint,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -4928,7 +4928,7 @@
 	level = 2
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/book/manual/chef_recipes,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -5112,11 +5112,11 @@
 	})
 "ik" = (
 /obj/structure/table/glass,
-/obj/item/weapon/stock_parts/console_screen,
-/obj/item/weapon/stock_parts/console_screen,
-/obj/item/weapon/stock_parts/console_screen,
-/obj/item/weapon/stock_parts/matter_bin,
-/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/stock_parts/console_screen,
+/obj/item/stock_parts/console_screen,
+/obj/item/stock_parts/console_screen,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
 /turf/open/floor/plasteel/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -5159,8 +5159,8 @@
 	})
 "io" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/book/manual/barman_recipes,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -5184,7 +5184,7 @@
 	})
 "iq" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -5291,11 +5291,11 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stock_parts/scanning_module{
+/obj/item/stock_parts/scanning_module{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/stock_parts/scanning_module,
+/obj/item/stock_parts/scanning_module,
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -32
 	},
@@ -5409,7 +5409,7 @@
 	})
 "iG" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -5495,7 +5495,7 @@
 	})
 "iN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/structure/sign/biohazard{
 	pixel_x = -32
 	},
@@ -5549,7 +5549,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/gateway,
+/obj/item/paper/pamphlet/gateway,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -5634,11 +5634,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -5739,9 +5739,9 @@
 	name = "kitchen Cabinet";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/sugar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -5897,9 +5897,9 @@
 "jr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/disk/tech_disk,
-/obj/item/weapon/disk/design_disk,
+/obj/item/folder/white,
+/obj/item/disk/tech_disk,
+/obj/item/disk/design_disk,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5965,7 +5965,7 @@
 	})
 "jx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -6235,7 +6235,7 @@
 	})
 "jT" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -6424,7 +6424,7 @@
 	name = "UO45 Central Hall"
 	})
 "kd" = (
-/obj/item/weapon/storage/backpack/satchel/tox,
+/obj/item/storage/backpack/satchel/tox,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/effect/decal/cleanable/dirt,
@@ -6471,7 +6471,7 @@
 	name = "UO45 Gateway"
 	})
 "kh" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6681,7 +6681,7 @@
 "kx" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -6695,7 +6695,7 @@
 	})
 "ky" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /obj/item/clothing/head/welding,
 /obj/structure/sign/biohazard{
 	pixel_y = 32
@@ -7262,7 +7262,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -7376,9 +7376,9 @@
 	})
 "lu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
-/obj/item/weapon/reagent_containers/spray/pepper,
+/obj/item/reagent_containers/spray/pepper,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
 	locked = 1;
@@ -7799,10 +7799,10 @@
 	})
 "lT" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -3
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
 	},
 /turf/open/floor/plasteel/bar{
@@ -7866,11 +7866,11 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 26
 	},
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -7913,7 +7913,7 @@
 "ma" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -8119,7 +8119,7 @@
 	})
 "mq" = (
 /obj/structure/table,
-/obj/item/weapon/newspaper,
+/obj/item/newspaper,
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
@@ -8162,7 +8162,7 @@
 	})
 "mt" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -8209,7 +8209,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/storage/backpack/satchel/eng,
+/obj/item/storage/backpack/satchel/eng,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/meson,
@@ -8284,7 +8284,7 @@
 	})
 "mB" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
@@ -8317,7 +8317,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -8505,7 +8505,7 @@
 	})
 "mQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -8518,11 +8518,11 @@
 	})
 "mR" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
@@ -8536,7 +8536,7 @@
 	})
 "mS" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -8640,7 +8640,7 @@
 "na" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -8756,8 +8756,8 @@
 	})
 "nk" = (
 /obj/structure/table,
-/obj/item/weapon/cartridge/signal/toxins,
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/cartridge/signal/toxins,
+/obj/item/cartridge/signal/toxins{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -9218,8 +9218,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/stamp/rd{
+/obj/item/folder/white,
+/obj/item/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -9234,11 +9234,11 @@
 "nQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -9300,7 +9300,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/off,
-/obj/item/weapon/screwdriver{
+/obj/item/screwdriver{
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/red/side{
@@ -10199,7 +10199,7 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10354,7 +10354,7 @@
 	name = "UO45 Research"
 	})
 "pg" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 5;
 	pixel_y = -27
 	},
@@ -10423,7 +10423,7 @@
 	name = "UO45 Research"
 	})
 "pl" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -10873,7 +10873,7 @@
 	dir = 8
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -11152,7 +11152,7 @@
 "qo" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/item/clothing/glasses/hud/health,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/corner{
@@ -11172,7 +11172,7 @@
 	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white/side{
 	dir = 2;
@@ -11480,7 +11480,7 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_y = 5
 	},
 /obj/machinery/firealarm{
@@ -11713,7 +11713,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -11861,7 +11861,7 @@
 	name = "UO45 Engineering"
 	})
 "rk" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -11893,10 +11893,10 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/tank/internals/emergency_oxygen{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = -8
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = -8
 	},
 /obj/item/clothing/mask/breath{
@@ -11922,8 +11922,8 @@
 	dir = 6
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 30
 	},
@@ -12134,8 +12134,8 @@
 	})
 "rB" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
+/obj/item/folder/white,
+/obj/item/pen,
 /turf/open/floor/plasteel/black{
 	heat_capacity = 1e+006
 	},
@@ -12154,8 +12154,8 @@
 	})
 "rD" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/poster/random_contraband,
+/obj/item/storage/box/lights/mixed,
+/obj/item/poster/random_contraband,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	burnt = 1;
@@ -12241,7 +12241,7 @@
 	})
 "rJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/gloves,
+/obj/item/storage/box/gloves,
 /turf/open/floor/plasteel/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -12612,11 +12612,11 @@
 	name = "Engineering Reception";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12731,7 +12731,7 @@
 	name = "miner's equipment";
 	req_access = list(201)
 	},
-/obj/item/weapon/storage/backpack/satchel/eng,
+/obj/item/storage/backpack/satchel/eng,
 /obj/item/clothing/gloves/fingerless,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 2;
@@ -12908,11 +12908,11 @@
 	})
 "sy" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -12927,7 +12927,7 @@
 	})
 "sz" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 6
 	},
@@ -12943,7 +12943,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/soap/nanotrasen,
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
 	},
@@ -13154,7 +13154,7 @@
 	name = "Engineering Reception";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -13198,7 +13198,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -13680,7 +13680,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/item/weapon/screwdriver{
+/obj/item/screwdriver{
 	pixel_y = 10
 	},
 /obj/item/device/radio/off,
@@ -14036,7 +14036,7 @@
 /obj/machinery/shower{
 	dir = 1
 	},
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
 	},
@@ -14337,7 +14337,7 @@
 	dir = 10
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -14373,7 +14373,7 @@
 	})
 "uy" = (
 /obj/structure/closet,
-/obj/item/weapon/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /turf/open/floor/plating{
 	burnt = 1;
 	heat_capacity = 1e+006;
@@ -15410,7 +15410,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -15508,7 +15508,7 @@
 	dir = 4
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -15546,7 +15546,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -16055,11 +16055,11 @@
 	})
 "wR" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/ce,
+/obj/item/stamp/ce,
 /turf/open/floor/plasteel/neutral{
 	dir = 2;
 	heat_capacity = 1e+006
@@ -16070,7 +16070,7 @@
 	})
 "wS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
+/obj/item/folder/yellow,
 /turf/open/floor/plasteel/neutral{
 	dir = 2;
 	heat_capacity = 1e+006
@@ -16081,11 +16081,11 @@
 	})
 "wT" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral{
 	dir = 2;
@@ -16123,7 +16123,7 @@
 "wV" = (
 /obj/machinery/light/small,
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -16183,10 +16183,10 @@
 	})
 "xb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/cigarettes{
+/obj/item/storage/fancy/cigarettes{
 	pixel_x = -2
 	},
-/obj/item/weapon/lighter{
+/obj/item/lighter{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel/neutral{
@@ -16474,7 +16474,7 @@
 	})
 "xv" = (
 /obj/structure/table,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /obj/item/device/radio/off,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -16580,7 +16580,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -17492,7 +17492,7 @@
 	poweralm = 0
 	})
 "yJ" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17504,7 +17504,7 @@
 	poweralm = 0
 	})
 "yK" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -17518,7 +17518,7 @@
 	poweralm = 0
 	})
 "yL" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/mineral/titanium/blue,

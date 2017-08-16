@@ -26,7 +26,7 @@
 "ag" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/table,
-/obj/item/weapon/tank/internals/plasma{
+/obj/item/tank/internals/plasma{
 	desc = "An emptied plasma tank, the oil on the nozzle seems to implied it was used for more than plasma storage.";
 	name = "dusty plasma tank"
 	},
@@ -72,7 +72,7 @@
 /area/awaymission/snowdin/post)
 "an" = (
 /obj/structure/table,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -95,7 +95,7 @@
 "aq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westright,
-/obj/item/weapon/paper/crumpled/ruins/snowdin/keys,
+/obj/item/paper/crumpled/ruins/snowdin/keys,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -123,13 +123,13 @@
 /area/awaymission/snowdin/base)
 "at" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/fluff/awaymissions/snowdin/secnotice,
+/obj/item/paper/fluff/awaymissions/snowdin/secnotice,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "au" = (
-/obj/item/weapon/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -138,16 +138,16 @@
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash,
-/obj/item/weapon/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "av" = (
 /obj/effect/decal/cleanable/oil,
-/obj/item/weapon/tank/internals/plasma{
+/obj/item/tank/internals/plasma{
 	desc = "An emptied plasma tank, the oil on the nozzle seems to implied it was used for more than plasma storage.";
 	name = "dusty plasma tank"
 	},
@@ -174,8 +174,8 @@
 /area/awaymission/snowdin/base)
 "ay" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/item/key,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -321,7 +321,7 @@
 /area/awaymission/snowdin/base)
 "aR" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/survivalcapsule,
+/obj/item/survivalcapsule,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -335,9 +335,9 @@
 /area/awaymission/snowdin/base)
 "aS" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/pill_bottle/stimulant,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/pill_bottle/stimulant,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -366,9 +366,9 @@
 /area/awaymission/snowdin)
 "aY" = (
 /obj/structure/guncase/shotgun,
-/obj/item/weapon/gun/ballistic/shotgun/automatic,
-/obj/item/weapon/gun/ballistic/shotgun/automatic,
-/obj/item/weapon/gun/ballistic/shotgun/automatic,
+/obj/item/gun/ballistic/shotgun/automatic,
+/obj/item/gun/ballistic/shotgun/automatic,
+/obj/item/gun/ballistic/shotgun/automatic,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -422,8 +422,8 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/soap/nanotrasen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -462,7 +462,7 @@
 /area/awaymission/snowdin/base)
 "bl" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -508,18 +508,18 @@
 /area/awaymission/snowdin/base)
 "bq" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
-/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
-/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
-/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod,
-/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/corn,
+/obj/item/reagent_containers/food/snacks/grown/corn,
+/obj/item/reagent_containers/food/snacks/grown/corn,
+/obj/item/reagent_containers/food/snacks/grown/cocoapod,
+/obj/item/reagent_containers/food/snacks/grown/cocoapod,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -537,16 +537,16 @@
 /area/awaymission/snowdin/base)
 "bs" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "bt" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
-/obj/item/weapon/paper/crumpled/ruins/snowdin/shovel,
+/obj/item/shovel,
+/obj/item/paper/crumpled/ruins/snowdin/shovel,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -615,10 +615,10 @@
 /area/awaymission/snowdin/base)
 "bA" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -626,8 +626,8 @@
 /area/awaymission/snowdin/base)
 "bB" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -658,7 +658,7 @@
 	name = "Central command action figure";
 	toysay = "Fire the BSA cannons!"
 	},
-/obj/item/weapon/storage/box/rubbershot,
+/obj/item/storage/box/rubbershot,
 /obj/item/key,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -761,7 +761,7 @@
 /area/awaymission/snowdin/base)
 "bP" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -823,8 +823,8 @@
 /area/awaymission/snowdin/base)
 "bY" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -907,7 +907,7 @@
 	},
 /area/awaymission/snowdin/base)
 "ck" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -974,21 +974,21 @@
 /area/awaymission/snowdin/base)
 "cu" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cv" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/crumpled/ruins/snowdin/snowdingatewaynotice,
+/obj/item/paper/crumpled/ruins/snowdin/snowdingatewaynotice,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cw" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/gibspawner/human,
 /turf/open/floor/carpet{
@@ -1066,7 +1066,7 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/fluff/awaymissions/snowdin/log,
+/obj/item/paper/fluff/awaymissions/snowdin/log,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1138,7 +1138,7 @@
 	},
 /area/awaymission/snowdin/igloo)
 "cT" = (
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating{
 	temperature = 220
 	},
@@ -1218,7 +1218,7 @@
 /area/awaymission/snowdin/post)
 "dh" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140
@@ -1241,7 +1241,7 @@
 /area/awaymission/snowdin/post)
 "dk" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140
@@ -1289,7 +1289,7 @@
 /area/awaymission/snowdin/dungeon1)
 "dr" = (
 /obj/structure/closet/emcloset,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -1310,7 +1310,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dt" = (
-/obj/item/weapon/paper/crumpled/ruins/snowdin/lootstructures,
+/obj/item/paper/crumpled/ruins/snowdin/lootstructures,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -1432,8 +1432,8 @@
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/gloves/color/black,
-/obj/item/weapon/shovel,
-/obj/item/weapon/switchblade,
+/obj/item/shovel,
+/obj/item/switchblade,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1554,7 +1554,7 @@
 /area/awaymission/snowdin/post)
 "dZ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/ruins/snowdin/syndielava,
+/obj/item/paper/crumpled/ruins/snowdin/syndielava,
 /obj/machinery/light/small{
 	active_power_usage = 0;
 	dir = 4;
@@ -1818,12 +1818,12 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/scalpel{
+/obj/item/surgicaldrill,
+/obj/item/hemostat,
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/cautery{
+/obj/item/cautery{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel/whiteblue{
@@ -1932,9 +1932,9 @@
 	dir = 1
 	},
 /obj/structure/closet/crate,
-/obj/item/weapon/implanter/storage,
+/obj/item/implanter/storage,
 /obj/item/clothing/shoes/jackboots,
-/obj/item/weapon/switchblade,
+/obj/item/switchblade,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1975,7 +1975,7 @@
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/gloves/color/black,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1993,7 +1993,7 @@
 	},
 /area/awaymission/snowdin/post)
 "fs" = (
-/obj/item/weapon/cigbutt/cigarbutt,
+/obj/item/cigbutt/cigarbutt,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2074,15 +2074,15 @@
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/post)
 "fG" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "fH" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -2097,7 +2097,7 @@
 	},
 /area/awaymission/snowdin/post)
 "fJ" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "fK" = (
@@ -2157,7 +2157,7 @@
 	},
 /area/awaymission/snowdin/post)
 "fS" = (
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140;
@@ -2179,7 +2179,7 @@
 /area/awaymission/snowdin/post)
 "fV" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/item/key,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -2219,7 +2219,7 @@
 /area/awaymission/snowdin/post)
 "ga" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140
@@ -2264,7 +2264,7 @@
 /turf/open/floor/plating/ice,
 /area/awaymission/snowdin/cave)
 "gg" = (
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "gh" = (
@@ -2353,9 +2353,9 @@
 /area/awaymission/snowdin/post)
 "gt" = (
 /obj/structure/frame/machine,
-/obj/item/weapon/circuitboard/machine/smes,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/circuitboard/machine/smes,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2364,21 +2364,21 @@
 	},
 /area/awaymission/snowdin/post)
 "gu" = (
-/obj/item/weapon/stock_parts/cell/high/empty,
+/obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
 "gv" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
 "gw" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2406,10 +2406,10 @@
 /area/awaymission/snowdin/post)
 "gA" = (
 /obj/structure/closet/secure_closet/contraband/armory,
-/obj/item/weapon/gun/ballistic/automatic/speargun,
-/obj/item/weapon/twohanded/spear,
-/obj/item/weapon/twohanded/spear,
-/obj/item/weapon/twohanded/spear,
+/obj/item/gun/ballistic/automatic/speargun,
+/obj/item/twohanded/spear,
+/obj/item/twohanded/spear,
+/obj/item/twohanded/spear,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2435,13 +2435,13 @@
 /area/awaymission/snowdin/post)
 "gD" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
 "gE" = (
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
@@ -2449,7 +2449,7 @@
 /area/awaymission/snowdin/post)
 "gF" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
@@ -2549,7 +2549,7 @@
 /area/awaymission/snowdin/post)
 "gS" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2669,8 +2669,8 @@
 /area/awaymission/snowdin/post)
 "hi" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2698,7 +2698,7 @@
 	},
 /area/awaymission/snowdin/post)
 "hm" = (
-/obj/item/weapon/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -2707,7 +2707,7 @@
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -2715,7 +2715,7 @@
 /area/awaymission/snowdin/post)
 "hn" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/fluff/awaymissions/snowdin/secnotice,
+/obj/item/paper/fluff/awaymissions/snowdin/secnotice,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2790,7 +2790,7 @@
 /area/awaymission/snowdin/cave)
 "hz" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/item/weapon/twohanded/spear,
+/obj/item/twohanded/spear,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "hA" = (
@@ -2814,11 +2814,11 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "hF" = (
-/obj/item/weapon/twohanded/fireaxe,
+/obj/item/twohanded/fireaxe,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "hG" = (
-/obj/item/weapon/twohanded/spear,
+/obj/item/twohanded/spear,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "hH" = (
@@ -2843,7 +2843,7 @@
 /area/awaymission/snowdin/post)
 "hK" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /obj/item/key,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -2851,8 +2851,8 @@
 /area/awaymission/snowdin/post)
 "hL" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/shovel,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2914,7 +2914,7 @@
 /area/awaymission/snowdin/sekret)
 "hW" = (
 /obj/structure/closet/emcloset,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -2947,8 +2947,8 @@
 /area/awaymission/snowdin/sekret)
 "ib" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2970,14 +2970,14 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "if" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3013,7 +3013,7 @@
 /area/awaymission/snowdin/dungeon1)
 "ik" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -3057,7 +3057,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "ir" = (
-/obj/item/weapon/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -3066,9 +3066,9 @@
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash,
-/obj/item/weapon/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3116,8 +3116,8 @@
 /area/awaymission/snowdin/sekret)
 "iy" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3130,32 +3130,32 @@
 /area/awaymission/snowdin/sekret)
 "iA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
+/obj/item/storage/firstaid/o2,
+/obj/item/storage/firstaid/o2,
 /turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "iB" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "iC" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "iD" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3313,7 +3313,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin)
 "ja" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -3482,7 +3482,7 @@
 	},
 /area/awaymission/snowdin)
 "jy" = (
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -3517,7 +3517,7 @@
 	},
 /area/awaymission/snowdin)
 "jC" = (
-/obj/item/weapon/tank/internals/plasma{
+/obj/item/tank/internals/plasma{
 	desc = "An emptied plasma tank, the oil on the nozzle seems to implied it was used for more than plasma storage.";
 	name = "dusty plasma tank"
 	},
@@ -3631,12 +3631,12 @@
 /area/awaymission/snowdin/sekret)
 "jR" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3664,14 +3664,14 @@
 /area/awaymission/snowdin)
 "jV" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/ruins/snowdin/misc1,
+/obj/item/paper/crumpled/ruins/snowdin/misc1,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "jW" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3834,8 +3834,8 @@
 /area/awaymission/snowdin/sekret)
 "kr" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -3859,9 +3859,9 @@
 /area/awaymission/snowdin/sekret)
 "ku" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/speargun,
-/obj/item/weapon/twohanded/spear,
-/obj/item/weapon/twohanded/spear,
+/obj/item/gun/ballistic/automatic/speargun,
+/obj/item/twohanded/spear,
+/obj/item/twohanded/spear,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -3882,12 +3882,12 @@
 /area/awaymission/snowdin/sekret)
 "kx" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/l6_saw/unrestricted,
+/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/paper/fluff/awaymissions/snowdin/saw_usage,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/item/paper/fluff/awaymissions/snowdin/saw_usage,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3902,7 +3902,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "kz" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -3920,14 +3920,14 @@
 	},
 /area/awaymission/snowdin)
 "kB" = (
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = 1
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "kC" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/effect/decal/cleanable/vomit,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -3941,7 +3941,7 @@
 /area/awaymission/snowdin/sekret)
 "kE" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/fluff/awaymissions/snowdin/syndienotice,
+/obj/item/paper/fluff/awaymissions/snowdin/syndienotice,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -3960,7 +3960,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "kH" = (
-/obj/item/weapon/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -3969,17 +3969,17 @@
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash,
-/obj/item/weapon/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "kI" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -4005,7 +4005,7 @@
 /area/awaymission/snowdin/sekret)
 "kL" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/revolver,
+/obj/item/gun/ballistic/revolver,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -4054,8 +4054,8 @@
 /area/awaymission/snowdin/sekret)
 "kS" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/mini_uzi,
-/obj/item/weapon/gun/ballistic/automatic/mini_uzi,
+/obj/item/gun/ballistic/automatic/mini_uzi,
+/obj/item/gun/ballistic/automatic/mini_uzi,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -4065,8 +4065,8 @@
 /area/awaymission/snowdin/sekret)
 "kT" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -4085,7 +4085,7 @@
 	},
 /area/awaymission/snowdin)
 "kW" = (
-/obj/item/weapon/storage/box/zipties{
+/obj/item/storage/box/zipties{
 	pixel_x = 1;
 	pixel_y = 2
 	},
@@ -4097,7 +4097,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/ale,
+/obj/item/reagent_containers/food/drinks/ale,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4152,7 +4152,7 @@
 /area/awaymission/snowdin/sekret)
 "lf" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4182,7 +4182,7 @@
 	},
 /area/awaymission/snowdin)
 "lj" = (
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4200,8 +4200,8 @@
 "lm" = (
 /obj/structure/table/wood,
 /obj/item/trash/candle,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4250,13 +4250,13 @@
 /area/awaymission/snowdin)
 "lt" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "lu" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -4283,14 +4283,14 @@
 /area/awaymission/snowdin)
 "lx" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/nuclear,
+/obj/item/book/manual/nuclear,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "ly" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4359,7 +4359,7 @@
 /area/awaymission/snowdin)
 "lH" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/light/built{
 	dir = 4
 	},
@@ -4414,23 +4414,23 @@
 	},
 /area/awaymission/snowdin)
 "lN" = (
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "lO" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "lP" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/plasteel/purple{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4460,7 +4460,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/obj/item/weapon/reagent_containers/food/drinks/ale,
+/obj/item/reagent_containers/food/drinks/ale,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4515,7 +4515,7 @@
 /area/awaymission/snowdin/sekret)
 "ma" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/automatic/c20r/toy,
+/obj/item/gun/ballistic/automatic/c20r/toy,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4529,7 +4529,7 @@
 "mc" = (
 /obj/machinery/light,
 /obj/structure/table,
-/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4576,7 +4576,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "mj" = (
-/obj/item/weapon/reagent_containers/syringe/charcoal{
+/obj/item/reagent_containers/syringe/charcoal{
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -4595,7 +4595,7 @@
 	name = "Infirmary";
 	req_access_txt = "150"
 	},
-/obj/item/weapon/reagent_containers/syringe/charcoal{
+/obj/item/reagent_containers/syringe/charcoal{
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -4612,7 +4612,7 @@
 	},
 /area/awaymission/snowdin)
 "mn" = (
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4687,7 +4687,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/storage/firstaid/tactical,
+/obj/item/storage/firstaid/tactical,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -4695,7 +4695,7 @@
 /area/awaymission/snowdin/sekret)
 "mw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/tactical,
+/obj/item/storage/firstaid/tactical,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -4703,7 +4703,7 @@
 /area/awaymission/snowdin/sekret)
 "mx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg,
+/obj/item/storage/backpack/duffelbag/syndie/ammo/smg,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -4759,13 +4759,13 @@
 	},
 /area/awaymission/snowdin)
 "mD" = (
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "mE" = (
-/obj/item/weapon/screwdriver{
+/obj/item/screwdriver{
 	pixel_y = 9
 	},
 /turf/open/floor/plating{
@@ -4828,7 +4828,7 @@
 	},
 /area/awaymission/snowdin)
 "mM" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating{
@@ -4859,7 +4859,7 @@
 	},
 /area/awaymission/snowdin)
 "mP" = (
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -4890,7 +4890,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "mT" = (
-/obj/item/weapon/gun/syringe{
+/obj/item/gun/syringe{
 	pixel_x = 1;
 	pixel_y = 2
 	},
@@ -4960,15 +4960,15 @@
 /area/awaymission/snowdin)
 "nc" = (
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/ruins/snowdin/shovel,
+/obj/item/paper/crumpled/ruins/snowdin/shovel,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "nd" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4990,8 +4990,8 @@
 /area/awaymission/snowdin)
 "ng" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -5007,7 +5007,7 @@
 /area/awaymission/snowdin)
 "ni" = (
 /obj/structure/flora/grass/green,
-/obj/item/weapon/a_gift,
+/obj/item/a_gift,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "nj" = (
@@ -5048,7 +5048,7 @@
 	},
 /area/awaymission/snowdin)
 "nn" = (
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -5057,8 +5057,8 @@
 /area/awaymission/snowdin)
 "no" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';
@@ -5130,7 +5130,7 @@
 /area/awaymission/snowdin/sekret)
 "nx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -5138,9 +5138,9 @@
 /area/awaymission/snowdin/sekret)
 "ny" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/lethalshot,
-/obj/item/weapon/storage/box/lethalshot,
-/obj/item/weapon/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -5148,7 +5148,7 @@
 /area/awaymission/snowdin/sekret)
 "nz" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
+/obj/item/gun/ballistic/shotgun/automatic/combat,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -5165,7 +5165,7 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/fluff/awaymissions/snowdin/log2,
+/obj/item/paper/fluff/awaymissions/snowdin/log2,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -5232,7 +5232,7 @@
 "nK" = (
 /obj/structure/flora/grass/green,
 /obj/structure/flora/tree/pine/xmas,
-/obj/item/weapon/a_gift,
+/obj/item/a_gift,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "nL" = (
@@ -5257,7 +5257,7 @@
 /area/awaymission/snowdin)
 "nO" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/survivalcapsule,
+/obj/item/survivalcapsule,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';

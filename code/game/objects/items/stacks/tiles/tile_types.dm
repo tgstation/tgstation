@@ -21,8 +21,8 @@
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
-	if (istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if (istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 
 		if(get_amount() < 4)
 			to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")

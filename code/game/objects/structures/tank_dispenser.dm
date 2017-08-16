@@ -20,9 +20,9 @@
 /obj/structure/tank_dispenser/Initialize()
 	. = ..()
 	for(var/i in 1 to oxygentanks)
-		new /obj/item/weapon/tank/internals/oxygen(src)
+		new /obj/item/tank/internals/oxygen(src)
 	for(var/i in 1 to plasmatanks)
-		new /obj/item/weapon/tank/internals/plasma(src)
+		new /obj/item/tank/internals/plasma(src)
 	update_icon()
 
 /obj/structure/tank_dispenser/update_icon()
@@ -40,17 +40,17 @@
 
 /obj/structure/tank_dispenser/attackby(obj/item/I, mob/user, params)
 	var/full
-	if(istype(I, /obj/item/weapon/tank/internals/plasma))
+	if(istype(I, /obj/item/tank/internals/plasma))
 		if(plasmatanks < TANK_DISPENSER_CAPACITY)
 			plasmatanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/weapon/tank/internals/oxygen))
+	else if(istype(I, /obj/item/tank/internals/oxygen))
 		if(oxygentanks < TANK_DISPENSER_CAPACITY)
 			oxygentanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(istype(I, /obj/item/wrench))
 		default_unfasten_wrench(user, I, time = 20)
 		return
 	else if(user.a_intent != INTENT_HARM)
@@ -87,13 +87,13 @@
 		return
 	switch(action)
 		if("plasma")
-			var/obj/item/weapon/tank/internals/plasma/tank = locate() in src
+			var/obj/item/tank/internals/plasma/tank = locate() in src
 			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				plasmatanks--
 			. = TRUE
 		if("oxygen")
-			var/obj/item/weapon/tank/internals/oxygen/tank = locate() in src
+			var/obj/item/tank/internals/oxygen/tank = locate() in src
 			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				oxygentanks--

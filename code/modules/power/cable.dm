@@ -119,7 +119,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/turf/T = get_turf(src)
 	if(T.intact)
 		return
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/wirecutters))
 		if (shock(user, 50))
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
@@ -135,8 +135,8 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/weapon/twohanded/rcl))
-		var/obj/item/weapon/twohanded/rcl/R = W
+	else if(istype(W, /obj/item/twohanded/rcl))
+		var/obj/item/twohanded/rcl/R = W
 		if(R.loaded)
 			R.loaded.cable_join(src, user)
 			R.is_empty(user)
@@ -460,7 +460,7 @@ By design, d1 is the smallest direction and d2 is the highest
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15)))
+GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"

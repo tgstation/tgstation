@@ -32,7 +32,7 @@
 	var/r_code = "ADMIN"
 	var/yes_code = FALSE
 	var/safety = TRUE
-	var/obj/item/weapon/disk/nuclear/auth = null
+	var/obj/item/disk/nuclear/auth = null
 	use_power = NO_POWER_USE
 	var/previous_level = ""
 	var/obj/item/nuke_core/core = null
@@ -90,7 +90,7 @@
 	tag = "syndienuke"
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/disk/nuclear))
+	if (istype(I, /obj/item/disk/nuclear))
 		if(!user.drop_item())
 			return
 		I.forceMove(src)
@@ -100,7 +100,7 @@
 
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(I, /obj/item/weapon/screwdriver/nuke))
+			if(istype(I, /obj/item/screwdriver/nuke))
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start removing [src]'s front panel's screws...</span>")
 				if(do_after(user, 60*I.toolspeed,target=src))
@@ -109,7 +109,7 @@
 					update_icon()
 				return
 		if(NUKESTATE_UNSCREWED)
-			if(istype(I, /obj/item/weapon/crowbar))
+			if(istype(I, /obj/item/crowbar))
 				to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,30*I.toolspeed,target=src))
@@ -118,8 +118,8 @@
 					update_icon()
 				return
 		if(NUKESTATE_PANEL_REMOVED)
-			if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/welder = I
+			if(istype(I, /obj/item/weldingtool))
+				var/obj/item/weldingtool/welder = I
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")
 				if(welder.remove_fuel(1,user))
@@ -129,7 +129,7 @@
 						update_icon()
 				return
 		if(NUKESTATE_WELDED)
-			if(istype(I, /obj/item/weapon/crowbar))
+			if(istype(I, /obj/item/crowbar))
 				to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,50*I.toolspeed,target=src))
@@ -296,7 +296,7 @@
 		if("insert_disk")
 			if(!auth)
 				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/weapon/disk/nuclear))
+				if(istype(I, /obj/item/disk/nuclear))
 					usr.drop_item()
 					I.forceMove(src)
 					auth = I
@@ -362,7 +362,7 @@
 	if(safety)
 		if(timing)
 			set_security_level(previous_level)
-			for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
+			for(var/obj/item/pinpointer/syndicate/S in GLOB.pinpointer_list)
 				S.switch_mode_to(initial(S.mode))
 				S.nuke_warning = FALSE
 		timing = FALSE
@@ -381,14 +381,14 @@
 		bomb_set = TRUE
 		set_security_level("delta")
 		detonation_timer = world.time + (timer_set * 10)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
+		for(var/obj/item/pinpointer/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 	else
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
+		for(var/obj/item/pinpointer/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(initial(S.mode))
 			S.nuke_warning = FALSE
 		countdown.stop()
@@ -482,7 +482,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		SSmapping.remove_nuke_threat(src)
 
 //==========DAT FUKKEN DISK===============
-/obj/item/weapon/disk
+/obj/item/disk
 	icon = 'icons/obj/module.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "card-id"
@@ -490,23 +490,23 @@ This is here to make the tiles around the station mininuke change when it's arme
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
 
-/obj/item/weapon/disk/nuclear
+/obj/item/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
-	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
+	persistence_replacement = /obj/item/disk/fakenucleardisk
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/weapon/disk/nuclear/New()
+/obj/item/disk/nuclear/New()
 	..()
 	GLOB.poi_list |= src
 	set_stationloving(TRUE, inform_admins=TRUE)
 
-/obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/claymore/highlander))
-		var/obj/item/weapon/claymore/highlander/H = I
+/obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/claymore/highlander))
+		var/obj/item/claymore/highlander/H = I
 		if(H.nuke_disk)
 			to_chat(user, "<span class='notice'>Wait... what?</span>")
 			qdel(H.nuke_disk)
@@ -518,13 +518,13 @@ This is here to make the tiles around the station mininuke change when it's arme
 		return 1
 	return ..()
 
-/obj/item/weapon/disk/nuclear/Destroy(force=FALSE)
+/obj/item/disk/nuclear/Destroy(force=FALSE)
 	// respawning is handled in /obj/Destroy()
 	if(force)
 		GLOB.poi_list -= src
 	. = ..()
 
-/obj/item/weapon/disk/nuclear/suicide_act(mob/user)
+/obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
@@ -542,7 +542,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS
 
-/obj/item/weapon/disk/fakenucleardisk
+/obj/item/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"
 	desc = "Broken dreams and a faint odor of cheese."
 	icon_state = "nucleardisk"

@@ -135,7 +135,7 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/weapon/crowbar))
+	if(intact && istype(C, /obj/item/crowbar))
 		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
@@ -144,7 +144,7 @@
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/weapon/crowbar/CB = user.is_holding_item_of_type(/obj/item/weapon/crowbar)
+	var/obj/item/crowbar/CB = user.is_holding_item_of_type(/obj/item/crowbar)
 	if(!CB)
 		return
 	var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)
@@ -201,7 +201,7 @@
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
 
-/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
@@ -215,7 +215,7 @@
 			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
 	return FALSE
 
-/turf/open/floor/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")
@@ -227,7 +227,7 @@
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
 
-			A.electronics = new/obj/item/weapon/electronics/airlock(A)
+			A.electronics = new/obj/item/electronics/airlock(A)
 
 			if(the_rcd.conf_access)
 				A.electronics.accesses = the_rcd.conf_access.Copy()

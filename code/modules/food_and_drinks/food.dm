@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
 ////////////////////////////////////////////////////////////////////////////////
-/obj/item/weapon/reagent_containers/food
+/obj/item/reagent_containers/food
 	possible_transfer_amounts = list()
 	volume = 50	//Sets the default container amount for all food items.
 	container_type = INJECTABLE
@@ -9,13 +9,13 @@
 	var/foodtype = NONE
 	var/last_check_time
 
-/obj/item/weapon/reagent_containers/food/Initialize(mapload)
+/obj/item/reagent_containers/food/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		pixel_x = rand(-5, 5)
 		pixel_y = rand(-5, 5)
 
-/obj/item/weapon/reagent_containers/food/proc/checkLiked(var/fraction, mob/M)
+/obj/item/reagent_containers/food/proc/checkLiked(var/fraction, mob/M)
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

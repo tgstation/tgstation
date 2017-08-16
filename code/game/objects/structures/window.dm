@@ -70,7 +70,7 @@
 			rods++
 
 	for(var/i in 1 to shards)
-		debris += new /obj/item/weapon/shard(src)
+		debris += new /obj/item/shard(src)
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
@@ -78,13 +78,13 @@
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
 
-/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 	return FALSE
 
-/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd)
+/obj/structure/window/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
@@ -94,7 +94,7 @@
 
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
-	for(var/obj/item/weapon/shard/shard in debris)
+	for(var/obj/item/shard/shard in debris)
 		shard.add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/ratvar_act()
@@ -173,8 +173,8 @@
 		return 1 //skip the afterattack
 
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
-		var/obj/item/weapon/weldingtool/WT = I
+	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
@@ -189,7 +189,7 @@
 		return
 
 	if(!(flags&NODECONSTRUCT))
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/screwdriver))
 			playsound(src, I.usesound, 75, 1)
 			if(reinf)
 				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
@@ -212,7 +212,7 @@
 			return
 
 
-		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
+		else if (istype(I, /obj/item/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
 			playsound(src, I.usesound, 75, 1)
 			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
@@ -220,7 +220,7 @@
 				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 			return
 
-		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
+		else if(istype(I, /obj/item/wrench) && !anchored)
 			playsound(src, I.usesound, 75, 1)
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
@@ -394,7 +394,7 @@
 		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
 
-/obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/obj/structure/window/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	return 0
 
 /obj/structure/window/CanAStarPass(ID, to_dir)
@@ -700,7 +700,7 @@
 	var/papers = rand(1,4)
 	debris += new /obj/item/stack/sheet/mineral/wood()
 	for(var/i in 1 to papers)
-		debris += new /obj/item/weapon/paper/natural()
+		debris += new /obj/item/paper/natural()
 	update_icon()
 
 /obj/structure/window/paperframe/attack_hand(mob/user)
@@ -728,13 +728,13 @@
 	queue_smooth(src)
 
 
-/obj/structure/window/paperframe/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
 	if(W.is_hot())
 		fire_act(W.is_hot())
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	if(istype(W, /obj/item/weapon/paper) && obj_integrity < max_integrity)
+	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
 		user.visible_message("[user] starts to patch the holes in \the [src].")
 		if(do_after(user, 20, target = src))
 			obj_integrity = min(obj_integrity+4,max_integrity)

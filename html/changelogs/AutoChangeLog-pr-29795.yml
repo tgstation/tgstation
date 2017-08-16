@@ -1,6 +1,0 @@
-author: "Pubby"
-delete-after: True
-changes: 
-  - rscadd: "The Curator job is now available on PubbyStation"
-  - rscadd: "Beekeeping has been added to PubbyStation's monastery"
-  - tweak: "PubbyStation's bar has been rearranged"

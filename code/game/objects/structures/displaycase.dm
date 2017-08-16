@@ -13,7 +13,7 @@
 	var/alert = TRUE
 	var/open = FALSE
 	var/openable = TRUE
-	var/obj/item/weapon/electronics/airlock/electronics
+	var/obj/item/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
 /obj/structure/displaycase/Initialize()
@@ -53,7 +53,7 @@
 	if(!(flags & NODECONSTRUCT))
 		dump()
 		if(!disassembled)
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/shard( src.loc )
 			trigger_alarm()
 	qdel(src)
 
@@ -61,7 +61,7 @@
 	if(!broken && !(flags & NODECONSTRUCT))
 		density = FALSE
 		broken = 1
-		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/shard( src.loc )
 		playsound(src, "shatter", 70, 1)
 		update_icon()
 		trigger_alarm()
@@ -112,15 +112,15 @@
 	src.icon = I
 	return
 
-/obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
 	if(W.GetID() && !broken && openable)
 		if(allowed(user))
 			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 			toggle_lock(user)
 		else
 			to_chat(user,  "<span class='warning'>Access denied.</span>")
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP && !broken)
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
+		var/obj/item/weldingtool/WT = W
 		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
 			playsound(loc, WT.usesound, 40, 1)
@@ -132,7 +132,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	else if(!alert && istype(W, /obj/item/weapon/crowbar) && openable) //Only applies to the lab cage and player made display cases
+	else if(!alert && istype(W, /obj/item/crowbar) && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")
@@ -195,11 +195,11 @@
 	desc = "wooden base of display case"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox_chassis"
-	var/obj/item/weapon/electronics/airlock/electronics
+	var/obj/item/electronics/airlock/electronics
 
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench)) //The player can only deconstruct the wooden frame
+	if(istype(I, /obj/item/wrench)) //The player can only deconstruct the wooden frame
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
@@ -207,7 +207,7 @@
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 
-	else if(istype(I, /obj/item/weapon/electronics/airlock))
+	else if(istype(I, /obj/item/electronics/airlock))
 		to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
@@ -238,7 +238,7 @@
 //The lab cage and captains display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
 	alert = 1
-	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
+	start_showpiece_type = /obj/item/gun/energy/laser/captain
 	req_access = list(ACCESS_CENT_SPECOPS)
 
 /obj/structure/displaycase/labcage
@@ -275,7 +275,7 @@
 		to_chat(user, "The plaque reads:")
 		to_chat(user, trophy_message)
 
-/obj/structure/displaycase/trophy/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/user, params)
 
 	if(!user.Adjacent(src)) //no TK museology
 		return

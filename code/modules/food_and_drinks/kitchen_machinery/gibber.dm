@@ -9,7 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
-	circuit = /obj/item/weapon/circuitboard/machine/gibber
+	circuit = /obj/item/circuitboard/machine/gibber
 
 	var/operating = FALSE //Is it on?
 	var/dirty = 0 // Does it need cleaning?
@@ -24,9 +24,9 @@
 
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
 		if(M.rating >= 2)
@@ -139,10 +139,10 @@
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
 	var/typeofskin = /obj/item/stack/sheet/animalhide/human
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
 	var/obj/item/stack/sheet/animalhide/allskin
 
 	if(ishuman(occupant))
@@ -162,7 +162,7 @@
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 
 	for (var/i=1 to meat_produced)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))

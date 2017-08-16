@@ -17,7 +17,7 @@
 
 /obj/item/device/chameleon/New()
 	..()
-	var/obj/item/weapon/cigbutt/butt = /obj/item/weapon/cigbutt
+	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
 /obj/item/device/chameleon/dropped()
@@ -36,7 +36,7 @@
 	if(!check_sprite(target))
 		return
 	if(!active_dummy)
-		if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(isitem(target) && !istype(target, /obj/item/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>Scanned [target].</span>")
 			var/obj/temp = new/obj()

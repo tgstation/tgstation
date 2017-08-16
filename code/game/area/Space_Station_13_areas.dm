@@ -263,22 +263,45 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/asteroid/central
 	name = "Central Asteroid Maintenance"
 	icon_state = "maintcentral"
-	
-/area/maintenance/asteroid/disposal/east
-	name = "Eastern External Waste Belt"
+
+/area/maintenance/asteroid/disposal
 	icon_state = "disposal"
-	
+
 /area/maintenance/asteroid/disposal/north
-	name = "Northern External Waste Belt"
-	icon_state = "disposal"
-	
-/area/maintenance/asteroid/disposal/southeast
-	name = "South-Eastern Disposal"
-	icon_state = "disposal"
-	
-/area/maintenance/asteroid/disposal/southwest
+	name = "Northern Disposal"
+
+/area/maintenance/asteroid/disposal/north/east
+	name = "North-Eastern Disposal"
+
+/area/maintenance/asteroid/disposal/north/west
+	name = "North-Western Disposal"
+
+/area/maintenance/asteroid/disposal/east
+	name = "Eastern Disposal"
+
+/area/maintenance/asteroid/disposal/west
+	name = "Western Disposal"
+
+/area/maintenance/asteroid/disposal/west/secondary
+	name = "Secondary Western Disposal"
+
+/area/maintenance/asteroid/disposal/south
+	name = "Southern Disposal"
+
+/area/maintenance/asteroid/disposal/south/west
 	name = "South-Western Disposal"
-	icon_state = "disposal"
+
+/area/maintenance/asteroid/disposal/external/east
+	name = "Eastern External Waste Belt"
+	
+/area/maintenance/asteroid/disposal/external/north
+	name = "Northern External Waste Belt"
+	
+/area/maintenance/asteroid/disposal/external/southeast
+	name = "South-Eastern External Waste Belt"
+	
+/area/maintenance/asteroid/disposal/external/southwest
+	name = "South-Western External Waste Belt"
 	
 /area/maintenance/asteroid/fore/cargo_west
 	name = "Fore Asteroid Maintenance"

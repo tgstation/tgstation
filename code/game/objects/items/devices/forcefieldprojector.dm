@@ -77,7 +77,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
 	density = TRUE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	armor = list(melee = 0, bullet = 25, laser = 50, energy = 50, bomb = 25, bio = 100, rad = 100, fire = 100, acid = 100)
