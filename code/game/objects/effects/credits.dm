@@ -14,12 +14,11 @@
         sleep(CREDIT_ROLL_SPEED)
         new /obj/effect/abstract/credit(CREDITS_LOC, I)
 
-INITIALIZE_IMMEDIATE(/obj/effect/abstract/credit)
-
 /obj/effect/abstract/credit
     icon = 'icons/credits.dmi'
     mouse_opacity = MOUSE_OPACITY_OPAQUE
     alpha = 0
+    layer = FLY_LAYER
 
 /obj/effect/abstract/credit/Initialize(mapload, credited)
     . = ..()
