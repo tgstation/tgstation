@@ -8,8 +8,8 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = 1
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
@@ -105,11 +105,11 @@
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/redtag))
+			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
 				threatcount += 4
 
 		if(lasercolor == "r")
-			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/bluetag))
+			if(is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
 				threatcount += 4
 
 		return threatcount
@@ -140,7 +140,7 @@
 		return 0
 	return 1
 
-/mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/G)
+/mob/living/carbon/monkey/can_use_guns(var/obj/item/G)
 	return 1
 
 /mob/living/carbon/monkey/angry

@@ -7,7 +7,7 @@
 	desc = "Allows for the construction of a \"Ripley\" Central Control module."
 	id = "ripley_main"
 	req_tech = list("programming" = 2)
-	build_path = /obj/item/weapon/circuitboard/mecha/ripley/main
+	build_path = /obj/item/circuitboard/mecha/ripley/main
 	category = list("Exosuit Modules")
 
 /datum/design/board/ripley_peri
@@ -15,7 +15,7 @@
 	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
 	req_tech = list("programming" = 2)
-	build_path = /obj/item/weapon/circuitboard/mecha/ripley/peripherals
+	build_path = /obj/item/circuitboard/mecha/ripley/peripherals
 	category = list("Exosuit Modules")
 
 
@@ -24,7 +24,7 @@
 	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
 	id = "odysseus_main"
 	req_tech = list("programming" = 3,"biotech" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/main
+	build_path = /obj/item/circuitboard/mecha/odysseus/main
 	category = list("Exosuit Modules")
 
 /datum/design/board/odysseus_peri
@@ -32,7 +32,7 @@
 	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
 	id = "odysseus_peri"
 	req_tech = list("programming" = 3,"biotech" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
+	build_path = /obj/item/circuitboard/mecha/odysseus/peripherals
 	category = list("Exosuit Modules")
 
 
@@ -41,7 +41,7 @@
 	desc = "Allows for the construction of a \"Gygax\" Central Control module."
 	id = "gygax_main"
 	req_tech = list("programming" = 4, "combat" = 3, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/mecha/gygax/main
+	build_path = /obj/item/circuitboard/mecha/gygax/main
 	category = list("Exosuit Modules")
 
 /datum/design/board/gygax_peri
@@ -49,7 +49,7 @@
 	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
 	id = "gygax_peri"
 	req_tech = list("programming" = 4, "combat" = 3, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/mecha/gygax/peripherals
+	build_path = /obj/item/circuitboard/mecha/gygax/peripherals
 	category = list("Exosuit Modules")
 
 /datum/design/board/gygax_targ
@@ -57,7 +57,7 @@
 	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
 	id = "gygax_targ"
 	req_tech = list("programming" = 4, "combat" = 4, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/mecha/gygax/targeting
+	build_path = /obj/item/circuitboard/mecha/gygax/targeting
 	category = list("Exosuit Modules")
 
 
@@ -66,7 +66,7 @@
 	desc = "Allows for the construction of a \"Durand\" Central Control module."
 	id = "durand_main"
 	req_tech = list("programming" = 4, "combat" = 4, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/mecha/durand/main
+	build_path = /obj/item/circuitboard/mecha/durand/main
 	category = list("Exosuit Modules")
 
 /datum/design/board/durand_peri
@@ -74,7 +74,7 @@
 	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
 	id = "durand_peri"
 	req_tech = list("programming" = 4, "combat" = 4, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/mecha/durand/peripherals
+	build_path = /obj/item/circuitboard/mecha/durand/peripherals
 	category = list("Exosuit Modules")
 
 /datum/design/board/durand_targ
@@ -82,7 +82,7 @@
 	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
 	id = "durand_targ"
 	req_tech = list("programming" = 5, "combat" = 4, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/mecha/durand/targeting
+	build_path = /obj/item/circuitboard/mecha/durand/targeting
 	category = list("Exosuit Modules")
 
 
@@ -91,7 +91,7 @@
 	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
 	id = "honker_main"
 	req_tech = list("programming" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/mecha/honker/main
+	build_path = /obj/item/circuitboard/mecha/honker/main
 	category = list("Exosuit Modules")
 
 /datum/design/board/honker_peri
@@ -99,7 +99,7 @@
 	desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
 	id = "honker_peri"
 	req_tech = list("programming" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/mecha/honker/peripherals
+	build_path = /obj/item/circuitboard/mecha/honker/peripherals
 	category = list("Exosuit Modules")
 
 /datum/design/board/honker_targ
@@ -107,7 +107,7 @@
 	desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
 	id = "honker_targ"
 	req_tech = list("programming" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting
+	build_path = /obj/item/circuitboard/mecha/honker/targeting
 	category = list("Exosuit Modules")
 
 
@@ -117,7 +117,7 @@
 	id = "phazon_main"
 	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "materials" = 6, "plasmatech" = 5)
-	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
+	build_path = /obj/item/circuitboard/mecha/phazon/main
 	category = list("Exosuit Modules")
 
 /datum/design/board/phazon_peri
@@ -126,7 +126,7 @@
 	id = "phazon_peri"
 	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "bluespace" = 5, "plasmatech" = 5)
-	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
+	build_path = /obj/item/circuitboard/mecha/phazon/peripherals
 	category = list("Exosuit Modules")
 
 /datum/design/board/phazon_targ
@@ -135,7 +135,7 @@
 	id = "phazon_targ"
 	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	req_tech = list("programming" = 6, "magnets" = 5, "plasmatech" = 5)
-	build_path = /obj/item/weapon/circuitboard/mecha/phazon/targeting
+	build_path = /obj/item/circuitboard/mecha/phazon/targeting
 	category = list("Exosuit Modules")
 
 ////////////////////////////////////////

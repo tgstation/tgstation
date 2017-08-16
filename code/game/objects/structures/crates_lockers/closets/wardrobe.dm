@@ -126,7 +126,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/grey(src)
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/duffelbag(src)
+		new /obj/item/storage/backpack/duffelbag(src)
 	if(prob(40))
 		new /obj/item/clothing/mask/bandana/black(src)
 		new /obj/item/clothing/mask/bandana/black(src)

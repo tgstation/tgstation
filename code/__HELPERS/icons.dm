@@ -712,7 +712,8 @@ The _flatIcons list is a cache for generated icon files.
 			if(!current)
 				curIndex++ //Try the next layer
 				continue
-			currentLayer = current:layer
+			var/image/I = current
+			currentLayer = I.layer
 			if(currentLayer<0) // Special case for FLY_LAYER
 				if(currentLayer <= -1000) return flat
 				if(pSet == 0) // Underlay
@@ -747,22 +748,22 @@ The _flatIcons list is a cache for generated icon files.
 		// Dimensions of overlay being added
 	var/{addX1;addX2;addY1;addY2}
 
-	for(var/I in layers)
-
-		if(I:alpha == 0)
+	for(var/V in layers)
+		var/image/I = V
+		if(I.alpha == 0)
 			continue
 
 		if(I == copy) // 'I' is an /image based on the object being flattened.
 			curblend = BLEND_OVERLAY
-			add = icon(I:icon, I:icon_state, I:dir)
+			add = icon(I.icon, I.icon_state, I.dir)
 		else // 'I' is an appearance object.
 			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
-		addX1 = min(flatX1, I:pixel_x+1)
-		addX2 = max(flatX2, I:pixel_x+add.Width())
-		addY1 = min(flatY1, I:pixel_y+1)
-		addY2 = max(flatY2, I:pixel_y+add.Height())
+		addX1 = min(flatX1, I.pixel_x+1)
+		addX2 = max(flatX2, I.pixel_x+add.Width())
+		addY1 = min(flatY1, I.pixel_y+1)
+		addY2 = max(flatY2, I.pixel_y+add.Height())
 
 		if(addX1!=flatX1 || addX2!=flatX2 || addY1!=flatY1 || addY2!=flatY2)
 			// Resize the flattened icon so the new icon fits
@@ -771,7 +772,7 @@ The _flatIcons list is a cache for generated icon files.
 			flatY1=addY1;flatY2=addY2
 
 		// Blend the overlay into the flattened icon
-		flat.Blend(add, blendMode2iconMode(curblend), I:pixel_x + 2 - flatX1, I:pixel_y + 2 - flatY1)
+		flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
 	if(A.color)
 		flat.Blend(A.color, ICON_MULTIPLY)
@@ -782,10 +783,11 @@ The _flatIcons list is a cache for generated icon files.
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
-	for(var/I in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		if(I:layer>A.layer)
+	for(var/V in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
+		var/image/I = V
+		if(I.layer>A.layer)
 			continue//If layer is greater than what we need, skip it.
-		var/icon/image_overlay = new(I:icon,I:icon_state)//Blend only works with icon objects.
+		var/icon/image_overlay = new(I.icon,I.icon_state)//Blend only works with icon objects.
 		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
 		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
 	return alpha_mask//And now return the mask.

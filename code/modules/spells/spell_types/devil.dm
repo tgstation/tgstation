@@ -5,7 +5,7 @@
 	include_user = 1
 	range = -1
 	clothes_req = 0
-	item_type = /obj/item/weapon/twohanded/pitchfork/demonic
+	item_type = /obj/item/twohanded/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -15,10 +15,10 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
-	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
+	item_type = /obj/item/twohanded/pitchfork/demonic/greater
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
-	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
+	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
 	item_type = /obj/item/device/instrument/violin/golden
@@ -50,24 +50,24 @@
 		if(C.mind && user.mind)
 			if(C.stat == DEAD)
 				if(user.drop_item())
-					var/obj/item/weapon/paper/contract/infernal/revive/contract = new(user.loc, C.mind, user.mind)
+					var/obj/item/paper/contract/infernal/revive/contract = new(user.loc, C.mind, user.mind)
 					user.put_in_hands(contract)
 			else
-				var/obj/item/weapon/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
+				var/obj/item/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
 				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship")
 				switch(contractTypeName)
 					if("Power")
-						contract = new /obj/item/weapon/paper/contract/infernal/power(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/power(C.loc, C.mind, user.mind)
 					if("Wealth")
-						contract = new /obj/item/weapon/paper/contract/infernal/wealth(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/wealth(C.loc, C.mind, user.mind)
 					if("Prestige")
-						contract = new /obj/item/weapon/paper/contract/infernal/prestige(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/prestige(C.loc, C.mind, user.mind)
 					if("Magic")
-						contract = new /obj/item/weapon/paper/contract/infernal/magic(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/magic(C.loc, C.mind, user.mind)
 					if("Knowledge")
-						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
 					if("Friendship")
-						contract = new /obj/item/weapon/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
 			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")

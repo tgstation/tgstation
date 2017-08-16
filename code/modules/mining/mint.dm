@@ -100,8 +100,8 @@
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new P(src)
-		var/obj/item/weapon/storage/bag/money/M = locate(/obj/item/weapon/storage/bag/money, T)
+		var/obj/item/storage/bag/money/M = locate(/obj/item/storage/bag/money, T)
 		if(!M)
-			M = new /obj/item/weapon/storage/bag/money(src)
+			M = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
 		O.loc = M

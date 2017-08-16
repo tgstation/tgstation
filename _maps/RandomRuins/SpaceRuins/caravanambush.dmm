@@ -66,7 +66,7 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 25
 	},
-/obj/item/weapon/coin/plasma,
+/obj/item/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "ao" = (
@@ -74,19 +74,19 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 25
 	},
-/obj/item/weapon/coin/gold,
-/obj/item/weapon/coin/gold,
-/obj/item/weapon/coin/mythril,
-/obj/item/weapon/coin/plasma,
+/obj/item/coin/gold,
+/obj/item/coin/gold,
+/obj/item/coin/mythril,
+/obj/item/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "ap" = (
 /obj/structure/table,
-/obj/item/weapon/coin/gold,
-/obj/item/weapon/coin/gold,
-/obj/item/weapon/coin/gold,
-/obj/item/weapon/coin/mythril,
-/obj/item/weapon/coin/plasma,
+/obj/item/coin/gold,
+/obj/item/coin/gold,
+/obj/item/coin/gold,
+/obj/item/coin/mythril,
+/obj/item/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aq" = (
@@ -111,7 +111,7 @@
 /area/ruin/powered)
 "at" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/brown,
+/obj/item/bedsheet/brown,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "au" = (
@@ -122,7 +122,7 @@
 /area/ruin/powered)
 "av" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/bag/money/vault,
+/obj/item/storage/bag/money/vault,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aw" = (
@@ -139,7 +139,7 @@
 /area/ruin/powered)
 "az" = (
 /obj/structure/table,
-/obj/item/weapon/storage/bag/money/vault,
+/obj/item/storage/bag/money/vault,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aA" = (
@@ -210,7 +210,7 @@
 /turf/closed/wall/mineral/iron,
 /area/ruin/unpowered/no_grav)
 "aL" = (
-/obj/item/weapon/coin/mythril,
+/obj/item/coin/mythril,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aM" = (
@@ -231,7 +231,7 @@
 /area/ruin/unpowered/no_grav)
 "aP" = (
 /obj/structure/chair,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
@@ -241,7 +241,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aR" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aS" = (
@@ -258,9 +258,9 @@
 /area/template_noop)
 "aU" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/internals/plasma/full,
-/obj/item/weapon/tank/internals/plasma/full,
-/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aV" = (
@@ -289,8 +289,8 @@
 /area/ruin/powered)
 "aZ" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "ba" = (
@@ -319,7 +319,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/mineral/plastitanium/airless,
@@ -336,7 +336,7 @@
 /area/ruin/unpowered/no_grav)
 "bh" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/ballistic/automatic/pistol/APS,
+/obj/item/gun/ballistic/automatic/pistol/APS,
 /turf/open/floor/wood/airless,
 /area/ruin/unpowered/no_grav)
 "bi" = (
@@ -347,7 +347,7 @@
 /area/ruin/unpowered/no_grav)
 "bj" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube,
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube,
 /turf/open/floor/wood/airless,
 /area/ruin/unpowered/no_grav)
 "bk" = (
@@ -437,7 +437,7 @@
 /area/ruin/unpowered)
 "by" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "bz" = (
@@ -469,7 +469,7 @@
 /obj/item/ammo_casing/shotgun/techshell,
 /obj/item/ammo_casing/shotgun/techshell,
 /obj/item/ammo_casing/shotgun/pulseslug,
-/obj/item/weapon/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "bE" = (
@@ -493,7 +493,7 @@
 /area/ruin/unpowered)
 "bI" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "bJ" = (
@@ -521,8 +521,8 @@
 /area/ruin/unpowered)
 "bN" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "bO" = (
@@ -583,8 +583,8 @@
 /obj/item/ammo_casing/shotgun/frag12,
 /obj/item/ammo_casing/shotgun/frag12,
 /obj/item/ammo_casing/shotgun/frag12,
-/obj/item/weapon/storage/box/beanbag,
-/obj/item/weapon/storage/box/rubbershot,
+/obj/item/storage/box/beanbag,
+/obj/item/storage/box/rubbershot,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "bW" = (
@@ -632,7 +632,7 @@
 "cd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "ce" = (
@@ -672,7 +672,7 @@
 /area/ruin/unpowered)
 "ck" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted,
+/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cl" = (
@@ -703,15 +703,15 @@
 /area/ruin/unpowered)
 "cp" = (
 /obj/structure/closet/crate/secure/engineering,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cq" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
@@ -735,25 +735,25 @@
 /area/ruin/powered)
 "cu" = (
 /obj/structure/closet/crate/secure/engineering,
-/obj/item/weapon/wrench{
+/obj/item/wrench{
 	color = "#ff0000";
 	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster.";
 	name = "experimental wrench";
 	toolspeed = 3
 	},
-/obj/item/weapon/screwdriver{
+/obj/item/screwdriver{
 	color = "#ff0000";
 	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster.";
 	name = "experimental screwdriver";
 	toolspeed = 3
 	},
-/obj/item/weapon/wirecutters{
+/obj/item/wirecutters{
 	color = "#ff0000";
 	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster.";
 	name = "experimental wirecutters";
 	toolspeed = 3
 	},
-/obj/item/weapon/crowbar/red{
+/obj/item/crowbar/red{
 	color = "#ff0000";
 	desc = "A prototype of a new crowbar design, allegedly the red color scheme makes it go faster.";
 	name = "experimental crowbar";
@@ -803,20 +803,20 @@
 /area/ruin/unpowered)
 "cA" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/ballistic/shotgun/riot,
-/obj/item/weapon/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cB" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/syringe/syndicate,
-/obj/item/weapon/gun/syringe/rapidsyringe,
+/obj/item/gun/syringe/syndicate,
+/obj/item/gun/syringe/rapidsyringe,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cC" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted,
-/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cD" = (
@@ -827,7 +827,7 @@
 /area/ruin/unpowered)
 "cE" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "cF" = (
@@ -853,7 +853,7 @@
 /area/ruin/unpowered)
 "cI" = (
 /obj/structure/grille/broken,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
@@ -887,15 +887,15 @@
 /area/ruin/unpowered)
 "cN" = (
 /obj/structure/closet/crate/secure/plasma,
-/obj/item/weapon/tank/internals/plasma/full,
-/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cO" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "cP" = (
@@ -948,7 +948,7 @@
 /area/ruin/unpowered)
 "cW" = (
 /obj/structure/closet/crate/secure/plasma,
-/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
@@ -974,7 +974,7 @@
 /area/ruin/unpowered)
 "da" = (
 /obj/item/stack/rods,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /mob/living/simple_animal/hostile/syndicate/melee/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
@@ -982,14 +982,14 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "db" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
 "dc" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/template_noop,
 /area/template_noop)
 "dd" = (
@@ -1006,8 +1006,8 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
-/obj/item/weapon/tank/internals/plasma/full,
-/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "df" = (
@@ -1067,7 +1067,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
-/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "dm" = (
@@ -1109,7 +1109,7 @@
 /area/ruin/unpowered)
 "dr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "ds" = (

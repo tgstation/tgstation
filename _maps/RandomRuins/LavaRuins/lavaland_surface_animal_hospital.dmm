@@ -42,7 +42,7 @@
 "ak" = (
 /obj/structure/table/wood,
 /obj/item/device/taperecorder,
-/obj/item/weapon/pen/blue,
+/obj/item/pen/blue,
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "al" = (
@@ -68,24 +68,24 @@
 /area/ruin/powered/animal_hospital)
 "ap" = (
 /obj/structure/table,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/scalpel{
+/obj/item/circular_saw,
+/obj/item/scalpel{
 	pixel_y = 12
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "aq" = (
 /obj/structure/table,
-/obj/item/weapon/cautery{
+/obj/item/cautery{
 	pixel_x = 4
 	},
-/obj/item/weapon/surgicaldrill,
+/obj/item/surgicaldrill,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "ar" = (
 /obj/structure/table,
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/razor,
+/obj/item/surgical_drapes,
+/obj/item/razor,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "as" = (
@@ -104,8 +104,8 @@
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "av" = (
-/obj/item/weapon/reagent_containers/glass/rag,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -119,11 +119,11 @@
 /area/ruin/powered/animal_hospital)
 "ax" = (
 /obj/structure/closet/crate/trashcart,
-/obj/item/weapon/storage/bag/trash,
+/obj/item/storage/bag/trash,
 /obj/item/trash/cheesie,
-/obj/item/weapon/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/syringe/antiviral,
 /obj/item/bodybag,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/grass{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -144,7 +144,7 @@
 	dir = 1;
 	pixel_y = -27
 	},
-/obj/item/weapon/paper/fluff/stations/lavaland/surface/henderson_report,
+/obj/item/paper/fluff/stations/lavaland/surface/henderson_report,
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "aA" = (
@@ -161,8 +161,8 @@
 /area/ruin/powered/animal_hospital)
 "aD" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
+/obj/item/retractor,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "aF" = (
@@ -196,10 +196,10 @@
 /area/ruin/powered/animal_hospital)
 "aN" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -238,11 +238,11 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/ammo_casing/shotgun/dart,
 /obj/item/ammo_casing/shotgun/dart,
-/obj/item/weapon/gun/ballistic/revolver/doublebarrel{
+/obj/item/gun/ballistic/revolver/doublebarrel{
 	desc = "For putting critters out to pasture."
 	},
 /obj/item/ammo_casing/shotgun/buckshot,
-/obj/item/weapon/storage/box/bodybags,
+/obj/item/storage/box/bodybags,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -275,8 +275,8 @@
 /area/ruin/powered/animal_hospital)
 "ba" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/storage/backpack/duffelbag/med,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/storage/backpack/duffelbag/med,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bb" = (
@@ -289,13 +289,13 @@
 /area/ruin/powered/animal_hospital)
 "bc" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bd" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/gloves,
-/obj/item/weapon/storage/box/masks{
+/obj/item/storage/box/gloves,
+/obj/item/storage/box/masks{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -306,13 +306,13 @@
 /area/ruin/powered/animal_hospital)
 "be" = (
 /obj/effect/decal/cleanable/oil,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "bf" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
-/obj/item/weapon/storage/box/matches,
+/obj/item/storage/fancy/cigarettes/dromedaryco,
+/obj/item/storage/box/matches,
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "bg" = (
@@ -321,7 +321,7 @@
 /area/ruin/powered/animal_hospital)
 "bh" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bi" = (
@@ -330,7 +330,7 @@
 /area/ruin/powered/animal_hospital)
 "bj" = (
 /obj/structure/table/glass,
-/obj/item/weapon/lazarus_injector,
+/obj/item/lazarus_injector,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bk" = (
@@ -339,22 +339,22 @@
 /area/ruin/powered/animal_hospital)
 "bl" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/cookie{
+/obj/item/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/cookie{
+/obj/item/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/cookie{
+/obj/item/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/cookie{
+/obj/item/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/cookie{
+/obj/item/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/cookie{
+/obj/item/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
 /obj/machinery/light{
@@ -380,15 +380,15 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bo" = (
-/obj/item/weapon/reagent_containers/glass/bowl,
-/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
-/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/cheesewedge,
+/obj/item/reagent_containers/food/snacks/cheesewedge,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bp" = (
 /obj/structure/closet/crate/bin,
 /obj/item/trash/pistachios,
-/obj/item/weapon/lipstick/random,
+/obj/item/lipstick/random,
 /obj/item/seeds/apple,
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
@@ -404,11 +404,11 @@
 /area/ruin/powered/animal_hospital)
 "bs" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/phone,
+/obj/item/phone,
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bt" = (
-/obj/item/weapon/twohanded/required/kirbyplants,
+/obj/item/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bu" = (
@@ -452,13 +452,13 @@
 /area/ruin/powered/animal_hospital)
 "bA" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/hug,
+/obj/item/storage/box/hug,
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bC" = (
@@ -469,11 +469,11 @@
 /area/ruin/powered/animal_hospital)
 "bD" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/bottle/cyanide{
+/obj/item/reagent_containers/glass/bottle/cyanide{
 	desc = "A cocktail of chemotherapy drugs intended to treat bladder cancer.";
 	name = "MVAC regimen"
 	},
-/obj/item/weapon/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bE" = (
@@ -497,8 +497,8 @@
 /area/ruin/powered/animal_hospital)
 "bH" = (
 /obj/structure/table,
-/obj/item/weapon/tank/internals/oxygen,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -517,10 +517,10 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bK" = (
-/obj/item/weapon/reagent_containers/glass/bowl,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
@@ -562,32 +562,32 @@
 "bQ" = (
 /obj/structure/table/glass,
 /obj/item/clothing/neck/petcollar,
-/obj/item/weapon/pen/blue,
+/obj/item/pen/blue,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bR" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/melee/baton/cattleprod{
+/obj/item/melee/baton/cattleprod{
 	desc = "On-the-fly rabies treatment.";
 	name = "cattle prod"
 	},
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/blue/side{
 	dir = 10
 	},
 /area/ruin/powered/animal_hospital)
 "bS" = (
 /obj/structure/closet,
-/obj/item/weapon/defibrillator/loaded,
-/obj/item/weapon/storage/belt/medical,
+/obj/item/defibrillator/loaded,
+/obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/plasteel/blue/side{
 	dir = 6
 	},
 /area/ruin/powered/animal_hospital)
 "bT" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

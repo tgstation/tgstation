@@ -35,8 +35,8 @@
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
-	var/installation = /obj/item/weapon/gun/energy/e_gun/turret		//the type of weapon installed by default
-	var/obj/item/weapon/gun/stored_gun = null
+	var/installation = /obj/item/gun/energy/e_gun/turret		//the type of weapon installed by default
+	var/obj/item/gun/stored_gun = null
 	var/gun_charge = 0		//the charge of the gun when retrieved from wreckage
 
 	var/mode = TURRET_STUN
@@ -113,7 +113,7 @@
 			icon_state = "[base_icon_state]_unpowered"
 
 
-/obj/machinery/porta_turret/proc/setup(obj/item/weapon/gun/turret_gun)
+/obj/machinery/porta_turret/proc/setup(obj/item/gun/turret_gun)
 	if(stored_gun)
 		qdel(stored_gun)
 		stored_gun = null
@@ -225,7 +225,7 @@
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(istype(I, /obj/item/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
@@ -242,7 +242,7 @@
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src)
 
-	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
+	else if((istype(I, /obj/item/wrench)) && (!on))
 		if(raised)
 			return
 
@@ -455,15 +455,15 @@
 			return 10
 
 	if(auth_weapons)	//check for weapon authorization
-		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/syndicate))
 
 			if(allowed(perp)) //if the perp has security access, return 0
 				return 0
 
-			if(perp.is_holding_item_of_type(/obj/item/weapon/gun) ||  perp.is_holding_item_of_type(/obj/item/weapon/melee/baton))
+			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
 				threatcount += 4
 
-			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee/baton))
+			if(istype(perp.belt, /obj/item/gun) || istype(perp.belt, /obj/item/melee/baton))
 				threatcount += 2
 
 	if(check_records)	//if the turret can check the records, check if they are set to *Arrest* on records
@@ -535,7 +535,7 @@
 /obj/machinery/porta_turret/stationary //is this even used anywhere
 	mode = TURRET_LETHAL
 	emagged = TRUE
-	installation = /obj/item/weapon/gun/energy/laser
+	installation = /obj/item/gun/energy/laser
 
 /obj/machinery/porta_turret/syndicate
 	installation = null
@@ -796,7 +796,7 @@
 	result_path = /obj/machinery/turretid
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 
-/obj/item/weapon/gun/proc/get_turret_properties()
+/obj/item/gun/proc/get_turret_properties()
 	. = list()
 	.["lethal_projectile"] = null
 	.["lethal_projectile_sound"] = null
@@ -804,7 +804,7 @@
 	.["stun_projectile_sound"] = null
 	.["base_icon_state"] = "standard"
 
-/obj/item/weapon/gun/energy/get_turret_properties()
+/obj/item/gun/energy/get_turret_properties()
 	. = ..()
 
 	var/obj/item/ammo_casing/primary_ammo = ammo_type[1]
@@ -820,7 +820,7 @@
 		.["lethal_projectile"] = .["stun_projectile"]
 		.["lethal_projectile_sound"] = .["stun_projectile_sound"]
 
-/obj/item/weapon/gun/ballistic/get_turret_properties()
+/obj/item/gun/ballistic/get_turret_properties()
 	. = ..()
 	var/obj/item/ammo_box/mag = mag_type
 	var/obj/item/ammo_casing/primary_ammo = initial(mag.ammo_type)
@@ -832,7 +832,7 @@
 	.["lethal_projectile_sound"] = .["stun_projectile_sound"]
 
 
-/obj/item/weapon/gun/energy/laser/bluetag/get_turret_properties()
+/obj/item/gun/energy/laser/bluetag/get_turret_properties()
 	. = ..()
 	.["stun_projectile"] = /obj/item/projectile/beam/lasertag/bluetag
 	.["lethal_projectile"] = /obj/item/projectile/beam/lasertag/bluetag
@@ -840,7 +840,7 @@
 	.["shot_delay"] = 30
 	.["team_color"] = "blue"
 
-/obj/item/weapon/gun/energy/laser/redtag/get_turret_properties()
+/obj/item/gun/energy/laser/redtag/get_turret_properties()
 	. = ..()
 	.["stun_projectile"] = /obj/item/projectile/beam/lasertag/redtag
 	.["lethal_projectile"] = /obj/item/projectile/beam/lasertag/redtag
@@ -848,7 +848,7 @@
 	.["shot_delay"] = 30
 	.["team_color"] = "red"
 
-/obj/item/weapon/gun/energy/e_gun/turret/get_turret_properties()
+/obj/item/gun/energy/e_gun/turret/get_turret_properties()
 	. = ..()
 
 /obj/machinery/porta_turret/lasertag
@@ -866,21 +866,21 @@
 		. = 0		//But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			. += 4
-		if(perp.is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/redtag))
+		if(perp.is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
 			. += 4
-		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag))
+		if(istype(perp.belt, /obj/item/gun/energy/laser/redtag))
 			. += 2
 
 	if(team_color == "red")
 		. = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			. += 4
-		if(perp.is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/bluetag))
+		if(perp.is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
 			. += 4
-		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
+		if(istype(perp.belt, /obj/item/gun/energy/laser/bluetag))
 			. += 2
 
-/obj/machinery/porta_turret/lasertag/setup(obj/item/weapon/gun/gun)
+/obj/machinery/porta_turret/lasertag/setup(obj/item/gun/gun)
 	var/list/properties = ..()
 	if(properties["team_color"])
 		team_color = properties["team_color"]
@@ -901,11 +901,11 @@
 
 //lasertag presets
 /obj/machinery/porta_turret/lasertag/red
-	installation = /obj/item/weapon/gun/energy/laser/redtag
+	installation = /obj/item/gun/energy/laser/redtag
 	team_color = "red"
 
 /obj/machinery/porta_turret/lasertag/blue
-	installation = /obj/item/weapon/gun/energy/laser/bluetag
+	installation = /obj/item/gun/energy/laser/bluetag
 	team_color = "blue"
 
 /obj/machinery/porta_turret/lasertag/bullet_act(obj/item/projectile/P)
