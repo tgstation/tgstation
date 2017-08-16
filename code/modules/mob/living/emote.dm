@@ -19,6 +19,11 @@
 	mob_type_allowed_typecache = list(/mob/living)
 	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
 
+/datum/emote/living/dab
+	key = "dab"
+	key_third_person = "dabs"
+	message = "dabs."
+
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
