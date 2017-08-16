@@ -16,6 +16,27 @@
 				/obj/item/seeds/sunflower/moonflower = 8
 				)
 
+//Vault strange seed disk
+
+/obj/item/weapon/disk/design_disk/strange_seed
+	name = "Lifegiver's Blessing"
+	desc = "There is some sort of strange emblem of a tree bearing growths on the disk"
+	icon_state = "datadisk1"
+	max_blueprints = 1
+
+/obj/item/weapon/disk/design_disk/strange_seed/Initialize()
+	. = ..()
+	var/datum/design/strange_seed/G = new
+	blueprints[1] = G
+
+/datum/design/strange_seed
+	name = "Strange Seed"
+	id = "seeds_random"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 5000)
+	build_path = /obj/item/seeds/random
+	category = list("initial", "Imported")
+
 //Free Golems
 
 /obj/item/weapon/disk/design_disk/golem_shell
