@@ -5,9 +5,9 @@
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_ARMORY)
-	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
+	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
-	var/obj/item/weapon/card/id/prisoner/id = null
+	var/obj/item/card/id/prisoner/id = null
 	var/obj/machinery/gulag_teleporter/teleporter = null
 	var/obj/structure/gulag_beacon/beacon = null
 	var/mob/living/carbon/human/prisoner = null
@@ -15,9 +15,9 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/gulag_teleporter_computer/New()
-	..()
-	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
+/obj/machinery/computer/gulag_teleporter_computer/Initialize()
+	. = ..()
+	scan_machinery()
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/id/prisoner))
+	if(istype(W, /obj/item/card/id/prisoner))
 		if(!id)
 			if(!user.drop_item())
 				return
@@ -101,7 +101,7 @@
 					id = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/weapon/card/id/prisoner))
+				if(istype(I, /obj/item/card/id/prisoner))
 					if(!usr.drop_item())
 						return
 					I.forceMove(src)

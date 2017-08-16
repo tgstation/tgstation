@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item
 	name = "item"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -112,6 +112,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/tip_timer
 	var/force_string_override
 
+	var/trigger_guard = TRIGGER_GUARD_NONE
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -125,6 +127,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(force_string)
 		force_string_override = TRUE
+
+	if(!hitsound)
+		if(damtype == "fire")
+			hitsound = 'sound/items/welder.ogg'
+		if(damtype == "brute")
+			hitsound = "swing_hit"
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
@@ -252,9 +260,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					C.update_damage_overlays()
 
 
-	if(istype(loc, /obj/item/weapon/storage))
+	if(istype(loc, /obj/item/storage))
 		//If the item is in a storage item, take it out
-		var/obj/item/weapon/storage/S = loc
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
 	if(throwing)
@@ -275,8 +283,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(anchored)
 		return
 
-	if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
+	if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
 	if(throwing)
@@ -301,7 +309,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	attack_paw(A)
 
 /obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/weapon/robot_module))
+	if(istype(src.loc, /obj/item/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!iscyborg(user))
 			return
@@ -313,9 +321,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
-/obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
+/obj/item/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/storage))
+		var/obj/item/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
 				if(isturf(loc))
@@ -341,7 +349,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 
-/obj/item/proc/handle_mass_pickup(obj/item/weapon/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
+/obj/item/proc/handle_mass_pickup(obj/item/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != thing_loc)
@@ -389,11 +397,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+/obj/item/proc/on_exit_storage(obj/item/storage/S)
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+/obj/item/proc/on_enter_storage(obj/item/storage/S)
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -566,11 +574,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	throw_speed = initial(throw_speed) //explosions change this.
 	in_inventory = FALSE
 
-/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
+/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
 		return 0
-	if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
+	if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0

@@ -2,7 +2,7 @@
 	name = "supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
-	circuit = /obj/item/weapon/circuitboard/computer/cargo
+	circuit = /obj/item/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
 	var/safety_warning = "For safety reasons the automated supply shuttle \
@@ -15,12 +15,12 @@
 	name = "supply request console"
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
-	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
+	circuit = /obj/item/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
-/obj/machinery/computer/cargo/New()
-	..()
-	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
+/obj/machinery/computer/cargo/Initialize()
+	. = ..()
+	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	emagged = board.emagged
 
@@ -34,7 +34,7 @@
 	contraband = TRUE
 
 	// This also permamently sets this on the circuit board
-	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
+	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.emagged = TRUE
 
@@ -122,7 +122,7 @@
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
-				say("The supply shuttle has been loaned to Centcom.")
+				say("The supply shuttle has been loaned to CentCom.")
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
@@ -145,7 +145,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = input("Reason:", name, "") as text|null
+				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 

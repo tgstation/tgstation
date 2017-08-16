@@ -29,7 +29,7 @@
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
 
-	var/obj/item/weapon/storage/internal/pocket/pockets = null
+	var/obj/item/storage/internal/pocket/pockets = null
 
 	//These allow head/mask items to dynamically alter the user's hair
 	// and facial hair, checking hair_extensions.dmi and facialhair_extensions.dmi
@@ -435,7 +435,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/tank/internals/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
@@ -496,7 +496,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.02
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals)
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -539,13 +539,15 @@ BLIND     // can't see anything
 		if(accessory_overlay)
 			. += accessory_overlay
 
-/obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
-	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = W
+/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
+	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
 		return 1
+	if(!attach_accessory(I, user))
+		return ..()
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -591,10 +593,6 @@ BLIND     // can't see anything
 				H.update_inv_wear_suit()
 
 	..()
-
-/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if(!attach_accessory(I, user))
-		..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
 	. = FALSE

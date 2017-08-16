@@ -174,7 +174,7 @@
 
 /obj/item/gun_control
 	name = "turret controls"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL

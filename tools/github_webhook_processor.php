@@ -162,10 +162,10 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	//only maintners should be able to remove these
-	if(strpos($title, '[DNM]') !== FALSE)
+	if(strpos($lowertitle, '[dnm]') !== FALSE)
 		$tags[] = 'Do Not Merge';
 
-	if(strpos($title, '[WIP]') !== FALSE)
+	if(strpos($lowertitle, '[wip]') !== FALSE)
 		$tags[] = 'Work In Progress';
 
 	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';

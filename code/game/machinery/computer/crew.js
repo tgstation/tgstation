@@ -421,7 +421,7 @@ function getColor(ijob)
 	else if (ijob >= 30 && ijob < 40)	{ return "#9B59B6"; } // science
 	else if (ijob >= 40 && ijob < 50)	{ return "#F1C40F"; } // engineering
 	else if (ijob >= 50 && ijob < 60)	{ return "#F39C12"; } // cargo
-	else if (ijob >= 200 && ijob < 230)	{ return "#00C100"; } // Centcom
+	else if (ijob >= 200 && ijob < 230)	{ return "#00C100"; } // CentCom
 	else								{ return "#C38312"; } // other / unknown
 }
 

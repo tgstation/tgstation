@@ -144,7 +144,7 @@
 
 //BOX O' IMPLANTS
 
-/obj/item/weapon/storage/box/cyber_implants
+/obj/item/storage/box/cyber_implants
 	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
@@ -155,7 +155,7 @@
 		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 
-/obj/item/weapon/storage/box/cyber_implants/PopulateContents()
+/obj/item/storage/box/cyber_implants/PopulateContents()
 	var/implant
 	while(contents.len <= amount)
 		implant = pick(boxed)

@@ -85,7 +85,7 @@
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
-/turf/proc/handleRCL(obj/item/weapon/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -104,7 +104,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/weapon/twohanded/rcl))
+	else if(istype(C, /obj/item/twohanded/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -160,29 +160,17 @@
 	return TRUE //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
+	..()
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
+	// If an opaque movable atom moves around we need to potentially update visibility.
+	if (AM.opacity)
+		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+		reconsider_lights()
+
 /turf/open/Entered(atom/movable/AM)
 	..()
-	//slipping
-	if (istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		if(M.movement_type & FLYING)
-			return
-		switch(wet)
-			if(TURF_WET_WATER)
-				if(!M.slip(60, null, NO_SLIP_WHEN_WALKING))
-					M.inertia_dir = 0
-			if(TURF_WET_LUBE)
-				if(M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP)))
-					M.confused = max(M.confused, 8)
-			if(TURF_WET_ICE)
-				M.slip(120, null, (SLIDE|GALOSHES_DONT_HELP))
-			if(TURF_WET_PERMAFROST)
-				M.slip(120, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
-			if(TURF_WET_SLIDE)
-				M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP))
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
@@ -337,7 +325,7 @@
 /turf/proc/Bless()
 	flags |= NOJAUNT
 
-/turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)
 		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
@@ -345,7 +333,7 @@
 
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/weapon/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/storage.proc/mass_remove_from_storage, src, things, progress)))
 		sleep(1)
 	qdel(progress)
 

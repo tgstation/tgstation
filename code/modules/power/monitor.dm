@@ -7,7 +7,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 100
-	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
+	circuit = /obj/item/circuitboard/computer/powermonitor
 
 	var/obj/structure/cable/attached
 
@@ -16,8 +16,8 @@
 	var/record_interval = 50
 	var/next_record = 0
 
-/obj/machinery/computer/monitor/New()
-	..()
+/obj/machinery/computer/monitor/Initialize()
+	. = ..()
 	search()
 	history["supply"] = list()
 	history["demand"] = list()

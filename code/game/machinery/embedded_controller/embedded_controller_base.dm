@@ -77,7 +77,7 @@
 	return ..()
 
 /obj/machinery/embedded_controller/radio/Initialize()
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)

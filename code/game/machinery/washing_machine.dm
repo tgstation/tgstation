@@ -69,10 +69,10 @@
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(loc)
+	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(loc)
 	qdel(src)
 
-/obj/item/weapon/paper/machine_wash(obj/machinery/washing_machine/WM)
+/obj/item/paper/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
 		if(istype(WM.color_source, /obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
@@ -129,7 +129,7 @@
 	if(chained)
 		chained = 0
 		slowdown = SHOES_SLOWDOWN
-		new /obj/item/weapon/restraints/handcuffs(loc)
+		new /obj/item/restraints/handcuffs(loc)
 	if(WM.color_source)
 		var/wash_color = WM.color_source.item_color
 		for(var/T in typesof(/obj/item/clothing/shoes/sneakers))
@@ -141,11 +141,11 @@
 				desc = "The colors are a bit dodgy."
 				break
 
-/obj/item/weapon/bedsheet/machine_wash(obj/machinery/washing_machine/WM)
+/obj/item/bedsheet/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
 		var/wash_color = WM.color_source.item_color
-		for(var/T in typesof(/obj/item/weapon/bedsheet))
-			var/obj/item/weapon/bedsheet/B = T
+		for(var/T in typesof(/obj/item/bedsheet))
+			var/obj/item/bedsheet/B = T
 			if(wash_color == initial(B.item_color))
 				icon_state = initial(B.icon_state)
 				item_color = wash_color
@@ -188,7 +188,7 @@
 	if(panel_open)
 		add_overlay("wm_panel")
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_icon()
 		return
@@ -211,7 +211,7 @@
 			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
-		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/weapon/stamp))
+		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp))
 			color_source = W
 		update_icon()
 

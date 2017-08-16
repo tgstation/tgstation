@@ -8,7 +8,7 @@
 	icon_aggro = "Fugu"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 5
 	friendly = "floats near"
 	speak_emote = list("puffs")

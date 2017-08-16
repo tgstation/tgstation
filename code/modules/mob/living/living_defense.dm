@@ -67,8 +67,8 @@
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
-			var/obj/item/weapon/W = I
+		if(istype(I, /obj/item)) //If the item is a weapon...
+			var/obj/item/W = I
 			dtype = W.damtype
 
 			if (W.throwforce > 0) //If the weapon's throwforce is greater than zero...
@@ -316,7 +316,7 @@
 		GLOB.cult_narsie.souls += 1
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
 			GLOB.cult_narsie.resolved = TRUE
-			world << sound('sound/machines/alarm.ogg')
+			sound_to_playing_players('sound/machines/alarm.ogg')
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
@@ -339,7 +339,7 @@
 		return
 
 	if(stat != DEAD && !is_servant_of_ratvar(src))
-		for(var/obj/item/weapon/implant/mindshield/M in implants)
+		for(var/obj/item/implant/mindshield/M in implants)
 			qdel(M)
 		if(!add_servant_of_ratvar(src))
 			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")

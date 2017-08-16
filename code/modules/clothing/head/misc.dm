@@ -1,7 +1,7 @@
 
 
 /obj/item/clothing/head/centhat
-	name = "\improper Centcom hat"
+	name = "\improper CentCom hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	item_state = "that"
@@ -187,7 +187,7 @@
 	item_state = "fedora"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	pockets = /obj/item/weapon/storage/internal/pocket/small
+	pockets = /obj/item/storage/internal/pocket/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)

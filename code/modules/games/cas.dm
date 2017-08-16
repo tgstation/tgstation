@@ -136,7 +136,7 @@
 		icon_state = "[card_face]"
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/pen))
+	if(istype(I, /obj/item/pen))
 		if(!blank)
 			to_chat(user, "You cannot write on that card.")
 			return

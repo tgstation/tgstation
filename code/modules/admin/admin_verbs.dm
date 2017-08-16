@@ -296,7 +296,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		/client/proc/startSinglo,
 		/client/proc/set_server_fps,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/cmd_admin_areatest,
+		/client/proc/cmd_admin_areatest_all,
+		/client/proc/cmd_admin_areatest_station,
 		/client/proc/readmin
 		)
 	if(holder)
@@ -455,7 +456,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 				mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
 				mob.alpha = 0 //JUUUUST IN CASE
 				mob.name = " "
-				mob.mouse_opacity = 0
+				mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	SSblackbox.add_details("admin_verb","Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

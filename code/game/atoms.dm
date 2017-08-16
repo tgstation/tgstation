@@ -105,7 +105,7 @@
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	return !density
 
-/atom/proc/onCentcom()
+/atom/proc/onCentCom()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return FALSE
@@ -126,7 +126,7 @@
 	if(istype(T.loc, /area/centcom))
 		return TRUE
 
-	//Check for centcomm shuttles
+	//Check for centcom shuttles
 	for(var/A in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = A
 		if(M.launch_status == ENDGAME_LAUNCHED)
@@ -270,7 +270,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "[bicon(src)] That's [f_name]")
+	to_chat(user, "[icon2html(src, user)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)
@@ -479,13 +479,13 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/ratvar_act()
 	return
 
-/atom/proc/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
-/atom/proc/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	return FALSE
 
-/atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
     return 0
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
@@ -610,3 +610,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
+
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
