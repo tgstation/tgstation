@@ -466,6 +466,20 @@
 	s.start()
 	holder.clear_reagents()
 
+/datum/chemical_reaction/smart_foam
+	name = "Smart Metal Foam"
+	id = "smart_metal_foam"
+	required_reagents = list("aluminium" = 3, "smart_foaming_agent" = 1, "facid" = 1)
+	mob_react = TRUE
+
+/datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/location = get_turf(holder.my_atom)
+	location.visible_message("<span class='danger'>The solution spews out metallic foam!</span>")
+	var/datum/effect_system/foam_spread/metal/smart/s = new()
+	s.set_up(created_volume * 5, location, holder, TRUE)
+	s.start()
+	holder.clear_reagents()
+
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
 	id = "ironlfoam"
@@ -486,6 +500,13 @@
 	id = "foaming_agent"
 	results = list("foaming_agent" = 1)
 	required_reagents = list("lithium" = 1, "hydrogen" = 1)
+
+/datum/chemical_reaction/smart_foaming_agent
+	name = "Smart foaming Agent"
+	id = "smart_foaming_agent"
+	results = list("smart_foaming_agent" = 3)
+	required_reagents = list("foaming_agent" = 3, "acetone" = 1, "iron" = 1)
+	mix_message = "The solution mixes into a frothy metal foam and conforms to the walls of its container."
 
 
 /////////////////////////////// Cleaning and hydroponics /////////////////////////////////////////////////
