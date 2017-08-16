@@ -33,7 +33,7 @@
 /obj/screen/text
 	icon = null
 	icon_state = null
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "CENTER-7,CENTER-7"
 	maptext_height = 480
 	maptext_width = 480
@@ -182,8 +182,8 @@
 	name = "close"
 
 /obj/screen/close/Click()
-	if(istype(master, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = master
+	if(istype(master, /obj/item/storage))
+		var/obj/item/storage/S = master
 		S.close(usr)
 	return 1
 
@@ -262,27 +262,27 @@
 					to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 					return
 
-		var/obj/item/I = C.is_holding_item_of_type(/obj/item/weapon/tank)
+		var/obj/item/I = C.is_holding_item_of_type(/obj/item/tank)
 		if(I)
 			to_chat(C, "<span class='notice'>You are now running on internals from the [I] on your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>")
 			C.internal = I
 		else if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			if(istype(H.s_store, /obj/item/weapon/tank))
+			if(istype(H.s_store, /obj/item/tank))
 				to_chat(H, "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>")
 				H.internal = H.s_store
-			else if(istype(H.belt, /obj/item/weapon/tank))
+			else if(istype(H.belt, /obj/item/tank))
 				to_chat(H, "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>")
 				H.internal = H.belt
-			else if(istype(H.l_store, /obj/item/weapon/tank))
+			else if(istype(H.l_store, /obj/item/tank))
 				to_chat(H, "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>")
 				H.internal = H.l_store
-			else if(istype(H.r_store, /obj/item/weapon/tank))
+			else if(istype(H.r_store, /obj/item/tank))
 				to_chat(H, "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>")
 				H.internal = H.r_store
 
 		//Separate so CO2 jetpacks are a little less cumbersome.
-		if(!C.internal && istype(C.back, /obj/item/weapon/tank))
+		if(!C.internal && istype(C.back, /obj/item/tank))
 			to_chat(C, "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>")
 			C.internal = C.back
 
@@ -468,7 +468,7 @@
 	name = "dmg"
 	blend_mode = BLEND_MULTIPLY
 	screen_loc = "CENTER-7,CENTER-7"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = UI_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
@@ -494,7 +494,7 @@
 	name = "blob health"
 	icon_state = "block"
 	screen_loc = ui_internal
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/blob/naut
 	name = "health"
@@ -511,13 +511,13 @@
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "base"
 	screen_loc = ui_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/clock
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_clock"
 	screen_loc = ui_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/clock/gear
 	icon = 'icons/mob/clockwork_mobs.dmi'
@@ -529,13 +529,13 @@
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_revenant"
 	screen_loc = ui_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/construct
 	icon = 'icons/mob/screen_construct.dmi'
 	icon_state = "artificer_health0"
 	screen_loc = ui_construct_health
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll
 	name = "health doll"

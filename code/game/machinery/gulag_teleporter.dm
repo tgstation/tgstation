@@ -17,17 +17,17 @@ The console is located at computer/gulag_teleporter.dm
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
-	circuit = /obj/item/weapon/circuitboard/machine/gulag_teleporter
+	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
 	var/static/list/telegulag_required_items = typecacheof(list(
-		/obj/item/weapon/implant,
+		/obj/item/implant,
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
-		/obj/item/weapon/tank/internals,
+		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/gas))
 
@@ -136,7 +136,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
 		if(!is_type_in_typecache(W, telegulag_required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
-			if(istype(W, /obj/item/weapon/restraints/handcuffs))
+			if(istype(W, /obj/item/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue
 			if(linked_reclaimer)
@@ -160,15 +160,15 @@ The console is located at computer/gulag_teleporter.dm
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
 
-/obj/item/weapon/circuitboard/machine/gulag_teleporter
+/obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/scanning_module,
-							/obj/item/weapon/stock_parts/manipulator)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+							/obj/item/ore/bluespace_crystal = 2,
+							/obj/item/stock_parts/scanning_module,
+							/obj/item/stock_parts/manipulator)
+	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */
 /obj/structure/gulag_beacon

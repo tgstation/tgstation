@@ -19,9 +19,9 @@
 	icon_door = "mixed"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
-	new /obj/item/weapon/storage/backpack/duffelbag(src)
-	new /obj/item/weapon/storage/backpack/explorer(src)
-	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
+	new /obj/item/storage/backpack/duffelbag(src)
+	new /obj/item/storage/backpack/explorer(src)
+	new /obj/item/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
@@ -43,17 +43,17 @@
 /obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
-	new /obj/item/weapon/storage/box/emptysandbags(src)
-	new /obj/item/weapon/shovel(src)
-	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/storage/box/emptysandbags(src)
+	new /obj/item/shovel(src)
+	new /obj/item/pickaxe/mini(src)
 	new /obj/item/device/radio/headset/headset_cargo/mining(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/weapon/storage/bag/plants(src)
-	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/storage/bag/plants(src)
+	new /obj/item/storage/bag/ore(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
-	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/survivalcapsule(src)
 	new /obj/item/device/assault_pod/mining(src)
 
 
@@ -62,7 +62,7 @@
 /obj/machinery/computer/shuttle/mining
 	name = "mining shuttle console"
 	desc = "Used to call and send the mining shuttle."
-	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
+	circuit = /obj/item/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 	no_destination_swap = 1

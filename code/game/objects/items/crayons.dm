@@ -499,7 +499,7 @@
  * Crayon Box
  */
 
-/obj/item/weapon/storage/crayons
+/obj/item/storage/crayons
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
@@ -510,7 +510,7 @@
 		/obj/item/toy/crayon
 	)
 
-/obj/item/weapon/storage/crayons/New()
+/obj/item/storage/crayons/New()
 	..()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
@@ -521,12 +521,12 @@
 	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
-/obj/item/weapon/storage/crayons/update_icon()
+/obj/item/storage/crayons/update_icon()
 	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
 		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
-/obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
 		switch(C.item_color)

@@ -10,7 +10,7 @@
 /*
  * Pens
  */
-/obj/item/weapon/pen
+/obj/item/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -28,31 +28,31 @@
 	var/degrees = 0
 	var/font = PEN_FONT
 
-/obj/item/weapon/pen/suicide_act(mob/user)
+/obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return(BRUTELOSS)
 
-/obj/item/weapon/pen/blue
+/obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
 	colour = "blue"
 
-/obj/item/weapon/pen/red
+/obj/item/pen/red
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
 	colour = "red"
 
-/obj/item/weapon/pen/invisible
+/obj/item/pen/invisible
 	desc = "It's an invisble pen marker."
 	icon_state = "pen"
 	colour = "white"
 
-/obj/item/weapon/pen/fourcolor
+/obj/item/pen/fourcolor
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
 	colour = "black"
 
-/obj/item/weapon/pen/fourcolor/attack_self(mob/living/carbon/user)
+/obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
 	switch(colour)
 		if("black")
 			colour = "red"
@@ -65,13 +65,13 @@
 	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
-/obj/item/weapon/pen/fountain
+/obj/item/pen/fountain
 	name = "fountain pen"
 	desc = "It's a common fountain pen, with a faux wood body."
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 
-/obj/item/weapon/pen/fountain/captain
+/obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
 	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
 	icon_state = "pen-fountain-o"
@@ -89,12 +89,12 @@
 						"Command Blue" = "pen-fountain-cb"
 						)
 
-/obj/item/weapon/pen/fountain/captain/reskin_obj(mob/M)
+/obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
 	if(current_skin)
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
-/obj/item/weapon/pen/attack_self(mob/living/carbon/user)
+/obj/item/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
@@ -105,14 +105,14 @@
 			hidden_uplink.interact(user)
 
 
-/obj/item/weapon/pen/attackby(obj/item/I, mob/user, params)
+/obj/item/pen/attackby(obj/item/I, mob/user, params)
 	if(hidden_uplink)
 		return hidden_uplink.attackby(I, user, params)
 	else
 		return ..()
 
 
-/obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
+/obj/item/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
 		return
 
@@ -128,7 +128,7 @@
 	else
 		. = ..()
 
-/obj/item/weapon/pen/afterattack(obj/O, mob/living/user, proximity)
+/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
 	if(isobj(O) && proximity)
 		if(O.unique_rename)
@@ -166,12 +166,12 @@
 /*
  * Sleepypens
  */
-/obj/item/weapon/pen/sleepy
+/obj/item/pen/sleepy
 	origin_tech = "engineering=4;syndicate=2"
 	container_type = OPENCONTAINER
 
 
-/obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
+/obj/item/pen/sleepy/attack(mob/living/M, mob/user)
 	if(!istype(M))
 		return
 
@@ -181,7 +181,7 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/weapon/pen/sleepy/New()
+/obj/item/pen/sleepy/New()
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
@@ -191,12 +191,12 @@
 /*
  * (Alan) Edaggers
  */
-/obj/item/weapon/pen/edagger
+/obj/item/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
 
-/obj/item/weapon/pen/edagger/attack_self(mob/living/user)
+/obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
 		on = FALSE
 		force = initial(force)
@@ -219,7 +219,7 @@
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 
-/obj/item/weapon/pen/edagger/update_icon()
+/obj/item/pen/edagger/update_icon()
 	if(on)
 		icon_state = "edagger"
 		item_state = "edagger"

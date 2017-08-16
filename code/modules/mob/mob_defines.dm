@@ -78,7 +78,7 @@
 	var/list/held_items = list(null, null) //len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand and 1 empty hand.
 	//held_items[active_hand_index] is the actively held item, but please use get_active_held_item() instead, because OOP
 
-	var/obj/item/weapon/storage/s_active = null//Carbon
+	var/obj/item/storage/s_active = null//Carbon
 
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 

@@ -72,7 +72,7 @@
 	layer = EDGED_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	opacity = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()

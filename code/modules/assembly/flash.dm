@@ -180,7 +180,7 @@
 	..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
-/obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
 
 /obj/item/device/assembly/flash/memorizer
@@ -224,7 +224,7 @@
 /obj/item/device/assembly/flash/shield
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "flashshield"
 	item_state = "flashshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -247,7 +247,7 @@
 		return 0
 	return 1
 
-/obj/item/device/assembly/flash/shield/attackby(obj/item/weapon/W, mob/user)
+/obj/item/device/assembly/flash/shield/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/flash = W
 		if(flash.crit_fail)

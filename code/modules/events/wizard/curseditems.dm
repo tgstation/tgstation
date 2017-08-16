@@ -22,7 +22,7 @@
 			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/head/wizard)
 			ruins_spaceworthiness = 1
 		if("swords")
-			loadout[5] = /obj/item/weapon/katana/cursed
+			loadout[5] = /obj/item/katana/cursed
 		if("bigfatdoobie")
 			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1

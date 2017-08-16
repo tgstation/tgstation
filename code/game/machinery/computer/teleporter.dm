@@ -4,7 +4,7 @@
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
-	circuit = /obj/item/weapon/circuitboard/computer/teleporter
+	circuit = /obj/item/circuitboard/computer/teleporter
 	var/obj/item/device/gps/locked
 	var/regime_set = "Teleporter"
 	var/id
@@ -168,7 +168,7 @@
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
-		for(var/obj/item/weapon/implant/tracking/I in GLOB.tracked_implants)
+		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
 				continue
 			else

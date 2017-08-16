@@ -38,8 +38,8 @@
 /obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
 	to_chat(user, "<span class='notice'>Picking up the swarmer may cause it to activate. You should be careful about this.</span>")
 
-/obj/effect/mob_spawn/swarmer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != INTENT_HARM)
+/obj/effect/mob_spawn/swarmer/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver) && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
@@ -91,7 +91,7 @@
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
 	projectilesound = 'sound/weapons/taser2.ogg'
-	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/weapon/ore/bluespace_crystal)
+	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/ore/bluespace_crystal)
 	del_on_death = 1
 	deathmessage = "explodes with a sharp pop!"
 	light_color = LIGHT_COLOR_CYAN
@@ -191,7 +191,7 @@
 		return 1
 	return ..()
 
-/obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armory
+/obj/item/gun/swarmer_act()//Stops you from eating the entire armory
 	return FALSE
 
 /obj/item/clockwork/alloy_shards/IntegrateAmount()
@@ -469,7 +469,7 @@
 
 	var/mob/living/carbon/human/H = target
 	if(ishuman(target) && (!H.handcuffed))
-		H.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(H)
+		H.handcuffed = new /obj/item/restraints/handcuffs/energy/used(H)
 		H.update_handcuffed()
 		add_logs(src, H, "handcuffed")
 
