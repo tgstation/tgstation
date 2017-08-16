@@ -19,6 +19,9 @@
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
+	
+/obj/item/projectile/bullet/weakbullet4
+	damage = 10
 
 /obj/item/projectile/bullet/toxinbullet
 	damage = 15

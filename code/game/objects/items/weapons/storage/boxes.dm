@@ -635,10 +635,20 @@
 	desc = "A box full of beanbag shells."
 	icon_state = "rubbershot_box"
 	illustration = null
-
+	
 /obj/item/weapon/storage/box/beanbag/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+	
+/obj/item/weapon/storage/box/improvisedshot
+	name = "box of improvised shots"
+	desc = "A box full of low tier shots"
+	icon_state = "lethalshot_box"
+	illustration = null
+	
+/obj/item/weapon/storage/box/improvisedhsot/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_casing/shotgun/improvised
 
 /obj/item/weapon/storage/box/actionfigure
 	name = "box of action figures"

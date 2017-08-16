@@ -57,7 +57,6 @@
 		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/frag,
-		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/implant_breaker,
 		/datum/gang_item/equipment/wetwork_boots,
 		/datum/gang_item/equipment/pen,
@@ -94,7 +93,6 @@
 		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/frag,
-		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/implant_breaker,
 		/datum/gang_item/equipment/wetwork_boots,
 	)

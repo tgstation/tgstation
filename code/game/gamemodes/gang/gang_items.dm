@@ -213,7 +213,7 @@
 /datum/gang_item/weapon/surplus
 	name = "Surplus Rifle"
 	id = "surplus"
-	cost = 8
+	cost = 5
 	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus
 
 /datum/gang_item/weapon/ammo/surplus_ammo
@@ -225,14 +225,14 @@
 /datum/gang_item/weapon/improvised
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
-	cost = 6
+	cost = 10
 	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/improvised_ammo
-	name = "Box of Buckshot"
-	id = "buckshot"
+	name = "Box of Improvised Buckshots"
+	id = "improvised_ammo"
 	cost = 5
-	item_path = /obj/item/weapon/storage/box/lethalshot
+	item_path = /obj/item/weapon/storage/box/improvisedshot
 
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
@@ -310,7 +310,7 @@
 /datum/gang_item/equipment/emp
 	name = "EMP Grenade"
 	id = "EMP"
-	cost = 5
+	cost = 20
 	item_path = /obj/item/weapon/grenade/empgrenade
 
 /datum/gang_item/equipment/c4
@@ -322,14 +322,8 @@
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
-	cost = 18
+	cost = 10
 	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
-
-/datum/gang_item/equipment/stimpack
-	name = "Black Market Stimulants"
-	id = "stimpack"
-	cost = 12
-	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
