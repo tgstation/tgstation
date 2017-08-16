@@ -942,7 +942,6 @@
 /area/holodeck/rec_center/pet_lounge)
 "cV" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/structure/window{
 	dir = 1
 	},
@@ -956,7 +955,6 @@
 	dir = 8
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/structure/window{
 	dir = 1
 	},
@@ -1031,7 +1029,6 @@
 /area/holodeck/rec_center/beach)
 "dj" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/machinery/iv_drip{
 	density = 0
 	},
@@ -1045,7 +1042,6 @@
 	dir = 8
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/machinery/iv_drip{
 	density = 0
 	},
