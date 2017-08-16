@@ -262,7 +262,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "Z" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall/r_wall,
 /area/ruin/powered/seedvault)
 

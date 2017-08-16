@@ -22,7 +22,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		switch(dir)
 			if(SOUTH,SOUTHEAST,SOUTHWEST)
 				density = FALSE
-	..()
+	return ..()
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -75,10 +75,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/centerstation/New()
-	..()
+/obj/machinery/gateway/centerstation/Initialize()
+	. = ..()
 	if(!GLOB.the_gateway)
 		GLOB.the_gateway = src
+	update_icon()
+	wait = world.time + config.gateway_delay	//+ thirty minutes default
+	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/Destroy()
 	if(GLOB.the_gateway == src)
@@ -95,12 +98,6 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 	can_link = TRUE
-
-/obj/machinery/gateway/centerstation/Initialize()
-	..()
-	update_icon()
-	wait = world.time + config.gateway_delay	//+ thirty minutes default
-	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/update_icon()
 	if(active)
@@ -182,7 +179,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 
 /obj/machinery/gateway/centeraway/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 

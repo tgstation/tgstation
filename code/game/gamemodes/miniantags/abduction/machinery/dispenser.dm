@@ -13,8 +13,8 @@
 	//TODO : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
-/obj/machinery/abductor/gland_dispenser/New()
-	..()
+/obj/machinery/abductor/gland_dispenser/Initialize()
+	. = ..()
 	gland_types = subtypesof(/obj/item/organ/heart/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)

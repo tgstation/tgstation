@@ -14,11 +14,6 @@
 	volume = 50
 	resistance_flags = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/New()
-	..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
-
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if (gulp_size < 5) gulp_size = 5
 	else gulp_size = max(round(reagents.total_volume / 5), 5)

@@ -115,8 +115,6 @@
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
 
-/obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
-	if(iscarbon(AM))
-		var/mob/living/carbon/carbon = AM
-		if(carbon.slip(40, src, FALSE))
-			qdel(src)
+/obj/item/weapon/grown/bananapeel/specialpeel/Initialize(AM)
+	. = ..()
+	AddComponent(/datum/component/slippery, 40)

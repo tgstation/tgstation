@@ -21,8 +21,8 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
-/obj/machinery/power/rad_collector/New()
-	..()
+/obj/machinery/power/rad_collector/Initialize()
+	. = ..()
 	GLOB.rad_collectors += src
 
 /obj/machinery/power/rad_collector/Destroy()

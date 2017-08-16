@@ -7,7 +7,7 @@
 /area/ruin/space/has_grav
 	has_gravity = TRUE
 
-area/ruin/space/has_grav/powered
+/area/ruin/space/has_grav/powered
 	requires_power = FALSE
 
 
@@ -52,13 +52,13 @@ area/ruin/space/has_grav/powered
 
 
 
-area/ruin/space/has_grav/powered/dinner_for_two
+/area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
 
-area/ruin/space/has_grav/powered/authorship
+/area/ruin/space/has_grav/powered/authorship
 	name = "Authorship"
 
-area/ruin/space/has_grav/powered/aesthetic
+/area/ruin/space/has_grav/powered/aesthetic
 	name = "Aesthetic"
 	ambientsounds = list('sound/ambience/ambivapor1.ogg')
 

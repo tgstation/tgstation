@@ -316,10 +316,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has alienized [M.key].")
-		spawn(0)
-			M:Alienize()
-			SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
+		SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
@@ -333,10 +331,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has slimeized [M.key].")
-		spawn(0)
-			M:slimeize()
-			SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
+		SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
@@ -461,12 +457,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 			if(worn)
 				if(istype(worn, /obj/item/device/pda))
-					worn:id = id
-					id.loc = worn
+					var/obj/item/device/pda/PDA = worn
+					PDA.id = id
+					id.forceMove(PDA)
 				else if(istype(worn, /obj/item/weapon/storage/wallet))
-					worn:front_id = id
-					id.loc = worn
-					worn.update_icon()
+					var/obj/item/weapon/storage/wallet/W = worn
+					W.front_id = id
+					id.forceMove(W)
+					W.update_icon()
 			else
 				H.equip_to_slot(id,slot_wear_id)
 
@@ -495,9 +493,9 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		qdel(adminmob)
 	SSblackbox.add_details("admin_verb","Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest()
+/client/proc/cmd_admin_areatest(on_station)
 	set category = "Mapping"
-	set name = "Test areas"
+	set name = "Test Areas"
 
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -507,9 +505,15 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	var/list/areas_with_LS = list()
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
+	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin))
 
 	for(var/area/A in world)
-		if(!(A.type in areas_all))
+		if(on_station)
+			var/turf/picked = safepick(get_area_turfs(A.type))
+			if(picked && (picked.z == ZLEVEL_STATION))
+				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
+					areas_all.Add(A.type)
+		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
@@ -582,6 +586,16 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
+
+/client/proc/cmd_admin_areatest_station()
+	set category = "Mapping"
+	set name = "Test Areas (STATION Z)"
+	cmd_admin_areatest(TRUE)
+
+/client/proc/cmd_admin_areatest_all()
+	set category = "Mapping"
+	set name = "Test Areas (ALL)"
+	cmd_admin_areatest(FALSE)
 
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in GLOB.mob_list)
 	set category = "Fun"

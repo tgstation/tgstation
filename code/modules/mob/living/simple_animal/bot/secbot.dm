@@ -44,7 +44,7 @@
 	desc = "It's Officer Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
-	..()
+	. = ..()
 	resize = 0.8
 	update_transform()
 
@@ -63,7 +63,7 @@
 	radio_channel = "AI Private"
 
 /mob/living/simple_animal/bot/secbot/Initialize()
-	..()
+	. = ..()
 	icon_state = "secbot[on]"
 	spawn(3)
 		var/datum/job/detective/J = new/datum/job/detective

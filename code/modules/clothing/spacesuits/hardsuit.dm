@@ -47,7 +47,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
-		wearer.show_message("[bicon(src)]<b><span class='robot'>[msg]</span></b>", 1)
+		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", 1)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	..()
@@ -200,7 +200,7 @@
 	item_color = "mining"
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	heat_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = HEAD
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 75)
 	brightness_on = 7
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
@@ -216,6 +216,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 75)
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/storage/bag/ore, /obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi

@@ -180,7 +180,7 @@
 		  </tr>
 		  {{#if data.centcom_access}}
 			<tr>
-			  <th style="color: '#A52A2A';">Centcom</th>
+			  <th style="color: '#A52A2A';">CentCom</th>
 			  <td>
 				{{#each data.centcom_jobs}}
 				  <ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>

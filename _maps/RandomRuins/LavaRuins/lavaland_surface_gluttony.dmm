@@ -85,7 +85,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "D" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "R" = (

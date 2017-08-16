@@ -10,9 +10,9 @@
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/emergency_shield/New()
-	src.setDir(pick(1,2,3,4))
-	..()
+/obj/structure/emergency_shield/Initialize()
+	. = ..()
+	setDir(pick(GLOB.cardinals))
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()
@@ -58,7 +58,7 @@
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
 	color = "#FF0000"
 	max_integrity = 20
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/structure/emergency_shield/invoker/emp_act(severity)
 	return

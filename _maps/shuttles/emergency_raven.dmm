@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -622,7 +622,7 @@
 /obj/docking_port/mobile/emergency{
 	dwidth = 14;
 	height = 18;
-	name = "Centcomm Raven Battlecruiser";
+	name = "CentCom Raven Battlecruiser";
 	timid = 1;
 	width = 32
 	},
@@ -978,7 +978,7 @@
 /area/shuttle/escape)
 "cr" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1002,7 +1002,7 @@
 /area/shuttle/escape)
 "cw" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1101,7 +1101,7 @@
 /area/shuttle/escape)
 "cR" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1290,7 +1290,7 @@
 /area/shuttle/escape)
 "dQ" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1312,7 +1312,7 @@
 /area/shuttle/escape)
 "dV" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1358,7 +1358,7 @@
 /area/shuttle/escape)
 "ei" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 10
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1379,7 +1379,7 @@
 /area/shuttle/escape)
 "en" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium{
@@ -1440,7 +1440,7 @@
 /area/shuttle/escape)
 "eA" = (
 /turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium{
