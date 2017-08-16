@@ -18,10 +18,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/abstract/credit)
 
 /obj/effect/abstract/credit
     icon = 'icons/credits.dmi'
+    mouse_opacity = MOUSE_OPACITY_OPAQUE
     alpha = 0
 
 /obj/effect/abstract/credit/Initialize(mapload, credited)
     . = ..()
+    name = "\improper [credited]"
     icon_state = credited
     maptext = credited
     animate(src, pixel_y = CREDIT_ANIMATE_HEIGHT, time = CREDIT_ROLL_SPEED)
