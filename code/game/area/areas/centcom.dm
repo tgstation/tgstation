@@ -152,8 +152,9 @@
 	requires_power = FALSE
 	has_gravity = TRUE
 	noteleport = TRUE
+	hidden = TRUE
 
 /area/reebe/city_of_cogs
 	name = "City of Cogs"
 	icon_state = "purple"
-	noteleport = FALSE
+	hidden = FALSE
