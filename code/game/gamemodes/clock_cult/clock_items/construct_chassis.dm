@@ -17,9 +17,6 @@
 	if(A && construct_type)
 		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ORBIT, flashwindow = FALSE)
 	GLOB.poi_list += src
-	if(isliving(loc))
-		var/mob/living/L = loc
-		L.dropItemToGround(src) //Prevent the shells from starting in hands
 
 /obj/item/clockwork/construct_chassis/Destroy()
 	GLOB.poi_list -= src

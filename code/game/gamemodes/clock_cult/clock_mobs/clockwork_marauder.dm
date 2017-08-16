@@ -52,7 +52,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0)
 		for(var/mob/living/L in view(2, src))
-			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
+			if(L.is_holding_item_of_type(/obj/item/nullrod))
 				to_chat(src, "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>")
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break

@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/effect/clockwork/city_of_cogs_rift/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/nullrod))
+	if(istype(I, /obj/item/nullrod))
 		to_chat(user, "<span class='warning'>Your [I.name] seems to have no effect on [src]!</span>")
 		return
 	. = ..()

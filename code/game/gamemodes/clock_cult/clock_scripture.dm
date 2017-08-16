@@ -230,6 +230,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 //Creates an object at the invoker's feet
 /datum/clockwork_scripture/create_object
 	var/object_path = /obj/item/clockwork //The path of the object created
+	var/put_object_in_hands = TRUE
 	var/creator_message = "<span class='brass'>You create a meme.</span>" //Shown to the invoker
 	var/observer_message
 	var/one_per_tile = FALSE
@@ -258,13 +259,14 @@ Applications: 8 servants, 3 caches, and 100 CV
 		to_chat(invoker, creator_message)
 	var/obj/O = new object_path (get_turf(invoker))
 	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
-	if(isitem(O))
+	if(isitem(O) && put_object_in_hands)
 		invoker.put_in_hands(O)
 	return TRUE
 
 
 //Used specifically to create construct shells.
 /datum/clockwork_scripture/create_object/construct
+	put_object_in_hands = FALSE
 	var/construct_type //The type of construct that the scripture is made to create, even if not directly
 	var/construct_limit = 1 //How many constructs of this type can exist
 
