@@ -151,3 +151,9 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	has_gravity = TRUE
+	noteleport = TRUE
+
+/area/reebe/city_of_cogs
+	name = "City of Cogs"
+	icon_state = "purple"
+	noteleport = FALSE

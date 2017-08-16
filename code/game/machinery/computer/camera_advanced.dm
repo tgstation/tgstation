@@ -289,7 +289,7 @@
 		return
 	do_sparks(5, TRUE, user)
 	do_sparks(5, TRUE, T)
-	user.visible_message("<span class='warning'>[user]'s [src] flares, and they flicker and vanish!</span>", "<span class='bold sevtug_small'>You warp to [AR]!</span>")
+	user.visible_message("<span class='warning'>[user]'s [target.name] flares, and they flicker and vanish!</span>", "<span class='bold sevtug_small'>You warp to [AR]!</span>")
 	T.visible_message("<span class='warning'>[user] warps in!</span>")
 	playsound(user, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
