@@ -1,4 +1,4 @@
-/obj/item/retractor
+/obj/item/weapon/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
@@ -9,7 +9,7 @@
 	origin_tech = "materials=1;biotech=1"
 
 
-/obj/item/retractor/augment
+/obj/item/weapon/retractor/augment
 	name = "toolarm retractor"
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	icon = 'icons/obj/surgery.dmi'
@@ -21,7 +21,7 @@
 	toolspeed = 0.5
 
 
-/obj/item/hemostat
+/obj/item/weapon/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
@@ -33,7 +33,7 @@
 	attack_verb = list("attacked", "pinched")
 
 
-/obj/item/hemostat/augment
+/obj/item/weapon/hemostat/augment
 	name = "toolarm hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
@@ -46,7 +46,7 @@
 	attack_verb = list("attacked", "pinched")
 
 
-/obj/item/cautery
+/obj/item/weapon/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
@@ -58,7 +58,7 @@
 	attack_verb = list("burnt")
 
 
-/obj/item/cautery/augment
+/obj/item/weapon/cautery/augment
 	name = "toolarm cautery"
 	desc = "A heated element that cauterizes wounds."
 	icon = 'icons/obj/surgery.dmi'
@@ -71,7 +71,7 @@
 	attack_verb = list("burnt")
 
 
-/obj/item/surgicaldrill
+/obj/item/weapon/surgicaldrill
 	name = "surgical drill"
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
@@ -87,7 +87,7 @@
 	attack_verb = list("drilled")
 
 
-/obj/item/surgicaldrill/augment
+/obj/item/weapon/surgicaldrill/augment
 	name = "toolarm surgical drill"
 	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
 	icon = 'icons/obj/surgery.dmi'
@@ -102,7 +102,7 @@
 	attack_verb = list("drilled")
 
 
-/obj/item/scalpel
+/obj/item/weapon/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
@@ -121,7 +121,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
-/obj/item/scalpel/augment
+/obj/item/weapon/scalpel/augment
 	name = "toolarm scalpel"
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	icon = 'icons/obj/surgery.dmi'
@@ -139,12 +139,12 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
-/obj/item/scalpel/suicide_act(mob/user)
+/obj/item/weapon/scalpel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 
-/obj/item/circular_saw
+/obj/item/weapon/circular_saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
@@ -164,7 +164,7 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
-/obj/item/circular_saw/augment
+/obj/item/weapon/circular_saw/augment
 	name = "toolarm circular saw"
 	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
 	icon = 'icons/obj/surgery.dmi'
@@ -183,7 +183,7 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
-/obj/item/surgical_drapes
+/obj/item/weapon/surgical_drapes
 	name = "surgical drapes"
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
 	icon = 'icons/obj/surgery.dmi'
@@ -192,17 +192,17 @@
 	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
 
-/obj/item/surgical_drapes/attack(mob/living/M, mob/user)
+/obj/item/weapon/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
 
-/obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
+/obj/item/weapon/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"
 	desc = "A container for holding body parts."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 
-/obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/weapon/organ_storage/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity)
 		return
 	if(contents.len)
@@ -228,7 +228,7 @@
 	I.loc = src
 	w_class = I.w_class
 
-/obj/item/organ_storage/attack_self(mob/user)
+/obj/item/weapon/organ_storage/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] dumps [I] from [src].", "<span class='notice'>You dump [I] from [src].</span>")

@@ -8,7 +8,7 @@
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
-	var/obj/item/tank/holding
+	var/obj/item/weapon/tank/holding
 
 	var/volume = 0
 
@@ -76,16 +76,16 @@
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/tank))
+/obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/tank))
 		if(!(stat & BROKEN))
-			var/obj/item/tank/T = W
+			var/obj/item/weapon/tank/T = W
 			if(holding || !user.drop_item())
 				return
 			T.loc = src
 			holding = T
 			update_icon()
-	else if(istype(W, /obj/item/wrench))
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()

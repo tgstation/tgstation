@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/blob,
 		/obj/effect/rune,
 		/obj/structure/spider/spiderling,
-		/obj/item/disk/nuclear,
+		/obj/item/weapon/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/device/radio/beacon,
 		/obj/singularity,
