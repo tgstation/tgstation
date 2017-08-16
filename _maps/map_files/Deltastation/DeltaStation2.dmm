@@ -7450,9 +7450,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqr" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
