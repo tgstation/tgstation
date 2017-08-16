@@ -2,67 +2,6 @@
 // APPLICATIONS //
 //////////////////
 
-//Memory Allocation: Finds a willing ghost and makes them into a clockwork marauders for the invoker.
-/datum/clockwork_scripture/memory_allocation
-	descname = "Guardian"
-	name = "Memory Allocation"
-	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilant fighter that lives within you, able to be \
-	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
-	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
-	invocations = list("Fright's will...", "...call forth...")
-	channel_time = 100
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 4)
-	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors."
-	tier = SCRIPTURE_APPLICATION
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 3
-
-/datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in GLOB.all_clockwork_mobs)
-		if(M.host == invoker)
-			to_chat(invoker, "<span class='warning'>You can only house one marauder at a time!</span>")
-			return FALSE
-	return TRUE
-
-/datum/clockwork_scripture/memory_allocation/scripture_effects()
-	return create_marauder()
-
-/datum/clockwork_scripture/memory_allocation/proc/create_marauder()
-	invoker.visible_message("<span class='warning'>A purple tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
-	"<span class='sevtug'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
-	invoker.notransform = TRUE //Vulnerable during the process
-	slab.busy = "Thought Modification in progress"
-	if(!do_after(invoker, 50, target = invoker))
-		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
-		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
-		invoker.notransform = FALSE
-		invoker.Knockdown(100)
-		invoker.apply_damage(10, BRUTE, "head")
-		slab.busy = null
-		return FALSE
-	clockwork_say(invoker, text2ratvar("...the mind made..."))
-	invoker.notransform = FALSE
-	slab.busy = "Marauder Selection in progress"
-	if(!check_special_requirements())
-		return FALSE
-	to_chat(invoker, "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>")
-	var/list/marauder_candidates = pollGhostCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50, POLL_IGNORE_CLOCKWORK_MARAUDER)
-	if(!check_special_requirements())
-		return FALSE
-	if(!marauder_candidates.len)
-		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
-		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
-		return FALSE
-	clockwork_say(invoker, text2ratvar("...sword and shield!"))
-	var/mob/dead/observer/theghost = pick(marauder_candidates)
-	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
-	M.key = theghost.key
-	M.bind_to_host(invoker)
-	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
-	"<span class='sevtug'>[M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
-	return TRUE
-
-
 //Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
 /datum/clockwork_scripture/create_object/sigil_of_transmission
 	descname = "Structure Power Generator & Battery"

@@ -146,7 +146,20 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/turf/open/floor/clockwork/break_tile_to_plating()
+	if(baseturf == type)
+		return
+	..()
+
+/turf/open/floor/clockwork/break_tile()
+	return
+
+/turf/open/floor/clockwork/burn_tile()
+	return
+
 /turf/open/floor/clockwork/ReplaceWithLattice()
+	if(baseturf == type)
+		return
 	..()
 	for(var/obj/structure/lattice/L in src)
 		L.ratvar_act()
@@ -180,6 +193,8 @@
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
+	if(baseturf == type)
+		return
 	if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, I.usesound, 20, 1)

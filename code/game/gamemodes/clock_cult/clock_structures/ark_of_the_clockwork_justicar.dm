@@ -172,8 +172,6 @@
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!second_sound_played)
-				var/area/gate_area = get_area(src)
-				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
 				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 35))
 				second_sound_played = TRUE
 			make_glow()
@@ -193,8 +191,8 @@
 				make_glow()
 				var/obj/effect/clockwork/overlay/gateway_glow/second_glow = new(startpoint)
 				second_glow.icon_state = "clockwork_gateway_closing"
-				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				animate(second_glow, transform = matrix() * 1.5, alpha = 255, time = 125)
+				animate(glow, transform = matrix() * 1.5, time = 125)
+				animate(second_glow, transform = matrix() * 1.5, time = 125)
 				send_to_playing_players(sound('sound/effects/ratvar_rises.ogg', 0, channel = CHANNEL_JUSTICAR_ARK)) //End the sounds
 				sleep(125)
 				make_glow()

@@ -38,7 +38,7 @@
 	if(LAZYLEN(buckled_mobs))
 		for(var/V in buckled_mobs)
 			var/mob/living/L = V
-			if(last_mob_health < L.health)
+			if(last_mob_health > L.health)
 				tick_damage += last_mob_health - L.health
 			last_mob_health = L.health
 			if(L.layer != mob_layer)
