@@ -87,6 +87,12 @@
 			var/mob/MO = M
 			MO.playsound_local(MO, sound, volume, vary, pressure_affected = FALSE)
 
+/proc/direct_sound_to_playing_players(sound_datum) //This is for sending specialized sound datums that playsound() can't account for, i.e. loops
+	for(var/M in GLOB.player_list)
+		if(ismob(M) && !isnewplayer(M))
+			var/mob/MO = M
+			DIRECT_OUTPUT(MO, sound_datum)
+
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
 	. = ++next_channel

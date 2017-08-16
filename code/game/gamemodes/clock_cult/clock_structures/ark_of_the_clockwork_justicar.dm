@@ -75,7 +75,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	if(!purpose_fulfilled)
 		hierophant_message("<span class='bold large_brass'>The Ark has fallen!</span>")
-		send_to_playing_players(sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
+		direct_sound_to_playing_players(sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
 	SSshuttle.clearHostileEnvironment(src)
 	if(!purpose_fulfilled)
 		SSticker.force_ending = TRUE //rip
@@ -105,7 +105,7 @@
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
-			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = CHANNEL_JUSTICAR_ARK, volume = 50))
+			direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = CHANNEL_JUSTICAR_ARK, volume = 50))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
@@ -201,19 +201,19 @@
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!second_sound_played)
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 30))
+				direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 30))
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!third_sound_played)
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 35))
+				direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 35))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 40))
+				direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 40))
 				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
