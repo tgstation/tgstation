@@ -41,7 +41,7 @@
 	desc = "Allows for the construction of circuit boards used to build an spacpeod tracking console."
 	id = "mechacontrol"
 	req_tech = list("programming" = 3)
-	build_path = /obj/item/weapon/circuitboard/computer/pod_tracking
+	build_path = /obj/item/circuitboard/computer/pod_tracking
 	category = list("Computer Boards")
 
 /datum/design/board/aiupload

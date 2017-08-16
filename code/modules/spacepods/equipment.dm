@@ -183,7 +183,7 @@
 	return answer
 
 /obj/item/device/spacepod_equipment/misc/tracker/attackby(obj/item/I as obj, mob/user as mob, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		if(enabled)
 			enabled = FALSE
 			user.show_message("<span class='notice'>You disable \the [src]'s power.")
@@ -225,7 +225,7 @@
 	icon_state = "cargo_ore"
 
 /obj/item/device/spacepod_equipment/cargo/ore/passover(var/obj/item/I)
-	if(storage && istype(I,/obj/item/weapon/ore))
+	if(storage && istype(I,/obj/item/ore))
 		I.forceMove(storage)
 
 // Crate System

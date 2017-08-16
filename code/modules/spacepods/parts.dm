@@ -72,7 +72,7 @@
 				pod.loc = F.loc
 			qdel(F)
 		playsound(get_turf(src), O.usesound, 50, 1)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(istype(O, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You [!anchored ? "secure \the [src] in place."  : "remove the securing bolts."]</span>")
 		anchored = !anchored
 		density = anchored

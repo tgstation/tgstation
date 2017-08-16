@@ -424,5 +424,5 @@
 	desc = "The circuit board for an Spacepod Fabricator."
 	id = "podfab"
 	req_tech = list("programming" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/podfab
+	build_path = /obj/item/circuitboard/machine/podfab
 	category = list("Research Machinery")

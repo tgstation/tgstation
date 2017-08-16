@@ -6,7 +6,7 @@
 	req_tech = list("materials" = 1) //All parts required to build a basic pod have materials 1, so the mechanic can do his damn job.
 	build_type = PODFAB
 	materials = list(MAT_METAL=5000)
-	build_path = /obj/item/weapon/circuitboard/mecha/pod
+	build_path = /obj/item/circuitboard/mecha/pod
 	category = list("Pod Parts")
 
 //////////////////////////////////////////////////

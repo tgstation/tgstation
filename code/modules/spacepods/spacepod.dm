@@ -5,7 +5,7 @@
 #define RIM	    		3
 #define PAINT			4
 
-/obj/item/weapon/pod_paint_bucket
+/obj/item/pod_paint_bucket
 	name = "space pod paintkit"
 	desc = "Pimp your ride"
 	icon = 'icons/obj/items.dmi'
@@ -26,14 +26,14 @@
 	var/list/mob/living/pilot	//There is only ever one pilot and he gets all the privledge
 	var/list/mob/living/passengers = list() //passengers can't do anything and are variable in number
 	var/max_passengers = 0
-	var/obj/item/weapon/storage/internal/cargo_hold
+	var/obj/item/storage/internal/cargo_hold
 
 	var/datum/spacepod/equipment/equipment_system
 
 	var/internal_temp_regulation = TRUE
 
-	var/cell_type = "/obj/item/weapon/stock_parts/cell/high"
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/cell_type = "/obj/item/stock_parts/cell/high"
+	var/obj/item/stock_parts/cell/cell
 
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
@@ -138,7 +138,7 @@
 	diag_hud_set_podcharge()
 	max_integrity *= pod_armor.armor_multiplier
 	obj_integrity *= pod_armor.armor_multiplier
-	cargo_hold = new/obj/item/weapon/storage/internal(src)
+	cargo_hold = new/obj/item/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
 	cargo_hold.max_w_class = 5		//fit almost anything
@@ -337,7 +337,7 @@
 		..()
 		deal_damage(W.force)
 	else
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(istype(W, /obj/item/crowbar))
 			if(!equipment_system.lock_system || unlocked || hatch_open)
 				hatch_open = !hatch_open
 				playsound(loc, W.usesound, 50, 1)
@@ -345,7 +345,7 @@
 			else
 				to_chat(user, "<span class='warning'>The hatch is locked shut!</span>")
 			return
-		if(istype(W, /obj/item/weapon/stock_parts/cell))
+		if(istype(W, /obj/item/stock_parts/cell))
 			if(!hatch_open)
 				to_chat(user, "<span class='warning'>The maintenance hatch is closed!</span>")
 				return
@@ -397,11 +397,11 @@
 				to_chat(user, "<span class='warning'>This is the wrong key!</span>")
 				return
 
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(istype(W, /obj/item/weldingtool))
 			if(!hatch_open)
 				to_chat(user, "<span class='warning'>You must open the maintenance hatch before attempting repairs.</span>")
 				return
-			var/obj/item/weapon/weldingtool/WT = W
+			var/obj/item/weldingtool/WT = W
 			if(!WT.isOn())
 				to_chat(user, "<span class='warning'>The welder must be on for this task.</span>")
 				return
@@ -562,7 +562,7 @@
 
 	L += src.contents
 
-	for(var/obj/item/weapon/storage/S in src)
+	for(var/obj/item/storage/S in src)
 		L += S.return_inv()
 	return L
 
@@ -576,7 +576,7 @@
 
 /obj/spacepod/civilian/attackby(obj/item/W as obj, mob/user as mob, params)
 	..()
-	if(istype(W, /obj/item/weapon/pod_paint_bucket))
+	if(istype(W, /obj/item/pod_paint_bucket))
 		apply_paint(user)
 		return
 
@@ -725,7 +725,7 @@
 	if(!istype(user))
 		return FALSE
 
-	var/fukkendisk = locate(/obj/item/weapon/disk/nuclear) in GetAllContents(user)
+	var/fukkendisk = locate(/obj/item/disk/nuclear) in GetAllContents(user)
 
 	if(user.incapacitated()) //are you cuffed, dying, lying, stunned or other
 		return FALSE
