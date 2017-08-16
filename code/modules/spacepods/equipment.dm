@@ -310,5 +310,5 @@
 	name = "vtec thruster upgrade"
 	w_class = WEIGHT_CLASS_BULKY
 	desc = "An upgrade to the thrusters in a spacepod, allowing it to move faster."
-	icon_state = "pod_vtec"
 	icon = 'goon/icons/pods/pod_parts.dmi'
+	icon_state = "pod_vtec"

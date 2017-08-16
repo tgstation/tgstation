@@ -386,7 +386,12 @@
 		if(istype(W, /obj/item/device/spacepod_key) && istype(equipment_system.lock_system, /obj/item/device/spacepod_equipment/lock/keyed))
 			var/obj/item/device/spacepod_key/key = W
 			if(key.id == equipment_system.lock_system.id)
-				lock_pod()
+				if(unlocked)
+					to_chat(user, "<span class='notice'>You lock [src].</span>")
+					unlocked = FALSE
+				else
+					to_chat(user, "<span class='notice'>You unlock [src].</span>")
+					unlocked = TRUE
 				return
 			else
 				to_chat(user, "<span class='warning'>This is the wrong key!</span>")
