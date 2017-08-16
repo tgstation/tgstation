@@ -1,0 +1,4 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - rscadd: "Blobs can now sense when they're being cuddled!"
