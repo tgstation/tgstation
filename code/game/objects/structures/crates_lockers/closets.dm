@@ -115,7 +115,7 @@
 		for(var/I in src)
 			qdel(I)
 		return
-	var/turf/T = L.drop_location()
+	var/turf/T = L.DropLocation()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
@@ -127,7 +127,7 @@
 	var/atom/L = loc
 	if(!L)
 		return
-	var/turf/T = L.drop_location()
+	var/turf/T = L.DropLocation()
 	for(var/atom/movable/AM in T)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
