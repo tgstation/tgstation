@@ -78,9 +78,8 @@
 				continue
 			output += "&nbsp;&nbsp;[filters[filter]]: [f.len]<br>"
 			for (var/device in f)
-				if (istype(device, /atom))
-					var/atom/A = device
-					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([A.x],[A.y],[A.z] in area [get_area(device)])<br>"
+				if (isobj(device))
+					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([device:x],[device:y],[device:z] in area [get_area(device:loc)])<br>"
 				else
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 

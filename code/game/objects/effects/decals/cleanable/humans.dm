@@ -169,7 +169,7 @@
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "some <B>[initial(S.name)]</B> [icon2html(initial(S.icon), user)]\n"
+			. += "some <B>[initial(S.name)]</B> [bicon(initial(S.icon))]\n"
 
 	to_chat(user, .)
 

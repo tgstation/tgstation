@@ -4,7 +4,7 @@
 	name = "water"
 	icon_state = "extinguish"
 	var/life = 15
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	mouse_opacity = 0
 
 
 /obj/effect/particle_effect/water/New()

@@ -37,12 +37,16 @@
 /datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs
 	deleteturfs = FALSE
 
+/datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs/New()
+	..()
+	ignore_typecache = typecacheof(list(/turf))
+
 /datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete
 	deleteturfs = FALSE
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete/New()
 	..()
-	ignore_typecache = typecacheof(list(/mob))
+	ignore_typecache = typecacheof(list(/mob, /turf))
 
 //Only places atoms/turfs on area borders
 /datum/mapGeneratorModule/border

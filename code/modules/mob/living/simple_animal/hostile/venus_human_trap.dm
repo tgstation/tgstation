@@ -33,7 +33,7 @@
 
 /obj/effect/ebeam/vine
 	name = "thick vine"
-	mouse_opacity = MOUSE_OPACITY_ICON
+	mouse_opacity = 1
 	desc = "A thick vine, painful to the touch."
 
 

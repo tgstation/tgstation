@@ -87,7 +87,7 @@
 				new /obj/effect/decal/cleanable/blood/old(src)
 		else if(prob(30))
 			if(istype(A, /area/medical/morgue))
-				new /obj/item/ectoplasm(src)
+				new /obj/item/weapon/ectoplasm(src)
 			else
 				new /obj/effect/decal/cleanable/vomit/old(src)
 		return

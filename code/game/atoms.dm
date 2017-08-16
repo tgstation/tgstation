@@ -270,7 +270,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "[icon2html(src, user)] That's [f_name]")
+	to_chat(user, "[bicon(src)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)
@@ -479,13 +479,13 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/ratvar_act()
 	return
 
-/atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+/atom/proc/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	return FALSE
 
-/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	return FALSE
 
-/atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
+/atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0
 
 //This proc is called on the location of an atom when the atom is Destroy()'d

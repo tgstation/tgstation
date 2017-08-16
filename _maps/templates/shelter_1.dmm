@@ -35,7 +35,7 @@
 /area/survivalpod)
 "i" = (
 /obj/structure/bed/pod,
-/obj/item/bedsheet/black,
+/obj/item/weapon/bedsheet/black,
 /turf/open/floor/pod,
 /area/survivalpod)
 "j" = (

@@ -6,7 +6,7 @@
 	anchored = TRUE
 	flags = ABSTRACT
 	pass_flags = PASSTABLE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 

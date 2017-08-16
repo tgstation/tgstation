@@ -22,7 +22,6 @@
 	return
 
 /turf/open/chasm/Entered(atom/movable/AM)
-	..()
 	START_PROCESSING(SSobj, src)
 	drop_stuff(AM)
 
