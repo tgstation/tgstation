@@ -187,8 +187,8 @@
 /area/shuttle/escape)
 "aJ" = (
 /obj/structure/table,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/crowbar,
+/obj/item/extinguisher,
+/obj/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aK" = (
@@ -197,8 +197,8 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -298,7 +298,7 @@
 /area/shuttle/escape)
 "bc" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -1;
 	pixel_y = 6
 	},
@@ -310,8 +310,8 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/pen,
+/obj/item/folder/blue,
+/obj/item/pen,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -438,8 +438,8 @@
 /area/shuttle/escape)
 "by" = (
 /obj/structure/table,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/crowbar,
+/obj/item/extinguisher,
+/obj/item/crowbar,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -484,9 +484,9 @@
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/scalpel,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/item/scalpel,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bG" = (
@@ -495,11 +495,11 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/table,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/cautery{
+/obj/item/circular_saw,
+/obj/item/cautery{
 	pixel_x = 4
 	},
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bI" = (

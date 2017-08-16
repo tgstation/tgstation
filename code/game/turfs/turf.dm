@@ -85,7 +85,7 @@
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
-/turf/proc/handleRCL(obj/item/weapon/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -104,7 +104,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/weapon/twohanded/rcl))
+	else if(istype(C, /obj/item/twohanded/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -325,7 +325,7 @@
 /turf/proc/Bless()
 	flags |= NOJAUNT
 
-/turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)
 		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
@@ -333,7 +333,7 @@
 
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/weapon/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/storage.proc/mass_remove_from_storage, src, things, progress)))
 		sleep(1)
 	qdel(progress)
 

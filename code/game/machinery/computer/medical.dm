@@ -6,8 +6,8 @@
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
-	circuit = /obj/item/weapon/circuitboard/computer/med_data
-	var/obj/item/weapon/card/id/scan = null
+	circuit = /obj/item/circuitboard/computer/med_data
+	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -26,7 +26,7 @@
 	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/card/id) && !scan)
+	if(istype(O, /obj/item/card/id) && !scan)
 		if(!user.drop_item())
 			return
 		O.loc = src
@@ -112,11 +112,11 @@
 
 					dat += "<table><tr><td><b><font size='4'>Medical Record</font></b></td></tr>"
 					if(active1 in GLOB.data_core.general)
-						if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
-							var/obj/item/weapon/photo/P1 = active1.fields["photo_front"]
+						if(istype(active1.fields["photo_front"], /obj/item/photo))
+							var/obj/item/photo/P1 = active1.fields["photo_front"]
 							user << browse_rsc(P1.img, "photo_front")
-						if(istype(active1.fields["photo_side"], /obj/item/weapon/photo))
-							var/obj/item/weapon/photo/P2 = active1.fields["photo_side"]
+						if(istype(active1.fields["photo_side"], /obj/item/photo))
+							var/obj/item/photo/P2 = active1.fields["photo_side"]
 							user << browse_rsc(P2.img, "photo_side")
 						dat += "<tr><td>Name:</td><td>[active1.fields["name"]]</td>"
 						dat += "<td><a href='?src=\ref[src];field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a></td>"
@@ -222,7 +222,7 @@
 				src.scan = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/weapon/card/id))
+				if(istype(I, /obj/item/card/id))
 					if(!usr.drop_item())
 						return
 					I.loc = src
@@ -258,7 +258,7 @@
 				src.authenticated = 1
 				src.rank = "Central Command"
 				src.screen = 1
-			else if(istype(src.scan, /obj/item/weapon/card/id))
+			else if(istype(src.scan, /obj/item/card/id))
 				src.active1 = null
 				src.active2 = null
 				if(src.check_access(src.scan))
@@ -399,14 +399,14 @@
 					if("show_photo_front")
 						if(active1)
 							if(active1.fields["photo_front"])
-								if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
-									var/obj/item/weapon/photo/P = active1.fields["photo_front"]
+								if(istype(active1.fields["photo_front"], /obj/item/photo))
+									var/obj/item/photo/P = active1.fields["photo_front"]
 									P.show(usr)
 					if("show_photo_side")
 						if(active1)
 							if(active1.fields["photo_side"])
-								if(istype(active1.fields["photo_side"], /obj/item/weapon/photo))
-									var/obj/item/weapon/photo/P = active1.fields["photo_side"]
+								if(istype(active1.fields["photo_side"], /obj/item/photo))
+									var/obj/item/photo/P = active1.fields["photo_side"]
 									P.show(usr)
 					else
 
@@ -539,7 +539,7 @@
 					GLOB.data_core.medicalPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 					sleep(30)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
+					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in GLOB.data_core.general)
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"])

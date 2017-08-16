@@ -82,7 +82,7 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
 	..()
 
@@ -99,7 +99,7 @@
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
-/turf/closed/wall/mineral/plasma/attackby(obj/item/weapon/W, mob/user, params)
+/turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
 		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")

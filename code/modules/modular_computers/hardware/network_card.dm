@@ -1,4 +1,4 @@
-/obj/item/weapon/computer_hardware/network_card
+/obj/item/computer_hardware/network_card
 	name = "network card"
 	desc = "A basic wireless network card for usage with standard NTNet frequencies."
 	power_usage = 50
@@ -12,7 +12,7 @@
 	device_type = MC_NET
 	var/global/ntnet_card_uid = 1
 
-/obj/item/weapon/computer_hardware/network_card/diagnostics(var/mob/user)
+/obj/item/computer_hardware/network_card/diagnostics(var/mob/user)
 	..()
 	to_chat(user, "NIX Unique ID: [identification_id]")
 	to_chat(user, "NIX User Tag: [identification_string]")
@@ -23,16 +23,16 @@
 	if(ethernet)
 		to_chat(user, "OpenEth (Physical Connection) - Physical network connection port")
 
-/obj/item/weapon/computer_hardware/network_card/New(var/l)
+/obj/item/computer_hardware/network_card/New(var/l)
 	..()
 	identification_id = ntnet_card_uid++
 
 // Returns a string identifier of this network card
-/obj/item/weapon/computer_hardware/network_card/proc/get_network_tag()
+/obj/item/computer_hardware/network_card/proc/get_network_tag()
 	return "[identification_string] (NID [identification_id])"
 
 // 0 - No signal, 1 - Low signal, 2 - High signal. 3 - Wired Connection
-/obj/item/weapon/computer_hardware/network_card/proc/get_signal(var/specific_action = 0)
+/obj/item/computer_hardware/network_card/proc/get_signal(var/specific_action = 0)
 	if(!holder) // Hardware is not installed in anything. No signal. How did this even get called?
 		return 0
 
@@ -61,7 +61,7 @@
 	return 0 // Computer is not on station and does not have upgraded network card. No signal.
 
 
-/obj/item/weapon/computer_hardware/network_card/advanced
+/obj/item/computer_hardware/network_card/advanced
 	name = "advanced network card"
 	desc = "An advanced network card for usage with standard NTNet frequencies. Its transmitter is strong enough to connect even off-station."
 	long_range = 1
@@ -72,7 +72,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/computer_hardware/network_card/wired
+/obj/item/computer_hardware/network_card/wired
 	name = "wired network card"
 	desc = "An advanced network card for usage with standard NTNet frequencies. This one also supports wired connection."
 	ethernet = 1

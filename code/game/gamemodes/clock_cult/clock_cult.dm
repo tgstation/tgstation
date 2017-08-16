@@ -233,22 +233,22 @@ Credit where due:
 	head = /obj/item/clothing/head/hardhat/white
 	uniform = /obj/item/clothing/under/color/yellow
 	shoes = /obj/item/clothing/shoes/sneakers/green
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset
 	gloves = /obj/item/clothing/gloves/color/yellow
-	belt = /obj/item/weapon/storage/belt/utility/servant
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1, \
-	/obj/item/clockwork/replica_fabricator/preloaded = 1, /obj/item/stack/tile/brass/thirty = 1, /obj/item/weapon/paper/servant_primer = 1)
-	id = /obj/item/weapon/card/id
+	belt = /obj/item/storage/belt/utility/servant
+	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
+	/obj/item/clockwork/replica_fabricator/preloaded = 1, /obj/item/stack/tile/brass/thirty = 1, /obj/item/paper/servant_primer = 1)
+	id = /obj/item/card/id
 
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	var/obj/item/weapon/card/id/W = H.wear_id
+	var/obj/item/card/id/W = H.wear_id
 	W.assignment = "Assistant"
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
 
-/obj/item/weapon/paper/servant_primer
+/obj/item/paper/servant_primer
 	name = "The Ark & You: A Primer On Servitude"
 	color = "#DAAA18"
 	info = "<b>DON'T PANIC.</b><br><br>\
@@ -265,7 +265,7 @@ Credit where due:
 	<hr>\
 	<b>Good luck!</b>"
 
-/obj/item/weapon/paper/servant_primer/examine(mob/user)
+/obj/item/paper/servant_primer/examine(mob/user)
 	if(!is_servant_of_ratvar(user) && !isobserver(user))
 		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
 	..()

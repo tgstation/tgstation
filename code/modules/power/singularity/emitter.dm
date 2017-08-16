@@ -7,7 +7,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_ENGINE_EQUIP)
-	circuit = /obj/item/weapon/circuitboard/machine/emitter
+	circuit = /obj/item/circuitboard/machine/emitter
 
 	use_power = NO_POWER_USE
 	idle_power_usage = 10
@@ -64,14 +64,14 @@
 	var/firedelay = 120
 	var/min_firedelay = 24
 	var/power_usage = 350
-	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		max_firedelay -= 20 * L.rating
 		min_firedelay -= 4 * L.rating
 		firedelay -= 20 * L.rating
 	maximum_fire_delay = max_firedelay
 	minimum_fire_delay = min_firedelay
 	fire_delay = firedelay
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
 
@@ -265,7 +265,7 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -274,15 +274,15 @@
 			state = EM_UNSECURED
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(active)
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
 		default_unfasten_wrench(user, W, 0)
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn \the [src] off first.")
 			return
@@ -368,7 +368,7 @@
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
 	manual = FALSE
 	for(var/obj/item/I in buckled_mob.held_items)
-		if(istype(I, /obj/item/weapon/turret_control))
+		if(istype(I, /obj/item/turret_control))
 			qdel(I)
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
@@ -419,7 +419,7 @@
 		desc = "The emitter will only fire on your command and at your designated target"
 		button_icon_state = "mech_zoom_on"
 		for(var/obj/item/I in U.held_items)
-			if(istype(I, /obj/item/weapon/turret_control))
+			if(istype(I, /obj/item/turret_control))
 				qdel(I)
 		UpdateButtonIcon()
 		return
@@ -433,15 +433,15 @@
 			var/obj/item/I = V
 			if(istype(I))
 				if(U.dropItemToGround(I))
-					var/obj/item/weapon/turret_control/TC = new /obj/item/weapon/turret_control()
+					var/obj/item/turret_control/TC = new /obj/item/turret_control()
 					U.put_in_hands(TC)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-				var/obj/item/weapon/turret_control/TC = new /obj/item/weapon/turret_control()
+				var/obj/item/turret_control/TC = new /obj/item/turret_control()
 				U.put_in_hands(TC)
 		UpdateButtonIcon()
 
 
-/obj/item/weapon/turret_control
+/obj/item/turret_control
 	name = "turret controls"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
@@ -449,7 +449,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON
 	var/delay = 0
 
-/obj/item/weapon/turret_control/afterattack(atom/targeted_atom, mob/user)
+/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user)
 	..()
 	var/obj/machinery/power/emitter/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))

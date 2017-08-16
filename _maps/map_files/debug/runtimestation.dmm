@@ -331,7 +331,7 @@
 /obj/item/device/flashlight{
 	pixel_y = 5
 	},
-/obj/item/weapon/airlock_painter,
+/obj/item/airlock_painter,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aT" = (
@@ -425,7 +425,7 @@
 /area/engine/atmos)
 "bd" = (
 /obj/structure/table,
-/obj/item/weapon/weldingtool/experimental,
+/obj/item/weldingtool/experimental,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "be" = (
@@ -471,7 +471,7 @@
 /obj/machinery/light,
 /obj/structure/table,
 /obj/item/device/analyzer,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bk" = (
@@ -503,13 +503,13 @@
 "bo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/table,
-/obj/item/weapon/screwdriver/power,
-/obj/item/weapon/wirecutters/power,
+/obj/item/screwdriver/power,
+/obj/item/wirecutters/power,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bp" = (
 /obj/machinery/light,
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /obj/item/device/lightreplacer,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -632,7 +632,7 @@
 "bH" = (
 /obj/structure/table,
 /obj/item/ammo_box/c10mm,
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bI" = (
@@ -641,20 +641,20 @@
 /area/bridge)
 "bJ" = (
 /obj/structure/table,
-/obj/item/weapon/card/id/captains_spare,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/holding,
+/obj/item/storage/backpack/holding,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bL" = (
 /obj/structure/table,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/weapon/construction/rcd,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/construction/rcd,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bM" = (
@@ -1005,14 +1005,14 @@
 /area/hallway/secondary/entry)
 "cI" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/arrival{
 	dir = 8
 	},
 /area/hallway/secondary/entry)
 "cJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/arrival{
 	dir = 10
 	},
@@ -1030,7 +1030,7 @@
 /area/hallway/secondary/entry)
 "cL" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -1038,8 +1038,8 @@
 /area/hallway/secondary/entry)
 "cM" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/item/device/healthanalyzer,
 /turf/open/floor/plasteel/arrival,
 /area/hallway/secondary/entry)
@@ -1345,8 +1345,8 @@
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/weapon/twohanded/fireaxe,
-/obj/item/weapon/extinguisher,
+/obj/item/twohanded/fireaxe,
+/obj/item/extinguisher,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dP" = (
@@ -1356,8 +1356,8 @@
 /area/storage/primary)
 "dQ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/storage/box/lights/tubes,
+/obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/tubes,
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/storage/primary)

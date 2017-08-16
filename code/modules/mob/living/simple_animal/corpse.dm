@@ -23,8 +23,8 @@
 	ears = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas
 	head = /obj/item/clothing/head/helmet/swat
-	back = /obj/item/weapon/storage/backpack
-	id = /obj/item/weapon/card/id
+	back = /obj/item/storage/backpack
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
@@ -41,9 +41,9 @@
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/weapon/tank/jetpack/oxygen
-	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
-	id = /obj/item/weapon/card/id
+	back = /obj/item/tank/jetpack/oxygen
+	r_pocket = /obj/item/tank/internals/emergency_oxygen
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
@@ -60,8 +60,8 @@
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/weapon/tank/jetpack/oxygen/harness
-	id = /obj/item/weapon/card/id
+	back = /obj/item/tank/jetpack/oxygen/harness
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/clown/corpse
@@ -163,5 +163,5 @@
 	ears = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
-	back = /obj/item/weapon/storage/backpack/security
-	id = /obj/item/weapon/card/id
+	back = /obj/item/storage/backpack/security
+	id = /obj/item/card/id

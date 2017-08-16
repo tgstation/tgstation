@@ -14,7 +14,7 @@
 	flags = ON_BORDER
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
-	var/obj/item/weapon/electronics/airlock/electronics = null
+	var/obj/item/electronics/airlock/electronics = null
 	var/reinf = 0
 	var/shards = 2
 	var/rods = 2
@@ -29,7 +29,7 @@
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
 	for(var/i in 1 to shards)
-		debris += new /obj/item/weapon/shard(src)
+		debris += new /obj/item/shard(src)
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 	if(cable)
@@ -114,7 +114,7 @@
 		return 1
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
-/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir)
+/obj/machinery/door/window/CanAStarPass(obj/item/card/id/ID, to_dir)
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target)
@@ -215,14 +215,14 @@
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		open()
 
-/obj/machinery/door/window/attackby(obj/item/weapon/I, mob/living/user, params)
+/obj/machinery/door/window/attackby(obj/item/I, mob/living/user, params)
 
 	if(operating)
 		return
 
 	add_fingerprint(user)
 	if(!(flags&NODECONSTRUCT))
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/screwdriver))
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
@@ -231,7 +231,7 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(istype(I, /obj/item/crowbar))
 			if(panel_open && !density && !operating)
 				playsound(src.loc, I.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \
@@ -264,9 +264,9 @@
 
 						to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
-						var/obj/item/weapon/electronics/airlock/ae
+						var/obj/item/electronics/airlock/ae
 						if(!electronics)
-							ae = new/obj/item/weapon/electronics/airlock( src.loc )
+							ae = new/obj/item/electronics/airlock( src.loc )
 							if(req_one_access)
 								ae.one_access = 1
 								ae.accesses = src.req_one_access

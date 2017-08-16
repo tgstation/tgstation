@@ -35,13 +35,13 @@
 	if(!burn_stuff())
 		STOP_PROCESSING(SSobj, src)
 
-/turf/open/lava/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
-/turf/open/lava/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")

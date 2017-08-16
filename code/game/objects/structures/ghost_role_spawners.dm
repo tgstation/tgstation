@@ -212,20 +212,20 @@
 			life and sent you to this hell are forever branded into your memory.</b>"
 			outfit.uniform = /obj/item/clothing/under/assistantformal
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
-			outfit.back = /obj/item/weapon/storage/backpack
+			outfit.back = /obj/item/storage/backpack
 		if(2)
 			flavour_text += "you're an exile from the Tiger Cooperative. Their technological fanaticism drove you to question the power and beliefs of the Exolitics, and they saw you as a \
 			heretic and subjected you to hours of horrible torture. You were hours away from execution when a high-ranking friend of yours in the Cooperative managed to secure you a pod, \
 			scrambled its destination's coordinates, and launched it. You awoke from stasis when you landed and have been surviving - barely - ever since.</b>"
 			outfit.uniform = /obj/item/clothing/under/rank/prisoner
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/orange
-			outfit.back = /obj/item/weapon/storage/backpack
+			outfit.back = /obj/item/storage/backpack
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
 			to a literal one, you find yourself nonetheless missing the recycled air and warm floors of what you left behind... but you'd still rather be here than there.</b>"
 			outfit.uniform = /obj/item/clothing/under/rank/medical
 			outfit.suit = /obj/item/clothing/suit/toggle/labcoat
-			outfit.back = /obj/item/weapon/storage/backpack/medic
+			outfit.back = /obj/item/storage/backpack/medic
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
 		if(4)
 			flavour_text += "you were always joked about by your friends for \"not playing with a full deck\", as they so <i>kindly</i> put it. It seems that they were right when you, on a tour \
@@ -233,7 +233,7 @@
 			it, and after a terrifying and fast ride for days, you landed here. You've had time to wisen up since then, and you think that your old friends wouldn't be laughing now.</b>"
 			outfit.uniform = /obj/item/clothing/under/color/grey/glorf
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
-			outfit.back = /obj/item/weapon/storage/backpack
+			outfit.back = /obj/item/storage/backpack
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
@@ -279,7 +279,7 @@
 	uniform = /obj/item/clothing/under/rank/prisoner
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/orange
-	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+	r_pocket = /obj/item/tank/internals/emergency_oxygen
 
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
@@ -307,8 +307,8 @@
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/device/radio/off
-	back = /obj/item/weapon/storage/backpack
-	implants = list(/obj/item/weapon/implant/mindshield)
+	back = /obj/item/storage/backpack
+	implants = list(/obj/item/implant/mindshield)
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
@@ -324,8 +324,8 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	head = /obj/item/clothing/head/helmet/blueshirt
-	back = /obj/item/weapon/storage/backpack/security
-	belt = /obj/item/weapon/storage/belt/security/full
+	back = /obj/item/storage/backpack/security
+	belt = /obj/item/storage/belt/security/full
 
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
@@ -368,7 +368,7 @@
 		L.mind.hasSoul = FALSE
 		var/mob/living/carbon/human/H = L
 		var/obj/item/worn = H.wear_id
-		var/obj/item/weapon/card/id/id = worn.GetID()
+		var/obj/item/card/id/id = worn.GetID()
 		id.registered_name = L.real_name
 		id.update_label()
 	else
@@ -380,9 +380,9 @@
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/device/radio/off
-	back = /obj/item/weapon/storage/backpack
-	implants = list(/obj/item/weapon/implant/mindshield) //No revolutionaries, he's MY friend.
-	id = /obj/item/weapon/card/id
+	back = /obj/item/storage/backpack
+	implants = list(/obj/item/implant/mindshield) //No revolutionaries, he's MY friend.
+	id = /obj/item/card/id
 
 /obj/effect/mob_spawn/human/syndicate
 	name = "Syndicate Operative"
@@ -400,9 +400,9 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset/syndicate/alt
-	back = /obj/item/weapon/storage/backpack
-	implants = list(/obj/item/weapon/implant/weapons_auth)
-	id = /obj/item/weapon/card/id
+	back = /obj/item/storage/backpack
+	implants = list(/obj/item/implant/weapons_auth)
+	id = /obj/item/card/id
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= "syndicate"
@@ -414,9 +414,9 @@
 
 /datum/outfit/syndicate_empty/SBC
 	name = "Syndicate Battlecruiser Ship Operative"
-	l_pocket = /obj/item/weapon/gun/ballistic/automatic/pistol
-	r_pocket = /obj/item/weapon/kitchen/knife/combat/survival
-	belt = /obj/item/weapon/storage/belt/military/assault
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/kitchen/knife/combat/survival
+	belt = /obj/item/storage/belt/military/assault
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
@@ -427,11 +427,11 @@
 	name = "Syndicate Battlecruiser Assault Operative"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	l_pocket = /obj/item/ammo_box/magazine/m10mm
-	r_pocket = /obj/item/weapon/kitchen/knife/combat/survival
-	belt = /obj/item/weapon/storage/belt/military
+	r_pocket = /obj/item/kitchen/knife/combat/survival
+	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/weapon/gun/ballistic/automatic/pistol
-	back = /obj/item/weapon/storage/backpack/security
+	suit_store = /obj/item/gun/ballistic/automatic/pistol
+	back = /obj/item/storage/backpack/security
 	mask = /obj/item/clothing/mask/gas/syndicate
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
@@ -442,11 +442,11 @@
 
 /datum/outfit/syndicate_empty/SBC/assault/captain
 	name = "Syndicate Battlecruiser Captain"
-	l_pocket = /obj/item/weapon/melee/transforming/energy/sword/saber/red
-	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
+	l_pocket = /obj/item/melee/transforming/energy/sword/saber/red
+	r_pocket = /obj/item/melee/classic_baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	suit_store = /obj/item/weapon/gun/ballistic/revolver/mateba
-	back = /obj/item/weapon/storage/backpack/satchel/leather
+	suit_store = /obj/item/gun/ballistic/revolver/mateba
+	back = /obj/item/storage/backpack/satchel/leather
 	head = /obj/item/clothing/head/HoS/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
@@ -467,8 +467,8 @@
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/security
 	shoes = /obj/item/clothing/shoes/jackboots
-	id = /obj/item/weapon/card/id/away/old/sec
-	r_pocket = /obj/item/weapon/restraints/handcuffs
+	id = /obj/item/card/id/away/old/sec
+	r_pocket = /obj/item/restraints/handcuffs
 	l_pocket = /obj/item/device/assembly/flash/handheld
 	assignedrole = "Ancient Crew"
 
@@ -491,9 +491,9 @@
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/engineer
 	shoes = /obj/item/clothing/shoes/workboots
-	id = /obj/item/weapon/card/id/away/old/eng
+	id = /obj/item/card/id/away/old/eng
 	gloves = /obj/item/clothing/gloves/color/fyellow/old
-	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
@@ -515,7 +515,7 @@
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/scientist
 	shoes = /obj/item/clothing/shoes/laceup
-	id = /obj/item/weapon/card/id/away/old/sci
+	id = /obj/item/card/id/away/old/sci
 	l_pocket = /obj/item/stack/medical/bruise_pack
 	assignedrole = "Ancient Crew"
 

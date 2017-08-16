@@ -13,10 +13,10 @@
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
+/obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
@@ -41,7 +41,7 @@
 									 "<span class='notice'>You have secured the [name]'s bolts.</span>")
 				anchored = TRUE
 
-	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+	else if(istype(W, /obj/item/gun/energy/plasmacutter))
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
@@ -52,8 +52,8 @@
 								 "<span class='notice'>You slice apart the [name].</span>")
 			deconstruct(TRUE)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
+		var/obj/item/pickaxe/drill/jackhammer/D = W
 		if(!src.loc)
 			return
 		user.visible_message("[user] destroys the [name]!", \
@@ -61,7 +61,7 @@
 		D.playDigSound()
 		qdel(src)
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
+	else if(istype(W, /obj/item/weldingtool) && !anchored)
 		playsound(loc, W.usesound, 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
@@ -111,7 +111,7 @@
 	desc = "This statue has a sickening green colour."
 	icon_state = "eng"
 
-/obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/statue/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
 	return ..()
 
@@ -171,7 +171,7 @@
 			log_game("Plasma statue ignited by [Proj] in [COORD(T)]. No known firer.")
 	..()
 
-/obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
@@ -277,7 +277,7 @@
 	honk()
 	..()
 
-/obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/statue/bananium/attackby(obj/item/W, mob/user, params)
 	honk()
 	return ..()
 

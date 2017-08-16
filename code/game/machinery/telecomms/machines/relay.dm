@@ -17,7 +17,7 @@
 	machinetype = 8
 	netspeed = 5
 	long_range_link = 1
-	circuit = /obj/item/weapon/circuitboard/machine/telecomms/relay
+	circuit = /obj/item/circuitboard/machine/telecomms/relay
 	var/broadcasting = 1
 	var/receiving = 1
 

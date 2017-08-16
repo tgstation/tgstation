@@ -126,7 +126,7 @@
 /area/shuttle/escape)
 "y" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -213,13 +213,13 @@
 /area/shuttle/escape)
 "L" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "M" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
