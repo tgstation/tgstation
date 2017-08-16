@@ -98,7 +98,7 @@
 				pulled_binding = binding
 				ranged_ability_user.start_pulling(binding)
 				slab.busy = "sustaining Geis"
-				slab.flags |= NODROP
+				slab.flags_1 |= NODROP_1
 				while(!QDELETED(binding) && !QDELETED(ranged_ability_user))
 					if(ranged_ability_user.pulling == binding)
 						pulled_binding = binding
@@ -114,7 +114,7 @@
 							add_mousepointer(ranged_ability_user.client)
 					sleep(1)
 				if(!QDELETED(slab))
-					slab.flags &= ~NODROP
+					slab.flags_1 &= ~NODROP_1
 				in_progress = FALSE
 				successful = TRUE
 

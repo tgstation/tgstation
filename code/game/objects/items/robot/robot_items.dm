@@ -151,7 +151,7 @@
 /obj/item/borg/charger
 	name = "power connector"
 	icon_state = "charger_draw"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/mode = "draw"
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))

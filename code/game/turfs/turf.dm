@@ -11,7 +11,7 @@
 
 	var/blocks_air = FALSE
 
-	flags = CAN_BE_DIRTY
+	flags_1 = CAN_BE_DIRTY_1
 
 	var/image/obscured	//camerachunks
 
@@ -133,7 +133,7 @@
 
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
+		if(border_obstacle.flags_1 & ON_BORDER_1)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
 				mover.Collide(border_obstacle)
 				return FALSE
@@ -323,7 +323,7 @@
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
-	flags |= NOJAUNT
+	flags_1 |= NOJAUNT_1
 
 /turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)

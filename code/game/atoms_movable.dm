@@ -137,7 +137,7 @@
 	if (orbiting)
 		orbiting.Check()
 
-	if(flags & CLEAN_ON_MOVE)
+	if(flags_1 & CLEAN_ON_MOVE_1)
 		clean_on_move()
 
 	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
@@ -323,7 +323,7 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (!target || (flags & NODROP) || speed <= 0)
+	if (!target || (flags_1 & NODROP_1) || speed <= 0)
 		return
 
 	if (pulledby)

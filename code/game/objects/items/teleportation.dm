@@ -20,7 +20,7 @@
 	var/frequency = 1451
 	var/broadcasting = null
 	var/listening = 1
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

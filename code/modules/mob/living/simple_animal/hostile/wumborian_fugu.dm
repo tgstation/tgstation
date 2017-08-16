@@ -104,7 +104,7 @@
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	origin_tech = "biotech=6"

@@ -307,7 +307,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_BULKY
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	materials = list(MAT_METAL=3000)
 	preposition = "on"
 

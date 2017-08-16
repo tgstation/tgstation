@@ -3,7 +3,7 @@
 	plane = GAME_PLANE
 	var/level = 2
 
-	var/flags = 0
+	var/flags_1 = 0
 	var/flags_2 = 0
 
 	var/list/fingerprints
@@ -193,23 +193,23 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return container_type & OPENCONTAINER
+	return container_type & OPENCONTAINER_1
 
 /atom/proc/is_transparent()
-	return container_type & TRANSPARENT
+	return container_type & TRANSPARENT_1
 
 /atom/proc/is_injectable(allowmobs = TRUE)
 	if(isliving(src) && allowmobs)
 		var/mob/living/L = src
 		return L.can_inject()
-	if(container_type & OPENCONTAINER)
+	if(container_type & OPENCONTAINER_1)
 		return TRUE
-	return container_type & INJECTABLE
+	return container_type & INJECTABLE_1
 
 /atom/proc/is_drawable(allowmobs = TRUE)
 	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
 		return TRUE
-	return container_type & DRAWABLE
+	return container_type & DRAWABLE_1
 
 /atom/proc/allow_drop()
 	return 1

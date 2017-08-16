@@ -34,7 +34,7 @@
 		for(var/obj/item in hand_items)
 			// I ensouled the nuke disk once. But it's probably a really
 			// mean tactic, so probably should discourage it.
-			if((item.flags & ABSTRACT) || (item.flags & NODROP) || (item & STATIONLOVING_2))
+			if((item.flags_1 & ABSTRACT_1) || (item.flags_1 & NODROP_1) || (item.flags_2 & STATIONLOVING_2))
 				continue
 			marked_item = item
 			to_chat(M, "<span class='warning'>You begin to focus your very being into [item]...</span>")

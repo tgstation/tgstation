@@ -473,14 +473,14 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-	// The shielded hardsuit is already NODROP
+	// The shielded hardsuit is already NODROP_1
 	no_drops += H.get_item_by_slot(slot_gloves)
 	no_drops += H.get_item_by_slot(slot_shoes)
 	no_drops += H.get_item_by_slot(slot_w_uniform)
 	no_drops += H.get_item_by_slot(slot_ears)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.flags |= NODROP
+		I.flags_1 |= NODROP_1
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill

@@ -238,8 +238,8 @@
 			INVOKE_ASYNC(src, .proc/defile, T)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
-	if(T.flags & NOJAUNT)
-		T.flags -= NOJAUNT
+	if(T.flags_1 & NOJAUNT_1)
+		T.flags_1 &= ~NOJAUNT_1
 		new /obj/effect/temp_visual/revenant(T)
 	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T

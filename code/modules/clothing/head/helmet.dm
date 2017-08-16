@@ -65,7 +65,7 @@
 		if(world.time > cooldown + toggle_cooldown)
 			cooldown = world.time
 			up = !up
-			flags ^= visor_flags
+			flags_1 ^= visor_flags
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
@@ -110,7 +110,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	strip_delay = 80
 	dog_fashion = null
 
