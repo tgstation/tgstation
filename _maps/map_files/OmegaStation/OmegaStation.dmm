@@ -23632,9 +23632,7 @@
 /obj/item/paper/guides/jobs/hydroponics,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/item/disk/plantgene,
-/obj/item/disk/plantgene,
-/obj/item/disk/plantgene,
+/obj/item/storage/box/disks_plantgene,
 /obj/item/toy/figure/botanist,
 /turf/open/floor/plasteel,
 /area/hydroponics)
