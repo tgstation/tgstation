@@ -32,8 +32,8 @@
 		else
 			log_world("Ruin loader had no ruins to pick from with [budget] left to spend.")
 			break
-		// Can we afford it
-		if(ruin.cost > budget)
+		// Can we afford it and is it not free
+		if(ruin.cost > budget && ruin.cost != 0)
 			overall_sanity--
 			continue
 		// If so, try to place it

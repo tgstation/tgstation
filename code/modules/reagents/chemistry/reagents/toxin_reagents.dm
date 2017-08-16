@@ -61,6 +61,9 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	produce_type = /obj/item/stack/sheet/mineral/plasma
+	attack_force = 10
+	pick_speed = 25
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/M)
 	if(holder.has_reagent("epinephrine"))

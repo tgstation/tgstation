@@ -10,7 +10,12 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
-	var/refined_type = null //What this ore defaults to being refined into
+	var/refined_type //What this ore defaults to being refined into
+	var/reagent_id
+
+/obj/item/weapon/ore/on_smelt()
+	if(reagent_id)
+		return reagent_id
 
 /obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -72,6 +77,7 @@
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
+	reagent_id = "uranium"
 
 /obj/item/weapon/ore/iron
 	name = "iron ore"
@@ -80,6 +86,7 @@
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
+	reagent_id = "iron"
 
 /obj/item/weapon/ore/glass
 	name = "sand pile"
@@ -139,6 +146,7 @@
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
+	reagent_id = "plasma"
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -156,6 +164,7 @@
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
+	reagent_id = "silver"
 
 /obj/item/weapon/ore/gold
 	name = "gold ore"
@@ -164,6 +173,7 @@
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
+	reagent_id = "gold"
 
 /obj/item/weapon/ore/diamond
 	name = "diamond ore"
@@ -172,6 +182,7 @@
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
+	reagent_id = "diamond"
 
 /obj/item/weapon/ore/bananium
 	name = "bananium ore"
@@ -317,7 +328,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
-	var/cmineral = null
+	var/cmineral
 	var/cooldown = 0
 	var/value = 1
 
@@ -452,3 +463,12 @@
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
+
+/obj/item/weapon/ore/adamantine
+	name = "adamantine ore"
+	icon_state = "ore"
+	origin_tech = "materials=8"
+	points = 0
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+	refined_type = null
+	reagent_id = "adamantine"

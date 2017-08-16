@@ -31,6 +31,14 @@
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	// blacksmithing vars
+	var/attack_force = 5 //self-explanatory
+	var/penetration_value = 0 //armour_penetration
+	var/sharp_result = FALSE //if the molded reagent comes out sharp
+	var/pick_speed = 40 //how fast the reagent would mine
+	var/blunt_damage = FALSE //if the reagant would make a good blunt weapon
+	var/produce_type = /obj/item/weapon/ore/slag //what the reagent produces if used in a mold
+	var/durability_reduction = 10 // How much this item loses on hit
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -46,6 +54,9 @@
 			if(amount >= 0.5)
 				M.reagents.add_reagent(id, amount)
 	return 1
+
+/datum/reagent/proc/on_transfer(datum/reagent/OR)
+	return
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
 	return

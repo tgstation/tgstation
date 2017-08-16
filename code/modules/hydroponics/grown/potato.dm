@@ -26,7 +26,7 @@
 	filling_color = "#E9967A"
 	bitesize = 100
 	foodtype = VEGETABLES
-
+	booze_power = 65
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
 	name = "potato wedges"

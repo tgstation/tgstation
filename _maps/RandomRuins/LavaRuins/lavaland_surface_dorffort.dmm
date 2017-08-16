@@ -1,0 +1,632 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/random/volcanic,
+/area/mine/explored)
+"c" = (
+/obj/machinery/anvil,
+/obj/item/weapon/smith_hammer,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"d" = (
+/obj/machinery/smelter{
+	layer = 4.4
+	},
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"e" = (
+/obj/effect/decal/cleanable/molten_object/large,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"f" = (
+/obj/structure/table/wood,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+/obj/item/seeds/plump,
+/obj/item/seeds/plump,
+/obj/item/seeds/plump,
+/obj/item/seeds/plump,
+/obj/item/weapon/cultivator,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"g" = (
+/obj/machinery/brewing_barrel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"h" = (
+/obj/machinery/hydroponics/soil,
+/obj/effect/decal/cleanable/egg_smudge,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"i" = (
+/obj/machinery/hydroponics/soil,
+/mob/living/simple_animal/chicken,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"j" = (
+/obj/machinery/hydroponics/soil,
+/mob/living/simple_animal/cow,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"k" = (
+/obj/item/device/flashlight/lantern,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"l" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"m" = (
+/obj/structure/table/wood,
+/obj/item/weapon/reagent_containers/glass/mold/bar,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"n" = (
+/obj/structure/table/wood,
+/obj/item/weapon/shovel/spade,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"o" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"p" = (
+/obj/structure/sink/puddle{
+	name = "magic puddle"
+	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"q" = (
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/storage/bag/ore,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"r" = (
+/obj/structure/table/wood,
+/obj/item/weapon/smith_hammer,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"s" = (
+/obj/structure/table/wood,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/obj/item/weapon/grown/log,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"t" = (
+/obj/item/seeds/tower,
+/turf/closed/mineral/random/volcanic,
+/area/mine/explored)
+"u" = (
+/mob/living/simple_animal/pet/cat,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"v" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"w" = (
+/mob/living/simple_animal/pet/cat{
+	gender = "female"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"x" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/bonfire,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/dorf)
+"y" = (
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	name = "old carpet"
+	},
+/area/ruin/powered/dorf)
+"z" = (
+/obj/structure/bonfire,
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	name = "old carpet"
+	},
+/area/ruin/powered/dorf)
+"A" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered/dorf)
+"B" = (
+/obj/item/device/flashlight/flare/torch,
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	name = "old carpet"
+	},
+/area/ruin/powered/dorf)
+"C" = (
+/obj/machinery/migrant_spawner,
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	name = "old carpet"
+	},
+/area/ruin/powered/dorf)
+"D" = (
+/obj/item/weapon/bedsheet/rd/royal_cape{
+	name = "Dwarven Leader's Cloak"
+	},
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	name = "old carpet"
+	},
+/area/ruin/powered/dorf)
+"E" = (
+/obj/structure/chair/wood/wings{
+	tag = "icon-wooden_chair_wings (NORTH)";
+	icon_state = "wooden_chair_wings";
+	dir = 1
+	},
+/obj/item/weapon/holosign_creator/mandate,
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	name = "old carpet"
+	},
+/area/ruin/powered/dorf)
+"F" = (
+/obj/item/clothing/head/crown/fancy,
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	name = "old carpet"
+	},
+/area/ruin/powered/dorf)
+
+(1,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+v
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+b
+b
+b
+b
+t
+l
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+v
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+c
+k
+q
+b
+l
+l
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+d
+l
+l
+l
+l
+l
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+b
+e
+m
+r
+b
+l
+l
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+b
+b
+l
+l
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+b
+b
+b
+b
+b
+l
+l
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+b
+b
+b
+b
+b
+l
+l
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+b
+b
+b
+b
+b
+l
+l
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(11,1,1) = {"
+a
+b
+b
+b
+b
+b
+l
+l
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(12,1,1) = {"
+a
+b
+f
+n
+s
+b
+l
+l
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(13,1,1) = {"
+a
+b
+g
+l
+l
+l
+l
+l
+w
+w
+b
+x
+A
+z
+A
+z
+A
+z
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+g
+l
+k
+b
+l
+l
+w
+w
+l
+l
+l
+B
+y
+B
+y
+D
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+h
+o
+o
+b
+l
+l
+l
+l
+l
+l
+y
+y
+C
+y
+y
+E
+b
+a
+"}
+(16,1,1) = {"
+a
+b
+i
+i
+o
+b
+u
+u
+l
+l
+l
+y
+y
+B
+y
+B
+y
+F
+b
+a
+"}
+(17,1,1) = {"
+a
+b
+j
+p
+j
+b
+u
+u
+l
+l
+b
+z
+A
+z
+A
+z
+A
+z
+b
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

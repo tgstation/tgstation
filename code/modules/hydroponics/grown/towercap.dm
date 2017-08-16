@@ -54,6 +54,10 @@
 	. = ..()
 	accepted = typecacheof(accepted)
 
+/obj/item/weapon/grown/log/on_smelt()
+	return "ash"
+
+
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)

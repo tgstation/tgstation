@@ -50,7 +50,15 @@
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
+	if(smelted_material)
+		smelted_material.reaction_mob(M, TOUCH, 30)
+		take_damage(smelted_material.durability_reduction, BRUTE, "melee", 1)
 
+/obj/item/obj_break(damage_flag)
+	var/turf/T = get_turf(src)
+	T.visible_message("<span class = 'danger'>[src] breaks apart!</span>")
+	qdel(src)
+	return
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)

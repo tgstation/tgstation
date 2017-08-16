@@ -7,7 +7,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	var/item_state = null
+	var/item_state
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
@@ -21,19 +21,19 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/inhand_y_dimension = 32
 
 	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
-	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
-	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
+	var/icon/alternate_worn_icon //If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
+	var/alternate_worn_layer //If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
 	max_integrity = 200
 
-	var/hitsound = null
-	var/usesound = null
-	var/throwhitsound = null
+	var/hitsound
+	var/usesound
+	var/throwhitsound
 	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
-	var/obj/item/master = null
+	var/obj/item/master
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
 	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -46,7 +46,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 
-	var/item_color = null //this needs deprecating, soonish
+	var/item_color //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -55,23 +55,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
-	var/list/allowed = null //suit storage stuff.
-	var/obj/item/device/uplink/hidden_uplink = null
+	var/list/allowed //suit storage stuff.
+	var/obj/item/device/uplink/hidden_uplink
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
-	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
+	var/origin_tech //Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
+	var/list/species_exception // list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
 	var/suittoggled = FALSE
 	var/hooded = 0
 
-	var/mob/thrownby = null
+	var/mob/thrownby
 
 	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
@@ -96,13 +96,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-	var/list/slot_equipment_priority = null // for default list, see /mob/proc/equip_to_appropriate_slot()
+	var/list/slot_equipment_priority // for default list, see /mob/proc/equip_to_appropriate_slot()
 
 	// Needs to be in /obj/item because corgis can wear a lot of
 	// non-clothing items
-	var/datum/dog_fashion/dog_fashion = null
+	var/datum/dog_fashion/dog_fashion
 
-	var/datum/rpg_loot/rpg_loot = null
+	var/datum/rpg_loot/rpg_loot
+
+	var/datum/reagent/smelted_material
+	var/starting_material
 
 
 	//Tooltip vars
@@ -691,3 +694,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 
+/obj/item/proc/on_brew()
+	return
+
+/obj/item/proc/on_smelt()
+	return
+
+/obj/item/proc/on_bar_smelt()
+	return
+
+/obj/item/proc/post_smithing()
+	return
