@@ -7,7 +7,7 @@
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
 	req_access = list(ACCESS_ROBOTICS)
-	circuit = /obj/item/weapon/circuitboard/computer/robotics
+	circuit = /obj/item/circuitboard/computer/robotics
 	var/temp = null
 
 	light_color = LIGHT_COLOR_PINK

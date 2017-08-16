@@ -10,7 +10,7 @@
 	max_integrity = 300
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
 	layer = OBJ_LAYER
-	circuit = /obj/item/weapon/circuitboard/machine/thermomachine
+	circuit = /obj/item/circuitboard/machine/thermomachine
 
 	var/on = FALSE
 	var/min_temperature = 0
@@ -28,7 +28,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		B += M.rating
 	heat_capacity = 5000 * ((B - 1) ** 2)
 
@@ -84,7 +84,7 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	if(!..())
 		return 0
 	SetInitDirections()
@@ -163,12 +163,12 @@
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
 	min_temperature = 170
-	circuit = /obj/item/weapon/circuitboard/machine/thermomachine/freezer
+	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
 	var/L
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB)
 
@@ -180,11 +180,11 @@
 	icon_state_open = "heater-o"
 	max_temperature = 140
 	min_temperature = T20C
-	circuit = /obj/item/weapon/circuitboard/machine/thermomachine/heater
+	circuit = /obj/item/circuitboard/machine/thermomachine/heater
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	max_temperature = T20C + (initial(max_temperature) * L)

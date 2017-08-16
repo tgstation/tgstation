@@ -60,7 +60,7 @@
 	name = "goliath cloak"
 	icon_state = "goliath_cloak"
 	desc = "A staunch, practical cape made out of numerous monster materials, it is coveted amongst exiles & hermits."
-	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear, /obj/item/weapon/twohanded/bonespear, /obj/item/organ/regenerative_core/legion, /obj/item/weapon/kitchen/knife/combat/bone, /obj/item/weapon/kitchen/knife/combat/survival)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/twohanded/spear, /obj/item/twohanded/bonespear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife/combat/bone, /obj/item/kitchen/knife/combat/survival)
 	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60) //a fair alternative to bone armor, requiring alternative materials and gaining a suit slot
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -76,7 +76,7 @@
 	name = "drake armour"
 	icon_state = "dragon"
 	desc = "A suit of armour fashioned from the remains of an ash drake. "
-	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe, /obj/item/twohanded/spear)
 	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50, fire = 100, acid = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

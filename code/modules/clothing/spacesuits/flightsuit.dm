@@ -97,11 +97,11 @@
 	var/datum/effect_system/trail_follow/ion/flight/ion_trail
 
 	var/assembled = FALSE
-	var/obj/item/weapon/stock_parts/manipulator/part_manip = null
-	var/obj/item/weapon/stock_parts/scanning_module/part_scan = null
-	var/obj/item/weapon/stock_parts/capacitor/part_cap = null
-	var/obj/item/weapon/stock_parts/micro_laser/part_laser = null
-	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
+	var/obj/item/stock_parts/manipulator/part_manip = null
+	var/obj/item/stock_parts/scanning_module/part_scan = null
+	var/obj/item/stock_parts/capacitor/part_cap = null
+	var/obj/item/stock_parts/micro_laser/part_laser = null
+	var/obj/item/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
 
@@ -123,11 +123,11 @@
 	..()
 
 /obj/item/device/flightpack/full/Initialize()
-	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
-	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
-	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
-	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
-	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
+	part_manip = new /obj/item/stock_parts/manipulator/pico(src)
+	part_scan = new /obj/item/stock_parts/scanning_module/phasic(src)
+	part_cap = new /obj/item/stock_parts/capacitor/super(src)
+	part_laser = new /obj/item/stock_parts/micro_laser/ultra(src)
+	part_bin = new /obj/item/stock_parts/matter_bin/super(src)
 	..()
 
 /obj/item/device/flightpack/proc/usermessage(message, span = "boldnotice", mob/mob_override = null)
@@ -779,37 +779,37 @@
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
 	var/changed = FALSE
-	if(istype(I, /obj/item/weapon/stock_parts))
-		var/obj/item/weapon/stock_parts/S = I
-		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
+	if(istype(I, /obj/item/stock_parts))
+		var/obj/item/stock_parts/S = I
+		if(istype(S, /obj/item/stock_parts/manipulator))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
 				part_manip = I
 				changed = TRUE
-		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
+		if(istype(S, /obj/item/stock_parts/scanning_module))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
 				part_scan = I
 				changed = TRUE
-		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
+		if(istype(S, /obj/item/stock_parts/micro_laser))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
 				part_laser = I
 				changed = TRUE
-		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
+		if(istype(S, /obj/item/stock_parts/matter_bin))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
 				part_bin = I
 				changed = TRUE
-		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
+		if(istype(S, /obj/item/stock_parts/capacitor))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_cap)
@@ -906,7 +906,7 @@
 	jetpack = null
 	var/flightpack
 	var/flight = FALSE
-	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/gun, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/gun, /obj/item/reagent_containers/spray/pepper, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet, /datum/action/item_action/flightsuit/toggle_boots, /datum/action/item_action/flightsuit/toggle_flightpack, /datum/action/item_action/flightsuit/lock_suit)
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	var/maint_panel = FALSE
@@ -1152,7 +1152,7 @@
 	else if(locked)
 		usermessage("You can not perform any service while the suit is locked!", "boldwarning")
 		return FALSE
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/screwdriver))
 		if(!maint_panel)
 			maint_panel = TRUE
 		else
@@ -1162,7 +1162,7 @@
 	else if(!maint_panel)
 		usermessage("The maintenance panel is closed!", "boldwarning")
 		return FALSE
-	else if(istype(I, /obj/item/weapon/crowbar))
+	else if(istype(I, /obj/item/crowbar))
 		var/list/inputlist = list()
 		if(pack)
 			inputlist += "Pack"

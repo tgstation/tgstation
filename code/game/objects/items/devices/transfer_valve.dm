@@ -6,8 +6,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks"
-	var/obj/item/weapon/tank/tank_one
-	var/obj/item/weapon/tank/tank_two
+	var/obj/item/tank/tank_one
+	var/obj/item/tank/tank_two
 	var/obj/item/device/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE
@@ -18,7 +18,7 @@
 	return 1
 
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/weapon/tank))
+	if(istype(item, /obj/item/tank))
 		if(tank_one && tank_two)
 			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first!</span>")
 			return

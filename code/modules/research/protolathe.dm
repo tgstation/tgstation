@@ -12,7 +12,7 @@ Note: Must be placed west/left of and R&D console to function.
 	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
 	container_type = OPENCONTAINER
-	circuit = /obj/item/weapon/circuitboard/machine/protolathe
+	circuit = /obj/item/circuitboard/machine/protolathe
 
 	var/datum/material_container/materials
 	var/efficiency_coeff
@@ -43,16 +43,16 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
 	reagents.maximum_volume = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 
 	materials.max_amount = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		materials.max_amount += M.rating * 75000
 
 	var/T = 1.2
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating/10
 	efficiency_coeff = min(max(0, T), 1)
 
@@ -67,7 +67,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 //we eject the materials upon deconstruction.
 /obj/machinery/r_n_d/protolathe/on_deconstruction()
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	materials.retrieve_all()
 	..()
@@ -109,7 +109,7 @@ Note: Must be placed west/left of and R&D console to function.
 			busy = FALSE
 		updateUsrDialog()
 
-	else if(istype(O, /obj/item/weapon/ore/bluespace_crystal)) //Bluespace crystals can be either a stack or an item
+	else if(istype(O, /obj/item/ore/bluespace_crystal)) //Bluespace crystals can be either a stack or an item
 		. = 1
 		if(!is_insertion_ready(user))
 			return

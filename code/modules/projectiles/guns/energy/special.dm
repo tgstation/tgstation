@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/energy/ionrifle
+/obj/item/gun/energy/ionrifle
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
@@ -13,10 +13,10 @@
 	flight_x_offset = 17
 	flight_y_offset = 9
 
-/obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
+/obj/item/gun/energy/ionrifle/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/ionrifle/carbine
+/obj/item/gun/energy/ionrifle/carbine
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
@@ -27,7 +27,7 @@
 	flight_x_offset = 18
 	flight_y_offset = 11
 
-/obj/item/weapon/gun/energy/decloner
+/obj/item/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
@@ -36,13 +36,13 @@
 	pin = null
 	ammo_x_offset = 1
 
-/obj/item/weapon/gun/energy/decloner/update_icon()
+/obj/item/gun/energy/decloner/update_icon()
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(cell.charge > shot.e_cost)
 		add_overlay("decloner_spin")
 
-/obj/item/weapon/gun/energy/floragun
+/obj/item/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
 	icon_state = "flora"
@@ -53,18 +53,18 @@
 	ammo_x_offset = 1
 	selfcharge = 1
 
-/obj/item/weapon/gun/energy/meteorgun
+/obj/item/gun/energy/meteorgun
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "meteor_gun"
 	item_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
+	cell_type = "/obj/item/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 
-/obj/item/weapon/gun/energy/meteorgun/pen
+/obj/item/gun/energy/meteorgun/pen
 	name = "meteor pen"
 	desc = "The pen is mightier than the sword."
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -74,7 +74,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/gun/energy/mindflayer
+/obj/item/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
@@ -82,7 +82,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+/obj/item/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
@@ -101,14 +101,14 @@
 	max_mod_capacity = 0
 	empty_state = null
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
+/obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
 	desc = "A weapon favored by Syndicate trick-or-treaters."
 	icon_state = "crossbow_halloween"
 	item_state = "crossbow"
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+/obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
@@ -119,7 +119,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
-/obj/item/weapon/gun/energy/plasmacutter
+/obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff."
 	icon_state = "plasmacutter"
@@ -135,19 +135,19 @@
 	heat = 3800
 	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
 
-/obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
+/obj/item/gun/energy/plasmacutter/examine(mob/user)
 	..()
 	if(cell)
 		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
-/obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
+/obj/item/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
 		cell.give(1000)
 		recharge_newshot(1)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
-	else if(istype(A, /obj/item/weapon/ore/plasma))
+	else if(istype(A, /obj/item/ore/plasma))
 		qdel(A)
 		cell.give(500)
 		recharge_newshot(1)
@@ -155,17 +155,17 @@
 	else
 		..()
 
-/obj/item/weapon/gun/energy/plasmacutter/update_icon()
+/obj/item/gun/energy/plasmacutter/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/plasmacutter/adv
+/obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
 	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=4;engineering=2"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
-/obj/item/weapon/gun/energy/wormhole_projector
+/obj/item/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
@@ -175,32 +175,32 @@
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 
-/obj/item/weapon/gun/energy/wormhole_projector/update_icon()
+/obj/item/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
 	item_state = icon_state
 	return
 
-/obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
+/obj/item/gun/energy/wormhole_projector/process_chamber()
 	..()
 	select_fire()
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
+/obj/item/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
 	if(P == p_blue)
 		p_blue = null
 	else if(P == p_orange)
 		p_orange = null
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/has_blue_portal()
+/obj/item/gun/energy/wormhole_projector/proc/has_blue_portal()
 	if(istype(p_blue) && !QDELETED(p_blue))
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/has_orange_portal()
+/obj/item/gun/energy/wormhole_projector/proc/has_orange_portal()
 	if(istype(p_orange) && !QDELETED(p_orange))
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/crosslink()
+/obj/item/gun/energy/wormhole_projector/proc/crosslink()
 	if(!has_blue_portal() && !has_orange_portal())
 		return
 	if(!has_blue_portal() && has_orange_portal())
@@ -212,7 +212,7 @@
 	p_orange.link_portal(p_blue)
 	p_blue.link_portal(p_orange)
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
+/obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
@@ -225,38 +225,38 @@
 
 /* 3d printer 'pseudo guns' for borgs */
 
-/obj/item/weapon/gun/energy/printer
+/obj/item/gun/energy/printer
 	name = "cyborg lmg"
 	desc = "A machinegun that fires 3d-printed flechettes slowly regenerated using a cyborg's internal power source."
 	icon_state = "l6closed0"
 	icon = 'icons/obj/guns/projectile.dmi'
-	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
+	cell_type = "/obj/item/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = 0
 	use_cyborg_cell = 1
 
-/obj/item/weapon/gun/energy/printer/update_icon()
+/obj/item/gun/energy/printer/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/printer/emp_act()
+/obj/item/gun/energy/printer/emp_act()
 	return
 
-/obj/item/weapon/gun/energy/temperature
+/obj/item/gun/energy/temperature
 	name = "temperature gun"
 	icon_state = "freezegun"
 	desc = "A gun that changes temperatures."
 	origin_tech = "combat=4;materials=4;powerstorage=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
-	cell_type = "/obj/item/weapon/stock_parts/cell/high"
+	cell_type = "/obj/item/stock_parts/cell/high"
 	pin = null
 
-/obj/item/weapon/gun/energy/temperature/security
+/obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1"
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/energy/laser/instakill
+/obj/item/gun/energy/laser/instakill
 	name = "instakill rifle"
 	icon_state = "instagib"
 	item_state = "instagib"
@@ -265,22 +265,22 @@
 	force = 60
 	origin_tech = "combat=7;magnets=6"
 
-/obj/item/weapon/gun/energy/laser/instakill/red
+/obj/item/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
 	icon_state = "instagibred"
 	item_state = "instagibred"
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill/red)
 
-/obj/item/weapon/gun/energy/laser/instakill/blue
+/obj/item/gun/energy/laser/instakill/blue
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
 	icon_state = "instagibblue"
 	item_state = "instagibblue"
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
 
-/obj/item/weapon/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
+/obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
 
-/obj/item/weapon/gun/energy/gravity_gun
+/obj/item/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
 	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)

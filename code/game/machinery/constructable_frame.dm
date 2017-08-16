@@ -4,7 +4,7 @@
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250
-	var/obj/item/weapon/circuitboard/circuit = null
+	var/obj/item/circuitboard/circuit = null
 	var/state = 1
 
 /obj/structure/frame/examine(user)
@@ -74,10 +74,10 @@
 /obj/structure/frame/machine/attackby(obj/item/P, mob/user, params)
 	switch(state)
 		if(1)
-			if(istype(P, /obj/item/weapon/circuitboard/machine))
+			if(istype(P, /obj/item/circuitboard/machine))
 				to_chat(user, "<span class='warning'>The frame needs wiring first!</span>")
 				return
-			else if(istype(P, /obj/item/weapon/circuitboard))
+			else if(istype(P, /obj/item/circuitboard))
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
@@ -94,7 +94,7 @@
 				else
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 				return
-			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
+			if(istype(P, /obj/item/screwdriver) && !anchored)
 				playsound(src.loc, P.usesound, 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
@@ -105,7 +105,7 @@
 						M.add_fingerprint(user)
 						qdel(src)
 				return
-			if(istype(P, /obj/item/weapon/wrench))
+			if(istype(P, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
@@ -115,7 +115,7 @@
 				return
 
 		if(2)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(istype(P, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
@@ -123,11 +123,11 @@
 					anchored = !anchored
 				return
 
-			if(istype(P, /obj/item/weapon/circuitboard/machine))
+			if(istype(P, /obj/item/circuitboard/machine))
 				if(!anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
-				var/obj/item/weapon/circuitboard/machine/B = P
+				var/obj/item/circuitboard/machine/B = P
 				if(!user.drop_item())
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -141,11 +141,11 @@
 				update_namelist()
 				return
 
-			else if(istype(P, /obj/item/weapon/circuitboard))
+			else if(istype(P, /obj/item/circuitboard))
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(istype(P, /obj/item/wirecutters))
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -155,7 +155,7 @@
 				return
 
 		if(3)
-			if(istype(P, /obj/item/weapon/crowbar))
+			if(istype(P, /obj/item/crowbar))
 				playsound(src.loc, P.usesound, 50, 1)
 				state = 2
 				circuit.loc = src.loc
@@ -173,7 +173,7 @@
 				icon_state = "box_1"
 				return
 
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(istype(P, /obj/item/screwdriver))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -194,13 +194,13 @@
 					qdel(src)
 				return
 
-			if(istype(P, /obj/item/weapon/storage/part_replacer) && P.contents.len && get_req_components_amt())
-				var/obj/item/weapon/storage/part_replacer/replacer = P
+			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len && get_req_components_amt())
+				var/obj/item/storage/part_replacer/replacer = P
 				var/list/added_components = list()
 				var/list/part_list = list()
 
 				//Assemble a list of current parts, then sort them by their rating!
-				for(var/obj/item/weapon/stock_parts/co in replacer)
+				for(var/obj/item/stock_parts/co in replacer)
 					part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
 				part_list = sortTim(part_list, /proc/cmp_rped_sort)
@@ -213,7 +213,7 @@
 						req_components[path]--
 						part_list -= part
 
-				for(var/obj/item/weapon/stock_parts/part in added_components)
+				for(var/obj/item/stock_parts/part in added_components)
 					components += part
 					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 				if(added_components.len)

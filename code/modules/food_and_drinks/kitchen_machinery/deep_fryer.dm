@@ -19,22 +19,22 @@ insert ascii eagle on american flag background here
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/static/list/deepfry_blacklisted_items = typecacheof(list(
-		/obj/item/weapon/screwdriver,
-		/obj/item/weapon/crowbar,
-		/obj/item/weapon/wrench,
-		/obj/item/weapon/wirecutters,
+		/obj/item/screwdriver,
+		/obj/item/crowbar,
+		/obj/item/wrench,
+		/obj/item/wirecutters,
 		/obj/item/device/multitool,
-		/obj/item/weapon/weldingtool,
-		/obj/item/weapon/reagent_containers/glass,
-		/obj/item/weapon/storage/part_replacer))
+		/obj/item/weldingtool,
+		/obj/item/reagent_containers/glass,
+		/obj/item/storage/part_replacer))
 
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50)
 	reagents.add_reagent("nutriment", 25)
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/deep_fryer(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
+	component_parts += new /obj/item/stock_parts/micro_laser(null)
 	RefreshParts()
 
 /obj/machinery/deepfryer/examine()
@@ -46,7 +46,7 @@ insert ascii eagle on american flag background here
 	if(!reagents.total_volume)
 		to_chat(user, "There's nothing to fry with in [src]!")
 		return
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
+	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
@@ -81,9 +81,9 @@ insert ascii eagle on american flag background here
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
-			var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
-			if(istype(frying, /obj/item/weapon/reagent_containers/))
-				var/obj/item/weapon/reagent_containers/food = frying
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
+			if(istype(frying, /obj/item/reagent_containers/))
+				var/obj/item/reagent_containers/food = frying
 				food.reagents.trans_to(S, food.reagents.total_volume)
 			S.icon = frying.icon
 			S.overlays = frying.overlays
@@ -107,7 +107,7 @@ insert ascii eagle on american flag background here
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
 			S.foodtype |= FRIED
-			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
+			if(istype(frying, /obj/item/reagent_containers/food/snacks/))
 				qdel(frying)
 			else
 				frying.forceMove(S)

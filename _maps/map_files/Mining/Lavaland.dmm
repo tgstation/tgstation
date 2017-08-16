@@ -93,12 +93,12 @@
 /area/mine/laborcamp)
 "as" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "at" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/machinery/camera{
 	c_tag = "Labor Camp Medical";
 	dir = 8;
@@ -110,8 +110,8 @@
 /obj/structure/rack{
 	dir = 1
 	},
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
 /obj/item/device/flashlight,
 /obj/item/clothing/glasses/meson,
 /turf/open/floor/plasteel,
@@ -120,9 +120,9 @@
 /obj/structure/rack{
 	dir = 1
 	},
-/obj/item/weapon/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /obj/item/device/flashlight,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /obj/item/clothing/glasses/meson,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -158,10 +158,10 @@
 /area/mine/laborcamp)
 "aC" = (
 /obj/structure/closet/crate/internals,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
@@ -190,7 +190,7 @@
 "aG" = (
 /obj/structure/table,
 /obj/item/trash/plate,
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aH" = (
@@ -385,7 +385,7 @@
 /area/mine/laborcamp)
 "bn" = (
 /obj/structure/table,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /obj/item/device/gps/mining,
 /obj/item/device/gps/mining,
 /obj/item/device/gps/mining,
@@ -427,7 +427,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -518,7 +518,7 @@
 /area/mine/production)
 "bD" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/dice/d4,
+/obj/item/dice/d4,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -536,7 +536,7 @@
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/purple/corner{
 	dir = 8
 	},
@@ -730,11 +730,11 @@
 /area/mine/laborcamp/security)
 "cd" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Labor Camp Security APC";
@@ -856,7 +856,7 @@
 	},
 /area/mine/eva)
 "cu" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cv" = (
@@ -1099,7 +1099,7 @@
 	pixel_y = 30
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/stations/lavaland/orm_notice,
+/obj/item/paper/fluff/stations/lavaland/orm_notice,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "de" = (
@@ -1167,7 +1167,7 @@
 /area/mine/living_quarters)
 "dn" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -1273,28 +1273,28 @@
 /area/mine/maintenance)
 "dB" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/empty{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
+/obj/item/reagent_containers/blood/BPlus{
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OPlus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /obj/machinery/camera{
 	c_tag = "Sleeper Room";
 	dir = 1;
@@ -1311,7 +1311,7 @@
 /area/mine/living_quarters)
 "dE" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -1983,7 +1983,7 @@
 /area/mine/living_quarters)
 "fe" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/brown,
+/obj/item/bedsheet/brown,
 /obj/machinery/airalarm{
 	frequency = 1439;
 	pixel_y = 23
@@ -2137,18 +2137,18 @@
 /area/mine/living_quarters)
 "fD" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = 7;
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/item/weapon/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -1;
 	pixel_y = 9
 	},
-/obj/item/weapon/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -8
 	},
 /turf/open/floor/plasteel/bar,
@@ -2170,7 +2170,7 @@
 /area/mine/living_quarters)
 "fG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fH" = (

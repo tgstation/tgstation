@@ -348,11 +348,11 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			/obj/effect/decal/cleanable = "CLEANABLE",
 			/obj/item/device/radio/headset = "HEADSET",
 			/obj/item/clothing/head/helmet/space = "SPESSHELMET",
-			/obj/item/weapon/book/manual = "MANUAL",
-			/obj/item/weapon/reagent_containers/food/drinks = "DRINK", //longest paths comes first
-			/obj/item/weapon/reagent_containers/food = "FOOD",
-			/obj/item/weapon/reagent_containers = "REAGENT_CONTAINERS",
-			/obj/item/weapon = "WEAPON",
+			/obj/item/book/manual = "MANUAL",
+			/obj/item/reagent_containers/food/drinks = "DRINK", //longest paths comes first
+			/obj/item/reagent_containers/food = "FOOD",
+			/obj/item/reagent_containers = "REAGENT_CONTAINERS",
+			/obj/item = "WEAPON",
 			/obj/machinery/atmospherics = "ATMOS_MECH",
 			/obj/machinery/portable_atmospherics = "PORT_ATMOS",
 			/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack = "MECHA_MISSILE_RACK",
@@ -442,14 +442,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
-		var/obj/item/weapon/card/id/id = null
+		var/obj/item/card/id/id = null
 		if(worn)
 			id = worn.GetID()
 		if(id)
 			id.icon_state = "gold"
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 		else
-			id = new /obj/item/weapon/card/id/gold(H.loc)
+			id = new /obj/item/card/id/gold(H.loc)
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 			id.registered_name = H.real_name
 			id.assignment = "Captain"
@@ -460,8 +460,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 					var/obj/item/device/pda/PDA = worn
 					PDA.id = id
 					id.forceMove(PDA)
-				else if(istype(worn, /obj/item/weapon/storage/wallet))
-					var/obj/item/weapon/storage/wallet/W = worn
+				else if(istype(worn, /obj/item/storage/wallet))
+					var/obj/item/storage/wallet/W = worn
 					W.front_id = id
 					id.forceMove(W)
 					W.update_icon()
@@ -706,7 +706,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	for(var/obj/machinery/power/rad_collector/Rad in GLOB.machines)
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
-				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
+				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
 				Plasma.air_contents.assert_gas("plasma")
 				Plasma.air_contents.gases["plasma"][MOLES] = 70
 				Rad.drainratio = 0

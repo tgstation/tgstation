@@ -267,7 +267,7 @@
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
 	var/obj/item/device/radio/R = locate() in all_contents
-	var/obj/item/weapon/pen/P = locate() in all_contents //including your PDA-pen!
+	var/obj/item/pen/P = locate() in all_contents //including your PDA-pen!
 
 	var/obj/item/uplink_loc
 
@@ -1020,7 +1020,7 @@
 
 			if("takeequip")
 				var/list/L = current.get_contents()
-				for(var/obj/item/weapon/pen/gang/pen in L)
+				for(var/obj/item/pen/gang/pen in L)
 					qdel(pen)
 				for(var/obj/item/device/gangtool/gangtool in L)
 					qdel(gangtool)

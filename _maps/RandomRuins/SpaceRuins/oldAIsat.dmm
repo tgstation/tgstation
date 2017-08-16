@@ -68,7 +68,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "am" = (
-/obj/item/weapon/stock_parts/cell,
+/obj/item/stock_parts/cell,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "an" = (
@@ -76,7 +76,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "ao" = (
-/obj/item/weapon/coin/clown,
+/obj/item/coin/clown,
 /turf/open/floor/engine,
 /area/tcommsat/chamber)
 "ap" = (
@@ -115,7 +115,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "av" = (
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "aw" = (
@@ -141,13 +141,13 @@
 /area/tcommsat/chamber)
 "aA" = (
 /obj/structure/table,
-/obj/item/weapon/paper,
+/obj/item/paper,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aB" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/blue,
+/obj/item/paper_bin,
+/obj/item/pen/blue,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -162,7 +162,7 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aE" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
 /turf/open/floor/engine,
@@ -207,7 +207,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aM" = (
-/obj/item/weapon/folder/yellow,
+/obj/item/folder/yellow,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aN" = (
@@ -272,11 +272,11 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aW" = (
-/obj/item/weapon/paper/crumpled,
+/obj/item/paper/crumpled,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aX" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
 /obj/item/stack/spacecash,
@@ -290,7 +290,7 @@
 /area/tcommsat/chamber)
 "aZ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes,
+/obj/item/storage/fancy/cigarettes,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "ba" = (
@@ -324,7 +324,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/electronics/airlock,
+/obj/item/electronics/airlock,
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "bf" = (
@@ -332,7 +332,7 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bg" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bh" = (
@@ -446,7 +446,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plasteel/airless/black,
@@ -495,7 +495,7 @@
 /area/tcommsat/chamber)
 "bH" = (
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
@@ -526,7 +526,7 @@
 /area/tcommsat/chamber)
 "bN" = (
 /obj/effect/decal/cleanable/blood,
-/obj/item/weapon/scalpel{
+/obj/item/scalpel{
 	pixel_y = 12
 	},
 /turf/open/floor/plasteel/airless/black,
@@ -535,7 +535,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plasteel/airless/black,
@@ -546,7 +546,7 @@
 /area/tcommsat/chamber)
 "bQ" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/computer/teleporter,
+/obj/item/circuitboard/computer/teleporter,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bR" = (
@@ -566,7 +566,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/structure/chair,
 /obj/item/clothing/under/rank/centcom_officer,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
@@ -593,7 +593,7 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bZ" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "ca" = (
@@ -603,8 +603,8 @@
 /area/tcommsat/chamber)
 "cb" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/syringe/lethal/choral,
-/obj/item/weapon/reagent_containers/syringe/lethal{
+/obj/item/reagent_containers/syringe/lethal/choral,
+/obj/item/reagent_containers/syringe/lethal{
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/airless/black,
@@ -614,7 +614,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "cd" = (
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "ce" = (
@@ -624,12 +624,12 @@
 /area/tcommsat/chamber)
 "cf" = (
 /obj/structure/table,
-/obj/item/weapon/hemostat,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "cg" = (
 /obj/structure/table,
-/obj/item/weapon/circular_saw,
+/obj/item/circular_saw,
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "ch" = (
@@ -697,7 +697,7 @@
 /turf/open/floor/plasteel/airless/black,
 /area/tcommsat/chamber)
 "cr" = (
-/obj/item/weapon/paper/crumpled,
+/obj/item/paper/crumpled,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -728,7 +728,7 @@
 /area/tcommsat/chamber)
 "cw" = (
 /obj/machinery/light/small,
-/obj/item/weapon/paper,
+/obj/item/paper,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -741,7 +741,7 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cy" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/template_noop,
@@ -749,7 +749,7 @@
 "cz" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/template_noop,
@@ -821,7 +821,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/chamber)
 "cN" = (
-/obj/item/weapon/paper/crumpled,
+/obj/item/paper/crumpled,
 /turf/open/floor/plasteel,
 /area/tcommsat/chamber)
 "cO" = (
@@ -843,7 +843,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/chamber)
 "cS" = (
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "cT" = (
@@ -861,7 +861,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/chamber)
 "cV" = (
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = -1
 	},

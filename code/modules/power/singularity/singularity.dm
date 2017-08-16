@@ -72,7 +72,7 @@
 /obj/singularity/attack_animal(mob/user)
 	consume(user)
 
-/obj/singularity/attackby(obj/item/weapon/W, mob/user, params)
+/obj/singularity/attackby(obj/item/W, mob/user, params)
 	consume(user)
 	return 1
 

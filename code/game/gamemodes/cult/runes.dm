@@ -56,10 +56,10 @@ To draw a rune, use an arcane tome.
 			to_chat(user, "<b>Keyword:</b> [keyword]")
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+	if(istype(I, /obj/item/tome) && iscultist(user))
 		to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 		qdel(src)
-	else if(istype(I, /obj/item/weapon/nullrod))
+	else if(istype(I, /obj/item/nullrod))
 		user.say("BEGONE FOUL MAGIKS!!")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
@@ -175,13 +175,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	qdel(src)
 
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
-	var/obj/item/weapon/nullrod/N = locate() in src
+	var/obj/item/nullrod/N = locate() in src
 	if(N && !GLOB.ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
 		return N
 	return 0
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
-	var/obj/item/weapon/storage/book/bible/B = locate() in src
+	var/obj/item/storage/book/bible/B = locate() in src
 	if(is_holding(B))
 		return B
 	return 0
@@ -198,7 +198,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/papers_on_rune = checkpapers()
 	var/entered_talisman_name
-	var/obj/item/weapon/paper/talisman/talisman_type
+	var/obj/item/paper/talisman/talisman_type
 	var/list/possible_talismans = list()
 	if(!papers_on_rune.len)
 		to_chat(user, "<span class='cultitalic'>There must be a blank paper on top of [src]!</span>")
@@ -211,8 +211,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Talisman Creation rune failed - already in use")
 		return
 
-	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply - /obj/item/weapon/paper/talisman/supply/weak - /obj/item/weapon/paper/talisman/summon_tome)
-		var/obj/item/weapon/paper/talisman/J = I
+	for(var/I in subtypesof(/obj/item/paper/talisman) - /obj/item/paper/talisman/malformed - /obj/item/paper/talisman/supply - /obj/item/paper/talisman/supply/weak - /obj/item/paper/talisman/summon_tome)
+		var/obj/item/paper/talisman/J = I
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
 			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
@@ -226,7 +226,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Talisman Creation rune failed - no blank papers on rune")
 		return
-	var/obj/item/weapon/paper/paper_to_imbue = papers_on_rune[1]
+	var/obj/item/paper/paper_to_imbue = papers_on_rune[1]
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
 	rune_in_use = TRUE
@@ -238,8 +238,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/imbue/proc/checkpapers()
 	. = list()
-	for(var/obj/item/weapon/paper/P in get_turf(src))
-		if(!P.info && !istype(P, /obj/item/weapon/paper/talisman))
+	for(var/obj/item/paper/P in get_turf(src))
+		if(!P.info && !istype(P, /obj/item/paper/talisman))
 			. |= P
 
 /obj/effect/rune/teleport
@@ -388,7 +388,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	[brutedamage || burndamage ? "even as [convertee.p_their()] wounds heal and close" : "as the markings below [convertee.p_them()] glow a bloody red"]!</span>", \
  	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
 	SSticker.mode.add_cultist(convertee.mind, 1)
-	new /obj/item/weapon/tome(get_turf(src))
+	new /obj/item/tome(get_turf(src))
 	convertee.mind.special_role = "Cultist"
 	to_chat(convertee, "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
 	and something evil takes root.</b></span>")
@@ -485,14 +485,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
-	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
+	if((istype(I, /obj/item/tome) && iscultist(user)))
 		user.visible_message("<span class='warning'>[user.name] begins erasing the [src]...</span>", "<span class='notice'>You begin erasing the [src]...</span>")
 		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
 			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with a tome")
 			message_admins("[key_name_admin(user)] erased a Narsie rune with a tome")
 			..()
 	else
-		if(istype(I, /obj/item/weapon/nullrod))	//Begone foul magiks. You cannot hinder me.
+		if(istype(I, /obj/item/nullrod))	//Begone foul magiks. You cannot hinder me.
 			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) using a null rod")
 			message_admins("[key_name_admin(user)] erased a Narsie rune with a null rod")
 			..()
@@ -842,7 +842,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/weapon/nullrod/N = L.null_rod_check()
+			var/obj/item/nullrod/N = L.null_rod_check()
 			if(N)
 				to_chat(L, "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>")
 				continue
@@ -871,7 +871,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/weapon/nullrod/N = L.null_rod_check()
+			var/obj/item/nullrod/N = L.null_rod_check()
 			if(N)
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)

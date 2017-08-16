@@ -48,7 +48,7 @@
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	..()
 	internal_storage.hidden_uplink.telecrystals = 30
-	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
+	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
 
 /mob/living/simple_animal/drone/snowflake
@@ -125,7 +125,7 @@
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
+	default_storage = /obj/item/storage/toolbox/brass/prefilled
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
@@ -135,10 +135,10 @@
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create.</b>"
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal fabricator
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
+	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar
 
 /mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost fabricator and slab in its box
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
+	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar/admin
 
 /mob/living/simple_animal/drone/cogscarab/Initialize()
 	. = ..()
@@ -165,7 +165,7 @@
 	..()
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
+	if(istype(I, /obj/item/screwdriver) && stat == DEAD)
 		try_reactivate(user)
 	else
 		..()
@@ -176,7 +176,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/G)
+/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/G)
 	return GLOB.ratvar_awakens
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()

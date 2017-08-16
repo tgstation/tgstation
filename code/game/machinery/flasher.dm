@@ -49,9 +49,9 @@
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/flasher/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/wirecutters))
+	if (istype(W, /obj/item/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			playsound(src.loc, W.usesound, 100, 1)
@@ -72,7 +72,7 @@
 		else
 			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/wrench))
 		if(!bulb)
 			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
@@ -164,8 +164,8 @@
 		if (M.m_intent != MOVE_INTENT_WALK && anchored)
 			flash()
 
-/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
+/obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/wrench))
 		playsound(src.loc, W.usesound, 100, 1)
 
 		if (!anchored && !isinspace())

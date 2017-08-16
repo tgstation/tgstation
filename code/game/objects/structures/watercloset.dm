@@ -72,7 +72,7 @@
 
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
@@ -95,10 +95,10 @@
 			w_items += I.w_class
 			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
 
-	else if(istype(I, /obj/item/weapon/reagent_containers))
+	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
 			return
-		var/obj/item/weapon/reagent_containers/RG = I
+		var/obj/item/reagent_containers/RG = I
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
 	else
@@ -131,7 +131,7 @@
 
 /obj/structure/urinal/New()
 	..()
-	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
+	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -160,7 +160,7 @@
 		..()
 
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 20*I.toolspeed, target = src))
@@ -181,10 +181,10 @@
 		to_chat(user, "<span class='notice'>You place [I] into the drain enclosure.</span>")
 
 
-/obj/item/weapon/reagent_containers/food/urinalcake
+/obj/item/reagent_containers/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
@@ -233,7 +233,7 @@
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 		if(do_after(user, 50*I.toolspeed, target = src))
 			switch(watertemp)
@@ -397,7 +397,7 @@
 
 
 
-/obj/item/weapon/bikehorn/rubberducky
+/obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
@@ -460,8 +460,8 @@
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
 
-	if(istype(O, /obj/item/weapon/reagent_containers))
-		var/obj/item/weapon/reagent_containers/RG = O
+	if(istype(O, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RG = O
 		if(RG.container_type & OPENCONTAINER)
 			if(!RG.reagents.holder_full())
 				RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
@@ -470,8 +470,8 @@
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
 			return FALSE
 
-	if(istype(O, /obj/item/weapon/melee/baton))
-		var/obj/item/weapon/melee/baton/B = O
+	if(istype(O, /obj/item/melee/baton))
+		var/obj/item/melee/baton/B = O
 		if(B.cell)
 			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
@@ -484,7 +484,7 @@
 				playsound(src, "sparks", 50, 1)
 				return
 
-	if(istype(O, /obj/item/weapon/mop))
+	if(istype(O, /obj/item/mop))
 		O.reagents.add_reagent("[dispensedreagent]", 5)
 		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
@@ -492,7 +492,7 @@
 
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		new /obj/item/reagent_containers/glass/rag(src.loc)
 		to_chat(user, "<span class='notice'>You tear off a strip of gauze and make a rag.</span>")
 		G.use(1)
 		return
@@ -584,7 +584,7 @@
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
 		color = input(user,"Choose Color") as color
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/screwdriver))
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
@@ -601,7 +601,7 @@
 					return
 				anchored = TRUE
 				to_chat(user, "<span class='notice'>You screw [src] to the floor.</span>")
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/wirecutters))
 		if(!anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
