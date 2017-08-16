@@ -15,7 +15,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	circuit = /obj/item/weapon/circuitboard/machine/limbgrower
+	circuit = /obj/item/circuitboard/machine/limbgrower
 
 	var/operating = FALSE
 	var/disabled = FALSE
@@ -56,7 +56,7 @@
 	popup.open()
 
 /obj/machinery/limbgrower/on_deconstruction()
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	..()
 
@@ -150,11 +150,11 @@
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	var/T=1.2
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 

@@ -20,8 +20,8 @@
 	power_channel = EQUIP
 	max_integrity = 300
 	integrity_failure = 100
-	var/obj/item/weapon/paper/copy = null	//what's in the copier!
-	var/obj/item/weapon/photo/photocopy = null
+	var/obj/item/paper/copy = null	//what's in the copier!
+	var/obj/item/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
 	var/copies = 1	//how many copies to print!
 	var/toner = 40 //how much toner is left! woooooo~
@@ -67,13 +67,13 @@
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
 					var/copy_as_paper = 1
-					if(istype(copy, /obj/item/weapon/paper/contract/employment))
-						var/obj/item/weapon/paper/contract/employment/E = copy
-						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target.current)
+					if(istype(copy, /obj/item/paper/contract/employment))
+						var/obj/item/paper/contract/employment/E = copy
+						var/obj/item/paper/contract/employment/C = new /obj/item/paper/contract/employment (loc, E.target.current)
 						if(C)
 							copy_as_paper = 0
 					if(copy_as_paper)
-						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+						var/obj/item/paper/c = new /obj/item/paper (loc)
 						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
 							if(toner > 10)	//lots of toner, make it dark
 								c.info = "<font color = #101010>"
@@ -102,7 +102,7 @@
 		else if(photocopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+					var/obj/item/photo/p = new /obj/item/photo (loc)
 					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 					var/icon/img = icon(photocopy.img)
 					if(greytoggle == "Greyscale")
@@ -162,13 +162,13 @@
 						temp_img = icon('icons/ass/assdrone.png')
 					else
 						break
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+					var/obj/item/photo/p = new /obj/item/photo (loc)
 					p.desc = "You see [ass]'s ass on the photo."
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
 					p.img = temp_img
 					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
-					var/icon/ic = icon('icons/obj/items.dmi',"photo")
+					var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
 					small_img.Scale(8, 8)
 					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 					p.icon = ic
@@ -214,7 +214,7 @@
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
 			find = input("Select image (numbered in order taken)") in nametemp
-			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+			var/obj/item/photo/p = new /obj/item/photo (loc)
 			for(var/datum/picture/q in tempAI.aicamera.aipictures)
 				if(q.fields["name"] == find)
 					selection = q
@@ -254,9 +254,9 @@
 	to_chat(user, "<span class='notice'>You take [O] out of [src].</span>")
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/paper))
+	if(istype(O, /obj/item/paper))
 		if(copier_empty())
-			if(istype(O, /obj/item/weapon/paper/contract/infernal))
+			if(istype(O, /obj/item/paper/contract/infernal))
 				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
 				resistance_flags |= FLAMMABLE
 				fire_act()
@@ -268,7 +268,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
-	else if(istype(O, /obj/item/weapon/photo))
+	else if(istype(O, /obj/item/photo))
 		if(copier_empty())
 			if(!user.drop_item())
 				return
@@ -297,7 +297,7 @@
 		else
 			to_chat(user, "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(istype(O, /obj/item/wrench))
 		if(isinspace())
 			to_chat(user, "<span class='warning'>There's nothing to fasten [src] to!</span>")
 			return

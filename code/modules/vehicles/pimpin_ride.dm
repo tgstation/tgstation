@@ -4,7 +4,7 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 
-	var/obj/item/weapon/storage/bag/trash/mybag = null
+	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 
 /obj/vehicle/janicart/Initialize(mapload)
@@ -43,7 +43,7 @@
 
 
 /obj/vehicle/janicart/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/storage/bag/trash))
+	if(istype(I, /obj/item/storage/bag/trash))
 		if(mybag)
 			to_chat(user, "<span class='warning'>[src] already has a trashbag hooked!</span>")
 			return

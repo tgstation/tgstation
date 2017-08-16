@@ -5,7 +5,7 @@
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
 
-/obj/item/weapon/paper
+/obj/item/paper
 	name = "paper"
 	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -33,7 +33,7 @@
 	var/contact_poison_volume = 0
 
 
-/obj/item/weapon/paper/pickup(user)
+/obj/item/paper/pickup(user)
 	if(contact_poison && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/gloves/G = H.gloves
@@ -43,7 +43,7 @@
 	..()
 
 
-/obj/item/weapon/paper/Initialize()
+/obj/item/paper/Initialize()
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
@@ -51,7 +51,7 @@
 	updateinfolinks()
 
 
-/obj/item/weapon/paper/update_icon()
+/obj/item/paper/update_icon()
 
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
@@ -62,12 +62,12 @@
 	icon_state = "paper"
 
 
-/obj/item/weapon/paper/examine(mob/user)
+/obj/item/paper/examine(mob/user)
 	..()
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
-	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
+	if(istype(src, /obj/item/paper/talisman)) //Talismans cannot be read
 		if(!iscultist(user) && !user.stat)
 			to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 			return
@@ -82,7 +82,7 @@
 		to_chat(user, "<span class='notice'>It is too far away.</span>")
 
 
-/obj/item/weapon/paper/verb/rename()
+/obj/item/paper/verb/rename()
 	set name = "Rename paper"
 	set category = "Object"
 	set src in usr
@@ -101,11 +101,11 @@
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
-/obj/item/weapon/paper/suicide_act(mob/user)
+/obj/item/paper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/paper/attack_self(mob/user)
+/obj/item/paper/attack_self(mob/user)
 	user.examinate(src)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(spam_flag == 0)
@@ -115,7 +115,7 @@
 				spam_flag = 0
 
 
-/obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
+/obj/item/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
 	if(istype(user) && user.current) //is AI
 		dist = get_dist(src, user.current)
@@ -129,7 +129,7 @@
 		onclose(usr, "[name]")
 
 
-/obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
+/obj/item/paper/proc/addtofield(id, text, links = 0)
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
@@ -167,14 +167,14 @@
 		updateinfolinks()
 
 
-/obj/item/weapon/paper/proc/updateinfolinks()
+/obj/item/paper/proc/updateinfolinks()
 	info_links = info
 	for(var/i in 1 to min(fields, 15))
 		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
-/obj/item/weapon/paper/proc/clearpaper()
+/obj/item/paper/proc/clearpaper()
 	info = null
 	stamps = null
 	LAZYCLEARLIST(stamped)
@@ -183,7 +183,7 @@
 	update_icon()
 
 
-/obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
+/obj/item/paper/proc/parsepencode(t, obj/item/pen/P, mob/user, iscrayon = 0)
 	if(length(t) < 1)		//No input means nothing needs to be parsed
 		return
 
@@ -238,7 +238,7 @@
 
 	return t
 
-/obj/item/weapon/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
+/obj/item/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
 	fields = 0
 	var/laststart = 1
 	while(1)
@@ -250,7 +250,7 @@
 	updateinfolinks()
 
 
-/obj/item/weapon/paper/proc/openhelp(mob/user)
+/obj/item/paper/proc/openhelp(mob/user)
 	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
 	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
@@ -272,7 +272,7 @@
 	</BODY></HTML>"}, "window=paper_help")
 
 
-/obj/item/weapon/paper/Topic(href, href_list)
+/obj/item/paper/Topic(href, href_list)
 	..()
 	if(usr.stat || usr.restrained())
 		return
@@ -287,12 +287,12 @@
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
-		if(!istype(i, /obj/item/weapon/pen))
+		if(!istype(i, /obj/item/pen))
 			if(!istype(i, /obj/item/toy/crayon))
 				return
 			iscrayon = 1
 
-		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
+		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
 			return
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
@@ -307,7 +307,7 @@
 			update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
+/obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	..()
 
 	if(resistance_flags & ON_FIRE)
@@ -316,18 +316,18 @@
 	if(is_blind(user))
 		return
 
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.is_literate())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]")
 			return
 		else
 			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
 			return
-		if(istype(src, /obj/item/weapon/paper/talisman/))
+		if(istype(src, /obj/item/paper/talisman/))
 			to_chat(user, "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
 			return
 
-	else if(istype(P, /obj/item/weapon/stamp))
+	else if(istype(P, /obj/item/stamp))
 
 		if(!in_range(src, user))
 			return
@@ -361,14 +361,14 @@
 
 	add_fingerprint(user)
 
-/obj/item/weapon/paper/fire_act(exposed_temperature, exposed_volume)
+/obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(!(resistance_flags & FIRE_PROOF))
 		icon_state = "paper_onfire"
 		info = "[stars(info)]"
 
 
-/obj/item/weapon/paper/extinguish()
+/obj/item/paper/extinguish()
 	..()
 	update_icon()
 
@@ -376,9 +376,9 @@
  * Construction paper
  */
 
-/obj/item/weapon/paper/construction
+/obj/item/paper/construction
 
-/obj/item/weapon/paper/construction/Initialize()
+/obj/item/paper/construction/Initialize()
 	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
@@ -386,18 +386,18 @@
  * Natural paper
  */
 
-/obj/item/weapon/paper/natural/Initialize()
+/obj/item/paper/natural/Initialize()
 	. = ..()
 	color = "#FFF5ED"
 
-/obj/item/weapon/paper/crumpled
+/obj/item/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
 	slot_flags = null
 
-/obj/item/weapon/paper/crumpled/update_icon()
+/obj/item/paper/crumpled/update_icon()
 	return
 
-/obj/item/weapon/paper/crumpled/bloody
+/obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
 

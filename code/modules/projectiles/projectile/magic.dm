@@ -313,7 +313,7 @@
 				return
 		else
 			var/obj/O = src
-			if(istype(O, /obj/item/weapon/gun))
+			if(istype(O, /obj/item/gun))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)

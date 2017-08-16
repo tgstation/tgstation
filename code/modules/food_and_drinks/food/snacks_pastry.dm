@@ -2,7 +2,7 @@
 //This file contains pastries that don't fit any existing categories.
 ////////////////////////////////////////////DONUTS////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/donut
+/obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
@@ -14,7 +14,7 @@
 	tastes = list("donut" = 1)
 	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/Initialize()
+/obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
 	if(prob(30))
 		icon_state = "donut2"
@@ -23,13 +23,13 @@
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
 		filling_color = "#FF69B4"
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/chaos
+/obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/chaos/Initialize()
+/obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
 	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
@@ -41,7 +41,7 @@
 		bonus_reagents = list("sprinkles" = 2, "[extra_reagent]" = 3, "sugar" = 1)
 		filling_color = "#FF69B4"
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly
+/obj/item/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
@@ -50,7 +50,7 @@
 	tastes = list("jelly" = 1, "donut" = 3)
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/Initialize()
+/obj/item/reagent_containers/food/snacks/donut/jelly/Initialize()
 	. = ..()
 	if(extra_reagent)
 		reagents.add_reagent("[extra_reagent]", 3)
@@ -61,14 +61,14 @@
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
 		filling_color = "#FF69B4"
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	extra_reagent = "slimejelly"
 	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly
+/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
@@ -77,7 +77,7 @@
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/muffin
+/obj/item/reagent_containers/food/snacks/muffin
 	name = "muffin"
 	desc = "A delicious and spongy little cake."
 	icon_state = "muffin"
@@ -87,14 +87,14 @@
 	tastes = list("muffin" = 1)
 	foodtype = GRAIN | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/muffin/berry
+/obj/item/reagent_containers/food/snacks/muffin/berry
 	name = "berry muffin"
 	icon_state = "berrymuffin"
 	desc = "A delicious and spongy little cake, with berries."
 	tastes = list("muffin" = 3, "berry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
+/obj/item/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
 	icon_state = "berrymuffin"
 	alpha = 125
@@ -102,7 +102,7 @@
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/chawanmushi
+/obj/item/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
 	icon_state = "chawanmushi"
@@ -114,7 +114,7 @@
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/waffles
+/obj/item/reagent_containers/food/snacks/waffles
 	name = "waffles"
 	desc = "Mmm, waffles."
 	icon_state = "waffles"
@@ -125,7 +125,7 @@
 	tastes = list("waffles" = 1)
 	foodtype = GRAIN | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/soylentgreen
+/obj/item/reagent_containers/food/snacks/soylentgreen
 	name = "\improper Soylent Green"
 	desc = "Not made of people. Honest." //Totally people.
 	icon_state = "soylent_green"
@@ -136,7 +136,7 @@
 	tastes = list("waffles" = 7, "people" = 1)
 	foodtype = GRAIN | GROSS | MEAT
 
-/obj/item/weapon/reagent_containers/food/snacks/soylenviridians
+/obj/item/reagent_containers/food/snacks/soylenviridians
 	name = "\improper Soylent Virdians"
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent_yellow"
@@ -147,7 +147,7 @@
 	tastes = list("waffles" = 7, "the colour green" = 1)
 	foodtype = GRAIN
 
-/obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
+/obj/item/reagent_containers/food/snacks/rofflewaffles
 	name = "roffle waffles"
 	desc = "Waffles from Roffle. Co."
 	icon_state = "rofflewaffles"
@@ -161,7 +161,7 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/cookie
+/obj/item/reagent_containers/food/snacks/cookie
 	name = "cookie"
 	desc = "COOKIE!!!"
 	icon_state = "COOKIE!!!"
@@ -172,17 +172,17 @@
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket
+/obj/item/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
 	list_reagents = list("nutriment" = 4)
-	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
 
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
+/obj/item/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
 	bonus_reagents = list("omnizine" = 3)
@@ -190,7 +190,7 @@
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
 
-/obj/item/weapon/reagent_containers/food/snacks/dankpocket
+/obj/item/reagent_containers/food/snacks/dankpocket
 	name = "\improper Dank-pocket"
 	desc = "The food of choice for the seasoned botanist."
 	icon_state = "dankpocket"
@@ -199,7 +199,7 @@
 	tastes = list("meat" = 2, "dough" = 2)
 	foodtype = GRAIN | VEGETABLES
 
-/obj/item/weapon/reagent_containers/food/snacks/fortunecookie
+/obj/item/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
@@ -209,7 +209,7 @@
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/poppypretzel
+/obj/item/reagent_containers/food/snacks/poppypretzel
 	name = "poppy pretzel"
 	desc = "It's all twisted up!"
 	icon_state = "poppypretzel"
@@ -219,7 +219,7 @@
 	tastes = list("pretzel" = 1)
 	foodtype = GRAIN | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
+/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit
 	name = "plump helmet biscuit"
 	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
 	icon_state = "phelmbiscuit"
@@ -229,7 +229,7 @@
 	tastes = list("mushroom" = 1, "biscuit" = 1)
 	foodtype = GRAIN | VEGETABLES
 
-/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize()
+/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize()
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump helmet biscuit"
@@ -239,7 +239,7 @@
 	if(fey)
 		reagents.add_reagent("omnizine", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/cracker
+/obj/item/reagent_containers/food/snacks/cracker
 	name = "cracker"
 	desc = "It's a salted cracker."
 	icon_state = "cracker"
@@ -250,7 +250,7 @@
 	tastes = list("cracker" = 1)
 	foodtype = GRAIN
 
-/obj/item/weapon/reagent_containers/food/snacks/hotdog
+/obj/item/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
 	desc = "Fresh footlong ready to go down on."
 	icon_state = "hotdog"
@@ -261,7 +261,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtype = GRAIN | MEAT | VEGETABLES
 
-/obj/item/weapon/reagent_containers/food/snacks/meatbun
+/obj/item/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."
 	icon_state = "meatbun"
@@ -271,7 +271,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtype = GRAIN | MEAT | VEGETABLES
 
-/obj/item/weapon/reagent_containers/food/snacks/khachapuri
+/obj/item/reagent_containers/food/snacks/khachapuri
 	name = "khachapuri"
 	desc = "Bread with egg and cheese?"
 	icon_state = "khachapuri"
@@ -281,7 +281,7 @@
 	foodtype = GRAIN | MEAT | DAIRY
 
 
-/obj/item/weapon/reagent_containers/food/snacks/sugarcookie
+/obj/item/reagent_containers/food/snacks/sugarcookie
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
 	icon_state = "sugarcookie"
@@ -291,7 +291,7 @@
 	tastes = list("sweetness" = 1)
 	foodtype = GRAIN | JUNKFOOD | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/chococornet
+/obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
 	desc = "Which side's the head, the fat end or the thin end?"
 	icon_state = "chococornet"
@@ -301,7 +301,7 @@
 	tastes = list("biscuit" = 3, "chocolate" = 1)
 	foodtype = GRAIN | JUNKFOOD
 
-/obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
+/obj/item/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
 	desc = "The best of both cookie and oat"
 	icon_state = "oatmealcookie"
@@ -311,7 +311,7 @@
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtype = GRAIN
 
-/obj/item/weapon/reagent_containers/food/snacks/raisincookie
+/obj/item/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
 	desc = "Why would you put raisins on a cookie?"
 	icon_state = "raisincookie"
@@ -321,7 +321,7 @@
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtype = GRAIN | FRUIT
 
-/obj/item/weapon/reagent_containers/food/snacks/cherrycupcake
+/obj/item/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"
 	desc = "A sweet cupcake with cherry bits."
 	icon_state = "cherrycupcake"
@@ -331,7 +331,7 @@
 	tastes = list("cake" = 3, "cherry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/bluecherrycupcake
+/obj/item/reagent_containers/food/snacks/bluecherrycupcake
 	name = "blue cherry cupcake"
 	desc = "Blue cherries inside a delicious cupcake"
 	icon_state = "bluecherrycupcake"
@@ -341,7 +341,7 @@
 	tastes = list("cake" = 3, "blue cherry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
-/obj/item/weapon/reagent_containers/food/snacks/honeybun
+/obj/item/reagent_containers/food/snacks/honeybun
 	name = "honey bun"
 	desc = "A sticky pastry bun glazed with honey."
 	icon_state = "honeybun"

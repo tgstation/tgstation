@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 //	use_power = NO_POWER_USE
 	max_integrity = 350
 	integrity_failure = 80
-	var/obj/item/weapon/tank/internals/plasma/loaded_tank = null
+	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
 	var/active = 0
 	var/locked = FALSE
@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		return TRUE
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
-	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
+	else if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>The [src] needs to be secured to the floor first!</span>")
 			return TRUE
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		loaded_tank = W
 		W.forceMove(src)
 		update_icons()
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/crowbar))
 		if(loaded_tank)
 			if(locked)
 				to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		else
 			to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 			return TRUE
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 0)
 		return TRUE
 	else if(W.GetID())
@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = FALSE
-	var/obj/item/weapon/tank/internals/plasma/Z = src.loaded_tank
+	var/obj/item/tank/internals/plasma/Z = src.loaded_tank
 	if (!Z)
 		return
 	Z.loc = get_turf(src)

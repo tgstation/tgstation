@@ -9,7 +9,7 @@
 	idle_power_usage = 50
 	active_power_usage = 300
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
-	circuit = /obj/item/weapon/circuitboard/machine/clonescanner
+	circuit = /obj/item/circuitboard/machine/clonescanner
 	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
@@ -19,11 +19,11 @@
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/obj/item/weapon/stock_parts/scanning_module/P in component_parts)
+	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
 		precision_coeff = P.rating
-	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
 /obj/machinery/dna_scannernew/update_icon()

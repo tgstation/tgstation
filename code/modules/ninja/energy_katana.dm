@@ -1,4 +1,4 @@
-/obj/item/weapon/dash
+/obj/item/dash
 	name = "abstract dash weapon"
 	var/max_charges = 3
 	var/current_charges = 3
@@ -12,21 +12,21 @@
 	var/beam_icon_state = "blur"
 	var/dash_beam_type = /obj/effect/ebeam
 
-/obj/item/weapon/dash/proc/charge()
+/obj/item/dash/proc/charge()
 	current_charges = Clamp(current_charges + 1, 0, max_charges)
 	if(istype(loc, /mob/living))
 		to_chat(loc, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")
 
-/obj/item/weapon/dash/attack_self(mob/user)
+/obj/item/dash/attack_self(mob/user)
 	dash_toggled = !dash_toggled
 	to_chat(user, "<span class='notice'>You [dash_toggled ? "enable" : "disable"] the dash function on [src].</span>")
 
-/obj/item/weapon/dash/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/dash/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
 		dash(user, target)
 		return
 
-/obj/item/weapon/dash/proc/dash(mob/user, atom/target)
+/obj/item/dash/proc/dash(mob/user, atom/target)
 	if(!current_charges)
 		return
 
@@ -54,7 +54,7 @@
 		current_charges--
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
-/obj/item/weapon/dash/energy_katana
+/obj/item/dash/energy_katana
 	name = "energy katana"
 	desc = "A katana infused with strong energy."
 	icon_state = "energy_katana"
@@ -76,7 +76,7 @@
 	bypass_density = TRUE
 	var/datum/effect_system/spark_spread/spark_system
 
-/obj/item/weapon/dash/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/dash/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
 		return ..()
 	if(proximity_flag && (isobj(target) || issilicon(target)))
@@ -89,7 +89,7 @@
 //If we hit the Ninja who owns this Katana, they catch it.
 //Works for if the Ninja throws it or it throws itself or someone tries
 //To throw it at the ninja
-/obj/item/weapon/dash/energy_katana/throw_impact(atom/hit_atom)
+/obj/item/dash/energy_katana/throw_impact(atom/hit_atom)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
@@ -100,7 +100,7 @@
 
 	..()
 
-/obj/item/weapon/dash/energy_katana/proc/returnToOwner(mob/living/carbon/human/user, doSpark = 1, caught = 0)
+/obj/item/dash/energy_katana/proc/returnToOwner(mob/living/carbon/human/user, doSpark = 1, caught = 0)
 	if(!istype(user))
 		return
 	forceMove(get_turf(user))
@@ -127,12 +127,12 @@
 	if(msg)
 		to_chat(user, "<span class='notice'>[msg]</span>")
 
-/obj/item/weapon/dash/energy_katana/Initialize()
+/obj/item/dash/energy_katana/Initialize()
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/weapon/dash/energy_katana/Destroy()
+/obj/item/dash/energy_katana/Destroy()
 	QDEL_NULL(spark_system)
 	return ..()

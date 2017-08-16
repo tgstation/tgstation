@@ -175,7 +175,7 @@
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
 
-/obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/obj/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	var/turf/T = get_turf(src)
 	return T.storage_contents_dump_act(src_object, user)
 

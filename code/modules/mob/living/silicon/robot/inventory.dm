@@ -16,8 +16,8 @@
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
 		update_sight()
-	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
-		var/obj/item/weapon/storage/bag/tray/T = O
+	else if(istype(O, /obj/item/storage/bag/tray/))
+		var/obj/item/storage/bag/tray/T = O
 		T.do_quick_empty()
 	if(client)
 		client.screen -= O

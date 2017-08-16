@@ -306,7 +306,7 @@
 
 ///////// Circuitboards
 
-/obj/item/weapon/circuitboard/mecha
+/obj/item/circuitboard/mecha
 	name = "exosuit circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
@@ -320,85 +320,85 @@
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/weapon/circuitboard/mecha/ripley
+/obj/item/circuitboard/mecha/ripley
 	origin_tech = "programming=2"
 
-/obj/item/weapon/circuitboard/mecha/ripley/peripherals
+/obj/item/circuitboard/mecha/ripley/peripherals
 	name = "Ripley Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/ripley/main
+/obj/item/circuitboard/mecha/ripley/main
 	name = "Ripley Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
-/obj/item/weapon/circuitboard/mecha/gygax
+/obj/item/circuitboard/mecha/gygax
 	origin_tech = "programming=4;combat=3;engineering=3"
 
-/obj/item/weapon/circuitboard/mecha/gygax/peripherals
+/obj/item/circuitboard/mecha/gygax/peripherals
 	name = "Gygax Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/gygax/targeting
+/obj/item/circuitboard/mecha/gygax/targeting
 	name = "Gygax Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 	origin_tech = "programming=4;combat=4"
 
-/obj/item/weapon/circuitboard/mecha/gygax/main
+/obj/item/circuitboard/mecha/gygax/main
 	name = "Gygax Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
-/obj/item/weapon/circuitboard/mecha/durand
+/obj/item/circuitboard/mecha/durand
 	origin_tech = "programming=4;combat=3;engineering=3"
 
-/obj/item/weapon/circuitboard/mecha/durand/peripherals
+/obj/item/circuitboard/mecha/durand/peripherals
 	name = "Durand Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/durand/targeting
+/obj/item/circuitboard/mecha/durand/targeting
 	name = "Durand Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 	origin_tech = "programming=4;combat=4;engineering=3"
 
-/obj/item/weapon/circuitboard/mecha/durand/main
+/obj/item/circuitboard/mecha/durand/main
 	name = "Durand Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
-/obj/item/weapon/circuitboard/mecha/honker
+/obj/item/circuitboard/mecha/honker
 	origin_tech = "programming=3;engineering=3"
 
-/obj/item/weapon/circuitboard/mecha/honker/peripherals
+/obj/item/circuitboard/mecha/honker/peripherals
 	name = "H.O.N.K Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/honker/targeting
+/obj/item/circuitboard/mecha/honker/targeting
 	name = "H.O.N.K Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/honker/main
+/obj/item/circuitboard/mecha/honker/main
 	name = "H.O.N.K Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
-/obj/item/weapon/circuitboard/mecha/odysseus
+/obj/item/circuitboard/mecha/odysseus
 	origin_tech = "programming=3;biotech=3"
 
-/obj/item/weapon/circuitboard/mecha/odysseus/peripherals
+/obj/item/circuitboard/mecha/odysseus/peripherals
 	name = "Odysseus Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/odysseus/main
+/obj/item/circuitboard/mecha/odysseus/main
 	name = "Odysseus Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
-/obj/item/weapon/circuitboard/mecha/phazon
+/obj/item/circuitboard/mecha/phazon
 	origin_tech = "programming=5;plasmatech=4"
 
-/obj/item/weapon/circuitboard/mecha/phazon/peripherals
+/obj/item/circuitboard/mecha/phazon/peripherals
 	name = "Phazon Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/phazon/targeting
+/obj/item/circuitboard/mecha/phazon/targeting
 	name = "Phazon Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/phazon/main
+/obj/item/circuitboard/mecha/phazon/main
 	name = "Phazon Central Control module (Exosuit Board)"
