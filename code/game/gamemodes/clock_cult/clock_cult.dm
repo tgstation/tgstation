@@ -204,7 +204,7 @@ Credit where due:
 			text += "<span class='large_brass'><b>Ratvar's servants defended the Ark until its activation!</b></span>"
 			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		else
-			text += "<span class='userdanger'>The Ark was destroyed! Ratvar bid for freedom has failed!</span>"
+			text += "<span class='userdanger'>The Ark was destroyed! Ratvar's bid for freedom has failed!</span>"
 			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
 		for(var/i in SSticker.scripture_states)

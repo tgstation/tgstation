@@ -53,13 +53,13 @@
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
-			sound_to_playing_players(S = sound('sound/effects/clockcult_gateway_disrupted.ogg', 50, TRUE, frequency = 10000, channel = CHANNEL_JUSTICAR_ARK))
+			sound_to_playing_players(S = sound('sound/effects/clockcult_gateway_disrupted.ogg', 50, TRUE, frequency = 30000, channel = CHANNEL_JUSTICAR_ARK))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
-			sleep(70)
+			sleep(40)
 			explosion(src, 5, 10, 20, 8)
 			QDEL_NULL(glow)
-			sleep(200)
+			sleep(100)
 	qdel(src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
