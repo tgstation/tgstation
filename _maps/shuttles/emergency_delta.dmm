@@ -274,13 +274,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "aA" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -893,13 +891,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cc" = (
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -913,7 +909,6 @@
 "ce" = (
 /obj/machinery/computer/security,
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 9
 	},
 /area/shuttle/escape)
@@ -922,7 +917,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -933,7 +927,6 @@
 	pixel_y = 58
 	},
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -942,21 +935,18 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
 "ci" = (
 /obj/machinery/computer/station_alert,
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cj" = (
 /obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -990,7 +980,6 @@
 "cp" = (
 /obj/machinery/computer/atmos_alert,
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 6
 	},
 /area/shuttle/escape)
