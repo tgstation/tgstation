@@ -1,6 +1,6 @@
 /obj/effect/clockwork/servant_blocker
 	icon_state = "servant_blocker"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	density = TRUE
 
 /obj/effect/clockwork/servant_blocker/CanPass(atom/movable/mover, turf/target)

@@ -59,7 +59,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = real_name
-	W.flags |= NODROP
+	W.flags_1 |= NODROP_1
 	W.update_label(real_name)
 	equip_to_slot_or_del(W, slot_wear_id)
 

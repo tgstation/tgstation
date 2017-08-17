@@ -79,7 +79,7 @@
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
-				src.container_type = OPENCONTAINER
+				src.container_type = OPENCONTAINER_1
 				return 0 //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -96,7 +96,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER
+			src.container_type = OPENCONTAINER_1
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
@@ -117,7 +117,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER
+			src.container_type = OPENCONTAINER_1
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
@@ -309,7 +309,7 @@
 	icon_state = "mwb" // Make it look all busted up and shit
 	visible_message("<span class='warning'>The microwave breaks!</span>") //Let them know they're stupid
 	broken = 2 // Make it broken so it can't be used util fixed
-	flags = null //So you can't add condiments
+	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 

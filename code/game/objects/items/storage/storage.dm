@@ -47,7 +47,7 @@
 
 		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
-				return content_can_dump(over_object, M)
+				return dump_content_at(over_object, M)
 
 			if(loc != usr || (loc && loc.loc == usr))
 				return
@@ -71,10 +71,14 @@
 					handle_item_insertion(I, 0 , L)
 
 
-//Check if this storage can dump the items
-/obj/item/storage/proc/content_can_dump(atom/dest_object, mob/user)
-	if(Adjacent(user) && dest_object.Adjacent(user))
-		if(dest_object.storage_contents_dump_act(src, user))
+/obj/item/weapon/storage/get_dumping_location(obj/item/weapon/storage/source,mob/user)
+	return src
+
+//Tries to dump content
+/obj/item/storage/proc/dump_content_at(atom/dest_object, mob/user)
+	var/atom/dump_destination = dest_object.get_dumping_location()
+	if(Adjacent(user) && dump_destination && user.Adjacent(dump_destination))
+		if(dump_destination.storage_contents_dump_act(src, user))
 			playsound(loc, "rustle", 50, 1, -5)
 			return 1
 	return 0
@@ -261,7 +265,7 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	if(!istype(W) || (W.flags & ABSTRACT))
+	if(!istype(W) || (W.flags_1 & ABSTRACT_1))
 		return //Not an item
 
 	if(loc == W)
@@ -302,7 +306,7 @@
 				to_chat(usr, "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>")
 			return 0 //To prevent the stacking of same sized storage items.
 
-	if(W.flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(W.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(usr, "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>")
 		return 0
 

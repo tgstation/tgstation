@@ -11,7 +11,7 @@
 	integrity_failure = 0
 	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
 	visible = FALSE
-	flags = ON_BORDER
+	flags_1 = ON_BORDER_1
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/obj/item/electronics/airlock/electronics = null
@@ -181,7 +181,7 @@
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT) && !disassembled)
+	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
 		for(var/obj/fragment in debris)
 			fragment.forceMove(get_turf(src))
 			transfer_fingerprints_to(fragment)
@@ -221,7 +221,7 @@
 		return
 
 	add_fingerprint(user)
-	if(!(flags&NODECONSTRUCT))
+	if(!(flags_1&NODECONSTRUCT_1))
 		if(istype(I, /obj/item/screwdriver))
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")

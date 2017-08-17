@@ -95,7 +95,7 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if(!user.drop_item() || (I.flags & ABSTRACT))
+		if(!user.drop_item() || (I.flags_1 & ABSTRACT_1))
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
@@ -236,7 +236,7 @@
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	var/turf/T = loc
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
@@ -246,6 +246,9 @@
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
 	..()
+
+/obj/machinery/disposal/get_dumping_location(obj/item/weapon/storage/source,mob/user)
+	return src
 
 //How disposal handles getting a storage dump from a storage object
 /obj/machinery/disposal/storage_contents_dump_act(obj/item/storage/src_object, mob/user)

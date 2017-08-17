@@ -130,7 +130,7 @@
 	..()
 
 /obj/machinery/flasher/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			stat |= BROKEN
 			if(bulb)
@@ -138,7 +138,7 @@
 				power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(bulb)
 			bulb.forceMove(loc)
 			bulb = null

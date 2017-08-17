@@ -3,7 +3,7 @@
 	name = "data cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/obj/machinery/machine
 
 /obj/item/pai_cable/proc/plugin(obj/machinery/M, mob/living/user)

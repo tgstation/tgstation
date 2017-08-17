@@ -3,7 +3,7 @@
 	icon = 'icons/obj/tank.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
@@ -37,7 +37,7 @@
 				return
 			if(H.wear_mask.mask_adjusted)
 				H.wear_mask.adjustmask(H)
-			if(!(H.wear_mask.flags & MASKINTERNALS))
+			if(!(H.wear_mask.flags_1 & MASKINTERNALS_1))
 				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
 				return
 

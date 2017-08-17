@@ -120,8 +120,8 @@
 	if(auto_name)
 		name = "\improper [get_area(src)] APC"
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -25)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 23 : -24) : 0
+	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 26 : -27)
+	pixel_y = (src.tdir & 3)? (src.tdir == 1 ? 25 : -25) : 0
 	if (building)
 		area = get_area(src)
 		opened = 1
@@ -593,11 +593,11 @@
 
 
 /obj/machinery/power/apc/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		set_broken()
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			set_broken()
 		if(opened != 2)

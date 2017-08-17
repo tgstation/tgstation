@@ -80,7 +80,7 @@
 /obj/item/restraints/legcuffs/beartrap/mega_arachnid
 	name = "fleshy restraints"
 	desc = "Used by mega arachnids to immobilize their prey."
-	flags = DROPDEL
+	flags_1 = DROPDEL_1
 	icon_state = "tentacle_end"
 	icon = 'icons/obj/projectiles.dmi'
 

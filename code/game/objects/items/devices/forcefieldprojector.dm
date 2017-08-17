@@ -4,7 +4,7 @@
 	icon_state = "signmaker_engi"
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

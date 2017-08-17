@@ -109,8 +109,8 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags = NODROP | NOBLUDGEON
-	container_type = OPENCONTAINER
+	flags_1 = NODROP_1 | NOBLUDGEON_1
+	container_type = OPENCONTAINER_1
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
@@ -221,7 +221,7 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	flags = NODROP //Necessary to ensure that the nozzle and tank never separate
+	flags_1 = NODROP_1 //Necessary to ensure that the nozzle and tank never separate
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -348,7 +348,7 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	spillable = 0
 	possible_transfer_amounts = list(5,10,15)
 

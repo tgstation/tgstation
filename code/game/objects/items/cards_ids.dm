@@ -56,7 +56,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	origin_tech = "magnets=2;syndicate=2"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/prox_check = TRUE //If the emag requires you to be in range
 
 /obj/item/card/emag/bluespace
