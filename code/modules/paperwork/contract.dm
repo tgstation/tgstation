@@ -5,7 +5,7 @@
 	throw_speed = 3
 	var/signed = FALSE
 	var/datum/mind/target
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 
 /obj/item/paper/contract/proc/update_text()
 	return

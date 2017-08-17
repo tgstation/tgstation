@@ -178,7 +178,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)

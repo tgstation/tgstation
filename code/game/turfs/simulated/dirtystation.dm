@@ -11,7 +11,7 @@
 	if(prob(66))	//fastest possible exit 2/3 of the time
 		return
 
-	if(!(flags & CAN_BE_DIRTY))
+	if(!(flags_1 & CAN_BE_DIRTY_1))
 		return
 
 	if(locate(/obj/structure/grille) in contents)
@@ -19,7 +19,7 @@
 
 	var/area/A = get_area(src)
 
-	if(A && !(A.flags & CAN_BE_DIRTY))
+	if(A && !(A.flags_1 & CAN_BE_DIRTY_1))
 		return
 
 	//The code below here isn't exactly optimal, but because of the individual decals that each area uses it's still applicable.
