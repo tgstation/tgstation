@@ -78,8 +78,8 @@
 {{elseif data.state == 2}}
 	<h2>Step 3: Payment</h2>
 	<b>Your device is now ready for fabrication..</b><br>
-	<i>Please ensure the required amount of credits are in the machine, then press purchase.</i><br>
-	<i>Current credits: <b>{{data.credits}}C</b></i><br>
+	<i>Please ensure the required amount of woolongs are in the machine, then press purchase.</i><br>
+	<i>Current woolongs: <b>{{data.credits}}C</b></i><br>
 	<i>Total price: <b>{{data.totalprice}}C</b></i><br><br>
 	<ui-button action='purchase' state='{{data.credits >= data.totalprice ? null : "disabled"}}'>PURCHASE</ui-button>
 	
