@@ -8,9 +8,9 @@ import easygui as egui
 import pyperclip as pclip
 
 LINE_LENGTH_LIM = 50
-LINES_LIMIT = 1000
-TICK_LAG = 0.33
-OVERALL_IMPORT_LIM = 999999
+LINES_LIMIT = 200
+TICK_LAG = 0.5
+OVERALL_IMPORT_LIM = 2*LINE_LENGTH_LIM*LINES_LIMIT
 END_OF_LINE_CHAR = """
 """ # BYOND can't parse \n and I am forced to define my own NEWLINE char
 
