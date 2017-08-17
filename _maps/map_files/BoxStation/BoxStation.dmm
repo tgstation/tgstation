@@ -64519,6 +64519,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/item/clothing/under/rank/mechanic{
+	desc = "It's a pair of dusty overalls that kinda look like what a mechanic would wear."
+	},
 /turf/open/floor/plasteel/black,
 /area/construction/mining/aux_base)
 "cUZ" = (
@@ -64639,6 +64642,12 @@
 	name = "Spacepod R&D Console"
 	},
 /turf/open/floor/plasteel/yellow/side,
+/area/construction/mining/aux_base)
+"cVn" = (
+/obj/item/clothing/under/rank/mechanic{
+	desc = "It's a pair of dusty overalls that kinda look like what a mechanic would wear."
+	},
+/turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 
 (1,1,1) = {"
@@ -76047,7 +76056,7 @@ arD
 ajZ
 cTI
 atp
-auQ
+cVn
 cUz
 cUQ
 cVc

@@ -1480,10 +1480,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
-/area/tcommsat/lounge
-	name = "Mechanic's Office"
-	icon_state = "podbay"
-
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
