@@ -263,8 +263,8 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)
 
-/turf/closed/wall/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+/turf/closed/wall/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
 	if(explosion_block >= 2)

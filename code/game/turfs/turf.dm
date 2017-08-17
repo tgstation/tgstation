@@ -325,6 +325,9 @@
 /turf/proc/Bless()
 	flags |= NOJAUNT
 
+/turf/get_dumping_location(obj/item/storage/source,mob/user)
+	return src
+
 /turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)
 		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
