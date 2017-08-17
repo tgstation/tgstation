@@ -191,6 +191,11 @@
 	var/datum/component/C = new nt(arglist(args))
 	return QDELING(C) ? GetComponent(new_type) : C
 
+/datum/proc/LoadComponent(component_type, ...)
+	. = GetComponent(component_type)
+	if(!.)
+		return AddComponent(arglist(args))
+
 /datum/proc/TakeComponent(datum/component/C)
 	if(!C)
 		return
