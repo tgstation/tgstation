@@ -12,11 +12,14 @@
     contributors = shuffle(contributors)
 
     . = list()
-    var/J = 0
     for(var/I in 1 to contributors.len)
         var/obj/effect/abstract/credit/C = new(CREDITS_LOC, contributors[I])
         addtimer(CALLBACK(C, /obj/effect/abstract/credit/proc/Animate), CREDIT_SPAWN_SPEED * (I - 1), TIMER_CLIENT_TIME)
         . += C
+
+/proc/TestCredit(name)
+    var/obj/effect/abstract/credit/C = new(get_turf(usr), name)
+    C.Animate()
 
 /obj/effect/abstract/credit
     icon = 'icons/credits.dmi'
