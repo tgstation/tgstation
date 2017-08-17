@@ -9,6 +9,8 @@
     var/list/contributors = icon_states(credits_file) - "___EMPTY_ICON_STATE___"
     qdel(credits_file)
 
+    contributors = shuffle(contributors)
+
     . = list()
     var/J = 0
     for(var/I in 1 to contributors.len)
