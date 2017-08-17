@@ -8,8 +8,9 @@ import easygui as egui
 import pyperclip as pclip
 
 LINE_LENGTH_LIM = 50
-LINES_LIMIT = 200
-OVERALL_IMPORT_LIM = 12000
+LINES_LIMIT = 1000
+TICK_LAG = 0.33
+OVERALL_IMPORT_LIM = 999999
 END_OF_LINE_CHAR = """
 """ # BYOND can't parse \n and I am forced to define my own NEWLINE char
 
@@ -19,6 +20,7 @@ FLOAT_PRECISION = 2 # Change here to allow more or less numbers after dot in flo
 OCTAVE_KEYS = 12
 HIGHEST_OCTAVE = 8
 
+time_quanta = 100 * TICK_LAG
 """
 class Meta():
     version = 1.0
@@ -178,11 +180,11 @@ def convert_into_delta_times(score):
 
 def perform_roundation(score):
     """
-    Rounds delta times to the nearest multiple of 100 ms as BYOND can't
+    Rounds delta times to the nearest multiple of time quanta as BYOND can't
     process duration less than that and returns new score
     """
     return list(map(
-        lambda event: [100*round(event[0]/100), event[1]],
+        lambda event: [time_quanta*round(event[0]/time_quanta), event[1]],
         score))
 
 def obtain_common_duration(score):
@@ -258,9 +260,8 @@ def explode_sheet_music(sheet_music):
         if line_counter > LINES_LIMIT-1:
             break
         if counter+len(note) > LINE_LENGTH_LIM-2:
-            last_note_num = len(split_list)-1
-            split_list[last_note_num] = split_list[last_note_num].rstrip(',')
-            split_list[last_note_num] += END_OF_LINE_CHAR
+            split_list[-1] = split_list[-1].rstrip(',')
+            split_list[-1] += END_OF_LINE_CHAR
             counter = 0
             line_counter += 1
         split_list.append(note)
