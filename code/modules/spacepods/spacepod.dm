@@ -51,7 +51,7 @@
 
 	var/has_paint = FALSE
 
-	flags_2 = UNACIDABLE | HEAR
+	flags_2 = UNACIDABLE | HEAR_1
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 	var/list/pod_overlays
