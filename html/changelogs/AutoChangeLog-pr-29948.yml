@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - soundadd: "The station's explosion now uses a new (or old) sound."
