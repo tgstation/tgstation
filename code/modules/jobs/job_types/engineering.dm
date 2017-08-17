@@ -178,7 +178,7 @@ Atmospheric Technician
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 	box = /obj/item/storage/box/engineer
 	pda_slot = slot_l_store
-	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1, /obj/item/device/gps/engineering=1)
 
 
 /datum/job/mechanic
