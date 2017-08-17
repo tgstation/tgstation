@@ -122,7 +122,6 @@ obj/item/weapon/construction
 	icon_state = "rcd"
 	max_matter = 160
 	var/mode = 1
-	var/canRturf = 0
 	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
 	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
@@ -363,7 +362,6 @@ obj/item/weapon/construction
 	..()
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
-	canRturf = 0
 
 /obj/item/weapon/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
