@@ -34,7 +34,6 @@
 	user.visible_message("<span class='warning'>[user] climbs through [src]!</span>", "<span class='danger'>You brace yourself and step through [src]...</span>")
 	pass_through_gateway(user)
 	return TRUE
-	. = ..()
 
 /obj/effect/clockwork/reebe_rift/attackby(obj/item/I, mob/living/user, params)
 	if(user.drop_item())
@@ -46,6 +45,12 @@
 /obj/effect/clockwork/reebe_rift/CollidedWith(atom/movable/AM)
 	..()
 	if(!QDELETED(AM))
+		if(ismob(AM))
+			to_chat(AM, "<span class='warning'>You start to climb through [src]...</span>")
+			if(!do_after(AM, 8, target = src))
+				return
+			else
+				user.visible_message("<span class='warning'>[user] climbs through [src]!</span>", "<span class='danger'>You brace yourself and step through [src]...</span>")
 		pass_through_gateway(AM, FALSE)
 
 /obj/effect/clockwork/reebe_rift/proc/pass_through_gateway(atom/movable/A, force_left)
