@@ -414,23 +414,52 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			end = temp
 	return end
 
+/proc/parsemarkdownrule(t, tag, html, htmlattr=FALSE)
+	. = copytext(t, 1, 0)
+	var/posstart = FALSE
+	var/pos = findtext(t, tag)
+	var/taglength = length(tag)
+	while(pos)
+		if(posstart)
+			. = replacetext(t, regex(".+", "g"), "<" + html + htmlattr ? (" " + htmlattr + ">") : ">", posstart, posstart + taglength)
+			. = replacetext(t, regex(".+", "g"), "</" + html + ">", pos, pos + taglength)
+			posstart = FALSE
+		else
+			posstart = pos
+		pos = findtext(t, tag, pos)
+
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
 	if (length(t) < 1)		//No input means nothing needs to be parsed
 		return
 
-//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+//	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+
+	// Replace escaped chars
+
+	t = replacetext(t, "\\\\", "%A")
+	t = replacetext(t, "\\%", "%B")
+	t = replacetext(t, "\\**", "%C")
+	t = replacetext(t, "\\*", "%D")
+	t = replacetext(t, "\\-", "%E")
+	t = replacetext(t, "\\__", "%G")
+	t = replacetext(t, "\\_", "%H")
+	t = replacetext(t, "\\|", "%I")
+	t = replacetext(t, "\\+", "%J")
+
+	// Custom tags
 
 	t = replacetext(t, regex("(?<!\\\\)%s(?:ign)?(?=\\s|$)", "ig"), user ? "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>" : "")
-
 	t = replacetext(t, regex("(?<!\\\\)%f(?:ield)?(?=\\s|$)", "ig"), "<span class=\"paper_field\">$1</span>")
 
+	// Lists, small and horizontal line
+
 	if (!limited)
-		t = replacetext(t, regex("(?<!\\\\)__((?:(?!(?<!\\\\)__).)+)(?<!\\\\)__", "g"), "<font size=\"1\">$1</font>")
+		t = parsemarkdownrule(t, "__", "font", "size=\"1\"")
 		var/list/tlist = splittext(text, "\n")
 		var/listlevel = 0
 		for (var/line in tlist)
 			var/count_asterisk = length(findtext(line, regex("(?:(?!(?<!\\\\)\\*).)+", "g"), ""))
-			if (count_asterisk % 2 == 1) // there is an extra asterisk
+			if (count_asterisk % 2 == 1 && findtext(line, regex("^\\s*\\*", "g"))) // there is an extra asterisk in the beggining
 				var/count_w = length(findtext(findtext(line, regex("\\*.*", "g"), ""), "  ", " ")) // whitespace before asterisk
 				line = replacetext(line, regex("\\*", ""), "<li>")
 				while (listlevel < count_w)
@@ -442,22 +471,37 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			else while (listlevel > 0)
 				line = "</ul>" + line
 				listlevel--
-
 		t = replacetext(t, "---", "<hr>")
-	else
-		t = replacetext(t, regex("(?<!\\\\)__((?:(?!(?<!\\\\)__).)+)(?<!\\\\)\\__", "g"), "$1")
 
-	t = replacetext(t, regex("(?<!\\\\)\\|((?:(?!(?<!\\\\)\\|).)+)(?<!\\\\)\\|", "g"), "<center>$1</center>")
-	t = replacetext(t, regex("(?<!\\\\)\\*\\*((?:(?!(?<!\\\\)\\*\\*).)+)(?<!\\\\)\\*\\*", "g"), "<b>$1</b>")
-	t = replacetext(t, regex("(?<!\\\\)\\*((?:(?!(?<!\\\\)\\*).)+)(?<!\\\\)\\*", "g"), "<i>$1</i>")
-	t = replacetext(t, regex("(?<!\\\\)_((?:(?!(?<!\\\\)_).)+)(?<!\\\\)_", "g"), "<u>$1</u>")
-	t = replacetext(t, regex("(?<!\\\\)\\+((?:(?!(?<!\\\\)\\+).)+)(?<!\\\\)\\+", "g"), "<font size=\"4\">$1</font>")
+	// Common rules
+
+	t = parsemarkdownrule(t, "|", "center")
+	t = parsemarkdownrule(t, "*", "i")
+	t = parsemarkdownrule(t, "**", "b")
+	t = parsemarkdownrule(t, "_", "u")
+	t = parsemarkdownrule(t, "+", "font", "size=\"4\"")
+
+	// Replace to unescape chars
+
+	/*
+	t = replacetext(t, "%A", "\\")
+	t = replacetext(t, "%B", "%")
+	t = replacetext(t, "%C", "**")
+	t = replacetext(t, "%D", "*")
+	t = replacetext(t, "%E", "-")
+	t = replacetext(t, "%G", "__")
+	t = replacetext(t, "%H", "_")
+	t = replacetext(t, "%I", "|")
+	t = replacetext(t, "%J", "+")
+	*/
+
+	// Whitespace be whitespace!
 
 	t = replacetext(t, "\n", "<br>")
 
 	t = replacetext(t, "\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
 
-	t = replacetext(t, regex("(?:(?:(?<= |^) )|(?: (?=$)))+", "g"), "&nbsp;")
+	t = replacetext(t, "  ", "&nbsp;&nbsp;")
 
 	return t
 
