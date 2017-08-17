@@ -495,7 +495,6 @@
 
 /datum/emote/living/ultraflip
 	key = "ultraflip"
-	key_third_person = "does an awesome flip! Shouldn't that be impossible?"
 	restraint_check = FALSE
 
 /datum/emote/living/ultraflip/run_emote(mob/user, params)
