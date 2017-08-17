@@ -130,9 +130,9 @@
 		dat = reeltext
 
 	else
-		dat = {"Five credits to play!<BR>
+		dat = {"Five woolongs to play!<BR>
 		<B>Prize Money Available:</B> [money] (jackpot payout is ALWAYS 100%!)<BR>
-		<B>Credit Remaining:</B> [balance]<BR>
+		<B>Woolong Remaining:</B> [balance]<BR>
 		[plays] players have tried their luck today, and [jackpots] have won a jackpot!<BR>
 		<HR><BR>
 		<A href='?src=\ref[src];spin=1'>Play!</A><BR>
