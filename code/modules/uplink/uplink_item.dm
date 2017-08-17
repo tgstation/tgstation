@@ -1338,7 +1338,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
-	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
+	desc = "A secure briefcase containing ₩5000. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
