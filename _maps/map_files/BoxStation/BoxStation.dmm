@@ -15418,6 +15418,8 @@
 	req_access_txt = "0";
 	req_one_access_txt = "32;47;48"
 	},
+/obj/item/device/gps/engineering,
+/obj/item/device/gps/engineering,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -64632,6 +64634,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"cVm" = (
+/obj/machinery/computer/rdconsole/robotics{
+	name = "Spacepod R&D Console"
+	},
+/turf/open/floor/plasteel/yellow/side,
+/area/construction/mining/aux_base)
 
 (1,1,1) = {"
 aaa
@@ -71928,7 +71936,7 @@ aaa
 aaa
 asF
 cTS
-cUj
+cTS
 cUA
 asF
 aaa
@@ -72185,8 +72193,8 @@ aaa
 aaa
 asF
 cTT
-cUk
-cUB
+cTT
+cTT
 asF
 aaa
 aqH
@@ -72441,9 +72449,9 @@ aaa
 aaa
 aaa
 asF
-cTU
-cUl
-cUC
+cTT
+cTT
+cTT
 asF
 aaa
 aqH
@@ -72698,9 +72706,9 @@ aaa
 aaa
 aaa
 asF
-cTV
-cUm
-cUD
+cTT
+cTT
+cTT
 asF
 aaa
 aqH
@@ -72955,8 +72963,8 @@ aaa
 aaa
 apJ
 asF
-cTW
-cUn
+cTS
+cTS
 cUE
 asF
 apJ
@@ -73213,8 +73221,8 @@ aaa
 apJ
 cTJ
 cTX
-cUo
-cUF
+cTX
+cTX
 cUU
 apJ
 asE
@@ -73470,8 +73478,8 @@ aaa
 asF
 cTK
 cTY
-cUp
-cUG
+cTY
+cTY
 cUV
 apJ
 auO
@@ -73726,9 +73734,9 @@ aaa
 aaa
 apJ
 cTL
-cTZ
-cUq
-cUH
+cTY
+cTY
+cTY
 cUW
 apJ
 avP
@@ -73983,9 +73991,9 @@ aaa
 aaa
 asF
 cTM
-cUa
-cUr
-cUI
+cTY
+cTY
+cTY
 cUX
 apJ
 awY
@@ -74494,12 +74502,12 @@ aaa
 aaa
 aaa
 cTG
-cTH
+cTG
 apJ
 apJ
 cUc
 cUt
-cUK
+cUc
 apJ
 apJ
 awZ
@@ -74756,7 +74764,7 @@ apJ
 apJ
 cUd
 cUu
-cUL
+cUc
 apJ
 apJ
 awZ
@@ -75011,9 +75019,9 @@ arC
 aEp
 apJ
 apJ
-cUe
+cUc
 cUv
-cUM
+cUc
 apJ
 apJ
 awZ
@@ -75528,7 +75536,7 @@ cTP
 cUg
 cUx
 cUO
-cVa
+cVm
 cVf
 awZ
 cry
@@ -75786,7 +75794,7 @@ cUh
 cUy
 cUP
 cVb
-cVg
+cVf
 awZ
 crz
 awW
@@ -80671,7 +80679,7 @@ aaH
 bNb
 apQ
 atO
-cVi
+cVh
 azF
 aAS
 aFP
@@ -80928,7 +80936,7 @@ avU
 avb
 bOi
 atO
-cVj
+cVh
 azF
 aAU
 aBG
@@ -81185,7 +81193,7 @@ alU
 ali
 alU
 atO
-cVk
+cVh
 azF
 aAP
 aAP
@@ -81442,7 +81450,7 @@ amC
 amC
 amC
 axi
-cVl
+cVh
 azF
 azF
 azF

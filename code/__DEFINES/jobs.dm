@@ -41,5 +41,3 @@
 #define CLOWN				(1<<11)
 #define MIME				(1<<12)
 #define ASSISTANT			(1<<13)
-
-#define MECHANIC			(1<<14)
