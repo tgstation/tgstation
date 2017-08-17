@@ -31,7 +31,6 @@
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
-
 /*
  * Cakehat
  */

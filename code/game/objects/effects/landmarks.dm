@@ -102,6 +102,9 @@
 /obj/effect/landmark/start/station_engineer
 	name = "Station Engineer"
 
+/obj/effect/landmark/start/mechanic
+	name = "Mechanic"
+
 /obj/effect/landmark/start/medical_doctor
 	name = "Medical Doctor"
 
