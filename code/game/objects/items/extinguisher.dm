@@ -5,7 +5,7 @@
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
@@ -30,7 +30,7 @@
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags = null //doesn't CONDUCT
+	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3

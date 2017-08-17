@@ -3,7 +3,7 @@
 	name = "glowing ring"
 	desc = "A flickering, glowing purple ring around a target."
 	clockwork_desc = "A binding ring around a target, preventing them from taking action."
-	max_integrity = 25
+	max_integrity = 20
 	light_range = 2
 	light_power = 0.8
 	light_color = "#AF0AAF"
@@ -86,6 +86,11 @@
 		for(var/i in M.get_empty_held_indexes())
 			var/obj/item/geis_binding/B = new(M)
 			M.put_in_hands(B, i)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(!C.handcuffed)
+				C.handcuffed = new /obj/item/restraints/handcuffs/energy/clock(C)
+				C.update_handcuffed()
 		M.regenerate_icons()
 		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", "<span class='warning'>A [name] appears around you!</span>")
 		repair_and_interrupt()
@@ -101,6 +106,11 @@
 		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
 		for(var/obj/item/geis_binding/GB in M.held_items)
 			M.dropItemToGround(GB, TRUE)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(istype(C.handcuffed, /obj/item/restraints/handcuffs/energy/clock))
+				QDEL_NULL(C.handcuffed)
+				C.update_handcuffed()
 
 /obj/structure/destructible/clockwork/geis_binding/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
@@ -146,7 +156,14 @@
 	desc = "A flickering ring preventing you from holding items."
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "geisbinding_full"
-	flags = NODROP|ABSTRACT|DROPDEL
+	flags_1 = NODROP_1|ABSTRACT_1|DROPDEL_1
 
 /obj/item/geis_binding/pre_attackby(atom/target, mob/living/user, params)
 	return FALSE
+
+/obj/item/restraints/handcuffs/energy/clock
+	name = "glowing rings"
+	desc = "Flickering rings preventing you from holding items."
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "geisbinding_full"
+	flags_1 = NODROP_1|ABSTRACT_1|DROPDEL_1

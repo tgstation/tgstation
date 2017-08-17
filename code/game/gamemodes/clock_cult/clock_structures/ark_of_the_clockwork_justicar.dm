@@ -82,7 +82,7 @@
 	. = ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()

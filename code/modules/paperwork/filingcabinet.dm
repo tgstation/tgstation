@@ -39,7 +39,7 @@
 				I.loc = src
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 2)
 		for(var/obj/item/I in src)
 			I.forceMove(loc)

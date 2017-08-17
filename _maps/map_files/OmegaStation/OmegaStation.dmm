@@ -14737,6 +14737,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/window/eastright{
+	dir = 8;
+	name = "Bar Door";
+	req_access_txt = "25"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -23625,9 +23630,10 @@
 /obj/item/book/manual/hydroponics_pod_people,
 /obj/item/storage/box/syringes,
 /obj/item/paper/guides/jobs/hydroponics,
-/obj/item/toy/figure/botanist,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/item/storage/box/disks_plantgene,
+/obj/item/toy/figure/botanist,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aNq" = (

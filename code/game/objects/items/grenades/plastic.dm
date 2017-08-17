@@ -3,7 +3,8 @@
 	desc = "Used to put holes in specific areas without too much extra hole."
 	icon_state = "plastic-explosive0"
 	item_state = "plastic-explosive"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
+	flags_2 = NO_EMP_WIRES_2
 	det_time = 10
 	display_timer = 0
 	var/atom/target = null
@@ -17,10 +18,6 @@
 /obj/item/grenade/plastic/New()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2")
 	..()
-
-/obj/item/grenade/plastic/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
 
 /obj/item/grenade/plastic/Destroy()
 	qdel(nadeassembly)
@@ -164,7 +161,7 @@
 	item_state = "plasticx"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "syndicate=1"
 	var/timer = 10

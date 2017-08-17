@@ -147,7 +147,7 @@
 
 
 /obj/structure/particle_accelerator/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 

@@ -10,7 +10,7 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10

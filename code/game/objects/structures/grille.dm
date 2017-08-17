@@ -5,7 +5,7 @@
 	icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
@@ -173,14 +173,14 @@
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	if(!(flags&NODECONSTRUCT))
+	if(!(flags_1&NODECONSTRUCT_1))
 		var/obj/R = new rods_type(src.loc, rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	..()
 
 /obj/structure/grille/obj_break()
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		new broken_type(src.loc)
 		var/obj/R = new rods_type(src.loc, rods_broken)
 		transfer_fingerprints_to(R)
@@ -226,8 +226,8 @@
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
-/obj/structure/grille/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+/obj/structure/grille/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"

@@ -14,7 +14,7 @@ AI MODULES
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "An AI Module for programming laws to an AI."
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
