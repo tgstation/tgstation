@@ -171,6 +171,7 @@ Atmospheric Technician
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/hardhat
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	glasses = /obj/item/clothing/glasses/hud/diagnostic
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
@@ -178,6 +179,7 @@ Atmospheric Technician
 	box = /obj/item/storage/box/engineer
 	pda_slot = slot_l_store
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+
 
 /datum/job/mechanic
 	title = "Mechanic"
