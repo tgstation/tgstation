@@ -966,9 +966,9 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		flags |= CLEAN_ON_MOVE
+		flags_1 |= CLEAN_ON_MOVE_1
 	else
-		flags &= ~CLEAN_ON_MOVE
+		flags_1 &= ~CLEAN_ON_MOVE_1
 
 	hat_offset = module.hat_offset
 

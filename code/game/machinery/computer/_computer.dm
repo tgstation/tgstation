@@ -66,7 +66,7 @@
 	return
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver) && circuit && !(flags&NODECONSTRUCT))
+	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, I.usesound, 50, 1)
 		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
@@ -85,7 +85,7 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/computer/obj_break(damage_flag)
-	if(circuit && !(flags & NODECONSTRUCT)) //no circuit, no breaking
+	if(circuit && !(flags_1 & NODECONSTRUCT_1)) //no circuit, no breaking
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 			stat |= BROKEN
@@ -103,7 +103,7 @@
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.circuit = circuit

@@ -295,9 +295,9 @@
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/itemcrafting/receiver = 1,
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
-				/obj/itemcrafting/stock = 1,
+				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
 	tools = list(/obj/item/screwdriver)
 	time = 100

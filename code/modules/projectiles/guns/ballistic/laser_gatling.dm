@@ -96,7 +96,7 @@
 	icon_state = "minigun_spin"
 	item_state = "minigun"
 	origin_tech = "combat=6;powerstorage=5;magnets=4"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
@@ -108,16 +108,15 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	casing_ejector = 0
+	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/ballistic/minigun/Initialize()
-	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
-
 	if(istype(loc, /obj/item/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
 		ammo_pack = loc
 	else
 		return INITIALIZE_HINT_QDEL //No pack, no gun
-	
+
 	return ..()
 
 /obj/item/gun/ballistic/minigun/attack_self(mob/living/user)

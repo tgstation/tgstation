@@ -126,11 +126,11 @@
 		icon_state = "dominator-broken"
 
 /obj/machinery/dominator/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		set_broken()
 
 /obj/machinery/dominator/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			set_broken()
 		new /obj/item/stack/sheet/plasteel(src.loc)

@@ -978,19 +978,19 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	// Used to make the frozen item visuals for Freon.
 	if(resistance_flags & FREEZE_PROOF)
 		return
-	if(!HAS_SECONDARY_FLAG(src, FROZEN))
+	if(!(flags_2 & FROZEN_2))
 		name = "frozen [name]"
 		add_atom_colour(list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)), TEMPORARY_COLOUR_PRIORITY)
 		alpha -= 25
-		SET_SECONDARY_FLAG(src, FROZEN)
+		flags_2 |= FROZEN_2
 
 //Assumes already frozed
 /obj/proc/make_unfrozen()
-	if(HAS_SECONDARY_FLAG(src, FROZEN))
+	if(flags_2 & FROZEN_2)
 		name = replacetext(name, "frozen ", "")
 		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)))
 		alpha += 25
-		CLEAR_SECONDARY_FLAG(src, FROZEN)
+		flags_2 &= ~FROZEN_2
 
 #undef FROZEN_RED_COLOR
 #undef FROZEN_GREEN_COLOR

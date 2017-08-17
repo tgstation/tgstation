@@ -321,7 +321,7 @@
 	qdel(src)
 
 /obj/machinery/porta_turret/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT) && !(stat & BROKEN))
+	if(!(flags_1 & NODECONSTRUCT_1) && !(stat & BROKEN))
 		stat |= BROKEN	//enables the BROKEN bit
 		update_icon()
 		invisibility = 0

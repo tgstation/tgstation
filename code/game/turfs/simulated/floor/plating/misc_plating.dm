@@ -80,7 +80,7 @@
 /turf/open/floor/plating/beach
 	name = "beach"
 	icon = 'icons/misc/beach.dmi'
-	flags = NONE
+	flags_1 = NONE
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)

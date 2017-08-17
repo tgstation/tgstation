@@ -69,8 +69,6 @@
 #error You need version 511 or higher
 #endif
 
- #define SERVICE_CMD_PARAM_KEY "serviceCommsKey"
-
 //Update this whenever the db schema changes 
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 3

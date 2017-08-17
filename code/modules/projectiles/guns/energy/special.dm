@@ -6,7 +6,7 @@
 	origin_tech = "combat=4;magnets=4"
 	can_flashlight = 1
 	w_class = WEIGHT_CLASS_HUGE
-	flags =  CONDUCT
+	flags_1 =  CONDUCT_1
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	ammo_x_offset = 3
@@ -126,8 +126,8 @@
 	item_state = "plasmacutter"
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
-	flags = CONDUCT
-	container_type = OPENCONTAINER
+	flags_1 = CONDUCT_1
+	container_type = OPENCONTAINER_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP

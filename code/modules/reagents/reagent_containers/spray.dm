@@ -6,8 +6,8 @@
 	item_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	flags = NOBLUDGEON
-	container_type = OPENCONTAINER
+	flags_1 = NOBLUDGEON_1
+	container_type = OPENCONTAINER_1
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL

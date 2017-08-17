@@ -630,7 +630,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/library
  	name = "Library"
  	icon_state = "library"
- 	flags = NONE
+ 	flags_1 = NONE
 
 /area/library/lounge
  	name = "Library Lounge"
@@ -639,12 +639,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/library/abandoned
  	name = "Abandoned Library"
  	icon_state = "library"
- 	flags = NONE
+ 	flags_1 = NONE
 
 /area/chapel
 	icon_state = "chapel"
 	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
-	flags = NONE
+	flags_1 = NONE
 
 /area/chapel/main
 	name = "Chapel"
@@ -685,7 +685,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
- 	flags = NONE
+ 	flags_1 = NONE
 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
@@ -723,7 +723,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = FALSE
 	blob_allowed = FALSE
-	flags = NONE
+	flags_1 = NONE
 
 /area/solar/asteroid/aft
 	name = "Aft Asteroid Solar"
@@ -939,7 +939,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
-	flags = NONE
+	flags_1 = NONE
 
 /area/medical/morgue
 	name = "Morgue"
@@ -1139,7 +1139,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/janitor
 	name = "Custodial Closet"
 	icon_state = "janitor"
-	flags = NONE
+	flags_1 = NONE
 
 /area/hydroponics
 	name = "Hydroponics"

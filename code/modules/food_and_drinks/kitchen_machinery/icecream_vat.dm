@@ -14,7 +14,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	max_integrity = 300
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
@@ -224,7 +224,7 @@
 	name = "[M.name] icecream"
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 4)
 	qdel(src)
 
