@@ -6,7 +6,7 @@
 
 /proc/RollCredits()
     var/icon/credits_file = new('icons/credits.dmi')
-    var/list/contributors = icon_states(credits_file) - "___EMPTY_ICON_STATE___"
+    var/list/contributors = icon_states(credits_file) - null
     qdel(credits_file)
 
     contributors = shuffle(contributors)
