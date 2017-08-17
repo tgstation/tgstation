@@ -329,7 +329,7 @@
 /obj/item/weapon/coin/examine(mob/user)
 	..()
 	if(value)
-		to_chat(user, "<span class='info'>It's worth [value] credit\s.</span>")
+		to_chat(user, "<span class='info'>It's worth [value] Speso\s.</span>")
 
 /obj/item/weapon/coin/gold
 	name = "gold coin"

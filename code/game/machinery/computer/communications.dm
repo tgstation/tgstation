@@ -174,13 +174,13 @@
 								M.existing_shuttle = SSshuttle.emergency
 								M.action_load(S)
 								SSshuttle.points -= S.credit_cost
-								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] Spesos." , "Shuttle Purchase")
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
 								SSblackbox.add_details("shuttle_purchase", S.name)
 							else
 								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
 						else
-							to_chat(usr, "Not enough credits.")
+							to_chat(usr, "Not enough Spesos.")
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -527,11 +527,11 @@
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 
 		if(STATE_PURCHASE)
-			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			dat += "Budget: [SSshuttle.points] Spesos.<BR>"
 			for(var/shuttle_id in SSmapping.shuttle_templates)
 				var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 				if(S.can_be_bought && S.credit_cost < INFINITY)
-					dat += "[S.name] | [S.credit_cost] Credits<BR>"
+					dat += "[S.name] | [S.credit_cost] Spesos<BR>"
 					dat += "[S.description]<BR>"
 					if(S.prerequisites)
 						dat += "Prerequisites: [S.prerequisites]<BR>"

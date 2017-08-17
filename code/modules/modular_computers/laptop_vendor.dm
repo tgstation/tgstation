@@ -247,7 +247,7 @@
 		if(!user.drop_item(c))
 			return
 		credits += c.value
-		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into the [src].</span>")
+		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] Spesos into the [src].</span>")
 		qdel(c)
 		return
 
@@ -257,7 +257,7 @@
 // Simplified payment processing, returns 1 on success.
 /obj/machinery/lapvend/proc/process_payment()
 	if(total_price > credits)
-		say("Insufficient credits.")
+		say("Insufficient Spesos.")
 		return 0
 	else
 		return 1

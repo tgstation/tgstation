@@ -27,7 +27,7 @@
 		value = C.value * C.amount
 	if(value)
 		SSshuttle.points += value
-		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>")
+		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] Spesos.</span>")
 		qdel(I)
 		return
 	return ..()
@@ -48,7 +48,7 @@
 			SSshuttle.points -= 200
 			if(next_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
-				var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
+				var/message = "Unauthorized Speso withdrawal underway in [A.map_name]!!"
 				radio.talk_into(src, message, radio_channel, get_spans())
 				next_warning = world.time + minimum_time_between_warnings
 
@@ -60,11 +60,11 @@
 		return
 	src.add_fingerprint(usr)
 	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
-	dat += "Current Balance: [SSshuttle.points] credits.<br>"
+	dat += "Current Balance: [SSshuttle.points] Spesos.<br>"
 	if(!siphoning)
-		dat += "<A href='?src=\ref[src];siphon=1'>Siphon Credits</A><br>"
+		dat += "<A href='?src=\ref[src];siphon=1'>Siphon Spesos</A><br>"
 	else
-		dat += "<A href='?src=\ref[src];halt=1'>Halt Credit Siphon</A><br>"
+		dat += "<A href='?src=\ref[src];halt=1'>Halt Speso Siphon</A><br>"
 
 	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
 
@@ -77,8 +77,8 @@
 	if(..())
 		return
 	if(href_list["siphon"])
-		say("Siphon of station credits has begun!")
+		say("Siphon of station Spesos has begun!")
 		siphoning = TRUE
 	if(href_list["halt"])
-		say("Station credit withdrawal halted.")
+		say("Station Speso withdrawal halted.")
 		siphoning = FALSE
