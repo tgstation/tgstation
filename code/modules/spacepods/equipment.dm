@@ -84,22 +84,22 @@
 	var/fire_sound
 	var/fire_delay = 15
 
-/obj/item/device/spacepod_equipment/weaponry/taser
+/obj/item/device/spacepod_equipment/weaponry/disabler
 	name = "disabler system"
 	desc = "A weak disabler system for space pods, fires disabler beams."
 	icon_state = "weapon_taser"
 	projectile_type = /obj/item/projectile/beam/disabler
 	shot_cost = 400
-	fire_sound = 'sound/weapons/Taser.ogg'
+	fire_sound = 'sound/weapons/taser2.ogg'
 
-/obj/item/device/spacepod_equipment/weaponry/burst_taser
+/obj/item/device/spacepod_equipment/weaponry/burst_disabler
 	name = "burst disabler system"
 	desc = "A weak disabler system for space pods, this one fires 3 at a time."
 	icon_state = "weapon_burst_taser"
 	projectile_type = /obj/item/projectile/beam/disabler
 	shot_cost = 1200
 	shots_per = 3
-	fire_sound = 'sound/weapons/Taser.ogg'
+	fire_sound = 'sound/weapons/taser2.ogg'
 	fire_delay = 30
 
 /obj/item/device/spacepod_equipment/weaponry/laser

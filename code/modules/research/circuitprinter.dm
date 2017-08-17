@@ -8,7 +8,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 
 	var/datum/material_container/materials

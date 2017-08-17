@@ -8,7 +8,7 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -116,8 +116,8 @@
 	materials = list(MAT_METAL=100)
 	possible_transfer_amounts = list()
 	volume = 5
-	flags = CONDUCT
-	container_type = OPENCONTAINER
+	flags_1 = CONDUCT_1
+	container_type = OPENCONTAINER_1
 	spillable = 1
 	resistance_flags = FIRE_PROOF
 
@@ -357,7 +357,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_open_container())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		container_type = OPENCONTAINER
+		container_type = OPENCONTAINER_1
 		playsound(src, "can_open", 50, 1)
 		spillable = TRUE
 		return

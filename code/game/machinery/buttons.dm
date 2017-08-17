@@ -97,7 +97,7 @@
 		update_icon()
 		return
 
-	if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
+	if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		return src.attack_hand(user)
 	else
 		return ..()

@@ -4,7 +4,7 @@
 	icon_state = "voice"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1;engineering=1"
-	flags = HEAR
+	flags_1 = HEAR_1
 	attachable = 1
 	verb_say = "beeps"
 	verb_ask = "beeps"

@@ -221,7 +221,7 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	flags = NODROP
+	flags_1 = NODROP_1
 	dog_fashion = null
 
 /obj/item/clothing/head/cone

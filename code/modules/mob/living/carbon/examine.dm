@@ -18,7 +18,7 @@
 		msg += "[t_He] [t_is] wearing [icon2html(wear_neck, user)] \a [src.wear_neck] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & ABSTRACT))
+		if(!(I.flags_1 & ABSTRACT_1))
 			if(I.blood_DNA)
 				msg += "<span class='warning'>[t_He] [t_is] holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
