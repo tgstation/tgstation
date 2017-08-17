@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate
 
 /obj/item/weapon/storage/box/syndicate/PopulateContents()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "sabotage" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "sniper" = 1, "darklord" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pick(list("bloodyspai", "stealth", "bond", "screwed" , "sabotage", "guns", "murder", "implant", "hacker", "sniper", "darklord", "metaops", "ninja")))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
