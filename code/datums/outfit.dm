@@ -101,7 +101,7 @@
 			H.update_action_buttons_icon()
 		if(implants)
 			for(var/implant_type in implants)
-				var/obj/item/weapon/implant/I = new implant_type(H)
+				var/obj/item/implant/I = new implant_type(H)
 				I.implant(H, null, silent=TRUE)
 
 	H.update_body()

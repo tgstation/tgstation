@@ -16,7 +16,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
 	machinetype = 4
-	circuit = /obj/item/weapon/circuitboard/machine/telecomms/server
+	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()

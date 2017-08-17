@@ -28,19 +28,19 @@ Chief Medical Officer
 	name = "Chief Medical Officer"
 	jobtype = /datum/job/cmo
 
-	id = /obj/item/weapon/card/id/silver
+	id = /obj/item/card/id/silver
 	belt = /obj/item/device/pda/heads/cmo
 	ears = /obj/item/device/radio/headset/heads/cmo
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	l_hand = /obj/item/weapon/storage/firstaid/regular
+	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
-	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
 
-	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel/med
-	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
+	backpack = /obj/item/storage/backpack/medic
+	satchel = /obj/item/storage/backpack/satchel/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Medical Doctor
@@ -70,12 +70,12 @@ Medical Doctor
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
-	l_hand = /obj/item/weapon/storage/firstaid/regular
+	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
 
-	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel/med
-	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
+	backpack = /obj/item/storage/backpack/medic
+	satchel = /obj/item/storage/backpack/satchel/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Chemist
@@ -107,9 +107,9 @@ Chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack = /obj/item/weapon/storage/backpack/chemistry
-	satchel = /obj/item/weapon/storage/backpack/satchel/chem
-	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
+	backpack = /obj/item/storage/backpack/chemistry
+	satchel = /obj/item/storage/backpack/satchel/chem
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Geneticist
@@ -141,9 +141,9 @@ Geneticist
 	suit =  /obj/item/clothing/suit/toggle/labcoat/genetics
 	suit_store =  /obj/item/device/flashlight/pen
 
-	backpack = /obj/item/weapon/storage/backpack/genetics
-	satchel = /obj/item/weapon/storage/backpack/satchel/gen
-	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
+	backpack = /obj/item/storage/backpack/genetics
+	satchel = /obj/item/storage/backpack/satchel/gen
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Virologist
@@ -176,6 +176,6 @@ Virologist
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store =  /obj/item/device/flashlight/pen
 
-	backpack = /obj/item/weapon/storage/backpack/virology
-	satchel = /obj/item/weapon/storage/backpack/satchel/vir
-	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
+	backpack = /obj/item/storage/backpack/virology
+	satchel = /obj/item/storage/backpack/satchel/vir
+	duffelbag = /obj/item/storage/backpack/duffelbag/med

@@ -85,10 +85,10 @@
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
-	if(istype(AM, /obj/item/weapon/ore) && AM.loc == get_step(src, input_dir))
+	if(istype(AM, /obj/item/ore) && AM.loc == get_step(src, input_dir))
 		process_ore(AM)
 
-/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/weapon/ore/O)
+/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/ore/O)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
 		unload_mineral(O)

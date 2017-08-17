@@ -34,14 +34,14 @@
 	var/obj/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
-	var/obj/item/weapon/robot_module/module = null
+	var/obj/item/robot_module/module = null
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
 	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
-	var/obj/item/weapon/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/cell/cell = null
 
 	var/opened = 0
 	var/emagged = FALSE
@@ -115,7 +115,7 @@
 	ident = rand(1, 999)
 
 	if(!cell)
-		cell = new /obj/item/weapon/stock_parts/cell(src)
+		cell = new /obj/item/stock_parts/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
@@ -131,7 +131,7 @@
 		builtInCamera.network = list("SS13")
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
-	module = new /obj/item/weapon/robot_module(src)
+	module = new /obj/item/robot_module(src)
 	module.rebuild_modules()
 	update_icons()
 	. = ..()
@@ -194,26 +194,26 @@
 
 
 /mob/living/silicon/robot/proc/pick_module()
-	if(module.type != /obj/item/weapon/robot_module)
+	if(module.type != /obj/item/robot_module)
 		return
 
 	if(wires.is_cut(WIRE_RESET_MODULE))
 		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
-	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
-	"Engineering" = /obj/item/weapon/robot_module/engineering, \
-	"Medical" = /obj/item/weapon/robot_module/medical, \
-	"Miner" = /obj/item/weapon/robot_module/miner, \
-	"Janitor" = /obj/item/weapon/robot_module/janitor, \
-	"Service" = /obj/item/weapon/robot_module/butler)
+	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
+	"Engineering" = /obj/item/robot_module/engineering, \
+	"Medical" = /obj/item/robot_module/medical, \
+	"Miner" = /obj/item/robot_module/miner, \
+	"Janitor" = /obj/item/robot_module/janitor, \
+	"Service" = /obj/item/robot_module/butler)
 	if(!config.forbid_peaceborg)
-		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
+		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(!config.forbid_secborg)
-		modulelist["Security"] = /obj/item/weapon/robot_module/security
+		modulelist["Security"] = /obj/item/robot_module/security
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
-	if(!input_module || module.type != /obj/item/weapon/robot_module)
+	if(!input_module || module.type != /obj/item/robot_module)
 		return
 
 	module.transform_to(modulelist[input_module])
@@ -364,10 +364,10 @@
 		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
 	return !cleared
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
+/mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weldingtool/WT = W
 		if (!getBruteLoss())
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
@@ -404,7 +404,7 @@
 		else
 			to_chat(user, "The wires seem fine, there's no need to fix them.")
 
-	else if(istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if(istype(W, /obj/item/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
 			opened = 0
@@ -417,7 +417,7 @@
 				opened = 1
 				update_icons()
 
-	else if(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
+	else if(istype(W, /obj/item/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
 			to_chat(user, "<span class='warning'>Close the cover first!</span>")
 		else if(cell)
@@ -437,12 +437,12 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
+	else if(istype(W, /obj/item/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		update_icons()
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
+	else if(istype(W, /obj/item/screwdriver) && opened && cell)	// radio
 		if(shell)
 			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
 		else if(radio)
@@ -451,7 +451,7 @@
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		update_icons()
 
-	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
+	else if(istype(W, /obj/item/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
 			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
 			spark_system.start()
@@ -463,8 +463,8 @@
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
-	else if(istype(W, /obj/item/weapon/aiModule))
-		var/obj/item/weapon/aiModule/MOD = W
+	else if(istype(W, /obj/item/aiModule))
+		var/obj/item/aiModule/MOD = W
 		if(!opened)
 			to_chat(user, "<span class='warning'>You need access to the robot's insides to do that!</span>")
 			return
@@ -492,7 +492,7 @@
 		else
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if (istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
 			to_chat(user, "<span class='notice'>The interface seems slightly damaged.</span>")
 		if(opened)
@@ -567,7 +567,7 @@
 			return check_access(george.get_active_held_item())
 	return 0
 
-/mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
+/mob/living/silicon/robot/proc/check_access(obj/item/card/id/I)
 	if(!istype(req_access, /list)) //something's very wrong
 		return 1
 
@@ -575,7 +575,7 @@
 	if(!L.len) //no requirements
 		return 1
 
-	if(!istype(I, /obj/item/weapon/card/id) && isitem(I))
+	if(!istype(I, /obj/item/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
@@ -784,7 +784,7 @@
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
-	var/set_module = /obj/item/weapon/robot_module/syndicate
+	var/set_module = /obj/item/robot_module/syndicate
 
 /mob/living/silicon/robot/syndicate/Initialize()
 	..()
@@ -810,7 +810,7 @@
 						Your defibrillator paddles can revive operatives through their hardsuits, or can be used on harm intent to shock enemies! \
 						Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
 						<i>Help the operatives secure the disk at all costs!</i></b>"
-	set_module = /obj/item/weapon/robot_module/syndicate_medical
+	set_module = /obj/item/robot_module/syndicate_medical
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
@@ -936,7 +936,7 @@
 	shown_robot_modules = FALSE
 	if(hud_used)
 		hud_used.update_robot_modules_display()
-	module.transform_to(/obj/item/weapon/robot_module)
+	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.
 	for(var/obj/item/I in upgrades)
@@ -951,7 +951,7 @@
 	return 1
 
 /mob/living/silicon/robot/proc/has_module()
-	if(!module || module.type == /obj/item/weapon/robot_module)
+	if(!module || module.type == /obj/item/robot_module)
 		. = FALSE
 	else
 		. = TRUE

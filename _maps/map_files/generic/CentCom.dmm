@@ -67,7 +67,7 @@
 /obj/structure/table/wood{
 	layer = 3.3
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1;
 	pixel_y = 4
@@ -167,7 +167,7 @@
 /area/holodeck/rec_center/bunker)
 "aB" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/matches{
+/obj/item/storage/box/matches{
 	pixel_x = -4;
 	pixel_y = 8
 	},
@@ -212,7 +212,7 @@
 /area/holodeck/rec_center/winterwonderland)
 "aJ" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/laser,
+/obj/item/gun/energy/laser,
 /turf/open/floor/holofloor{
 	icon_state = "asteroidfloor";
 	dir = 8
@@ -299,7 +299,7 @@
 /area/holodeck/rec_center/winterwonderland)
 "aV" = (
 /obj/structure/table/wood,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1;
 	pixel_y = 10
@@ -379,7 +379,7 @@
 /area/holodeck/rec_center/lounge)
 "bh" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/book/manual/barman_recipes,
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/lounge)
@@ -425,7 +425,7 @@
 /area/holodeck/rec_center/pet_lounge)
 "bq" = (
 /obj/structure/table/glass,
-/obj/item/weapon/surgicaldrill,
+/obj/item/surgicaldrill,
 /turf/open/floor/holofloor{
 	icon_state = "white";
 	dir = 9
@@ -433,7 +433,7 @@
 /area/holodeck/rec_center/medical)
 "br" = (
 /obj/structure/table/glass,
-/obj/item/weapon/hemostat,
+/obj/item/hemostat,
 /turf/open/floor/holofloor{
 	icon_state = "white";
 	dir = 1
@@ -441,10 +441,10 @@
 /area/holodeck/rec_center/medical)
 "bs" = (
 /obj/structure/table/glass,
-/obj/item/weapon/scalpel{
+/obj/item/scalpel{
 	pixel_y = 10
 	},
-/obj/item/weapon/circular_saw,
+/obj/item/circular_saw,
 /turf/open/floor/holofloor{
 	icon_state = "white";
 	dir = 1
@@ -452,7 +452,7 @@
 /area/holodeck/rec_center/medical)
 "bt" = (
 /obj/structure/table/glass,
-/obj/item/weapon/retractor,
+/obj/item/retractor,
 /turf/open/floor/holofloor{
 	icon_state = "white";
 	dir = 1
@@ -461,7 +461,7 @@
 "bu" = (
 /obj/structure/table/glass,
 /obj/item/stack/medical/gauze,
-/obj/item/weapon/cautery,
+/obj/item/cautery,
 /turf/open/floor/holofloor{
 	icon_state = "white";
 	dir = 5
@@ -506,7 +506,7 @@
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/under/color/red,
-/obj/item/weapon/holo/esword/red,
+/obj/item/holo/esword/red,
 /turf/open/floor/holofloor{
 	icon_state = "warningline";
 	dir = 2
@@ -554,8 +554,8 @@
 /area/holodeck/rec_center/pet_lounge)
 "bI" = (
 /obj/structure/table/glass,
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/razor,
+/obj/item/surgical_drapes,
+/obj/item/razor,
 /turf/open/floor/holofloor{
 	icon_state = "white";
 	dir = 8
@@ -619,7 +619,7 @@
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "bV" = (
-/obj/item/weapon/storage/bag/easterbasket{
+/obj/item/storage/bag/easterbasket{
 	name = "picnic basket";
 	pixel_y = 6
 	},
@@ -688,7 +688,7 @@
 	},
 /area/holodeck/rec_center/pet_lounge)
 "ch" = (
-/obj/item/weapon/shovel/spade{
+/obj/item/shovel/spade{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -725,11 +725,11 @@
 /area/holodeck/rec_center/medical)
 "cm" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/syringes{
+/obj/item/storage/box/syringes{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/beakers,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -805,7 +805,7 @@
 /area/holodeck/rec_center/anthophila)
 "cx" = (
 /obj/effect/holodeck_effect/mobspawner/bee,
-/obj/item/weapon/melee/flyswatter,
+/obj/item/melee/flyswatter,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/anthophila)
 "cy" = (
@@ -891,7 +891,7 @@
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "cL" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "cM" = (
@@ -928,7 +928,7 @@
 /area/holodeck/rec_center/pet_lounge)
 "cS" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/weapon/cultivator,
+/obj/item/cultivator,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "cT" = (
@@ -942,7 +942,7 @@
 /area/holodeck/rec_center/pet_lounge)
 "cV" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/structure/window{
 	dir = 1
 	},
@@ -956,7 +956,7 @@
 	dir = 8
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/structure/window{
 	dir = 1
 	},
@@ -984,11 +984,11 @@
 /turf/open/floor/holofloor/beach/coast_t,
 /area/holodeck/rec_center/beach)
 "da" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/holodeck/rec_center/beach)
 "db" = (
-/obj/item/weapon/shovel/spade,
+/obj/item/shovel/spade,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/holodeck/rec_center/beach)
 "dc" = (
@@ -1031,7 +1031,7 @@
 /area/holodeck/rec_center/beach)
 "dj" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/machinery/iv_drip{
 	density = 0
 	},
@@ -1045,7 +1045,7 @@
 	dir = 8
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/machinery/iv_drip{
 	density = 0
 	},
@@ -1120,7 +1120,7 @@
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/under/color/green,
-/obj/item/weapon/holo/esword/green,
+/obj/item/holo/esword/green,
 /turf/open/floor/holofloor{
 	icon_state = "warningline";
 	dir = 1
@@ -1165,14 +1165,14 @@
 	},
 /area/holodeck/rec_center/spacechess)
 "dA" = (
-/obj/item/weapon/banner/blue,
+/obj/item/banner/blue,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/thunderdome1218)
 "dB" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/suit/armor/riot/knight/blue,
 /obj/item/clothing/head/helmet/knight/blue,
-/obj/item/weapon/claymore/weak,
+/obj/item/claymore/weak,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/thunderdome1218)
 "dC" = (
@@ -1186,11 +1186,11 @@
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/suit/armor/riot/knight/red,
 /obj/item/clothing/head/helmet/knight/red,
-/obj/item/weapon/claymore/weak,
+/obj/item/claymore/weak,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/thunderdome1218)
 "dE" = (
-/obj/item/weapon/banner/red,
+/obj/item/banner/red,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/thunderdome1218)
 "dF" = (
@@ -1224,7 +1224,7 @@
 /area/holodeck/rec_center/chapelcourt)
 "dJ" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/storage/book/bible,
+/obj/item/storage/book/bible,
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark"
@@ -1232,7 +1232,7 @@
 /area/holodeck/rec_center/chapelcourt)
 "dK" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark"
@@ -1397,7 +1397,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
+	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1423,7 +1423,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
+	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1438,7 +1438,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
+	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1593,7 +1593,7 @@
 /area/holodeck/rec_center/kobayashi)
 "ez" = (
 /obj/structure/table/glass,
-/obj/item/weapon/gun/energy/e_gun/mini/practice_phaser,
+/obj/item/gun/energy/e_gun/mini/practice_phaser,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eA" = (
@@ -1612,8 +1612,8 @@
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eC" = (
-/obj/item/weapon/gavelblock,
-/obj/item/weapon/gavelhammer,
+/obj/item/gavelblock,
+/obj/item/gavelhammer,
 /obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 8;
@@ -1636,7 +1636,7 @@
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eF" = (
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/rollercoaster)
 "eG" = (
@@ -1663,7 +1663,7 @@
 	},
 /area/holodeck/rec_center/firingrange)
 "eJ" = (
-/obj/item/weapon/weldingtool,
+/obj/item/weldingtool,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/refuel)
 "eK" = (
@@ -1685,22 +1685,22 @@
 /area/holodeck/rec_center/thunderdome1218)
 "eN" = (
 /obj/structure/table/wood,
-/obj/item/weapon/melee/chainofcommand{
+/obj/item/melee/chainofcommand{
 	name = "chain whip"
 	},
-/obj/item/weapon/twohanded/spear,
+/obj/item/twohanded/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
 "eO" = (
 /obj/structure/table/wood,
-/obj/item/weapon/scythe,
-/obj/item/weapon/twohanded/spear,
+/obj/item/scythe,
+/obj/item/twohanded/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
 "eP" = (
 /obj/structure/table/wood,
-/obj/item/weapon/tailclub,
-/obj/item/weapon/twohanded/spear,
+/obj/item/tailclub,
+/obj/item/twohanded/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
 "eQ" = (
@@ -1858,8 +1858,8 @@
 /area/holodeck/rec_center/kobayashi)
 "fn" = (
 /obj/structure/table,
-/obj/item/weapon/folder,
-/obj/item/weapon/pen/blue,
+/obj/item/folder,
+/obj/item/pen/blue,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1870,8 +1870,8 @@
 /area/holodeck/rec_center/kobayashi)
 "fo" = (
 /obj/structure/table,
-/obj/item/weapon/folder,
-/obj/item/weapon/pen,
+/obj/item/folder,
+/obj/item/pen,
 /turf/open/floor/holofloor{
 	icon_state = "neutral";
 	dir = 1
@@ -1882,8 +1882,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/folder,
-/obj/item/weapon/pen/red,
+/obj/item/folder,
+/obj/item/pen/red,
 /turf/open/floor/holofloor{
 	icon_state = "neutral";
 	dir = 1
@@ -1918,7 +1918,7 @@
 	},
 /area/holodeck/rec_center/firingrange)
 "ft" = (
-/obj/item/weapon/paper/guides/jobs/security/range,
+/obj/item/paper/guides/jobs/security/range,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "fu" = (
@@ -2066,7 +2066,7 @@
 /area/holodeck/rec_center/firingrange)
 "fM" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/practice,
 /obj/item/clothing/ears/earmuffs,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
@@ -2090,8 +2090,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/weapon/melee/baton/loaded,
-/obj/item/weapon/melee/transforming/energy/sword/saber/red,
+/obj/item/melee/baton/loaded,
+/obj/item/melee/transforming/energy/sword/saber/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -2127,8 +2127,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/weapon/melee/baton/loaded,
-/obj/item/weapon/melee/transforming/energy/sword/saber/green,
+/obj/item/melee/baton/loaded,
+/obj/item/melee/transforming/energy/sword/saber/green,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -2157,7 +2157,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/weapon/gun/energy/laser,
+/obj/item/gun/energy/laser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -2169,7 +2169,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/weapon/gun/energy/laser,
+/obj/item/gun/energy/laser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -2617,11 +2617,11 @@
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hJ" = (
-/obj/item/weapon/twohanded/ctf/blue,
+/obj/item/twohanded/ctf/blue,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hK" = (
-/obj/item/weapon/twohanded/ctf/red,
+/obj/item/twohanded/ctf/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hL" = (
@@ -2841,15 +2841,15 @@
 /area/centcom/prison)
 "ix" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iy" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/crowbar/red,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -2877,7 +2877,7 @@
 /area/centcom/control)
 "iB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/lockbox/loyalty,
+/obj/item/storage/lockbox/loyalty,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2885,14 +2885,14 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iC" = (
-/obj/item/weapon/storage/box/emps{
+/obj/item/storage/box/emps{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/weapon/grenade/plastic/x4,
-/obj/item/weapon/grenade/plastic/x4,
-/obj/item/weapon/grenade/plastic/x4,
+/obj/item/storage/box/flashbangs,
+/obj/item/grenade/plastic/x4,
+/obj/item/grenade/plastic/x4,
+/obj/item/grenade/plastic/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
 /obj/structure/reagent_dispensers/peppertank{
@@ -2903,14 +2903,14 @@
 /area/centcom/control)
 "iD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs/cable/zipties,
+/obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/device/assembly/flash/handheld,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -2931,10 +2931,10 @@
 /area/centcom/control)
 "iI" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/storage/belt/security/full,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -2942,10 +2942,10 @@
 /area/centcom/control)
 "iJ" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/storage/belt/security/full,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -3026,10 +3026,10 @@
 /area/centcom/control)
 "iX" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/storage/belt/security/full,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -3037,10 +3037,10 @@
 /area/centcom/control)
 "iY" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/storage/belt/security/full,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -3216,7 +3216,7 @@
 /area/centcom/supply)
 "jr" = (
 /obj/item/stack/packageWrap,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -3527,8 +3527,8 @@
 	},
 /area/centcom/control)
 "kc" = (
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/crowbar/red,
+/obj/item/storage/box/handcuffs,
+/obj/item/crowbar/red,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -3550,7 +3550,7 @@
 	},
 /area/centcom/control)
 "kf" = (
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /obj/item/device/taperecorder,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
@@ -3558,8 +3558,8 @@
 	},
 /area/centcom/control)
 "kg" = (
-/obj/item/weapon/wrench,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/wrench,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
@@ -3567,7 +3567,7 @@
 	},
 /area/centcom/control)
 "kh" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -3577,7 +3577,7 @@
 /area/centcom/control)
 "ki" = (
 /obj/structure/table/wood,
-/obj/item/weapon/phone{
+/obj/item/phone{
 	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
@@ -3596,24 +3596,24 @@
 	},
 /area/centcom/control)
 "kj" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/control)
 "kk" = (
-/obj/item/weapon/storage/briefcase{
+/obj/item/storage/briefcase{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -3648,7 +3648,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "kq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/vault{
@@ -3677,8 +3677,8 @@
 /area/syndicate_mothership/control)
 "kv" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/crowbar/red,
+/obj/item/storage/box/handcuffs,
+/obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -3693,13 +3693,13 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "kx" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -3708,7 +3708,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kz" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/firealarm{
@@ -3723,7 +3723,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -3733,7 +3733,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -3750,8 +3750,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kE" = (
@@ -3766,23 +3766,23 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/stamp/law,
+/obj/item/clipboard,
+/obj/item/folder/blue,
+/obj/item/stamp/law,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kG" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kH" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/airalarm{
@@ -3831,8 +3831,8 @@
 /area/centcom/control)
 "kP" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/wrench,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3841,7 +3841,7 @@
 /area/centcom/control)
 "kQ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/device/flashlight/seclite,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3850,15 +3850,15 @@
 /area/centcom/control)
 "kR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/stamp/law,
+/obj/item/clipboard,
+/obj/item/folder/blue,
+/obj/item/stamp/law,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kT" = (
@@ -3899,8 +3899,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gavelblock,
-/obj/item/weapon/gavelhammer,
+/obj/item/gavelblock,
+/obj/item/gavelhammer,
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -3990,9 +3990,9 @@
 /area/centcom/control)
 "lg" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -4000,10 +4000,10 @@
 /area/centcom/control)
 "lh" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/crowbar/power,
-/obj/item/weapon/storage/belt/security/full,
+/obj/item/storage/box/handcuffs,
+/obj/item/crowbar/red,
+/obj/item/crowbar/power,
+/obj/item/storage/belt/security/full,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -4027,7 +4027,7 @@
 /area/centcom/control)
 "ll" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/briefcase,
+/obj/item/storage/briefcase,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4055,9 +4055,9 @@
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/pen/red,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4081,8 +4081,8 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/wrench,
+/obj/item/crowbar/red,
+/obj/item/wrench,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4129,7 +4129,7 @@
 /turf/open/floor/plating,
 /area/centcom/control)
 "ly" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -4200,7 +4200,7 @@
 	},
 /area/syndicate_mothership/control)
 "lI" = (
-/obj/item/weapon/disk/data,
+/obj/item/disk/data,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -4255,16 +4255,16 @@
 /area/centcom/supply)
 "lQ" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/stack/packageWrap,
 /obj/item/stack/cable_coil/white,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/green/side{
 	dir = 9
 	},
 /area/centcom/control)
 "lR" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/green/side{
@@ -4272,7 +4272,7 @@
 	},
 /area/centcom/control)
 "lS" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -4294,7 +4294,7 @@
 	},
 /area/centcom/control)
 "lV" = (
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/structure/table,
 /turf/open/floor/plasteel/green/side{
 	dir = 5
@@ -4317,9 +4317,9 @@
 /area/centcom/control)
 "lY" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /obj/machinery/button/door{
 	id = "XCCsec3";
 	name = "XCC Shutter 3 Control";
@@ -4374,8 +4374,8 @@
 /area/centcom/control)
 "me" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder,
-/obj/item/weapon/pen/red,
+/obj/item/folder,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4426,7 +4426,7 @@
 /obj/machinery/door/window/brigdoor/southleft{
 	name = "Shower"
 	},
-/obj/item/weapon/soap/deluxe,
+/obj/item/soap/deluxe,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
 /area/centcom/ferry)
@@ -4474,7 +4474,7 @@
 	},
 /area/centcom/control)
 "ms" = (
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4496,7 +4496,7 @@
 /area/centcom/control)
 "mv" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs/cable/zipties,
+/obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4510,8 +4510,8 @@
 /area/centcom/control)
 "mx" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4556,12 +4556,12 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/ferry)
 "mE" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4574,7 +4574,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/packageWrap,
 /obj/item/stack/cable_coil/white,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4653,16 +4653,16 @@
 /area/centcom/control)
 "mP" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/photo_album,
+/obj/item/storage/photo_album,
 /obj/item/device/camera,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/control)
 "mQ" = (
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4782,7 +4782,7 @@
 "ng" = (
 /obj/structure/table/wood,
 /obj/item/device/taperecorder,
-/obj/item/weapon/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /obj/item/device/flashlight/seclite,
 /obj/structure/noticeboard{
 	pixel_y = 28
@@ -4793,7 +4793,7 @@
 /area/centcom/ferry)
 "nh" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/photo_album,
+/obj/item/storage/photo_album,
 /obj/item/device/camera,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
@@ -4806,7 +4806,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-15";
 	pixel_x = -6;
 	pixel_y = 12
@@ -4847,7 +4847,7 @@
 /area/centcom/ferry)
 "nn" = (
 /obj/machinery/computer/card/centcom,
-/obj/item/weapon/card/id/centcom,
+/obj/item/card/id/centcom,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "no" = (
@@ -4856,8 +4856,8 @@
 /area/centcom/ferry)
 "np" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = 32;
@@ -4868,10 +4868,10 @@
 /area/centcom/ferry)
 "nq" = (
 /obj/structure/table/wood,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/melee/chainofcommand,
-/obj/item/weapon/stamp/captain,
+/obj/item/clipboard,
+/obj/item/folder/blue,
+/obj/item/melee/chainofcommand,
+/obj/item/stamp/captain,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
@@ -4880,7 +4880,7 @@
 "nr" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 32;
 	pixel_y = 24
 	},
@@ -4895,8 +4895,8 @@
 /area/centcom/supply)
 "nt" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/red,
+/obj/item/paper_bin,
+/obj/item/pen/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -4905,7 +4905,7 @@
 "nu" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/packageWrap,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light{
 	dir = 1
@@ -4928,22 +4928,22 @@
 /area/centcom/supply)
 "nx" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
 /area/centcom/control)
 "ny" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "nz" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -4955,8 +4955,8 @@
 /area/centcom/control)
 "nA" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4974,11 +4974,11 @@
 /turf/open/floor/plasteel/vault,
 /area/centcom/control)
 "nD" = (
-/obj/item/weapon/storage/briefcase{
+/obj/item/storage/briefcase{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4997,7 +4997,7 @@
 /area/centcom/ferry)
 "nG" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "nH" = (
@@ -5012,13 +5012,13 @@
 /area/centcom/ferry)
 "nJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "nK" = (
@@ -5095,8 +5095,8 @@
 /area/centcom/control)
 "nT" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -5131,7 +5131,7 @@
 /area/centcom/ferry)
 "nX" = (
 /obj/structure/table/wood,
-/obj/item/weapon/phone{
+/obj/item/phone{
 	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
@@ -5160,8 +5160,8 @@
 /area/centcom/ferry)
 "nZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "oa" = (
@@ -5189,7 +5189,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "oe" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -5205,8 +5205,8 @@
 /area/centcom/ferry)
 "of" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/stamp/qm,
+/obj/item/folder/yellow,
+/obj/item/stamp/qm,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -5238,9 +5238,9 @@
 	req_access_txt = "109";
 	base_state = "rightsecure"
 	},
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/pen/red,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
+/obj/item/pen/red,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
@@ -5253,11 +5253,11 @@
 	},
 /area/centcom/control)
 "ok" = (
-/obj/item/weapon/storage/briefcase{
+/obj/item/storage/briefcase{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase,
 /obj/structure/table/wood,
 /obj/structure/noticeboard{
 	dir = 8;
@@ -5344,7 +5344,7 @@
 /area/centcom/ferry)
 "ou" = (
 /obj/structure/destructible/cult/tome,
-/obj/item/weapon/book/codex_gigas,
+/obj/item/book/codex_gigas,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -5355,13 +5355,13 @@
 /area/centcom/ferry)
 "ov" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/cartridge/quartermaster{
+/obj/item/cartridge/quartermaster{
 	pixel_x = -6
 	},
-/obj/item/weapon/cartridge/quartermaster{
+/obj/item/cartridge/quartermaster{
 	pixel_x = 6
 	},
-/obj/item/weapon/cartridge/quartermaster{
+/obj/item/cartridge/quartermaster{
 	pixel_y = 6
 	},
 /obj/item/device/gps/mining,
@@ -5376,14 +5376,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/red,
+/obj/item/paper_bin,
+/obj/item/pen/red,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "ox" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -5436,7 +5436,7 @@
 /area/centcom/control)
 "oE" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5452,7 +5452,7 @@
 	},
 /area/centcom/control)
 "oG" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -5463,9 +5463,9 @@
 	},
 /area/centcom/control)
 "oH" = (
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /obj/structure/table,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
@@ -5483,9 +5483,9 @@
 /area/syndicate_mothership/control)
 "oK" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/folder/red,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -5497,8 +5497,8 @@
 /area/centcom/ferry)
 "oL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/lighter,
+/obj/item/folder/red,
+/obj/item/lighter,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -5508,14 +5508,14 @@
 	},
 /area/centcom/ferry)
 "oM" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "oN" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light_switch{
@@ -5530,7 +5530,7 @@
 /area/centcom/ferry)
 "oP" = (
 /obj/structure/table/wood,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/toy/figure/dsquad,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5542,11 +5542,11 @@
 /area/centcom/ferry)
 "oR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/secure/briefcase{
+/obj/item/storage/secure/briefcase{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/weapon/storage/lockbox/medal,
+/obj/item/storage/lockbox/medal,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = 32
 	},
@@ -5561,7 +5561,7 @@
 /area/centcom/ferry)
 "oT" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -5595,12 +5595,12 @@
 /area/centcom/supply)
 "oX" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder,
-/obj/item/weapon/stamp/denied{
+/obj/item/folder,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -5644,8 +5644,8 @@
 /area/centcom/control)
 "pd" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/green/side{
 	dir = 6
 	},
@@ -5711,7 +5711,7 @@
 /area/syndicate_mothership/control)
 "po" = (
 /obj/machinery/vending/cigarette{
-	products = list(/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 7, /obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift = 3, /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust = 2, /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp = 3, /obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 1, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/greyscale = 4, /obj/item/weapon/storage/fancy/rollingpapers = 5)
+	products = list(/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7, /obj/item/storage/fancy/cigarettes/cigpack_uplift = 3, /obj/item/storage/fancy/cigarettes/cigpack_robust = 2, /obj/item/storage/fancy/cigarettes/cigpack_carp = 3, /obj/item/storage/fancy/cigarettes/cigpack_midori = 1, /obj/item/storage/box/matches = 10, /obj/item/lighter/greyscale = 4, /obj/item/storage/fancy/rollingpapers = 5)
 	},
 /turf/open/floor/plasteel/bar{
 	dir = 2
@@ -5726,7 +5726,7 @@
 	},
 /area/syndicate_mothership/control)
 "pq" = (
-/obj/item/weapon/soap/syndie,
+/obj/item/soap/syndie,
 /obj/structure/mopbucket,
 /obj/machinery/light/small{
 	dir = 1
@@ -5739,7 +5739,7 @@
 /obj/structure/mirror{
 	pixel_x = 28
 	},
-/obj/item/weapon/mop,
+/obj/item/mop,
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
@@ -5799,7 +5799,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "pz" = (
-/obj/item/weapon/paper/fluff/stations/centcom/disk_memo,
+/obj/item/paper/fluff/stations/centcom/disk_memo,
 /obj/structure/noticeboard{
 	pixel_x = -32
 	},
@@ -5844,7 +5844,7 @@
 /area/syndicate_mothership/control)
 "pF" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /obj/item/device/taperecorder,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5855,7 +5855,7 @@
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/device/radio/headset/headset_cent,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5880,8 +5880,8 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/wrench,
+/obj/item/crowbar/red,
+/obj/item/wrench,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5905,7 +5905,7 @@
 /area/centcom/ferry)
 "pM" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/weapon/weldingtool/experimental,
+/obj/item/weldingtool/experimental,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -5936,7 +5936,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pO" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/newscaster{
@@ -5951,7 +5951,7 @@
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "pQ" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -5973,7 +5973,7 @@
 /area/centcom/ferry)
 "pT" = (
 /obj/machinery/computer/card/centcom,
-/obj/item/weapon/card/id/centcom,
+/obj/item/card/id/centcom,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
 	name = "Research Monitor";
@@ -6023,7 +6023,7 @@
 	amount = 50
 	},
 /obj/item/stack/cable_coil/white,
-/obj/item/weapon/screwdriver/power,
+/obj/item/screwdriver/power,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
 	d2 = 2;
@@ -6048,8 +6048,8 @@
 /area/centcom/ferry)
 "pY" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/lockbox/loyalty,
-/obj/item/weapon/gun/ballistic/automatic/ar,
+/obj/item/storage/lockbox/loyalty,
+/obj/item/gun/ballistic/automatic/ar,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -6058,10 +6058,10 @@
 /area/centcom/ferry)
 "pZ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/crowbar/power,
-/obj/item/weapon/storage/belt/security/full,
+/obj/item/storage/box/handcuffs,
+/obj/item/crowbar/red,
+/obj/item/crowbar/power,
+/obj/item/storage/belt/security/full,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
@@ -6093,7 +6093,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "qd" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -6118,8 +6118,8 @@
 /area/centcom/control)
 "qg" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -6129,8 +6129,8 @@
 /area/centcom/control)
 "qh" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/wrench,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -6138,18 +6138,18 @@
 /area/centcom/control)
 "qi" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/crowbar/red,
+/obj/item/storage/box/handcuffs,
+/obj/item/crowbar/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/control)
 "qj" = (
-/obj/item/weapon/storage/box/ids{
+/obj/item/storage/box/ids{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/silver_ids,
+/obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -6303,7 +6303,7 @@
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "qE" = (
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/structure/table/reinforced,
 /obj/item/device/detective_scanner,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6479,8 +6479,8 @@
 /area/centcom/evac)
 "qU" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -6544,14 +6544,14 @@
 /area/syndicate_mothership/control)
 "rg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,
+/obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
 /area/syndicate_mothership/control)
 "rh" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -6666,7 +6666,7 @@
 /area/centcom/ferry)
 "rz" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "rA" = (
@@ -6692,15 +6692,15 @@
 /area/centcom/ferry)
 "rC" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/folder/red,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
 "rD" = (
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
@@ -6708,8 +6708,8 @@
 	},
 /area/centcom/ferry)
 "rE" = (
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
@@ -6775,10 +6775,10 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rI" = (
-/obj/item/weapon/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /obj/item/ammo_box/a357,
 /obj/item/ammo_box/a357,
-/obj/item/weapon/gun/ballistic/revolver/mateba,
+/obj/item/gun/ballistic/revolver/mateba,
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm{
 	dir = 1;
@@ -6790,7 +6790,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rJ" = (
-/obj/item/weapon/gun/energy/pulse/carbine/loyalpin,
+/obj/item/gun/energy/pulse/carbine/loyalpin,
 /obj/item/device/flashlight/seclite,
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
@@ -6803,14 +6803,14 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rK" = (
-/obj/item/weapon/storage/box/emps{
+/obj/item/storage/box/emps{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/weapon/grenade/plastic/x4,
-/obj/item/weapon/grenade/plastic/x4,
-/obj/item/weapon/grenade/plastic/x4,
+/obj/item/storage/box/flashbangs,
+/obj/item/grenade/plastic/x4,
+/obj/item/grenade/plastic/x4,
+/obj/item/grenade/plastic/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
 /obj/structure/reagent_dispensers/peppertank{
@@ -6822,7 +6822,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rL" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/green/corner{
@@ -6853,7 +6853,7 @@
 	},
 /area/centcom/control)
 "rQ" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -6866,7 +6866,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "rS" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/vault{
@@ -6874,7 +6874,7 @@
 	},
 /area/centcom/control)
 "rT" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -6958,13 +6958,13 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "sf" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -7187,9 +7187,9 @@
 "sH" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/packageWrap,
-/obj/item/weapon/crowbar/power,
-/obj/item/weapon/wrench,
-/obj/item/weapon/hand_labeler,
+/obj/item/crowbar/power,
+/obj/item/wrench,
+/obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -7210,8 +7210,8 @@
 /area/centcom/ferry)
 "sK" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -7221,7 +7221,7 @@
 	},
 /area/centcom/ferry)
 "sL" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/vault{
@@ -7233,7 +7233,7 @@
 /turf/open/floor/plasteel/vault,
 /area/centcom/ferry)
 "sN" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -7252,11 +7252,11 @@
 /area/centcom/ferry)
 "sP" = (
 /obj/structure/table/wood,
-/obj/item/weapon/dice/d20{
+/obj/item/dice/d20{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/dice/d10{
+/obj/item/dice/d10{
 	pixel_x = -3
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
@@ -7311,8 +7311,8 @@
 "sV" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	dir = 1;
@@ -7380,8 +7380,8 @@
 /turf/open/floor/carpet,
 /area/wizard_station)
 "th" = (
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
@@ -7425,9 +7425,9 @@
 /area/centcom/ferry)
 "to" = (
 /obj/structure/closet/emcloset,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
@@ -7535,7 +7535,7 @@
 /area/centcom/control)
 "tx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -7549,8 +7549,8 @@
 /area/centcom/control)
 "tz" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -7584,9 +7584,9 @@
 /area/centcom/control)
 "tD" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -7606,8 +7606,8 @@
 /area/centcom/control)
 "tG" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -7790,15 +7790,15 @@
 /area/centcom/control)
 "uh" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red{
+/obj/item/folder/red{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/weapon/folder/blue{
+/obj/item/folder/blue{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -7874,7 +7874,7 @@
 	icon_state = "minibar_left";
 	name = "skeletal minibar"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "uv" = (
@@ -7886,7 +7886,7 @@
 	icon_state = "minibar_right";
 	name = "skeletal minibar"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/gin,
+/obj/item/reagent_containers/food/drinks/bottle/gin,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "uw" = (
@@ -7969,7 +7969,7 @@
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "uG" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -8008,7 +8008,7 @@
 /turf/open/floor/plasteel/green/corner,
 /area/centcom/control)
 "uN" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -8017,7 +8017,7 @@
 	},
 /area/centcom/control)
 "uO" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -8026,7 +8026,7 @@
 	},
 /area/centcom/control)
 "uP" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8041,7 +8041,7 @@
 	},
 /area/centcom/evac)
 "uR" = (
-/obj/item/weapon/statuebust{
+/obj/item/statuebust{
 	pixel_y = 12
 	},
 /obj/structure/table/wood/fancy,
@@ -8057,14 +8057,14 @@
 /area/wizard_station)
 "uU" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/storage/pill_bottle/dice{
+/obj/item/storage/pill_bottle/dice{
 	icon_state = "magicdicebag"
 	},
 /turf/open/floor/carpet,
 /area/wizard_station)
 "uV" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/storage/photo_album,
+/obj/item/storage/photo_album,
 /obj/machinery/light,
 /turf/open/floor/carpet,
 /area/wizard_station)
@@ -8249,11 +8249,11 @@
 	},
 /area/centcom/control)
 "vx" = (
-/obj/item/weapon/storage/box/ids{
+/obj/item/storage/box/ids{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/silver_ids,
+/obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -8261,9 +8261,9 @@
 /area/centcom/control)
 "vy" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen/blue,
+/obj/item/clipboard,
+/obj/item/folder/white,
+/obj/item/pen/blue,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -8284,9 +8284,9 @@
 /area/centcom/control)
 "vB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -8304,7 +8304,7 @@
 /turf/open/floor/plasteel/blue/side,
 /area/centcom/control)
 "vE" = (
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/structure/table,
 /turf/open/floor/plasteel/green/side{
 	dir = 6
@@ -8327,7 +8327,7 @@
 /area/wizard_station)
 "vI" = (
 /obj/structure/table/wood,
-/obj/item/weapon/retractor,
+/obj/item/retractor,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -8337,7 +8337,7 @@
 /obj/structure/table/wood,
 /obj/item/clothing/suit/wizrobe/magusblue,
 /obj/item/clothing/head/wizard/magus,
-/obj/item/weapon/staff,
+/obj/item/staff,
 /obj/structure/mirror/magic{
 	pixel_y = 28
 	},
@@ -8350,11 +8350,11 @@
 /obj/structure/table/wood,
 /obj/item/clothing/suit/wizrobe/magusred,
 /obj/item/clothing/head/wizard/magus,
-/obj/item/weapon/staff,
+/obj/item/staff,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "vL" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
 /turf/open/floor/grass,
 /area/wizard_station)
 "vM" = (
@@ -8376,14 +8376,14 @@
 /area/syndicate_mothership/control)
 "vQ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
 "vR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/phone{
+/obj/item/phone{
 	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
@@ -8421,7 +8421,7 @@
 	},
 /area/centcom/ferry)
 "vU" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -8430,7 +8430,7 @@
 	},
 /area/centcom/ferry)
 "vV" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light{
@@ -8460,7 +8460,7 @@
 /area/centcom/ferry)
 "vY" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/device/flashlight/seclite,
 /obj/structure/noticeboard{
 	pixel_y = 28
@@ -8470,10 +8470,10 @@
 /area/centcom/ferry)
 "vZ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = 6
 	},
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = -4
 	},
 /obj/machinery/firealarm{
@@ -8484,11 +8484,11 @@
 /area/centcom/ferry)
 "wa" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
+/obj/item/gun/energy/e_gun{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/e_gun,
+/obj/item/gun/energy/e_gun,
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
@@ -8548,7 +8548,7 @@
 	},
 /obj/item/clothing/suit/wizrobe/red,
 /obj/item/clothing/head/wizard/red,
-/obj/item/weapon/staff,
+/obj/item/staff,
 /obj/item/clothing/shoes/sandal/magic,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -8556,7 +8556,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "wj" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
 /turf/open/floor/grass,
 /area/wizard_station)
 "wk" = (
@@ -8568,7 +8568,7 @@
 /area/syndicate_mothership/control)
 "wl" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/ionrifle{
+/obj/item/gun/energy/ionrifle{
 	pin = /obj/item/device/firing_pin
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8578,8 +8578,8 @@
 /area/syndicate_mothership/control)
 "wm" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -8626,14 +8626,14 @@
 /turf/open/floor/plasteel/blue/corner,
 /area/centcom/control)
 "wu" = (
-/obj/item/weapon/scalpel{
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/retractor{
+/obj/item/circular_saw,
+/obj/item/retractor{
 	pixel_x = 4
 	},
-/obj/item/weapon/hemostat{
+/obj/item/hemostat{
 	pixel_x = -4
 	},
 /obj/item/clothing/gloves/color/latex,
@@ -8672,14 +8672,14 @@
 /obj/structure/destructible/cult/talisman{
 	desc = "A altar dedicated to the Wizard's Federation"
 	},
-/obj/item/weapon/kitchen/knife/ritual,
+/obj/item/kitchen/knife/ritual,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "wB" = (
 /obj/item/clothing/shoes/sandal/marisa,
 /obj/item/clothing/suit/wizrobe/marisa,
 /obj/item/clothing/head/wizard/marisa,
-/obj/item/weapon/staff/broom,
+/obj/item/staff/broom,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "wC" = (
@@ -8695,44 +8695,44 @@
 /area/centcom/ferry)
 "wE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red{
+/obj/item/folder/red{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/weapon/folder/blue{
+/obj/item/folder/blue{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "wF" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
 "wG" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
 "wH" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen/blue,
+/obj/item/clipboard,
+/obj/item/folder/white,
+/obj/item/pen/blue,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
 "wI" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -8751,7 +8751,7 @@
 /area/centcom/ferry)
 "wM" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/device/radio,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -8760,7 +8760,7 @@
 /area/centcom/ferry)
 "wN" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -8775,7 +8775,7 @@
 	},
 /area/centcom/ferry)
 "wP" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -8794,14 +8794,14 @@
 /turf/open/floor/plasteel/green/corner,
 /area/centcom/control)
 "wS" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/blue/corner,
 /area/centcom/control)
 "wT" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/cmo,
 /area/centcom/control)
 "wU" = (
@@ -8832,7 +8832,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "xa" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
 /turf/open/floor/grass,
 /area/wizard_station)
 "xb" = (
@@ -8847,13 +8847,13 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "xd" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
@@ -8873,9 +8873,9 @@
 /area/centcom/ferry)
 "xh" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -8891,8 +8891,8 @@
 /area/centcom/ferry)
 "xj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/yellow,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -8900,8 +8900,8 @@
 /area/centcom/ferry)
 "xk" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/zipties,
-/obj/item/weapon/crowbar/red,
+/obj/item/storage/box/zipties,
+/obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -8945,12 +8945,12 @@
 "xs" = (
 /obj/structure/table,
 /obj/item/toy/sword,
-/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
+/obj/item/gun/ballistic/shotgun/toy/crossbow,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "xt" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -8973,13 +8973,13 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "xw" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
 /turf/open/floor/grass,
 /area/wizard_station)
 "xx" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -8990,21 +8990,21 @@
 /area/centcom/ferry)
 "xz" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /obj/item/device/taperecorder,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "xA" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
 "xB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/crowbar/red,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9012,16 +9012,16 @@
 /area/centcom/ferry)
 "xC" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/pen/blue,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
+/obj/item/pen/blue,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/ferry)
 "xD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs/cable/zipties,
+/obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9029,7 +9029,7 @@
 /area/centcom/ferry)
 "xE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/lockbox/loyalty,
+/obj/item/storage/lockbox/loyalty,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -9037,8 +9037,8 @@
 /area/centcom/ferry)
 "xF" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -9061,38 +9061,38 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "xI" = (
-/obj/item/weapon/defibrillator/loaded,
+/obj/item/defibrillator/loaded,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cmo,
 /area/centcom/control)
 "xJ" = (
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 2;
 	pixel_y = 8
 	},
@@ -9129,8 +9129,8 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "xN" = (
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -9138,8 +9138,8 @@
 /turf/open/floor/plasteel/cmo,
 /area/centcom/control)
 "xO" = (
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -9153,7 +9153,7 @@
 "xP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	dir = 1;
@@ -9167,8 +9167,8 @@
 "xQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -9197,7 +9197,7 @@
 /area/wizard_station)
 "xT" = (
 /obj/structure/table/wood,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/device/radio/headset/headset_cent,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9238,7 +9238,7 @@
 /area/centcom/evac)
 "xY" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs/cable/zipties,
+/obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9268,9 +9268,9 @@
 /area/syndicate_mothership)
 "yd" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/folder/red,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9278,8 +9278,8 @@
 /area/centcom/ferry)
 "ye" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/lighter,
+/obj/item/folder/red,
+/obj/item/lighter,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -9313,7 +9313,7 @@
 	},
 /area/centcom/ferry)
 "yj" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/power/apc{
@@ -9335,7 +9335,7 @@
 	},
 /area/centcom/ferry)
 "yl" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light,
@@ -9348,7 +9348,7 @@
 	},
 /area/centcom/ferry)
 "ym" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -9400,8 +9400,8 @@
 /area/centcom/ferry)
 "yq" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/emps,
-/obj/item/weapon/gun/energy/ionrifle,
+/obj/item/storage/box/emps,
+/obj/item/gun/energy/ionrifle,
 /obj/structure/sign/bluecross_2{
 	pixel_y = -32
 	},
@@ -9412,8 +9412,8 @@
 /area/centcom/ferry)
 "yr" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/gun/syringe/rapidsyringe,
+/obj/item/storage/box/syringes,
+/obj/item/gun/syringe/rapidsyringe,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},
@@ -9442,7 +9442,7 @@
 /area/centcom/ferry)
 "yu" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /obj/item/device/taperecorder,
 /obj/machinery/firealarm{
 	dir = 4;
@@ -9454,8 +9454,8 @@
 /area/centcom/control)
 "yv" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -9477,9 +9477,9 @@
 /area/centcom/control)
 "yy" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -9499,7 +9499,7 @@
 /area/centcom/control)
 "yA" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9527,10 +9527,10 @@
 /area/centcom/evac)
 "yE" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/storage/belt/security/full,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -9556,21 +9556,21 @@
 /area/centcom/control)
 "yH" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -4
 	},
-/obj/item/weapon/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/hypospray/medipen,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/control)
 "yI" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -9580,23 +9580,23 @@
 /area/centcom/control)
 "yJ" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/storage/belt/security/full,
+/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/evac)
 "yK" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/evac)
 "yL" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -9608,13 +9608,13 @@
 	},
 /area/centcom/evac)
 "yM" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9635,7 +9635,7 @@
 "yP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -9645,7 +9645,7 @@
 "yQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/food/drinks/britcup,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -9669,8 +9669,8 @@
 /area/centcom/evac)
 "yU" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9678,18 +9678,18 @@
 /area/centcom/evac)
 "yV" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /obj/item/device/taperecorder,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/evac)
 "yW" = (
-/obj/item/weapon/storage/box/ids{
+/obj/item/storage/box/ids{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/silver_ids,
+/obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
@@ -9720,13 +9720,13 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "za" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 8
@@ -9746,8 +9746,8 @@
 "zc" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /obj/machinery/door/window/brigdoor{
 	name = "CentCom Customs";
 	icon_state = "rightsecure";
@@ -9761,8 +9761,8 @@
 "zd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen/blue,
+/obj/item/folder/white,
+/obj/item/pen/blue,
 /obj/machinery/door/window/brigdoor{
 	name = "CentCom Customs";
 	icon_state = "rightsecure";
@@ -9807,8 +9807,8 @@
 "zj" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/teleport_scroll,
-/obj/item/weapon/dice/d20,
-/obj/item/weapon/dice,
+/obj/item/dice/d20,
+/obj/item/dice,
 /turf/open/floor/carpet,
 /area/wizard_station)
 "zk" = (
@@ -9857,7 +9857,7 @@
 	},
 /area/centcom/control)
 "zq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -9866,7 +9866,7 @@
 	},
 /area/centcom/control)
 "zr" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/green/corner,
@@ -9882,9 +9882,9 @@
 /area/centcom/control)
 "zt" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen/blue,
+/obj/item/clipboard,
+/obj/item/folder/white,
+/obj/item/pen/blue,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -9894,22 +9894,22 @@
 	},
 /area/centcom/control)
 "zu" = (
-/obj/item/weapon/cautery/alien,
+/obj/item/cautery/alien,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/wizard_station)
 "zv" = (
-/obj/item/weapon/coin/antagtoken,
+/obj/item/coin/antagtoken,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/wizard_station)
 "zw" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/item/bedsheet/wiz,
 /turf/open/floor/carpet,
 /area/wizard_station)
 "zx" = (
-/obj/item/weapon/soap/homemade,
+/obj/item/soap/homemade,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -9929,7 +9929,7 @@
 /area/centcom/control)
 "zz" = (
 /obj/structure/closet/cardboard,
-/obj/item/weapon/banhammer,
+/obj/item/banhammer,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/wizard_station)
@@ -9948,13 +9948,13 @@
 /area/wizard_station)
 "zC" = (
 /obj/structure/dresser,
-/obj/item/weapon/storage/backpack/satchel,
+/obj/item/storage/backpack/satchel,
 /turf/open/floor/carpet,
 /area/wizard_station)
 "zD" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/bag/tray,
-/obj/item/weapon/reagent_containers/food/snacks/burger/spell,
+/obj/item/storage/bag/tray,
+/obj/item/reagent_containers/food/snacks/burger/spell,
 /turf/open/floor/carpet,
 /area/wizard_station)
 "zE" = (
@@ -9969,7 +9969,7 @@
 /area/wizard_station)
 "zG" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/skub{
+/obj/item/skub{
 	pixel_y = 16
 	},
 /turf/open/floor/plasteel/white,
@@ -9995,12 +9995,12 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "zL" = (
-/obj/item/weapon/clipboard,
-/obj/item/weapon/stamp/denied{
+/obj/item/clipboard,
+/obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -10008,8 +10008,8 @@
 /area/tdome/tdomeobserve)
 "zM" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/red,
+/obj/item/paper_bin,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -10020,8 +10020,8 @@
 /area/tdome/tdomeobserve)
 "zO" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/green/side{
 	dir = 9
 	},
@@ -10131,7 +10131,7 @@
 "Af" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
@@ -10182,7 +10182,7 @@
 /area/wizard_station)
 "Ao" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/magic/wand{
+/obj/item/gun/magic/wand{
 	desc = "Used in emergencies to reignite magma engines.";
 	max_charges = 0;
 	name = "wand of emergency engine ignition"
@@ -10191,7 +10191,7 @@
 /area/wizard_station)
 "Ap" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bikehorn/golden{
+/obj/item/bikehorn/golden{
 	pixel_x = -8;
 	pixel_y = 8
 	},
@@ -10227,19 +10227,19 @@
 /area/centcom/holding)
 "Au" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -10326,7 +10326,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "AI" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/green/corner{
@@ -10339,7 +10339,7 @@
 	},
 /area/tdome/tdomeobserve)
 "AK" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -10408,7 +10408,7 @@
 	},
 /area/tdome/tdomeobserve)
 "AU" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/soap/nanotrasen,
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
 "AV" = (
@@ -10421,7 +10421,7 @@
 	},
 /area/tdome/tdomeobserve)
 "AW" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -10474,7 +10474,7 @@
 /turf/open/floor/plasteel/green/side,
 /area/tdome/tdomeobserve)
 "Bg" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -10514,28 +10514,28 @@
 /area/centcom/holding)
 "Bl" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
 /area/centcom/holding)
 "Bm" = (
 /obj/structure/table,
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
 /area/centcom/holding)
 "Bn" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
 /area/centcom/holding)
 "Bo" = (
 /obj/structure/table,
-/obj/item/weapon/dice/d20,
+/obj/item/dice/d20,
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
@@ -10577,7 +10577,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Bv" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -10586,7 +10586,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Bw" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -10595,7 +10595,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Bx" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -10604,7 +10604,7 @@
 	},
 /area/tdome/tdomeobserve)
 "By" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/red/side,
@@ -10620,13 +10620,13 @@
 /turf/open/floor/plasteel/loadingarea,
 /area/tdome/tdomeobserve)
 "BC" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/green/side,
 /area/tdome/tdomeobserve)
 "BD" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -10635,7 +10635,7 @@
 	},
 /area/tdome/tdomeobserve)
 "BE" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -10712,8 +10712,8 @@
 /area/wizard_station)
 "BP" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/crayons,
-/obj/item/weapon/gun/ballistic/automatic/toy/pistol,
+/obj/item/storage/crayons,
+/obj/item/gun/ballistic/automatic/toy/pistol,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "BQ" = (
@@ -10745,49 +10745,49 @@
 /area/tdome/tdomeobserve)
 "BU" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
-/obj/item/weapon/reagent_containers/food/snacks/sausage,
-/obj/item/weapon/reagent_containers/food/snacks/sausage,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet,
-/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
-/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
-/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
-/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/meat/rawbacon,
+/obj/item/reagent_containers/food/snacks/meat/rawbacon,
+/obj/item/reagent_containers/food/snacks/meat/rawbacon,
+/obj/item/reagent_containers/food/snacks/meat/rawbacon,
+/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/tdome/tdomeobserve)
 "BV" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet,
-/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/rice,
-/obj/item/weapon/reagent_containers/food/snacks/grown/rice,
-/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
-/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
-/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon,
-/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime,
-/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange,
-/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
-/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/whitebeet,
+/obj/item/reagent_containers/food/snacks/grown/whitebeet,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/rice,
+/obj/item/reagent_containers/food/snacks/grown/rice,
+/obj/item/reagent_containers/food/snacks/grown/icepepper,
+/obj/item/reagent_containers/food/snacks/grown/icepepper,
+/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/obj/item/reagent_containers/food/snacks/grown/cherries,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -10799,48 +10799,48 @@
 /area/tdome/tdomeobserve)
 "BX" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod,
-/obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod,
-/obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane,
-/obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane,
-/obj/item/weapon/reagent_containers/food/snacks/grown/oat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/oat,
-/obj/item/weapon/reagent_containers/food/snacks/grown/grapes,
-/obj/item/weapon/reagent_containers/food/snacks/grown/grapes,
-/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
-/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
-/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
-/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/vanillapod,
+/obj/item/reagent_containers/food/snacks/grown/vanillapod,
+/obj/item/reagent_containers/food/snacks/grown/sugarcane,
+/obj/item/reagent_containers/food/snacks/grown/sugarcane,
+/obj/item/reagent_containers/food/snacks/grown/oat,
+/obj/item/reagent_containers/food/snacks/grown/oat,
+/obj/item/reagent_containers/food/snacks/grown/grapes,
+/obj/item/reagent_containers/food/snacks/grown/grapes,
+/obj/item/reagent_containers/food/snacks/grown/corn,
+/obj/item/reagent_containers/food/snacks/grown/corn,
+/obj/item/reagent_containers/food/snacks/grown/chili,
+/obj/item/reagent_containers/food/snacks/grown/chili,
+/obj/item/reagent_containers/food/snacks/grown/carrot,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/tdome/tdomeobserve)
 "BY" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
-/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet,
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -10905,8 +10905,8 @@
 /area/tdome/tdomeobserve)
 "Cg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/beanbag,
-/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
+/obj/item/storage/box/beanbag,
+/obj/item/gun/ballistic/revolver/doublebarrel,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -10929,8 +10929,8 @@
 /area/tdome/tdomeobserve)
 "Cj" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -10957,8 +10957,8 @@
 /area/wizard_station)
 "Cn" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/crayons,
-/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
+/obj/item/storage/crayons,
+/obj/item/gun/ballistic/shotgun/toy/crossbow,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Co" = (
@@ -10991,7 +10991,7 @@
 /area/tdome/tdomeobserve)
 "Ct" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
 /turf/open/floor/plasteel/grimy,
 /area/tdome/tdomeobserve)
 "Cu" = (
@@ -11027,7 +11027,7 @@
 /area/centcom/holding)
 "Cy" = (
 /obj/structure/table,
-/obj/item/weapon/gun/ballistic/automatic/toy/pistol,
+/obj/item/gun/ballistic/automatic/toy/pistol,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Cz" = (
@@ -11045,14 +11045,14 @@
 /area/tdome/tdomeobserve)
 "CB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = -8
 	},
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
@@ -11163,8 +11163,8 @@
 /area/tdome/tdomeobserve)
 "CP" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/mint,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/reagent_containers/food/condiment/enzyme{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -11203,7 +11203,7 @@
 /turf/open/floor/plasteel/whitegreen/corner,
 /area/tdome/tdomeobserve)
 "CU" = (
-/obj/item/weapon/reagent_containers/food/snacks/egg/rainbow{
+/obj/item/reagent_containers/food/snacks/egg/rainbow{
 	desc = "I bet you think you're pretty clever... well you are.";
 	name = "easter egg"
 	},
@@ -11228,7 +11228,7 @@
 "CX" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/apron/chef,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -11236,14 +11236,14 @@
 "CY" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = -8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/food/drinks/britcup,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
@@ -11333,8 +11333,8 @@
 "Di" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/storage/bag/tray,
-/obj/item/weapon/kitchen/fork,
+/obj/item/storage/bag/tray,
+/obj/item/kitchen/fork,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
@@ -11351,7 +11351,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Dl" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -11364,8 +11364,8 @@
 /area/tdome/tdomeobserve)
 "Dn" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/item/clothing/head/chefhat,
 /turf/open/floor/plasteel/vault,
 /area/tdome/tdomeobserve)
@@ -11387,13 +11387,13 @@
 	},
 /area/tdome/tdomeobserve)
 "Dq" = (
-/obj/item/weapon/storage/fancy/cigarettes/cigars{
+/obj/item/storage/fancy/cigarettes/cigars{
 	pixel_y = 6
 	},
-/obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba{
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -11405,7 +11405,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Ds" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -11473,7 +11473,7 @@
 	},
 /area/tdome/tdomeobserve)
 "DA" = (
-/obj/item/weapon/storage/box/matches{
+/obj/item/storage/box/matches{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -11486,11 +11486,11 @@
 	},
 /area/tdome/tdomeobserve)
 "DB" = (
-/obj/item/weapon/lighter{
+/obj/item/lighter{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -11498,9 +11498,9 @@
 /area/tdome/tdomeobserve)
 "DC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/book/manual/barman_recipes,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/glass/rag,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -11553,8 +11553,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/weapon/melee/baton/loaded,
-/obj/item/weapon/melee/transforming/energy/sword/saber/red,
+/obj/item/melee/baton/loaded,
+/obj/item/melee/transforming/energy/sword/saber/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -11673,8 +11673,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/weapon/melee/baton/loaded,
-/obj/item/weapon/melee/transforming/energy/sword/saber/green,
+/obj/item/melee/baton/loaded,
+/obj/item/melee/transforming/energy/sword/saber/green,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -11926,7 +11926,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/weapon/gun/energy/laser,
+/obj/item/gun/energy/laser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -11956,7 +11956,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/weapon/gun/energy/laser,
+/obj/item/gun/energy/laser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -12027,7 +12027,7 @@
 	},
 /area/tdome/tdomeadmin)
 "Fd" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -12049,7 +12049,7 @@
 	},
 /area/tdome/tdomeadmin)
 "Fg" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -12111,7 +12111,7 @@
 /area/shuttle/escape)
 "Fp" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/fluff/stations/centcom/broken_evac,
+/obj/item/paper/fluff/stations/centcom/broken_evac,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Fq" = (
@@ -12122,8 +12122,8 @@
 /area/tdome/tdomeadmin)
 "Fr" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12131,9 +12131,9 @@
 /area/tdome/tdomeadmin)
 "Fs" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/folder/red,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12141,7 +12141,7 @@
 /area/tdome/tdomeadmin)
 "Ft" = (
 /obj/structure/table/wood,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/device/radio/headset/headset_cent,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12149,7 +12149,7 @@
 /area/tdome/tdomeadmin)
 "Fu" = (
 /obj/structure/table/wood,
-/obj/item/weapon/phone{
+/obj/item/phone{
 	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
@@ -12207,8 +12207,8 @@
 /area/tdome/tdomeadmin)
 "Fy" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/lighter,
+/obj/item/folder/red,
+/obj/item/lighter,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -12217,11 +12217,11 @@
 	},
 /area/tdome/tdomeadmin)
 "Fz" = (
-/obj/item/weapon/storage/briefcase{
+/obj/item/storage/briefcase{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12229,15 +12229,15 @@
 /area/tdome/tdomeadmin)
 "FA" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/tdome/tdomeadmin)
 "FB" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_y = 5
 	},
 /obj/machinery/light,
@@ -12247,7 +12247,7 @@
 /area/tdome/tdomeadmin)
 "FC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/random,
+/obj/item/book/manual/random,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "FD" = (
@@ -12354,17 +12354,17 @@
 /area/centcom/evac)
 "FW" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "FX" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/fire{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -12372,10 +12372,10 @@
 /area/centcom/evac)
 "FY" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2
 	},
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -12467,17 +12467,17 @@
 /area/abductor_ship)
 "Gp" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "Gq" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "Gr" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "Gs" = (
@@ -12543,8 +12543,8 @@
 /area/centcom/evac)
 "GE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/stamp,
+/obj/item/clipboard,
+/obj/item/stamp,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "GF" = (
@@ -12553,8 +12553,8 @@
 	},
 /area/abductor_ship)
 "GG" = (
-/obj/item/weapon/retractor/alien,
-/obj/item/weapon/hemostat/alien,
+/obj/item/retractor/alien,
+/obj/item/hemostat/alien,
 /obj/structure/table/abductor,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12572,7 +12572,7 @@
 /area/abductor_ship)
 "GK" = (
 /obj/structure/table/abductor,
-/obj/item/weapon/storage/box/alienhandcuffs,
+/obj/item/storage/box/alienhandcuffs,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "GL" = (
@@ -12612,11 +12612,11 @@
 	},
 /area/abductor_ship)
 "GS" = (
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/paper/guides/antag/abductor,
-/obj/item/weapon/scalpel/alien,
+/obj/item/surgical_drapes,
+/obj/item/paper/guides/antag/abductor,
+/obj/item/scalpel/alien,
 /obj/structure/table/abductor,
-/obj/item/weapon/cautery/alien,
+/obj/item/cautery/alien,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "GT" = (
@@ -12626,7 +12626,7 @@
 /area/abductor_ship)
 "GU" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "GV" = (
@@ -12666,8 +12666,8 @@
 /area/abductor_ship)
 "Ha" = (
 /obj/structure/table/abductor,
-/obj/item/weapon/surgicaldrill/alien,
-/obj/item/weapon/circular_saw/alien,
+/obj/item/surgicaldrill/alien,
+/obj/item/circular_saw/alien,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hb" = (
@@ -12785,13 +12785,13 @@
 /area/centcom/evac)
 "Hw" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Hx" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Hy" = (
@@ -12847,7 +12847,7 @@
 /area/centcom/evac)
 "HH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/lockbox,
+/obj/item/storage/lockbox,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "HI" = (
@@ -12860,13 +12860,13 @@
 /area/centcom/evac)
 "HK" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/pen,
+/obj/item/clipboard,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "HL" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "HM" = (
@@ -13079,7 +13079,7 @@
 /area/centcom/evac)
 "JU" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -13589,7 +13589,7 @@
 /area/centcom/evac)
 "LW" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

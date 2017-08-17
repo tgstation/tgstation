@@ -56,12 +56,12 @@
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(!disassembled)
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/shard( src.loc )
 	qdel(src)
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weapon/weldingtool/WT = I
+	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		var/obj/item/weldingtool/WT = I
 		if(broken)
 			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))

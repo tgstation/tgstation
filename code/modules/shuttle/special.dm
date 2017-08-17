@@ -164,7 +164,7 @@
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
-	access_card = new /obj/item/weapon/card/id(src)
+	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
@@ -206,7 +206,7 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/weapon/card/id/ID = user.get_idcard()
+	var/obj/item/card/id/ID = user.get_idcard()
 	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 
@@ -226,7 +226,7 @@
 	var/total_cash = 0
 	var/list/counted_money = list()
 
-	for(var/obj/item/weapon/coin/C in mover.GetAllContents())
+	for(var/obj/item/coin/C in mover.GetAllContents())
 		total_cash += C.value
 		counted_money += C
 		if(total_cash >= threshold)

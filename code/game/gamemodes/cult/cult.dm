@@ -125,9 +125,9 @@
 			mob.dna.remove_mutation(CLOWNMUT)
 
 	if(tome)
-		. += cult_give_item(/obj/item/weapon/tome, mob)
+		. += cult_give_item(/obj/item/tome, mob)
 	else
-		. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
+		. += cult_give_item(/obj/item/paper/talisman/supply, mob)
 	to_chat(mob, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
 /datum/game_mode/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
@@ -146,7 +146,7 @@
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].")
 		if(where == "backpack")
-			var/obj/item/weapon/storage/B = mob.back
+			var/obj/item/storage/B = mob.back
 			B.orient2hud(mob)
 			B.show_to(mob)
 		return 1

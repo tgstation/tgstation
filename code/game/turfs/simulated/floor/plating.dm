@@ -60,8 +60,8 @@
 			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
-	else if(istype(C, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/welder = C
+	else if(istype(C, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
 			if(welder.remove_fuel(0,user))
 				to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")

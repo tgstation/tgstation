@@ -21,7 +21,7 @@
 		return 1
 	return 0
 
-/obj/item/weapon/electronics/airalarm
+/obj/item/electronics/airalarm
 	name = "air alarm electronics"
 	icon_state = "airalarm_electronics"
 
@@ -640,20 +640,20 @@
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
+			if(istype(W, /obj/item/wirecutters) && panel_open && wires.is_all_cut())
 				playsound(src.loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
-			else if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
+			else if(istype(W, /obj/item/screwdriver))  // Opening that Air Alarm up.
 				playsound(src.loc, W.usesound, 50, 1)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
 				return
-			else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
 					to_chat(user, "<span class='warning'>It does nothing!</span>")
 				else
@@ -667,14 +667,14 @@
 				wires.interact(user)
 				return
 		if(1)
-			if(istype(W, /obj/item/weapon/crowbar))
+			if(istype(W, /obj/item/crowbar))
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, W.usesound, 50, 1)
 				if (do_after(user, 20*W.toolspeed, target = src))
 					if (buildstage == 1)
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
-						new /obj/item/weapon/electronics/airalarm( src.loc )
+						new /obj/item/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()
@@ -701,7 +701,7 @@
 						update_icon()
 				return
 		if(0)
-			if(istype(W, /obj/item/weapon/electronics/airalarm))
+			if(istype(W, /obj/item/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					buildstage = 1
@@ -709,7 +709,7 @@
 					qdel(W)
 				return
 
-			if(istype(W, /obj/item/weapon/wrench))
+			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 				playsound(src.loc, W.usesound, 50, 1)
 				new /obj/item/wallframe/airalarm( user.loc )
@@ -736,7 +736,7 @@
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 2)
-		var/obj/item/I = new /obj/item/weapon/electronics/airalarm(loc)
+		var/obj/item/I = new /obj/item/electronics/airalarm(loc)
 		if(!disassembled)
 			I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
