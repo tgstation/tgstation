@@ -16,7 +16,7 @@
       <span>{{data.location}}</span>
     {{/if}}
   </ui-section>
-  <ui-section label='Credits'>
+  <ui-section label='Spesos'>
     <span>{{Math.floor(adata.points)}}</span>
   </ui-section>
   <ui-section label='CentCom Message'>
@@ -43,7 +43,7 @@
       <ui-section candystripe nowrap>
         <div class='content'>#{{id}}</div>
         <div class='content'>{{object}}</div>
-        <div class='content'>{{cost}} Credits</div>
+        <div class='content'>{{cost}} Spesos</div>
         <div class='content'>
           <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
         </div>
@@ -63,7 +63,7 @@
     <ui-section candystripe nowrap>
       <div class='content'>#{{id}}</div>
       <div class='content'>{{object}}</div>
-      <div class='content'>{{cost}} Credits</div>
+      <div class='content'>{{cost}} Spesos</div>
       <div class='content'>By {{orderer}}</div>
       <div class='content'>Comment: {{reason}}</div>
       {{#if !data.requestonly}}
@@ -82,7 +82,7 @@
     <tab name='{{name}}'>
       {{#each packs}}
         <ui-section label='{{name}}' candystripe right>
-          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Credits</ui-button>
+          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Spesos</ui-button>
         </ui-section>
       {{/each}}
     </tab>

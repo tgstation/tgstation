@@ -125,7 +125,7 @@
 	A.headline = pick(	"[company.name] filing for bankruptcy", \
 						"[company.name] unable to pay, investors run", \
 						"[company.name] crashes, in foreclosure", \
-						"[company.name] in dire need of credits")
+						"[company.name] in dire need of Spesos")
 	A.subtitle = "Investors panic, bailout pending"
 	if (prob(15))
 		A.opinion = rand(-1, 1)

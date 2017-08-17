@@ -130,9 +130,9 @@
 		dat = reeltext
 
 	else
-		dat = {"Five credits to play!<BR>
+		dat = {"Five Spesos to play!<BR>
 		<B>Prize Money Available:</B> [money] (jackpot payout is ALWAYS 100%!)<BR>
-		<B>Credit Remaining:</B> [balance]<BR>
+		<B>Spesos Remaining:</B> [balance]<BR>
 		[plays] players have tried their luck today, and [jackpots] have won a jackpot!<BR>
 		<HR><BR>
 		<A href='?src=\ref[src];spin=1'>Play!</A><BR>
@@ -234,7 +234,7 @@
 	var/linelength = get_lines()
 
 	if(reels[1][2] + reels[2][2] + reels[3][2] + reels[4][2] + reels[5][2] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
-		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] credits worth of coins!'")
+		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] Spesos worth of coins!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
 		balance += money - give_coins(JACKPOT)
@@ -246,11 +246,11 @@
 			random_step(C, 2, 50)
 
 	else if(linelength == 5)
-		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand credits worth of coins!'")
+		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand Spesos worth of coins!'")
 		give_money(BIG_PRIZE)
 
 	else if(linelength == 4)
-		visible_message("<b>[src]</b> says, 'Winner! You win four hundred credits worth of coins!'")
+		visible_message("<b>[src]</b> says, 'Winner! You win four hundred Spesos worth of coins!'")
 		give_money(SMALL_PRIZE)
 
 	else if(linelength == 3)
