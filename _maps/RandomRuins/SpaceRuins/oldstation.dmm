@@ -44,9 +44,9 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 15
 	},
-/obj/item/weapon/ore/bluespace_crystal,
-/obj/item/weapon/ore/bluespace_crystal,
-/obj/item/weapon/ore/bluespace_crystal,
+/obj/item/ore/bluespace_crystal,
+/obj/item/ore/bluespace_crystal,
+/obj/item/ore/bluespace_crystal,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "ak" = (
@@ -93,7 +93,7 @@
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "as" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/banner,
+/obj/item/banner,
 /turf/open/floor/plasteel/blue/side{
 	dir = 9
 	},
@@ -118,7 +118,7 @@
 	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
 	name = "Broken Computer"
 	},
-/obj/item/weapon/paper/fluff/ruins/oldstation/damagereport,
+/obj/item/paper/fluff/ruins/oldstation/damagereport,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/comm)
 "aw" = (
@@ -127,7 +127,7 @@
 	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
 	name = "Broken Computer"
 	},
-/obj/item/weapon/paper/fluff/ruins/oldstation/report,
+/obj/item/paper/fluff/ruins/oldstation/report,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/comm)
 "ax" = (
@@ -138,7 +138,7 @@
 /area/ruin/space/has_grav/ancientstation/comm)
 "ay" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/banner,
+/obj/item/banner,
 /turf/open/floor/plasteel/blue/side{
 	dir = 5
 	},
@@ -207,9 +207,9 @@
 "aL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/deck,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/pen,
+/obj/item/deck,
+/obj/item/folder/blue,
+/obj/item/pen,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/comm)
 "aM" = (
@@ -331,20 +331,20 @@
 "ba" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/coin,
+/obj/item/coin,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/backpack/old,
+/obj/item/storage/backpack/old,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "bd" = (
@@ -371,10 +371,10 @@
 "bi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/apc,
-/obj/item/weapon/electronics/apc,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/apc,
+/obj/item/electronics/apc,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "bj" = (
@@ -447,19 +447,19 @@
 "bt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/dice/d6,
+/obj/item/dice/d6,
 /turf/open/floor/plasteel/blue/side,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/plasteel/blue/side,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/soap/nanotrasen,
 /turf/open/floor/plasteel/blue/side{
 	dir = 6
 	},
@@ -558,7 +558,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -599,7 +599,7 @@
 /turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "bW" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -636,13 +636,13 @@
 "cd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/scalpel{
+/obj/item/circular_saw,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/cautery{
+/obj/item/cautery{
 	pixel_x = 4
 	},
 /turf/open/floor/plating,
@@ -807,7 +807,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cz" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /obj/structure/cable{
@@ -881,7 +881,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cH" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -920,7 +920,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "cO" = (
@@ -1066,7 +1066,7 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "di" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/ancient,
+/obj/item/storage/firstaid/ancient,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/white/side{
 	dir = 5
@@ -1107,7 +1107,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "dn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /obj/machinery/light/small{
@@ -1133,7 +1133,7 @@
 	desc = "A highly-pressurized water tank, this one seems almost empty..";
 	tank_volume = 1000
 	},
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "dr" = (
@@ -1144,7 +1144,7 @@
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "ds" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /obj/machinery/light/small{
@@ -1291,7 +1291,7 @@
 /area/template_noop)
 "dM" = (
 /obj/structure/table,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/clothing/mask/breath,
@@ -1463,14 +1463,14 @@
 	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
 	name = "Broken Computer"
 	},
-/obj/item/weapon/card/id/away/old/apc,
+/obj/item/card/id/away/old/apc,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
 /area/ruin/space/has_grav/ancientstation/engi)
 "ek" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/stock_parts/cell{
+/obj/item/stock_parts/cell{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -1504,11 +1504,11 @@
 "ep" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/cultivator{
+/obj/item/cultivator{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/cultivator,
+/obj/item/cultivator,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
@@ -1566,7 +1566,7 @@
 "ex" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -1628,7 +1628,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "eG" = (
-/obj/item/weapon/circuitboard/machine/sleeper,
+/obj/item/circuitboard/machine/sleeper,
 /turf/open/floor/plasteel/airless/floorgrime,
 /area/template_noop)
 "eH" = (
@@ -1790,7 +1790,7 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fa" = (
 /obj/item/solar_assembly,
-/obj/item/weapon/electronics/tracker,
+/obj/item/electronics/tracker,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "fb" = (
@@ -1906,7 +1906,7 @@
 "fq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/paper,
+/obj/item/paper,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/sec)
 "fr" = (
@@ -1945,7 +1945,7 @@
 "fv" = (
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "fw" = (
@@ -1956,7 +1956,7 @@
 "fx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/tank/internals/anesthetic,
+/obj/item/tank/internals/anesthetic,
 /obj/item/clothing/mask/breath/medical,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -1965,7 +1965,7 @@
 /obj/structure/table/optable{
 	name = "Robotics Operating Table"
 	},
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "fz" = (
@@ -2057,7 +2057,7 @@
 "fM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/sec)
 "fN" = (
@@ -2076,7 +2076,7 @@
 /area/ruin/space/has_grav/ancientstation/sec)
 "fP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/electronics/apc,
+/obj/item/electronics/apc,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fQ" = (
@@ -2747,7 +2747,7 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "gN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical/old,
+/obj/item/storage/toolbox/mechanical/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -2770,10 +2770,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "gQ" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/console_screen,
-/obj/item/weapon/stock_parts/console_screen,
-/obj/item/weapon/stock_parts/matter_bin,
-/obj/item/weapon/stock_parts/scanning_module{
+/obj/item/stock_parts/console_screen,
+/obj/item/stock_parts/console_screen,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/scanning_module{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -2782,9 +2782,9 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "gR" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/capacitor,
-/obj/item/weapon/stock_parts/micro_laser,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/micro_laser,
 /obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
@@ -2844,7 +2844,7 @@
 "hb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/sec)
 "hc" = (
@@ -3012,7 +3012,7 @@
 "hA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/sec)
 "hB" = (
@@ -3051,10 +3051,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hF" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/aluminium{
+/obj/item/reagent_containers/glass/beaker/large/aluminium{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/bromine{
+/obj/item/reagent_containers/glass/beaker/large/bromine{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3066,10 +3066,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hG" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/carbon{
+/obj/item/reagent_containers/glass/beaker/large/carbon{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/chlorine{
+/obj/item/reagent_containers/glass/beaker/large/chlorine{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3081,10 +3081,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hH" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/copper{
+/obj/item/reagent_containers/glass/beaker/large/copper{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/ethanol{
+/obj/item/reagent_containers/glass/beaker/large/ethanol{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3189,13 +3189,13 @@
 "hT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "hU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/food/condiment/enzyme{
 	layer = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -3224,7 +3224,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/item/weapon/storage/backpack/old,
+/obj/item/storage/backpack/old,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -3236,13 +3236,13 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hZ" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/fluorine{
+/obj/item/reagent_containers/glass/beaker/large/fluorine{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/hydrogen{
+/obj/item/reagent_containers/glass/beaker/large/hydrogen{
 	pixel_x = -6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/water{
+/obj/item/reagent_containers/glass/beaker/large/water{
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3279,7 +3279,7 @@
 /obj/machinery/power/solar_control{
 	name = "Station Solar Control Computer"
 	},
-/obj/item/weapon/paper/guides/jobs/engi/solars,
+/obj/item/paper/guides/jobs/engi/solars,
 /obj/structure/cable,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
@@ -3353,7 +3353,7 @@
 "im" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -3365,8 +3365,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/broken_bottle,
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/broken_bottle,
+/obj/item/soap/nanotrasen,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "io" = (
@@ -3375,14 +3375,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/reagent_containers/glass/beaker,
+/obj/item/folder/white,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "ip" = (
 /obj/machinery/chem_master,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -3417,18 +3417,18 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "it" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/mercury{
+/obj/item/reagent_containers/glass/beaker/large/mercury{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/nitrogen{
+/obj/item/reagent_containers/glass/beaker/large/nitrogen{
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/oxygen{
+/obj/item/reagent_containers/glass/beaker/large/oxygen{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/phosphorus{
+/obj/item/reagent_containers/glass/beaker/large/phosphorus{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3436,13 +3436,13 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "iu" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/iodine{
+/obj/item/reagent_containers/glass/beaker/large/iodine{
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/iron{
+/obj/item/reagent_containers/glass/beaker/large/iron{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/lithium{
+/obj/item/reagent_containers/glass/beaker/large/lithium{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3474,7 +3474,7 @@
 /area/ruin/space/has_grav/ancientstation/engi)
 "iw" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical/old,
+/obj/item/storage/toolbox/mechanical/old,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/side,
 /area/ruin/space/has_grav/ancientstation/engi)
@@ -3501,11 +3501,11 @@
 "iz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser/retro/old{
+/obj/item/gun/energy/laser/retro/old{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/weapon/gun/energy/laser/retro/old{
+/obj/item/gun/energy/laser/retro/old{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -3568,13 +3568,13 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "iG" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/potassium{
+/obj/item/reagent_containers/glass/beaker/large/potassium{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/radium{
+/obj/item/reagent_containers/glass/beaker/large/radium{
 	pixel_x = -6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/welding_fuel{
+/obj/item/reagent_containers/glass/beaker/large/welding_fuel{
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3598,7 +3598,7 @@
 "iI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "iJ" = (
@@ -3618,11 +3618,11 @@
 "iL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -3664,10 +3664,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "iQ" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/sugar{
+/obj/item/reagent_containers/glass/beaker/large/sugar{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/sulfur{
+/obj/item/reagent_containers/glass/beaker/large/sulfur{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3679,10 +3679,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "iR" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/silver{
+/obj/item/reagent_containers/glass/beaker/large/silver{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/sodium{
+/obj/item/reagent_containers/glass/beaker/large/sodium{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3690,10 +3690,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "iS" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large/sacid{
+/obj/item/reagent_containers/glass/beaker/large/sacid{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large/silicon{
+/obj/item/reagent_containers/glass/beaker/large/silicon{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3730,8 +3730,8 @@
 /area/ruin/space/has_grav/ancientstation/engi)
 "iW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/wrench,
-/obj/item/weapon/wirecutters,
+/obj/item/wrench,
+/obj/item/wirecutters,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "iX" = (
@@ -3935,7 +3935,7 @@
 /obj/structure/closet/crate,
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
-/obj/item/weapon/storage/box/firingpins,
+/obj/item/storage/box/firingpins,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "jA" = (
@@ -3961,7 +3961,7 @@
 /obj/item/stack/cable_coil{
 	amount = 15
 	},
-/obj/item/weapon/paper,
+/obj/item/paper,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
@@ -3973,7 +3973,7 @@
 	tag = ""
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -4004,7 +4004,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "jJ" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
 /obj/structure/cable{
@@ -4048,7 +4048,7 @@
 "jN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/weapon/disk/tech_disk,
+/obj/item/disk/tech_disk,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "jO" = (
@@ -4279,7 +4279,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/fluff/ruins/oldstation/protosuit,
+/obj/item/paper/fluff/ruins/oldstation/protosuit,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "ku" = (
@@ -4324,7 +4324,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/fluff/ruins/oldstation/protosing,
+/obj/item/paper/fluff/ruins/oldstation/protosing,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "kA" = (
@@ -4345,7 +4345,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "kD" = (
 /obj/structure/table,
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/item/device/flashlight/glowstick,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
@@ -4366,8 +4366,8 @@
 "kG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/weapon/reagent_containers/spray/weedspray,
-/obj/item/weapon/reagent_containers/spray/pestspray,
+/obj/item/reagent_containers/spray/weedspray,
+/obj/item/reagent_containers/spray/pestspray,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "kH" = (
@@ -4418,7 +4418,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "kN" = (
 /obj/structure/table,
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/item/device/flashlight/glowstick,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -4455,7 +4455,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/paper/fluff/ruins/oldstation,
+/obj/item/paper/fluff/ruins/oldstation,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "kR" = (
@@ -4463,7 +4463,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/fluff/ruins/oldstation/protohealth,
+/obj/item/paper/fluff/ruins/oldstation/protohealth,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "kS" = (
@@ -4481,7 +4481,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/item/weapon/paper/fluff/ruins/oldstation/protoinv,
+/obj/item/paper/fluff/ruins/oldstation/protoinv,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "kU" = (
@@ -4489,7 +4489,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/fluff/ruins/oldstation/protogun,
+/obj/item/paper/fluff/ruins/oldstation/protogun,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "kV" = (
@@ -4531,7 +4531,7 @@
 	start_charge = 0
 	},
 /obj/structure/cable,
-/obj/item/weapon/storage/backpack/old,
+/obj/item/storage/backpack/old,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "kZ" = (
@@ -4557,7 +4557,7 @@
 /area/ruin/space/has_grav/ancientstation/proto)
 "lc" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/energy/e_gun/old,
+/obj/item/gun/energy/e_gun/old,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "ld" = (
@@ -4630,17 +4630,17 @@
 /area/ruin/unpowered)
 "lq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "lr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/ore/bluespace_crystal,
+/obj/item/ore/bluespace_crystal,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "ls" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/ore/bluespace_crystal/refined,
+/obj/item/ore/bluespace_crystal/refined,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "lt" = (
@@ -4652,18 +4652,18 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "lu" = (
-/obj/item/weapon/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
 /turf/open/floor/plasteel/airless/floorgrime,
 /area/template_noop)
 "lv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/stock_parts/console_screen,
+/obj/item/stock_parts/console_screen,
 /turf/open/floor/plasteel/airless/white/side{
 	dir = 4
 	},
 /area/template_noop)
 "lw" = (
-/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "lx" = (

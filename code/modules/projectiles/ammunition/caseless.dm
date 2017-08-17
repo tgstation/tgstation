@@ -78,13 +78,13 @@
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
-	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
+	if (istype(A, /obj/item/screwdriver) && !modified)
 		modified = 1
 		FD.modified = 1
 		FD.damage_type = BRUTE
 		to_chat(user, "<span class='notice'>You pop the safety cap off [src].</span>")
 		update_icon()
-	else if (istype(A, /obj/item/weapon/pen))
+	else if (istype(A, /obj/item/pen))
 		if(modified)
 			if(!FD.pen)
 				if(!user.transferItemToLoc(A, FD))

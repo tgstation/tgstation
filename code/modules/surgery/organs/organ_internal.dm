@@ -59,7 +59,7 @@
 
 
 /obj/item/organ/proc/prepare_eat()
-	var/obj/item/weapon/reagent_containers/food/snacks/organ/S = new
+	var/obj/item/reagent_containers/food/snacks/organ/S = new
 	S.name = name
 	S.desc = desc
 	S.icon = icon
@@ -69,7 +69,7 @@
 
 	return S
 
-/obj/item/weapon/reagent_containers/food/snacks/organ
+/obj/item/reagent_containers/food/snacks/organ
 	name = "appendix"
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
@@ -88,7 +88,7 @@
 	if(M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(status == ORGAN_ORGANIC)
-			var/obj/item/weapon/reagent_containers/food/snacks/S = prepare_eat()
+			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
 			if(S)
 				H.drop_item()
 				H.put_in_active_hand(S)

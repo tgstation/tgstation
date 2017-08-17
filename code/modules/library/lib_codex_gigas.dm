@@ -4,7 +4,7 @@
 #define MULTIPLE_SYLLABLE 4
 #define SUFFIX 5
 
-/obj/item/weapon/book/codex_gigas
+/obj/item/book/codex_gigas
 	name = "\improper Codex Gigas"
 	desc = "A book documenting the nature of devils."
 	icon_state ="demonomicon"
@@ -18,7 +18,7 @@
 	var/currentName = ""
 	var/currentSection = PRE_TITLE
 
-/obj/item/weapon/book/codex_gigas/attack_self(mob/user)
+/obj/item/book/codex_gigas/attack_self(mob/user)
 	if(is_blind(user))
 		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>")
 		return
@@ -36,7 +36,7 @@
 	ask_name(user)
 
 
-/obj/item/weapon/book/codex_gigas/proc/perform_research(mob/user, devilName)
+/obj/item/book/codex_gigas/proc/perform_research(mob/user, devilName)
 	if(!devilName)
 		user.visible_message("[user] closes [title] without looking anything up.")
 		return
@@ -60,13 +60,13 @@
 	onclose(user, "book")
 	inUse = FALSE
 
-/obj/item/weapon/book/codex_gigas/proc/display_devil(datum/antagonist/devil/devil, mob/reader, devilName)
+/obj/item/book/codex_gigas/proc/display_devil(datum/antagonist/devil/devil, mob/reader, devilName)
 	reader << browse("Information on [devilName]<br><br><br>[GLOB.lawlorify[LORE][devil.ban]]<br>[GLOB.lawlorify[LORE][devil.bane]]<br>[GLOB.lawlorify[LORE][devil.obligation]]<br>[GLOB.lawlorify[LORE][devil.banish]]<br>[devil.ascendable?"This devil may ascend given enough souls.":""]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
-/obj/item/weapon/book/codex_gigas/proc/ask_name(mob/reader)
+/obj/item/book/codex_gigas/proc/ask_name(mob/reader)
 	ui_interact(reader)
 
-/obj/item/weapon/book/codex_gigas/ui_act(action, params)
+/obj/item/book/codex_gigas/ui_act(action, params)
 	if(..())
 		return
 	if(!action)
@@ -93,14 +93,14 @@
 		currentSection = SUFFIX
 	return currentSection != oldSection
 
-/obj/item/weapon/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/item/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "codex_gigas", name, 450, 450, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/book/codex_gigas/ui_data(mob/user)
+/obj/item/book/codex_gigas/ui_data(mob/user)
 	var/list/data = list()
 	data["name"]=currentName
 	data["currentSection"]=currentSection

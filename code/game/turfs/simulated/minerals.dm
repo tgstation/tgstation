@@ -50,12 +50,12 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/pickaxe/P, mob/user, params)
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	if (istype(P, /obj/item/weapon/pickaxe))
+	if (istype(P, /obj/item/pickaxe))
 		var/turf/T = user.loc
 		if (!isturf(T))
 			return
@@ -102,13 +102,13 @@
 	..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		var/obj/item/I = H.is_holding_item_of_type(/obj/item/weapon/pickaxe)
+		var/obj/item/I = H.is_holding_item_of_type(/obj/item/pickaxe)
 		if(I)
 			attackby(I,H)
 		return
 	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active, /obj/item/weapon/pickaxe))
+		if(istype(R.module_active, /obj/item/pickaxe))
 			src.attackby(R.module_active,R)
 			return
 /*	else if(istype(AM, /obj/mecha))
@@ -232,7 +232,7 @@
 
 
 /turf/closed/mineral/iron
-	mineralType = /obj/item/weapon/ore/iron
+	mineralType = /obj/item/ore/iron
 	spreadChance = 20
 	spread = 1
 	scan_state = "rock_Iron"
@@ -246,7 +246,7 @@
 
 
 /turf/closed/mineral/uranium
-	mineralType = /obj/item/weapon/ore/uranium
+	mineralType = /obj/item/ore/uranium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Uranium"
@@ -260,7 +260,7 @@
 
 
 /turf/closed/mineral/diamond
-	mineralType = /obj/item/weapon/ore/diamond
+	mineralType = /obj/item/ore/diamond
 	spreadChance = 0
 	spread = 1
 	scan_state = "rock_Diamond"
@@ -274,7 +274,7 @@
 
 
 /turf/closed/mineral/gold
-	mineralType = /obj/item/weapon/ore/gold
+	mineralType = /obj/item/ore/gold
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Gold"
@@ -288,7 +288,7 @@
 
 
 /turf/closed/mineral/silver
-	mineralType = /obj/item/weapon/ore/silver
+	mineralType = /obj/item/ore/silver
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Silver"
@@ -302,7 +302,7 @@
 
 
 /turf/closed/mineral/titanium
-	mineralType = /obj/item/weapon/ore/titanium
+	mineralType = /obj/item/ore/titanium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Titanium"
@@ -316,7 +316,7 @@
 
 
 /turf/closed/mineral/plasma
-	mineralType = /obj/item/weapon/ore/plasma
+	mineralType = /obj/item/ore/plasma
 	spreadChance = 8
 	spread = 1
 	scan_state = "rock_Plasma"
@@ -330,7 +330,7 @@
 
 
 /turf/closed/mineral/clown
-	mineralType = /obj/item/weapon/ore/bananium
+	mineralType = /obj/item/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
@@ -338,7 +338,7 @@
 
 
 /turf/closed/mineral/bscrystal
-	mineralType = /obj/item/weapon/ore/bluespace_crystal
+	mineralType = /obj/item/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
@@ -461,7 +461,7 @@
 		stage = GIBTONITE_DETONATE
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
-		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
+		var/obj/item/twohanded/required/gibtonite/G = new /obj/item/twohanded/required/gibtonite/(src)
 		if(det_time <= 0)
 			G.quality = 3
 			G.icon_state = "Gibtonite ore 3"

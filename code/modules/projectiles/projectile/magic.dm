@@ -259,7 +259,7 @@
 	if(!new_mob)
 		return
 	new_mob.grant_language(/datum/language/common)
-	SET_SECONDARY_FLAG(new_mob, OMNITONGUE)
+	new_mob.flags_2 |= OMNITONGUE_2
 	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
@@ -313,7 +313,7 @@
 				return
 		else
 			var/obj/O = src
-			if(istype(O, /obj/item/weapon/gun))
+			if(istype(O, /obj/item/gun))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)

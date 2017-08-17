@@ -1,7 +1,7 @@
 /mob/living/carbon/proc/dream()
 	set waitfor = 0
 	var/list/dreams = GLOB.dream_strings.Copy()
-	for(var/obj/item/weapon/bedsheet/sheet in loc)
+	for(var/obj/item/bedsheet/sheet in loc)
 		dreams += sheet.dream_messages
 	var/list/dream_images = list()
 	for(var/i in 1 to rand(3, rand(5, 10)))

@@ -27,7 +27,7 @@
 	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags = CONDUCT | HEAR
+	flags_1 = CONDUCT_1 | HEAR_1
 	slot_flags = SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -510,9 +510,9 @@
 	else
 		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
-/obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
@@ -547,10 +547,10 @@
 	name = "cyborg radio"
 	subspace_switchable = 1
 	dog_fashion = null
+	flags_2 = NO_EMP_WIRES_2
 
 /obj/item/device/radio/borg/Initialize(mapload)
 	..()
-	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
@@ -560,9 +560,9 @@
 	. = ..()
 	set_frequency(GLOB.SYND_FREQ)
 
-/obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(keyslot)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_stake"
 	density = TRUE
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	var/obj/item/target/pinned_target
 
 /obj/structure/target_stake/Destroy()

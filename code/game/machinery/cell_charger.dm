@@ -2,29 +2,26 @@
 	name = "cell charger"
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "ccharger0"
+	icon_state = "ccharger"
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
 	power_channel = EQUIP
-	var/obj/item/weapon/stock_parts/cell/charging = null
+	var/obj/item/stock_parts/cell/charging = null
 	var/chargelevel = -1
 
 /obj/machinery/cell_charger/proc/updateicon()
-	icon_state = "ccharger[charging ? 1 : 0]"
+	cut_overlays()
 
-	if(charging && !(stat & (BROKEN|NOPOWER)))
-		var/newlevel = 	round(charging.percent() * 4 / 100)
-
-		if(chargelevel != newlevel)
-			chargelevel = newlevel
-
-			cut_overlays()
-			add_overlay("ccharger-o[newlevel]")
-
-	else
-		cut_overlays()
+	if(charging)
+		add_overlay(image(charging.icon, charging.icon_state))
+		add_overlay("ccharger-on")
+		if(!(stat & (BROKEN|NOPOWER)))
+			var/newlevel = 	round(charging.percent() * 4 / 100)
+			if(chargelevel != newlevel)
+				chargelevel = newlevel
+				add_overlay("ccharger-o[newlevel]")
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
@@ -32,8 +29,8 @@
 	if(charging)
 		to_chat(user, "Current charge: [round(charging.percent(), 1)]%")
 
-/obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+/obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stock_parts/cell))
 		if(stat & BROKEN)
 			to_chat(user, "<span class='warning'>[src] is broken!</span>")
 			return
@@ -58,7 +55,7 @@
 			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")
 			chargelevel = -1
 			updateicon()
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
