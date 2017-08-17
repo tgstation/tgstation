@@ -5,13 +5,13 @@
 /obj/item/pod_parts/core
 	name="Space Pod Core"
 	icon_state = "core"
-	flags = CONDUCT
+	flags_2 = CONDUCT
 	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
 
 /obj/item/pod_parts/pod_frame
 	name = "Space Pod Frame"
 	icon_state = ""
-	flags = CONDUCT
+	flags_2 = CONDUCT
 	density = 0
 	anchored = 0
 	var/link_to = null
