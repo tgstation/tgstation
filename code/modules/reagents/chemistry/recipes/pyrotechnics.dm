@@ -144,7 +144,7 @@
 	required_reagents = list("methamphetamine" = 1)
 	strengthdiv = 6
 	modifier = 1
-	mob_react = TRUE //Yes, setting it true makes it NOT react in mobs.
+	mob_react = FALSE
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -270,7 +270,7 @@
 	required_reagents = list("smoke_powder" = 1)
 	required_temp = 374
 	secondary = 1
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
