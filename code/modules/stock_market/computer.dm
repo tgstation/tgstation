@@ -63,7 +63,7 @@ a.updated {
 </style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
-	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
+	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Woolongs:</b> [balance()] </span><br>"
 	for (var/datum/stock/S in GLOB.stockExchange.last_read)
 		var/list/LR = GLOB.stockExchange.last_read[S]
 		if (!(logged_in in LR))
@@ -204,7 +204,7 @@ a.updated {
 	if (!S.sellShares(logged_in, amt))
 		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
-	to_chat(user, "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
+	to_chat(user, "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] woolongs.</span>")
 	GLOB.stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
@@ -239,7 +239,7 @@ a.updated {
 		return
 
 	var/total = amt * S.current_value
-	to_chat(user, "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
+	to_chat(user, "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] woolongs.</span>")
 	GLOB.stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
@@ -279,13 +279,13 @@ a.updated {
 		for(var/D in GLOB.stockExchange.logs)
 			var/datum/stock_log/L = D
 			if(istype(L, /datum/stock_log/buy))
-				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits in <b>[L.company_name]</b>.<br>"
+				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total woolongs in <b>[L.company_name]</b>.<br>"
 				continue
 			if(istype(L, /datum/stock_log/sell))
-				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits from <b>[L.company_name]</b>.<br>"
+				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total woolongs from <b>[L.company_name]</b>.<br>"
 				continue
 			if(istype(L, /datum/stock_log/borrow))
-				dat += "[L.time] | <b>[L.user_name]</b> borrowed <b>[L.stocks]</b> stocks with a deposit of <b>[L.money]</b> credits in <b>[L.company_name]</b>.<br>"
+				dat += "[L.time] | <b>[L.user_name]</b> borrowed <b>[L.stocks]</b> stocks with a deposit of <b>[L.money]</b> woolongs in <b>[L.company_name]</b>.<br>"
 				continue
 		var/datum/browser/popup = new(usr, "stock_logs", "Stock Transaction Logs", 600, 400)
 		popup.set_content(dat)

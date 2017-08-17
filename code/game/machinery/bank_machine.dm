@@ -27,7 +27,7 @@
 		value = C.value * C.amount
 	if(value)
 		SSshuttle.points += value
-		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>")
+		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] woolongs.</span>")
 		qdel(I)
 		return
 	return ..()
@@ -60,11 +60,11 @@
 		return
 	src.add_fingerprint(usr)
 	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
-	dat += "Current Balance: [SSshuttle.points] credits.<br>"
+	dat += "Current Balance: [SSshuttle.points] Woolongs.<br>"
 	if(!siphoning)
-		dat += "<A href='?src=\ref[src];siphon=1'>Siphon Credits</A><br>"
+		dat += "<A href='?src=\ref[src];siphon=1'>Siphon Woolongs</A><br>"
 	else
-		dat += "<A href='?src=\ref[src];halt=1'>Halt Credit Siphon</A><br>"
+		dat += "<A href='?src=\ref[src];halt=1'>Halt Woolong Siphon</A><br>"
 
 	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
 
@@ -77,8 +77,8 @@
 	if(..())
 		return
 	if(href_list["siphon"])
-		say("Siphon of station credits has begun!")
+		say("Siphon of station woolongs has begun!")
 		siphoning = TRUE
 	if(href_list["halt"])
-		say("Station credit withdrawal halted.")
+		say("Station woolong withdrawal halted.")
 		siphoning = FALSE
