@@ -107,16 +107,7 @@
 		return ..()
 
 /turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
-	switch(current_size)
-		if(STAGE_THREE)
-			if(prob(30))
-				src.gets_dug()
-		if(STAGE_FOUR)
-			if(prob(50))
-				src.gets_dug()
-		else if(current_size >= STAGE_FIVE)
-			if(prob(70))
-				src.gets_dug()
+	return
 
 
 /turf/open/floor/plating/asteroid/basalt
