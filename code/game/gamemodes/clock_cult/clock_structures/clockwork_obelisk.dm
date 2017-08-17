@@ -7,14 +7,13 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	unanchored_icon = "obelisk_unwrenched"
-	construction_value = 20
 	max_integrity = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 4, \
 	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
 	var/hierophant_cost = MIN_CLOCKCULT_POWER //how much it costs to broadcast with large text
-	var/gateway_cost = 2000 //how much it costs to open a gateway
+	var/gateway_cost = 1500 //how much it costs to open a gateway
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/Initialize()
 	. = ..()

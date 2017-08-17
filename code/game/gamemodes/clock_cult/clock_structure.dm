@@ -15,16 +15,13 @@
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/alloy_shards/small = 3) //Parts left behind when a structure breaks
-	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 	var/immune_to_servant_attacks = FALSE //if we ignore attacks from servants of ratvar instead of taking damage
 
 /obj/structure/destructible/clockwork/Initialize()
 	. = ..()
-	change_construction_value(construction_value)
 	GLOB.all_clockwork_objects += src
 
 /obj/structure/destructible/clockwork/Destroy()
-	change_construction_value(-construction_value)
 	GLOB.all_clockwork_objects -= src
 	return ..()
 
@@ -159,9 +156,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
-		var/sigil_number = LAZYLEN(check_apc_and_sigils())
-		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
-		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>")
+		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power.</span>")
 
 /obj/structure/destructible/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -238,15 +233,11 @@
 	return power
 
 /obj/structure/destructible/clockwork/powered/proc/accessable_sigil_power()
-	var/power = 0
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
-		power += T.power_charge
-	return power
-
+	return GLOB.clockwork_power
 
 /obj/structure/destructible/clockwork/powered/proc/try_use_power(amount) //try to use an amount of power
 	if(!needs_power || GLOB.ratvar_awakens)
-		return 1
+		return TRUE
 	if(amount <= 0)
 		return FALSE
 	var/power = total_accessable_power()
@@ -256,15 +247,9 @@
 
 /obj/structure/destructible/clockwork/powered/proc/use_power(amount) //we've made sure we had power, so now we use it
 	var/sigilpower = accessable_sigil_power()
-	var/list/sigils_in_range = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
-		sigils_in_range += T
 	while(sigilpower && amount >= MIN_CLOCKCULT_POWER)
-		for(var/S in sigils_in_range)
-			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(MIN_CLOCKCULT_POWER))
-				sigilpower -= MIN_CLOCKCULT_POWER
-				amount -= MIN_CLOCKCULT_POWER
+		GLOB.clockwork_power -= MIN_CLOCKCULT_POWER
+		amount -= MIN_CLOCKCULT_POWER
 	var/apcpower = accessable_apc_power()
 	while(apcpower >= MIN_CLOCKCULT_POWER && amount >= MIN_CLOCKCULT_POWER)
 		if(target_apc.cell.use(MIN_CLOCKCULT_POWER))
@@ -282,30 +267,8 @@
 	else
 		return TRUE
 
-/obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils or if there are no sigils, to the APC
+/obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to the global clockwork power
 	if(amount <= 0)
 		return FALSE
-	var/list/sigils_in_range = check_apc_and_sigils()
-	if(!istype(sigils_in_range))
-		return FALSE
-	if(sigils_in_range.len)
-		while(amount >= MIN_CLOCKCULT_POWER)
-			for(var/S in sigils_in_range)
-				var/obj/effect/clockwork/sigil/transmission/T = S
-				if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(-MIN_CLOCKCULT_POWER))
-					amount -= MIN_CLOCKCULT_POWER
-	if(target_apc && target_apc.cell && target_apc.cell.give(amount))
-		target_apc.charging = 1
-		target_apc.chargemode = TRUE
-		target_apc.update()
-		target_apc.update_icon()
-		target_apc.updateUsrDialog()
+	GLOB.clockwork_power += amount
 	return TRUE
-
-/obj/structure/destructible/clockwork/powered/proc/check_apc_and_sigils() //checks for sigils and an APC, returning FALSE if it finds neither, and a list of sigils otherwise
-	. = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
-		. += T
-	var/list/L = .
-	if(!L.len && (!target_apc || !target_apc.cell))
-		return FALSE

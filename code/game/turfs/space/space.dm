@@ -2,6 +2,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	name = "\proper space"
+	layer = SPACE_LAYER
 	intact = 0
 
 	temperature = TCMB

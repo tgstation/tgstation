@@ -7,7 +7,6 @@
 	active_icon = "prolonging_prism"
 	inactive_icon = "prolonging_prism_inactive"
 	unanchored_icon = "prolonging_prism_unwrenched"
-	construction_value = 20
 	max_integrity = 125
 	break_message = "<span class='warning'>The prism falls to the ground with a heavy thud!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \

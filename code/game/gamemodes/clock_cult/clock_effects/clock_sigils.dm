@@ -11,9 +11,21 @@
 	var/stat_affected = CONSCIOUS
 	var/sigil_name = "Sigil"
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
+	var/list/component_refund = list()
 
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
-	if(I.force && !is_servant_of_ratvar(user))
+	if(is_servant_of_ratvar(user))
+		if(istype(I, /obj/item/clockwork/slab))
+			user.visible_message("<span class='warning'>[user] starts to dispel [src]...</span>", "<span class='danger'>You start to dispel [src]...</span>")
+			if(do_after(user, 20, target = src))
+				user.visible_message("<span class='warning'>[user] dispels [src]!</span>", "<span class='danger'>You dispel [src]!</span>")
+				for(var/i in component_refund)
+					if(component_refund[i])
+						for(var/r in 1 to component_refund[i])
+							generate_cache_component(i, src)
+					qdel(src)
+			return 1
+	else if(I.force)
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
 		return 1
@@ -49,12 +61,12 @@
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
 
-//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar-Sian cultists are damaged and knocked down for a longer time
+//Sigil of Transgression: Stuns the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down for a longer time.
 /obj/effect/clockwork/sigil/transgression
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
 	icon = 'icons/effects/clockwork_effects.dmi'
-	clockwork_desc = "A sigil that will stun the next non-Servant to cross it."
+	clockwork_desc = "A sigil that will briefly stun and apply Belligerent to the next non-Servant to cross it."
 	icon_state = "sigildull"
 	layer = HIGH_SIGIL_LAYER
 	alpha = 75
@@ -63,20 +75,19 @@
 	light_power = 1
 	light_color = "#FAE48C"
 	sigil_name = "Sigil of Transgression"
+	component_refund = list(BELLIGERENT_EYE = 1)
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
-	var/target_flashed = L.flash_act()
-	for(var/mob/living/M in viewers(5, src))
-		if(!is_servant_of_ratvar(M) && M != L)
-			M.flash_act()
-	if(iscultist(L))
-		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
-		L.adjustBruteLoss(10)
-		L.Knockdown(140, FALSE)
-	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
-	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(100)
-	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
+	var/datum/status_effect/belligerent/B = L.has_status_effect(STATUS_EFFECT_BELLIGERENT)
+	if(QDELETED(B))
+		if(iscultist(L))
+			to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
+			L.adjustBruteLoss(8)
+			L.Knockdown(60, FALSE)
+		else
+			L.Stun(30)
+	L.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src), !QDELETED(B))
 	qdel(src)
 
 
@@ -94,12 +105,15 @@
 	light_color = "#FAE48C"
 	stat_affected = UNCONSCIOUS
 	resist_string = "glows faintly yellow"
+	sigil_name = "Sigil of Submission"
+	component_refund = list(GEIS_CAPACITOR = 1)
 	var/convert_time = 80
 	var/delete_on_finish = TRUE
-	sigil_name = "Sigil of Submission"
 	var/glow_type = /obj/effect/temp_visual/ratvar/sigil/submission
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
+	if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
+		L.buckled.anchored = TRUE
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	var/oldcolor = color
 	animate(src, color = "#AF0AAF", time = convert_time, flags = ANIMATION_END_NOW)
@@ -108,10 +122,12 @@
 		glow = new glow_type(get_turf(src))
 		animate(glow, alpha = 255, time = convert_time)
 	var/I = 0
-	while(I < convert_time && get_turf(L) == get_turf(src))
+	while(I < convert_time && !QDELETED(L) && get_turf(L) == get_turf(src))
 		I++
+		if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
+			L.buckled.anchored = TRUE
 		sleep(1)
-	if(get_turf(L) != get_turf(src))
+	if(QDELETED(L) || get_turf(L) != get_turf(src))
 		if(glow)
 			qdel(glow)
 		animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
@@ -145,20 +161,25 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that serves as power generation and a battery for clockwork structures."
+	clockwork_desc = "A sigil that automatically drains power from everything nearby. Clockwork structures will automatically use drained power."
 	icon_state = "sigiltransmission"
 	alpha = 50
 	color = "#EC8A2D"
 	light_color = "#EC8A2D"
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
+	component_refund = list(HIEROPHANT_ANSIBLE = 1)
 	affects_servants = TRUE
-	var/power_charge = 0 //starts with no power
-	var/drain_range = 14
+	var/drain_range = 7
 
 /obj/effect/clockwork/sigil/transmission/Initialize()
 	. = ..()
 	update_glow()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/clockwork/sigil/transmission/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)
@@ -170,12 +191,8 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		var/structure_number = 0
-		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
-			structure_number++
-		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
-		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? " is":"s are"] in range.</span>")
-		to_chat(user, "<span class='brass'>While active, it will gradually drain power from nearby electronics. It is currently [isprocessing ? "active":"disabled"].</span>")
+		to_chat(user, "<span class='[GLOB.ratvar_awakens || GLOB.clockwork_power ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[GLOB.clockwork_power]"]W</b> of power.</span>")
+		to_chat(user, "<span class='brass'>It will gradually drain power from nearby electronics.</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
 		else if(!GLOB.ratvar_awakens)
@@ -198,21 +215,11 @@
 	if(is_servant_of_ratvar(user))
 		attack_hand(user)
 
-/obj/effect/clockwork/sigil/transmission/attack_hand(mob/user)
-	if(is_servant_of_ratvar(user))
-		visible_message("<span class='notice'>[user] [isprocessing ? "de":""]activates [src].</span>", "<span class='brass'>You [isprocessing ? "de":""]activate the [sigil_name].</span>")
-		if(isprocessing)
-			STOP_PROCESSING(SSobj, src)
-		else
-			START_PROCESSING(SSobj, src)
-	else
-		return ..()
-
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(is_servant_of_ratvar(L))
 		if(iscyborg(L))
 			charge_cyborg(L)
-	else if(power_charge)
+	else if(GLOB.clockwork_power)
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
 /obj/effect/clockwork/sigil/transmission/process()
@@ -235,7 +242,7 @@
 	to_chat(cyborg, "<span class='brass'>You start to charge from the [sigil_name]...</span>")
 	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, .proc/cyborg_checks, cyborg, TRUE)))
 		return
-	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), power_charge) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
+	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), GLOB.clockwork_power) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(modify_charge(giving_power))
 		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
 		var/previous_color = cyborg.color
@@ -249,7 +256,7 @@
 		if(!silent)
 			to_chat(cyborg, "<span class='warning'>You have no cell!</span>")
 		return FALSE
-	if(!power_charge)
+	if(!GLOB.clockwork_power)
 		if(!silent)
 			to_chat(cyborg, "<span class='warning'>The [sigil_name] has no stored power!</span>")
 		return FALSE
@@ -267,21 +274,22 @@
 	if(GLOB.ratvar_awakens)
 		update_glow()
 		return TRUE
-	if(power_charge - amount < 0)
+	if(GLOB.clockwork_power - amount < 0)
 		return FALSE
-	power_charge -= amount
+	GLOB.clockwork_power -= amount
 	update_glow()
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/proc/update_glow()
-	if(GLOB.ratvar_awakens)
-		alpha = 255
-	else
-		alpha = min(initial(alpha) + power_charge*0.02, 255)
-	if(!power_charge)
-		set_light(0)
-	else
-		set_light(max(alpha*0.02, 1.4), max(alpha*0.01, 0.1))
+	for(var/obj/effect/clockwork/sigil/transmission/T in GLOB.all_clockwork_objects)
+		if(GLOB.ratvar_awakens)
+			T.alpha = 255
+		else
+			T.alpha = min(initial(T.alpha) + GLOB.clockwork_power*0.005, 255)
+		if(!GLOB.clockwork_power)
+			T.set_light(0)
+		else
+			T.set_light(max(T.alpha*0.02, 1.4), max(T.alpha*0.01, 0.1))
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality
@@ -296,6 +304,7 @@
 	stat_affected = DEAD
 	resist_string = "glows shimmering yellow"
 	sigil_name = "Vitality Matrix"
+	component_refund = list(VANGUARD_COGWHEEL = 1)
 	var/revive_cost = 150
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets

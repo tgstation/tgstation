@@ -80,12 +80,19 @@
 
 	SEND_SOUND(src, S)
 
-/proc/sound_to_playing_players(sound, volume = 100, vary)
-	sound = get_sfx(sound)
-	for(var/M in GLOB.player_list)
-		if(ismob(M) && !isnewplayer(M))
-			var/mob/MO = M
-			MO.playsound_local(MO, sound, volume, vary, pressure_affected = FALSE)
+/proc/sound_to_playing_players(soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = FALSE, sound/S = null)
+	var/had_sound = FALSE
+	if(!S)
+		S = sound(get_sfx(soundin))
+	else
+		had_sound = TRUE
+	for(var/m in GLOB.player_list)
+		if(ismob(m) && !isnewplayer(m))
+			var/mob/M = m
+			if(had_sound)
+				SEND_SOUND(M, S)
+			else
+				M.playsound_local(M, null, vol, vary, frequency, falloff, channel, pressure_affected, S)
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used

@@ -619,7 +619,7 @@
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(fulltile)
 		made_glow = TRUE
-	..()
+	. = ..()
 	QDEL_LIST(debris)
 	var/amount_of_gears = 2
 	if(fulltile)
@@ -627,7 +627,6 @@
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
-	change_construction_value(fulltile ? 2 : 1)
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
@@ -635,10 +634,6 @@
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
-
-/obj/structure/window/reinforced/clockwork/Destroy()
-	change_construction_value(fulltile ? -2 : -1)
-	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)

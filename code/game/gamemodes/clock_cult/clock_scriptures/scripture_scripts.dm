@@ -6,27 +6,47 @@
 /datum/clockwork_scripture/create_object/ocular_warden
 	descname = "Structure, Turret"
 	name = "Ocular Warden"
-	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
+	desc = "Forms an automatic short-range turret which will automatically attack and apply Belligerent to nearby non-Servants."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	consumed_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
+	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
-	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
+	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack and apply Belligerent to nearby non-Servants.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
-	usage_tip = "Although powerful, the warden is very fragile and should optimally be placed behind barricades."
+	usage_tip = "The warden will also produce Vitality gradually while attacking."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 	space_allowed = TRUE
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
 	quickbind = TRUE
-	quickbind_desc = "Creates an Ocular Warden, which will automatically attack nearby unrestrained non-Servants that can see it."
+	quickbind_desc = "Creates an Ocular Warden, which will automatically attack and apply Belligerent to nearby non-Servants."
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
 	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(OCULAR_WARDEN_EXCLUSION_RANGE, invoker))
-		to_chat(invoker, "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" )
+		to_chat(invoker, "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>")
 		return FALSE
 	return ..()
+
+
+//Judicial Visor: Creates a judicial visor, which can smite an area.
+/datum/clockwork_scripture/create_object/judicial_visor
+	descname = "Delayed Area Knockdown Glasses"
+	name = "Judicial Visor"
+	desc = "Creates a visor that can smite an area, applying Belligerent and briefly stunning. The smote area will explode after 3 seconds."
+	invocations = list("Grant me the flames of Engine!")
+	channel_time = 10
+	consumed_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
+	whispered = TRUE
+	object_path = /obj/item/clothing/glasses/judicial_visor
+	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting a small area.</span>"
+	usage_tip = "The visor has a thirty-second cooldown once used."
+	tier = SCRIPTURE_SCRIPT
+	space_allowed = TRUE
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
 
 
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
@@ -37,7 +57,7 @@
 	Dead Servants can be revived by this sigil at a cost of 150 Vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2)
+	consumed_components = list(GEIS_CAPACITOR = 1, VANGUARD_COGWHEEL = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
@@ -162,126 +182,121 @@
 	return TRUE
 
 
-//Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.
-/datum/clockwork_scripture/create_object/replica_fabricator
-	descname = "Replaces Objects with Ratvarian Versions"
-	name = "Replica Fabricator"
-	desc = "Forms a device that, when used on certain objects, replaces them with their Ratvarian equivalents. It requires power to function."
-	invocations = list("With this device...", "...his presence shall be made known.")
-	channel_time = 20
-	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
-	whispered = TRUE
-	object_path = /obj/item/clockwork/replica_fabricator/preloaded
-	creator_message = "<span class='brass'>You form a replica fabricator.</span>"
-	usage_tip = "Clockwork Walls cause nearby Tinkerer's Caches to generate components passively, making this a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
+//Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
+/datum/clockwork_scripture/create_object/mania_motor
+	descname = "Powered Structure, Area Denial"
+	name = "Mania Motor"
+	desc = "Creates a mania motor which causes minor damage and a variety of negative mental effects in nearby non-Servant humans, potentially up to and including conversion."
+	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
+	channel_time = 80
+	consumed_components = list(GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 1)
+	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
+	creator_message = "<span class='brass'>You form a mania motor, which causes minor damage and negative mental effects in non-Servants.</span>"
+	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "It will also cure hallucinations and brain damage in nearby Servants."
 	tier = SCRIPTURE_SCRIPT
-	space_allowed = TRUE
+	one_per_tile = TRUE
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 8
+	quickbind = TRUE
+	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
+
+
+//Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
+/datum/clockwork_scripture/create_object/tinkerers_daemon
+	descname = "Powered Structure, Component Generator"
+	name = "Tinkerer's Daemon"
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power and active daemons are outnumbered by Servants by a ratio of 5:1."
+	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
+	channel_time = 80
+	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
+	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
+	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "Vital to your success!"
+	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
+	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
 
 
-//Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
-/datum/clockwork_scripture/function_call
-	descname = "Permanent Summonable Spear"
-	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every 3 minutes, with it lasting 3 minutes. The spear's attacks will generate Vitality, used for healing."
+//Arcane Armory: Grants the invoker the ability to call forth a Ratvarian spear and a set of clockwork armor.
+/datum/clockwork_scripture/arcane_armory
+	descname = "Permanent Summonable Spear & Armor"
+	name = "Arcane Armory"
+	desc = "Grants the invoker the abilities to call forth a powerful Ratvarian spear and a set of clockwork armor. The spear's attacks will generate Vitality, used for healing, and being attacked \
+	with the armor on will slightly increase the duration of Vanguard."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
 	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
-	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
+	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear and prevent resummoning for a time."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 
-/datum/clockwork_scripture/function_call/check_special_requirements()
-	for(var/datum/action/innate/function_call/F in invoker.actions)
-		to_chat(invoker, "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
-		return FALSE
+/datum/clockwork_scripture/arcane_armory/check_special_requirements()
+	if(invoker.mind)
+		var/datum/antagonist/clockcult/C = invoker.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+		if(!C)
+			return FALSE
+		if(C.armory_bound)
+			to_chat(invoker, "<span class='warning'>You have already bound an arcane armory to yourself!</span>")
+			return FALSE
 	return invoker.can_hold_items()
 
-/datum/clockwork_scripture/function_call/scripture_effects()
+/datum/clockwork_scripture/arcane_armory/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
-	var/datum/action/innate/function_call/F = new()
-	F.Grant(invoker)
-	return TRUE
-
-//Function Call action: Calls forth a Ratvarian spear once every 3 minutes.
-/datum/action/innate/function_call
-	name = "Function Call"
-	desc = "Allows you to summon a Ratvarian spear to fight enemies."
-	button_icon_state = "ratvarian_spear"
-	background_icon_state = "bg_clock"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
-	buttontooltipstyle = "clockcult"
-	var/cooldown = 0
-	var/base_cooldown = RATVARIAN_SPEAR_DURATION
-
-/datum/action/innate/function_call/IsAvailable()
-	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
-		return FALSE
-	return ..()
-
-/datum/action/innate/function_call/Activate()
-	if(!owner.get_empty_held_indexes())
-		to_chat(usr, "<span class='warning'>You need an empty hand to call forth your spear!</span>")
-		return FALSE
-	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
-	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
-	owner.put_in_hands(R)
-	if(!GLOB.ratvar_awakens)
-		to_chat(owner, "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>")
-	cooldown = base_cooldown + world.time
-	owner.update_action_buttons_icon()
-	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
+	"<span class='brass'>You bind a Ratvarian spear and a set of clockwork armor to yourself.<br>Use the \"Summon Spear\" and \"Call Cuirass\" action buttons to call them forth, respectively.</span>")
+	var/datum/antagonist/clockcult/C = invoker.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+	C.armory_bound = TRUE
+	C.spear.Grant(invoker)
+	C.cuirass.Grant(invoker)
 	return TRUE
 
 
-//Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.
-/datum/clockwork_scripture/spatial_gateway
-	descname = "Teleport Gate"
-	name = "Spatial Gateway"
-	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
-	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
-	invocations = list("Spatial Gateway...", "...activate!")
-	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
-	multiple_invokers_used = TRUE
-	multiple_invokers_optional = TRUE
-	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
+//Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
+/datum/clockwork_scripture/create_object/sigil_of_transmission
+	descname = "Structure Power Generator & Battery"
+	name = "Sigil of Transmission"
+	desc = "Places a sigil that will automatically drain power into the global power storage that clockwork structures will automatically use from."
+	invocations = list("Divinity...", "...power our creations!")
+	channel_time = 60
+	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 2)
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/transmission
+	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it and will drain power when activated.</span>"
+	usage_tip = "Cyborgs can charge from this sigil by remaining over it for 5 seconds."
 	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 9
 	quickbind = TRUE
-	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
+	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
-/datum/clockwork_scripture/spatial_gateway/check_special_requirements()
-	if(!isturf(invoker.loc))
-		to_chat(invoker, "<span class='warning'>You must not be inside an object to use this scripture!</span>")
-		return FALSE
-	var/other_servants = 0
-	for(var/mob/living/L in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
-			other_servants++
-	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
-		if(O.anchored)
-			other_servants++
-	if(!other_servants)
-		to_chat(invoker, "<span class='warning'>There are no other conscious servants or anchored clockwork obelisks!</span>")
-		return FALSE
-	return TRUE
 
-/datum/clockwork_scripture/spatial_gateway/scripture_effects()
-	var/portal_uses = 0
-	var/duration = 0
-	for(var/mob/living/L in range(1, invoker))
-		if(!L.stat && is_servant_of_ratvar(L))
-			portal_uses++
-			duration += 40 //4 seconds
-	if(GLOB.ratvar_awakens)
-		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
-		duration = max(duration, 100)
-	return slab.procure_gateway(invoker, duration, portal_uses)
+//Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.
+/datum/clockwork_scripture/create_object/clockwork_obelisk
+	descname = "Powered Structure, Teleportation Hub"
+	name = "Clockwork Obelisk"
+	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living Servant or clockwork obelisk."
+	invocations = list("May this obelisk...", "...take us to all places!")
+	channel_time = 80
+	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
+	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
+	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
+	observer_message = "<span class='warning'>A brass obelisk appears hanging in midair!</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks receive double duration and uses."
+	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."

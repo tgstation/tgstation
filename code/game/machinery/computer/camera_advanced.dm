@@ -225,3 +225,71 @@
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
+
+//Used by servants of Ratvar! They let you beam to the station.
+/obj/machinery/computer/camera_advanced/ratvar
+	name = "ratvarian camera observer"
+	desc = "A console used to snoop on the station's goings-on. A jet of steam occasionally whooshes out from slats on its sides."
+	use_power = FALSE
+	networks = list("SS13", "MiniSat") //:eye:
+	var/datum/action/innate/servant_warp/warp_action = new
+
+/obj/machinery/computer/camera_advanced/ratvar/Initialize()
+	. = ..()
+	ratvar_act()
+
+/obj/machinery/computer/camera_advanced/ratvar/CreateEye()
+	..()
+	eyeobj.visible_icon = 1
+	eyeobj.icon = 'icons/obj/abductor.dmi' //in case you still had any doubts
+	eyeobj.icon_state = "camera_target"
+
+/obj/machinery/computer/camera_advanced/ratvar/GrantActions(mob/living/carbon/user)
+	..()
+	if(warp_action)
+		warp_action.Grant(user)
+		warp_action.target = src
+		actions += warp_action
+
+/obj/machinery/computer/camera_advanced/ratvar/attack_hand(mob/living/user)
+	if(!is_servant_of_ratvar(user))
+		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
+		return
+	. = ..()
+
+/datum/action/innate/servant_warp
+	name = "Gateway In"
+	desc = "Warps to the tile you're viewing. You can use the Spatial Gateway scripture to return."
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
+	button_icon_state = "Spatial Gateway"
+	background_icon_state = "bg_clock"
+	buttontooltipstyle = "clockcult"
+
+/datum/action/innate/servant_warp/Activate()
+	if(QDELETED(target) || !ishuman(owner) || !owner.canUseTopic(target))
+		return
+	var/mob/living/carbon/human/user = owner
+	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
+	var/obj/machinery/computer/camera_advanced/ratvar/R  = target
+	var/turf/T = get_turf(remote_eye)
+	if(user.z != ZLEVEL_REEBE || T.z != ZLEVEL_STATION)
+		return
+	if(isclosedturf(T))
+		to_chat(user, "<span class='sevtug_small'>You can't teleport into a wall.</span>")
+		return
+	else if(isspaceturf(T))
+		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
+		return
+	var/area/AR = get_area(T)
+	if(istype(AR, /area/ai_monitored))
+		to_chat(user, "<span class='sevtug_small'>The structure there is too dense for [src] to pierce.</span>")
+		return
+	if(alert(user, "Are you sure you want to warp to [AR]?", target.name, "Warp", "Cancel") == "Cancel" || QDELETED(R) || !user.canUseTopic(R))
+		return
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(get_turf(user))
+	var/obj/effect/clockwork/spatial_gateway/S2 = new(T)
+
+	S1.setup_gateway(S2, 10, 1, FALSE)
+	S2.visible_message("<span class='warning'>The air ripples before suddenly tearing open!</span>")
+	S1.pass_through_gateway(user) //bloop.
+	R.remove_eye_control(user)

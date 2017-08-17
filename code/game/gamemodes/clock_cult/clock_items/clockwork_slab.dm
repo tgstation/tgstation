@@ -22,7 +22,7 @@
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis, /datum/clockwork_scripture/create_object/sigil_of_submission, \
-	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
+	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/spatial_gateway) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	var/recollection_category = "Default"
 	actions_types = list(/datum/action/item_action/clock/hierophant)
@@ -45,48 +45,10 @@
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
-/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
-	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
-	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
-	/datum/clockwork_scripture/create_object/tinkerers_cache)
-	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
+/obj/item/clockwork/slab/cyborg
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
+	maximum_quickbound = 6 //we have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
-
-/obj/item/clockwork/slab/cyborg/engineer //two scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
-
-/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armory)
-
-/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
-/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
-/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/tinkerers_daemon)
-
-/obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
-
-/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
-
-/obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
-	if(!GLOB.ratvar_awakens)
-		to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
-	else
-		..()
-
-/obj/item/clockwork/slab/cyborg/ratvar_act()
-	..()
-	if(!GLOB.ratvar_awakens)
-		SStgui.close_uis(src)
 
 /obj/item/clockwork/slab/Initialize()
 	. = ..()
@@ -115,6 +77,12 @@
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
 		slab_ability.remove_ranged_ability()
 
+/obj/item/clockwork/slab/ratvar_act()
+	if(GLOB.ark_heralded)
+		speed_multiplier = initial(speed_multiplier) * 0.5
+	else
+		speed_multiplier = initial(speed_multiplier)
+
 //Component Generation
 /obj/item/clockwork/slab/process()
 	if(!produces_components)
@@ -122,15 +90,7 @@
 		return
 	if(production_time > world.time)
 		return
-	var/servants = 0
-	var/production_slowdown = 0
-	for(var/mob/living/M in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		production_slowdown = min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM) //SLAB_SERVANT_SLOWDOWN additional seconds for each servant above 5, up to SLAB_SLOWDOWN_MAXIMUM
-	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
+	production_time = world.time + SLAB_PRODUCTION_TIME
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
 	if(istype(L) && (no_cost || can_recite_scripture(L)))
@@ -154,15 +114,10 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		if(GLOB.clockwork_caches) //show components on examine
-			to_chat(user, "<b>Stored components (with global cache):</b>")
-			for(var/i in stored_components)
-				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
-				(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
-		else
-			to_chat(user, "<b>Stored components:</b>")
-			for(var/i in stored_components)
-				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
+		to_chat(user, "<b>Stored components (with global cache):</b>")
+		for(var/i in stored_components)
+			to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
+			(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
 
 //Component Transferal
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
@@ -181,11 +136,7 @@
 			if(targetslab == src)
 				to_chat(user, "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>")
 			else
-				for(var/i in stored_components)
-					targetslab.stored_components[i] += stored_components[i]
-					stored_components[i] = 0
-				update_slab_info(targetslab)
-				update_slab_info(src)
+				transfer_components_to_slab(targetslab)
 				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
 				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
 		else
@@ -199,31 +150,30 @@
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
-		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src]\
-		[GLOB.clockwork_caches ? ", where it is added to the global cache":""].</span>")
-		if(GLOB.clockwork_caches)
-			GLOB.clockwork_component_cache[C.component_id]++
-			update_slab_info()
-		else
-			stored_components[C.component_id]++
-			update_slab_info(src)
+		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src], where it is added to the global cache.</span>")
+		GLOB.clockwork_component_cache[C.component_id]++
+		update_slab_info()
 		user.drop_item()
 		qdel(C)
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
-		var/obj/item/clockwork/slab/S = I
-		var/needs_update = FALSE
-		for(var/i in stored_components)
-			stored_components[i] += S.stored_components[i]
-			S.stored_components[i] = 0
-			if(S.stored_components[i])
-				needs_update = TRUE
-		if(needs_update)
-			update_slab_info(src)
-			update_slab_info(S)
-		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
+		transfer_components_to_slab(I)
+		user.visible_message("<span class='notice'>[user] empties [src] into [I].</span>", "<span class='notice'>You transfer your slab's components into [I].</span>")
 	else
 		return ..()
+
+/obj/item/clockwork/slab/proc/transfer_components_to_slab(obj/item/clockwork/slab/other_slab)
+	if(other_slab == src)
+		return
+	var/needs_update = FALSE
+	for(var/i in stored_components)
+		if(stored_components[i])
+			needs_update = TRUE
+		other_slab.stored_components[i] += stored_components[i]
+		stored_components[i] = 0
+	if(needs_update)
+		update_slab_info(src)
+		update_slab_info(other_slab)
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
@@ -310,32 +260,6 @@
 			textlist += "HONOR RATVAR "
 		textlist += "</b></font>"
 	else
-		var/servants = 0
-		var/production_time = SLAB_PRODUCTION_TIME
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-				servants++
-		if(servants > SCRIPT_SERVANT_REQ)
-			servants -= SCRIPT_SERVANT_REQ
-			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-		var/production_text_addon = ""
-		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-		production_time = production_time/600
-		var/list/production_text
-		if(round(production_time))
-			production_text = list("<b>[round(production_time)] minute\s")
-		if(production_time != round(production_time))
-			production_time -= round(production_time)
-			production_time *= 60
-			if(!LAZYLEN(production_text))
-				production_text = list("<b>[round(production_time, 1)] second\s")
-			else
-				production_text += " and [round(production_time, 1)] second\s"
-		production_text += "</b>"
-		production_text += production_text_addon
-		production_text = production_text.Join()
-
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
 		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \
@@ -431,31 +355,6 @@
 			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create additional power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
-			var/servants = 0 //Calculate the current production time for slab components
-			var/production_time = SLAB_PRODUCTION_TIME
-			for(var/mob/living/M in GLOB.living_mob_list)
-				if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-					servants++
-			if(servants > SCRIPT_SERVANT_REQ)
-				servants -= SCRIPT_SERVANT_REQ
-				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-			var/production_text_addon = ""
-			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-				production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-			production_time = production_time/600
-			var/list/production_text
-			if(round(production_time))
-				production_text = list("<b>[round(production_time)] minute\s")
-			if(production_time != round(production_time))
-				production_time -= round(production_time)
-				production_time *= 60
-				if(!LAZYLEN(production_text))
-					production_text = list("<b>[round(production_time, 1)] second\s")
-				else
-					production_text += " and [round(production_time, 1)] second\s"
-			production_text += "</b>"
-			production_text += production_text_addon
-			production_text = production_text.Join()
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
@@ -466,9 +365,8 @@
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
-			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>[production_text]</b>. This number will increase \
-			as the amount of Servants in the covenant increase; additionally, slabs can only produce components when held by a Servant, and holding more than one slab will cause both \
-			of them to halt progress until one of them is removed from their person.<br><br>"
+			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>[SLAB_PRODUCTION_TIME * 0.1] seconds</b>.<br>\
+			Slabs can only produce components when held by a Servant, and holding more than one slab will cause all but one of them to halt progress.<br><br>"
 			dat += "Your slab has an internal storage of components, but it isn't meant to be the main one. Instead, there's a <b>global storage</b> of components that can be \
 			added to through various ways. Anything that needs components will first draw them from the global storage before attempting to draw them from the slab. Most methods of \
 			component production add to the global storage. You can also offload components from your slab into the global storage by using it on a Tinkerer's Cache, a structure whose \
@@ -576,13 +474,10 @@
 			temp_data += " "
 		else
 			temp_data += " ("
-	if(GLOB.clockwork_caches) //if we have caches, display what's in the global cache
-		for(var/i in GLOB.clockwork_component_cache)
-			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
-			if(i != HIEROPHANT_ANSIBLE)
-				temp_data += " "
-	else
-		temp_data += "<b>NONE</b>"
+	for(var/i in GLOB.clockwork_component_cache)
+		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
+		if(i != HIEROPHANT_ANSIBLE)
+			temp_data += " "
 	temp_data += ")</font>"
 	temp_data = temp_data.Join()
 	data["components"] = temp_data
@@ -594,17 +489,7 @@
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and <b>[SCRIPT_CACHE_REQ]</b> Tinkerer's Cache.</i></font>"
-		if(SCRIPTURE_APPLICATION)
-			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, <b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
-		if(SCRIPTURE_JUDGEMENT)
-			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
-				data["tier_info"] = "<font color=#B18B25><b>This scripture is permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures will be unlocked once the Ark is halfway to activating.</i></font>"
 
 	data["selected"] = selected_scripture
 
@@ -672,9 +557,7 @@
 		if("component")
 			var/list/components = list("Random Components")
 			for(var/i in GLOB.clockwork_component_cache)
-				var/cache_components = 0
-				if(GLOB.clockwork_caches)
-					cache_components = GLOB.clockwork_component_cache[i]
+				var/cache_components = GLOB.clockwork_component_cache[i]
 				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
 			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
 			if(input_component && !..())

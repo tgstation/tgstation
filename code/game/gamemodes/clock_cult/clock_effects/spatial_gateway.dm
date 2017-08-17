@@ -137,6 +137,9 @@
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
+		if(!uses)
+			density = FALSE
+			linked_gateway.density = FALSE
 	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
@@ -150,8 +153,12 @@
 	var/list/possible_targets = list()
 	var/list/teleportnames = list()
 
+	for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
+		if(!G.Adjacent(invoker) && G.z <= ZLEVEL_SPACEMAX && G.obj_integrity)
+			possible_targets[avoid_assoc_duplicate_keys("[G.name]", teleportnames)] = G
+
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
-		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX) && O.anchored) //don't list obelisks that we're next to
+		if(!O.Adjacent(invoker) && O != src && O.z <= ZLEVEL_SPACEMAX && O.anchored) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
 			possible_targets[avoid_assoc_duplicate_keys("[locname] [O.name]", teleportnames)] = O
@@ -167,7 +174,7 @@
 	var/atom/movable/target = possible_targets[input_target_key]
 	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (isitem(src) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
-	if(!target) //if we have no target, but did have a key, let them retry
+	if(QDELETED(target)) //if we have no target, but did have a key, let them retry
 		to_chat(invoker, "<span class='warning'>That target no longer exists!</span>")
 		return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	if(isliving(target))
@@ -179,6 +186,7 @@
 			to_chat(invoker, "<span class='warning'>That Servant is no longer conscious!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
+	var/istargetark = istype(target, /obj/structure/destructible/clockwork/massive/celestial_gateway)
 	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	if(issrcobelisk)
 		if(!anchored)
@@ -200,12 +208,27 @@
 		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
 		time_duration = round(time_duration * (2 * efficiency), 1)
 		CO.active = TRUE //you'd be active in a second but you should update immediately
+	if(istargetark)
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/CG = target
+		if(!CG.obj_integrity)
+			to_chat(invoker, "<span class='warning'>The [target.name] has been destroyed!</span>")
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
-	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
+	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to \the [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
 	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
-	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
+	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk || istargetark ? get_turf(target) : get_step(get_turf(target), target.dir))
+	if(istargetark)
+		S2.icon_state = null
 
 	//Set up the portals now that they've spawned
 	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
 	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
 	return TRUE
+
+/proc/quick_spatial_gate(atom/source, atom/target, atom/teleported)
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(source)
+	var/obj/effect/clockwork/spatial_gateway/S2 = new(target)
+
+	S1.setup_gateway(S2, 10, 1, FALSE)
+	S2.visible_message("<span class='warning'>The air above [target] ripples before suddenly tearing open!</span>")
+	S1.pass_through_gateway(teleported) //bloop.

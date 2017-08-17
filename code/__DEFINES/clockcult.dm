@@ -6,13 +6,18 @@
 #define HIEROPHANT_ANSIBLE "hierophant_ansible"
 
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
-GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
+GLOBAL_VAR_INIT(clockwork_power, 0) //How much Power is stored, total
 GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
 GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)) //The pool of components that caches draw from
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
+GLOBAL_DATUM(ark_of_the_clockwork_justicar, /obj/structure/destructible/clockwork/massive/celestial_gateway)
+GLOBAL_VAR_INIT(initial_ark_time, 0) //In deciseonds, the initial time before the ark activates
+GLOBAL_VAR_INIT(herald_votes, 0) //how many yes votes have been cast for heralding the ark
+GLOBAL_VAR_INIT(herald_vote_complete, FALSE) //if the vote has finishes
+GLOBAL_VAR_INIT(ark_heralded, FALSE) //if the servants have given up stealth for bonuses
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
@@ -20,27 +25,13 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
-#define SCRIPT_SERVANT_REQ 6
-#define SCRIPT_CACHE_REQ 1
-#define SCRIPTURE_APPLICATION "Application"
-#define APPLICATION_SERVANT_REQ 9
-#define APPLICATION_CACHE_REQ 3
-#define APPLICATION_CV_REQ 100
-#define SCRIPTURE_JUDGEMENT "Judgement"
-#define JUDGEMENT_SERVANT_REQ 12
-#define JUDGEMENT_CACHE_REQ 5
-#define JUDGEMENT_CV_REQ 300
 
 //general component/cooldown things
-#define SLAB_PRODUCTION_TIME 450 //how long(deciseconds) slabs require to produce a single component; defaults to 45 seconds
+#define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 90 seconds
 
-#define SLAB_SERVANT_SLOWDOWN 150 //how much each servant above 5 slows down slab-based generation; defaults to 15 seconds per sevant
+#define CACHE_PRODUCTION_TIME 100 //how long(deciseconds) caches require to produce a component; defaults to 10 seconds
 
-#define SLAB_SLOWDOWN_MAXIMUM 1350 //maximum slowdown from additional servants; defaults to 2 minutes 15 seconds
-
-#define CACHE_PRODUCTION_TIME 300 //how long(deciseconds) caches require to produce a component; defaults to 30 seconds
-
-#define ACTIVE_CACHE_SLOWDOWN 50 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 5 seconds
+#define ACTIVE_CACHE_SLOWDOWN 100 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 10 seconds
 
 #define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
 
@@ -72,23 +63,19 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 //Ark defines
 #define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
 
-#define GATEWAY_REEBE_FOUND 119 //when progress is at or above this, the gateway finds reebe and begins drawing power
+#define GATEWAY_REEBE_FOUND 239 //when progress is at or above this, the gateway finds reebe and begins drawing power
 
-#define GATEWAY_RATVAR_COMING 239 //when progress is at or above this, ratvar has entered and is coming through the gateway
+#define GATEWAY_RATVAR_COMING 479 //when progress is at or above this, ratvar has entered and is coming through the gateway
 
-#define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
+#define GATEWAY_RATVAR_ARRIVAL 600 //when progress is at or above this, game over ratvar's here everybody go home
 
 #define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
-
-#define ARK_CONSUME_COST 15 //how many of each component an Ark needs to consume to activate
 
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 
 //misc clockcult stuff
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
-
-#define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
 
 #define FABRICATOR_REPAIR_PER_TICK 4 //how much a fabricator repairs each tick, and also how many deciseconds each tick is
 

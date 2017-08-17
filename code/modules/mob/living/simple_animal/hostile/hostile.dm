@@ -201,9 +201,6 @@
 			return 1
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
-			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
-			if(OW.target != src)
-				return FALSE
 			return TRUE
 
 

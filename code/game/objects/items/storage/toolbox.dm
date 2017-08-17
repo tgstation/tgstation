@@ -145,7 +145,8 @@
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
 /obj/item/storage/toolbox/brass/prefilled/PopulateContents()
-	new fabricator_type(src)
+	if(fabricator_type)
+		new fabricator_type(src)
 	new /obj/item/screwdriver/brass(src)
 	new /obj/item/wirecutters/brass(src)
 	new /obj/item/wrench/brass(src)
@@ -162,6 +163,10 @@
 /obj/item/storage/toolbox/brass/prefilled/ratvar/admin
 	slab_type = /obj/item/clockwork/slab/debug
 	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
+
+/obj/item/storage/toolbox/brass/prefilled/servant
+	slot_flags = SLOT_BELT
+	fabricator_type = null
 
 
 /obj/item/storage/toolbox/artistic

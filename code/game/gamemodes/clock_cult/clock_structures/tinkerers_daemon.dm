@@ -8,7 +8,6 @@
 	inactive_icon = "tinkerers_daemon"
 	unanchored_icon = "tinkerers_daemon_unwrenched"
 	max_integrity = 100
-	construction_value = 20
 	break_message = "<span class='warning'>The daemon shatters into millions of pieces, leaving only a disc of metal!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/small = 6, \
@@ -56,9 +55,6 @@
 		if(!anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>")
 			return FALSE
-		if(!GLOB.clockwork_caches)
-			to_chat(user, "<span class='nezbere'>\"You require a cache for this daemon to operate. Get to it.\"</span>")
-			return
 		var/min_power_usable = 0
 		for(var/i in GLOB.clockwork_component_cache)
 			if(!min_power_usable)
@@ -87,7 +83,7 @@
 				for(var/mob/living/L in GLOB.living_mob_list)
 					if(is_servant_of_ratvar(L))
 						servants++
-				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !GLOB.clockwork_caches || servants * 0.2 < 1)
+				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || servants * 0.2 < 1)
 					return
 				if(!component_id_to_produce)
 					to_chat(user, "<span class='warning'>You decide not to select a component and activate the daemon.</span>")
@@ -102,7 +98,7 @@
 				for(var/mob/living/L in GLOB.living_mob_list)
 					if(is_servant_of_ratvar(L))
 						servants++
-				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !GLOB.clockwork_caches || servants * 0.2 < 1)
+				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || servants * 0.2 < 1)
 					return
 				toggle(0, user)
 
@@ -149,7 +145,7 @@
 				min_power_usable = min(min_power_usable, get_component_cost(i))
 	else
 		min_power_usable = get_component_cost(component_id_to_produce)
-	if(!GLOB.clockwork_caches || . < min_power_usable) //if we don't have enough to produce the lowest or what we chose to produce, cancel out
+	if(. < min_power_usable) //if we don't have enough to produce the lowest or what we chose to produce, cancel out
 		forced_disable(FALSE)
 		return
 	if(production_time <= world.time)

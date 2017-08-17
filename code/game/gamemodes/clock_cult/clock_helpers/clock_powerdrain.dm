@@ -15,8 +15,8 @@
 	if(cell && cell.charge)
 		playsound(src, "sparks", 50, 1)
 		flick("apc-spark", src)
-		. = min(cell.charge, MIN_CLOCKCULT_POWER*3)
-		cell.use(.) //Better than a power sink!
+		. = min(cell.charge, MIN_CLOCKCULT_POWER*2)
+		cell.use(.)
 		if(!cell.charge && !shorted)
 			shorted = 1
 			visible_message("<span class='warning'>The [name]'s screen blurs with static.</span>")
@@ -25,7 +25,7 @@
 
 /obj/machinery/power/smes/power_drain(clockcult_user)
 	if(charge)
-		. = min(charge, MIN_CLOCKCULT_POWER*3)
+		. = min(charge, MIN_CLOCKCULT_POWER*2)
 		charge -= . * 50
 		if(!charge && !panel_open)
 			panel_open = TRUE
@@ -36,18 +36,18 @@
 
 /obj/item/stock_parts/cell/power_drain(clockcult_user)
 	if(charge)
-		. = min(charge, MIN_CLOCKCULT_POWER*3)
+		. = min(charge, MIN_CLOCKCULT_POWER*2)
 		charge = use(.)
 		update_icon()
 
 /mob/living/silicon/robot/power_drain(clockcult_user)
 	if((!clockcult_user || !is_servant_of_ratvar(src)) && cell && cell.charge)
-		. = min(cell.charge, MIN_CLOCKCULT_POWER*4)
+		. = min(cell.charge, MIN_CLOCKCULT_POWER)
 		cell.use(.)
 		spark_system.start()
 
 /obj/mecha/power_drain(clockcult_user)
 	if((!clockcult_user || (occupant && !is_servant_of_ratvar(occupant))) && cell && cell.charge)
-		. = min(cell.charge, MIN_CLOCKCULT_POWER*4)
+		. = min(cell.charge, MIN_CLOCKCULT_POWER)
 		cell.use(.)
 		spark_system.start()

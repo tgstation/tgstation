@@ -340,6 +340,9 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	pixel_x = 0
 	pixel_y = 0
 
+/obj/item/stack/tile/brass/thirty
+	amount = 30
+
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."

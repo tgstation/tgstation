@@ -16,10 +16,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	var/bonus_burn = 5
-	var/timerid
+	var/datum/action/innate/summon_spear/summon_action
 
 /obj/item/clockwork/ratvarian_spear/Destroy()
-	deltimer(timerid)
+	summon_action = null
 	return ..()
 
 /obj/item/clockwork/ratvarian_spear/ratvar_act()
@@ -29,25 +29,16 @@
 		throwforce = 40
 		armour_penetration = 50
 		clockwork_desc = initial(clockwork_desc)
-		deltimer(timerid)
 	else
 		force = initial(force)
 		bonus_burn = initial(bonus_burn)
 		throwforce = initial(throwforce)
 		armour_penetration = initial(armour_penetration)
-		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
-		deltimer(timerid)
-		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
-
-/obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
-	..()
-	clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons."
-	deltimer(timerid)
 
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='inathneq_small'>Attacks on living non-Servants will generate <b>[bonus_burn]</b> units of vitality.</span>")
+		to_chat(user, "<span class='inathneq_small'>Attacks on living non-Servants will generate Vitality based on a percentage of damage done.</span>")
 		if(!iscyborg(user))
 			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>")
 
@@ -68,17 +59,21 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L))
-			if(L.put_in_active_hand(src))
+			if(L.stat == CONSCIOUS && L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(L.stat != DEAD && !L.null_rod_check())
 				if(issilicon(L) || iscultist(L))
 					L.Knockdown(100)
 				else
 					L.Knockdown(40)
 				GLOB.clockwork_vitality += L.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar
+			if(summon_action)
+				summon_action.cooldown = world.time + summon_action.break_cooldown
+				summon_action.owner.update_action_buttons_icon()
+				addtimer(CALLBACK(summon_action.owner, /mob.proc/update_action_buttons_icon), summon_action.break_cooldown)
 			break_spear(T)
 	else
 		..()

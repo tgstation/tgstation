@@ -57,6 +57,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
+		if(invoker.has_status_effect(STATUS_EFFECT_GEISTRACKER))
+			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"Sustaining Geis!\"</span>")
+			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
@@ -107,7 +110,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
 		for(var/i in consumed_components)
-			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
+			var/cache_components = GLOB.clockwork_component_cache[i]
 			var/total_components = slab.stored_components[i] + cache_components
 			if(consumed_components[i] && total_components < consumed_components[i])
 				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \
@@ -155,7 +158,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
 	var/turf/T = get_turf(invoker)
-	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND))
+	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_REEBE))
 		channel_time *= 2
 		for(var/i in consumed_components)
 			if(consumed_components[i])
@@ -238,7 +241,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/create_object/check_special_requirements()
 	var/turf/T = get_turf(invoker)
-	if(!space_allowed && isspaceturf(T))
+	if(istype(T, /turf/open/clock_spawn_room) || ispath(T.baseturf, /turf/open/clock_spawn_room))
+		return FALSE
+	if(!space_allowed && (isspaceturf(T) || istype(T, /turf/open/indestructible/reebe_void)))
 		to_chat(invoker, "<span class='warning'>You need solid ground to place this object!</span>")
 		return FALSE
 	if(one_per_tile && (locate(prevent_path) in T))

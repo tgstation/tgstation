@@ -332,7 +332,6 @@
 	..()
 	for(var/i in 1 to 2)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
-	change_construction_value(2)
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
@@ -340,10 +339,6 @@
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
-
-/obj/machinery/door/window/clockwork/Destroy()
-	change_construction_value(-2)
-	return ..()
 
 /obj/machinery/door/window/clockwork/emp_act(severity)
 	if(prob(80/severity))

@@ -7,7 +7,6 @@
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
 	unanchored_icon = "mania_motor_unwrenched"
-	construction_value = 20
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	max_integrity = 100
 	light_color = "#AF0AAF"

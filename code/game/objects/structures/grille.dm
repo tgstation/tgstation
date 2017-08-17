@@ -246,13 +246,14 @@
 	desc = "A strangely-shaped grille."
 	broken_type = /obj/structure/grille/ratvar/broken
 
-/obj/structure/grille/ratvar/New()
-	..()
-	if(broken)
-		new /obj/effect/temp_visual/ratvar/grille/broken(get_turf(src))
-	else
-		new /obj/effect/temp_visual/ratvar/grille(get_turf(src))
-		new /obj/effect/temp_visual/ratvar/beam/grille(get_turf(src))
+/obj/structure/grille/ratvar/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		if(broken)
+			new /obj/effect/temp_visual/ratvar/grille/broken(get_turf(src))
+		else
+			new /obj/effect/temp_visual/ratvar/grille(get_turf(src))
+			new /obj/effect/temp_visual/ratvar/beam/grille(get_turf(src))
 
 /obj/structure/grille/ratvar/narsie_act()
 	take_damage(rand(1, 3), BRUTE)

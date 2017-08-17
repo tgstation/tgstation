@@ -6,7 +6,7 @@
 	icon_state = "clockwork_helmet"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 55, bullet = 55, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/Initialize()
 	. = ..()
@@ -20,12 +20,12 @@
 /obj/item/clothing/head/helmet/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
 		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
-		flags_1 |= STOPSPRESSUREDMAGE_1
+		flags_1 |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags_1 &= ~STOPSPRESSUREDMAGE_1
+		armor = list(melee = 55, bullet = 55, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		flags_1 &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
@@ -46,6 +46,12 @@
 			user.adjustBrainLoss(30)
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround), src, 1) //equipped happens before putting stuff on(but not before picking items up), 1). thus, we need to wait for it to be on before forcing it off.
 
+/obj/item/clothing/head/helmet/clockwork/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/datum/status_effect/vanguard_shield/V = owner.has_status_effect(STATUS_EFFECT_VANGUARD)
+	if(V)
+		V.duration += 4
+	return ..()
+
 /obj/item/clothing/head/helmet/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
 		return 0
@@ -61,7 +67,7 @@
 	cold_protection = CHEST|GROIN|LEGS
 	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 55, bullet = 55, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/Initialize()
@@ -76,19 +82,15 @@
 /obj/item/clothing/suit/armor/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
 		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
-		flags_1 |= STOPSPRESSUREDMAGE_1
+		flags_1 |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags_1 &= ~STOPSPRESSUREDMAGE_1
+		armor = list(melee = 55, bullet = 55, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		flags_1 &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
-/obj/item/clothing/suit/armor/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	if(equipper && !is_servant_of_ratvar(equipper))
-		return 0
-	return ..()
 
 /obj/item/clothing/suit/armor/clockwork/equipped(mob/living/user, slot)
 	..()
@@ -108,6 +110,17 @@
 			user.IgniteMob()
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
 
+/obj/item/clothing/suit/armor/clockwork/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/datum/status_effect/vanguard_shield/V = owner.has_status_effect(STATUS_EFFECT_VANGUARD)
+	if(V)
+		V.duration += 5
+	return ..()
+
+/obj/item/clothing/suit/armor/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+	if(equipper && !is_servant_of_ratvar(equipper))
+		return 0
+	return ..()
+
 /obj/item/clothing/gloves/clockwork
 	name = "clockwork gauntlets"
 	desc = "Heavy, shock-resistant gauntlets with brass reinforcement."
@@ -123,7 +136,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 55, bullet = 55, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/Initialize()
 	. = ..()
@@ -137,19 +150,14 @@
 /obj/item/clothing/gloves/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
 		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
-		flags_1 |= STOPSPRESSUREDMAGE_1
+		flags_1 |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags_1 &= ~STOPSPRESSUREDMAGE_1
+		armor = list(melee = 55, bullet = 55, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		flags_1 &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
-
-/obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	if(equipper && !is_servant_of_ratvar(equipper))
-		return 0
-	return ..()
 
 /obj/item/clothing/gloves/clockwork/equipped(mob/living/user, slot)
 	..()
@@ -167,6 +175,17 @@
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
+
+/obj/item/clothing/gloves/clockwork/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/datum/status_effect/vanguard_shield/V = owner.has_status_effect(STATUS_EFFECT_VANGUARD)
+	if(V)
+		V.duration += 3
+	return ..()
+
+/obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+	if(equipper && !is_servant_of_ratvar(equipper))
+		return 0
+	return ..()
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
@@ -192,14 +211,9 @@
 
 /obj/item/clothing/shoes/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		flags_1 |= NOSLIP_1
+		flags_1 |= NOSLIP
 	else
-		flags_1 &= ~NOSLIP_1
-
-/obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	if(equipper && !is_servant_of_ratvar(equipper))
-		return 0
-	return ..()
+		flags_1 &= ~NOSLIP
 
 /obj/item/clothing/shoes/clockwork/equipped(mob/living/user, slot)
 	..()
@@ -217,3 +231,14 @@
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
+
+/obj/item/clothing/shoes/clockwork/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/datum/status_effect/vanguard_shield/V = owner.has_status_effect(STATUS_EFFECT_VANGUARD)
+	if(V)
+		V.duration += 3
+	return ..()
+
+/obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+	if(equipper && !is_servant_of_ratvar(equipper))
+		return 0
+	return ..()
