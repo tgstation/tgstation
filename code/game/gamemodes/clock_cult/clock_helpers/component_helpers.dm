@@ -13,12 +13,8 @@
 /proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab)
 	. = list()
 	if(storage_slab)
-		if(GLOB.clockwork_caches)
-			for(var/i in GLOB.clockwork_component_cache)
-				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(GLOB.clockwork_component_cache[i] + storage_slab.stored_components[i]), 1)
-		else
-			for(var/i in GLOB.clockwork_component_cache)
-				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*storage_slab.stored_components[i], 1)
+		for(var/i in GLOB.clockwork_component_cache)
+			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(GLOB.clockwork_component_cache[i] + storage_slab.stored_components[i]), 1)
 	else
 		for(var/i in GLOB.clockwork_component_cache)
 			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*GLOB.clockwork_component_cache[i], 1)

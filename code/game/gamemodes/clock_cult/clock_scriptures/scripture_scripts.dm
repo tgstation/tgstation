@@ -182,24 +182,47 @@
 	return TRUE
 
 
-//Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.
-/datum/clockwork_scripture/create_object/replica_fabricator
-	descname = "Replaces Objects with Ratvarian Versions"
-	name = "Replica Fabricator"
-	desc = "Forms a device that, when used on certain objects, replaces them with their Ratvarian equivalents. It requires power to function."
-	invocations = list("With this device...", "...his presence shall be made known.")
-	channel_time = 20
-	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
-	whispered = TRUE
-	object_path = /obj/item/clockwork/replica_fabricator/preloaded
-	creator_message = "<span class='brass'>You form a replica fabricator.</span>"
-	usage_tip = "Clockwork Walls cause nearby Tinkerer's Caches to generate components passively, making this a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
+//Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
+/datum/clockwork_scripture/create_object/mania_motor
+	descname = "Powered Structure, Area Denial"
+	name = "Mania Motor"
+	desc = "Creates a mania motor which causes minor damage and a variety of negative mental effects in nearby non-Servant humans, potentially up to and including conversion."
+	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
+	channel_time = 80
+	consumed_components = list(GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 1)
+	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
+	creator_message = "<span class='brass'>You form a mania motor, which causes minor damage and negative mental effects in non-Servants.</span>"
+	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "It will also cure hallucinations and brain damage in nearby Servants."
 	tier = SCRIPTURE_SCRIPT
-	space_allowed = TRUE
+	one_per_tile = TRUE
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 8
+	quickbind = TRUE
+	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
+
+
+//Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
+/datum/clockwork_scripture/create_object/tinkerers_daemon
+	descname = "Powered Structure, Component Generator"
+	name = "Tinkerer's Daemon"
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power and active daemons are outnumbered by Servants by a ratio of 5:1."
+	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
+	channel_time = 80
+	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
+	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
+	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "Vital to your success!"
+	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
+	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
 
 
 //Arcane Armory: Grants the invoker the ability to call forth a Ratvarian spear and a set of clockwork armor.
@@ -235,6 +258,26 @@
 	C.spear.Grant(invoker)
 	C.cuirass.Grant(invoker)
 	return TRUE
+
+
+//Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
+/datum/clockwork_scripture/create_object/sigil_of_transmission
+	descname = "Structure Power Generator & Battery"
+	name = "Sigil of Transmission"
+	desc = "Places a sigil that will automatically drain power into the global power storage that clockwork structures will automatically use from."
+	invocations = list("Divinity...", "...power our creations!")
+	channel_time = 60
+	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 2)
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/transmission
+	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it and will drain power when activated.</span>"
+	usage_tip = "Cyborgs can charge from this sigil by remaining over it for 5 seconds."
+	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
 
 //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.

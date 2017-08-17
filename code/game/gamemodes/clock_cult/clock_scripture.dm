@@ -110,7 +110,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
 		for(var/i in consumed_components)
-			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
+			var/cache_components = GLOB.clockwork_component_cache[i]
 			var/total_components = slab.stored_components[i] + cache_components
 			if(consumed_components[i] && total_components < consumed_components[i])
 				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \

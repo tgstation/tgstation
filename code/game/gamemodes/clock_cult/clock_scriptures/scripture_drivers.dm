@@ -171,37 +171,24 @@
 	quickbind_desc = "Creates a new Clockwork Slab."
 
 
-//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
-/datum/clockwork_scripture/create_object/tinkerers_cache
-	descname = "Necessary Structure, Shares Components"
-	name = "Tinkerer's Cache"
-	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
-	Striking a cache with a slab will transfer that slab's components to the global cache."
-	invocations = list("Constructing...", "...a cache!")
-	channel_time = 50
-	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-	object_path = /obj/structure/destructible/clockwork/cache
-	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
-	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
+//Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.
+/datum/clockwork_scripture/create_object/replica_fabricator
+	descname = "Replaces Objects with Ratvarian Versions"
+	name = "Replica Fabricator"
+	desc = "Forms a device that, when used on certain objects, replaces them with their Ratvarian equivalents. It requires power to function."
+	invocations = list("With this device...", "...his presence shall be made known.")
+	channel_time = 20
+	consumed_components = list(REPLICANT_ALLOY = 1)
+	whispered = TRUE
+	object_path = /obj/item/clockwork/replica_fabricator/preloaded
+	creator_message = "<span class='brass'>You form a replica fabricator.</span>"
+	usage_tip = "Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_DRIVER
-	one_per_tile = TRUE
+	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 	quickbind = TRUE
-	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
-	var/static/prev_cost = 0
-
-/datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.4), 10)
-	if(cache_cost_increase != prev_cost)
-		prev_cost = cache_cost_increase
-		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-		for(var/i in consumed_components)
-			if(i != REPLICANT_ALLOY)
-				consumed_components[i] += cache_cost_increase
-		return TRUE
-	return FALSE
+	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
 
 
 //Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.

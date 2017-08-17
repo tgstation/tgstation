@@ -11,6 +11,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
+	var/start_time_added = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/active = FALSE
 	var/activating = FALSE
@@ -56,6 +57,11 @@
 			sound_to_playing_players(S = sound('sound/effects/clockcult_gateway_disrupted.ogg', 50, TRUE, frequency = 30000, channel = CHANNEL_JUSTICAR_ARK))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
+			animate(glow, transform = matrix() * 1.5, time = 9)
+			animate(transform = matrix(), time = 9)
+			animate(transform = matrix() * 2, time = 6)
+			animate(transform = matrix(), time = 6)
+			animate(transform = matrix() * 3, alpha = 0, time = 3)
 			sleep(40)
 			explosion(src, 5, 10, 20, 8)
 			QDEL_NULL(glow)
@@ -111,6 +117,9 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!obj_integrity || !GLOB.initial_ark_time)
 		return
+	if(!start_time_added)
+		GLOB.initial_ark_time += SSticker.round_start_time
+		start_time_added = TRUE
 	var/turf/own_turf = get_turf(src)
 	var/list/open_turfs = list()
 	for(var/t in RANGE_TURFS(1, own_turf))
@@ -128,6 +137,22 @@
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
 	if(!active)
+		if(!GLOB.herald_vote_complete && GLOB.initial_ark_time - 16200 <= world.time)
+			GLOB.herald_vote_complete = TRUE
+			if(GLOB.herald_votes > LAZYLEN(SSticker.mode.servants_of_ratvar) * 0.5)
+				priority_announce("A group of fanatics following the cause of Ratvar have rashly sacrificed stealth for power, and dare anyone to try and stop them.", title = "The Justiciar Comes")
+				hierophant_message("<span class='brass'>Ratvar's arrival has been heralded, and clockwork slabs and replica fabricators will work at greatly increased speed.</span><br>\
+				<span class='big_brass'>With no need for stealth, the Ark will activate five minutes earlier.</span>")
+				GLOB.initial_ark_time -= 3000
+				GLOB.ark_heralded = TRUE
+				for(var/datum/mind/M in SSticker.mode.servants_of_ratvar)
+					if(M.current)
+						for(var/datum/action/innate/herald_vote/vote in M.current.actions)
+							vote.Remove(M.current)
+				for(var/obj/O in GLOB.all_clockwork_objects)
+					O.ratvar_act()
+			else
+				hierophant_message("<span class='brass'>Ratvar's arrival has not been heralded, and stealth is retained.</span>")
 		if(!activating && GLOB.initial_ark_time - 300 <= world.time)
 			visible_message("<span class='boldwarning'>[src] whirrs to life!</span>")
 			hierophant_message("<span class='bold large_brass'>The Ark is activating! Return to Reebe!</span>")
@@ -137,7 +162,7 @@
 			activating = TRUE
 		if(activating && GLOB.initial_ark_time <= world.time)
 			active = TRUE
-			priority_announce("Massive bluespace anomaly detected on all frequencies. All crew are directed to @!$, [Gibberish(text2ratvar("PURGE ALL UNTRUTHS"), 100)] <&. the anomalies and \
+			priority_announce("Massive bluespace anomaly detected on all frequencies. All crew are directed to @!$ [Gibberish(text2ratvar("PURGE ALL UNTRUTHS"), 100)] <& the anomalies and \
 			destroy their source to prevent further damage to corporate property. This is not a drill.", "Central Command Higher Dimensional Affairs")
 			set_security_level("delta")
 			SSshuttle.registerHostileEnvironment(src)

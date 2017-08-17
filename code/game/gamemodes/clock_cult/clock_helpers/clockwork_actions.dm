@@ -49,6 +49,42 @@
 	log_talk(owner,"CLOCK:[key_name(owner)] : [input]",LOGSAY)
 	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)
 
+//Herald Ratvar action, allows a servant to vote to herald Ratvar for massive bonuses at the cost of stealth
+/datum/action/innate/herald_vote
+	name = "Herald Ratvar"
+	desc = "Vote on if you want to herald Ratvar's arrival for massive bonuses at the cost of stealth."
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
+	button_icon_state = "clockvote"
+	background_icon_state = "bg_clock"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	buttontooltipstyle = "clockcult"
+
+/datum/action/innate/herald_vote/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return FALSE
+	return ..()
+
+/datum/action/innate/herald_vote/Activate()
+	var/input = alert(owner, "Herald Ratvar at the cost of stealth?", , "Yes", "No", "Cancel")
+	if(!input || !IsAvailable())
+		return
+	var/datum/mind/M = owner.mind
+	if(!M)
+		return
+	var/datum/antagonist/clockcult/C = M.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+	if(!C)
+		return
+	switch(input)
+		if("Yes")
+			to_chat(owner, "<span class='brass'>You voted <span class='inathneq_large'>YES</span> to heralding Ratvar's arrival.</span>")
+			GLOB.herald_votes++
+			C.voted = TRUE
+			Remove(owner)
+		if("No")
+			to_chat(owner, "<span class='brass'>You voted <span class='neovgre_large'>NO</span> to heralding Ratvar's arrival.</span>")
+			C.voted = TRUE
+			Remove(owner)
+
 //Summon Spear action: Calls forth a Ratvarian spear.
 /datum/action/innate/summon_spear
 	name = "Summon Spear"

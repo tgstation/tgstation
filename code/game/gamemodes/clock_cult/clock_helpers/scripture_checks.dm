@@ -1,15 +1,9 @@
 //returns a list of scriptures and if they're unlocked or not
 /proc/scripture_unlock_check()
-	var/servants = 0
-	for(var/mob/living/M in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
-	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE)
+	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE)
 	//Drivers: Always unlocked.
-	.[SCRIPTURE_SCRIPT] = (SSticker.scripture_states[SCRIPTURE_SCRIPT] || (GLOB.initial_ark_time && GLOB.initial_ark_time - (GLOB.initial_ark_time * 0.5) <= world.time))
+	.[SCRIPTURE_SCRIPT] = (SSticker.scripture_states[SCRIPTURE_SCRIPT] || GLOB.ark_heralded || (GLOB.initial_ark_time && GLOB.initial_ark_time - (GLOB.initial_ark_time * 0.5) <= world.time))
 	//Script: Ark is halfway to activating.
-	.[SCRIPTURE_APPLICATION] = (SSticker.scripture_states[SCRIPTURE_APPLICATION] || servants >= GLOB.application_servants_needed)
-	//Application: One crewmember converted.
 
 //reports to servants when scripture is locked or unlocked
 /proc/scripture_unlock_alert(list/previous_states)

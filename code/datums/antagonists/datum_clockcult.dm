@@ -1,6 +1,8 @@
 //CLOCKCULT PROOF OF CONCEPT
 /datum/antagonist/clockcult
 	var/datum/action/innate/hierophant/hierophant_network = new()
+	var/datum/action/innate/herald_vote/herald = new()
+	var/voted = FALSE
 	var/armory_bound = FALSE
 	var/datum/action/innate/summon_spear/spear = new()
 	var/datum/action/innate/call_cuirass/cuirass = new()
@@ -11,6 +13,7 @@
 
 /datum/antagonist/clockcult/Destroy()
 	QDEL_NULL(hierophant_network)
+	QDEL_NULL(herald)
 	QDEL_NULL(spear)
 	QDEL_NULL(cuirass)
 	return ..()
@@ -94,7 +97,7 @@
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
 			A.can_be_carded = FALSE
-			A.requires_power = POWER_REQ_CLOCKCULT
+			A.requires_power = POWER_REQ_NONE
 			var/list/AI_frame = list(mutable_appearance('icons/mob/clockwork_mobs.dmi', "aiframe")) //make the AI's cool frame
 			for(var/d in GLOB.cardinals)
 				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
@@ -125,6 +128,8 @@
 		hierophant_network.title = initial(hierophant_network.title)
 		hierophant_network.span_for_name = initial(hierophant_network.span_for_name)
 		hierophant_network.span_for_message = initial(hierophant_network.span_for_message)
+	if(!GLOB.herald_vote_complete && !voted)
+		herald.Grant(current)
 	if(current.can_hold_items() && armory_bound)
 		spear.Grant(current)
 		cuirass.Grant(current)

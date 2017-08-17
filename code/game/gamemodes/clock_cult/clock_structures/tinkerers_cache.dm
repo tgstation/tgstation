@@ -16,12 +16,10 @@
 /obj/structure/destructible/clockwork/cache/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	GLOB.clockwork_caches++
 	update_slab_info()
 	set_light(2, 0.7)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
-	GLOB.clockwork_caches--
 	update_slab_info()
 	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)

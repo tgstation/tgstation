@@ -77,6 +77,12 @@
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
 		slab_ability.remove_ranged_ability()
 
+/obj/item/clockwork/slab/ratvar_act()
+	if(GLOB.ark_heralded)
+		speed_multiplier = initial(speed_multiplier) * 0.5
+	else
+		speed_multiplier = initial(speed_multiplier)
+
 //Component Generation
 /obj/item/clockwork/slab/process()
 	if(!produces_components)
@@ -108,15 +114,10 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		if(GLOB.clockwork_caches) //show components on examine
-			to_chat(user, "<b>Stored components (with global cache):</b>")
-			for(var/i in stored_components)
-				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
-				(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
-		else
-			to_chat(user, "<b>Stored components:</b>")
-			for(var/i in stored_components)
-				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
+		to_chat(user, "<b>Stored components (with global cache):</b>")
+		for(var/i in stored_components)
+			to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
+			(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
 
 //Component Transferal
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
@@ -149,14 +150,9 @@
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
-		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src]\
-		[GLOB.clockwork_caches ? ", where it is added to the global cache":""].</span>")
-		if(GLOB.clockwork_caches)
-			GLOB.clockwork_component_cache[C.component_id]++
-			update_slab_info()
-		else
-			stored_components[C.component_id]++
-			update_slab_info(src)
+		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src], where it is added to the global cache.</span>")
+		GLOB.clockwork_component_cache[C.component_id]++
+		update_slab_info()
 		user.drop_item()
 		qdel(C)
 		return 1
@@ -478,13 +474,10 @@
 			temp_data += " "
 		else
 			temp_data += " ("
-	if(GLOB.clockwork_caches) //if we have caches, display what's in the global cache
-		for(var/i in GLOB.clockwork_component_cache)
-			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
-			if(i != HIEROPHANT_ANSIBLE)
-				temp_data += " "
-	else
-		temp_data += "<b>NONE</b>"
+	for(var/i in GLOB.clockwork_component_cache)
+		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
+		if(i != HIEROPHANT_ANSIBLE)
+			temp_data += " "
 	temp_data += ")</font>"
 	temp_data = temp_data.Join()
 	data["components"] = temp_data
@@ -497,11 +490,6 @@
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>These scriptures will be unlocked once the Ark is halfway to activating.</i></font>"
-		if(SCRIPTURE_APPLICATION)
-			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[GLOB.application_servants_needed]</b> Servants.</i></font>"
 
 	data["selected"] = selected_scripture
 
@@ -569,9 +557,7 @@
 		if("component")
 			var/list/components = list("Random Components")
 			for(var/i in GLOB.clockwork_component_cache)
-				var/cache_components = 0
-				if(GLOB.clockwork_caches)
-					cache_components = GLOB.clockwork_component_cache[i]
+				var/cache_components = GLOB.clockwork_component_cache[i]
 				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
 			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
 			if(input_component && !..())

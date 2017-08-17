@@ -214,7 +214,7 @@
 			to_chat(invoker, "<span class='warning'>The [target.name] has been destroyed!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
-	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
+	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to \the [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
 	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
 	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk || istargetark ? get_turf(target) : get_step(get_turf(target), target.dir))
 	if(istargetark)

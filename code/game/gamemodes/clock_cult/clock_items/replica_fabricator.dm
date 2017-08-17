@@ -15,7 +15,7 @@
 	var/repairing = null //what we're currently repairing, if anything
 	var/obj/effect/clockwork/sigil/transmission/recharging = null //the sigil we're charging from, if any
 	var/speed_multiplier = 1 //how fast this fabricator works
-	var/charge_rate = MIN_CLOCKCULT_POWER * 4 //how much power we gain every two seconds
+	var/charge_rate = MIN_CLOCKCULT_POWER * 6 //how much power we gain every two seconds
 	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
 
 /obj/item/clockwork/replica_fabricator/preloaded
@@ -116,9 +116,14 @@
 	if(GLOB.ratvar_awakens)
 		uses_power = FALSE
 		speed_multiplier = initial(speed_multiplier) * 0.25
+		charge_rate = initial(charge_rate)
+	else if(GLOB.ark_heralded)
+		speed_multiplier = initial(speed_multiplier) * 0.5
+		charge_rate = initial(charge_rate) * 2
 	else
 		uses_power = initial(uses_power)
 		speed_multiplier = initial(speed_multiplier)
+		charge_rate = initial(charge_rate)
 
 /obj/item/clockwork/replica_fabricator/examine(mob/living/user)
 	..()
@@ -334,7 +339,7 @@
 		return FALSE
 	if(can_use_power(RATVAR_POWER_CHECK))
 		return FALSE
-	charge_values["power_gain"] = Clamp(sigil.power_charge, 0, POWER_WALL_MINUS_FLOOR)
+	charge_values["power_gain"] = Clamp(GLOB.clockwork_power, 0, POWER_WALL_MINUS_FLOOR)
 	if(!charge_values["power_gain"])
 		if(!silent)
 			to_chat(user, "<span class='warning'>The [sigil.sigil_name] contains no power!</span>")

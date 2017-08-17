@@ -399,8 +399,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
 		else
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b><font color=#1E8CE1>[GLOB.clockwork_vitality]</font></b> Vitality.<br>\
+		textlist += "<b><font color=#1E8CE1>[GLOB.clockwork_vitality]</font></b> Vitality.<br>\
+		<b><font color=#DAAA18>[GLOB.clockwork_power]</font></b> Power.<br>\
 		<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			textlist += "Seconds until [G.active ? "Ratvar's arrival" : "Ark activation"]: <b>[G.get_arrival_text(TRUE)]</b><br>"

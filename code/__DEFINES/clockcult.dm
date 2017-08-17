@@ -6,8 +6,8 @@
 #define HIEROPHANT_ANSIBLE "hierophant_ansible"
 
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
-GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
+GLOBAL_VAR_INIT(clockwork_power, 0) //How much Power is stored, total
 GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
@@ -15,6 +15,9 @@ GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_C
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
 GLOBAL_DATUM(ark_of_the_clockwork_justicar, /obj/structure/destructible/clockwork/massive/celestial_gateway)
 GLOBAL_VAR_INIT(initial_ark_time, 0) //In deciseonds, the initial time before the ark activates
+GLOBAL_VAR_INIT(herald_votes, 0) //how many yes votes have been cast for heralding the ark
+GLOBAL_VAR_INIT(herald_vote_complete, FALSE) //if the vote has finishes
+GLOBAL_VAR_INIT(ark_heralded, FALSE) //if the servants have given up stealth for bonuses
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
@@ -22,14 +25,11 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
-#define SCRIPTURE_APPLICATION "Application"
-#define APPLICATION_SERVANT_REQ 5
-GLOBAL_VAR_INIT(application_servants_needed, APPLICATION_SERVANT_REQ)
 
 //general component/cooldown things
 #define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 90 seconds
 
-#define CACHE_PRODUCTION_TIME 300 //how long(deciseconds) caches require to produce a component; defaults to 30 seconds
+#define CACHE_PRODUCTION_TIME 100 //how long(deciseconds) caches require to produce a component; defaults to 10 seconds
 
 #define ACTIVE_CACHE_SLOWDOWN 100 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 10 seconds
 
@@ -76,8 +76,6 @@ GLOBAL_VAR_INIT(application_servants_needed, APPLICATION_SERVANT_REQ)
 
 //misc clockcult stuff
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
-
-#define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
 
 #define FABRICATOR_REPAIR_PER_TICK 4 //how much a fabricator repairs each tick, and also how many deciseconds each tick is
 

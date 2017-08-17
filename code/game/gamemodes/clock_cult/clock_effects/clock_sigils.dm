@@ -161,7 +161,7 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that serves as power generation and a battery for clockwork structures."
+	clockwork_desc = "A sigil that automatically drains power from everything nearby. Clockwork structures will automatically use drained power."
 	icon_state = "sigiltransmission"
 	alpha = 50
 	color = "#EC8A2D"
@@ -170,12 +170,16 @@
 	sigil_name = "Sigil of Transmission"
 	component_refund = list(HIEROPHANT_ANSIBLE = 1)
 	affects_servants = TRUE
-	var/power_charge = 0 //starts with no power
-	var/drain_range = 14
+	var/drain_range = 7
 
 /obj/effect/clockwork/sigil/transmission/Initialize()
 	. = ..()
 	update_glow()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/clockwork/sigil/transmission/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)
@@ -187,12 +191,8 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		var/structure_number = 0
-		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
-			structure_number++
-		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
-		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? " is":"s are"] in range.</span>")
-		to_chat(user, "<span class='brass'>While active, it will gradually drain power from nearby electronics. It is currently [isprocessing ? "active":"disabled"].</span>")
+		to_chat(user, "<span class='[GLOB.ratvar_awakens || GLOB.clockwork_power ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[GLOB.clockwork_power]"]W</b> of power.</span>")
+		to_chat(user, "<span class='brass'>It will gradually drain power from nearby electronics.</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
 		else if(!GLOB.ratvar_awakens)
@@ -215,21 +215,11 @@
 	if(is_servant_of_ratvar(user))
 		attack_hand(user)
 
-/obj/effect/clockwork/sigil/transmission/attack_hand(mob/user)
-	if(is_servant_of_ratvar(user))
-		visible_message("<span class='notice'>[user] [isprocessing ? "de":""]activates [src].</span>", "<span class='brass'>You [isprocessing ? "de":""]activate the [sigil_name].</span>")
-		if(isprocessing)
-			STOP_PROCESSING(SSobj, src)
-		else
-			START_PROCESSING(SSobj, src)
-	else
-		return ..()
-
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(is_servant_of_ratvar(L))
 		if(iscyborg(L))
 			charge_cyborg(L)
-	else if(power_charge)
+	else if(GLOB.clockwork_power)
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
 /obj/effect/clockwork/sigil/transmission/process()
@@ -252,7 +242,7 @@
 	to_chat(cyborg, "<span class='brass'>You start to charge from the [sigil_name]...</span>")
 	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, .proc/cyborg_checks, cyborg, TRUE)))
 		return
-	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), power_charge) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
+	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), GLOB.clockwork_power) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(modify_charge(giving_power))
 		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
 		var/previous_color = cyborg.color
@@ -266,7 +256,7 @@
 		if(!silent)
 			to_chat(cyborg, "<span class='warning'>You have no cell!</span>")
 		return FALSE
-	if(!power_charge)
+	if(!GLOB.clockwork_power)
 		if(!silent)
 			to_chat(cyborg, "<span class='warning'>The [sigil_name] has no stored power!</span>")
 		return FALSE
@@ -284,21 +274,22 @@
 	if(GLOB.ratvar_awakens)
 		update_glow()
 		return TRUE
-	if(power_charge - amount < 0)
+	if(GLOB.clockwork_power - amount < 0)
 		return FALSE
-	power_charge -= amount
+	GLOB.clockwork_power -= amount
 	update_glow()
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/proc/update_glow()
-	if(GLOB.ratvar_awakens)
-		alpha = 255
-	else
-		alpha = min(initial(alpha) + power_charge*0.02, 255)
-	if(!power_charge)
-		set_light(0)
-	else
-		set_light(max(alpha*0.02, 1.4), max(alpha*0.01, 0.1))
+	for(var/obj/effect/clockwork/sigil/transmission/T in GLOB.all_clockwork_objects)
+		if(GLOB.ratvar_awakens)
+			T.alpha = 255
+		else
+			T.alpha = min(initial(T.alpha) + GLOB.clockwork_power*0.005, 255)
+		if(!GLOB.clockwork_power)
+			T.set_light(0)
+		else
+			T.set_light(max(T.alpha*0.02, 1.4), max(T.alpha*0.01, 0.1))
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality

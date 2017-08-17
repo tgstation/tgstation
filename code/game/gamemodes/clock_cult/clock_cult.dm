@@ -118,8 +118,7 @@ Credit where due:
 	if(number_players > 30) //plus one servant for every additional 10 players
 		number_players -= 30
 		starter_servants += round(number_players/10)
-	GLOB.initial_ark_time = Clamp(12600 + 600 * starter_servants, 18000, 21000) //30 minutes by default, 35 maximum
-	GLOB.application_servants_needed = starter_servants + 1 //convert a guy!
+	GLOB.initial_ark_time = 18000
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
