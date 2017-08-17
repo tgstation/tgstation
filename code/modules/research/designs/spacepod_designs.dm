@@ -138,8 +138,8 @@
 
 /datum/design/pod_gun_taser
 	construction_time = 200
-	name = "Spacepod Equipment (Taser)"
-	desc = "Allows for the construction of a spacepod mounted taser."
+	name = "Spacepod Equipment (Disabler)"
+	desc = "Allows for the construction of a spacepod mounted disabler."
 	id = "podgun_taser"
 	build_type = PODFAB
 	req_tech = list("materials" = 2, "combat" = 2)
@@ -149,8 +149,8 @@
 
 /datum/design/pod_gun_btaser
 	construction_time = 200
-	name = "Spacepod Equipment (Burst Taser)"
-	desc = "Allows for the construction of a spacepod mounted taser. This is the burst-fire model."
+	name = "Spacepod Equipment (Burst Disabler)"
+	desc = "Allows for the construction of a spacepod mounted disabler. This is the burst-fire model."
 	id = "podgun_btaser"
 	build_type = PODFAB
 	req_tech = list("materials" = 3, "combat" = 3)
