@@ -231,7 +231,7 @@
 		_text_ : Makes the text <u>underlined</u>.<br>
 		+text+ : Increases the <font size = \"4\">size</font> of the text.<br>
 		%s : Inserts a signature of your name in a foolproof way.<br>
-		%s : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
+		%f : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
 		__text__ : Decreases the <font size = \"1\">size</font> of the text.<br>

@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	return end
 
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
-	if(length(t) < 1)		//No input means nothing needs to be parsed
+	if (length(t) < 1)		//No input means nothing needs to be parsed
 		return
 
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
@@ -424,20 +424,24 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	t = replacetext(t, regex("(?<!\\\\)%f(?:ield)?(?=\\s|$)", "ig"), "<span class=\"paper_field\">$1</span>")
 
-	if(!limited)
+	if (!limited)
 		t = replacetext(t, regex("(?<!\\\\)__((?:(?!(?<!\\\\)__).)+)(?<!\\\\)__", "g"), "<font size=\"1\">$1</font>")
 		var/list/tlist = splittext(text, "\n")
-		var/inlist = FALSE
-		for(var/line in tlist)
-			var/count_asterisk = length(replacetext(line, regex("(?:(?!(?<!\\\\)\\*).)+", "g"), ""))
-			if(count_asterisk % 2 == 1) // there is an extra asterisk
-				if(!inlist)
-					inlist = TRUE
+		var/listlevel = 0
+		for (var/line in tlist)
+			var/count_asterisk = length(findtext(line, regex("(?:(?!(?<!\\\\)\\*).)+", "g"), ""))
+			if (count_asterisk % 2 == 1) // there is an extra asterisk
+				var/count_w = length(findtext(findtext(line, regex("\\*.*", "g"), ""), "  ", " ")) // whitespace before asterisk
+				line = replacetext(line, regex("\\*", ""), "<li>")
+				while (listlevel < count_w)
 					line = "<ul>" + line
-				line += "<li>" + line
-			else if(inlist)
-				inlist = FALSE
+					listlevel++
+				while (listlevel > count_w)
+					line = "</ul>" + line
+					listlevel--
+			else while (listlevel > 0)
 				line = "</ul>" + line
+				listlevel--
 
 		t = replacetext(t, "---", "<hr>")
 	else
