@@ -12,7 +12,7 @@ INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (3, 1);
 
 Modified table 'death', adding the column 'last_words'.
 
-ALTER TABLE `death` ADD COLUMN `last_words` varchar(96) DEFAULT NULL AFTER `staminaloss`
+ALTER TABLE `death` ADD COLUMN `last_words` varchar(255) DEFAULT NULL AFTER `staminaloss`
 
 ----------------------------------------------------
 
