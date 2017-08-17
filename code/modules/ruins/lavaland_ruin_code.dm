@@ -35,7 +35,7 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 5000)
 	build_path = /obj/item/seeds/random
-	category = list("initial", "Imported")
+	category = list("Imported")
 
 //Free Golems
 

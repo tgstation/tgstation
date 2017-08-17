@@ -5,7 +5,7 @@
 "e" = (/obj/structure/table/wood,/obj/item/weapon/storage/box/disks_plantgene,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
 "f" = (/obj/structure/table/wood,/obj/item/weapon/storage/box/disks_plantgene,/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
 "g" = (/obj/machinery/plantgenes/seedvault,/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
-"h" = (/obj/structure/table/wood,/obj/item/weapon/disk/design_disk/strange_seed{step_x = 0; step_y = 1},/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
+"h" = (/obj/structure/table/wood,/obj/item/weapon/disk/design_disk/strange_seed,/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
 "i" = (/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
 "j" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
 "k" = (/obj/structure/closet/crate/hydroponics,/obj/structure/beebox,/obj/item/weapon/melee/flyswatter,/obj/item/honey_frame,/obj/item/honey_frame,/obj/item/honey_frame,/obj/item/queen_bee/bought,/obj/item/clothing/head/beekeeper_head,/obj/item/clothing/suit/beekeeper_suit,/turf/open/floor/plasteel/freezer,/area/ruin/powered/seedvault)
