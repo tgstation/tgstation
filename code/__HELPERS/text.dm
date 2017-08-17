@@ -416,20 +416,28 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
 	if(length(t) < 1)		//No input means nothing needs to be parsed
-		return "nothing"
+		return
 
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 	t = replacetext(t, regex("(?<!\\\\)%s(?:ign)?(?=\\s|$)", "ig"), user ? "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>" : "")
 
-	t = replacetext(t, regex("(?<!\\\\)%f(?:ield)?(?=\\s|$)", "ig"), "\[field\]", "<span class=\"paper_field\">$1</span>")
+	t = replacetext(t, regex("(?<!\\\\)%f(?:ield)?(?=\\s|$)", "ig"), "<span class=\"paper_field\">$1</span>")
 
 	if(!limited)
-		t = replacetext(t, regex("(?<!\\\\)__((?:(?!(?<!\\\\)__).)+)(?<!\\\\)\\__", "g"), "<font size=\"1\">$1</font>")
-
-		t = replacetext(t, "\[*\]", "<li>")
-		t = replacetext(t, "\[list\]", "<ul>")
-		t = replacetext(t, "\[/list\]", "</ul>")
+		t = replacetext(t, regex("(?<!\\\\)__((?:(?!(?<!\\\\)__).)+)(?<!\\\\)__", "g"), "<font size=\"1\">$1</font>")
+		var/list/tlist = splittext(text, "\n")
+		var/inlist = FALSE
+		for(var/line in tlist)
+			var/count_asterisk = length(replacetext(line, regex("(?:(?!(?<!\\\\)\\*).)+", "g"), ""))
+			if(count_asterisk % 2 == 1) // there is an extra asterisk
+				if(!inlist)
+					inlist = TRUE
+					line = "<ul>" + line
+				line += "<li>" + line
+			else if(inlist)
+				inlist = FALSE
+				line = "</ul>" + line
 
 		t = replacetext(t, "---", "<hr>")
 	else
