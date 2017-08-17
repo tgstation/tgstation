@@ -1,0 +1,5 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - imageadd: "Nanotrasen redesigned the area power controllers!"
+  - imageadd: "Thanks Xhuis for the contrast tweak on APCs"

@@ -67,7 +67,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()

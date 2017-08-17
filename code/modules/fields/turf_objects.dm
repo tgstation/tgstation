@@ -6,8 +6,8 @@
 	icon_state = null
 	alpha = 0
 	invisibility = INVISIBILITY_ABSTRACT
-	flags = ABSTRACT|ON_BORDER
-	mouse_opacity = 0
+	flags_1 = ABSTRACT_1|ON_BORDER_1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/datum/proximity_monitor/advanced/parent = null
 
 /obj/effect/abstract/proximity_checker/advanced/Initialize(mapload, _monitor)

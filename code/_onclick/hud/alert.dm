@@ -92,7 +92,7 @@
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
@@ -220,7 +220,7 @@ or something covering your eyes."
 /obj/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
-If you're feeling frisky, click yourself in help intent to pull the object out."
+If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
 	icon_state = "embeddedobject"
 
 /obj/screen/alert/embeddedobject/Click()

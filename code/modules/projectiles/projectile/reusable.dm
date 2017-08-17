@@ -37,7 +37,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	range = 10
 	var/modified = 0
-	var/obj/item/weapon/pen/pen = null
+	var/obj/item/pen/pen = null
 
 /obj/item/projectile/bullet/reusable/foam_dart/handle_drop()
 	if(dropped)

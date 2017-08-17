@@ -12,7 +12,7 @@
 
 /obj/structure/emergency_shield/Initialize()
 	. = ..()
-	setDir(pick(1,2,3,4))
+	setDir(pick(GLOB.cardinals))
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()
@@ -58,7 +58,7 @@
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
 	color = "#FF0000"
 	max_integrity = 20
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/structure/emergency_shield/invoker/emp_act(severity)
 	return
@@ -111,7 +111,7 @@
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat && BROKEN))
 			stat |= BROKEN
 			locked = pick(0,1)
@@ -140,8 +140,8 @@
 			to_chat(user, "<span class='warning'>The device must first be secured to the floor!</span>")
 	return
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		playsound(src.loc, W.usesound, 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
@@ -163,7 +163,7 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(locked)
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
@@ -210,7 +210,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
 	max_integrity = 300
 	var/active = FALSE
@@ -333,7 +333,7 @@
 	return ..()
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())

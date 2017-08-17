@@ -27,7 +27,7 @@
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
-	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
+	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type
 	var/liked_food = NONE
 	var/disliked_food = GROSS
@@ -212,7 +212,7 @@
 
 	if(mutanthands)
 		// Drop items in hands
-		// If you're lucky enough to have a NODROP item, then it stays.
+		// If you're lucky enough to have a NODROP_1 item, then it stays.
 		for(var/V in C.held_items)
 			var/obj/item/I = V
 			if(istype(I))
@@ -751,7 +751,7 @@
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_l_store)
-			if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+			if(I.flags_1 & NODROP_1) //Pockets aren't visible, so you can't move NODROP_1 items into them.
 				return 0
 			if(H.l_store)
 				return 0
@@ -767,7 +767,7 @@
 			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
 				return 1
 		if(slot_r_store)
-			if(I.flags & NODROP)
+			if(I.flags_1 & NODROP_1)
 				return 0
 			if(H.r_store)
 				return 0
@@ -784,7 +784,7 @@
 				return 1
 			return 0
 		if(slot_s_store)
-			if(I.flags & NODROP)
+			if(I.flags_1 & NODROP_1)
 				return 0
 			if(H.s_store)
 				return 0
@@ -800,13 +800,13 @@
 				if(!disable_warning)
 					to_chat(H, "The [I.name] is too big to attach.") //should be src?
 				return 0
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return 1
 			return 0
 		if(slot_handcuffed)
 			if(H.handcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/restraints/handcuffs))
+			if(!istype(I, /obj/item/restraints/handcuffs))
 				return 0
 			if(num_arms < 2)
 				return 0
@@ -814,14 +814,14 @@
 		if(slot_legcuffed)
 			if(H.legcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/restraints/legcuffs))
+			if(!istype(I, /obj/item/restraints/legcuffs))
 				return 0
 			if(num_legs < 2)
 				return 0
 			return 1
 		if(slot_in_backpack)
-			if(H.back && istype(H.back, /obj/item/weapon/storage))
-				var/obj/item/weapon/storage/B = H.back
+			if(H.back && istype(H.back, /obj/item/storage))
+				var/obj/item/storage/B = H.back
 				if(B.can_be_inserted(I, 1, H))
 					return 1
 			return 0
@@ -853,7 +853,7 @@
 /datum/species/proc/get_spans()
 	return list()
 
-/datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return 0
 
 ////////
@@ -996,7 +996,7 @@
 		gravity = 1
 
 	if(!gravity)
-		var/obj/item/weapon/tank/jetpack/J = H.back
+		var/obj/item/tank/jetpack/J = H.back
 		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
 		if(!istype(J) && istype(C))
@@ -1021,7 +1021,7 @@
 		if(H.back)
 			. += H.back.slowdown
 		for(var/obj/item/I in H.held_items)
-			if(HAS_SECONDARY_FLAG(I, SLOWS_WHILE_IN_HAND))
+			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
 		var/health_deficiency = (100 - H.health + H.staminaloss)
 		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
