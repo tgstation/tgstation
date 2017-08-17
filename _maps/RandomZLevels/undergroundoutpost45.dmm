@@ -17851,6 +17851,10 @@
 	power_light = 0;
 	poweralm = 0
 	})
+"zi" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -18107,7 +18111,7 @@ aa
 aa
 aa
 aa
-aa
+zi
 "}
 (2,1,1) = {"
 aa
@@ -36538,9 +36542,9 @@ ad
 ad
 ad
 ad
-ys
+yk
 yw
-yx
+yn
 ad
 ad
 ad
@@ -37053,7 +37057,7 @@ ad
 ad
 ad
 ad
-yx
+yn
 eJ
 yB
 ad
@@ -37315,8 +37319,8 @@ eJ
 eJ
 yr
 ad
-yF
-yG
+yA
+yj
 ad
 ad
 ad
@@ -37571,8 +37575,8 @@ ad
 ad
 yC
 eJ
-yE
-yv
+yw
+ym
 yH
 ad
 ad
@@ -37828,7 +37832,7 @@ ad
 ad
 ad
 eJ
-yx
+yn
 eJ
 yz
 ad
@@ -38337,7 +38341,7 @@ ad
 yl
 eJ
 yq
-yv
+ym
 ad
 ad
 yz
@@ -38595,7 +38599,7 @@ ad
 eJ
 eJ
 eJ
-yy
+yn
 ad
 yD
 eJ
@@ -38605,8 +38609,8 @@ ad
 ad
 ad
 ad
-yG
-yy
+yj
+yn
 ad
 ad
 ad
@@ -38852,17 +38856,17 @@ ad
 ad
 yr
 yn
-yy
 yn
-yx
+yn
+yn
 eJ
 eJ
 ad
 ad
 ad
 ad
-yI
-yv
+yp
+ym
 yA
 ad
 ad
@@ -39109,7 +39113,7 @@ ad
 ad
 ad
 ad
-yx
+yn
 eJ
 eJ
 eJ
@@ -39370,7 +39374,7 @@ yz
 eJ
 eJ
 eJ
-yy
+yn
 eJ
 eJ
 eJ
@@ -39626,12 +39630,12 @@ ad
 yp
 yq
 eJ
-yy
 yn
-yv
+yn
+ym
 eJ
-yy
-yy
+yn
+yn
 ad
 ad
 ad
@@ -39881,14 +39885,14 @@ ad
 ad
 ad
 yA
-yx
+yn
 eJ
 yn
 ad
 ad
 yw
-yG
-ys
+yj
+yk
 ad
 ad
 ad

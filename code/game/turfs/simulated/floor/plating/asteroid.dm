@@ -101,10 +101,22 @@
 	return
 
 /turf/open/floor/plating/asteroid/singularity_act()
-	return
+	if(!turf_z_is_planet(src))
+		ChangeTurf(/turf/open/space)
+	else
+		return ..()
 
 /turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
-	return
+	switch(current_size)
+		if(STAGE_THREE)
+			if(prob(30))
+				src.gets_dug()
+		if(STAGE_FOUR)
+			if(prob(50))
+				src.gets_dug()
+		else if(current_size >= STAGE_FIVE)
+			if(prob(70))
+				src.gets_dug()
 
 
 /turf/open/floor/plating/asteroid/basalt

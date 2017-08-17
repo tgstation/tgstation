@@ -45,3 +45,5 @@ Last space-z level = empty
 #define ZLEVEL_SPACEMAX 12
 
 #define SPACERUIN_MAP_EDGE_PAD 15
+
+GLOBAL_LIST_INIT(z_is_planet, list())
