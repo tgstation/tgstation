@@ -111,7 +111,7 @@
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat && BROKEN))
 			stat |= BROKEN
 			locked = pick(0,1)
@@ -210,7 +210,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
 	max_integrity = 300
 	var/active = FALSE

@@ -159,7 +159,7 @@
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
-	else if(!(I.flags & (NODROP|ABSTRACT)))
+	else if(!(I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		thrown_thing = I
 		dropItemToGround(I)
 
@@ -181,13 +181,13 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags&ABSTRACT)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Neck:</B> <A href='?src=\ref[src];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags&ABSTRACT))	? wear_neck	: "Nothing"]</A>"}
+	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags_1&ABSTRACT_1)) 			? head 		: "Nothing"]</A>
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags_1&ABSTRACT_1))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Neck:</B> <A href='?src=\ref[src];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags_1&ABSTRACT_1))	? wear_neck	: "Nothing"]</A>"}
 
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "Nothing"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "Nothing"]</a>"
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
@@ -213,7 +213,7 @@
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
 								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
@@ -221,7 +221,7 @@
 						internal = null
 						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.flags & MASKINTERNALS)) || getorganslot("breathing_tube"))
+						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot("breathing_tube"))
 							internal = ITEM
 							update_internals_hud_icon(1)
 
@@ -387,7 +387,7 @@
 		return initial(pixel_y)
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.flags & (NODROP|ABSTRACT)))
+	if(!I || (I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		return
 
 	dropItemToGround(I)

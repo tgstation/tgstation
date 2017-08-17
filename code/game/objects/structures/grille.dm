@@ -5,7 +5,7 @@
 	icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
@@ -173,14 +173,14 @@
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	if(!(flags&NODECONSTRUCT))
+	if(!(flags_1&NODECONSTRUCT_1))
 		var/obj/R = new rods_type(src.loc, rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	..()
 
 /obj/structure/grille/obj_break()
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		new broken_type(src.loc)
 		var/obj/R = new rods_type(src.loc, rods_broken)
 		transfer_fingerprints_to(R)

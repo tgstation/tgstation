@@ -311,7 +311,7 @@
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
 	icon_state = "coin__heads"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY

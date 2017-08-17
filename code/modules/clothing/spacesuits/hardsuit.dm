@@ -231,7 +231,7 @@
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
-	visor_flags = STOPSPRESSUREDMAGE
+	visor_flags = STOPSPRESSUREDMAGE_1
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -251,7 +251,7 @@
 		name = initial(name)
 		desc = initial(desc)
 		set_light(brightness_on)
-		flags |= visor_flags
+		flags_1 |= visor_flags
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
@@ -260,7 +260,7 @@
 		name += " (combat)"
 		desc = alt_desc
 		set_light(0)
-		flags &= ~visor_flags
+		flags_1 &= ~visor_flags
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 		flags_inv &= ~visor_flags_inv
 		cold_protection &= ~HEAD
@@ -281,13 +281,13 @@
 			linkedsuit.name = initial(linkedsuit.name)
 			linkedsuit.desc = initial(linkedsuit.desc)
 			linkedsuit.slowdown = 1
-			linkedsuit.flags |= STOPSPRESSUREDMAGE
+			linkedsuit.flags_1 |= STOPSPRESSUREDMAGE_1
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 		else
 			linkedsuit.name += " (combat)"
 			linkedsuit.desc = linkedsuit.alt_desc
 			linkedsuit.slowdown = 0
-			linkedsuit.flags &= ~(STOPSPRESSUREDMAGE)
+			linkedsuit.flags_1 &= ~(STOPSPRESSUREDMAGE_1)
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
 
 		linkedsuit.icon_state = "hardsuit[on]-[item_color]"
@@ -641,7 +641,7 @@
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	item_color = "ert_medical"
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP //Dont want people changing into the other teams gear
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1 | NODROP_1 //Dont want people changing into the other teams gear
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100, fire = 95, acid = 95)
 	slowdown = 0

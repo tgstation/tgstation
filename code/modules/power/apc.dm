@@ -593,11 +593,11 @@
 
 
 /obj/machinery/power/apc/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		set_broken()
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			set_broken()
 		if(opened != 2)

@@ -11,7 +11,7 @@ Note: Must be placed west/left of and R&D console to function.
 	name = "protolathe"
 	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	circuit = /obj/item/circuitboard/machine/protolathe
 
 	var/datum/material_container/materials

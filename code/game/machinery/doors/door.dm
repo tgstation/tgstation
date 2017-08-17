@@ -11,7 +11,7 @@
 	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags = PREVENT_CLICK_UNDER
+	flags_1 = PREVENT_CLICK_UNDER_1
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -163,7 +163,7 @@
 	else if(istype(I, /obj/item/weldingtool))
 		try_to_weld(I, user)
 		return 1
-	else if(!(I.flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
+	else if(!(I.flags_1 & NOBLUDGEON_1) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
 		return 1
 	return ..()
