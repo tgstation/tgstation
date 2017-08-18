@@ -189,7 +189,7 @@ public class IconState {
             px[i] = sl.clone();
         }
         
-        int alphaNumber = in.imgInfo.alpha ? 4 : 3;
+        int channelCount = in.imgInfo.alpha ? 4 : 3;
         Image[] images = new Image[frames*dirs];
         for(int imageY=0; imageY<dirs; imageY++) {
             for(int imageX=0; imageX<frames; imageX++) {
@@ -197,7 +197,7 @@ public class IconState {
                 for(int pixelY=0; pixelY<h; pixelY++) {
                     for(int pixelX=0; pixelX<w; pixelX++) {
                         int bY = imageY*h + pixelY;
-                        int bX = imageX*alphaNumber*w + alphaNumber*pixelX;
+                        int bX = imageX*channelCount*w + channelCount*pixelX;
                         pixels[pixelY][pixelX] = new RGBA(px[bY][bX    ],
                                                           px[bY][bX + 1],
                                                           px[bY][bX + 2],
