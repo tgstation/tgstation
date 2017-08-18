@@ -1,0 +1,138 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
+using System.Web.Script.Serialization;
+
+namespace CreditsTool
+{
+	class Program
+	{
+		const string ConfigPath = "remappings.txt";
+		const string OutputLocation = "./credit_pngs";
+		//this downloads all the user images of contributors of a passed github repository
+		//usage ./CreditsTool <repo owner> <repo> [authToken (helps with github rate limiter)]
+		static void Main(string[] args)
+		{
+			if (args.Length < 2)
+			{
+				Console.WriteLine("Usage: ./CreditsTool.exe <repo owner> <repo> [authToken]");
+				return;
+			}
+
+			if (Directory.Exists(OutputLocation))
+			{
+				Console.WriteLine(String.Format("Aborted: {0} exists!", OutputLocation));
+				return;
+			}
+			Directory.CreateDirectory(OutputLocation);
+
+			string repoOwner = args[0],
+				repoName = args[1],
+				authToken = args.Length > 2 ? args[2] : null;
+
+			Console.WriteLine("Querying contributors API...");
+
+			var FirstResponse = GetPageResponse(repoOwner, repoName, authToken, 1);
+
+			Console.WriteLine("Collecting avatar URLs...");
+
+			var LoginAvatars = new Dictionary<string, string>();
+			//now list the things we want: avatar urls and logins
+			foreach (var I in LoadPages(FirstResponse, repoOwner, repoName, authToken))
+				LoginAvatars.Add((string)I["login"], (string)I["avatar_url"]);
+
+			Console.WriteLine(String.Format("Collected info for {0} contributors.", LoginAvatars.Count));
+
+			Console.WriteLine("Remapping github logins...");
+
+			var remaps = LoadConfig();
+
+			Console.WriteLine(String.Format("Downloading and converting avatars to {0} (this will take a while)...", OutputLocation));
+
+			using (var client = new WebClient())
+			{
+				var count = 0;
+				foreach (var I in LoginAvatars)
+				{
+					var writtenFilename = I.Key;
+					if (remaps.TryGetValue(writtenFilename, out string tmp))
+					{
+						if (tmp == "__REMOVE__")
+							continue;
+						writtenFilename = tmp;
+					}
+					using (var stream = new MemoryStream(client.DownloadData(I.Value)))
+					using (var originalBMP = new Bitmap(stream))
+					using (var resizedBMP = new Bitmap(originalBMP, new Size(32, 32)))
+					{
+						resizedBMP.Save(String.Format("{0}{1}{2}.png", OutputLocation, Path.DirectorySeparatorChar, writtenFilename), ImageFormat.Png);
+						Console.WriteLine(String.Format("Done {0}.png! {1}%", I.Key, (int)((((float)(count + 1)) / LoginAvatars.Count) * 100)));
+					}
+					++count;
+				}
+			}
+		}
+
+		static IDictionary<string, string> LoadConfig()
+		{
+			var result = new Dictionary<string, string>();
+			if (File.Exists(ConfigPath))
+				foreach (var I in File.ReadAllLines(ConfigPath))
+					if (!String.IsNullOrWhiteSpace(I) && I[0] != '#')
+					{
+						var splits = new List<string>(I.Split(' '));
+						if (splits.Count >= 1 && !String.IsNullOrEmpty(splits[1]))
+						{
+							var key = splits[0];
+							splits.RemoveAt(0);
+							result.Add(key, String.Join(" ", splits));
+						}
+					}
+			return result;
+		}
+
+		static IList<IDictionary<string, object>> LoadPages(WebResponse firstResponse, string repoOwner, string repoName, string authToken)
+		{
+			int numPages = GetNumPagesOfContributors(firstResponse);
+			Console.WriteLine(String.Format("Downloading {0} pages of contributor info...", numPages));
+			//load and combine json for all pages
+			var jss = new JavaScriptSerializer();
+			List<IDictionary<string, object>> json;
+			using (var sr = new StreamReader(firstResponse.GetResponseStream()))
+				json = jss.Deserialize<List<IDictionary<string, object>>>(sr.ReadToEnd());
+
+			//skip the first
+			for (var I = 2; I <= numPages; ++I)
+				using (var sr = new StreamReader(GetPageResponse(repoOwner, repoName, authToken, I).GetResponseStream()))
+					json.AddRange(jss.Deserialize<List<IDictionary<string, object>>>(sr.ReadToEnd()));
+			return json;
+		}
+
+		static int GetNumPagesOfContributors(WebResponse response) {
+			var splits = response.Headers["Link"].Split(',');
+			foreach (var I in splits)
+				if (I.Contains("rel=\"last\"")) //our boy
+				{
+					var pagestrIndex = I.IndexOf("page=") + 5;
+					var closingIndex = I.IndexOf('>', pagestrIndex + 1);
+					var thedroidswerelookingfor = I.Substring(pagestrIndex, closingIndex - pagestrIndex);
+					return Convert.ToInt32(thedroidswerelookingfor);
+				}
+			return 1;
+		}
+
+		static WebResponse GetPageResponse(string repoOwner, string repoName, string authToken, int pageNumber)
+		{
+			HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(String.Format("https://api.github.com/repos/{0}/{1}/contributors?page={2}", repoOwner, repoName, pageNumber));
+			httpWebRequest.Method = WebRequestMethods.Http.Get;
+			httpWebRequest.Accept = "application/json";
+			httpWebRequest.UserAgent = "tgstation-13-credits-tool";
+			if(authToken != null)
+				httpWebRequest.Headers.Add(String.Format("Authorization: token {0}", authToken));
+			return httpWebRequest.GetResponse();
+		}
+	}
+}

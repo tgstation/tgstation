@@ -1,0 +1,16 @@
+# To make your name something other than your github name type it in the format "<github name> <credited name>
+# e.g.
+# Cyberboss Jordan Brown
+# To suppress your name from appearing in the credits do "<github name> __REMOVE__
+# e.g.
+# Cyberboss __REMOVE__
+
+optimumtact Oranges
+qustinnus Floyd / Qustinnus
+catalystfd __REMOVE__
+TheVekter Vekter
+tgstation-server __REMOVE__
+ChangelingRain Joan
+kebab __REMOVE__
+NewSta1 NewSta
+theOperand Miauw
