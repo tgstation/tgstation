@@ -8,7 +8,7 @@
 	var/shuttleId = ""
 	var/shuttlePortId = ""
 	var/shuttlePortName = ""
-	var/list/jumpto_ports = list()
+	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/list/blacklisted_turfs
 	var/obj/docking_port/stationary/my_port
 	var/view_range = 7
@@ -135,7 +135,7 @@
 		var/obj/docking_port/stationary/S = V
 		if(z_lock && (S.z != z_lock))
 			continue
-		if((S.id == shuttlePortId) || (S.id in jumpto_ports))
+		if((S.id == shuttlePortId) || jumpto_ports[S.id])
 			continue
 		for(var/T in S.return_turfs())
 			blacklisted_turfs[T] = TRUE
@@ -224,7 +224,7 @@
 		var/obj/docking_port/stationary/S = V
 		if(console.z_lock && (S.z != console.z_lock))
 			continue
-		if(S.id in console.jumpto_ports)
+		if(console.jumpto_ports[S.id])
 			L[S.name] = S
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
