@@ -6,8 +6,7 @@
 
 /proc/RollCredits()
 	set waitfor = FALSE
-	var/list/contributors = icon_states('icons/credits.dmi') - ""
-	contributors = shuffle(contributors)
+	contributors = shuffle(icon_states('icons/credits.dmi'))
 
 	var/turf/T = CREDITS_LOC
 	for(var/I in contributors)
