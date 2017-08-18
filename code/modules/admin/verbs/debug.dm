@@ -316,10 +316,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has alienized [M.key].")
-		spawn(0)
-			M:Alienize()
-			SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
+		SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
@@ -333,10 +331,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has slimeized [M.key].")
-		spawn(0)
-			M:slimeize()
-			SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
+		SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
@@ -461,12 +457,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 			if(worn)
 				if(istype(worn, /obj/item/device/pda))
-					worn:id = id
-					id.loc = worn
+					var/obj/item/device/pda/PDA = worn
+					PDA.id = id
+					id.forceMove(PDA)
 				else if(istype(worn, /obj/item/weapon/storage/wallet))
-					worn:front_id = id
-					id.loc = worn
-					worn.update_icon()
+					var/obj/item/weapon/storage/wallet/W = worn
+					W.front_id = id
+					id.forceMove(W)
+					W.update_icon()
 			else
 				H.equip_to_slot(id,slot_wear_id)
 
