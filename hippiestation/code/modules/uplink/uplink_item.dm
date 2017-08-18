@@ -104,6 +104,16 @@
 		U.telecrystals += cost //So the admins don't have to refund you
 	return
 
+/datum/uplink_item/role_restricted/firesuit_syndie
+	name = "Syndicate Firesuit"
+	desc = "A less heavy, armored version of the common firesuit developed by a now-defunct, \
+	Syndicate-affiliated collective with a penchant for arson. It offers complete fireproofing, \
+	spaceproofing, the added bonus of not slowing the wearer while equipped and it fits into any backpack. \
+	Comes in conspicuous red/orange colors. Helmet included."
+	cost = 4
+	item = /obj/item/weapon/storage/box/syndie_kit/firesuit/
+	restricted_roles = list("Atmospheric Technician")
+	
 /datum/uplink_item/role_restricted/fire_axe
 	name = "Fire Axe"
 	desc = "A rather blunt fire axe recovered from the burnt out wreck of an old space station. \
