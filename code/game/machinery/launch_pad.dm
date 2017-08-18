@@ -8,7 +8,7 @@
 	use_power = TRUE
 	idle_power_usage = 200
 	active_power_usage = 2500
-	circuit = /obj/item/weapon/circuitboard/machine/launchpad
+	circuit = /obj/item/circuitboard/machine/launchpad
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
@@ -20,7 +20,7 @@
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = -1 //to make default parts have the base value
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	range = initial(range)
 	range += E
@@ -196,7 +196,7 @@
 	icon_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 8
 	hitsound = "swing_hit"
 	throw_speed = 2

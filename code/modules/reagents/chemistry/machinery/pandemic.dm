@@ -8,14 +8,14 @@
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	circuit = /obj/item/weapon/circuitboard/computer/pandemic
+	circuit = /obj/item/circuitboard/computer/pandemic
 	use_power = TRUE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	var/wait
 	var/mode = MAIN_SCREEN
 	var/datum/symptom/selected_symptom
-	var/obj/item/weapon/reagent_containers/beaker
+	var/obj/item/reagent_containers/beaker
 
 /obj/machinery/computer/pandemic/Initialize()
 	. = ..()
@@ -183,7 +183,7 @@
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = new(FALSE, SSdisease.archive_diseases[id])
 			var/list/data = list("viruses" = list(A))
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new(get_turf(src))
+			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood", 20, data)
@@ -194,7 +194,7 @@
 		if("create_vaccine_bottle")
 			var/index = text2num(params["index"])
 			var/datum/disease/D = SSdisease.archive_diseases[get_virus_id_by_index(index)]
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new(get_turf(src))
+			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent("vaccine", 15, list(index))
 			wait = TRUE
@@ -216,7 +216,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return

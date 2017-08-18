@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
@@ -162,7 +162,7 @@
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
 	item_state = ""
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	brightness_on = 2
 	var/holo_cooldown = 0
 
@@ -210,7 +210,7 @@
 	item_state = "lamp"
 	brightness_on = 5
 	w_class = WEIGHT_CLASS_BULKY
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	materials = list()
 	on = TRUE
 
@@ -524,5 +524,5 @@
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	brightness_on = 15
 	flashlight_power = 1
-	flags = CONDUCT | DROPDEL
+	flags_1 = CONDUCT_1 | DROPDEL_1
 	actions_types = list()

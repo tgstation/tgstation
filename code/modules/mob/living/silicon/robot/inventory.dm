@@ -11,21 +11,21 @@
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0
-	O.mouse_opacity = 2
+	O.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(istype(O, /obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
 		update_sight()
-	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
-		var/obj/item/weapon/storage/bag/tray/T = O
+	else if(istype(O, /obj/item/storage/bag/tray/))
+		var/obj/item/storage/bag/tray/T = O
 		T.do_quick_empty()
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
 	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
 
-	if(DROPDEL & O.flags)
-		O.flags &= ~DROPDEL //we shouldn't HAVE things with DROPDEL in our modules, but better safe than runtiming horribly
+	if(O.flags_1 & DROPDEL_1)
+		O.flags_1 &= ~DROPDEL_1 //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
 
 	O.dropped(src)
 

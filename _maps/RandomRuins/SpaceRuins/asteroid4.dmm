@@ -44,12 +44,12 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/effect/mob_spawn/human/clown{
 	brute_damage = 120;
 	oxy_damage = 75
 	},
-/obj/item/weapon/paper/fluff/ruins/asteroid4/extraction,
+/obj/item/paper/fluff/ruins/asteroid4/extraction,
 /obj/item/stack/sheet/mineral/bananium{
 	amount = 15
 	},
@@ -59,7 +59,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/weapon/storage/pod{
+/obj/item/storage/pod{
 	pixel_x = -26
 	},
 /turf/open/floor/mineral/titanium/blue,

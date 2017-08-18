@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/ballistic
+/obj/item/gun/ballistic
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason"
 	name = "projectile gun"
 	icon_state = "pistol"
@@ -9,7 +9,7 @@
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = 1 //whether the gun ejects the chambered casing
 
-/obj/item/weapon/gun/ballistic/Initialize()
+/obj/item/gun/ballistic/Initialize()
 	. = ..()
 	if(!spawnwithmagazine)
 		update_icon()
@@ -19,7 +19,7 @@
 	chamber_round()
 	update_icon()
 
-/obj/item/weapon/gun/ballistic/update_icon()
+/obj/item/gun/ballistic/update_icon()
 	..()
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
@@ -27,7 +27,7 @@
 		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 
 
-/obj/item/weapon/gun/ballistic/process_chamber(empty_chamber = 1)
+/obj/item/gun/ballistic/process_chamber(empty_chamber = 1)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(istype(AC)) //there's a chambered round
 		if(casing_ejector)
@@ -39,19 +39,19 @@
 	chamber_round()
 
 
-/obj/item/weapon/gun/ballistic/proc/chamber_round()
+/obj/item/gun/ballistic/proc/chamber_round()
 	if (chambered || !magazine)
 		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.forceMove(src)
 
-/obj/item/weapon/gun/ballistic/can_shoot()
+/obj/item/gun/ballistic/can_shoot()
 	if(!magazine || !magazine.ammo_count(0))
 		return 0
 	return 1
 
-/obj/item/weapon/gun/ballistic/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
@@ -68,8 +68,8 @@
 				return
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	if(istype(A, /obj/item/weapon/suppressor))
-		var/obj/item/weapon/suppressor/S = A
+	if(istype(A, /obj/item/suppressor))
+		var/obj/item/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
 				if(!user.transferItemToLoc(A, src))
@@ -90,10 +90,10 @@
 			return
 	return 0
 
-/obj/item/weapon/gun/ballistic/attack_hand(mob/user)
+/obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
 		if(suppressed && can_unsuppress)
-			var/obj/item/weapon/suppressor/S = suppressed
+			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
 				..()
 				return
@@ -106,7 +106,7 @@
 			return
 	..()
 
-/obj/item/weapon/gun/ballistic/attack_self(mob/living/user)
+/obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
 		magazine.loc = get_turf(src.loc)
@@ -125,11 +125,11 @@
 	return
 
 
-/obj/item/weapon/gun/ballistic/examine(mob/user)
+/obj/item/gun/ballistic/examine(mob/user)
 	..()
 	to_chat(user, "Has [get_ammo()] round\s remaining.")
 
-/obj/item/weapon/gun/ballistic/proc/get_ammo(countchambered = 1)
+/obj/item/gun/ballistic/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
@@ -137,7 +137,7 @@
 		boolets += magazine.ammo_count()
 	return boolets
 
-/obj/item/weapon/gun/ballistic/suicide_act(mob/user)
+/obj/item/gun/ballistic/suicide_act(mob/user)
 	if (chambered && chambered.BB && can_trigger_gun(user) && !chambered.BB.nodamage)
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
@@ -155,7 +155,7 @@
 
 
 
-/obj/item/weapon/gun/ballistic/proc/sawoff(mob/user)
+/obj/item/gun/ballistic/proc/sawoff(mob/user)
 	if(sawn_state == SAWN_OFF)
 		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
 		return
@@ -182,7 +182,7 @@
 		return 1
 
 // Sawing guns related proc
-/obj/item/weapon/gun/ballistic/proc/blow_up(mob/user)
+/obj/item/gun/ballistic/proc/blow_up(mob/user)
 	. = 0
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
 		if(AC.BB)
@@ -190,7 +190,7 @@
 			. = 1
 
 
-/obj/item/weapon/suppressor
+/obj/item/suppressor
 	name = "suppressor"
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/projectile.dmi'
@@ -200,7 +200,7 @@
 	var/initial_w_class = null
 
 
-/obj/item/weapon/suppressor/specialoffer
+/obj/item/suppressor/specialoffer
 	name = "cheap suppressor"
 	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
 	icon = 'icons/obj/guns/projectile.dmi'

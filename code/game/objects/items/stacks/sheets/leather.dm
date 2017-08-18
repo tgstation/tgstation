@@ -12,7 +12,7 @@
 	novariants = FALSE
 
 GLOBAL_LIST_INIT(human_recipes, list( \
-	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
+	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5), \
 	))
 
 /obj/item/stack/sheet/animalhide/human/Initialize(mapload, new_amount, merge = TRUE)
@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	icon_state = "sheet-corgi"
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
-	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3), \
 	))
 
 /obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, new_amount, merge = TRUE)
@@ -53,8 +53,8 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	icon_state = "sheet-monkey"
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
-	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, on_floor = 1), \
-	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2, on_floor = 1), \
+	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1), \
+	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, new_amount, merge = TRUE)
@@ -74,8 +74,8 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	icon_state = "sheet-xeno"
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
-	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1, on_floor = 1), \
-	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2, on_floor = 1), \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/xeno/Initialize(mapload, new_amount, merge = TRUE)
@@ -133,12 +133,12 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	origin_tech = "materials=2"
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
-	new/datum/stack_recipe("wallet", /obj/item/weapon/storage/wallet, 1), \
+	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1), \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2), \
 	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3), \
-	new/datum/stack_recipe("toolbelt", /obj/item/weapon/storage/belt/utility, 4), \
-	new/datum/stack_recipe("leather satchel", /obj/item/weapon/storage/backpack/satchel/leather, 5), \
-	new/datum/stack_recipe("bandolier", /obj/item/weapon/storage/belt/bandolier, 5), \
+	new/datum/stack_recipe("toolbelt", /obj/item/storage/belt/utility, 4), \
+	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5), \
+	new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
 	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
 	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
 ))
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
-	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
+	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/sinew, 1), \
 ))
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)
@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "hide plate"
 	max_amount = 6
 	novariants = FALSE
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
@@ -192,14 +192,14 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "drake plate"
 	max_amount = 10
 	novariants = FALSE
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 
 //Step one - dehairing.
 
-/obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
 	if(W.is_sharp())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")

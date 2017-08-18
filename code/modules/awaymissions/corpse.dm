@@ -159,7 +159,7 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
-	var/obj/item/weapon/card/id/W = H.wear_id
+	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(id_access)
 			for(var/jobtype in typesof(/datum/job))
@@ -331,11 +331,11 @@
 /datum/outfit/spacebartender
 	name = "Space Bartender"
 	uniform = /obj/item/clothing/under/rank/bartender
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	id = /obj/item/weapon/card/id
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/beach
@@ -356,7 +356,7 @@
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/shorts/red
-	r_pocket = /obj/item/weapon/storage/wallet/random
+	r_pocket = /obj/item/storage/wallet/random
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -379,7 +379,7 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
-	id = /obj/item/weapon/card/id
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/commander
@@ -398,8 +398,8 @@
 	head = /obj/item/clothing/head/centhat
 	gloves = /obj/item/clothing/gloves/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
-	r_pocket = /obj/item/weapon/lighter
-	id = /obj/item/weapon/card/id
+	r_pocket = /obj/item/lighter
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
@@ -416,8 +416,8 @@
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
-	back = /obj/item/weapon/storage/backpack/security
-	id = /obj/item/weapon/card/id
+	back = /obj/item/storage/backpack/security
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/commander/alive
@@ -502,7 +502,7 @@
 /datum/outfit/cryobartender
 	name = "Cryogenic Bartender"
 	uniform = /obj/item/clothing/under/rank/bartender
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
