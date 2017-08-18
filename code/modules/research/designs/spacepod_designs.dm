@@ -136,25 +136,25 @@
 //////SPACEPOD GUNS///////////////////////
 //////////////////////////////////////////
 
-/datum/design/pod_gun_taser
+/datum/design/pod_gun_disabler
 	construction_time = 200
-	name = "Spacepod Equipment (Taser)"
-	desc = "Allows for the construction of a spacepod mounted taser."
-	id = "podgun_taser"
+	name = "Spacepod Equipment (Disabler)"
+	desc = "Allows for the construction of a spacepod mounted disabler."
+	id = "podgun_disabler"
 	build_type = PODFAB
 	req_tech = list("materials" = 2, "combat" = 2)
-	build_path = /obj/item/device/spacepod_equipment/weaponry/taser
+	build_path = /obj/item/device/spacepod_equipment/weaponry/disabler
 	category = list("Pod Weaponry")
 	materials = list(MAT_METAL = 15000)
 
-/datum/design/pod_gun_btaser
+/datum/design/pod_gun_disabler
 	construction_time = 200
-	name = "Spacepod Equipment (Burst Taser)"
-	desc = "Allows for the construction of a spacepod mounted taser. This is the burst-fire model."
-	id = "podgun_btaser"
+	name = "Spacepod Equipment (Burst Disabler)"
+	desc = "Allows for the construction of a spacepod mounted disabler. This is the burst-fire model."
+	id = "podgun_bdisabler"
 	build_type = PODFAB
 	req_tech = list("materials" = 3, "combat" = 3)
-	build_path = /obj/item/device/spacepod_equipment/weaponry/burst_taser
+	build_path = /obj/item/device/spacepod_equipment/weaponry/burst_disabler
 	category = list("Pod Weaponry")
 	materials = list(MAT_METAL = 15000,MAT_PLASMA=2000)
 
