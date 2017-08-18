@@ -7,6 +7,7 @@
 	flags = NONE
 
 	invisibility = INVISIBILITY_ABSTRACT
+	see_invisible = SEE_INVISIBLE_OBSERVER
 
 	density = FALSE
 	stat = DEAD
