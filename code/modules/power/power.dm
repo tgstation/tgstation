@@ -113,7 +113,7 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/power/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
@@ -299,11 +299,11 @@
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 
 	if(istype(power_source, /datum/powernet))
 		PN = power_source
-	else if(istype(power_source, /obj/item/weapon/stock_parts/cell))
+	else if(istype(power_source, /obj/item/stock_parts/cell))
 		cell = power_source
 	else if(istype(power_source, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
@@ -340,7 +340,7 @@
 	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
 		PN.load+=drained_power
-	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
+	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy
 

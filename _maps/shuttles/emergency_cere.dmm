@@ -14,8 +14,8 @@
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/emergency,
-/obj/item/weapon/crowbar,
+/obj/item/storage/toolbox/emergency,
+/obj/item/crowbar,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -27,8 +27,8 @@
 /area/shuttle/escape)
 "ag" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/darkpurple,
 /area/shuttle/escape)
 "ah" = (
@@ -63,11 +63,11 @@
 /area/shuttle/escape)
 "an" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/o2,
+/obj/item/storage/firstaid/o2,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -124,7 +124,7 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "az" = (
@@ -155,7 +155,6 @@
 /area/shuttle/escape)
 "aE" = (
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -180,7 +179,6 @@
 /area/shuttle/escape)
 "aJ" = (
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -195,7 +193,7 @@
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aM" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/item/device/radio/intercom{
@@ -217,7 +215,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aP" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/item/device/radio/intercom{
@@ -225,7 +223,6 @@
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -266,7 +263,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 1;
@@ -302,13 +299,11 @@
 /area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 8
 	},
 /area/shuttle/escape)
 "ba" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -443,7 +438,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -465,7 +459,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -498,8 +491,8 @@
 /area/shuttle/escape)
 "by" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/teargas,
-/obj/item/weapon/storage/box/zipties,
+/obj/item/storage/box/teargas,
+/obj/item/storage/box/zipties,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 2;
@@ -524,7 +517,6 @@
 /area/shuttle/escape)
 "bB" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -536,7 +528,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -561,7 +552,7 @@
 /area/shuttle/escape)
 "bG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
+/obj/item/storage/box/cups,
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
@@ -580,14 +571,14 @@
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "bK" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -602,7 +593,6 @@
 /area/shuttle/escape)
 "bM" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -617,7 +607,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -629,7 +618,6 @@
 /area/shuttle/escape)
 "bR" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -651,7 +639,7 @@
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -691,7 +679,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ca" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -707,7 +695,6 @@
 "cc" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -715,7 +702,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -746,13 +733,11 @@
 	name = "Speedy* Recovery"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -760,30 +745,26 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "ck" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "cl" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "cm" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/weapon/wrench,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/wrench,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -793,7 +774,6 @@
 /area/shuttle/escape)
 "co" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -820,7 +800,6 @@
 /area/shuttle/escape)
 "ct" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -832,13 +811,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cv" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -847,18 +824,16 @@
 /area/shuttle/escape)
 "cx" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 8
 	},
 /area/shuttle/escape)
 "cy" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -891,32 +866,31 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 4
 	},
 /area/shuttle/escape)
 "cE" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
+/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
+/obj/item/reagent_containers/blood/BPlus{
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OPlus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/APlus,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
 "cF" = (
@@ -924,24 +898,23 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/scalpel{
+/obj/item/circular_saw,
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/hemostat,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/cautery{
+/obj/item/hemostat,
+/obj/item/surgicaldrill,
+/obj/item/cautery{
 	pixel_x = 4
 	},
-/obj/item/weapon/retractor,
+/obj/item/retractor,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
 "cG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/crowbar,
+/obj/item/storage/firstaid/fire,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -961,16 +934,15 @@
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/razor,
+/obj/item/surgical_drapes,
+/obj/item/razor,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
 "cK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/storage/firstaid/o2,
+/obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -992,7 +964,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -1001,7 +972,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1033,13 +1003,11 @@
 "cT" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 9
 	},
 /area/shuttle/escape)
 "cU" = (
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1049,13 +1017,11 @@
 	},
 /obj/machinery/computer/monitor,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
 "cW" = (
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -1079,27 +1045,23 @@
 "cZ" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
 "da" = (
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
 "db" = (
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 4
 	},
 /area/shuttle/escape)
 "dc" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/metalfoam,
+/obj/item/storage/box/metalfoam,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1107,7 +1069,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1115,7 +1076,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -1135,7 +1095,6 @@
 "dh" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -1144,22 +1103,20 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/shuttle/escape)
 "dj" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
 "dk" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
 "dl" = (
@@ -1189,7 +1146,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 6
 	},
 /area/shuttle/escape)

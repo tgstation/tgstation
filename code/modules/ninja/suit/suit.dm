@@ -16,7 +16,7 @@ Contents:
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
-	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals, /obj/item/weapon/stock_parts/cell)
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
 	slowdown = 0
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
@@ -26,12 +26,12 @@ Contents:
 
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
-	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
-	var/obj/item/weapon/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
+	var/obj/item/disk/tech_disk/t_disk//To copy design onto disk.
+	var/obj/item/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
@@ -83,7 +83,7 @@ Contents:
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
 
 	//Cell Init
-	cell = new/obj/item/weapon/stock_parts/cell/high
+	cell = new/obj/item/stock_parts/cell/high
 	cell.charge = 9000
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
@@ -130,15 +130,15 @@ Contents:
 		to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 		return FALSE
 	affecting = H
-	flags |= NODROP //colons make me go all |=
+	flags_1 |= NODROP_1 //colons make me go all |=
 	slowdown = FALSE
 	n_hood = H.head
-	n_hood.flags |= NODROP
+	n_hood.flags_1 |= NODROP_1
 	n_shoes = H.shoes
-	n_shoes.flags |= NODROP
+	n_shoes.flags_1 |= NODROP_1
 	n_shoes.slowdown--
 	n_gloves = H.gloves
-	n_gloves.flags |= NODROP
+	n_gloves.flags_1 |= NODROP_1
 	return TRUE
 
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
@@ -150,18 +150,18 @@ Contents:
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
-	flags &= ~NODROP
+	flags_1 &= ~NODROP_1
 	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.flags &= ~NODROP
+		n_hood.flags_1 &= ~NODROP_1
 	if(n_shoes)
-		n_shoes.flags &= ~NODROP
+		n_shoes.flags_1 &= ~NODROP_1
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.flags &= ~NODROP
+		n_gloves.flags_1 &= ~NODROP_1
 		n_gloves.candrain=0
 		n_gloves.draining=0
 

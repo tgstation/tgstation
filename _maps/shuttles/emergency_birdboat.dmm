@@ -11,18 +11,18 @@
 /area/shuttle/escape)
 "ad" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/retractor{
+/obj/item/scalpel,
+/obj/item/retractor{
 	pixel_y = 5
 	},
-/obj/item/weapon/hemostat,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/table,
-/obj/item/weapon/cautery,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/circular_saw{
+/obj/item/cautery,
+/obj/item/surgicaldrill,
+/obj/item/circular_saw{
 	pixel_y = 9
 	},
 /turf/open/floor/plasteel/white,
@@ -47,7 +47,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ak" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -65,7 +65,7 @@
 /area/shuttle/escape)
 "an" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "ao" = (
@@ -128,7 +128,7 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "az" = (
@@ -143,7 +143,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aB" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -180,7 +180,7 @@
 /area/shuttle/escape)
 "aI" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti{
+/obj/item/reagent_containers/food/snacks/boiledspaghetti{
 	name = "pasghetti";
 	pixel_x = 4;
 	pixel_y = 7
@@ -211,7 +211,7 @@
 /area/shuttle/escape)
 "aM" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+/obj/item/reagent_containers/food/snacks/chocolatebar,
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aN" = (
@@ -247,11 +247,11 @@
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/fire{
+/obj/item/storage/firstaid/fire{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aS" = (
@@ -269,11 +269,11 @@
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -297,7 +297,7 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/structure/table/glass,
-/obj/item/weapon/defibrillator/loaded,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 

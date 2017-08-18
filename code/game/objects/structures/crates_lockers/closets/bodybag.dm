@@ -16,7 +16,7 @@
 	var/tagged = 0 // so closet code knows to put the tag overlay back
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
+	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
 		if(user.get_active_held_item() != I)
 			return
@@ -29,7 +29,7 @@
 		else
 			name = "body bag"
 		return
-	else if(istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/wirecutters))
 		to_chat(user, "<span class='notice'>You cut the tag off [src].</span>")
 		name = "body bag"
 		tagged = 0

@@ -61,7 +61,7 @@
 	var/animal_species //Sorry, no spider+corgi buttbabies.
 
 	//simple_animal access
-	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
+	var/obj/item/card/id/access_card = null	//innate access uses an internal ID card
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
@@ -478,8 +478,8 @@
 		hand_index = (active_hand_index % held_items.len)+1
 	var/obj/item/held_item = get_active_held_item()
 	if(held_item)
-		if(istype(held_item, /obj/item/weapon/twohanded))
-			var/obj/item/weapon/twohanded/T = held_item
+		if(istype(held_item, /obj/item/twohanded))
+			var/obj/item/twohanded/T = held_item
 			if(T.wielded == 1)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return

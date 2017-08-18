@@ -23,12 +23,12 @@
 /area/awaymission/academy/headmaster)
 "af" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ag" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/blue,
+/obj/item/folder/blue,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ah" = (
@@ -103,12 +103,12 @@
 /area/awaymission/academy/headmaster)
 "aq" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ar" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/fluff/awaymissions/academy/console_maint,
+/obj/item/paper/fluff/awaymissions/academy/console_maint,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "as" = (
@@ -148,7 +148,7 @@
 /area/awaymission/academy/headmaster)
 "aw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ax" = (
@@ -183,12 +183,12 @@
 /area/awaymission/academy/headmaster)
 "aB" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/purple,
+/obj/item/bedsheet/purple,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aC" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/mug/tea,
+/obj/item/reagent_containers/food/drinks/mug/tea,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aD" = (
@@ -225,7 +225,7 @@
 /area/awaymission/academy/headmaster)
 "aJ" = (
 /obj/structure/destructible/cult/tome,
-/obj/item/weapon/dice/d20/fate,
+/obj/item/dice/d20/fate,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aK" = (
@@ -239,12 +239,12 @@
 /area/awaymission/academy/academycellar)
 "aM" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/briefcase,
+/obj/item/storage/briefcase,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aN" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/coin/plasma,
+/obj/item/coin/plasma,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aO" = (
@@ -303,12 +303,12 @@
 /area/awaymission/academy/headmaster)
 "aY" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/blue,
+/obj/item/folder/blue,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ba" = (
@@ -318,22 +318,22 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bb" = (
 /obj/structure/table/wood,
-/obj/item/weapon/staff,
+/obj/item/staff,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bc" = (
 /obj/structure/table/wood,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "bd" = (
 /obj/structure/table/wood,
-/obj/item/weapon/pen/invisible,
+/obj/item/pen/invisible,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "be" = (
@@ -344,7 +344,7 @@
 /area/awaymission/academy/headmaster)
 "bf" = (
 /obj/structure/table/wood,
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bg" = (
@@ -358,17 +358,17 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/dice/d20,
+/obj/item/dice/d20,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bi" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/mug/tea,
+/obj/item/reagent_containers/food/drinks/mug/tea,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bj" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "bk" = (
@@ -390,7 +390,7 @@
 /area/awaymission/academy/headmaster)
 "bm" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/blue,
+/obj/item/folder/blue,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "bn" = (
@@ -630,7 +630,7 @@
 /area/awaymission/academy/headmaster)
 "cc" = (
 /obj/structure/table,
-/obj/item/weapon/lighter/greyscale,
+/obj/item/lighter/greyscale,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "cd" = (
@@ -717,7 +717,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "cr" = (
@@ -896,13 +896,13 @@
 /area/awaymission/academy/headmaster)
 "cU" = (
 /obj/structure/closet/crate/internals,
-/obj/item/weapon/tank/internals/oxygen,
-/obj/item/weapon/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen/red,
 /turf/open/floor/plasteel/black,
 /area/awaymission/academy/headmaster)
 "cV" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -968,7 +968,7 @@
 /area/awaymission/academy/classrooms)
 "dg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/magic/wand/fireball,
+/obj/item/gun/magic/wand/fireball,
 /turf/open/floor/wood,
 /area/awaymission/academy/classrooms)
 "dh" = (
@@ -1115,7 +1115,7 @@
 /area/awaymission/academy/headmaster)
 "dD" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "dE" = (
@@ -1281,7 +1281,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper/fluff/awaymissions/academy/class/automotive,
+/obj/item/paper/fluff/awaymissions/academy/class/automotive,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "eh" = (
@@ -1294,7 +1294,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper/fluff/awaymissions/academy/class/pyromancy,
+/obj/item/paper/fluff/awaymissions/academy/class/pyromancy,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "ej" = (
@@ -1506,7 +1506,7 @@
 /area/awaymission/academy/classrooms)
 "eR" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/bag/tray,
+/obj/item/storage/bag/tray,
 /turf/open/floor/plasteel/barber{
 	dir = 8
 	},
@@ -1560,7 +1560,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/snacks/burger/spell,
+/obj/item/reagent_containers/food/snacks/burger/spell,
 /turf/open/floor/plasteel/barber{
 	dir = 8
 	},
@@ -1768,7 +1768,7 @@
 /obj/structure/noticeboard{
 	pixel_y = -32
 	},
-/obj/item/weapon/paper/fluff/awaymissions/academy/class/biology,
+/obj/item/paper/fluff/awaymissions/academy/class/biology,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "fz" = (
@@ -1962,12 +1962,12 @@
 /area/awaymission/academy/classrooms)
 "gb" = (
 /obj/structure/table,
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "gc" = (
 /obj/structure/table,
-/obj/item/weapon/lazarus_injector,
+/obj/item/lazarus_injector,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -2032,7 +2032,7 @@
 /area/awaymission/academy/classrooms)
 "gl" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2053,7 +2053,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "go" = (
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gp" = (
@@ -2157,7 +2157,7 @@
 /area/awaymission/academy/classrooms)
 "gD" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel,
+/obj/item/scalpel,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "gE" = (
@@ -2187,16 +2187,16 @@
 /area/awaymission/academy/academyaft)
 "gH" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/awaymissions/academy/grade/aplus,
-/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
+/obj/item/paper/fluff/awaymissions/academy/grade/aplus,
+/obj/item/gun/ballistic/shotgun/automatic/combat,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/awaymission/academy/classrooms)
 "gI" = (
 /obj/structure/table,
-/obj/item/weapon/gun/ballistic/revolver/russian,
-/obj/item/weapon/paper/fluff/awaymissions/academy/grade/bminus,
+/obj/item/gun/ballistic/revolver/russian,
+/obj/item/paper/fluff/awaymissions/academy/grade/bminus,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2294,8 +2294,8 @@
 /area/awaymission/academy/classrooms)
 "gW" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/paper/fluff/awaymissions/academy/grade/dminus,
+/obj/item/gun/energy/floragun,
+/obj/item/paper/fluff/awaymissions/academy/grade/dminus,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2446,7 +2446,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "hr" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -2633,7 +2633,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/caution,
+/obj/item/caution,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -2685,12 +2685,12 @@
 /obj/structure/closet,
 /obj/item/candle,
 /obj/item/candle,
-/obj/item/weapon/storage/box/matches,
+/obj/item/storage/box/matches,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hT" = (
 /obj/structure/closet,
-/obj/item/weapon/storage/belt/soulstone,
+/obj/item/storage/belt/soulstone,
 /obj/item/clothing/under/schoolgirl,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
@@ -2708,7 +2708,7 @@
 /area/awaymission/academy/academyaft)
 "hW" = (
 /obj/structure/closet,
-/obj/item/weapon/lipstick/random,
+/obj/item/lipstick/random,
 /obj/item/clothing/under/schoolgirl,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
@@ -2718,12 +2718,12 @@
 "hY" = (
 /obj/structure/closet,
 /obj/item/clothing/under/color/lightpurple,
-/obj/item/weapon/staff,
+/obj/item/staff,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hZ" = (
 /obj/structure/closet,
-/obj/item/weapon/storage/wallet/random,
+/obj/item/storage/wallet/random,
 /obj/item/clothing/glasses/regular/hipster,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
@@ -2735,16 +2735,16 @@
 /area/awaymission/academy/academyaft)
 "ib" = (
 /obj/structure/closet,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /obj/item/clothing/under/color/lightpurple,
-/obj/item/weapon/poster/random_contraband,
+/obj/item/poster/random_contraband,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "ic" = (
 /obj/structure/closet,
-/obj/item/weapon/storage/box/snappops,
-/obj/item/weapon/storage/backpack,
-/obj/item/weapon/paper/fluff/awaymissions/academy/grade/failure,
+/obj/item/storage/box/snappops,
+/obj/item/storage/backpack,
+/obj/item/paper/fluff/awaymissions/academy/grade/failure,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "id" = (
@@ -2786,9 +2786,9 @@
 /area/awaymission/academy/academyaft)
 "ij" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
-/obj/item/weapon/circuitboard/machine/telecomms/receiver,
-/obj/item/weapon/circuitboard/machine/telecomms/relay,
+/obj/item/circuitboard/machine/telecomms/broadcaster,
+/obj/item/circuitboard/machine/telecomms/receiver,
+/obj/item/circuitboard/machine/telecomms/relay,
 /turf/open/floor/plasteel/hydrofloor,
 /area/awaymission/academy/academyaft)
 "ik" = (
@@ -2820,12 +2820,12 @@
 /area/awaymission/academy/academyaft)
 "io" = (
 /obj/structure/rack,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/subspace/crystal,
-/obj/item/weapon/stock_parts/subspace/filter,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/micro_laser/high,
+/obj/item/stock_parts/micro_laser/high,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "ip" = (
@@ -2846,19 +2846,19 @@
 /area/awaymission/academy/academyaft)
 "is" = (
 /obj/structure/rack,
-/obj/item/weapon/stock_parts/scanning_module,
-/obj/item/weapon/stock_parts/micro_laser,
-/obj/item/weapon/stock_parts/subspace/filter,
-/obj/item/weapon/stock_parts/subspace/ansible,
+/obj/item/stock_parts/scanning_module,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/ansible,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "it" = (
-/obj/item/weapon/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
 /turf/open/floor/plasteel/hydrofloor,
 /area/awaymission/academy/academyaft)
 "iu" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "iv" = (
@@ -2910,8 +2910,8 @@
 /area/awaymission/academy/academyaft)
 "iB" = (
 /obj/structure/rack,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/subspace/filter,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/subspace/filter,
 /turf/open/floor/plasteel/hydrofloor,
 /area/awaymission/academy/academyaft)
 "iC" = (
@@ -2953,7 +2953,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "iH" = (
-/obj/item/weapon/paper,
+/obj/item/paper,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iI" = (
@@ -3248,7 +3248,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/item/weapon/weldingtool,
+/obj/item/weldingtool,
 /turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "jq" = (
@@ -3277,13 +3277,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless,
 /area/awaymission/academy/academyaft)
 "ju" = (
 /obj/structure/window/reinforced,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
 /turf/open/floor/plasteel/red/side,
 /area/awaymission/academy/academyaft)
 "jv" = (
@@ -3323,7 +3323,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jB" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/space,
@@ -3712,11 +3712,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/book/manual/ripley_build_and_repair,
+/obj/item/book/manual/ripley_build_and_repair,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "kL" = (
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "kM" = (
@@ -3766,7 +3766,7 @@
 /area/awaymission/academy/academycellar)
 "kT" = (
 /obj/structure/table/wood,
-/obj/item/weapon/kitchen/knife/ritual,
+/obj/item/kitchen/knife/ritual,
 /obj/item/candle/infinite,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
@@ -3824,7 +3824,7 @@
 /area/awaymission/academy/academycellar)
 "lg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/guardiancreator/choose,
+/obj/item/guardiancreator/choose,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lh" = (
@@ -3842,7 +3842,7 @@
 "lk" = (
 /obj/structure/safe/floor,
 /obj/item/voodoo,
-/obj/item/weapon/gun/magic/wand/fireball,
+/obj/item/gun/magic/wand/fireball,
 /obj/item/clothing/suit/space/hardsuit/wizard,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
@@ -3912,7 +3912,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lw" = (
-/obj/item/weapon/ectoplasm,
+/obj/item/ectoplasm,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lx" = (
@@ -3922,12 +3922,12 @@
 "ly" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/table,
-/obj/item/weapon/staff,
+/obj/item/staff,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lz" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lA" = (
@@ -3945,7 +3945,7 @@
 /area/awaymission/academy/academyengine)
 "lD" = (
 /obj/structure/table,
-/obj/item/weapon/weldingtool,
+/obj/item/weldingtool,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lE" = (
@@ -4006,7 +4006,7 @@
 /area/awaymission/academy/academyengine)
 "lN" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lO" = (
@@ -4027,7 +4027,7 @@
 /area/awaymission/academy/academyengine)
 "lQ" = (
 /obj/structure/table,
-/obj/item/weapon/gun/magic/wand/polymorph,
+/obj/item/gun/magic/wand/polymorph,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lR" = (
@@ -4125,13 +4125,13 @@
 /area/awaymission/academy/academyengine)
 "mj" = (
 /obj/structure/rack,
-/obj/item/weapon/spellbook/oneuse/summonitem,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/spellbook/oneuse/summonitem,
+/obj/item/pen/fourcolor,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "mk" = (
 /obj/structure/rack,
-/obj/item/weapon/claymore,
+/obj/item/claymore,
 /obj/item/toy/figure/wizard,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
@@ -4145,12 +4145,12 @@
 /area/awaymission/academy/academyengine)
 "mn" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/magic/wand,
+/obj/item/gun/magic/wand,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mo" = (
 /obj/structure/rack,
-/obj/item/weapon/staff,
+/obj/item/staff,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mp" = (
@@ -4244,7 +4244,7 @@
 /area/awaymission/academy/academyengine)
 "mJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/gin,
+/obj/item/reagent_containers/food/drinks/bottle/gin,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mK" = (
@@ -4253,7 +4253,7 @@
 /area/awaymission/academy/academyengine)
 "mL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mM" = (
@@ -4294,7 +4294,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mU" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab,
+/obj/item/reagent_containers/food/snacks/meat/slab,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mV" = (
@@ -4379,7 +4379,7 @@
 /area/awaymission/academy/academyengine)
 "nj" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "nk" = (

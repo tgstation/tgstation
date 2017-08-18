@@ -14,7 +14,7 @@
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "af" = (
@@ -29,11 +29,11 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ai" = (
@@ -55,8 +55,8 @@
 /area/shuttle/escape)
 "am" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka{
+/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
 	pixel_x = 5;
 	pixel_y = 18
 	},
@@ -148,7 +148,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "az" = (
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aA" = (
@@ -159,7 +159,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aC" = (
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aD" = (
@@ -211,7 +211,7 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/weapon/broken_bottle,
+/obj/item/broken_bottle,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aM" = (
@@ -266,7 +266,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aV" = (
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /mob/living/simple_animal/hostile/bear/fightpit,
 /turf/open/floor/engine,
 /area/shuttle/escape)
@@ -331,7 +331,7 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bf" = (
@@ -381,7 +381,7 @@
 /area/shuttle/escape)
 "bm" = (
 /obj/structure/table,
-/obj/item/weapon/hatchet,
+/obj/item/hatchet,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bn" = (
@@ -395,21 +395,21 @@
 /area/shuttle/escape)
 "bo" = (
 /obj/structure/table,
-/obj/item/weapon/melee/baseball_bat{
+/obj/item/melee/baseball_bat{
 	pixel_x = -5
 	},
-/obj/item/weapon/crowbar/large{
+/obj/item/crowbar/large{
 	pixel_x = 6
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bp" = (
 /obj/structure/table,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bq" = (
-/obj/item/weapon/broken_bottle,
+/obj/item/broken_bottle,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -430,7 +430,7 @@
 	pixel_x = 27
 	},
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bu" = (
@@ -494,12 +494,12 @@
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid{
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bG" = (
@@ -508,12 +508,12 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/closet,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bI" = (

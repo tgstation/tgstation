@@ -85,7 +85,7 @@
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, C.mouseParams)
 
 /obj/machinery/manned_turret/proc/direction_track(mob/user, atom/targeted)
-	if(user.stat != CONSCIOUS)
+	if(user.incapacitated())
 		return
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
@@ -125,7 +125,7 @@
 
 /obj/machinery/manned_turret/proc/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
-	if(target == user || target == get_turf(src))
+	if(target == user || user.incapacitated() || target == get_turf(src))
 		return
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
@@ -143,6 +143,8 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
+	if(user.incapacitated())
+		return
 	update_positioning()						//REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
@@ -174,10 +176,10 @@
 
 /obj/item/gun_control
 	name = "turret controls"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
+	flags_1 = ABSTRACT_1 | NODROP_1 | NOBLUDGEON_1 | DROPDEL_1
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 

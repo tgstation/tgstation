@@ -12,8 +12,8 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/device/radio/headset/syndicate(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/weapon/storage/belt/military(src)
-	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/storage/belt/military(src)
+	new /obj/item/crowbar/red(src)
 	new /obj/item/clothing/glasses/night(src)
 	return
 
@@ -23,9 +23,9 @@
 /obj/structure/closet/syndicate/nuclear/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/box/teargas(src)
-	new /obj/item/weapon/storage/backpack/duffelbag/syndie/med(src)
+	new /obj/item/storage/box/flashbangs(src)
+	new /obj/item/storage/box/teargas(src)
+	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
 	new /obj/item/device/pda/syndicate(src)
 	return
 
@@ -44,7 +44,7 @@
 
 	//Sad trombone
 	if(pickednum == 1)
-		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
+		var/obj/item/paper/P = new /obj/item/paper(src)
 		P.name = "\improper IOU"
 		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
 
@@ -90,7 +90,7 @@
 
 	//Jetpack (You hit the jackpot!)
 	if(pickednum == 50)
-		new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+		new /obj/item/tank/jetpack/carbondioxide(src)
 
 	return
 
