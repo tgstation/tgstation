@@ -6,7 +6,7 @@
 
 /proc/RollCredits()
 	set waitfor = FALSE
-	var/list/contributors = icon_states('icons/credits.dmi') - null
+	var/list/contributors = icon_states('icons/credits.dmi') - ""
 	contributors = shuffle(contributors)
 
 	for(var/I in contributors)
