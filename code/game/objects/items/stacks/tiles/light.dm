@@ -3,7 +3,7 @@
 	singular_name = "light floor tile"
 	desc = "A floor tile, made out of glass. It produces light."
 	icon_state = "tile_e"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	turf_type = /turf/open/floor/light
 	var/state = 0

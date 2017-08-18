@@ -7,7 +7,7 @@
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
 	w_class = WEIGHT_CLASS_GIGANTIC
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/chassis
@@ -313,7 +313,7 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0

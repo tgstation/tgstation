@@ -5,7 +5,7 @@
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	flags =  CONDUCT
+	flags_1 =  CONDUCT_1
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
@@ -143,7 +143,7 @@
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 
-	flags = DROPDEL
+	flags_1 = DROPDEL_1
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 

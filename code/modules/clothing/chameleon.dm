@@ -60,7 +60,7 @@
 		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>")
 	if(new_headgear)
 		// Force drop the item in the headslot, even though
-		// it's NODROP
+		// it's NODROP_1
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
 		// where is `slot_head` defined? WHO KNOWS
@@ -85,7 +85,7 @@
 	for(var/V in typesof(chameleon_type))
 		if(ispath(V) && ispath(V, /obj/item))
 			var/obj/item/I = V
-			if(chameleon_blacklist[V] || (initial(I.flags) & ABSTRACT))
+			if(chameleon_blacklist[V] || (initial(I.flags_1) & ABSTRACT_1))
 				continue
 			if(!initial(I.icon_state) || !initial(I.item_state))
 				continue
@@ -314,7 +314,7 @@
 /obj/item/clothing/head/chameleon/drone
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
-	flags = NODROP
+	flags_1 = NODROP_1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// which means it offers no protection, it's just air and light
 
@@ -334,7 +334,7 @@
 	resistance_flags = 0
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
-	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -362,7 +362,7 @@
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
-	flags = NODROP
+	flags_1 = NODROP_1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
@@ -384,7 +384,7 @@
 	item_color = "black"
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
-	flags = NOSLIP
+	flags_1 = NOSLIP_1
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
 	pockets = /obj/item/storage/internal/pocket/shoes

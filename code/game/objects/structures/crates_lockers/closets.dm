@@ -110,7 +110,12 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	var/turf/T = get_turf(src)
+	var/atom/L = loc
+	if(!L)
+		for(var/I in src)
+			qdel(I)
+		return
+	var/turf/T = L.drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
@@ -119,7 +124,10 @@
 		throwing.finalize(FALSE)
 
 /obj/structure/closet/proc/take_contents()
-	var/turf/T = get_turf(src)
+	var/atom/L = loc
+	if(!L)
+		return
+	var/turf/T = L.drop_location()
 	for(var/atom/movable/AM in T)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
@@ -164,7 +172,7 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags & NODROP))
+		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags_1 & NODROP_1))
 			return
 	else
 		return
@@ -193,12 +201,12 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && material_drop_amount && !(flags & NODECONSTRUCT))
+	if(ispath(material_drop) && material_drop_amount && !(flags_1 & NODECONSTRUCT_1))
 		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
@@ -251,7 +259,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
+	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
@@ -448,3 +456,6 @@
 /obj/structure/closet/singularity_act()
 	dump_contents()
 	..()
+
+/obj/structure/closet/AllowDrop()
+	return TRUE

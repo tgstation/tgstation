@@ -66,7 +66,7 @@
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
-	flags = NONE
+	flags_1 = NONE
 	var/ore_type = /obj/item/ore/glass
 	var/turfverb = "uproot"
 
@@ -141,7 +141,7 @@
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet)
-	flags = NONE
+	flags_1 = NONE
 
 /turf/open/floor/carpet/Initialize()
 	..()

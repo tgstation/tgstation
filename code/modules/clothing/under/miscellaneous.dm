@@ -387,7 +387,7 @@
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"

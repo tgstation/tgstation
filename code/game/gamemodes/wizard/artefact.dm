@@ -208,7 +208,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	sharpness = IS_SHARP
 	force = 20

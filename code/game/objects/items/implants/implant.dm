@@ -9,7 +9,7 @@
 	item_color = "b"
 	var/allow_multiple = FALSE
 	var/uses = -1
-	flags = DROPDEL
+	flags_1 = DROPDEL_1
 
 
 /obj/item/implant/proc/trigger(emote, mob/living/carbon/source)

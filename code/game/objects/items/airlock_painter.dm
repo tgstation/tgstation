@@ -10,7 +10,7 @@
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 	origin_tech = "engineering=2"
 
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 
 	var/obj/item/device/toner/ink = null

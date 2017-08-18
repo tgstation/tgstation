@@ -19,11 +19,13 @@
 	var/list/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
 	var/current_color_index = 1
 	var/ghetto = FALSE
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
-		
+
 		if(!loaded)
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")

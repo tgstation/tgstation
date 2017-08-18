@@ -51,8 +51,8 @@
 	active = !active
 	if(active)
 		for(var/obj/item/I in owner.held_items)
-			if(!(I.flags & NODROP))
-				stored_items += I
+			if(!(I.flags_1 & NODROP_1))
+				flags_1 += I
 
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)
@@ -62,7 +62,7 @@
 		else
 			for(var/obj/item/I in stored_items)
 				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
-				I.flags |= NODROP
+				I.flags_1 |= NODROP_1
 
 	else
 		release_items()
@@ -86,7 +86,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		I.flags &= ~NODROP
+		I.flags_1 &= ~NODROP_1
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
