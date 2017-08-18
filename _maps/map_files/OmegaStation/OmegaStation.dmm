@@ -142,7 +142,6 @@
 "aaq" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/plasteel/darkblue/side{
-	icon_state = "darkblue";
 	dir = 1
 	},
 /area/bridge)
@@ -152,7 +151,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	icon_state = "darkblue";
 	dir = 1
 	},
 /area/bridge)
@@ -200,14 +198,12 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 1
 	},
 /area/bridge)
 "aaw" = (
 /obj/machinery/computer/security/mining,
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/bridge)
@@ -242,7 +238,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 9
 	},
 /area/bridge)
@@ -360,7 +355,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 1
 	},
 /area/bridge)
@@ -374,7 +368,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 1
 	},
 /area/bridge)
@@ -384,7 +377,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 5
 	},
 /area/bridge)
@@ -2853,7 +2845,6 @@
 "aeU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/quartermaster/storage)
@@ -3300,7 +3291,6 @@
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -3326,7 +3316,6 @@
 	id = "cargounload"
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/quartermaster/storage)
@@ -3787,7 +3776,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -3822,7 +3810,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/quartermaster/storage)
@@ -5111,7 +5098,6 @@
 	name = "Queue Shutters"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -5162,14 +5148,12 @@
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 9
 	},
 /area/quartermaster/storage)
 "aiJ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/quartermaster/storage)
@@ -5178,7 +5162,6 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/quartermaster/storage)
@@ -5191,7 +5174,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/quartermaster/storage)
@@ -5214,7 +5196,6 @@
 /obj/item/pen/red,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/quartermaster/storage)
@@ -5225,7 +5206,6 @@
 	},
 /obj/item/paper_bin,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/quartermaster/storage)
@@ -5546,7 +5526,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -5555,7 +5534,6 @@
 "ajp" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -5808,7 +5786,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/quartermaster/storage)
@@ -5841,7 +5818,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/quartermaster/storage)
@@ -6708,7 +6684,6 @@
 "akL" = (
 /obj/structure/closet/wardrobe/cargotech,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -6721,21 +6696,18 @@
 "akN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/quartermaster/storage)
 "akO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/quartermaster/storage)
 "akP" = (
 /obj/machinery/photocopier,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/quartermaster/storage)
@@ -7167,7 +7139,6 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -7212,7 +7183,6 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/quartermaster/storage)
@@ -7735,7 +7705,6 @@
 /obj/machinery/computer/stockexchange,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 10
 	},
 /area/quartermaster/storage)
@@ -7787,7 +7756,6 @@
 /obj/item/stack/cable_coil/white,
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/quartermaster/storage)
@@ -8726,7 +8694,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -8793,7 +8760,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/purple/side{
-	icon_state = "purple";
 	dir = 9
 	},
 /area/quartermaster/miningdock)
@@ -8806,7 +8772,6 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/quartermaster/miningdock)
@@ -9465,7 +9430,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/quartermaster/miningdock)
@@ -9477,7 +9441,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/purple/side{
-	icon_state = "purple";
 	dir = 4
 	},
 /area/quartermaster/miningdock)
@@ -10222,14 +10185,12 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/purple/side{
-	icon_state = "purple";
 	dir = 8
 	},
 /area/quartermaster/miningdock)
 "aqs" = (
 /obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/quartermaster/miningdock)
@@ -10362,7 +10323,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 8
 	},
 /area/security/brig)
@@ -10384,7 +10344,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 8
 	},
 /area/security/brig)
@@ -10698,7 +10657,6 @@
 /obj/item/folder/yellow,
 /obj/item/toy/figure/miner,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 10
 	},
 /area/quartermaster/miningdock)
@@ -10711,7 +10669,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/purple/side{
-	icon_state = "purple";
 	dir = 6
 	},
 /area/quartermaster/miningdock)
@@ -10915,7 +10872,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/green/side{
-	icon_state = "green";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -12309,7 +12265,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/caution/corner{
-	icon_state = "cautioncorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -15945,7 +15900,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/arrival{
-	icon_state = "arrival";
 	dir = 9
 	},
 /area/engine/atmos)
@@ -16604,7 +16558,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/arrival{
-	icon_state = "arrival";
 	dir = 8
 	},
 /area/engine/atmos)
@@ -16715,7 +16668,6 @@
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/caution{
-	icon_state = "caution";
 	dir = 10
 	},
 /area/engine/atmos)
@@ -17628,7 +17580,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/escape{
-	icon_state = "escape";
 	dir = 1
 	},
 /area/hallway/secondary/exit{
@@ -17642,7 +17593,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/escape{
-	icon_state = "escape";
 	dir = 1
 	},
 /area/hallway/secondary/exit{
@@ -19036,7 +18986,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/arrival{
-	icon_state = "arrival";
 	dir = 8
 	},
 /area/hallway/primary/central{
@@ -19477,7 +19426,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/arrival{
-	icon_state = "arrival";
 	dir = 8
 	},
 /area/hallway/primary/central{
@@ -21680,20 +21628,17 @@
 /area/hydroponics)
 "aJO" = (
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 9
 	},
 /area/hydroponics)
 "aJP" = (
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 1
 	},
 /area/hydroponics)
 "aJQ" = (
 /obj/effect/landmark/start/botanist,
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 1
 	},
 /area/hydroponics)
@@ -21708,7 +21653,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 1
 	},
 /area/hydroponics)
@@ -21717,7 +21661,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 5
 	},
 /area/hydroponics)
@@ -22346,7 +22289,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/purple/side{
-	icon_state = "purple";
 	dir = 5
 	},
 /area/janitor)
@@ -22389,7 +22331,6 @@
 "aKW" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 8
 	},
 /area/hydroponics)
@@ -22445,7 +22386,6 @@
 "aLb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 4
 	},
 /area/hydroponics)
@@ -22570,7 +22510,6 @@
 	})
 "aLt" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/hallway/secondary/exit{
@@ -22993,7 +22932,6 @@
 /area/hydroponics)
 "aMl" = (
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 10
 	},
 /area/hydroponics)
@@ -23042,7 +22980,6 @@
 "aMq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/greenblue/side{
-	icon_state = "greenblue";
 	dir = 6
 	},
 /area/hydroponics)
@@ -23151,7 +23088,6 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/hallway/secondary/exit{
@@ -23176,7 +23112,6 @@
 "aMC" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/hallway/secondary/exit{
@@ -23827,7 +23762,6 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/hallway/secondary/exit{
@@ -24186,7 +24120,6 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/redyellow/side{
-	icon_state = "redyellow";
 	dir = 9
 	},
 /area/hallway/primary/central)
@@ -24198,20 +24131,17 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow/side{
-	icon_state = "redyellow";
 	dir = 1
 	},
 /area/hallway/primary/central)
 "aOo" = (
 /turf/open/floor/plasteel/redyellow/side{
-	icon_state = "redyellow";
 	dir = 1
 	},
 /area/hallway/primary/central)
 "aOp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/redyellow/side{
-	icon_state = "redyellow";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -24220,7 +24150,6 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/redyellow/side{
-	icon_state = "redyellow";
 	dir = 5
 	},
 /area/hallway/primary/central)
@@ -24634,7 +24563,6 @@
 	network = list("SS13","Prison")
 	},
 /turf/open/floor/plasteel/green/corner{
-	icon_state = "greencorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -24662,7 +24590,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/purple/corner{
-	icon_state = "purplecorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -24689,7 +24616,6 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/green/corner{
-	icon_state = "greencorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -24745,7 +24671,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/green/corner{
-	icon_state = "greencorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -24761,7 +24686,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -24781,7 +24705,6 @@
 	network = list("SS13","Prison")
 	},
 /turf/open/floor/plasteel/green/corner{
-	icon_state = "greencorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -24810,7 +24733,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -24825,7 +24747,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/green/corner{
-	icon_state = "greencorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -24839,7 +24760,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -24856,7 +24776,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/green/corner{
-	icon_state = "greencorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -27095,7 +27014,6 @@
 "aTw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -27144,7 +27062,6 @@
 "aTE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/purple/corner{
-	icon_state = "purplecorner";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -27560,7 +27477,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/whiteyellow/corner{
-	icon_state = "whiteyellowcorner";
 	dir = 8
 	},
 /area/medical/chemistry)
@@ -27954,13 +27870,11 @@
 "aVk" = (
 /obj/effect/landmark/start/chemist,
 /turf/open/floor/plasteel/whiteyellow/corner{
-	icon_state = "whiteyellowcorner";
 	dir = 8
 	},
 /area/medical/chemistry)
 "aVl" = (
 /turf/open/floor/plasteel/whiteyellow/corner{
-	icon_state = "whiteyellowcorner";
 	dir = 8
 	},
 /area/medical/chemistry)
@@ -29397,7 +29311,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -30819,7 +30732,6 @@
 "baG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -31273,7 +31185,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -33276,7 +33187,6 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -33668,7 +33578,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -34484,8 +34393,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
-	dir = 5;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	dir = 5
 	},
 /area/science/xenobiology)
 "bhe" = (
@@ -34514,7 +34422,6 @@
 /area/science/xenobiology)
 "bhf" = (
 /turf/open/floor/plasteel/vault{
-	icon_state = "vault";
 	dir = 8
 	},
 /area/science/xenobiology)
@@ -35701,15 +35608,13 @@
 /area/science/xenobiology)
 "bjs" = (
 /turf/open/floor/plasteel/whitepurple/side{
-	icon_state = "whitepurple";
 	dir = 1
 	},
 /area/science/xenobiology)
 "bjt" = (
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/whitepurple/side{
-	dir = 5;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	dir = 5
 	},
 /area/science/xenobiology)
 "bju" = (
@@ -35810,8 +35715,7 @@
 /area/science/xenobiology)
 "bjG" = (
 /turf/open/floor/plasteel/whitepurple/side{
-	dir = 6;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	dir = 6
 	},
 /area/science/xenobiology)
 "bjH" = (
@@ -36436,7 +36340,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/shuttle/arrival)
@@ -36517,7 +36420,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 4
 	},
 /area/shuttle/arrival)
@@ -38523,7 +38425,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/escape{
-	icon_state = "escape";
 	dir = 1
 	},
 /area/hallway/secondary/exit{
@@ -38947,7 +38848,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 9
 	},
 /area/hallway/secondary/exit{
@@ -38963,7 +38863,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/hallway/secondary/exit{
@@ -38991,7 +38890,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/hallway/secondary/exit{
