@@ -481,5 +481,5 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/AllowDrop()
 	CRASH("Bad op: area/AllowDrop() called")
 
-/area/DropLocation()
-	CRASH("Bad op: area/DropLocation() called")
+/area/drop_location()
+	CRASH("Bad op: area/drop_location() called")
