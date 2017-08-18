@@ -498,8 +498,12 @@
 /mob/living/carbon/proc/gorillize()
 	if(notransform)
 		return
-	for(var/obj/item/W in src)
+
+	var/Itemlist = get_equipped_items()
+	Itemlist += held_items
+	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W)
+
 	regenerate_icons()
 	notransform = TRUE
 	canmove = FALSE

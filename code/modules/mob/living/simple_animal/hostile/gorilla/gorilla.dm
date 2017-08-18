@@ -1,9 +1,14 @@
+#define GORILLA_HANDS_LAYER 1
+#define GORILLA_TOTAL_LAYERS 1
+
 /mob/living/simple_animal/hostile/gorilla
 	name = "Gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
-	icon_state = "gorilla"
-	icon_living = "gorilla"
-	icon_dead = "gorilla_dead"
+	icon = 'icons/mob/gorilla.dmi'
+	icon_state = "crawling"
+	icon_state = "crawling"
+	icon_living = "crawling"
+	icon_dead = "dead"
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
@@ -20,11 +25,14 @@
 	environment_smash = 2
 	attacktext = "pummels"
 	attack_sound = 'sound/weapons/punch1.ogg'
+	dextrous = TRUE
+	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	faction = list("jungle")
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
 	minbodytemp = 270
 	maxbodytemp = 350
+	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
