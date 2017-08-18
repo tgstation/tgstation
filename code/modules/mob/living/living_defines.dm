@@ -76,4 +76,4 @@
 
 	var/datum/language/selected_default_language
 
-	var/last_words
+	var/last_words	//used for database logging
