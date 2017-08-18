@@ -5,10 +5,7 @@
 #define CREDITS_LOC locate(12, 167, ZLEVEL_CENTCOM)
 
 /proc/RollCredits()
-    var/icon/credits_file = new('icons/credits.dmi')
-    var/list/contributors = icon_states(credits_file) - null
-    qdel(credits_file)
-
+    var/list/contributors = icon_states('icons/credits.dmi') - null
     contributors = shuffle(contributors)
 
     . = list()
