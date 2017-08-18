@@ -12,6 +12,7 @@ namespace CreditsTool
 	{
 		const string ConfigPath = "remappings.txt";
 		const string OutputLocation = "./credit_pngs";
+		const int world_icon_size = 32;
 		//this downloads all the user images of contributors of a passed github repository
 		//usage ./CreditsTool <repo owner> <repo> [authToken (helps with github rate limiter)]
 		static void Main(string[] args)
@@ -41,8 +42,10 @@ namespace CreditsTool
 
 			var LoginAvatars = new Dictionary<string, string>();
 			//now list the things we want: avatar urls and logins
-			foreach (var I in LoadPages(FirstResponse, repoOwner, repoName, authToken))
-				LoginAvatars.Add((string)I["login"], (string)I["avatar_url"]);
+			foreach (var I in LoadPages(FirstResponse, repoOwner, repoName, authToken)) {
+				var avurl = (string)I["avatar_url"];
+				LoginAvatars.Add((string)I["login"], String.Format("{0}{1}s={2}", avurl, avurl.Contains("?") ? "&" : "?", world_icon_size));
+			}
 
 			Console.WriteLine(String.Format("Collected info for {0} contributors.", LoginAvatars.Count));
 
@@ -66,14 +69,22 @@ namespace CreditsTool
 					}
 					using (var stream = new MemoryStream(client.DownloadData(I.Value)))
 					using (var originalBMP = new Bitmap(stream))
-					using (var resizedBMP = new Bitmap(originalBMP, new Size(32, 32)))
 					{
-						resizedBMP.Save(String.Format("{0}{1}{2}.png", OutputLocation, Path.DirectorySeparatorChar, writtenFilename), ImageFormat.Png);
-						Console.WriteLine(String.Format("Done {0}.png! {1}%", I.Key, (int)((((float)(count + 1)) / LoginAvatars.Count) * 100)));
+						if (originalBMP.Width == world_icon_size && originalBMP.Height == world_icon_size)  //no need to resize
+							SaveBMP(originalBMP, writtenFilename);
+						else
+							using (var resizedBMP = new Bitmap(originalBMP, new Size(world_icon_size, world_icon_size)))
+								SaveBMP(resizedBMP, writtenFilename);
 					}
+					Console.WriteLine(String.Format("Done {0}.png! {1}%", writtenFilename, (int)((((float)(count + 1)) / LoginAvatars.Count) * 100)));
 					++count;
 				}
 			}
+		}
+
+		static void SaveBMP(Bitmap bmp, string writtenFilename)
+		{
+			bmp.Save(String.Format("{0}{1}{2}.png", OutputLocation, Path.DirectorySeparatorChar, writtenFilename), ImageFormat.Png);
 		}
 
 		static IDictionary<string, string> LoadConfig()
@@ -111,7 +122,8 @@ namespace CreditsTool
 			return json;
 		}
 
-		static int GetNumPagesOfContributors(WebResponse response) {
+		static int GetNumPagesOfContributors(WebResponse response)
+		{
 			var splits = response.Headers["Link"].Split(',');
 			foreach (var I in splits)
 				if (I.Contains("rel=\"last\"")) //our boy
@@ -130,7 +142,7 @@ namespace CreditsTool
 			httpWebRequest.Method = WebRequestMethods.Http.Get;
 			httpWebRequest.Accept = "application/json";
 			httpWebRequest.UserAgent = "tgstation-13-credits-tool";
-			if(authToken != null)
+			if (authToken != null)
 				httpWebRequest.Headers.Add(String.Format("Authorization: token {0}", authToken));
 			return httpWebRequest.GetResponse();
 		}
