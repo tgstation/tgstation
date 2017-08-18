@@ -16,12 +16,11 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aad" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "aae" = (
@@ -336,8 +335,7 @@
 	},
 /area/shuttle/syndicate)
 "aaO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "aaP" = (
@@ -3936,8 +3934,7 @@
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/prison)
 "ajf" = (
@@ -7179,8 +7176,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apS" = (
@@ -32699,8 +32695,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/science/xenobiology)
 "btC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/biohazard,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -54140,8 +54135,7 @@
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/bar)
 "cpd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "cpe" = (
@@ -54783,8 +54777,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "cqW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
 /area/chapel/asteroid{
 	name = "Monastery Asteroid"
@@ -54795,8 +54788,7 @@
 /turf/open/space/basic,
 /area/space)
 "cqY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
 /area/chapel/asteroid{
 	name = "Monastery Asteroid"
@@ -54815,15 +54807,13 @@
 /turf/open/floor/plating/airless,
 /area/chapel/office)
 "crc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
 /area/chapel/asteroid{
 	name = "Monastery Asteroid"
 	})
 "crd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
 /area/chapel/asteroid{
 	name = "Monastery Asteroid"
@@ -54855,8 +54845,7 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
 "cri" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
 /area/chapel/asteroid{
 	name = "Monastery Asteroid"
@@ -54891,8 +54880,7 @@
 /turf/open/space,
 /area/space)
 "crn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cro" = (
@@ -55018,8 +55006,7 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main/monastery)
 "crI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "crJ" = (
