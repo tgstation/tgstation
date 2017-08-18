@@ -333,12 +333,12 @@
 
 /obj/item/grenade/chem_grenade/smart_metal_foam/Initialize()
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminium", 30)
-	B2.reagents.add_reagent("smart_foaming_agent", 10)
-	B2.reagents.add_reagent("facid", 10)
+	B1.reagents.add_reagent("aluminium", 75)
+	B2.reagents.add_reagent("smart_foaming_agent", 25)
+	B2.reagents.add_reagent("facid", 25)
 
 	beakers += B1
 	beakers += B2

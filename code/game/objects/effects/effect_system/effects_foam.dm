@@ -34,7 +34,6 @@
 
 /obj/effect/particle_effect/foam/metal/smart
 	name = "smart foam"
-	icon_state = "mfoam"
 
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
@@ -78,7 +77,6 @@
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
 			T.ChangeTurf(/turf/open/floor/plating/foam)
-		T = get_turf(src) //In case we got changed into space, refresh
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
 			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!

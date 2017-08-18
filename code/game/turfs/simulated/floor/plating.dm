@@ -81,15 +81,13 @@
 /turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/P = I
-		if(P.amount <= 1)
-			to_chat(user, "<span class='danger'>You need at least one floor tile to buil- wait, how did you get a stack with no tiles...?>/span>")
-			return
-		P.use(1)
-		var/obj/L = locate(/obj/structure/lattice, src)
-		if(L)
-			qdel(L)
-		playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
-		ChangeTurf(/turf/open/floor/plating)
+		if(P.use(1))
+			var/obj/L = locate(/obj/structure/lattice, src)
+			if(L)
+				qdel(L)
+			to_chat(user, "<span class='notice'>You reinforce the foamed plating with tiling.</span>")
+			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
+			ChangeTurf(/turf/open/floor/plating)
 	else
 		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -97,7 +95,7 @@
 		if(prob(I.force * 20 - 25))
 			user.visible_message("<span class='danger'>[user] smashes through [src]!</span>", \
 							"<span class='danger'>You smash through [src] with [I]!</span>")
-			qdel(src)
+			ChangeTurf(baseturf)
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
