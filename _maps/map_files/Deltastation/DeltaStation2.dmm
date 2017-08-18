@@ -24954,6 +24954,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/fireaxecabinet{
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/caution{
 	icon_state = "caution";
 	dir = 8
@@ -138063,7 +138067,7 @@ aRf
 aSV
 aUs
 aIU
-aIU
+aSV
 aIU
 aSV
 aSV
