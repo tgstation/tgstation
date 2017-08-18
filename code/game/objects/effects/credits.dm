@@ -6,10 +6,8 @@
 
 /proc/RollCredits()
 	set waitfor = FALSE
-	contributors = shuffle(icon_states('icons/credits.dmi'))
-
 	var/turf/T = CREDITS_LOC
-	for(var/I in contributors)
+	for(var/I in shuffle(icon_states('icons/credits.dmi')))
 		new /obj/effect/abstract/credit(T, I)
 		sleep(CREDIT_SPAWN_SPEED)
 
