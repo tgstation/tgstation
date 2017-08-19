@@ -119,7 +119,7 @@
 
 /obj/item/reagent_containers/food/snacks/salad/bellpepper
 	name = "bell peppers and beef"
-	desc = "Something seems missing.."
+	desc = "Something seems missing..."
 	icon_state = "herbsalad"
 	bonus_reagents = list("vitamin" = 4)
 	list_reagents = list("nutriment" = 4)
