@@ -125,11 +125,17 @@
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	subcategory = CAT_SALAD
 
-/datum/crafting_recipe/food/citrusdelight
+/datum/crafting_recipe/food/bellpeppers_and_beef
 	name = "Bell Peppers and Beef"
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 3
+		/obj/item/reagent_containers/food/snacks/grown/chili = 4,
+		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1, // we dont have shiitakes so this will have to do
+		/datum/reagent/consumable/soysauce = 5,
+		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/blackpepper = 2,
+		/datum/reagent/consumable/soysauce = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/bellpepper
 	subcategory = CAT_SALAD
