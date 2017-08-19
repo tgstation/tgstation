@@ -117,7 +117,7 @@
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
 
-/obj/item/reagent_containers/food/snacks/salad/herbsalad
+/obj/item/reagent_containers/food/snacks/salad/bellpepper
 	name = "bell peppers and beef"
 	desc = "Something seems missing.."
 	icon_state = "herbsalad"
