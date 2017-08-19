@@ -86,7 +86,7 @@
 	for(var/M in GLOB.player_list)
 		if(ismob(M) && !isnewplayer(M))
 			var/mob/MO = M
-			MO.playsound_local(MO, null, vol, vary, frequency, falloff, channel, pressure_affected, S)
+			MO.playsound_local(MO, null, volume, vary, frequency, falloff, channel, pressure_affected, S)
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
