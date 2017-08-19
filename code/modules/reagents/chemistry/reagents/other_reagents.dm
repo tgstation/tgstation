@@ -1079,6 +1079,14 @@
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
 
+/datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
+	name = "Smart foaming agent"
+	id = "smart_foaming_agent"
+	description = "A agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
+	reagent_state = SOLID
+	color = "#664B63" // rgb: 102, 75, 99
+	taste_description = "metal"
+
 /datum/reagent/ammonia
 	name = "Ammonia"
 	id = "ammonia"

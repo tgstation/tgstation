@@ -72,7 +72,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	w_class_on = WEIGHT_CLASS_HUGE
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	armour_penetration = 100
 	origin_tech = "combat=4;magnets=3"
 	attack_verb_off = list("attacked", "chopped", "cleaved", "torn", "cut")

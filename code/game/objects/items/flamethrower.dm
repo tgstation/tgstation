@@ -6,7 +6,7 @@
 	item_state = "flamethrower_0"
 	lefthand_file = 'icons/mob/inhands/weapons/flamethrower_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/flamethrower_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 3
 	throwforce = 10
 	throw_speed = 1

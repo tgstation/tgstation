@@ -136,7 +136,7 @@
 
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state == 4)
 			new /obj/item/shard(loc)
 			new /obj/item/shard(loc)

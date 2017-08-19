@@ -23,7 +23,7 @@
 		var/obj/item/clothing/suit/armor/abductor/vest/V = locate() in H
 		if(V)
 			console.AddVest(V)
-			V.flags |= NODROP
+			V.flags_1 |= NODROP_1
 
 		var/obj/item/storage/backpack/B = locate() in H
 		if(B)

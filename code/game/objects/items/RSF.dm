@@ -13,7 +13,7 @@ RSF
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/matter = 0
 	var/mode = 1
@@ -123,7 +123,6 @@ RSF
 	var/toxin = 0
 	var/cooldown = 0
 	var/cooldowndelay = 10
-	var/emagged = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/cookiesynth/examine(mob/user)

@@ -64,6 +64,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/materials
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
+	var/emagged = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -135,7 +136,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			hitsound = "swing_hit"
 
 /obj/item/Destroy()
-	flags &= ~DROPDEL	//prevent reqdels
+	flags_1 &= ~DROPDEL_1	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -386,7 +387,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
-	if(DROPDEL & flags)
+	if(DROPDEL_1 & flags_1)
 		qdel(src)
 	in_inventory = FALSE
 
