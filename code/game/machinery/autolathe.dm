@@ -123,7 +123,7 @@
 		busy = FALSE
 		return 1
 
-	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
+	if(O.flags_2 & HOLOGRAM_2)
 		return 1
 
 	var/material_amount = materials.get_item_material_amount(O)

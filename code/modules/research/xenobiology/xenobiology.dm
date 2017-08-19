@@ -12,7 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
-	container_type = INJECTABLE
+	container_type = INJECTABLE_1
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -419,7 +419,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	item_color = "golem"
-	flags = ABSTRACT | NODROP
+	flags_1 = ABSTRACT_1 | NODROP_1
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	has_sensor = NO_SENSORS
 
@@ -434,7 +434,7 @@
 	body_parts_covered = FULL_BODY
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags = ABSTRACT | NODROP
+	flags_1 = ABSTRACT_1 | NODROP_1
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -442,7 +442,7 @@
 	icon_state = "golem"
 	item_state = null
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags = NOSLIP | ABSTRACT | NODROP
+	flags_1 = NOSLIP_1 | ABSTRACT_1 | NODROP_1
 
 
 /obj/item/clothing/mask/breath/golem
@@ -452,7 +452,7 @@
 	item_state = "golem"
 	siemens_coefficient = 0
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags = ABSTRACT | NODROP
+	flags_1 = ABSTRACT_1 | NODROP_1
 
 
 /obj/item/clothing/gloves/golem
@@ -461,7 +461,7 @@
 	icon_state = "golem"
 	item_state = null
 	siemens_coefficient = 0
-	flags = ABSTRACT | NODROP
+	flags_1 = ABSTRACT_1 | NODROP_1
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
@@ -472,7 +472,7 @@
 	name = "golem's head"
 	desc = "a golem's head"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags = ABSTRACT | NODROP
+	flags_1 = ABSTRACT_1 | NODROP_1
 
 /obj/effect/golemrune
 	anchored = TRUE
@@ -632,7 +632,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	max_amount = 60
 	turf_type = /turf/open/floor/bluespace
 
@@ -648,7 +648,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
 

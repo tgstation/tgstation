@@ -4,6 +4,9 @@
 
 #define IRC_STATUS_THROTTLE 5
 
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
 //keep these in sync with TGS3
 #define SERVICE_WORLD_PARAM "server_service"
 #define SERVICE_PR_TEST_JSON "..\\..\\prtestjob.json"
@@ -17,7 +20,7 @@
 #define SERVICE_CMD_NAME_CHECK "namecheck"
 #define SERVICE_CMD_ADMIN_WHO "adminwho"
 
-//#define SERVICE_CMD_PARAM_KEY //defined in __compile_options.dm
+#define SERVICE_CMD_PARAM_KEY "serviceCommsKey"
 #define SERVICE_CMD_PARAM_COMMAND "command"
 #define SERVICE_CMD_PARAM_MESSAGE "message"
 #define SERVICE_CMD_PARAM_TARGET "target"

@@ -29,7 +29,7 @@
 	name = "explorer gas mask"
 	desc = "A military-grade gas mask that can be connected to an air supply."
 	icon_state = "gas_mining"
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)

@@ -182,7 +182,7 @@
 
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	if(lying && !(I.flags&ABSTRACT))
+	if(lying && !(I.flags_1&ABSTRACT_1))
 		return FALSE
 	if(!istype(I))
 		return FALSE
@@ -252,7 +252,7 @@
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if((I.flags & NODROP) && !force)
+	if((I.flags_1 & NODROP_1) && !force)
 		return FALSE
 	return TRUE
 
@@ -286,13 +286,13 @@
 //DO NOT CALL THIS PROC
 //use one of the above 2 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP_1 for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
 													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
-	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
+	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP_1.
 		return TRUE
 
-	if((I.flags & NODROP) && !force)
+	if((I.flags_1 & NODROP_1) && !force)
 		return FALSE
 
 	var/hand_index = get_held_index_of_item(I)
@@ -305,7 +305,7 @@
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move && !(I.flags & DROPDEL))	//item may be moved/qdel'd immedietely, don't bother moving it
+		if(!no_move && !(I.flags_1 & DROPDEL_1))	//item may be moved/qdel'd immedietely, don't bother moving it
 			I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE

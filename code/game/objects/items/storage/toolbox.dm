@@ -5,7 +5,7 @@
 	item_state = "toolbox_red"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 12
 	throwforce = 12
 	throw_speed = 2

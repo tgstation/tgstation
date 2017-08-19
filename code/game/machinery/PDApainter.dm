@@ -103,7 +103,7 @@
 		return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			stat |= BROKEN
 			update_icon()

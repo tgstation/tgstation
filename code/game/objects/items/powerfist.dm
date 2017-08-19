@@ -5,7 +5,7 @@
 	item_state = "powerfist"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	attack_verb = list("whacked", "fisted", "power-punched")
 	force = 20
 	throwforce = 10

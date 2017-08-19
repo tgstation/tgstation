@@ -498,7 +498,7 @@
 
 /obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
 		if(disassembled)
 			new/obj/item/stack/tile/brass(T, 4)

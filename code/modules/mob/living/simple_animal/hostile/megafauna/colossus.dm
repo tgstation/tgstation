@@ -351,7 +351,7 @@ Difficulty: Very Hard
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = NO_POWER_USE
 	density = TRUE
-	flags = HEAR
+	flags_1 = HEAR_1
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
 
@@ -667,7 +667,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!W.admin_spawned && !HAS_SECONDARY_FLAG(W, HOLOGRAM) && !(W.flags & ABSTRACT))
+				if(!W.admin_spawned && !(W.flags_2 & HOLOGRAM_2) && !(W.flags_1 & ABSTRACT_1))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)

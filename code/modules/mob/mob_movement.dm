@@ -274,7 +274,7 @@
 					R.reveal(20)
 					R.stun(20)
 				return
-			if(stepTurf.flags & NOJAUNT)
+			if(stepTurf.flags_1 & NOJAUNT_1)
 				to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
 			else
 				L.loc = get_step(L, direct)

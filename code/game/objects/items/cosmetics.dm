@@ -107,7 +107,7 @@
 	desc = "The latest and greatest power razor born from the science of shaving."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "razor"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 
 

@@ -12,7 +12,7 @@ obj/item/construction
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	force = 0
 	throwforce = 10
 	throw_speed = 3

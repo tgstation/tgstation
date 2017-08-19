@@ -5,7 +5,7 @@
 //There is toggleable "stabilizers" that will make momentum go down FAST instead of its normal slow rate
 //The suit is heavy and will slow you down on the ground but is a bit faster then usual in air
 //The speed at which you drift is determined by your current momentum
-//Also, I should probably add in some kind of limiting mechanic but I really don't like having to refill this all the time, expecially as it will be NODROP.
+//Also, I should probably add in some kind of limiting mechanic but I really don't like having to refill this all the time, expecially as it will be NODROP_1.
 //Apparently due to code limitations you have to detect mob movement with.. shoes.
 //The object that handles the flying itself - FLIGHT PACK --------------------------------------------------------------------------------------
 /obj/item/device/flightpack
@@ -859,9 +859,9 @@
 	if(suit)
 		active = toggle
 		if(active)
-			src.flags |= NOSLIP
+			src.flags_1 |= NOSLIP_1
 		if(!active)
-			src.flags &= ~NOSLIP
+			src.flags_1 &= ~NOSLIP_1
 
 /obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
 	if(slot == slot_shoes)
@@ -1043,7 +1043,7 @@
 			usermessage("You're already wearing something on your back!", "boldwarning")
 			return FALSE
 		user.equip_to_slot_if_possible(pack,slot_back,0,0,1)
-		pack.flags |= NODROP
+		pack.flags_1 |= NODROP_1
 		resync()
 		user.visible_message("<span class='notice'>A [pack.name] extends from [user]'s [name] and clamps to their back!</span>")
 		user.update_inv_wear_suit()
@@ -1057,7 +1057,7 @@
 			return FALSE
 		if(pack.flight && forced)
 			pack.disable_flight(1)
-		pack.flags &= ~NODROP
+		pack.flags_1 &= ~NODROP_1
 		resync()
 		if(user)
 			user.transferItemToLoc(pack, src, TRUE)
@@ -1081,14 +1081,14 @@
 			usermessage("You're already wearing something on your feet!", "boldwarning")
 			return FALSE
 		user.equip_to_slot_if_possible(shoes,slot_shoes,0,0,1)
-		shoes.flags |= NODROP
+		shoes.flags_1 |= NODROP_1
 		user.visible_message("<span class='notice'>[user]'s [name] extends a pair of [shoes.name] over their feet!</span>")
 		user.update_inv_wear_suit()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = FALSE)
-	shoes.flags &= ~NODROP
+	shoes.flags_1 &= ~NODROP_1
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
 		user.transferItemToLoc(shoes, src, TRUE)

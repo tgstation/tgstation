@@ -134,7 +134,7 @@
 
 
 /obj/structure/light_construct/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, sheets_refunded)
 	qdel(src)
 
@@ -347,7 +347,7 @@
 			deconstruct()
 		else
 			to_chat(user, "<span class='userdanger'>You stick \the [W] into the light socket!</span>")
-			if(has_power() && (W.flags & CONDUCT))
+			if(has_power() && (W.flags_1 & CONDUCT_1))
 				do_sparks(3, TRUE, src)
 				if (prob(75))
 					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
@@ -355,7 +355,7 @@
 		return ..()
 
 /obj/machinery/light/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/structure/light_construct/newlight = null
 		var/cur_stage = 2
 		if(!disassembled)
@@ -383,7 +383,7 @@
 /obj/machinery/light/attacked_by(obj/item/I, mob/living/user)
 	..()
 	if(status == LIGHT_BROKEN || status == LIGHT_EMPTY)
-		if(on && (I.flags & CONDUCT))
+		if(on && (I.flags_1 & CONDUCT_1))
 			if(prob(12))
 				electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 

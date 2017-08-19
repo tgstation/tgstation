@@ -91,7 +91,7 @@
 // except it actually ASKS THE DEAD (wooooo)
 
 /obj/item/toy/eightball/haunted
-	flags = HEAR
+	flags_1 = HEAR_1
 	var/last_message
 	var/selected_message
 	var/list/votes

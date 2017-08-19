@@ -2,7 +2,7 @@
 	name = "cell charger"
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "ccharger0"
+	icon_state = "ccharger"
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
@@ -12,19 +12,16 @@
 	var/chargelevel = -1
 
 /obj/machinery/cell_charger/proc/updateicon()
-	icon_state = "ccharger[charging ? 1 : 0]"
+	cut_overlays()
 
-	if(charging && !(stat & (BROKEN|NOPOWER)))
-		var/newlevel = 	round(charging.percent() * 4 / 100)
-
-		if(chargelevel != newlevel)
-			chargelevel = newlevel
-
-			cut_overlays()
-			add_overlay("ccharger-o[newlevel]")
-
-	else
-		cut_overlays()
+	if(charging)
+		add_overlay(image(charging.icon, charging.icon_state))
+		add_overlay("ccharger-on")
+		if(!(stat & (BROKEN|NOPOWER)))
+			var/newlevel = 	round(charging.percent() * 4 / 100)
+			if(chargelevel != newlevel)
+				chargelevel = newlevel
+				add_overlay("ccharger-o[newlevel]")
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
