@@ -458,3 +458,5 @@
 	var/obj/item/O = contents[contents.len]
 	. = O.attack(M, user, def_zone, FALSE)
 	update_icon()
+
+#undef PANCAKE_MAX_STACK
