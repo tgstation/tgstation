@@ -191,6 +191,14 @@
 	research_cost = 5000
 	export_price = 5000
 
+/datum/techweb_node/cryotech
+	id = "cryotech"
+	display_name = "Cryostasis Technology"
+	description = "Smart freezing of objects to preserve them!"
+	prereq_ids = list("adv_engi", "emp_basic", "biotech")
+	design_ids = list("splitbeaker", "noreactsyringe", "cryotube", "cryoGrenade")
+	research_cost = 5000
+	export_price = 5000
 
 /////////////////////////////////////////
 //////////////////Misc///////////////////
@@ -283,14 +291,6 @@
 	name = "Advanced Mass-Spectrometer"
 	id = "adv_mass_spectrometer"
 	build_path = /obj/item/device/mass_spectrometer/adv
-/datum/design/noreactbeaker
-	name = "Cryostasis Beaker"
-	id = "splitbeaker"
-	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
-/datum/design/noreactsyringe
-	name = "Cryo Syringe"
-	id = "noreactsyringe"
-	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
 /datum/design/piercesyringe
 	name = "Piercing Syringe"
 	id = "piercesyringe"
@@ -892,11 +892,6 @@
 	name = "Machine Design (Sleeper Board)"
 	id = "sleeper"
 	category = list ("Medical Machinery")
-/datum/design/board/cryotube
-	name = "Machine Design (Cryotube Board)"
-	id = "cryotube"
-	build_path = /obj/item/weapon/circuitboard/machine/cryo_tube
-	category = list ("Medical Machinery")
 /datum/design/board/chem_dispenser
 	name = "Machine Design (Portable Chem Dispenser Board)"
 	id = "chem_dispenser"
@@ -1385,12 +1380,6 @@
 	name = "Pyro Grenade"
 	id = "pyro_Grenade"
 	build_path = /obj/item/weapon/grenade/chem_grenade/pyro
-/* // Currently commented out, because it has no worthwhile useage yet.
-/datum/design/cryo_grenade
-	name = "Cryo Grenade"
-	id = "cryo_Grenade"
-	build_path = /obj/item/weapon/grenade/chem_grenade/cryo
-*/
 /datum/design/adv_grenade
 	name = "Advanced Release Grenade"
 	id = "adv_Grenade"
