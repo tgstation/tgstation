@@ -1,3 +1,6 @@
+#define MAIN_SCREEN 1
+#define SYMPTOM_DETAILS 2
+
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
@@ -10,6 +13,8 @@
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	var/wait
+	var/mode = MAIN_SCREEN
+	var/datum/symptom/selected_symptom
 	var/obj/item/reagent_containers/beaker
 
 /obj/machinery/computer/pandemic/Initialize()
@@ -34,9 +39,7 @@
 
 /obj/machinery/computer/pandemic/proc/get_viruses_data(datum/reagent/blood/B)
 	. = list()
-	if(!islist(B.data["viruses"]))
-		return
-	var/list/V = B.data["viruses"]
+	var/list/V = B.get_diseases()
 	var/index = 1
 	for(var/virus in V)
 		var/datum/disease/D = virus
@@ -47,21 +50,24 @@
 		this["name"] = D.name
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/A = D
-			var/datum/disease/advance/archived = SSdisease.archive_diseases[D.GetDiseaseID()]
-			if(archived.name == "Unknown")
+			var/disease_name = SSdisease.get_disease_name(A.GetDiseaseID())
+			if(disease_name == "Unknown")
 				this["can_rename"] = TRUE
-			this["name"] = archived.name
+			this["name"] = disease_name
 			this["is_adv"] = TRUE
-			this["resistance"] = A.totalResistance()
-			this["stealth"] = A.totalStealth()
-			this["stage_speed"] = A.totalStageSpeed()
-			this["transmission"] = A.totalTransmittable()
 			this["symptoms"] = list()
+			var/symptom_index = 1
 			for(var/symptom in A.symptoms)
 				var/datum/symptom/S = symptom
 				var/list/this_symptom = list()
 				this_symptom["name"] = S.name
+				this_symptom["sym_index"] = symptom_index
+				symptom_index++
 				this["symptoms"] += list(this_symptom)
+			this["resistance"] = A.totalResistance()
+			this["stealth"] = A.totalStealth()
+			this["stage_speed"] = A.totalStageSpeed()
+			this["transmission"] = A.totalTransmittable()
 		this["index"] = index++
 		this["agent"] = D.agent
 		this["description"] = D.desc || "none"
@@ -69,6 +75,20 @@
 		this["cure"] = D.cure_text || "none"
 
 		. += list(this)
+
+/obj/machinery/computer/pandemic/proc/get_symptom_data(datum/symptom/S)
+	. = list()
+	var/list/this = list()
+	this["name"] = S.name
+	this["desc"] = S.desc
+	this["stealth"] = S.stealth
+	this["resistance"] = S.resistance
+	this["stage_speed"] = S.stage_speed
+	this["transmission"] = S.transmittable
+	this["level"] = S.level
+	this["neutered"] = S.neutered
+	this["threshold_desc"] = S.threshold_desc
+	. += this
 
 /obj/machinery/computer/pandemic/proc/get_resistance_data(datum/reagent/blood/B)
 	. = list()
@@ -81,6 +101,7 @@
 		if(D)
 			this["id"] = id
 			this["name"] = D.name
+
 		. += list(this)
 
 /obj/machinery/computer/pandemic/proc/reset_replicator_cooldown()
@@ -113,18 +134,23 @@
 /obj/machinery/computer/pandemic/ui_data(mob/user)
 	var/list/data = list()
 	data["is_ready"] = !wait
-	if(beaker)
-		data["has_beaker"] = TRUE
-		if(!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
-			data["beaker_empty"] = TRUE
-		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
-		if(B)
-			data["has_blood"] = TRUE
-			data["blood"] = list()
-			data["blood"]["dna"] = B.data["blood_DNA"] || "none"
-			data["blood"]["type"] = B.data["blood_type"] || "none"
-			data["viruses"] = get_viruses_data(B)
-			data["resistances"] = get_resistance_data(B)
+	data["mode"] = mode
+	switch(mode)
+		if(MAIN_SCREEN)
+			if(beaker)
+				data["has_beaker"] = TRUE
+				if(!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
+					data["beaker_empty"] = TRUE
+				var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
+				if(B)
+					data["has_blood"] = TRUE
+					data["blood"] = list()
+					data["blood"]["dna"] = B.data["blood_DNA"] || "none"
+					data["blood"]["type"] = B.data["blood_type"] || "none"
+					data["viruses"] = get_viruses_data(B)
+					data["resistances"] = get_resistance_data(B)
+		if(SYMPTOM_DETAILS)
+			data["symptom"] = get_symptom_data(selected_symptom)
 
 	return data
 
@@ -166,8 +192,8 @@
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
-			var/index = params["index"]
-			var/datum/disease/D = SSdisease.archive_diseases[index]
+			var/index = text2num(params["index"])
+			var/datum/disease/D = SSdisease.archive_diseases[get_virus_id_by_index(index)]
 			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent("vaccine", 15, list(index))
@@ -175,6 +201,19 @@
 			update_icon()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)
 			. = TRUE
+		if("symptom_details")
+			var/picked_symptom_index = text2num(params["picked_symptom"])
+			var/index = text2num(params["index"])
+			var/datum/disease/advance/A = get_by_index("viruses", index)
+			var/datum/symptom/S = A.symptoms[picked_symptom_index]
+			mode = SYMPTOM_DETAILS
+			selected_symptom = S
+			. = TRUE
+		if("back")
+			mode = MAIN_SCREEN
+			selected_symptom = null
+			. = TRUE
+
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
