@@ -124,3 +124,12 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	subcategory = CAT_SALAD
+
+/datum/crafting_recipe/food/citrusdelight
+	name = "Bell Peppers and Beef"
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/salad/bellpepper
+	subcategory = CAT_SALAD
