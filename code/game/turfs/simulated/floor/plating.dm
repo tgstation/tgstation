@@ -82,7 +82,7 @@
 	if(istype(I, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/P = I
 		if(P.use(1))
-			var/obj/L = locate(/obj/structure/lattice, src)
+			var/obj/L = locate(/obj/structure/lattice) in src
 			if(L)
 				qdel(L)
 			to_chat(user, "<span class='notice'>You reinforce the foamed plating with tiling.</span>")
@@ -100,4 +100,5 @@
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
 /turf/open/floor/plating/foam/ex_act()
-	ChangeTurf(/turf/open/space)
+	..()
+	ChangeTurf(baseturf)
