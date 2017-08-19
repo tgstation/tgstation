@@ -1,0 +1,4 @@
+/code/world.dm @god
+/code/modules/mob/* @god
+/code/modules/mapping/* @god
+/code/modules/atmospherics/* @god
