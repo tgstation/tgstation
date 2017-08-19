@@ -134,8 +134,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1, // we dont have shiitakes so this will have to do
 		/datum/reagent/consumable/soysauce = 5,
 		/datum/reagent/consumable/sodiumchloride = 2,
-		/datum/reagent/consumable/blackpepper = 2,
-		/datum/reagent/consumable/soysauce = 2
+		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/bellpepper
 	subcategory = CAT_SALAD
