@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Adds smart metal foam, which conforms to area borders and walls. It can be made through chemistry by mixing foaming agent, acetone, and iron."
+  - rscadd: "Smart metal foam will create foamed plating on tiles exposed to space. Foamed plating can be struck with floor tiles to turn it into regular plating!"

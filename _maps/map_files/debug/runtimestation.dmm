@@ -712,7 +712,6 @@
 	},
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plasteel/arrival{
-	icon_state = "arrival";
 	dir = 9
 	},
 /area/hallway/secondary/entry)

@@ -3,7 +3,7 @@
 	thermal_conductivity = 0
 	broken_states = list("engine")
 	burnt_states = list("engine")
-	flags = NONE
+	flags_1 = NONE
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK

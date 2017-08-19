@@ -3,7 +3,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	spillable = 1
 	resistance_flags = ACID_PROOF
 
@@ -169,7 +169,7 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
-	flags = OPENCONTAINER
+	flags_1 = OPENCONTAINER_1
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -180,7 +180,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	origin_tech = "materials=2;engineering=3;plasmatech=3"
-	flags = OPENCONTAINER
+	flags_1 = OPENCONTAINER_1
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
 	. = ..()
@@ -196,7 +196,7 @@
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
-	flags = OPENCONTAINER
+	flags_1 = OPENCONTAINER_1
 	origin_tech = "bluespace=5;materials=4;plasmatech=4"
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
@@ -240,7 +240,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 70
-	flags = OPENCONTAINER
+	flags_1 = OPENCONTAINER_1
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
 	resistance_flags = 0

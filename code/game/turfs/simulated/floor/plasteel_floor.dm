@@ -21,6 +21,10 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/black/telecomms/mainframe
 	name = "Mainframe Floor"
+/turf/open/floor/plasteel/black/telecomms/server
+	name = "Server Base"
+/turf/open/floor/plasteel/black/telecomms/server/walkway
+	name = "Server Walkway"
 /turf/open/floor/plasteel/airless/black
 	icon_state = "dark"
 /turf/open/floor/plasteel/black/side
@@ -355,6 +359,8 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/vault/telecomms/mainframe
 	name = "Mainframe Floor"
+/turf/open/floor/plasteel/vault/killroom
+	name = "Killroom Floor"
 
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"

@@ -4,7 +4,7 @@
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
-	flags = ON_BORDER
+	flags_1 = ON_BORDER_1
 	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
