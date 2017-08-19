@@ -111,7 +111,7 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 // MINING LASERS
-/obj/item/device/spacepod_equipment/weaponry/mining_laser_basic
+/obj/item/device/spacepod_equipment/weaponry/basic_pod_ka
 	name = "weak kinetic accelerator"
 	desc = "A weak kinetic accelerator for space pods, fires bursts of energy that cut through rock."
 	icon = 'goon/icons/pods/ship.dmi'
@@ -121,7 +121,7 @@
 	fire_delay = 14
 	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
-/obj/item/device/spacepod_equipment/weaponry/mining_laser
+/obj/item/device/spacepod_equipment/weaponry/pod_ka
 	name = "kinetic accelerator system"
 	desc = "A kinetic accelerator system for space pods, fires bursts of energy that cut through rock."
 	icon = 'goon/icons/pods/ship.dmi'

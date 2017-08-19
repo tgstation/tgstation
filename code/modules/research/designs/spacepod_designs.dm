@@ -102,7 +102,7 @@
 	construction_time = 400 //more time than frames, less than pod core
 	name = "Pod Armor (industrial)"
 	desc = "Allows for the construction of spacepod armor. This is the industrial grade version."
-	id = "podarmor_dark"
+	id = "podarmor_industiral"
 	build_type = PODFAB
 	req_tech = list("materials" = 6, "engineering" = 5)
 	build_path = /obj/item/pod_parts/armor/industrial
@@ -113,7 +113,7 @@
 	construction_time = 400 //more time than frames, less than pod core
 	name = "Pod Armor (syndicate)"
 	desc = "Allows for the construction of spacepod armor. This is the syndicate version."
-	id = "podarmor_dark"
+	id = "podarmor_syndicate"
 	build_type = PODFAB
 	req_tech = list("materials" = 6, "engineering" = 6, "combat" = 6, "syndicate" = 6)
 	build_path = /obj/item/pod_parts/armor/syndicate
@@ -169,37 +169,26 @@
 	category = list("Pod Weaponry")
 	materials = list(MAT_METAL=10000,MAT_GLASS=5000,MAT_GOLD=1000,MAT_SILVER=2000)
 
-/datum/design/pod_mining_laser_basic
-	construction_time = 200
-	name = "Basic Mining Laser"
-	desc = "Allows for the construction of a weak mining laser"
-	id = "pod_mining_laser_basic"
-	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2, "magnets" = 3, "combat" = 2)
-	build_type = PODFAB
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_SILVER = 2000, MAT_URANIUM = 2000)
-	build_path = /obj/item/device/spacepod_equipment/weaponry/mining_laser_basic
-	category = list("Pod Weaponry")
-
-/datum/design/pod_mining_laser_basic
+/datum/design/pod_ka_basic
 	construction_time = 200
 	name = "Basic Kinetic Accelerator"
 	desc = "Allows for the construction of a weak spacepod Kinetic Accelerator"
-	id = "pod_mining_laser_basic"
+	id = "pod_ka_basic"
 	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2, "magnets" = 3, "combat" = 2)
 	build_type = PODFAB
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_SILVER = 2000, MAT_URANIUM = 2000)
-	build_path = /obj/item/device/spacepod_equipment/weaponry/mining_laser_basic
+	build_path = /obj/item/device/spacepod_equipment/weaponry/basic_pod_ka
 	category = list("Pod Weaponry")
 
-/datum/design/pod_mining_laser
+/datum/design/pod_ka
 	construction_time = 200
 	name = "Kinetic Accelerator"
 	desc = "Allows for the construction of a spacepod Kinetic Accelerator."
-	id = "pod_mining_laser"
+	id = "pod_ka"
 	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4)
 	build_type = PODFAB
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/device/spacepod_equipment/weaponry/mining_laser
+	build_path = /obj/item/device/spacepod_equipment/weaponry/pod_ka
 	category = list("Pod Weaponry")
 
 
