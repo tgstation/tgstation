@@ -53,16 +53,17 @@
 
 /obj/machinery/computer/podtracker/ui_data(mob/user)
 	var/list/data = list()
-	data["pods"] = list()
+	var/list/pods_list = list()
+	data["pods"] = pods_list
 	for(var/obj/spacepod/SP in GLOB.spacepods_list)
 		if(istype(SP.equipment_system.misc_system, /obj/item/device/spacepod_equipment/misc/tracker))
-			world << "START DEBUG"
-			world << "max_integrity: [SP.max_integrity]"
-			world << "obj_integrity: [SP.obj_integrity]"
-			world << "name: [SP.name]"
-			world << "pilot: [SP.pilot.name]"
-			world << "maxcharge: [SP.cell.maxcharge]"
-			world << "cellcharge: [SP.cell.charge]"
-			world << "END DEBUG"
-			data["pods"] += list(list("max_integrity" = SP.max_integrity, "obj_integrity" = SP.obj_integrity, "name" = SP.name, "pilot" = SP.pilot ? SP.pilot.name : "None", "maxcharge" = SP.cell.maxcharge, "cellcharge" = SP.cell.charge))
+			var/list/pod = list()
+			pod["name"] = SP.name
+			pod["max_integrity"] = SP.max_integrity
+			pod["obj_integrity"] = SP.obj_integrity
+			pod["pilot"] = SP.pilot ? SP.pilot.name : "None"
+			pod["maxcharge"] = SP.cell.maxcharge
+			pod["cellcharge"] = SP.cell.charge
+			pods_list[++pods_list.len] = pod
+			//data["pods"] += list(list("max_integrity" = SP.max_integrity, "obj_integrity" = SP.obj_integrity, "name" = SP.name, "pilot" = SP.pilot ? SP.pilot.name : "None", "maxcharge" = SP.cell.maxcharge, "cellcharge" = SP.cell.charge))
  	return data

@@ -22,10 +22,10 @@
     {{#each data.pods}}
 		<ui-section label='{{name}}' candystripe right>
 			<ui-section label='Integrity'>
-				<ui-bar min='0' max='{{max_integrity}}' value='{{obj_integrity}}'state='{{healthState(obj_integrity)}}'>{{Math.round(obj_integrity)}}/{{Math.round(max_integrity)}}</ui-bar>		  
+				<ui-bar min='0' max='{{max_integrity}}' value='{{obj_integrity}}'state='{{healthState(obj_integrity)}}'> {{Math.round(obj_integrity)}}/{{Math.round(max_integrity)}}</ui-bar>		  
 			</ui-section>
 			<ui-section label='Power'>
-				<ui-bar min='0' max='{{maxcharge}}' value='{{cellcharge}}'state='{{chargeState(cellcharge)}}'>{{Math.round(cellcharge)}}/{{Math.round(maxcharge)}}</ui-bar>		  
+				<ui-bar min='0' max='{{maxcharge}}' value='{{cellcharge}} 'state='{{chargeState(cellcharge)}}'> {{Math.round(cellcharge)}}/{{Math.round(maxcharge)}}</ui-bar>		  
 			</ui-section>
 			Pilot is {{pilot}}
 		</ui-section>
