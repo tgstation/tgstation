@@ -30,6 +30,9 @@
 			if(!istype(src, /turf/open/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
+			var/obj/item/I = new /obj/item/stack/rods(src, 2)
+			if(wet == TURF_WET_PERMAFROST)
+				I.make_frozen_visual()
 			ChangeTurf(/turf/open/floor/plating)
 			return
 

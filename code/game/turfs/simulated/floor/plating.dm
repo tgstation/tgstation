@@ -44,6 +44,8 @@
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					ChangeTurf(/turf/open/floor/engine)
+					if(HAS_SECONDARY_FLAG(R, FROZEN))
+						MakeSlippery(TURF_WET_PERMAFROST)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
@@ -54,6 +56,8 @@
 			if(!W.use(1))
 				return
 			var/turf/open/floor/T = ChangeTurf(W.turf_type)
+			if(HAS_SECONDARY_FLAG(W, FROZEN))
+				T.MakeSlippery(TURF_WET_PERMAFROST)
 			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
