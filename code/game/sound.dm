@@ -80,7 +80,7 @@
 
 	SEND_SOUND(src, S)
 
-/proc/sound_to_playing_players(soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = FALSE, sound/S = null)
+/proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, falloff = FALSE, channel = 0, pressure_affected = FALSE, sound/S = null)
 	if(!S)
 		S = sound(get_sfx(soundin))
 	for(var/M in GLOB.player_list)
