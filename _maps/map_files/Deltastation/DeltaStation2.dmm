@@ -24806,6 +24806,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/fireaxecabinet{
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -29280,10 +29284,10 @@
 "bgT" = (
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
-	input_tag = "co2_in";
-	name = "Carbon Dioxide Supply Control";
-	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+	input_tag = "n2o_in";
+	name = "Nitrous Oxide Supply Control";
+	output_tag = "n2o_out";
+	sensors = list("n2o_sensor" = "Tank")
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -137673,7 +137677,7 @@ aRf
 aSV
 aUs
 aIU
-aIU
+aSV
 aIU
 aSV
 aSV

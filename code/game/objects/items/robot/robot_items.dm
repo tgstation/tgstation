@@ -278,7 +278,6 @@
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
 	icon_state = "megaphone"
 	var/cooldown = 0
-	var/emagged = FALSE
 
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged

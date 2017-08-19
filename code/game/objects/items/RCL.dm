@@ -170,13 +170,18 @@
 		loaded.item_color	 = colors[current_color_index]
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
+	update_icon()
 
 
-/obj/item/twohanded/rcl/pre_loaded/Initialize () //Comes preloaded with cable, for testing stuff
+/obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
 	. = ..()
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
+	update_icon()
+
+/obj/item/twohanded/rcl/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/twohanded/rcl/ui_action_click(mob/user, action)
