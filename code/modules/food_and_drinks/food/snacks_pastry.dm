@@ -351,6 +351,8 @@
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtype = GRAIN
 
+#define PANCAKE_MAX_STACK 10
+
 /obj/item/reagent_containers/food/snacks/pancakes
 	name = "pancake"
 	desc = "A fluffy pancake. The softer, superior relative of the waffle."
@@ -360,7 +362,6 @@
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#D2691E"
 	tastes = list("pancakes" = 1)
-	var/stackMax = 10
 	foodtype = GRAIN | SUGAR
 
 /obj/item/reagent_containers/food/snacks/pancakes/blueberry
@@ -397,7 +398,7 @@
 	var/ingredients_listed = ""
 	var/pancakeCount = contents.len
 	switch(pancakeCount)
-		if (0)
+		if(0)
 			desc = initial(desc)
 		if(1 to 2)
 			desc = "A stack of fluffy pancakes."
@@ -405,7 +406,7 @@
 			desc = "A fat stack of fluffy pancakes!"
 		if(7 to 9)
 			desc = "A grand tower of fluffy, delicious pancakes!"
-		if(stackMax to INFINITY)
+		if(PANCAKE_MAX_STACK to INFINITY)
 			desc = "A massive towering spire of fluffy, delicious pancakes. It looks like it could tumble over!"
 	var/originalBites = bitecount
 	if (pancakeCount)
@@ -421,7 +422,7 @@
 /obj/item/reagent_containers/food/snacks/pancakes/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pancakes/))
 		var/obj/item/reagent_containers/food/snacks/pancakes/P = I
-		if((contents.len >= stackMax) || ((P.contents.len + contents.len) > stackMax) || (reagents.total_volume >= volume))
+		if((contents.len >= PANCAKE_MAX_STACK) || ((P.contents.len + contents.len) > PANCAKE_MAX_STACK) || (reagents.total_volume >= volume))
 			to_chat(user, "<span class='warning'>You can't add that many pancakes to [src]!</span>")
 		else
 			if(!user.transferItemToLoc(I, src))
@@ -457,8 +458,3 @@
 	var/obj/item/O = contents[contents.len]
 	. = O.attack(M, user, def_zone, FALSE)
 	update_icon()
-
-/obj/item/reagent_containers/food/snacks/pancakes/Destroy()
-	for(. in contents)
-		qdel(.)
-	return ..()
