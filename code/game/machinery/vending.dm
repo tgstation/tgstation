@@ -106,14 +106,14 @@
 
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
-		if(!(flags & NODECONSTRUCT))
+		if(!(flags_1 & NODECONSTRUCT_1))
 			new /obj/item/stack/sheet/metal(loc, 3)
 		qdel(src)
 	else
 		..()
 
 /obj/machinery/vending/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		var/dump_amount = 0
 		for(var/datum/data/vending_product/R in product_records)
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.

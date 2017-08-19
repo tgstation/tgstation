@@ -138,7 +138,7 @@
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	flags = NODROP|ABSTRACT
+	flags_1 = NODROP_1|ABSTRACT_1
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
@@ -167,7 +167,7 @@
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		for(var/obj/item/bloodcrawl/BC in C)
-			BC.flags = null
+			BC.flags_1 = null
 			qdel(BC)
 	qdel(src.holder)
 	src.holder = null

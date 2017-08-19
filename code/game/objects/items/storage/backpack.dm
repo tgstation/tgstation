@@ -54,15 +54,16 @@
 	qdel(user)
 	return
 
-/obj/item/storage/backpack/holding/content_can_dump(atom/dest_object, mob/user)
+/obj/item/storage/backpack/holding/dump_content_at(atom/dest_object, mob/user)
 	if(Adjacent(user))
-		if(get_dist(user, dest_object) < 8)
-			if(dest_object.storage_contents_dump_act(src, user))
+		var/atom/dumping_location = dest_object.get_dumping_location()
+		if(get_dist(user, dumping_location) < 8)
+			if(dumping_location.storage_contents_dump_act(src, user))
 				if(alt_sound && prob(1))
 					playsound(src, alt_sound, 40, 1)
 				else
 					playsound(src, pshoom, 40, 1)
-				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
+				user.Beam(dumping_location,icon_state="rped_upgrade",time=5)
 				return 1
 		to_chat(user, "The [src.name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)

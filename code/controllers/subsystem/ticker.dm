@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(ticker)
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
@@ -324,13 +324,13 @@ SUBSYSTEM_DEF(ticker)
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 
 
 		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
-			SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+			SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 			station_explosion_detonation(bomb)
 			actually_blew_up = station_missed == NUKE_SYNDICATE_BASE	//don't kill everyone on station if it detonated off station
 		else	//station was destroyed
@@ -341,28 +341,28 @@ SUBSYSTEM_DEF(ticker)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_nukewin"
 				if("AI malfunction") //Malf (screen,explosion,summary)
 					flick("intro_malf",cinematic)
 					sleep(76)
 					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)	//TODO: If we ever decide to actually detonate the vault bomb
 					cinematic.icon_state = "summary_malf"
 				if("blob") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
 				if("cult") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_cult"
 				if("no_core") //Nuke failed to detonate as it had no core
@@ -376,7 +376,7 @@ SUBSYSTEM_DEF(ticker)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red", cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosionfar.ogg'))
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.

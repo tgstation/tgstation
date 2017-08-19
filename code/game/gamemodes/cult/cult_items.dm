@@ -5,7 +5,7 @@
 	item_state = "cultblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30
@@ -31,7 +31,7 @@
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -108,7 +108,7 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -117,7 +117,7 @@
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 
 /obj/item/clothing/head/magus

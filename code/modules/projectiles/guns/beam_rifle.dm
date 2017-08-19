@@ -715,7 +715,7 @@
 	light_range = 2
 	light_color = "#00ffff"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flags = ABSTRACT
+	flags_1 = ABSTRACT_1
 	appearance_flags = 0
 
 /obj/effect/projectile_beam/proc/scale_to(nx,ny,override=TRUE)

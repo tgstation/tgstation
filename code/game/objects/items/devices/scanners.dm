@@ -63,7 +63,7 @@ MASS SPECTROMETER
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
@@ -255,7 +255,7 @@ MASS SPECTROMETER
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
@@ -331,9 +331,9 @@ MASS SPECTROMETER
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -395,7 +395,7 @@ MASS SPECTROMETER
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	origin_tech = "biotech=2"
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

@@ -6,7 +6,7 @@
 	var/obj/item/clothing/head/helmet/part1 = null
 	var/obj/item/device/electropack/part2 = null
 	w_class = WEIGHT_CLASS_HUGE
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 
 /obj/item/assembly/shock_kit/Destroy()
 	qdel(part1)
