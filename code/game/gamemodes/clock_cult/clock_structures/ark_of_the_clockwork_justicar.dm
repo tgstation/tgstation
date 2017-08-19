@@ -68,7 +68,7 @@
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has fallen at [gate_area.map_name]!</b></span>")
-		sound_to_playing_players(S = sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
+		sound_to_playing_players(channel = CHANNEL_JUSTICAR_ARK, S = sound(null, 0))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
 	if(!was_stranded && !purpose_fulfilled)
@@ -87,7 +87,7 @@
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
-			sound_to_playing_players(S = sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = CHANNEL_JUSTICAR_ARK, volume = 50))
+			sound_to_playing_players(null, 50, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_disrupted.ogg', 0))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
@@ -172,7 +172,7 @@
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!first_sound_played)
-				sound_to_playing_players(S = sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 30))
+				sound_to_playing_players(null, 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', 1))
 				first_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
@@ -180,13 +180,13 @@
 			if(!second_sound_played)
 				var/area/gate_area = get_area(src)
 				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
-				sound_to_playing_players(S = sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 35))
+				sound_to_playing_players(null, 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', 1))
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!third_sound_played)
-				sound_to_playing_players(S = sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 40))
+				sound_to_playing_players(null, 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', 1))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
@@ -197,7 +197,7 @@
 				purpose_fulfilled = TRUE
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				sound_to_playing_players(S = sound('sound/effects/ratvar_rises.ogg', 0, channel = CHANNEL_JUSTICAR_ARK)) //End the sounds
+				sound_to_playing_players(null, 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/ratvar_rises.ogg', 0)) //End the sounds
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
