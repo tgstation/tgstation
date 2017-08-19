@@ -57,7 +57,7 @@
 	steps = list(
 				// 1. Initial state
 				list(
-					"desc" = "An empty pod frame.",
+					"desc" = "An unwired pod frame.",
 					state_next = list(
 						"key"      = /obj/item/stack/cable_coil,
 						"vis_msg"  = "{USER} wires the {HOLDER}.",
@@ -80,7 +80,7 @@
 				),
 				// 3. Cleanly wired
 				list(
-					"desc" = "A wired pod frame.",
+					"desc" = "A wired pod frame, without a mainboard.",
 					state_prev = list(
 						"key"      = /obj/item/screwdriver,
 						"vis_msg"  = "{USER} unclips {HOLDER}'s wiring harnesses.",
@@ -112,7 +112,7 @@
 				),
 				// 5. Circuit secured
 				list(
-					"desc" = "A wired pod frame with a secured mainboard.",
+					"desc" = "A wired pod frame with a secured mainboard. It needs the pod core now.s",
 					state_prev = list(
 						"key"      = /obj/item/screwdriver,
 						"vis_msg"  = "{USER} unsecures the mainboard.",
@@ -145,7 +145,7 @@
 				),
 				// 7. Core secured
 				list(
-					"desc" = "A naked space pod with an exposed core. How lewd.",
+					"desc" = "A naked space pod with an exposed core, without a metal bulkhead. How lewd.",
 					state_prev = list(
 						"key"      = /obj/item/wrench,
 						"vis_msg"  = "{USER} unsecures the {HOLDER}'s core.",
@@ -191,7 +191,7 @@
 				),
 				// 10. Welded bulkhead
 				list(
-					"desc" = "A space pod with sealed bulkhead panelling exposed.",
+					"desc" = "A space pod with sealed bulkhead panelling exposed... It needs the armor now.",
 					state_prev = list(
 						"key"      = /obj/item/weldingtool,
 						"vis_msg"  = "{USER} cuts the {HOLDER}'s bulkhead panelling loose.",
@@ -222,7 +222,7 @@
 				),
 				// 12. Bolted-down armor
 				list(
-					"desc" = "A space pod with unsecured armor.",
+					"desc" = "A space pod with unwelded armor.",
 					state_prev = list(
 						"key"      = /obj/item/wrench,
 						"vis_msg"  = "{USER} unsecures the {HOLDER}'s armor.",
