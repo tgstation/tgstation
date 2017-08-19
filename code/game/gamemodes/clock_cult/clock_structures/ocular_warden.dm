@@ -16,6 +16,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/sight_range = 3
 	var/damage_per_tick = 0.8
+	var/mech_damage_per_tick = 5
 
 /obj/structure/destructible/clockwork/ocular_warden/Initialize()
 	. = ..()
@@ -69,5 +70,5 @@
 	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
 		if(M.z == z && get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
-			M.take_damage(3 * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
+			M.take_damage(mech_damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(M))
