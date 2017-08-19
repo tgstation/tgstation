@@ -5,7 +5,7 @@
 # e.g.
 # Cyberboss __REMOVE__
 
-optimumtact Oranges
+optimumtact oranges
 qustinnus Floyd / Qustinnus
 catalystfd __REMOVE__
 TheVekter Vekter
