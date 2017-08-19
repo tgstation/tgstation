@@ -416,8 +416,6 @@
 
 	handle_item_insertion(W, 0 , user)
 
-/obj/item/storage/AllowDrop()
-	return TRUE
 
 /obj/item/storage/attack_hand(mob/user)
 	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
