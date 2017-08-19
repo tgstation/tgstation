@@ -374,7 +374,7 @@
 
 /obj/item/reagent_containers/food/snacks/pancakes/chocolatechip
 	name = "chocolate chip pancake"
-	desc = "A fluffy and delicious chocolate pancake."
+	desc = "A fluffy and delicious chocolate chip pancake."
 	icon_state = "ccpancakes_1"
 	item_state = "ccpancakes"
 	bonus_reagents = list("vitamin" = 2)
