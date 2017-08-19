@@ -15,7 +15,7 @@
 	/obj/item/clockwork/component/belligerent_eye/suppression_lens = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/sight_range = 3
-	var/damage_per_tick = 0.4
+	var/damage_per_tick = 0.8
 
 /obj/structure/destructible/clockwork/ocular_warden/Initialize()
 	. = ..()
