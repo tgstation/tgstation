@@ -116,3 +116,12 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+
+/obj/item/reagent_containers/food/snacks/salad/bellpepper
+	name = "bell peppers and beef"
+	desc = "Something seems missing..."
+	icon_state = "herbsalad"
+	bonus_reagents = list("vitamin" = 4)
+	list_reagents = list("nutriment" = 4)
+	tastes = list("bell peppers" = 1, "the lack of beef" = 1)
+	foodtype = VEGETABLES
