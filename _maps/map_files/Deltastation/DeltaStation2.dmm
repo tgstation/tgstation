@@ -113221,20 +113221,25 @@
 "esz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esA" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor/multi_tile/three_tile_hor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esB" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esC" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -113244,11 +113249,8 @@
 /turf/open/floor/plating,
 /area/construction/mining)
 "esF" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -113303,17 +113305,17 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esT" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -113328,20 +113330,22 @@
 /area/space)
 "esY" = (
 /turf/closed/wall/r_wall,
-/area/construction/mining)
+/area/engine/pod_construction)
 "esZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction/mining)
 "eta" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor/multi_tile/three_tile_hor,
+/obj/machinery/door/poddoor/multi_tile/three_tile_hor{
+	id = "podblasts"
+	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etb" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etc" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
@@ -113389,7 +113393,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etl" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113400,11 +113404,11 @@
 "etn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "eto" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etp" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -113434,7 +113438,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/button/door{
-	id = "podblastl";
+	id = "podblasts";
 	name = "Blast Door Control";
 	pixel_x = -26;
 	pixel_y = -6;
@@ -113442,7 +113446,7 @@
 	req_one_access_txt = "0"
 	},
 /obj/machinery/button/door{
-	id = "podblastr";
+	id = "podblastn";
 	name = "Blast Door Control";
 	pixel_x = -26;
 	pixel_y = 7;
@@ -113450,7 +113454,7 @@
 	req_one_access_txt = "0"
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etw" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -113471,8 +113475,12 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/camera/autoname{
+	dir = 8;
+	network = list("SS13")
+	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etA" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113503,7 +113511,7 @@
 "etH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etI" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -113555,26 +113563,26 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etU" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etV" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etW" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -113583,7 +113591,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "etY" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113630,7 +113638,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euk" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -113645,7 +113653,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "eul" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum{
@@ -113653,7 +113661,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "eum" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113666,7 +113674,7 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 9
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "eup" = (
 /obj/item/stack/sheet/plasteel{
 	amount = 15
@@ -113674,15 +113682,11 @@
 /obj/item/wrench,
 /obj/item/clothing/glasses/welding,
 /obj/structure/table/reinforced,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "euq" = (
 /obj/machinery/light{
 	dir = 1
@@ -113693,33 +113697,24 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "eur" = (
 /obj/machinery/spod_part_fabricator,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "eus" = (
 /obj/structure/rack{
 	dir = 4
 	},
-/obj/item/electronics/airlock,
-/obj/item/electronics/airlock,
-/obj/item/electronics/airlock,
-/obj/item/electronics/airlock,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
-/obj/item/wallframe/camera,
-/obj/item/wallframe/camera,
-/obj/item/wallframe/camera,
-/obj/item/wallframe/camera,
-/obj/item/device/assault_pod/mining,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 5
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "eut" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113739,11 +113734,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euz" = (
 /obj/structure/rack{
 	dir = 4
@@ -113751,7 +113746,7 @@
 /obj/item/device/gps/engineering,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euA" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113759,35 +113754,28 @@
 /turf/closed/wall/r_wall,
 /area/construction/mining)
 "euC" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for the Auxillary Mining Base.";
-	dir = 4;
-	name = "Auxillary Base Monitor";
-	network = list("AuxBase");
-	pixel_x = -28
-	},
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 8
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "euD" = (
 /turf/open/floor/plasteel/black,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euE" = (
 /turf/open/floor/plasteel/black,
 /area/construction/mining)
 "euF" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/black,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euG" = (
 /turf/open/floor/plasteel/darkyellow/corner{
 	dir = 4
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "euH" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/ai_status_display{
@@ -113797,7 +113785,7 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 5
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "euI" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113811,12 +113799,12 @@
 "euL" = (
 /obj/structure/sign/pods,
 /turf/closed/wall/r_wall,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euM" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euN" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -113844,7 +113832,7 @@
 "euQ" = (
 /obj/structure/sign/poster/official/safety_internals,
 /turf/closed/wall/r_wall,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -113852,7 +113840,7 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 8
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "euS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -113861,13 +113849,13 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -113879,7 +113867,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "euW" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
@@ -113905,7 +113893,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "euX" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -113918,19 +113906,19 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 9
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "eva" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -113939,7 +113927,7 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -113947,7 +113935,7 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "eve" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -113963,7 +113951,7 @@
 /turf/open/floor/plasteel/darkyellow/corner{
 	dir = 1
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -113973,26 +113961,26 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evk" = (
 /obj/structure/table,
 /obj/item/stack/sheet/plasteel{
@@ -114001,13 +113989,6 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for the Auxillary Mining Base.";
-	dir = 8;
-	name = "Auxillary Base Monitor";
-	network = list("AuxBase");
-	pixel_x = 28
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light{
 	dir = 4
@@ -114015,7 +113996,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evl" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -114032,20 +114013,20 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 10
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evq" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evr" = (
 /obj/structure/sign/nosmoking_2{
 	pixel_y = -32
@@ -114056,12 +114037,12 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evs" = (
 /obj/machinery/power/apc{
+	areastring = "/area/engine/pod_construction";
 	dir = 2;
 	name = "Starboard Primary Hallway APC";
-	areastring = "/area/hallway/primary/starboard";
 	pixel_y = -26
 	},
 /obj/structure/cable/white{
@@ -114072,7 +114053,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evt" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -114083,7 +114064,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evu" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -114096,7 +114077,7 @@
 /turf/open/floor/plasteel/darkyellow/corner{
 	dir = 8
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -114110,7 +114091,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evw" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/white{
@@ -114119,14 +114100,14 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evx" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -114135,7 +114116,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evz" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
@@ -114154,7 +114135,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evA" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -114195,7 +114176,7 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 10
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evL" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -114203,7 +114184,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -114216,7 +114197,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/black,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evN" = (
 /obj/machinery/light,
 /obj/structure/disposalpipe/trunk{
@@ -114227,14 +114208,14 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evO" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow/side,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evP" = (
 /obj/structure/table,
 /obj/item/stock_parts/cell/high,
@@ -114251,7 +114232,7 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 6
 	},
-/area/construction/mining)
+/area/engine/pod_construction)
 "evQ" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -114282,7 +114263,7 @@
 /area/construction/mining)
 "evY" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Gravity Generator Foyer";
+	name = "Space Pod Construction";
 	req_access_txt = "10"
 	},
 /obj/structure/cable/white{
@@ -114296,11 +114277,11 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/construction/mining)
+/area/engine/pod_construction)
 "evZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/area/construction/mining)
+/area/engine/pod_construction)
 "ewa" = (
 /turf/closed/wall/r_wall,
 /area/construction/mining)
@@ -114841,6 +114822,33 @@
 	dir = 5
 	},
 /area/engine/transit_tube)
+"ewX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"ewY" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/multi_tile/three_tile_hor{
+	id = "podblastn"
+	},
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"ewZ" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"exa" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"exb" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"exc" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/engine/pod_construction)
 
 (1,1,1) = {"
 aaa
@@ -128579,7 +128587,7 @@ aaa
 aaa
 aaa
 aaa
-agg
+aaf
 aaa
 aaf
 aaa
@@ -128838,7 +128846,7 @@ aaa
 aaa
 aaf
 aaa
-agg
+aaf
 aaa
 aaf
 aaa
@@ -130120,7 +130128,7 @@ aaa
 aaa
 aaa
 aaa
-evS
+esJ
 aaf
 aaa
 agg
@@ -130131,7 +130139,7 @@ aaf
 aaf
 bJv
 aaf
-bRJ
+bRI
 aaf
 aaf
 aaf
@@ -130377,7 +130385,7 @@ aaa
 aaa
 aaa
 aaa
-evT
+esJ
 agg
 aaa
 aaf
@@ -130388,7 +130396,7 @@ aaf
 aaa
 bJv
 aaa
-bRJ
+bRI
 aaa
 aaf
 aaa
@@ -130645,7 +130653,7 @@ aaf
 aaa
 bJv
 aaa
-bRJ
+bRI
 aaa
 aaf
 aaa
@@ -131649,20 +131657,20 @@ aaa
 aaa
 aaa
 esJ
-esQ
+esJ
 esY
-etf
-etm
-etu
-etG
-etS
-euh
-euv
-euK
-euY
-evn
-evD
-evU
+esY
+esz
+esY
+esz
+esY
+esY
+esY
+esY
+esz
+esz
+esY
+esJ
 agg
 aaf
 agg
@@ -131902,23 +131910,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ewX
 esz
-esE
-esK
-esR
-esZ
-etg
+esz
+esz
+esz
+esz
+esA
 etn
 etv
 etH
 etT
-eui
-euw
+esY
+esY
 euL
 euZ
 evo
-evE
+esY
 aaa
 aaf
 aaa
@@ -132159,23 +132167,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ewY
 esA
 esF
-esL
+esF
 esS
 eta
-eth
+esB
 eto
-etw
-etI
+eto
+eto
 etU
 euj
 eux
 euM
 eva
 evp
-evF
+esY
 agg
 aaf
 agg
@@ -132416,32 +132424,32 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ewZ
 esB
-esG
-esM
+esF
+esF
 esT
 etb
-eti
-etp
-etx
-etJ
+esB
+eto
+eto
+eto
 etV
 euk
 euy
-euN
+euk
 evb
 evq
-evG
+esY
 aaf
 aaf
 ewq
 ewD
-ewF
+ewD
 ewG
-ewK
-ewL
-ewN
+ewG
+ewG
+ewG
 bNH
 aaf
 bRI
@@ -132673,23 +132681,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
+exa
 esC
-esH
-esN
+esF
+esF
 esU
-etc
-etj
-etq
-ety
-etK
+etb
+esB
+eto
+eto
+eto
 etW
 eul
 euz
-euO
+euM
 evc
 evr
-evH
+esY
 btF
 btF
 ewr
@@ -132930,23 +132938,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-esD
-esI
-esO
-esV
-etd
+exb
+esz
+esz
+esz
+esz
+esz
 etk
-etr
+etn
 etz
-etL
+etH
 etX
-eum
-euA
-euP
+esY
+esY
+euL
 evd
 evs
-evI
+esY
 btF
 ewg
 ews
@@ -133190,21 +133198,21 @@ aaa
 aaa
 aaa
 aaa
-esP
-esW
-ete
-etl
-ets
-etA
-etM
-etY
-eun
-euB
+esJ
+esJ
+esY
+esY
+esz
+esY
+esz
+esY
+esY
+esY
 euQ
-eve
+evd
 evt
-evJ
-evV
+esY
+esY
 btF
 ewt
 btD
@@ -133448,20 +133456,20 @@ aaa
 aaa
 aaa
 aaa
-esX
+esJ
 agg
 aaf
 aaa
-etB
+esJ
 aaf
-etZ
+esz
 euo
 euC
 euR
 evf
 evu
 evK
-evW
+esY
 ewh
 ewu
 btD
@@ -133708,17 +133716,17 @@ agg
 aaf
 agg
 aaf
-ett
-etC
+esJ
+esJ
 aaa
-eua
+esz
 eup
 euD
 euS
 evg
 evv
 evL
-evX
+esY
 ewi
 ewv
 btD
@@ -133966,11 +133974,11 @@ aaa
 aaf
 aaf
 aaa
-etD
-etN
-eub
+esJ
+esJ
+esY
 euq
-euE
+euD
 euT
 evh
 evw
@@ -134224,11 +134232,11 @@ aaa
 aaa
 aaa
 aaa
-etO
-euc
+esJ
+esz
 eur
 euF
-euU
+euT
 evi
 evx
 evN
@@ -134481,15 +134489,15 @@ aaf
 agg
 agg
 agg
-etP
-eud
+esJ
+esz
 eus
 euG
 euV
 evj
 evy
 evO
-ewa
+esY
 ewl
 ewy
 btD
@@ -134738,15 +134746,15 @@ aaa
 aaf
 aaa
 aaa
-etQ
-eue
-eut
+esJ
+esY
+esY
 euH
 euW
 evk
 evz
 evP
-ewb
+esY
 ewm
 ewz
 btD
@@ -134994,16 +135002,16 @@ agg
 agg
 agg
 agg
-etE
-etR
-euf
-euu
-euI
-euX
-evl
-evA
-evQ
-ewc
+esJ
+esJ
+exc
+esY
+esY
+esY
+esY
+esY
+esY
+esY
 ewn
 ewA
 btD
@@ -135251,14 +135259,14 @@ aaf
 aaf
 aaf
 aaa
-etF
+esJ
 aaa
-eug
+esJ
 aaa
-euJ
+esJ
 aaa
-evm
-evB
+esJ
+esJ
 aaa
 ewd
 ewo
@@ -135515,11 +135523,11 @@ aNV
 aNV
 aNV
 aaf
-evC
-evR
-ewe
+esJ
+esJ
+ewd
 ewp
-ewC
+ewz
 btD
 bwM
 byB
@@ -135774,9 +135782,9 @@ aNV
 aaf
 aaa
 aaa
-ewf
+ewd
 byC
-bAp
+ewz
 btD
 bwN
 ewH
