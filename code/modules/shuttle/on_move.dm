@@ -1,3 +1,19 @@
+//These defines are to make it easier to change the args available without having to copy paste it in everywhere
+//You need to also change the same procs in shuttle.dm
+//These are undefined at the end of the file
+#define TURF_FROM fromShuttleMove(turf/newT, turf_type, baseturf_type)
+#define TURF_TO toShuttleMove(turf/oldT, shuttle_dir)
+#define TURF_ON onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force, move_dir)
+#define TURF_AFTER afterShuttleMove(turf/oldT)
+
+#define ATOM_BEFORE beforeShuttleMove(turf/newT, rotation)
+#define ATOM_ON onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+#define ATOM_AFTER afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
+
+#define AREA_BEFORE beforeShuttleMove()
+#define AREA_ON onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
+#define AREA_AFTER afterShuttleMove()
+
 /*
 All ShuttleMove procs go here
 */
@@ -5,14 +21,14 @@ All ShuttleMove procs go here
 /************************************Base procs************************************/
 
 // Called on every turf in the shuttle region, return false if it doesn't want to move
-/turf/proc/fromShuttleMove(turf/newT, turf_type, baseturf_type)
+/turf/proc/TURF_FROM
 	if(type == turf_type && baseturf == baseturf_type)
 		return FALSE
 	return TRUE
 
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
-/turf/proc/toShuttleMove(turf/oldT, shuttle_dir)
+/turf/proc/TURF_TO
 	for(var/i in contents)
 		var/atom/movable/thing = i
 		if(ismob(thing))
@@ -41,7 +57,7 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on the old turf to move the turf data
-/turf/proc/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force, move_dir)
+/turf/proc/TURF_ON
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
 
@@ -60,7 +76,7 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on the new turf after everything has been moved
-/turf/proc/afterShuttleMove(turf/oldT)
+/turf/proc/TURF_AFTER
 	if(SSlighting.initialized && FALSE)
 		var/atom/movable/lighting_object/old_obj = lighting_object
 		var/atom/movable/lighting_object/new_obj = oldT.lighting_object
@@ -74,11 +90,11 @@ All ShuttleMove procs go here
 
 // Called on every atom in shuttle turf contents before anything has been moved
 // Return true if it should be moved regardless of turf being moved
-/atom/movable/proc/beforeShuttleMove(turf/newT, rotation)
+/atom/movable/proc/ATOM_BEFORE
 	return FALSE
 
 // Called on atoms to move the atom to the new location
-/atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir)
+/atom/movable/proc/ATOM_ON
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
 
@@ -94,7 +110,7 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on atoms after everything has been moved
-/atom/movable/proc/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
+/atom/movable/proc/ATOM_AFTER
 	if(light)
 		update_light()
 	return TRUE
@@ -102,11 +118,11 @@ All ShuttleMove procs go here
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Called on areas before anything has been moved
-/area/proc/beforeShuttleMove()
+/area/proc/AREA_BEFORE
 	return TRUE
 
 // Called on areas to move their turf between areas
-/area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
+/area/proc/AREA_ON
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
 
@@ -124,7 +140,7 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on areas after everything has been moved
-/area/proc/afterShuttleMove()
+/area/proc/AREA_AFTER
 	return TRUE
 
 /************************************Shuttle Rotation************************************/
@@ -149,7 +165,7 @@ All ShuttleMove procs go here
 
 /************************************Turf move procs************************************/
 
-/turf/open/afterShuttleMove(turf/oldT) //Recalculates SSair stuff for turfs on both sides
+/turf/open/TURF_AFTER //Recalculates SSair stuff for turfs on both sides
 	. = ..()
 	SSair.remove_from_active(src)
 	SSair.remove_from_active(oldT)
@@ -162,7 +178,7 @@ All ShuttleMove procs go here
 
 /************************************Machinery move procs************************************/
 
-/obj/machinery/door/airlock/beforeShuttleMove()
+/obj/machinery/door/airlock/ATOM_BEFORE
 	. = ..()
 	shuttledocked = 0
 	for(var/obj/machinery/door/airlock/A in range(1, src))
@@ -170,56 +186,55 @@ All ShuttleMove procs go here
 		A.air_tight = TRUE
 		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 
-/obj/machinery/door/airlock/afterShuttleMove()
+/obj/machinery/door/airlock/ATOM_AFTER
 	. = ..()
 	shuttledocked =  1
 	for(var/obj/machinery/door/airlock/A in range(1, src))
 		A.shuttledocked = 1
 
-/obj/machinery/camera/beforeShuttleMove()
+/obj/machinery/camera/ATOM_BEFORE
 	. = ..()
 	GLOB.cameranet.removeCamera(src)
 	GLOB.cameranet.updateChunk()
 	return TRUE
 
-/obj/machinery/camera/afterShuttleMove()
+/obj/machinery/camera/ATOM_AFTER
 	. = ..()
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 	var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(x, y, z)
 	chunk.hasChanged(TRUE)
 
-/obj/machinery/telecomms/onShuttleMove(turf/T1)
+/obj/machinery/telecomms/ATOM_AFTER
 	. = ..()
-	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
-		listening_level = T1.z
+	listening_level = z // Update listening Z, just in case you have telecomm relay on a shuttle
 
-/obj/machinery/mech_bay_recharge_port/afterShuttleMove()
+/obj/machinery/mech_bay_recharge_port/ATOM_AFTER
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
-/obj/machinery/atmospherics/afterShuttleMove()
+/obj/machinery/atmospherics/ATOM_AFTER
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
 
-/obj/machinery/computer/auxillary_base/onShuttleMove(turf/T1)
+/obj/machinery/computer/auxillary_base/ATOM_ON
 	. = ..()
 	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
 
-/obj/machinery/gravity_generator/main/beforeShuttleMove()
+/obj/machinery/gravity_generator/main/ATOM_BEFORE
 	. = ..()
 	on = FALSE
 	update_list()
 
-/obj/machinery/gravity_generator/main/afterShuttleMove()
+/obj/machinery/gravity_generator/main/ATOM_AFTER
 	. = ..()
 	if(charge_count != 0 && charging_state != POWER_UP)
 		on = TRUE
 	update_list()
 
-/obj/machinery/thruster/beforeShuttleMove()
+/obj/machinery/thruster/ATOM_BEFORE
 	. = ..()
 	. = TRUE
 
@@ -238,7 +253,7 @@ All ShuttleMove procs go here
 		var/new_pos = supposed_node_connect.Find(real_node_connect[I])
 		nodes[new_pos] = nodes_copy[I]
 
-/obj/machinery/atmospherics/afterShuttleMove()
+/obj/machinery/atmospherics/ATOM_AFTER
 	. = ..()
 	var/missing_nodes = FALSE
 	for(DEVICE_TYPE_LOOP)
@@ -267,17 +282,17 @@ All ShuttleMove procs go here
 		// atmosinit() calls update_icon(), so we don't need to call it
 		update_icon()
 
-/obj/machinery/atmospherics/pipe/afterShuttleMove()
+/obj/machinery/atmospherics/pipe/ATOM_AFTER
 	. = ..()
 	var/turf/T = loc
 	hide(T.intact)
 
-/obj/machinery/navbeacon/beforeShuttleMove()
+/obj/machinery/navbeacon/ATOM_BEFORE
 	. = ..()
 	GLOB.navbeacons["[z]"] -= src
 	GLOB.deliverybeacons -= src
 
-/obj/machinery/navbeacon/afterShuttleMove()
+/obj/machinery/navbeacon/ATOM_AFTER
 	. = ..()
 	var/turf/T = loc
 	hide(T.intact)
@@ -289,7 +304,7 @@ All ShuttleMove procs go here
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
 
-/obj/machinery/power/terminal/afterShuttleMove()
+/obj/machinery/power/terminal/ATOM_AFTER
 	. = ..()
 	var/turf/T = src.loc
 	if(level==1)
@@ -297,14 +312,14 @@ All ShuttleMove procs go here
 
 /************************************Item move procs************************************/
 
-/obj/item/storage/pod/onShuttleMove()
+/obj/item/storage/pod/ATOM_ON
 	unlocked = TRUE
 	// If the pod was launched, the storage will always open.
 	return ..()
 
 /************************************Mob move procs************************************/
 
-/mob/onShuttleMove()
+/mob/ATOM_ON
 	if(!move_on_shuttle)
 		return 0
 	. = ..()
@@ -316,7 +331,7 @@ All ShuttleMove procs go here
 		else
 			shake_camera(src, 7, 1)
 
-/mob/living/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
+/mob/living/ATOM_AFTER
 	. = ..()
 	if(movement_force && !buckled)
 		if(movement_force["THROW"])
@@ -328,26 +343,25 @@ All ShuttleMove procs go here
 		if(movement_force["KNOCKDOWN"])
 			Knockdown(movement_force["KNOCKDOWN"])
 
-/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
-	var/turf/oldT = loc
+/mob/living/simple_animal/hostile/megafauna/ATOM_ON
 	. = ..()
 	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldT)] to [ADMIN_COORDJMP(loc)]")
 
 /************************************Structure move procs************************************/
 
-/obj/structure/grille/beforeShuttleMove()
+/obj/structure/grille/ATOM_BEFORE
 	. = ..()
 	. = TRUE
 
-/obj/structure/lattice/beforeShuttleMove()
+/obj/structure/lattice/ATOM_BEFORE
 	. = ..()
 	. = TRUE
 
-/obj/structure/disposalpipe/afterShuttleMove()
+/obj/structure/disposalpipe/ATOM_AFTER
 	. = ..()
 	update()
 
-/obj/structure/cable/afterShuttleMove()
+/obj/structure/cable/ATOM_AFTER
 	. = ..()
 	var/turf/T = loc
 	if(level==1)
@@ -355,26 +369,22 @@ All ShuttleMove procs go here
 
 /************************************Misc move procs************************************/
 
-/atom/movable/lighting_object/onShuttleMove()
+/atom/movable/lighting_object/ATOM_ON
 	return FALSE
 
-/atom/movable/light/onShuttleMove()
+/atom/movable/light/ATOM_ON
 	return FALSE
 
-/obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force)
-	var/obj/docking_port/mobile/docked_port = get_docked()
-	if(!docked_port)
-		docked_port = locate(/obj/docking_port/mobile) in newT
-
-	if(docked_port && locate(/obj/docking_port/stationary) in newT)
-		return FALSE 	//There's a mobile dock that's moving to the new turf to be with another stationary dock! After all I did for them...
+/obj/docking_port/stationary/ATOM_ON
+	if(old_dock == src) //Don't move the dock we're leaving
+		return FALSE
 
 	. = ..()
 
-obj/docking_port/stationary/public_mining_dock/onShuttleMove()
+/obj/docking_port/stationary/public_mining_dock/ATOM_ON
 	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
 	return 0
 
-/obj/effect/abstract/proximity_checker/onShuttleMove()
+/obj/effect/abstract/proximity_checker/ATOM_ON
 	//timer so it only happens once
 	addtimer(CALLBACK(monitor, /datum/proximity_monitor/proc/SetRange, monitor.current_range, TRUE), 0, TIMER_UNIQUE)
