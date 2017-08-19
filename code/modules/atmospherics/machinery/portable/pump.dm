@@ -1,6 +1,6 @@
 #define PUMP_OUT "out"
 #define PUMP_IN "in"
-#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 10)
+#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 30)
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
 #define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
 
@@ -12,7 +12,6 @@
 	var/on = FALSE
 	var/direction = PUMP_OUT
 	var/obj/machinery/atmospherics/components/binary/pump/pump
-
 	volume = 1000
 
 /obj/machinery/portable_atmospherics/pump/Initialize()
