@@ -24,7 +24,7 @@
 	if(!check_functionality())
 		return FALSE
 
-	var/obj/item/paper/P = new/obj/item/paper(holder.drop_location())
+	var/obj/item/paper/P = new/obj/item/paper(get_turf(holder))
 
 	// Damaged printer causes the resulting paper to be somewhat harder to read.
 	if(damage > damage_malfunction)
