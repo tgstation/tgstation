@@ -108,13 +108,13 @@
 		return
 	switch(current_size)
 		if(STAGE_THREE)
-			if(prob(30))
+			if(!prob(30))
 				gets_dug()
 		if(STAGE_FOUR)
 			if(prob(50))
 				gets_dug()
-		else if(current_size >= STAGE_FIVE)
-			if(prob(70))
+		else 
+			if(current_size >= STAGE_FIVE && prob(70))
 				gets_dug()
 
 
