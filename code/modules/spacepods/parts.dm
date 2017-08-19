@@ -146,5 +146,10 @@
 	name = "industrial pod armor"
 	desc = "Tough industrial-grade spacepod armor. While meant for construction work, it is commonly used in spacepod battles, too."
 
+/obj/item/pod_parts/armor/security
+	armor_type = /datum/pod_armor/security
+	name = "security pod armor"
+	desc = "Tough military-grade pod armor, meant for use by the NanoTrasen military and it's sub-divisons for space combat."
+
 
 

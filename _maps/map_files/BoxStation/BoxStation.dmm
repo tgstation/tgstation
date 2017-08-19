@@ -399,6 +399,8 @@
 /obj/item/storage/box/firingpins,
 /obj/item/storage/box/firingpins,
 /obj/item/key/security,
+/obj/item/device/lock_buster,
+/obj/item/device/lock_buster,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -868,6 +870,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/pod_parts/armor/security,
+/obj/item/pod_parts/armor/security,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "acn" = (

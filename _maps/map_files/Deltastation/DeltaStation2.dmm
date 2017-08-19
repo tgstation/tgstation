@@ -52670,6 +52670,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/pod_parts/armor/security,
+/obj/item/pod_parts/armor/security,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bXm" = (
@@ -52689,6 +52691,8 @@
 /obj/item/device/flashlight/seclite,
 /obj/item/device/flashlight/seclite,
 /obj/item/device/flashlight/seclite,
+/obj/item/device/lock_buster,
+/obj/item/device/lock_buster,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -131660,15 +131664,15 @@ esJ
 esJ
 esY
 esY
-esz
+ewX
 esY
-esz
-esY
-esY
+ewX
 esY
 esY
-esz
-esz
+esY
+esY
+ewX
+ewX
 esY
 esJ
 agg
@@ -131911,11 +131915,11 @@ aaa
 aaa
 aaa
 ewX
-esz
-esz
-esz
-esz
-esz
+ewX
+ewX
+ewX
+ewX
+ewX
 esA
 etn
 etv
@@ -132429,7 +132433,7 @@ esB
 esF
 esF
 esT
-etb
+ewZ
 esB
 eto
 eto
@@ -132681,12 +132685,12 @@ aaa
 aaa
 aaa
 aaa
-exa
+ewZ
 esC
 esF
 esF
 esU
-etb
+ewZ
 esB
 eto
 eto
@@ -132938,12 +132942,12 @@ aaa
 aaa
 aaa
 aaa
-exb
-esz
-esz
-esz
-esz
-esz
+ewX
+ewX
+ewX
+ewX
+ewX
+ewX
 etk
 etn
 etz
@@ -133202,9 +133206,9 @@ esJ
 esJ
 esY
 esY
-esz
+ewX
 esY
-esz
+ewX
 esY
 esY
 esY
@@ -133462,7 +133466,7 @@ aaf
 aaa
 esJ
 aaf
-esz
+ewX
 euo
 euC
 euR
@@ -133719,7 +133723,7 @@ aaf
 esJ
 esJ
 aaa
-esz
+ewX
 eup
 euD
 euS
@@ -134233,7 +134237,7 @@ aaa
 aaa
 aaa
 esJ
-esz
+ewX
 eur
 euF
 euT
@@ -134490,7 +134494,7 @@ agg
 agg
 agg
 esJ
-esz
+ewX
 eus
 euG
 euV
