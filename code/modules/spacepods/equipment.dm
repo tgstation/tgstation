@@ -168,20 +168,6 @@
 	icon_state = "pod_locator"
 	enabled = TRUE
 
-/obj/item/device/spacepod_equipment/misc/tracker/proc/get_pod_info()
-	var/obj/spacepod/M = src.loc
-	if(!M)
-		return 0
-	var/cell_charge = max(0, M.cell.charge)
-	var/answer = {"<b>Name:</b> [M.name]
-	<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%
-	<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]
-	<b>Airtank:</b> [M.return_pressure()]kPa
-	<b>Pilot:</b> [M.pilot||"None"]
-	<b>Location:</b> [get_area(M)||"Unknown"] "}
-
-	return answer
-
 /obj/item/device/spacepod_equipment/misc/tracker/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/screwdriver))
 		if(enabled)

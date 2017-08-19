@@ -109,6 +109,8 @@
 		has_paint = 1
 	update_icons()
 
+/obj/spacepod/proc/get_intergrity()
+	return obj_integrity/max_integrity*100
 
 /obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/p_armor)
 	. = ..(mapload)

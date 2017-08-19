@@ -9,6 +9,7 @@
 	var/screen = 0
 	var/stored_data
 
+/*
 /obj/machinery/computer/podtracker/attack_hand(mob/user)
 	if(..())
 		return
@@ -42,4 +43,26 @@
 		screen = 0
 	updateUsrDialog()
 	return
+*/
 
+/obj/machinery/computer/podtracker/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+  ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+  if(!ui)
+    ui = new(user, src, ui_key, "podtracker", name, 600, 900, master_ui, state)
+    ui.open()
+
+/obj/machinery/computer/podtracker/ui_data(mob/user)
+	var/list/data = list()
+	data["pods"] = list()
+	for(var/obj/spacepod/SP in GLOB.spacepods_list)
+		if(istype(SP.equipment_system.misc_system, /obj/item/device/spacepod_equipment/misc/tracker))
+			world << "START DEBUG"
+			world << "max_integrity: [SP.max_integrity]"
+			world << "obj_integrity: [SP.obj_integrity]"
+			world << "name: [SP.name]"
+			world << "pilot: [SP.pilot.name]"
+			world << "maxcharge: [SP.cell.maxcharge]"
+			world << "cellcharge: [SP.cell.charge]"
+			world << "END DEBUG"
+			data["pods"] += list(list("max_integrity" = SP.max_integrity, "obj_integrity" = SP.obj_integrity, "name" = SP.name, "pilot" = SP.pilot ? SP.pilot.name : "None", "maxcharge" = SP.cell.maxcharge, "cellcharge" = SP.cell.charge))
+ 	return data
