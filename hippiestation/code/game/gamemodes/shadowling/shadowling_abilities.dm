@@ -87,7 +87,7 @@
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
 	H.set_light(blacklistLuminosity) //I hate lightcode for making me do it this way
-	
+
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets,mob/user = usr)
 	if(!shadowling_check(user) && !admin_override)
@@ -297,7 +297,6 @@
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(user), slot_head)
 	user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(user), slot_gloves)
 	user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(user), slot_wear_mask)
-	user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(user), slot_glasses)
 	user.set_species(/datum/species/shadow/ling)
 
 
