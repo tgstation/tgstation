@@ -703,6 +703,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Gravity Generator Room"
 	icon_state = "grav_gen"
 
+/area/engine/pod_construction
+	name = "Space Pod Construction Area"
+	icon_state = "yellow"
+
 /area/engine/secure_construction
 	name = "Secure Construction Area"
 	icon_state = "engine"

@@ -9607,6 +9607,14 @@
 /obj/item/wallframe/camera,
 /obj/item/wallframe/camera,
 /obj/item/device/assault_pod/mining,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -12748,6 +12756,7 @@
 	network = list("AuxBase");
 	pixel_x = 28
 	},
+/obj/item/clothing/head/welding,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -15421,7 +15430,7 @@
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
 /turf/open/floor/plasteel/yellow/side{
-	dir = 6
+	dir = 4
 	},
 /area/construction/mining/aux_base)
 "aII" = (
@@ -64398,10 +64407,10 @@
 	},
 /area/construction/mining/aux_base)
 "cUO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -64611,6 +64620,60 @@
 	desc = "It's a pair of dusty overalls that kinda look like what a mechanic would wear."
 	},
 /turf/open/floor/plasteel,
+/area/construction/mining/aux_base)
+"cVo" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/plasteel/yellow/side{
+	dir = 9
+	},
+/area/construction/mining/aux_base)
+"cVp" = (
+/obj/machinery/computer/rdconsole/robotics{
+	name = "Spacepod R&D Console"
+	},
+/turf/open/floor/plasteel/yellow/side{
+	dir = 1
+	},
+/area/construction/mining/aux_base)
+"cVq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/construction/mining/aux_base)
+"cVr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
+"cVs" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/construction/mining/aux_base)
+"cVt" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Space Pod Construction";
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/construction/mining/aux_base)
+"cVu" = (
+/obj/structure/closet/toolcloset,
+/turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
 
 (1,1,1) = {"
@@ -71392,11 +71455,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+asF
+cTS
+cTS
+cUA
+asF
 cVe
 aaa
 aaa
@@ -71649,11 +71712,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+asF
+cTT
+cTT
+cTT
+asF
 aaa
 aaa
 aaa
@@ -71907,9 +71970,9 @@ aaa
 aaa
 aaa
 asF
-cTS
-cTS
-cUA
+cTT
+cTT
+cTT
 asF
 aaa
 aaa
@@ -72676,13 +72739,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
+apJ
 asF
-cTT
-cTT
-cTT
+cTS
+cTS
+cUE
 asF
-aaa
+apJ
 aqH
 cpL
 aqH
@@ -72934,11 +72997,11 @@ aaa
 aaa
 aaa
 apJ
-asF
-cTS
-cTS
-cUE
-asF
+cTJ
+cTX
+cTX
+cTX
+cUU
 apJ
 ckq
 cqq
@@ -73190,12 +73253,12 @@ aaa
 aaa
 aaa
 aaa
-apJ
-cTJ
-cTX
-cTX
-cTX
-cUU
+asF
+cTK
+cTY
+cTY
+cTY
+cUV
 apJ
 asE
 cyb
@@ -73447,12 +73510,12 @@ aaa
 aaa
 aaa
 aaa
-asF
-cTK
+apJ
+cTL
 cTY
 cTY
 cTY
-cUV
+cVt
 apJ
 auO
 auP
@@ -73704,12 +73767,12 @@ aaa
 aaa
 aaa
 aaa
-apJ
-cTL
+asF
+cTM
 cTY
 cTY
 cTY
-cUW
+cUX
 apJ
 avP
 cyb
@@ -73961,12 +74024,12 @@ aaa
 aaa
 aaa
 aaa
-asF
-cTM
-cTY
-cTY
-cTY
-cUX
+apJ
+cTN
+cUb
+cUs
+cUJ
+cUY
 apJ
 awY
 ayk
@@ -74219,11 +74282,11 @@ aaa
 aaa
 aaa
 apJ
-cTN
-cUb
-cUs
-cUJ
-cUY
+apJ
+cUc
+cUt
+cUc
+apJ
 apJ
 awZ
 ayl
@@ -74477,9 +74540,9 @@ cTG
 cTG
 apJ
 apJ
-cUc
-cUt
-cUc
+cUd
+cUu
+cVr
 apJ
 apJ
 awZ
@@ -74734,8 +74797,8 @@ apJ
 apJ
 apJ
 apJ
-cUd
-cUu
+cUc
+cUv
 cUc
 apJ
 apJ
@@ -74990,11 +75053,11 @@ arC
 arC
 aEp
 apJ
-apJ
-cUc
-cUv
-cUc
-apJ
+cVo
+cUf
+cUw
+cUN
+cUZ
 apJ
 awZ
 aIK
@@ -75247,11 +75310,11 @@ arD
 arD
 auN
 apJ
-cTO
-cUf
-cUw
-cUN
-cUZ
+cTP
+cUg
+cUx
+cVs
+cVu
 apJ
 awZ
 aIK
@@ -75504,11 +75567,11 @@ arD
 arD
 auN
 asF
-cTP
-cUg
+cVp
+cVq
 cUx
 cUO
-cVm
+cVa
 cVf
 awZ
 cry
@@ -75765,7 +75828,7 @@ cCt
 cUh
 cUy
 cUP
-cVb
+cVa
 cVf
 awZ
 crz
