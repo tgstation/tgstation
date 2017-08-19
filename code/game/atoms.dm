@@ -3,8 +3,8 @@
 	plane = GAME_PLANE
 	var/level = 2
 
-	var/flags = 0
-	var/list/secondary_flags
+	var/flags_1 = 0
+	var/flags_2 = 0
 
 	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
@@ -197,26 +197,26 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return container_type & OPENCONTAINER
+	return container_type & OPENCONTAINER_1
 
 /atom/proc/is_transparent()
-	return container_type & TRANSPARENT
+	return container_type & TRANSPARENT_1
 
 /atom/proc/is_injectable(allowmobs = TRUE)
 	if(isliving(src) && allowmobs)
 		var/mob/living/L = src
 		return L.can_inject()
-	if(container_type & OPENCONTAINER)
+	if(container_type & OPENCONTAINER_1)
 		return TRUE
-	return container_type & INJECTABLE
+	return container_type & INJECTABLE_1
 
 /atom/proc/is_drawable(allowmobs = TRUE)
 	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
 		return TRUE
-	return container_type & DRAWABLE
+	return container_type & DRAWABLE_1
 
-/atom/proc/allow_drop()
-	return 1
+/atom/proc/AllowDrop()
+	return FALSE
 
 /atom/proc/CheckExit()
 	return 1
@@ -225,7 +225,7 @@
 	return
 
 /atom/proc/emp_act(severity)
-	if(istype(wires) && !HAS_SECONDARY_FLAG(src, NO_EMP_WIRES))
+	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -443,7 +443,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-    return 0
+	return 0
+
+/atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
@@ -567,6 +570,12 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
+
+/atom/proc/drop_location()
+	var/atom/L = loc
+	if(!L)
+		return null
+	return L.AllowDrop() ? L : get_turf(L)
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)

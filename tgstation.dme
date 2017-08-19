@@ -81,7 +81,6 @@
 #include "code\__HELPERS\AStar.dm"
 #include "code\__HELPERS\cmp.dm"
 #include "code\__HELPERS\files.dm"
-#include "code\__HELPERS\flags.dm"
 #include "code\__HELPERS\game.dm"
 #include "code\__HELPERS\global_lists.dm"
 #include "code\__HELPERS\icon_smoothing.dm"

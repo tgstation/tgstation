@@ -167,7 +167,7 @@
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags&NODECONSTRUCT))
+	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
@@ -198,7 +198,7 @@
 	light_color = "#DDFFD3"
 	max_n_of_items = 10
 	pixel_y = -4
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
@@ -237,13 +237,13 @@
 	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 	qdel(src)
 
 /obj/structure/fans/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags&NODECONSTRUCT))
+	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")

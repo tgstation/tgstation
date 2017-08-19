@@ -16,7 +16,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soap"
 	w_class = WEIGHT_CLASS_TINY
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

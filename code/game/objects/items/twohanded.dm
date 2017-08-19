@@ -117,7 +117,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP
+	flags_1 = ABSTRACT_1 | NODROP_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/twohanded/offhand/unwield()
@@ -485,7 +485,7 @@
 	icon_state = "chainsaw_off"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 13
 	var/force_on = 21
 	w_class = WEIGHT_CLASS_HUGE

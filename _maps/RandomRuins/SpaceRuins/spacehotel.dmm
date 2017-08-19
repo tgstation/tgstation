@@ -3212,7 +3212,6 @@
 "is" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 9
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3229,7 +3228,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3246,7 +3244,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3260,7 +3257,6 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3276,7 +3272,6 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3285,7 +3280,6 @@
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3352,7 +3346,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3379,7 +3372,6 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3417,7 +3409,6 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/head/welding,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3432,7 +3423,6 @@
 	amount = 60
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3601,7 +3591,6 @@
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3634,7 +3623,6 @@
 	amount = 50
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3736,7 +3724,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3762,7 +3749,6 @@
 /area/ruin/space/has_grav/hotel/power)
 "jE" = (
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3771,7 +3757,6 @@
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3780,21 +3765,18 @@
 /area/ruin/space/has_grav/hotel/security)
 "jH" = (
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 9
 	},
 /area/ruin/space/has_grav/hotel/security)
 "jI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/security)
 "jJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -3803,7 +3785,6 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -3812,7 +3793,6 @@
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 5
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -3900,7 +3880,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3942,7 +3921,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -3951,7 +3929,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -3969,7 +3946,6 @@
 /area/ruin/space/has_grav/hotel/security)
 "kl" = (
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -3997,7 +3973,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/ruin/space/has_grav/hotel/power)
@@ -4065,13 +4040,11 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 6
 	},
 /area/ruin/space/has_grav/hotel/power)
 "kx" = (
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -4155,7 +4128,6 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -4176,7 +4148,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -4273,7 +4244,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -4374,7 +4344,6 @@
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -4401,7 +4370,6 @@
 /area/ruin/unpowered/no_grav)
 "lw" = (
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 10
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -4418,7 +4386,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/security)
@@ -4570,7 +4537,6 @@
 /area/ruin/space/has_grav/hotel/security)
 "lU" = (
 /turf/open/floor/plasteel/red/side{
-	icon_state = "red";
 	dir = 6
 	},
 /area/ruin/space/has_grav/hotel/security)

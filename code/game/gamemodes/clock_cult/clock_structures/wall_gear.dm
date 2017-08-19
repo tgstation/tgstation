@@ -70,6 +70,6 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/wall_gear/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT) && disassembled)
+	if(!(flags_1 & NODECONSTRUCT_1) && disassembled)
 		new /obj/item/stack/tile/brass(loc, 3)
 	return ..()

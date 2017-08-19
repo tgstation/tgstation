@@ -524,7 +524,7 @@
 			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
-	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
+	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
 	if(istype(W, /obj/item/scalpel/supermatter))
 		playsound(src, W.usesound, 100, 1)

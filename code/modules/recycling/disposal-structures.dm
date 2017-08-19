@@ -121,8 +121,8 @@
 	T.assume_air(gas)
 	T.air_update_turf()
 
-/obj/structure/disposalholder/allow_drop()
-	return 1
+/obj/structure/disposalholder/AllowDrop()
+	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
 	return
@@ -316,7 +316,7 @@
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(stored)
 				var/turf/T = loc
