@@ -491,3 +491,21 @@
 	else
 		qdel(N)
 		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
+
+/datum/emote/living/ultraflip
+	key = "ultraflip"
+	restraint_check = FALSE
+
+/datum/emote/living/ultraflip/run_emote(mob/user, params)
+	. = ..()
+	if(!.)
+		user.SpinAnimation(7,1)
+		user.spin(20, 1)
+		if(iscyborg(user))
+			var/mob/living/silicon/robot/R = user
+			if(R.buckled_mobs)
+				for(var/mob/M in R.buckled_mobs)
+					if(R.riding_datum)
+						R.riding_datum.force_dismount(M)
+					else
+						R.unbuckle_all_mobs()
