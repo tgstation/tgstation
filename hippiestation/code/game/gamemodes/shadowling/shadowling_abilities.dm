@@ -269,6 +269,7 @@
 			to_chat(M, my_message)
 		if(M in GLOB.dead_mob_list)
 			to_chat(M, "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]")
+	log_say("[user.real_name]/[user.key] : [text]")
 
 
 
