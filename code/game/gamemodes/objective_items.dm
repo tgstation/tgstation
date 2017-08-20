@@ -108,6 +108,10 @@
 	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
 	..()
 
+/datum/objective_item/steal/supermatter/TargetExists()
+	var/obj/machinery/power/supermatter_shard/S
+	return S.main_engine != null
+
 //Items with special checks!
 /datum/objective_item/steal/plasma
 	name = "28 moles of plasma (full tank)."
