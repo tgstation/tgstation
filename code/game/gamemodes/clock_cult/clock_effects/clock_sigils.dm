@@ -115,7 +115,10 @@
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
-		L.buckled.anchored = TRUE
+		if(is_servant_of_ratvar(L.pulledby))
+			L.pulledby.stop_pulling()
+		if(is_servant_of_ratvar(L.buckled.pulledby))
+			L.pulledby.stop_pulling()
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	var/oldcolor = color
 	animate(src, color = "#AF0AAF", time = convert_time, flags = ANIMATION_END_NOW)
@@ -126,8 +129,6 @@
 	var/I = 0
 	while(I < convert_time && !QDELETED(L) && get_turf(L) == get_turf(src))
 		I++
-		if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
-			L.buckled.anchored = TRUE
 		sleep(1)
 	if(QDELETED(L) || get_turf(L) != get_turf(src))
 		if(glow)
