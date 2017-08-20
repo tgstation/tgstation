@@ -110,25 +110,17 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	var/atom/L = loc
-	if(!L)
-		for(var/I in src)
-			qdel(I)
-		return
-	var/turf/T = L.drop_location()
+	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
-		AM.forceMove(T)
+		AM.forceMove(L)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)
 		throwing.finalize(FALSE)
 
 /obj/structure/closet/proc/take_contents()
-	var/atom/L = loc
-	if(!L)
-		return
-	var/turf/T = L.drop_location()
-	for(var/atom/movable/AM in T)
+	var/atom/L = drop_location()
+	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
 
