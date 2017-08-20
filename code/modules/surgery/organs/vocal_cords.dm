@@ -209,6 +209,8 @@
 		power_multiplier *= (1 + (1/specific_listeners.len)) //2x on a single guy, 1.5x on two and so on
 		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
+	shuffle_inplace(listeners)
+
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
@@ -248,10 +250,12 @@
 	var/static/regex/dance_words = regex("dance")
 	var/static/regex/jump_words = regex("jump")
 	var/static/regex/salute_words = regex("salute")
-	var/static/regex/deathgasp_words = regex("play dead")
 	var/static/regex/clap_words = regex("clap|applaud")
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
+
+	message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 
 	//STUN
 	if(findtext(message, stun_words))
@@ -532,14 +536,6 @@
 			L.emote("salute")
 			sleep(5) //So the chat flows more naturally
 
-	//PLAY DEAD
-	else if((findtext(message, deathgasp_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.emote("deathgasp")
-			sleep(5) //So the chat flows more naturally
-
 	//PLEASE CLAP
 	else if((findtext(message, clap_words)))
 		cooldown = COOLDOWN_MEME
@@ -567,11 +563,7 @@
 	else
 		cooldown = COOLDOWN_NONE
 
-	message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-
 	return cooldown
-
 
 #undef COOLDOWN_STUN
 #undef COOLDOWN_DAMAGE
