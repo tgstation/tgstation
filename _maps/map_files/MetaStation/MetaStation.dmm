@@ -30389,12 +30389,10 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/pod_parts/core,
 /turf/open/floor/plasteel/darkyellow/side,
 /area/engine/pod_construction)
 "bgb" = (

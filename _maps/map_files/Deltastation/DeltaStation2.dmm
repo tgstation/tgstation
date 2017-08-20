@@ -113894,10 +113894,8 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 2
-	},
 /obj/effect/turf_decal/bot,
+/obj/item/pod_parts/core,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
