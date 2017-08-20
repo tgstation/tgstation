@@ -184,7 +184,7 @@
 
 
 
-/datum/effect_system/trail_follow/ion/space_trail/start() //fuck whoever put 20 src's in here making me remove them
+/datum/effect_system/trail_follow/ion/space_trail/start()
 	if(!on)
 		on = FALSE
 		processing = TRUE

@@ -1,6 +1,6 @@
 
 
-/obj/spacepod/proc/GrantActions(mob/living/user)
+/obj/spacepod/proc/Grant_Actions(mob/living/user)
 	exit_action.Grant(user, src)
 	lock_action.Grant(user, src)
 	door_action.Grant(user, src)
@@ -11,7 +11,7 @@
 	tank_action.Grant(user, src)
 
 
-/obj/spacepod/proc/RemoveActions(mob/living/user)
+/obj/spacepod/proc/Remove_Actions(mob/living/user)
 	exit_action.Remove(user)
 	lock_action.Remove(user)
 	door_action.Remove(user)

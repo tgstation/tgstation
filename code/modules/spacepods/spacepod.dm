@@ -162,14 +162,14 @@
 	occupant_sanity_check()
 	if(pilot)
 		pilot.forceMove(get_turf(src))
-		RemoveActions(pilot)
+		Remove_Actions(pilot)
 		pilot.clear_alert("charge")
 		pilot.clear_alert("mech damage")
 		pilot = null
 	if(passengers)
 		for(var/mob/living/M in passengers)
 			M.forceMove(get_turf(src))
-			RemoveActions(M)
+			Remove_Actions(M)
 			passengers -= M
 	GLOB.spacepods_list -= src
 	GLOB.poi_list.Remove(src)
@@ -213,7 +213,7 @@
 		overlays += pod_overlays[DAMAGE]
 		if(obj_integrity <= round(max_integrity/4))
 			overlays += pod_overlays[FIRE]
-	light_color = icon_light_color[src.icon_state]
+	light_color = icon_light_color[icon_state]
 	bound_width = 64
 	bound_height = 64
 
@@ -233,7 +233,7 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		deal_damage(damage)
 		visible_message("<span class='danger'>[user]</span> [user.attacktext] [src]!")
-		log_attack("<font color='red'>attacked [src.name]</font>")
+		log_attack("<font color='red'>attacked [name]</font>")
 	return
 
 /obj/spacepod/proc/fixReg()
@@ -243,9 +243,9 @@
 /obj/spacepod/attack_alien(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	deal_damage(15)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 	to_chat(user, "<span class='warning'>You slash at [src]!</span>")
-	visible_message("<span class='warning'>The [user] slashes at [src.name]'s armor!</span>")
+	visible_message("<span class='warning'>The [user] slashes at [name]'s armor!</span>")
 	return
 
 /obj/spacepod/proc/deal_damage(var/damage)
@@ -462,7 +462,7 @@
 			target = passengers[1]
 
 		if(target && istype(target))
-			src.visible_message("<span class='warning'>[user] is trying to rip the door open and pull [target] out of the [src]!</span>",
+			visible_message("<span class='warning'>[user] is trying to rip the door open and pull [target] out of the [src]!</span>",
 				"<span class='warning'>You see [user] outside the door trying to rip it open!</span>")
 			if(do_after(user, 50, target = src))
 				target.forceMove(get_turf(src))
@@ -562,7 +562,7 @@
 
 	var/list/L = list(  )
 
-	L += src.contents
+	L += contents
 
 	for(var/obj/item/storage/S in src)
 		L += S.return_inv()
@@ -611,16 +611,16 @@
 			pod_armor = /datum/pod_armor/industrial
 	update_icons()
 
-/obj/spacepod/proc/toggle_internal_tank(var/mob/usr)
+/obj/spacepod/proc/toggle_internal_tank(var/mob/user)
 
-	if(usr.incapacitated())
+	if(user.incapacitated())
 		return
 
-	if(usr != src.pilot)
-		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair")
+	if(user != pilot)
+		to_chat(user, "<span class='notice'>You can't reach the controls from your chair")
 		return
 	use_internal_tank = !use_internal_tank
-	to_chat(usr, "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>")
+	to_chat(user, "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>")
 
 /obj/spacepod/proc/add_cabin()
 	cabin_air = new
@@ -680,7 +680,7 @@
 
 		if(M != user && unlocked && (M.stat == DEAD || M.incapacitated()))
 			if(passengers.len >= max_passengers && !pilot)
-				to_chat(usr, "<span class='danger'><b>That person can't fly the pod!</b></span>")
+				to_chat(user, "<span class='danger'><b>That person can't fly the pod!</b></span>")
 				return FALSE
 			if(passengers.len < max_passengers)
 				visible_message("<span class='danger'>[user.name] starts loading [M.name] into the pod!</span>")
@@ -713,15 +713,15 @@
 		to_chat(user, "<span class='warning'>[src] already has \an [C.storage]</span>")
 
 /obj/spacepod/proc/enter_pod(mob/user)
-	if(usr.stat != CONSCIOUS)
+	if(user.stat != CONSCIOUS)
 		return FALSE
 
 	if(equipment_system.lock_system && !unlocked)
 		to_chat(user, "<span class='warning'>[src]'s doors are locked!</span>")
 		return FALSE
 
-	if(get_dist(src, user) > 2 || get_dist(usr, user) > 1)
-		to_chat(usr, "They are too far away to put inside")
+	if(get_dist(src, user) > 2)
+		to_chat(user, "They are too far away to put inside")
 		return FALSE
 
 	if(!istype(user))
@@ -738,7 +738,7 @@
 		to_chat(user, "<span class='danger'><B>The nuke-disk is locking the door every time you try to open it. You get the feeling that it doesn't want to go into the spacepod.</b></span>")
 		return FALSE
 
-	for(var/mob/living/simple_animal/slime/S in range(1,usr))
+	for(var/mob/living/simple_animal/slime/S in range(1,user))
 		if(S.Target == user)
 			to_chat(user, "You're too busy getting your life sucked out of you.")
 			return FALSE
@@ -760,14 +760,14 @@
 				user.forceMove(src)
 				add_fingerprint(user)
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				GrantActions(user)
+				Grant_Actions(user)
 				return
 			if(passengers.len < max_passengers)
 				user.stop_pulling()
 				passengers += user
 				user.forceMove(src)
 				add_fingerprint(user)
-				GrantActions(user)
+				Grant_Actions(user)
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 			else
 				to_chat(user, "<span class='notice'>You were too slow. Try better next time, loser.</span>")
@@ -806,39 +806,39 @@
 		user.forceMove(get_turf(src))
 		pilot = null
 		to_chat(user, "<span class='notice'>You climb out of [src].</span>")
-		RemoveActions(user)
+		Remove_Actions(user)
 		user.clear_alert("charge")
 		user.clear_alert("mech damage")
 	if(user in passengers)
 		user.forceMove(get_turf(src))
 		passengers -= user
 		to_chat(user, "<span class='notice'>You climb out of [src].</span>")
-		RemoveActions(user)
+		Remove_Actions(user)
 
-/obj/spacepod/proc/lock_pod(var/mob/usr)
+/obj/spacepod/proc/lock_pod(var/mob/user)
 
-	if(usr.incapacitated())
+	if(user.incapacitated())
 		return
 
-	if(usr in passengers && usr != src.pilot)
-		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair")
+	if(user in passengers && user != pilot)
+		to_chat(user, "<span class='notice'>You can't reach the controls from your chair")
 		return
 
 	unlocked = !unlocked
-	to_chat(usr, "<span class='warning'>You [unlocked ? "unlock" : "lock"] the doors.</span>")
+	to_chat(user, "<span class='warning'>You [unlocked ? "unlock" : "lock"] the doors.</span>")
 
 
-/obj/spacepod/proc/toggleDoors(var/mob/usr)
+/obj/spacepod/proc/toggleDoors(var/mob/user)
 
-	if(usr.incapacitated())
+	if(user.incapacitated())
 		return
 
-	if(usr != src.pilot)
-		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair")
+	if(user != pilot)
+		to_chat(user, "<span class='notice'>You can't reach the controls from your chair")
 		return
 
 	for(var/obj/machinery/door/poddoor/multi_tile/P in orange(3,src))
-		var/mob/living/carbon/human/L = usr
+		var/mob/living/carbon/human/L = user
 		if(P.check_access(L.get_active_held_item()) || P.check_access(L.wear_id))
 			if(P.density)
 				P.open()
@@ -854,43 +854,43 @@
 				else
 					P.close()
 					return TRUE
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
-	to_chat(usr, "<span class='warning'>You are not close to any pod doors.</span>")
+	to_chat(user, "<span class='warning'>You are not close to any pod doors.</span>")
 
-/obj/spacepod/proc/fireWeapon(var/mob/usr)
+/obj/spacepod/proc/fireWeapon(var/mob/user)
 
-	if(usr.incapacitated())
+	if(user.incapacitated())
 		return
 
-	if(usr != src.pilot)
-		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair")
+	if(user != pilot)
+		to_chat(user, "<span class='notice'>You can't reach the controls from your chair")
 		return
 	if(!equipment_system.weapon_system)
-		to_chat(usr, "<span class='warning'>[src] has no weapons!</span>")
+		to_chat(user, "<span class='warning'>[src] has no weapons!</span>")
 		return
 	equipment_system.weapon_system.fire_weapons()
 
-/obj/spacepod/proc/unload(var/mob/usr)
-	if(usr.incapacitated())
+/obj/spacepod/proc/unload(var/mob/user)
+	if(user.incapacitated())
 		return
 
-	if(usr != src.pilot)
-		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair")
+	if(user != pilot)
+		to_chat(user, "<span class='notice'>You can't reach the controls from your chair")
 		return
 	if(!equipment_system.cargo_system)
-		to_chat(usr, "<span class='warning'>[src] has no cargo system!</span>")
+		to_chat(user, "<span class='warning'>[src] has no cargo system!</span>")
 		return
 	equipment_system.cargo_system.unload()
 
-/obj/spacepod/proc/toggleLights(var/mob/usr)
+/obj/spacepod/proc/toggleLights(var/mob/user)
 
-	if(usr.incapacitated())
+	if(user.incapacitated())
 		return
 
-	if(usr != src.pilot)
-		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair")
+	if(user != pilot)
+		to_chat(user, "<span class='notice'>You can't reach the controls from your chair")
 		return
 	lightsToggle()
 
@@ -900,14 +900,12 @@
 		set_light(lights_power)
 	else
 		set_light(0)
-	to_chat(usr, "Lights toggled [lights ? "on" : "off"].")
+	to_chat(pilot, "Lights toggled [lights ? "on" : "off"].")
 	for(var/mob/living/M in passengers)
 		to_chat(M, "Lights toggled [lights ? "on" : "off"].")
 
-/obj/spacepod/proc/checkSeat(var/mob/usr)
-	var/mob/user = usr
-
-	if(usr.incapacitated())
+/obj/spacepod/proc/checkSeat(var/mob/user)
+	if(user.incapacitated())
 		return
 
 	to_chat(user, "<span class='notice'>You start rooting around under the seat for lost items</span>")
@@ -917,7 +915,7 @@
 		if(true_contents.len > 0)
 			var/obj/I = pick(true_contents)
 			if(user.put_in_hands(I))
-				src.contents -= I
+				contents -= I
 				to_chat(user, "<span class='notice'>You find a [I] [pick("under the seat", "under the console", "in the mainenance access")]!</span>")
 			else
 				to_chat(user, "<span class='notice'>You think you saw something shiny, but you can't reach it!</span>")
@@ -941,7 +939,7 @@
 
 
 /obj/spacepod/relaymove(mob/user, direction)
-	if(usr != src.pilot)
+	if(user != pilot)
 		return
 	handlerelaymove(user, direction)
 
@@ -954,7 +952,7 @@
 	else
 		move_delay = 2
 	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)
-		src.dir = direction
+		dir = direction
 		switch(direction)
 			if(NORTH)
 				if(inertia_dir == SOUTH)

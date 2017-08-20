@@ -112,7 +112,7 @@
 				),
 				// 5. Circuit secured
 				list(
-					"desc" = "A wired pod frame with a secured mainboard. It needs the pod core now.s",
+					"desc" = "A wired pod frame with a secured mainboard. It is missing a pod core.",
 					state_prev = list(
 						"key"      = /obj/item/screwdriver,
 						"vis_msg"  = "{USER} unsecures the mainboard.",
