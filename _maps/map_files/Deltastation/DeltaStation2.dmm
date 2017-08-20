@@ -113707,7 +113707,7 @@
 	},
 /area/engine/pod_construction)
 "eur" = (
-/obj/machinery/spod_part_fabricator,
+/obj/machinery/mecha_part_fabricator/spacepod,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1

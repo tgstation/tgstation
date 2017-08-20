@@ -91083,7 +91083,7 @@
 	},
 /area/engine/pod_construction)
 "dEs" = (
-/obj/machinery/spod_part_fabricator,
+/obj/machinery/mecha_part_fabricator/spacepod,
 /obj/machinery/light{
 	dir = 1
 	},
