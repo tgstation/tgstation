@@ -235,14 +235,14 @@
 	var/canSword = FALSE
 	var/obj/item/device/assembly/bikehorn/horn = new()
 	
-	/obj/item/weapon/melee/energy/sword/bikehorn/New()
+/obj/item/weapon/melee/energy/sword/bikehorn/New()
 	..()
 	name = horn.name
 	icon_state = horn.icon_state
 	icon = horn.icon
 	horn.forceMove(src)
 	
-	/obj/item/weapon/melee/transforming/energy/sword/bikehorn/examine(mob/user)
+/obj/item/weapon/melee/transforming/energy/sword/bikehorn/examine(mob/user)
 	if(!active)
 		horn.examine(user)
 	else
