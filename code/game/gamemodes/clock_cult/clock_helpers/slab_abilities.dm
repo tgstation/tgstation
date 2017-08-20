@@ -24,13 +24,6 @@
 //For the Geis scripture; binds a target to convert.
 /obj/effect/proc_holder/slab/geis
 	ranged_mousepointer = 'icons/effects/geis_target.dmi'
-	var/obj/structure/destructible/clockwork/geis_binding/binding //we always have a reference to the binding
-	var/obj/structure/destructible/clockwork/geis_binding/pulled_binding //we use this to see if we're pulling it or not
-
-/obj/effect/proc_holder/slab/geis/remove_ranged_ability(msg)
-	..()
-	binding = null
-	pulled_binding = null
 
 /obj/effect/proc_holder/slab/geis/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -79,8 +72,8 @@
 				var/obj/structure/destructible/clockwork/geis_binding/binding = new(get_turf(target))
 				binding.setDir(target.dir)
 				binding.buckle_mob(target, TRUE)
-				pulled_binding = binding
 				ranged_ability_user.start_pulling(binding)
+				ranged_ability_user.apply_status_effect(STATUS_EFFECT_GEISTRACKER, binding)
 				successful = TRUE
 
 		remove_ranged_ability()
