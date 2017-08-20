@@ -631,9 +631,9 @@
 	toxpwr = 0.5
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
-	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+	if(M.needed_foods["proteins"] <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(0.5*REM, 0)
-	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
+	M.adjust_foodgroup("proteins", -3)
 	M.overeatduration = 0
 	return ..()
 
