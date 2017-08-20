@@ -15,7 +15,7 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()
@@ -155,7 +155,7 @@
 	return
 
 /obj/machinery/food_cart/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 4)
 	qdel(src)
 

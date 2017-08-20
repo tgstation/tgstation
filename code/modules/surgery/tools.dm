@@ -4,7 +4,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 
@@ -15,7 +15,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
@@ -27,7 +27,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
@@ -39,7 +39,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
@@ -52,7 +52,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
@@ -64,7 +64,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
@@ -80,7 +80,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "materials=1;biotech=1"
@@ -94,7 +94,7 @@
 	icon_state = "drill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "materials=1;biotech=1"
@@ -109,7 +109,7 @@
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -126,7 +126,7 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -153,7 +153,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 9
@@ -171,7 +171,7 @@
 	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 9

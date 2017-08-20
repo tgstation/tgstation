@@ -32,6 +32,9 @@
 /obj/effect/particle_effect/foam/metal/MakeSlippery()
 	return
 
+/obj/effect/particle_effect/foam/metal/smart
+	name = "smart foam"
+
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
 	metal = IRON_FOAM
@@ -65,6 +68,20 @@
 			new /obj/structure/foamedmetal/iron(get_turf(src))
 		if(RESIN_FOAM)
 			new /obj/structure/foamedmetal/resin(get_turf(src))
+	flick("[icon_state]-disolve", src)
+	QDEL_IN(src, 5)
+
+/obj/effect/particle_effect/foam/smart/kill_foam() //Smart foam adheres to area borders for walls
+	STOP_PROCESSING(SSfastprocess, src)
+	if(metal)
+		var/turf/T = get_turf(src)
+		if(isspaceturf(T)) //Block up any exposed space
+			T.ChangeTurf(/turf/open/floor/plating/foam)
+		for(var/direction in GLOB.cardinals)
+			var/turf/cardinal_turf = get_step(T, direction)
+			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
+				new/obj/structure/foamedmetal(T)
+				break
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -147,6 +164,10 @@
 
 /datum/effect_system/foam_spread/metal
 	effect_type = /obj/effect/particle_effect/foam/metal
+
+
+/datum/effect_system/foam_spread/metal/smart
+	effect_type = /obj/effect/particle_effect/foam/smart
 
 
 /datum/effect_system/foam_spread/New()

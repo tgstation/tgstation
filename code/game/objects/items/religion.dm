@@ -86,7 +86,7 @@
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
-	flags = 0
+	flags_1 = 0
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50, fire = 60, acid = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
@@ -147,7 +147,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60) //does this even do anything on boots?
-	flags = NOSLIP
+	flags_1 = NOSLIP_1
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET

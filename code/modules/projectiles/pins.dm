@@ -5,10 +5,9 @@
 	icon_state = "firing_pin"
 	item_state = "pen"
 	origin_tech = "materials=2;combat=4"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
-	var/emagged = FALSE
 	var/fail_message = "<span class='warning'>INVALID USER.</span>"
 	var/selfdestruct = 0 // Explode when user check is failed.
 	var/force_replace = 0 // Can forcefully replace other pins.

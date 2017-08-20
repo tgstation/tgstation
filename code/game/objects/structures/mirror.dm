@@ -47,14 +47,14 @@
 	..()
 
 /obj/structure/mirror/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "mirror_broke"
 		playsound(src, "shatter", 70, 1)
 		desc = "Oh no, seven years of bad luck!"
 		broken = 1
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
 			new /obj/item/shard( src.loc )
 	qdel(src)

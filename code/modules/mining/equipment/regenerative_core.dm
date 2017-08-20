@@ -22,7 +22,7 @@
 	name = "regenerative core"
 	desc = "All that remains of a hivelord. It can be used to heal completely, but it will rapidly decay into uselessness."
 	icon_state = "roro core 2"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	slot = "hivecore"
 	force = 0
 	actions_types = list(/datum/action/item_action/organ_action/use)

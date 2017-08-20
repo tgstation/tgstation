@@ -15,7 +15,7 @@ insert ascii eagle on american flag background here
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/static/list/deepfry_blacklisted_items = typecacheof(list(

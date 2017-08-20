@@ -413,7 +413,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -475,7 +474,6 @@
 "bk" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -556,7 +554,6 @@
 /area/shuttle/escape)
 "br" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -679,7 +676,6 @@
 "bL" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -863,7 +859,6 @@
 "cb" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1483,7 +1478,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1500,7 +1494,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1526,7 +1519,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1535,7 +1527,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1544,7 +1535,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)

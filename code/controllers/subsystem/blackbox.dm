@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
-	flags = SS_NO_TICK_CHECK | SS_NO_INIT
+	flags = SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_BLACKBOX
 
@@ -18,8 +18,13 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/msg_other = list()
 
 	var/list/feedback = list()	//list of datum/feedback_variable
-
+	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
+
+
+/datum/controller/subsystem/blackbox/Initialize()
+	triggertime = world.time
+	. = ..()
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()
@@ -32,6 +37,11 @@ SUBSYSTEM_DEF(blackbox)
 	var/admincount = GLOB.admins.len
 	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 	query_record_playercount.Execute()
+
+	if(config.use_exp_tracking)
+		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
+			update_exp(10,FALSE)
+
 
 /datum/controller/subsystem/blackbox/Recover()
 	msg_common = SSblackbox.msg_common

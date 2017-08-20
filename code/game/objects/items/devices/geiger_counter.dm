@@ -16,7 +16,6 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	var/scanning = 0
 	var/radiation_count = 0
-	var/emagged = FALSE
 
 /obj/item/device/geiger_counter/New()
 	..()

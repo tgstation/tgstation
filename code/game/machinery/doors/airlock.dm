@@ -34,7 +34,7 @@
 
 #define AIRLOCK_INTEGRITY_N			 300 // Normal airlock integrity
 #define AIRLOCK_INTEGRITY_MULTIPLIER 1.5 // How much reinforced doors health increases
-#define AIRLOCK_DAMAGE_DEFLECTION_N  20  // Normal airlock damage deflection
+#define AIRLOCK_DAMAGE_DEFLECTION_N  21  // Normal airlock damage deflection
 #define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
 
 #define NOT_ELECTRIFIED 0
@@ -1529,7 +1529,7 @@
 
 
 /obj/machinery/door/airlock/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(flags_1 & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
 		if(!panel_open)
 			panel_open = TRUE
@@ -1547,7 +1547,7 @@
 
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
 			A = new assemblytype(src.loc)

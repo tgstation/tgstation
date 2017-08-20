@@ -70,7 +70,7 @@
 /obj/item/storage/lockbox/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(locked)
 		to_chat(user, "<span class='warning'>It's locked!</span>")
-		return 0
+		return null
 	open = TRUE
 	return ..()
 

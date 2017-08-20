@@ -3,7 +3,7 @@
 	name = "pickaxe"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 15
 	throwforce = 10
@@ -62,7 +62,7 @@
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
@@ -72,7 +72,7 @@
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
-	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP flag, and easier to change borg specific drill mechanics.
+	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
 	digspeed = 7
 
@@ -93,7 +93,7 @@
 	icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	force = 8
 	var/digspeed = 20
