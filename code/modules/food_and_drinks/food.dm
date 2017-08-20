@@ -26,11 +26,8 @@ GLOBAL_LIST_INIT(temp_stabilizers, typecacheof(list(
 /obj/item/reagent_containers/food/proc/can_temp_naturally_adjust()
 	if(istype(loc, /obj/item/storage))
 		var/obj/item/storage/S = loc
-		if(is_type_in_typecache(S.loc, GLOB.temp_stabilizers))
-			return TRUE
-	if(is_type_in_typecache(loc, GLOB.temp_stabilizers))
-		return TRUE
-	return FALSE
+		return is_type_in_typecache(S.loc, GLOB.temp_stabilizers)
+	return is_type_in_typecache(loc, GLOB.temp_stabilizers)
 
 /obj/item/reagent_containers/food/proc/in_danger_zone()
 	if(current_temp >= min_danger && current_temp <= max_danger)
@@ -61,7 +58,7 @@ GLOBAL_LIST_INIT(temp_stabilizers, typecacheof(list(
 		time_spent_in_danger_zone++
 		if(time_spent_in_danger_zone > 20)
 			reagents.add_reagent(rotten_reagent, 1)
-		if(time_spent_in_danger_zone > 40)
+		if(time_spent_in_danger_zone == 40)
 			desc += " I wouldn't eat that..."
 			name = "rotten [name]"
 			color = "#BCE060"
@@ -80,3 +77,28 @@ GLOBAL_LIST_INIT(temp_stabilizers, typecacheof(list(
 				to_chat(H,"<span class='notice'>I love this taste!</span>")
 				H.adjust_disgust(-5 + -2.5 * fraction)
 			last_check_time = world.time
+
+
+/obj/item/reagent_containers/food/ingredient
+	name = "base ingredient"
+	icon = 'icons/obj/kitchen/ingredients_greyscaled.dmi'
+	var/base_type = 1 // 1 for reagent, 0 for food
+	var/datum/reagent/base_reagent
+	var/obj/item/reagent_containers/food/base_food
+	var/processed_type = /obj/item/reagent_containers/food/ingredient/processed
+
+/obj/item/reagent_containers/food/ingredient/proc/add_ingredient(ingredient, rename=1)
+	if(base_type)
+		var/datum/reagent/R = ingredient
+		base_reagent = new R.type
+		color = R.color
+		if(rename)
+			name = "[R.name] [name]"
+		reagents.add_reagent(R.id, 50)
+	else
+		var/obj/item/reagent_containers/food/F = ingredient
+		base_food = new F.type(src)
+		color = F.filling_color
+		if(rename)
+			name = "[R.name] [name]
+		F.reagents.copy_to(src, F.reagents.total_volume)
