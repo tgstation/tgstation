@@ -42,11 +42,12 @@
 	// each use in a short timespan
 	for(var/i in 1 to healing_ticks)
 		if(user)
-			var/healpertick = -(total_healing / healing_ticks)
-			user.adjustBruteLoss(healpertick / recent_uses, 0)
-			user.adjustOxyLoss(healpertick / recent_uses, 0)
-			user.adjustFireLoss(healpertick / recent_uses, 0)
-			user.updatehealth()
+			if (!user.on_fire)
+				var/healpertick = -(total_healing / healing_ticks)
+				user.adjustBruteLoss(healpertick / recent_uses, 0)
+				user.adjustOxyLoss(healpertick / recent_uses, 0)
+				user.adjustFireLoss(healpertick / recent_uses, 0)
+				user.updatehealth()
 		else
 			break
 		sleep(10)
