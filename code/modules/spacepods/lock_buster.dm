@@ -4,10 +4,10 @@
 	icon_state = "lock_buster_off"
 	var/on = FALSE
 
-/obj/item/device/lock_buster/attack_self(mob/user as mob)
+/obj/item/device/lock_buster/attack_self(mob/user)
 	on = !on
 	if(on)
 		icon_state = "lock_buster_on"
 	else
 		icon_state = "lock_buster_off"
-	to_chat(usr, "<span class='notice'>You turn the [src] [on ? "on" : "off"].</span>")
+	to_chat(user, "<span class='notice'>You turn the [src] [on ? "on" : "off"].</span>")
