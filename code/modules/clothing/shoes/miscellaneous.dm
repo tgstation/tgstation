@@ -94,15 +94,11 @@
 	desc = "A court jesters shoes, updated with modern squeaking technology."
 	icon_state = "jester_shoes"
 
-
-
 /obj/item/clothing/shoes/bees
-	name = "FUCK"
-	desc = "BEES"
-	icon_state = "clown"
-	item_state = "clown_shoes"
+	name = "Bee shoes"
+	desc = "to revert bee or to revert revert bee, that is the question"
+	icon_state = "bee_shoes"
 	slowdown = SHOES_SLOWDOWN+1
-	item_color = "clown"
 	var/footstep = TRUE	//used for squeeks whilst walking
 
 /obj/item/clothing/shoes/bees/step_action()
