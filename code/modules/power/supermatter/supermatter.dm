@@ -131,6 +131,8 @@
 	var/produces_gas = TRUE
 	var/obj/effect/countdown/supermatter/countdown
 
+	var/is_main_engine = FALSE
+	var/static/obj/machinery/power/supermatter_shard/main_engine
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
@@ -143,7 +145,8 @@
 	radio.listening = 0
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_SUPERMATTER)
-
+	if(is_main_engine)
+		main_engine = src
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
@@ -151,6 +154,8 @@
 	QDEL_NULL(radio)
 	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
+	if(is_main_engine && main_engine == src)
+		main_engine = null
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/examine(mob/user)
@@ -584,6 +589,9 @@
 		else
 			L.show_message("<span class='italics'>You hear an unearthly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
 
+/obj/machinery/power/supermatter_shard/engine
+	is_main_engine = TRUE
+
 // When you wanna make a supermatter shard for the dramatic effect, but
 // don't want it exploding suddenly
 /obj/machinery/power/supermatter_shard/hugbox
@@ -598,6 +606,9 @@
 	anchored = TRUE
 	gasefficency = 0.15
 	explosion_power = 35
+
+/obj/machinery/power/supermatter_shard/crystal/engine
+	is_main_engine = TRUE
 
 /obj/machinery/power/supermatter_shard/proc/supermatter_pull(turf/center, pull_range = 10)
 	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
