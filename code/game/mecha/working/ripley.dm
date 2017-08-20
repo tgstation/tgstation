@@ -9,7 +9,7 @@
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	deflect_chance = 15
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
