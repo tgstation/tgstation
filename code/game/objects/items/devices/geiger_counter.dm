@@ -16,7 +16,6 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	var/scanning = 0
 	var/radiation_count = 0
-	var/emagged = FALSE
 
 /obj/item/device/geiger_counter/New()
 	..()
@@ -118,7 +117,7 @@
 	..()
 
 /obj/item/device/geiger_counter/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver) && emagged)
+	if(istype(I, /obj/item/screwdriver) && emagged)
 		if(scanning)
 			to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
 			return 0

@@ -42,7 +42,7 @@
 	luminosity = 0
 	})
 "h" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plating/asteroid,
 /area/shuttle/escape{
 	luminosity = 0

@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = HEAR
+	flags_1 = HEAR_1
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
@@ -218,7 +218,7 @@
 		return
 
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
+	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
 		t1 += "[mytape.storedinfo[i]]<BR>"
@@ -278,9 +278,9 @@
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined)
 		var/delay = -1
-		if (istype(I, /obj/item/weapon/screwdriver))
+		if (istype(I, /obj/item/screwdriver))
 			delay = 120*I.toolspeed
-		else if(istype(I, /obj/item/weapon/pen))
+		else if(istype(I, /obj/item/pen))
 			delay = 120*1.5
 		if (delay != -1)
 			to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")

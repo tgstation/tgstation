@@ -1,5 +1,5 @@
 /*********************Hivelord stabilizer****************/
-/obj/item/weapon/hivelordstabilizer
+/obj/item/hivelordstabilizer
 	name = "stabilizing serum"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=3"
 
-/obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
+/obj/item/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/regenerative_core/C = M
 	if(!istype(C, /obj/item/organ/regenerative_core))
 		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")
@@ -22,7 +22,7 @@
 	name = "regenerative core"
 	desc = "All that remains of a hivelord. It can be used to heal completely, but it will rapidly decay into uselessness."
 	icon_state = "roro core 2"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	slot = "hivecore"
 	force = 0
 	actions_types = list(/datum/action/item_action/organ_action/use)

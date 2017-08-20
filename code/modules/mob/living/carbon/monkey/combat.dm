@@ -77,8 +77,8 @@
 		return FALSE
 
 	// WEAPONS
-	if(istype(I, /obj/item/weapon))
-		var/obj/item/weapon/W = I
+	if(istype(I, /obj/item))
+		var/obj/item/W = I
 		if(W.force >= best_force)
 			put_in_hands(W)
 			best_force = W.force
@@ -150,10 +150,10 @@
 		return TRUE
 
 	// have we been disarmed
-	if(!locate(/obj/item/weapon) in held_items)
+	if(!locate(/obj/item) in held_items)
 		best_force = 0
 
-	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget && (pickupTarget.flags & NODROP)))
+	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget && (pickupTarget.flags_1 & NODROP_1)))
 		pickupTarget = null
 
 	if(!resisting && pickupTarget)
@@ -245,7 +245,7 @@
 
 			// pickup any nearby weapon
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
-				var/obj/item/weapon/W = locate(/obj/item/weapon/) in oview(2,src)
+				var/obj/item/W = locate(/obj/item/) in oview(2,src)
 				if(W && !blacklistItems[W] && W.force > best_force)
 					pickupTarget = W
 
@@ -272,9 +272,9 @@
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
 
 					// check if target has a weapon
-					var/obj/item/weapon/W
-					for(var/obj/item/weapon/I in target.held_items)
-						if(!(I.flags & ABSTRACT))
+					var/obj/item/W
+					for(var/obj/item/I in target.held_items)
+						if(!(I.flags_1 & ABSTRACT_1))
 							W = I
 							break
 
@@ -388,7 +388,7 @@
 
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
-	var/obj/item/weapon/Weapon = locate(/obj/item/weapon) in held_items
+	var/obj/item/Weapon = locate(/obj/item) in held_items
 
 	// attack with weapon if we have one
 	if(Weapon)
@@ -439,7 +439,7 @@
 		retaliate(L)
 	return ..()
 
-/mob/living/carbon/monkey/attackby(obj/item/weapon/W, mob/user, params)
+/mob/living/carbon/monkey/attackby(obj/item/W, mob/user, params)
 	..()
 	if((W.force) && (!target) && (W.damtype != STAMINA) )
 		retaliate(user)
