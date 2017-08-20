@@ -109,8 +109,7 @@
 	..()
 
 /datum/objective_item/steal/supermatter/TargetExists()
-	var/obj/machinery/power/supermatter_shard/S
-	return S.main_engine != null
+	return GLOB.main_supermatter_engine != null
 
 //Items with special checks!
 /datum/objective_item/steal/plasma

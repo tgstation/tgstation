@@ -55,6 +55,8 @@
 #define SUPERMATTER_DANGER_PERCENT 50
 #define SUPERMATTER_WARNING_PERCENT 100
 
+GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
+
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
@@ -132,7 +134,6 @@
 	var/obj/effect/countdown/supermatter/countdown
 
 	var/is_main_engine = FALSE
-	var/static/obj/machinery/power/supermatter_shard/main_engine
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
@@ -146,7 +147,7 @@
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_SUPERMATTER)
 	if(is_main_engine)
-		main_engine = src
+		GLOB.main_supermatter_engine = src
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
@@ -154,8 +155,8 @@
 	QDEL_NULL(radio)
 	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
-	if(is_main_engine && main_engine == src)
-		main_engine = null
+	if(is_main_engine && GLOB.main_supermatter_engine == src)
+		GLOB.main_supermatter_engine = null
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/examine(mob/user)
