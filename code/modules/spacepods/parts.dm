@@ -50,7 +50,7 @@
 		var/obj/item/pod_parts/pod_frame/F = connectedparts[i]
 		if(F.type in neededparts) //if one of the items can be founded in neededparts
 			neededparts -= F.type
-			log_admin("Found [F.type]")
+			//log_admin("Found [F.type]")
 		else //because neededparts has 4 distinct items, this must be called if theyre not all in place and wrenched
 			return
 	return connectedparts

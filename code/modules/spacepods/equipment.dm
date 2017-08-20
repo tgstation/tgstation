@@ -1,11 +1,11 @@
-/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
+/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons(var/mob/user)
 	if(my_atom.next_firetime > world.time)
-		to_chat(usr, "<span class='warning'>Your weapons are recharging.</span>")
+		to_chat(user, "<span class='warning'>Your weapons are recharging.</span>")
 		return
 	var/turf/firstloc
 	var/turf/secondloc
 	if(!my_atom.cell.use(shot_cost))
-		to_chat(usr, "<span class='warning'>Insufficient charge to fire the weapons</span>")
+		to_chat(user, "<span class='warning'>Insufficient charge to fire the weapons</span>")
 		return
 	var/olddir
 	for(var/i in 0 to shots_per-1)
@@ -27,10 +27,10 @@
 		var/obj/item/projectile/projone = new projectile_type(firstloc)
 		var/obj/item/projectile/projtwo = new projectile_type(secondloc)
 		projone.starting = get_turf(my_atom)
-		projone.firer = usr
+		projone.firer = user
 		projone.def_zone = "chest"
 		projtwo.starting = get_turf(my_atom)
-		projtwo.firer = usr
+		projtwo.firer = user
 		projtwo.def_zone = "chest"
 		INVOKE_ASYNC(src, .proc/do_fire, projone, projtwo)
 		sleep(2)

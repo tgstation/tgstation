@@ -870,7 +870,7 @@
 	if(!equipment_system.weapon_system)
 		to_chat(user, "<span class='warning'>[src] has no weapons!</span>")
 		return
-	equipment_system.weapon_system.fire_weapons()
+	equipment_system.weapon_system.fire_weapons(user)
 
 /obj/spacepod/proc/unload(var/mob/user)
 	if(user.incapacitated())

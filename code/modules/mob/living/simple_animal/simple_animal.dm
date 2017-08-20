@@ -138,7 +138,7 @@
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
-			return 1
+			return TRUE
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	set waitfor = FALSE
@@ -277,7 +277,7 @@
 	..()
 	if(statpanel("Status"))
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/death(gibbed)
 	if(nest)
@@ -308,20 +308,20 @@
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
-		return 0
+		return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
-			return 0
+			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
-			return 0
+			return FALSE
 	if(istype(the_target,/obj/spacepod))
 		var/obj/spacepod/S = the_target
 		if(S.pilot)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/simple_animal/handle_fire()
 	return
@@ -369,14 +369,14 @@
 
 /mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
 	if(incapacitated())
-		return 0
+		return FALSE
 	if(no_dextery || dextrous)
 		if(be_close && !in_range(M, src))
-			return 0
+			return FALSE
 	else
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(!canUseTopic(who, TRUE))
