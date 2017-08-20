@@ -11,6 +11,20 @@
 /datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
 	return 1
 
+/datum/objective_item/proc/TargetExists()
+	return TRUE
+
+/datum/objective_item/steal/New()
+	..()
+	if(TargetExists())
+		GLOB.possible_items += src
+	else
+		qdel(src)
+
+/datum/objective_item/steal/Destroy()
+	GLOB.possible_items -= src
+	return ..()
+
 /datum/objective_item/steal/caplaser
 	name = "the captain's antique laser gun."
 	targetitem = /obj/item/gun/energy/laser/captain
@@ -157,6 +171,17 @@
 	targetitem = /obj/item/documents/syndicate/blue
 	difficulty = 10
 
+/datum/objective_item/special/New()
+	..()
+	if(TargetExists())
+		GLOB.possible_items_special += src
+	else
+		qdel(src)
+
+/datum/objective_item/special/Destroy()
+	GLOB.possible_items_special -= src
+	return ..()
+
 //Old ninja objectives.
 /datum/objective_item/special/pinpointer
 	name = "the captain's pinpointer."
@@ -192,6 +217,17 @@
 	name = "a piece of corgi meat."
 	targetitem = /obj/item/reagent_containers/food/snacks/meat/slab/corgi
 	difficulty = 5
+
+/datum/objective_item/stack/New()
+	..()
+	if(TargetExists())
+		GLOB.possible_items_special += src
+	else
+		qdel(src)
+
+/datum/objective_item/stack/Destroy()
+	GLOB.possible_items_special -= src
+	return ..()
 
 //Stack objectives get their own subtype
 /datum/objective_item/stack
