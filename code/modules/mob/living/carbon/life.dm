@@ -308,7 +308,7 @@
 			if(SSmobs.times_fired%3==1)
 				if(!(M.status_flags & GODMODE))
 					M.adjustBruteLoss(5)
-				nutrition += 10
+				adjust_foodgroup("protein", 10)
 
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()

@@ -452,7 +452,7 @@
 	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
-	if(nutrition < 100 && !blood)
+	if(get_all_hungry_foodgroups() && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
@@ -475,7 +475,7 @@
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
 	if(!blood)
-		nutrition -= lost_nutrition
+		adjust_all_foodgroup(-lost_nutrition)
 		adjustToxLoss(-3)
 	for(var/i=0 to distance)
 		if(blood)

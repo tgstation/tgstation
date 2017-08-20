@@ -5,43 +5,6 @@
 	implant_overlay = "chest_implant_overlay"
 	zone = "chest"
 
-/obj/item/organ/cyberimp/chest/nutriment
-	name = "Nutriment pump implant"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
-	icon_state = "chest_implant"
-	implant_color = "#00AA00"
-	var/hunger_threshold = NUTRITION_LEVEL_STARVING
-	var/synthesizing = 0
-	var/poison_amount = 5
-	slot = "stomach"
-	origin_tech = "materials=2;powerstorage=2;biotech=2"
-
-/obj/item/organ/cyberimp/chest/nutriment/on_life()
-	if(synthesizing)
-		return
-
-	if(owner.nutrition <= hunger_threshold)
-		synthesizing = TRUE
-		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
-		owner.nutrition += 50
-		sleep(50)
-		synthesizing = FALSE
-
-/obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
-	if(!owner)
-		return
-	owner.reagents.add_reagent("bad_food", poison_amount / severity)
-	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
-
-
-/obj/item/organ/cyberimp/chest/nutriment/plus
-	name = "Nutriment pump implant PLUS"
-	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
-	icon_state = "chest_implant"
-	implant_color = "#006607"
-	hunger_threshold = NUTRITION_LEVEL_HUNGRY
-	poison_amount = 10
-	origin_tech = "materials=4;powerstorage=3;biotech=3"
 
 /obj/item/organ/cyberimp/chest/reviver
 	name = "Reviver implant"

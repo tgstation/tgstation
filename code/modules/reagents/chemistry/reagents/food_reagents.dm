@@ -12,11 +12,12 @@
 	id = "consumable"
 	taste_description = "generic food"
 	taste_mult = 4
-	var/nutriment_factor = 1 * REAGENTS_METABOLISM
+	var/nutrient = "carbohydrates"
+	var/amt_of_nut = 15
 
 /datum/reagent/consumable/on_mob_life(mob/living/M)
 	current_cycle++
-	M.nutrition += nutriment_factor
+	M.adjust_foodgroup(nutrient, amt_of_nut)
 	holder.remove_reagent(src.id, metabolization_rate)
 
 /datum/reagent/consumable/nutriment
@@ -74,14 +75,40 @@
 	name = "Vitamin"
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
+	nutrient = "vitamins"
+	amt_of_nut = 15
 
-	brute_heal = 1
-	burn_heal = 1
+/datum/reagent/consumable/nutriment/carbohydrate
+	name = "Carbohydrates"
+	id = "carbohydrate"
+	description = "Carbs for days."
+	reagent_state = SOLID
+	nutrient = "carbohydrates"
+	amt_of_nut = 15
 
-/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/M)
-	if(M.satiety < 600)
-		M.satiety += 30
-	. = ..()
+/datum/reagent/consumable/nutriment/fiber
+	name = "Fibers"
+	id = "fiber"
+	description = "No. Just no."
+	reagent_state = SOLID
+	nutrient = "fiber"
+	amt_of_nut = 15
+
+/datum/reagent/consumable/nutriment/protein
+	name = "Proteins"
+	id = "protein"
+	description = "MAX GAINS"
+	reagent_state = SOLID
+	nutrient = "proteins"
+	amt_of_nut = 15
+
+/datum/reagent/consumable/nutriment/mineral
+	name = "Minerals"
+	id = "mineral"
+	description = "Carbs for days."
+	reagent_state = SOLID
+	nutrient = "minerals"
+	amt_of_nut = 15
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"

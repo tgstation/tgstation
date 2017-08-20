@@ -143,3 +143,5 @@
 	var/list/can_ride_typecache = list()
 
 	var/list/mousemove_intercept_objects
+
+	var/list/needed_foods = list("carbohydrates" = 350, "vitamins" = 350, "proteins" = 350, "fiber" = 350, "minerals" = 350)

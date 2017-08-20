@@ -783,10 +783,6 @@
 /obj/item/spellbook/oneuse/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
-	if(user.nutrition)
-		user.nutrition -= 200
-		if(user.nutrition <= 0)
-			user.nutrition = 0
 
 
 /obj/item/spellbook/oneuse/blind

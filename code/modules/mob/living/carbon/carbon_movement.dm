@@ -50,11 +50,11 @@
 	. = ..()
 	if(. && mob_has_gravity()) //floating is easy
 		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
-			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
+			adjust_all_foodgroup(-1)
 		else if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTOR/10
+			adjust_all_foodgroup(-0.01)
 			if(m_intent == MOVE_INTENT_RUN)
-				nutrition -= HUNGER_FACTOR/10
+				adjust_all_foodgroup(-0.02)
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
 

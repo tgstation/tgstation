@@ -597,7 +597,7 @@
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
 	id = "doctorsdelight"
-	description = "A gulp a day keeps the Medibot away! A mixture of juices that heals most damage types fairly quickly at the cost of hunger."
+	description = "A gulp a day keeps the Medibot away! A mixture of juices that heals most damage types fairly quickly, if you're a doctor."
 	color = "#FF8CFF" // rgb: 255, 140, 255
 	taste_description = "homely fruit"
 	glass_icon_state = "doctorsdelightglass"
@@ -605,13 +605,11 @@
 	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-0.5, 0)
-	M.adjustFireLoss(-0.5, 0)
-	M.adjustToxLoss(-0.5, 0)
-	M.adjustOxyLoss(-0.5, 0)
-	if(M.nutrition && (M.nutrition - 2 > 0))
-		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
-			M.nutrition -= 2
+	if((M.mind && M.mind.assigned_role == "Medical Doctor"))
+		M.adjustBruteLoss(-0.5, 0)
+		M.adjustFireLoss(-0.5, 0)
+		M.adjustToxLoss(-0.5, 0)
+		M.adjustOxyLoss(-0.5, 0)
 	..()
 	. = 1
 

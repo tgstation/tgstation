@@ -877,7 +877,7 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && \
+	if (!H.get_all_hungry_foodgroups() && H.stat != DEAD && \
 		H.dna && H.dna.species && (!(NOHUNGER in H.dna.species.species_traits)))
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
@@ -888,41 +888,24 @@
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
-		H.nutrition = max(0, H.nutrition - hunger_rate)
+		H.adjust_all_foodgroups(-hunger_rate)
 
-
-	if (H.nutrition > NUTRITION_LEVEL_FULL)
+	var/list/fat = H.get_fat_foodgroups()
+	if (fat.len == 6)
 		if(H.overeatduration < 600) //capped so people don't take forever to unfat
 			H.overeatduration++
 	else
 		if(H.overeatduration > 1)
 			H.overeatduration -= 2 //doubled the unfat rate
-
-	//metabolism change
-	if(H.nutrition > NUTRITION_LEVEL_FAT)
-		H.metabolism_efficiency = 1
-	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
-		if(H.metabolism_efficiency != 1.25 && (H.dna && H.dna.species && !(NOHUNGER in H.dna.species.species_traits)))
-			to_chat(H, "<span class='notice'>You feel vigorous.</span>")
-			H.metabolism_efficiency = 1.25
-	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		if(H.metabolism_efficiency != 0.8)
-			to_chat(H, "<span class='notice'>You feel sluggish.</span>")
-		H.metabolism_efficiency = 0.8
-	else
-		if(H.metabolism_efficiency == 1.25)
-			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
-		H.metabolism_efficiency = 1
-
-	switch(H.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition", /obj/screen/alert/fat)
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			H.clear_alert("nutrition")
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition", /obj/screen/alert/hungry)
-		else
-			H.throw_alert("nutrition", /obj/screen/alert/starving)
+	var/list/shit = H.get_low_foodgroups()
+	if(!fat.len && !shit.len)
+		H.clear_alert("nutrition")
+	if(fat.len == 6)
+		H.throw_alert("nutrition", /obj/screen/alert/fat)
+	if(shit.len)
+		H.throw_alert("nutrition", /obj/screen/alert/hungry)
+	if(H.get_all_hungry_foodgroups())
+		H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
@@ -1030,8 +1013,12 @@
 				. += (health_deficiency / 75)
 			else
 				. += (health_deficiency / 25)
-		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
-			. += hungry / 50
+		var/list/hungry = H.get_low_foodgroups()
+		for(var/HU in hungry)
+			var/fed = (500 - HU) / 5
+			if(fed >= 70 && !flight)
+				. += fed / 50
+				break
 		if(H.disabilities & FAT)
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)

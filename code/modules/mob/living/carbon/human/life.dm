@@ -271,7 +271,7 @@
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high
 	if(!stat)
-		if(getToxLoss() >= 45 && nutrition > 20)
+		if(getToxLoss() >= 45 && !get_all_hungry_foodgroups())
 			lastpuke += prob(50)
 			if(lastpuke >= 50) // about 25 second delay I guess
 				vomit(20, toxic = TRUE)

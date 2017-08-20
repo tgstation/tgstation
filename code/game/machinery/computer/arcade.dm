@@ -420,7 +420,6 @@
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
 				if(emagged)
-					user.nutrition = 0 //yeah you pretty hongry
 					to_chat(user, "<span class='userdanger'><font size=3>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."

@@ -32,9 +32,9 @@
 		to_chat(H, "<span class='danger'>You feel empty!</span>")
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
+		if(H.get_all_hungry_foodgroups())
 			H.blood_volume += 3
-			H.nutrition -= 2.5
+			H.adjust_all_foodgroup(-2.5)
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
@@ -144,9 +144,9 @@
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
-	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+	else if(H.get_all_fat_foodgroups())
 		H.blood_volume += 3
-		H.nutrition -= 2.5
+		H.adjust_all_foodgroup(-2.5)
 
 	..()
 

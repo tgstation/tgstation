@@ -379,7 +379,7 @@
 	SetKnockdown(0, FALSE)
 	SetSleeping(0, FALSE)
 	radiation = 0
-	nutrition = NUTRITION_LEVEL_FED + 50
+	needed_foods = list("carbohydrates" = 350, "vitamins" = 350, "proteins" = 350, "fiber" = 350, "minerals" = 350)
 	bodytemperature = 310
 	set_blindness(0)
 	set_blurriness(0)
@@ -978,3 +978,62 @@
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 	return canmove
+
+/mob/living/proc/adjust_foodgroup(food_group, amount)
+	needed_foods[food_group] += amount
+	if(needed_foods[food_group] > 600)
+		needed_foods[food_group] = 600
+	if(needed_foods[food_group] < 0)
+		needed_foods[food_group] = 0
+
+/mob/living/proc/set_foodgroup(food_group, amount)
+	needed_foods[food_group] = amount
+	if(needed_foods[food_group] > 600)
+		needed_foods[food_group] = 600
+	if(needed_foods[food_group] < 0)
+		needed_foods[food_group] = 0
+
+/mob/living/proc/adjust_all_foodgroup(amount)
+	for(var/F in needed_foods)
+		F += amount
+		if(F > 600)
+			F = 600
+		if(F < 0)
+			F = 0
+/mob/living/proc/set_all_foodgroup(amount)
+	for(var/F in needed_foods)
+		F = amount
+		if(F > 600)
+			F = 600
+		if(F < 0)
+			F = 0
+
+/mob/living/proc/get_low_foodgroups(food_group, amount)
+	var/list/low_groups = list()
+	for(var/F in needed_foods)
+		if(F <= NUTRITION_LEVEL_HUNGRY)
+			low_groups += food_group[F]
+	return low_groups
+
+/mob/living/proc/get_all_hungry_foodgroups(food_group, amount)
+	for(var/F in needed_foods)
+		if(F <= NUTRITION_LEVEL_HUNGRY)
+			continue
+		else
+			return FALSE
+	return TRUE
+
+/mob/living/proc/get_fat_foodgroups(food_group, amount)
+	var/list/fat_groups = list()
+	for(var/F in needed_foods)
+		if(F >= NUTRITION_LEVEL_FAT)s
+			fat_groups += food_group[F]
+	return fat_groups
+
+/mob/living/proc/get_all_fat_foodgroups(food_group, amount)
+	for(var/F in needed_foods)
+		if(F >= NUTRITION_LEVEL_FAT)
+			continue
+		else
+			return FALSE
+	return TRUE
