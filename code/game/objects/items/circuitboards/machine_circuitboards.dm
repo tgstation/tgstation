@@ -724,7 +724,7 @@
 
 /obj/item/circuitboard/machine/podfab
 	name = "Spacepod Fabricator (Machine Board)"
-	build_path = /obj/machinery/spod_part_fabricator
+	build_path = /obj/machinery/mecha_part_fabricator/spacepod
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
