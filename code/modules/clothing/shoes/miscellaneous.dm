@@ -97,8 +97,8 @@
 
 
 /obj/item/clothing/shoes/bees
-	name = "BEES"
-	desc = "FUCK"
+	name = "FUCK"
+	desc = "BEES"
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
@@ -108,10 +108,9 @@
 /obj/item/clothing/shoes/bees/step_action()
 	if(footstep)
 		playsound(src, 'sound/effects/fuck.ogg', 50, 1)
-		footstep = !footstep
 	else
 		playsound(src, 'sound/effects/bees.ogg', 50, 1)
-		footstep = !footstep
+	footstep = !footstep
 
 
 /obj/item/clothing/shoes/jackboots
