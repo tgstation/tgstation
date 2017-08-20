@@ -8,7 +8,8 @@
 	ClearCredits()
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
-	for(var/I in shuffle(icon_states('icons/credits.dmi')))
+    var/static/list/order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states('icons/credits.dmi') - "Thanks for playing!")
+	for(var/I in order_for_this_round)
 		if(!credits)
 			break
 		_credits += new /obj/screen/credit(null, I, src)
