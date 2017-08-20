@@ -108,7 +108,7 @@
 		M.AdjustStun(-130 + (apply_time - world.time), 1, 1) //remove exactly as much stun as was applied
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			M.silent = max(M.silent - 7, 0)
+			C.silent = max(C.silent - 7, 0)
 		for(var/obj/item/geis_binding/GB in M.held_items)
 			M.dropItemToGround(GB, TRUE)
 		if(iscarbon(M))
