@@ -16,13 +16,12 @@
 
 /obj/effect/abstract/credit
 	icon = 'icons/credits.dmi'
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	layer = SPLASHSCREEN_LAYER
 
 /obj/effect/abstract/credit/Initialize(mapload, credited)
 	. = ..()
-	name = text("\improper []", credited)
 	icon_state = credited
 	maptext = credited
 	maptext_x = world.icon_size + 8
