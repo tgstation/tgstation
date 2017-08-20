@@ -92,7 +92,6 @@
 			var/mob/living/carbon/C = M
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/restraints/handcuffs/energy/clock(C)
-				C.update_handcuffed()
 		M.regenerate_icons()
 		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", "<span class='warning'>A [name] appears around you!</span>")
 		repair_and_interrupt()
