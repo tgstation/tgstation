@@ -8,14 +8,16 @@
 	ClearCredits()
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
-    var/static/list/order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states('icons/credits.dmi') - "Thanks for playing!")
-	for(var/I in order_for_this_round)
+	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states('icons/credits.dmi')) - "Thanks for playing!")
+	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			break
 		_credits += new /obj/screen/credit(null, I, src)
 		sleep(CREDIT_SPAWN_SPEED)
 
-/client/proc/ClearCredits()
+/client/verb/ClearCredits()
+	set name = "Hide Credits"
+	set category = "OOC"
 	for(var/I in credits)
 		var/obj/screen/credit/C = I
 		var/fot = C.fadeout_timer
