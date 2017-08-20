@@ -62,7 +62,7 @@
 				executed = 1
 				target.dos_sources.Add(src)
 				if(GLOB.ntnet_global.intrusion_detection_enabled)
-					var/obj/item/weapon/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
+					var/obj/item/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
 					GLOB.ntnet_global.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [network_card.get_network_tag()]")
 					GLOB.ntnet_global.intrusion_detection_alarm = 1
 			return 1

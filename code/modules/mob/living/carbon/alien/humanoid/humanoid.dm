@@ -2,7 +2,7 @@
 	name = "alien"
 	icon_state = "alien"
 	pass_flags = PASSTABLE
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	var/obj/item/r_store = null
@@ -42,7 +42,7 @@
 	<HR>"}
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "<font color=grey>Empty</font>"]</a>"
 	dat += "<BR><A href='?src=\ref[src];pouches=1'>Empty Pouches</A>"
 
 	if(handcuffed)

@@ -17,7 +17,7 @@
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/neck/wear_neck = null
-	var/obj/item/weapon/tank/internal = null
+	var/obj/item/tank/internal = null
 	var/obj/item/head = null
 
 	var/obj/item/gloves = null //only used by humans
@@ -33,7 +33,7 @@
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
 	has_limbs = 1
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
+	var/obj/item/reagent_containers/food/snacks/meat/slab/type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab
 
 	var/list/obj/effect/proc_holder/alien/abilities = list()
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs

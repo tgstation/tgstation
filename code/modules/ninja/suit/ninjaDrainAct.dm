@@ -97,7 +97,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CELL//
-/obj/item/weapon/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
+/obj/item/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 

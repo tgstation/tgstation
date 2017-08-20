@@ -17,7 +17,7 @@
 	var/active = 0
 	var/strength = 0
 	var/powered = 0
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 /obj/machinery/particle_accelerator/control_box/Initialize()
 	. = ..()
@@ -269,7 +269,7 @@
 
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
+			if(istype(W, /obj/item/wrench) && !isinspace())
 				playsound(loc, W.usesound, 75, 1)
 				anchored = TRUE
 				user.visible_message("[user.name] secures the [name] to the floor.", \
@@ -277,7 +277,7 @@
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
-			if(istype(W, /obj/item/weapon/wrench))
+			if(istype(W, /obj/item/wrench))
 				playsound(loc, W.usesound, 75, 1)
 				anchored = FALSE
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
@@ -292,18 +292,18 @@
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN
 					did_something = TRUE
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			if(istype(W, /obj/item/weapon/wirecutters))//TODO:Shock user if its on?
+			if(istype(W, /obj/item/wirecutters))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [name].", \
 					"You remove some wires.")
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
-			else if(istype(W, /obj/item/weapon/screwdriver))
+			else if(istype(W, /obj/item/screwdriver))
 				user.visible_message("[user.name] closes the [name]'s access panel.", \
 					"You close the access panel.")
 				construction_state = PA_CONSTRUCTION_COMPLETE
 				did_something = TRUE
 		if(PA_CONSTRUCTION_COMPLETE)
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(istype(W, /obj/item/screwdriver))
 				user.visible_message("[user.name] opens the [name]'s access panel.", \
 					"You open the access panel.")
 				construction_state = PA_CONSTRUCTION_PANEL_OPEN

@@ -254,6 +254,21 @@ CREATE TABLE `SS13_messages` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `SS13_role_time`
+--
+
+DROP TABLE IF EXISTS `SS13_role_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE `SS13_role_time` 
+( `ckey` VARCHAR(32) NOT NULL ,
+ `job` VARCHAR(32) NOT NULL ,
+ `minutes` INT UNSIGNED NOT NULL,
+ PRIMARY KEY (`ckey`, `job`) 
+ ) ENGINE = InnoDB;
+
+--
 -- Table structure for table `SS13_player`
 --
 
@@ -268,6 +283,7 @@ CREATE TABLE `SS13_player` (
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
+  `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)

@@ -254,6 +254,21 @@ CREATE TABLE `messages` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `role_time`
+--
+
+DROP TABLE IF EXISTS `role_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE `role_time` 
+( `ckey` VARCHAR(32) NOT NULL ,
+ `job` VARCHAR(32) NOT NULL ,
+ `minutes` INT UNSIGNED NOT NULL,
+ PRIMARY KEY (`ckey`, `job`) 
+ ) ENGINE = InnoDB;
+
+--
 -- Table structure for table `player`
 --
 
@@ -268,6 +283,7 @@ CREATE TABLE `player` (
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
+  `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)

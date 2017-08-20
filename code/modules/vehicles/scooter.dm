@@ -4,7 +4,7 @@
 	icon_state = "scooter"
 
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 		playsound(get_turf(user), 'sound/items/ratchet.ogg', 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
@@ -68,7 +68,7 @@
 		to_chat(M, "<span class='warning'>You can't lift this up when somebody's on it.</span>")
 		return
 	if(over_object == M)
-		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
+		var/obj/item/melee/skateboard/board = new /obj/item/melee/skateboard()
 		M.put_in_hands(board)
 		qdel(src)
 
@@ -81,7 +81,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 		new /obj/item/stack/rods(get_turf(src),10)
 		playsound(get_turf(user), 'sound/items/ratchet.ogg', 50, 1)
@@ -103,7 +103,7 @@
 			qdel(src)
 
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 		playsound(get_turf(user), I.usesound, 50, 1)
 		if(do_after(user, 20, target = src))

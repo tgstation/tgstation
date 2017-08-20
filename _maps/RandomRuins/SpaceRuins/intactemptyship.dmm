@@ -88,8 +88,8 @@
 /area/ruin/space/has_grav/powered/authorship)
 "r" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "s" = (
@@ -119,8 +119,8 @@
 /area/ruin/space/has_grav/powered/authorship)
 "w" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper,
-/obj/item/weapon/pen,
+/obj/item/paper,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "x" = (

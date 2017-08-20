@@ -77,7 +77,7 @@
 
 /obj/effect/ruin_loader
 	name = "random ruin"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	invisibility = 0
 

@@ -62,6 +62,13 @@
 				data["viruses"] = preserve
 	return 1
 
+/datum/reagent/blood/proc/get_diseases()
+	. = list()
+	if(data && data["viruses"])
+		for(var/thing in data["viruses"])
+			var/datum/disease/D = thing
+			. += D
+
 /datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
@@ -148,8 +155,8 @@
 	O.extinguish()
 	O.acid_level = 0
 	// Monkey cube
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
+	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -1075,6 +1082,14 @@
 	name = "Foaming agent"
 	id = "foaming_agent"
 	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+	reagent_state = SOLID
+	color = "#664B63" // rgb: 102, 75, 99
+	taste_description = "metal"
+
+/datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
+	name = "Smart foaming agent"
+	id = "smart_foaming_agent"
+	description = "A agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"

@@ -5,7 +5,7 @@
 	max_occurrences = 3
 	earliest_start = 0
 
-//Note about adding items to this: Because of how NODROP works if an item spawned to the hands can also be equiped to a slot
+//Note about adding items to this: Because of how NODROP_1 works if an item spawned to the hands can also be equiped to a slot
 //it will be able to be put into that slot from the hand, but then get stuck there. To avoid this make a new subtype of any
 //item you want to equip to the hand, and set its slots_flags = null. Only items equiped to hands need do this.
 
@@ -22,7 +22,7 @@
 			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/head/wizard)
 			ruins_spaceworthiness = 1
 		if("swords")
-			loadout[5] = /obj/item/weapon/katana/cursed
+			loadout[5] = /obj/item/katana/cursed
 		if("bigfatdoobie")
 			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
@@ -51,7 +51,7 @@
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
 				H.temporarilyRemoveItemFromInventory(slots[i], TRUE)
 				H.equip_to_slot_or_del(I, wearslots[i])
-				I.flags |= NODROP
+				I.flags_1 |= NODROP_1
 				I.name = "cursed " + I.name
 
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
