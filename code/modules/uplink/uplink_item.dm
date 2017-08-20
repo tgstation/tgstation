@@ -1253,7 +1253,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A bikehorn with a built-in energy sword. Activate through Alt-Click."
 	item = /obj/item/weapon/melee/energy/sword/bikehorn
 	restricted_roles = list("Clown")
-	cost = 7
+	cost = 10
 
 /datum/uplink_item/role_restricted/reverse_revolver
 	name = "Reverse Revolver"
