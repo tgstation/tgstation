@@ -1066,6 +1066,21 @@
 	diag_hud_set_podhealth()
 
 
+/obj/spacepod/verb/rename_pod(new_name as text)
+	set name = "Rename Pod"
+	set desc = "Rename your spacepod"
+	set category = "Spacepod"
+	set src = usr.loc
+	set popup_menu = 0
+
+	if(usr.incapacitated())
+		return
+
+	if(usr != pilot)
+		to_chat(usr, "<span class='danger'>You are unable to rename the pod, as you are not the pilot!</span>")
+	else
+		name = new_name
+
 
 #undef DAMAGE
 #undef FIRE
