@@ -228,7 +228,7 @@
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!second_sound_played)
-				new /obj/effect/temp_visual/decoy/fading/fivesecond(loc, glow)
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', 1))
 				second_sound_played = TRUE
 			make_glow()
@@ -237,14 +237,14 @@
 			if(!third_sound_played)
 				var/area/gate_area = get_area(src)
 				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
-				new /obj/effect/temp_visual/decoy/fading/fivesecond(loc, glow)
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', 1))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				new /obj/effect/temp_visual/decoy/fading/fivesecond(loc, glow)
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', 1))
 				fourth_sound_played = TRUE
 			make_glow()
