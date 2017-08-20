@@ -1,7 +1,7 @@
-#define CREDIT_ROLL_SPEED 150
+#define CREDIT_ROLL_SPEED 125
 #define CREDIT_SPAWN_SPEED 15
 #define CREDIT_ANIMATE_HEIGHT (14 * world.icon_size)
-#define CREDIT_EASE_DURATION 30
+#define CREDIT_EASE_DURATION 22
 
 /client/proc/RollCredits()
 	set waitfor = FALSE
