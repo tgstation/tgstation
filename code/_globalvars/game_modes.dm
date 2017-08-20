@@ -16,3 +16,5 @@ GLOBAL_VAR_INIT(reckoning_complete, FALSE)
 GLOBAL_VAR_INIT(sac_complete, FALSE)
 GLOBAL_DATUM(cult_narsie, /obj/singularity/narsie/large/cult)
 GLOBAL_LIST_EMPTY(summon_spots)
+
+GLOBAL_LIST_INIT(possibleShadowlingNames, list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian"))

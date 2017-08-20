@@ -23,6 +23,7 @@
 		<a href='?src=\ref[src];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=\ref[src];makeAntag=shadowling'>Make Shadowling</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -557,6 +558,39 @@
 	new /datum/round_event/ghost_role/abductor
 	return 1
 
+//Revenant
 /datum/admins/proc/makeRevenant()
 	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
 	return 1
+
+//Shadowling
+/datum/admins/proc/makeShadowling()
+	var/datum/game_mode/shadowling/temp = new
+	if(config.protect_roles_from_antagonist)
+		temp.restricted_jobs += temp.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H = null
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
+		if(ROLE_SHADOWLING in applicant.client.prefs.be_special)
+			if(!applicant.stat)
+				if(applicant.mind)
+					if(!applicant.mind.special_role)
+						if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate"))
+							if(temp.age_check(applicant.client))
+								if(!(applicant.job in temp.restricted_jobs))
+									if(!(is_shadow_or_thrall(applicant)))
+										candidates += applicant
+
+	if(candidates.len)
+		H = pick(candidates)
+		SSticker.mode.shadows += H.mind
+		H.mind.special_role = "shadowling"
+		to_chat(H, "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
+		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>")
+		SSticker.mode.finalize_shadowling(H.mind)
+		message_admins("[H] has been made into a shadowling.")
+		candidates.Remove(H)
+		return 1
+	return 0
