@@ -50,8 +50,8 @@
 
 /mob/living/simple_animal/hostile/gorilla/AttackingTarget()
 	var/list/parts = target_bodyparts(target)
-	if(parts != null)
-		if(LAZYLEN(parts) == 0)
+	if(parts)
+		if(!parts.len)
 			return FALSE
 		var/obj/item/bodypart/BP = pick(parts)
 		BP.dismember()
@@ -67,17 +67,11 @@
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)
-	. = ..()
-	if(. && istype(the_target, /mob/living/carbon/monkey))
-		return FALSE
-	var/list/parts = target_bodyparts(the_target)
-	if(parts != null && LAZYLEN(parts) <= 3) // Don't remove all of their limbs.
-		return FALSE
+	var/list/parts = target_bodyparts(target)
+	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
 
-/mob/living/simple_animal/hostile/gorilla/handle_automated_speech(var/override)
-	set waitfor = FALSE
-	if(speak_chance)
-		if(override || (target && prob(speak_chance)))
-			playsound(loc, "sound/creatures/gorilla.ogg", 200)
+/mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
+	if(speak_chance && (override || prob(speak_chance)))
+		playsound(src, "sound/creatures/gorilla.ogg", 200)
 	..()
 

@@ -502,7 +502,7 @@
 	var/Itemlist = get_equipped_items()
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
-		dropItemToGround(W)
+		dropItemToGround(W, TRUE)
 
 	regenerate_icons()
 	notransform = TRUE

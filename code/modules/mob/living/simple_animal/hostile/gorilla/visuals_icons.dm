@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile/gorilla/proc/apply_overlay(cache_index)
-	if((. = gorilla_overlays[cache_index]))
+	. = gorilla_overlays[cache_index]
+	if(.)
 		add_overlay(.)
 
 /mob/living/simple_animal/hostile/gorilla/proc/remove_overlay(cache_index)
@@ -14,7 +15,9 @@
 
 	var/standing = FALSE
 	for(var/I in held_items)
-		standing |= I != null
+		if(I)
+			standing = TRUE
+			break
 	if(!standing)
 		if(stat != DEAD)
 			icon_state = "crawling"
