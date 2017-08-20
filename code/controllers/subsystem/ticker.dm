@@ -465,6 +465,10 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
+	for(var/client/C in GLOB.clients)
+		if(!C.credits)
+			C.RollCredits()
+
 	//Player status report
 	for(var/mob/Player in GLOB.mob_list)
 		if(Player.mind && !isnewplayer(Player))
