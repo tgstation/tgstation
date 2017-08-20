@@ -200,15 +200,22 @@
 	research_cost = 5000
 	export_price = 5000
 
+/datum/techweb_node/clown
+	id = "clown"
+	display_name = "Clown Technology"
+	description = "Honk?!"
+	prereq_ids = list("base")
+	design_ids = list("air_horn", "honker_main", "honker_peri", "honker_targ", "honk_chassis", "honk_head", "honk_torso", "honk_left_arm", "honk_right_arm",
+	"honk_left_leg", "honk_right_leg", "mech_banana_mortar", "mech_mousetrap_mortar", "mech_honker", "mech_punch_face", "implant_trombone")
+	research_cost = 5000
+	export_price = 5000
+
+
 /////////////////////////////////////////
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
-/datum/design/air_horn
-	name = "Air Horn"
-	desc = "Damn son, where'd you find this?"
-	id = "air_horn"
 /datum/design/magboots
 	name = "Magnetic Boots"
 	id = "magboots"
@@ -381,10 +388,6 @@
 /datum/design/implantcase
 	name = "Implant Case"
 	id = "implantcase"
-/datum/design/implant_sadtrombone
-	name = "Sad Trombone Implant Case"
-	id = "implant_trombone"
-	build_path = /obj/item/weapon/implantcase/sad_trombone
 /datum/design/implant_chem
 	name = "Chemical Implant Case"
 	id = "implant_chem"
@@ -596,42 +599,6 @@
 	id = "durand_armor"
 	build_path = /obj/item/mecha_parts/part/durand_armor
 	construction_time = 600
-//H.O.N.K
-/datum/design/honk_chassis
-	name = "Exosuit Chassis (\"H.O.N.K\")"
-	id = "honk_chassis"
-	build_path = /obj/item/mecha_parts/chassis/honker
-	construction_time = 100
-/datum/design/honk_torso
-	name = "Exosuit Torso (\"H.O.N.K\")"
-	id = "honk_torso"
-	build_path = /obj/item/mecha_parts/part/honker_torso
-	construction_time = 300
-/datum/design/honk_head
-	name = "Exosuit Head (\"H.O.N.K\")"
-	id = "honk_head"
-	build_path = /obj/item/mecha_parts/part/honker_head
-	construction_time = 200
-/datum/design/honk_left_arm
-	name = "Exosuit Left Arm (\"H.O.N.K\")"
-	id = "honk_left_arm"
-	build_path = /obj/item/mecha_parts/part/honker_left_arm
-	construction_time = 200
-/datum/design/honk_right_arm
-	name = "Exosuit Right Arm (\"H.O.N.K\")"
-	id = "honk_right_arm"
-	build_path = /obj/item/mecha_parts/part/honker_right_arm
-	construction_time = 200
-/datum/design/honk_left_leg
-	name = "Exosuit Left Leg (\"H.O.N.K\")"
-	id = "honk_left_leg"
-	build_path =/obj/item/mecha_parts/part/honker_left_leg
-	construction_time = 200
-/datum/design/honk_right_leg
-	name = "Exosuit Right Leg (\"H.O.N.K\")"
-	id = "honk_right_leg"
-	build_path = /obj/item/mecha_parts/part/honker_right_leg
-	construction_time = 200
 //Phazon
 /datum/design/phazon_chassis
 	name = "Exosuit Chassis (\"Phazon\")"
@@ -704,26 +671,6 @@
 	id = "mech_generator"
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
 	construction_time = 100
-/datum/design/mech_mousetrap_mortar
-	name = "H.O.N.K Mousetrap Mortar"
-	id = "mech_mousetrap_mortar"
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
-	construction_time = 300
-/datum/design/mech_banana_mortar
-	name = "H.O.N.K Banana Mortar"
-	id = "mech_banana_mortar"
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
-	construction_time = 300
-/datum/design/mech_honker
-	name = "HoNkER BlAsT 5000"
-	id = "mech_honker"
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/honker
-	construction_time = 500
-/datum/design/mech_punching_glove
-	name = "Oingo Boingo Punch-face"
-	id = "mech_punching_face"
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
-	construction_time = 400
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////
@@ -1055,18 +1002,6 @@
 	name = "\"Durand\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
 	id = "durand_targ"
-/datum/design/board/honker_main
-	name = "\"H.O.N.K\" Central Control module"
-	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
-	id = "honker_main"
-/datum/design/board/honker_peri
-	name = "\"H.O.N.K\" Peripherals Control module"
-	desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
-	id = "honker_peri"
-/datum/design/board/honker_targ
-	name = "\"H.O.N.K\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
-	id = "honker_targ"
 /datum/design/board/phazon_main
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
