@@ -233,14 +233,17 @@
 	name = ""
 	desc = "An energy blade extends from the bikehorn. Where's your god now?"
 	var/canSword = FALSE
-	var/obj/item/device/assembly/bikehorn/horn = new()
+	var/obj/item/weapon/bikehorn = new()
 	
-/obj/item/weapon/melee/energy/sword/bikehorn/New()
-	..()
-	name = horn.name
-	icon_state = horn.icon_state
-	icon = horn.icon
-	horn.forceMove(src)
+/obj/item/weapon/melee/energy/sword/bikehorn/Initialize()
+    update_icon()
+    return ..()
+
+/obj/item/weapon/melee/energy/sword/bikehorn/update_icon()
+    name = horn.name
+    icon_state = horn.icon_state
+    icon = horn.icon
+    horn.forceMove(src)
 	
 /obj/item/weapon/melee/transforming/energy/sword/bikehorn/examine(mob/user)
 	if(!active)
@@ -251,7 +254,7 @@
  /obj/item/weapon/melee/transforming/energy/sword/bikehorn/attack_self(mob/living/carbon/L)
 	if(canSword)
 		activate(L)
-		playsound(loc, 'sound/items/bikehorn.ogg', 80, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', 80, 1)
 	else
 		horn.attack_self(L)
 
@@ -259,7 +262,7 @@
 	if(!active)
 		horn.attack(M,user)
 	else
-		playsound(loc, 'sound/items/bikehorn.ogg', 80, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', 80, 1)
 		..()
 
  /obj/item/weapon/melee/transforming/energy/sword/bikehorn/Crossed(mob/living/L)
@@ -268,7 +271,7 @@
 	else
 		..()
  
- /obj/item/weapon/melee/transforming/energy/sword/bikehorn/setIcon()
+ /obj/item/weapon/melee/transforming/energy/sword/bikehorn/update_icon()
 	if(active)
 		item_state = "swordpink"
 		icon = 'icons/obj/weapons.dmi'
@@ -282,8 +285,8 @@
 	if(L.mind.special_role)
 		canSword = !canSword
 		if(canSword)
-			L << "<span class='notice'>You squeeze the [name]. Honking it will now extend an esword.</span>"
+			to_chat(user, "<span class='notice'>You squeeze the [src]. Honking it will now extend an energy sword.</span>")
 		else
- 			L << "<span class='notice'>You squeeze the [name]. It functions like a normal bikehorn again.</span>"
+ 			to_chat(user, "<span class='notice'>You squeeze the [src]. It functions like a normal bikehorn again.</span>")
 		if(active)
 			activate(L) 
