@@ -20,7 +20,9 @@
 /obj/item/device/assault_pod
 	name = "Assault Pod Targetting Device"
 	icon_state = "gangtool-red"
-	item_state = "walkietalkie"
+	item_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."
 	var/shuttle_id = "steel_rain"
 	var/dwidth = 3

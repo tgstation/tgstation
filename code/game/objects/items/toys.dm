@@ -40,6 +40,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
+	
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
@@ -278,6 +279,8 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamblade"
 	item_state = "arm_blade"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
@@ -288,6 +291,8 @@
 	desc = "A replica toolbox that rumbles when you turn the key"
 	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	var/active = FALSE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	attack_verb = list("robusted")
@@ -547,6 +552,8 @@
 	desc = "A tool to help you write fictional devils!"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "demonomicon"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
 
