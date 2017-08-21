@@ -229,5 +229,5 @@
 /obj/proc/gang_contraband_value()
 	return 0
 
-/obj/disable_light() //used for forcing a light off. shadowlings, for example
+/obj/proc/disable_light() //used for forcing a light off. shadowlings, for example
 	return 0
