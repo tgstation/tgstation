@@ -11,9 +11,6 @@
 
 	name = e_name
 	desc = "A [name] vandalizing the station."
-	if(type == "poseur tag")
-		type = pick(GLOB.gang_name_pool)
-
 	if(alt_icon)
 		icon = alt_icon
 	icon_state = type

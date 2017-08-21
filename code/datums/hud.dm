@@ -74,8 +74,6 @@ GLOBAL_LIST_INIT(huds, list(
 
 //MOB PROCS
 /mob/proc/reload_huds()
-	var/gang_huds = list()
-	if(SSticker.mode)
 	for(var/datum/atom_hud/hud in (GLOB.huds|GLOB.active_alternate_appearances))
 		if(hud && hud.hudusers[src])
 			hud.add_hud_to(src)
