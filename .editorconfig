@@ -2,3 +2,4 @@
 insert_final_newline = false
 indent_style = tab
 indent_size = 4
+ban_count = 1
