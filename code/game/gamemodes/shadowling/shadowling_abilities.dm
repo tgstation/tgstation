@@ -67,25 +67,15 @@
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
 	var/admin_override = 0 //Requested by Shadowlight213. Allows anyone to cast the spell, not just shadowlings.
 
-/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishItem(obj/item/I) //Does not darken items held by mobs due to mobs having separate luminosity, use extinguishMob() or write your own proc.
-	if(istype(I, /obj/item/device/flashlight))
-		var/obj/item/device/flashlight/F = I
-		if(F.on)
-			if(is_type_in_list(I, blacklisted_lights))
-				I.visible_message("<span class='danger'>[I] dims slightly before scattering the shadows around it.</span>")
-				return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
-			F.on = 0
-			F.update_brightness()
-	else if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/P = I
-		P.fon = 0
+/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishObj(obj/I) //Does not darken items held by mobs due to mobs having separate luminosity, use extinguishMob() or write your own proc.
 	I.set_light(0)
+	I.disable_light()
 	return I.luminosity
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(mob/living/H)
 	var/blacklistLuminosity = 0
 	for(var/obj/item/F in H)
-		blacklistLuminosity += extinguishItem(F)
+		blacklistLuminosity += extinguishObj(F)
 	H.set_light(blacklistLuminosity) //I hate lightcode for making me do it this way
 
 
@@ -95,20 +85,11 @@
 		return
 	to_chat(user, "<span class='shadowling'>You silently disable all nearby lights.</span>")
 	for(var/turf/T in view(5))
-		for(var/obj/item/F in T.contents)
-			extinguishItem(F)
-		for(var/obj/machinery/light/L in T.contents)
-			L.on = 0
-			L.visible_message("<span class='warning'>[L] flickers and falls dark.</span>")
-			L.update(0)
-		for(var/obj/machinery/computer/C in T.contents)
-			C.set_light(0)
-			C.visible_message("<span class='warning'>[C] grows dim, its screen barely readable.</span>")
+		for(var/obj/F in T.contents)
+			extinguishObj(F)
 		for(var/obj/structure/glowshroom/G in orange(7, user)) //High radius because glowshroom spam wrecks shadowlings
 			G.visible_message("<span class='warning'>[G] withers away!</span>")
 			qdel(G)
-		for(var/mob/living/H in T.contents)
-			extinguishMob(H)
 		for(var/mob/living/silicon/robot/borgie in T.contents)
 			borgie.update_headlamp(TRUE, 150)
 			borgie.lamp_recharging = TRUE

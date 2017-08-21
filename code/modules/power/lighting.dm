@@ -175,6 +175,10 @@
 
 // the smaller bulb light fixture
 
+/obj/machinery/light/disable_light()
+	on = FALSE
+	update(0)
+
 /obj/machinery/light/small
 	icon_state = "bulb1"
 	base_state = "bulb"

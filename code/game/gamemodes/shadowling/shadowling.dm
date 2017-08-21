@@ -142,11 +142,8 @@ Made by Xhuis
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hatch(null))
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hivemind(null))
 	update_shadow_icons_added(shadow_mind)
-	INVOKE_ASYNC(src, .proc/unclown, S, "Your alien nature has allowed you to overcome your clownishness.")
-
-/datum/game_mode/proc/unclown(mob/living/carbon/human/S, fluff_message)
 	if(shadow_mind.assigned_role == "Clown")
-		to_chat(S, "<span class='notice'>[fluff_message]</span>")
+		to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
 		S.dna.remove_mutation(CLOWNMUT)
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
