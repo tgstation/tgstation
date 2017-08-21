@@ -376,6 +376,12 @@
 	message = "yawns."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/headpat
+	key = "pat"
+	key_third_person = "pats"
+	message = "pats the air in front of them."
+	message_param = "pats %t on the head."
+
 /datum/emote/living/custom
 	key = "me"
 	key_third_person = "custom"
