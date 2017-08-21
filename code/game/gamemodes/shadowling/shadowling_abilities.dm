@@ -147,6 +147,7 @@
 	action_icon = 'icons/mob/actions/actions_sling.dmi'
 	var/enthralling = 0
 
+
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets,mob/living/carbon/human/user = usr)
 	listclearnulls(SSticker.mode.thralls)
 	if(!(user.mind in SSticker.mode.shadows)) return

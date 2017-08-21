@@ -512,7 +512,6 @@
 #include "code\game\gamemodes\shadowling\ascendant_shadowling.dm"
 #include "code\game\gamemodes\shadowling\shadowling.dm"
 #include "code\game\gamemodes\shadowling\shadowling_abilities.dm"
-#include "code\game\gamemodes\shadowling\shadowling_items.dm"
 #include "code\game\gamemodes\shadowling\special_shadowling_abilities.dm"
 #include "code\game\gamemodes\traitor\double_agents.dm"
 #include "code\game\gamemodes\traitor\traitor.dm"

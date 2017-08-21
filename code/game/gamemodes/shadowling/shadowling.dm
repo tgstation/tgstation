@@ -266,10 +266,13 @@ Made by Xhuis
 	name = "Shadowling"
 	id = "shadowling"
 	say_mod = "chitters"
-	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
+	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS,RESISTCOLD,RESISTPRESSURE,NO_UNDERWEAR) //Can't use guns due to muzzle flash
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	nojumpsuit = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision/alien/sling
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
+
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0

@@ -91,12 +91,6 @@
 			H.faction |= "faithless"
 			H.shadow_walk = TRUE
 
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(H), slot_w_uniform)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(H), slot_shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(H), slot_wear_suit)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(H), slot_head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(H), slot_gloves)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(H), slot_wear_mask)
 			H.set_species(/datum/species/shadow/ling) //can't be a shadowling without being a shadowling
 
 			H.mind.RemoveSpell(src)
