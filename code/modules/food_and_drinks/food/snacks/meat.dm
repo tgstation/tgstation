@@ -225,7 +225,16 @@
 	tastes = list("meat" = 1, "wheat" = 1)
 	foodtype = GRAIN
 
+<<<<<<< HEAD
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
+=======
+/obj/item/reagent_containers/food/snacks/meat/slab/gorilla
+	name = "gorilla meat"
+	desc = "Much meatier than monkey meat."
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/rawbacon
+>>>>>>> d2290096c5... Gorillas (#29923)
 	name = "raw piece of bacon"
 	desc = "A raw piece of bacon."
 	icon_state = "bacon"
