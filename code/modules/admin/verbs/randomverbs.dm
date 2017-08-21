@@ -970,10 +970,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(istype(H, /datum/atom_hud/antag))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
-	for(var/datum/gang/G in SSticker.mode.gangs)
-		var/datum/atom_hud/antag/H = G.ganghud
-		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-
 	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
