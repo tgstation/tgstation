@@ -399,8 +399,8 @@
 	if(!req_defib && !combat)
 		return
 	busy = TRUE
-	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
-			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
+	M.visible_message("<span class='danger'>[user] touched [M] with [src]!</span>", \
+			"<span class='userdanger'>[user] touched you with [src]!</span>")
 	M.adjustStaminaLoss(50)
 	M.Knockdown(100)
 	M.updatehealth() //forces health update before next life tick

@@ -82,8 +82,8 @@
 		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
 			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
 		if(!blocked)
-			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
-							"<span class='userdanger'>[src] has been hit by [I].</span>")
+			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
+							"<span class='userdanger'>You're hit by [I]!</span>")
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
@@ -113,8 +113,8 @@
 			else
 				return
 		updatehealth()
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-						"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[M.name] hit [src]!</span>", \
+						"<span class='userdanger'>[M.name] hit you!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
@@ -157,14 +157,14 @@
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
 				add_logs(user, src, "grabbed", addition="aggressive grab")
-				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
+				visible_message("<span class='danger'>[user] grabbed [src] aggressively!</span>", \
+								"<span class='userdanger'>[user] grabbed you aggressively!</span>")
 				drop_all_held_items()
 				stop_pulling()
 			if(GRAB_NECK)
 				add_logs(user, src, "grabbed", addition="neck grab")
-				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
-								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
+				visible_message("<span class='danger'>[user] grabbed [src] by the neck!</span>",\
+								"<span class='userdanger'>[user] grabbed you by the neck!</span>")
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
@@ -191,8 +191,8 @@
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>The [M.name] glomped [src]!</span>", \
+				"<span class='userdanger'>The [M.name] glomped you!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
@@ -205,7 +205,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='userdanger'>\The [M] [M.attacktext] you!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M, src, "attacked")
 		return 1
 
@@ -223,12 +223,12 @@
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[M.name] bit [src]!</span>", \
+					"<span class='userdanger'>[M.name] bit you!</span>", null, COMBAT_MESSAGE_RANGE)
 			return 1
 		else
-			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[M.name] attempted to bite [src]!</span>", \
+				"<span class='userdanger'>[M.name] attempted to bite you!</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
@@ -241,19 +241,19 @@
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
-				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[L.name] bit [src]!</span>", \
+					"<span class='userdanger'>[L.name] bit you!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
-				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[L.name] attempted to bite [src]!</span>", \
+					"<span class='userdanger'>[L.name] attempted to bite you!</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	switch(M.a_intent)
 		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe-like arm.</span>")
 			return 0
 
 		if ("grab")

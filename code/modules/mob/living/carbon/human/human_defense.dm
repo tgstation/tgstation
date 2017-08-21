@@ -177,9 +177,8 @@
 			return
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/message = "[user] has [hulk_verb]ed [src]!"
-		visible_message("<span class='danger'>[message]</span>", \
-								"<span class='userdanger'>[message]</span>")
+		visible_message("<span class='danger'>[user] [hulk_verb]ed [src]!</span>", \
+								"<span class='userdanger'>[user] [hulk_verb]ed you!</span>")
 		adjustBruteLoss(15)
 		damage_clothes(15, BRUTE, "melee")
 		return 1
@@ -208,13 +207,13 @@
 		if(get_active_held_item() && drop_item())
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-					"<span class='userdanger'>[M] disarmed [src]!</span>")
+					"<span class='userdanger'>[M] disarmed you!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			Knockdown(100)
 			add_logs(M, src, "tackled")
-			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-				"<span class='userdanger'>[M] has tackled down [src]!</span>")
+			visible_message("<span class='danger'>[M] tackled [src] down!</span>", \
+				"<span class='userdanger'>[M] tackled you down!</span>")
 
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
@@ -241,8 +240,8 @@
 			var/damage = prob(90) ? 20 : 0
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
-					"<span class='userdanger'>[M] has lunged at [src]!</span>")
+				visible_message("<span class='danger'>[M] lunged at [src]!</span>", \
+					"<span class='userdanger'>[M] lunged at you!</span>")
 				return 0
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			if(!affecting)
@@ -250,8 +249,8 @@
 			var/armor_block = run_armor_check(affecting, "melee","","",10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-				"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			visible_message("<span class='danger'>[M] slashed at [src]!</span>", \
+				"<span class='userdanger'>[M] slashed at you!</span>")
 			add_logs(M, src, "attacked")
 			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
 				return 1
@@ -262,13 +261,13 @@
 			if(get_active_held_item() && drop_item())
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-						"<span class='userdanger'>[M] disarmed [src]!</span>")
+						"<span class='userdanger'>[M] disarmed you!</span>")
 			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Knockdown(100)
 				add_logs(M, src, "tackled")
-				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-					"<span class='userdanger'>[M] has tackled down [src]!</span>")
+				visible_message("<span class='danger'>[M] tackled [src] down!</span>", \
+					"<span class='userdanger'>[M] tackled you down!</span>")
 
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)
@@ -353,8 +352,8 @@
 				update_damage_overlays()
 			updatehealth()
 
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[M.name] hit [src]!</span>", \
+								"<span class='userdanger'>[M.name] hit you!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else

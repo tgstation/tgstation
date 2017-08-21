@@ -1105,8 +1105,8 @@
 
 		if(!damage || !affecting)
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
-			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
-			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[user] attempted to [atk_verb] [target]!</span>",\
+			"<span class='userdanger'>[user] attempted to [atk_verb] you!</span>", null, COMBAT_MESSAGE_RANGE)
 			return 0
 
 
@@ -1114,16 +1114,16 @@
 
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 
-		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
-					"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
+					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 		target.apply_damage(damage, BRUTE, affecting, armor_block)
 		add_logs(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
-							"<span class='userdanger'>[user] has knocked [target] down!</span>")
+			target.visible_message("<span class='danger'>[user] knocked  [target] down!</span>", \
+							"<span class='userdanger'>[user] knocked you down!</span>")
 			target.apply_effect(80, KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
@@ -1146,8 +1146,8 @@
 		var/randn = rand(1, 100)
 		if(randn <= 25)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
-				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[user] pushed [target]!</span>",
+				"<span class='userdanger'>[user] pushed you!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(40, KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
@@ -1161,8 +1161,8 @@
 			else
 				I = target.get_active_held_item()
 				if(target.drop_item())
-					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
-						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+					target.visible_message("<span class='danger'>[user] disarmed [target]!</span>", \
+						"<span class='userdanger'>[user] disarmed you!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
 					I = null
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -1172,7 +1172,7 @@
 
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
-						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='userdanger'>[user] attemped to disarm you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 
 
@@ -1258,8 +1258,8 @@
 			if("head")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
-										"<span class='userdanger'>[H] has been knocked senseless!</span>")
+						H.visible_message("<span class='danger'>[H] is knocked senseless!</span>", \
+										"<span class='userdanger'>You're knocked senseless!</span>")
 						H.confused = max(H.confused, 20)
 						H.adjust_blurriness(10)
 
@@ -1280,8 +1280,8 @@
 			if("chest")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
-									"<span class='userdanger'>[H] has been knocked down!</span>")
+						H.visible_message("<span class='danger'>[H] is knocked down!</span>", \
+									"<span class='userdanger'>You're knocked down!</span>")
 						H.apply_effect(60, KNOCKDOWN, armor_block)
 
 				if(bloody)
