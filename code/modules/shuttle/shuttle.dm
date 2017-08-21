@@ -535,7 +535,7 @@
 			continue
 		for(var/thing in oldT) //Needs to be this kind of loop in case, because of shuttle rotation shenanigans, the destination turf is the same as the source turf
 			var/atom/movable/moving_atom = thing
-			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)	//atoms
 			moved_atoms += moving_atom
 		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force, movement_direction) 	//turfs
 		var/area/shuttle_area = oldT.loc
