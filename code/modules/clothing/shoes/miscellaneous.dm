@@ -94,6 +94,21 @@
 	desc = "A court jesters shoes, updated with modern squeaking technology."
 	icon_state = "jester_shoes"
 
+/obj/item/clothing/shoes/bees
+	name = "Bee shoes"
+	desc = "to revert bee or to revert revert bee, that is the question"
+	icon_state = "bee_shoes"
+	slowdown = SHOES_SLOWDOWN+1
+	var/footstep = TRUE	//used for squeeks whilst walking
+
+/obj/item/clothing/shoes/bees/step_action()
+	if(footstep)
+		playsound(src, 'sound/effects/fuck.ogg', 50, 1)
+	else
+		playsound(src, 'sound/effects/bees.ogg', 50, 1)
+	footstep = !footstep
+
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
