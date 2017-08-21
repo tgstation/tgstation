@@ -13,7 +13,7 @@
 	maxHealth = 220
 	health = 220
 	loot = list(/obj/effect/gibspawner/generic)
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/gorilla = 4)
 	response_help  = "prods"
 	response_disarm = "challenges"
 	response_harm   = "thumps"
