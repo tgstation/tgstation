@@ -33,14 +33,14 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	if(!M)
+	if(QDELETED(M))
 		return
 	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.origin = src
 	the_eye.dir = M.dir
 	var/area/A = get_area(M)
-	if(!A)
+	if(QDELETED(A))
 		return
 	var/turf/origin = locate(M.x + x_offset, M.y + y_offset, M.z)
 	for(var/turf/T in A)
@@ -59,7 +59,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	..()
-	if(user && user.client)
+	if(!QDELETED(user) && user.client)
 		var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 		user.client.images += the_eye.placement_images
 		user.client.images += the_eye.placed_images
@@ -67,7 +67,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/remove_eye_control(mob/living/user)
 	..()
-	if(user && user.client)
+	if(!QDELETED(user) && user.client)
 		var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 		user.client.images -= the_eye.placement_images
 		user.client.images -= the_eye.placed_images
@@ -173,7 +173,7 @@
 	user.sight = BLIND|SEE_TURFS
 	user.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	user.sync_lighting_plane_alpha()
-	return 1
+	return TRUE
 
 /datum/action/innate/shuttledocker_rotate
 	name = "Rotate"
@@ -181,7 +181,7 @@
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/shuttledocker_rotate/Activate()
-	if(!target || !isliving(target))
+	if(QDELETED(target) || !isliving(target))
 		return
 	var/mob/living/C = target
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
@@ -194,7 +194,7 @@
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/innate/shuttledocker_place/Activate()
-	if(!target || !isliving(target))
+	if(QDELETED(target) || !isliving(target))
 		return
 	var/mob/living/C = target
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
@@ -209,7 +209,7 @@
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/shuttle_docker/Activate()
-	if(!target || !isliving(target))
+	if(QDELETED(target) || !isliving(target))
 		return
 	var/mob/living/C = target
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
@@ -229,6 +229,8 @@
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
+	if(QDELETED(src) || QDELETED(target) || !isliving(target))
+		return
 	playsound(src, "terminal_type", 25, 0)
 	if(selected)
 		var/turf/T = get_turf(L[selected])
