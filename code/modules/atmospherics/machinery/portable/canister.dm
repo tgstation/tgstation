@@ -189,8 +189,9 @@
 #define CONNECTED 2
 #define EMPTY 4
 #define LOW 8
-#define FULL 16
-#define DANGER 32
+#define MEDIUM 16
+#define FULL 32
+#define DANGER 64
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
@@ -207,9 +208,11 @@
 	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
 		update |= EMPTY
-	else if(pressure < ONE_ATMOSPHERE)
+	else if(pressure < 5 * ONE_ATMOSPHERE)
 		update |= LOW
-	else if(pressure < 15 * ONE_ATMOSPHERE)
+	else if(pressure < 10 * ONE_ATMOSPHERE)
+		update |= MEDIUM
+	else if(pressure < 40 * ONE_ATMOSPHERE)
 		update |= FULL
 	else
 		update |= DANGER
@@ -222,9 +225,9 @@
 		add_overlay("can-open")
 	if(update & CONNECTED)
 		add_overlay("can-connector")
-	if(update & EMPTY)
+	if(update & LOW)
 		add_overlay("can-o0")
-	else if(update & LOW)
+	else if(update & MEDIUM)
 		add_overlay("can-o1")
 	else if(update & FULL)
 		add_overlay("can-o2")
@@ -234,6 +237,7 @@
 #undef CONNECTED
 #undef EMPTY
 #undef LOW
+#undef MEDIUM
 #undef FULL
 #undef DANGER
 
@@ -243,7 +247,7 @@
 
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			canister_break()
 		if(disassembled)
@@ -252,9 +256,9 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
-	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/W, mob/user, params)
+	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
 				return
@@ -269,7 +273,7 @@
 		return ..()
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
-	if((stat & BROKEN) || (flags & NODECONSTRUCT))
+	if((flags_1 & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
 	canister_break()
 

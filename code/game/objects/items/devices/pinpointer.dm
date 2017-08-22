@@ -1,10 +1,10 @@
 //Pinpointers are used to track atoms from a distance as long as they're on the same z-level. The captain and nuke ops have ones that track the nuclear authentication disk.
-/obj/item/weapon/pinpointer
+/obj/item/pinpointer
 	name = "pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
@@ -19,16 +19,16 @@
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
 	var/alert = FALSE // TRUE to display things more seriously
 
-/obj/item/weapon/pinpointer/New()
+/obj/item/pinpointer/New()
 	..()
 	GLOB.pinpointer_list += src
 
-/obj/item/weapon/pinpointer/Destroy()
+/obj/item/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	GLOB.pinpointer_list -= src
 	return ..()
 
-/obj/item/weapon/pinpointer/attack_self(mob/living/user)
+/obj/item/pinpointer/attack_self(mob/living/user)
 	active = !active
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
@@ -39,17 +39,17 @@
 		STOP_PROCESSING(SSfastprocess, src)
 	update_pointer_overlay()
 
-/obj/item/weapon/pinpointer/process()
+/obj/item/pinpointer/process()
 	if(!active)
 		STOP_PROCESSING(SSfastprocess, src)
 		return
 	scan_for_target()
 	update_pointer_overlay()
 
-/obj/item/weapon/pinpointer/proc/scan_for_target()
+/obj/item/pinpointer/proc/scan_for_target()
 	return
 
-/obj/item/weapon/pinpointer/proc/update_pointer_overlay()
+/obj/item/pinpointer/proc/update_pointer_overlay()
 	cut_overlays()
 	if(!active)
 		return
@@ -72,12 +72,12 @@
 			if(16 to INFINITY)
 				add_overlay("pinon[alert ? "alert" : "far"]")
 
-/obj/item/weapon/pinpointer/crew // A replacement for the old crew monitoring consoles
+/obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 
-/obj/item/weapon/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
+/obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
 	if((H.z == 0 || H.z == here.z) && istype(H.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = H.w_uniform
@@ -91,7 +91,7 @@
 
 	return FALSE
 
-/obj/item/weapon/pinpointer/crew/attack_self(mob/living/user)
+/obj/item/pinpointer/crew/attack_self(mob/living/user)
 	if(active)
 		active = FALSE
 		user.visible_message("<span class='notice'>[user] deactivates their pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
@@ -110,7 +110,7 @@
 
 		var/name = "Unknown"
 		if(H.wear_id)
-			var/obj/item/weapon/card/id/I = H.wear_id.GetID()
+			var/obj/item/card/id/I = H.wear_id.GetID()
 			name = I.registered_name
 
 		while(name in name_counts)
@@ -134,7 +134,7 @@
 	START_PROCESSING(SSfastprocess, src)
 	update_pointer_overlay()
 
-/obj/item/weapon/pinpointer/crew/scan_for_target()
+/obj/item/pinpointer/crew/scan_for_target()
 	if(target)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -143,7 +143,7 @@
 	if(!target)
 		active = FALSE
 
-/obj/item/weapon/pinpointer/process()
+/obj/item/pinpointer/process()
 	if(!active)
 		STOP_PROCESSING(SSfastprocess, src)
 		return

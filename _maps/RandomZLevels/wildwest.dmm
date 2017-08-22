@@ -171,7 +171,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "aL" = (
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/grinder{
+/obj/item/paper/fluff/awaymissions/wildwest/grinder{
 	info = "meat grinder requires sacri"
 	},
 /turf/open/floor/plasteel/cult{
@@ -363,7 +363,7 @@
 /area/awaymission/wwmines)
 "bC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "bD" = (
@@ -379,7 +379,7 @@
 /area/awaymission/wwmines)
 "bG" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/book/manual/barman_recipes,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "bH" = (
@@ -392,16 +392,16 @@
 /area/awaymission/wwmines)
 "bJ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
 /area/awaymission/wwmines)
 "bK" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/book/manual/chef_recipes,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -421,11 +421,11 @@
 /area/awaymission/wwmines)
 "bN" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -601,14 +601,14 @@
 /area/awaymission/wwgov)
 "cg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page4,
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page4,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
 /area/awaymission/wwmines)
 "ch" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -641,7 +641,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "co" = (
-/obj/item/weapon/storage/bag/money,
+/obj/item/storage/bag/money,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "cp" = (
@@ -682,7 +682,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwgov)
 "cx" = (
-/obj/item/weapon/storage/bag/money,
+/obj/item/storage/bag/money,
 /turf/open/floor/carpet,
 /area/awaymission/wwgov)
 "cy" = (
@@ -705,7 +705,7 @@
 /area/awaymission/wwmines)
 "cC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "cD" = (
@@ -742,17 +742,17 @@
 /area/awaymission/wwmines)
 "cJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "cK" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/saltshaker,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "cL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/twohanded/dualsaber,
+/obj/item/twohanded/dualsaber,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "cM" = (
@@ -821,22 +821,22 @@
 /turf/open/floor/plating,
 /area/awaymission/wwrefine)
 "cU" = (
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page1,
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page1,
 /turf/open/floor/carpet,
 /area/awaymission/wwgov)
 "cV" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight,
+/obj/item/reagent_containers/food/snacks/soup/monkeysdelight,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "cW" = (
 /obj/structure/table/wood,
-/obj/item/weapon/kitchen/knife/butcher,
+/obj/item/kitchen/knife/butcher,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "cX" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
+/obj/item/reagent_containers/food/snacks/soup/stew,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "cY" = (
@@ -879,17 +879,17 @@
 /area/awaymission/wwgov)
 "dd" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/store/bread/creamcheese,
+/obj/item/reagent_containers/food/snacks/store/bread/creamcheese,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "de" = (
 /obj/structure/table/wood,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "df" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon,
+/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "dg" = (
@@ -958,25 +958,25 @@
 /area/space)
 "dp" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/brown,
+/obj/item/bedsheet/brown,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "dq" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "dr" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "ds" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
+/obj/item/reagent_containers/food/drinks/bottle/patron,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "dt" = (
@@ -1054,7 +1054,7 @@
 /area/awaymission/wwmines)
 "dH" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "dI" = (
@@ -1182,22 +1182,22 @@
 /area/awaymission/wwmines)
 "dY" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly,
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "dZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "ea" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+/obj/item/reagent_containers/food/snacks/donut/jelly,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eb" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/donut,
+/obj/item/reagent_containers/food/snacks/donut,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "ec" = (
@@ -1289,7 +1289,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eq" = (
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "er" = (
@@ -1368,20 +1368,20 @@
 /area/awaymission/wwgov)
 "eE" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
-/obj/item/weapon/gun/ballistic,
+/obj/item/bedsheet/blue,
+/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "eF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "eG" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly,
+/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eH" = (
@@ -1820,7 +1820,7 @@
 /area/awaymission/wwmines)
 "fS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "fT" = (
@@ -1868,7 +1868,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "fZ" = (
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page7,
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page7,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "ga" = (
@@ -1906,7 +1906,7 @@
 /area/awaymission/wwmines)
 "gg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/revolver/russian,
+/obj/item/gun/ballistic/revolver/russian,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gh" = (
@@ -1934,7 +1934,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gm" = (
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gn" = (
@@ -1981,15 +1981,15 @@
 	},
 /area/awaymission/wwmines)
 "gv" = (
-/obj/item/weapon/hatchet,
+/obj/item/hatchet,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gw" = (
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gx" = (
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -2153,7 +2153,7 @@
 /obj/item/clothing/suit/space/syndicate/black/orange,
 /obj/item/clothing/head/helmet/space/syndicate/black/orange,
 /obj/item/clothing/mask/gas/syndicate,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gX" = (
@@ -2164,7 +2164,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gY" = (
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page8,
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page8,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},

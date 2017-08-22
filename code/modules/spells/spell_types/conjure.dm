@@ -64,7 +64,7 @@
 	range = -1
 	clothes_req = 0
 	var/obj/item/item
-	var/item_type = /obj/item/weapon/banhammer
+	var/item_type = /obj/item/banhammer
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10

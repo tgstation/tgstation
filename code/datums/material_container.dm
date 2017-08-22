@@ -223,7 +223,7 @@
 	name = "Metal"
 	id = MAT_METAL
 	sheet_type = /obj/item/stack/sheet/metal
-	coin_type = /obj/item/weapon/coin/iron
+	coin_type = /obj/item/coin/iron
 
 /datum/material/glass
 	name = "Glass"
@@ -234,31 +234,31 @@
 	name = "Silver"
 	id = MAT_SILVER
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	coin_type = /obj/item/weapon/coin/silver
+	coin_type = /obj/item/coin/silver
 
 /datum/material/gold
 	name = "Gold"
 	id = MAT_GOLD
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	coin_type = /obj/item/weapon/coin/gold
+	coin_type = /obj/item/coin/gold
 
 /datum/material/diamond
 	name = "Diamond"
 	id = MAT_DIAMOND
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
-	coin_type = /obj/item/weapon/coin/diamond
+	coin_type = /obj/item/coin/diamond
 
 /datum/material/uranium
 	name = "Uranium"
 	id = MAT_URANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
-	coin_type = /obj/item/weapon/coin/uranium
+	coin_type = /obj/item/coin/uranium
 
 /datum/material/plasma
 	name = "Solid Plasma"
 	id = MAT_PLASMA
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	coin_type = /obj/item/weapon/coin/plasma
+	coin_type = /obj/item/coin/plasma
 
 /datum/material/bluespace
 	name = "Bluespace Mesh"
@@ -269,7 +269,7 @@
 	name = "Bananium"
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/weapon/coin/clown
+	coin_type = /obj/item/coin/clown
 
 /datum/material/titanium
 	name = "Titanium"

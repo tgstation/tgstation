@@ -69,7 +69,7 @@
 
 		dat+="<br>"
 		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<a href='?src=\ref[src];toggle_vest=1'>[vest.flags & NODROP ? "Unlock" : "Lock"] Vest</a><br>"
+		dat += "<a href='?src=\ref[src];toggle_vest=1'>[vest.flags_1 & NODROP_1 ? "Unlock" : "Lock"] Vest</a><br>"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
@@ -95,7 +95,7 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("baton")
-				Dispense(/obj/item/weapon/abductor_baton,cost=2)
+				Dispense(/obj/item/abductor_baton,cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")

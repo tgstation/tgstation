@@ -9,7 +9,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(ACCESS_ROBOTICS)
-	circuit = /obj/item/weapon/circuitboard/machine/mechfab
+	circuit = /obj/item/circuitboard/machine/mechfab
 	var/time_coeff = 1
 	var/component_coeff = 1
 	var/datum/material_container/materials
@@ -44,24 +44,24 @@
 	var/T = 0
 
 	//maximum stocking amount (default 300000, 600000 at T4)
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	materials.max_amount = (200000 + (T*50000))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
-	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/Ma in component_parts)
 		T -= Ma.rating*0.15
 	component_coeff = T
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
-	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
+	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
+/obj/machinery/mecha_part_fabricator/check_access(obj/item/card/id/I)
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
@@ -441,7 +441,7 @@
 
 		updateUsrDialog()
 
-	else if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
+	else if(istype(W, /obj/item/ore/bluespace_crystal))
 
 		if(!is_insertion_ready(user))
 			return 1

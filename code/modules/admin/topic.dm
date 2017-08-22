@@ -6,7 +6,7 @@
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 	if(href_list["ahelp"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, TRUE))
 			return
 
 		var/ahelp_ref = href_list["ahelp"]
@@ -21,6 +21,24 @@
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
+
+	else if(href_list["getplaytimewindow"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
+		if(!M)
+			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
+			return
+		cmd_show_exp_panel(M.client)
+
+	else if(href_list["toggleexempt"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
+		if(!C)
+			to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+			return
+		toggle_exempt_status(C)
 
 	else if(href_list["makeAntag"])
 		if (!SSticker.mode)
@@ -1678,7 +1696,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
 			return
 
-		var/obj/item/weapon/reagent_containers/food/snacks/cookie/cookie = new(H)
+		var/obj/item/reagent_containers/food/snacks/cookie/cookie = new(H)
 		if(H.put_in_hands(cookie))
 			H.update_inv_hands()
 		else
@@ -1747,7 +1765,7 @@
 	else if(href_list["reject_custom_name"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/obj/item/weapon/station_charter/charter = locate(href_list["reject_custom_name"])
+		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
 	else if(href_list["jumpto"])

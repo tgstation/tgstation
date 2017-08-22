@@ -1,0 +1,5 @@
+author: "Pubby"
+delete-after: True
+changes: 
+  - rscadd: "Gorillas"
+  - rscadd: "Irradiating monkeys can now turn them into hostile gorillas"

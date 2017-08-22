@@ -156,7 +156,7 @@
 /area/shuttle/transport)
 "aI" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/item/bedsheet/wiz,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
@@ -216,12 +216,12 @@
 /area/shuttle/transport)
 "aT" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aU" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/rainbow,
+/obj/item/bedsheet/rainbow,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aV" = (
@@ -265,11 +265,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/vending_refill/snack,
+/obj/item/vending_refill/snack,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bd" = (
-/obj/item/weapon/twohanded/required/kirbyplants/dead{
+/obj/item/twohanded/required/kirbyplants/dead{
 	desc = "It doesn't look very healthy...";
 	name = "potted plant"
 	},

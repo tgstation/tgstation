@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
+/obj/item/reagent_containers/food/snacks/grown/mushroom
 	name = "mushroom"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
@@ -11,7 +11,7 @@
 	icon_state = "mycelium-reishi"
 	species = "reishi"
 	plantname = "Reishi"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
 	lifespan = 35
 	endurance = 35
 	maturation = 10
@@ -26,7 +26,7 @@
 
 
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
+/obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
@@ -40,7 +40,7 @@
 	icon_state = "mycelium-amanita"
 	species = "amanita"
 	plantname = "Fly Amanitas"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/amanita
 	lifespan = 50
 	endurance = 35
 	maturation = 10
@@ -52,7 +52,7 @@
 	mutatelist = list(/obj/item/seeds/angel)
 	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0, "growthserum" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
+/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = /obj/item/seeds/amanita
 	name = "fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
@@ -67,7 +67,7 @@
 	icon_state = "mycelium-angel"
 	species = "angel"
 	plantname = "Destroying Angels"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/angel
 	lifespan = 50
 	endurance = 35
 	maturation = 12
@@ -81,7 +81,7 @@
 	rarity = 30
 	origin_tech = "biotech=5"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
+/obj/item/reagent_containers/food/snacks/grown/mushroom/angel
 	seed = /obj/item/seeds/angel
 	name = "destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
@@ -96,7 +96,7 @@
 	icon_state = "mycelium-liberty"
 	species = "liberty"
 	plantname = "Liberty-Caps"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap
 	maturation = 7
 	production = 1
 	yield = 5
@@ -106,7 +106,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("mushroomhallucinogen" = 0.25, "nutriment" = 0.02)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
+/obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = /obj/item/seeds/liberty
 	name = "liberty-cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
@@ -121,7 +121,7 @@
 	icon_state = "mycelium-plump"
 	species = "plump"
 	plantname = "Plump-Helmet Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	maturation = 8
 	production = 1
 	yield = 4
@@ -132,7 +132,7 @@
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
+/obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = /obj/item/seeds/plump
 	name = "plump-helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
@@ -147,7 +147,7 @@
 	icon_state = "mycelium-walkingmushroom"
 	species = "walkingmushroom"
 	plantname = "Walking Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
 	lifespan = 30
 	endurance = 30
 	maturation = 5
@@ -157,7 +157,7 @@
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.15)
 	rarity = 30
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
+/obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
 	seed = /obj/item/seeds/plump/walkingmushroom
 	name = "walking mushroom"
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
@@ -165,7 +165,7 @@
 	filling_color = "#9370DB"
 	origin_tech = "biotech=4;programming=5"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
 		return
 	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
@@ -185,7 +185,7 @@
 	icon_state = "mycelium-chanter"
 	species = "chanter"
 	plantname = "Chanterelle Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	lifespan = 35
 	endurance = 20
 	maturation = 7
@@ -197,7 +197,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("nutriment" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
+/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = /obj/item/seeds/chanter
 	name = "chanterelle cluster"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
@@ -212,7 +212,7 @@
 	icon_state = "mycelium-glowshroom"
 	species = "glowshroom"
 	plantname = "Glowshrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	lifespan = 100 //ten times that is the delay
 	endurance = 30
 	maturation = 15
@@ -226,7 +226,7 @@
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap, /obj/item/seeds/glowshroom/shadowshroom)
 	reagents_add = list("radium" = 0.1, "phosphorus" = 0.1, "nutriment" = 0.04)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = /obj/item/seeds/glowshroom
 	name = "glowshroom cluster"
 	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
@@ -235,7 +235,7 @@
 	var/effect_path = /obj/structure/glowshroom
 	origin_tech = "biotech=4;plasmatech=6"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
 		return FALSE
 	if(!isturf(user.loc))
@@ -267,13 +267,13 @@
 	icon_grow = "glowshroom-grow"
 	icon_dead = "glowshroom-dead"
 	plantname = "Glowcaps"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list()
 	reagents_add = list("teslium" = 0.1, "nutriment" = 0.04)
 	rarity = 30
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	seed = /obj/item/seeds/glowshroom/glowcap
 	name = "glowcap cluster"
 	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but isn't actually bioluminescent. They're warm to the touch..."
@@ -292,13 +292,13 @@
 	icon_grow = "shadowshroom-grow"
 	icon_dead = "shadowshroom-dead"
 	plantname = "Shadowshrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom
 	genes = list(/datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list()
 	reagents_add = list("radium" = 0.2, "nutriment" = 0.04)
 	rarity = 30
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom
 	seed = /obj/item/seeds/glowshroom/shadowshroom
 	name = "shadowshroom cluster"
 	desc = "<I>Mycena Umbra</I>: This species of mushroom emits shadow instead of light."
@@ -306,7 +306,7 @@
 	effect_path = /obj/structure/glowshroom/shadowshroom
 	origin_tech = "biotech=4;plasmatech=4;magnets=4"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom/attack_self(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom/attack_self(mob/user)
 	. = ..()
 	if(.)
 		investigate_log("was planted by [key_name(user)] at [COORD(user)]", INVESTIGATE_BOTANY)
@@ -335,7 +335,7 @@
 	icon_state = "mycelium-polypore"
 	species = "polypore"
 	plantname = "Polypore Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/shavings
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
@@ -347,7 +347,7 @@
 	icon_state = "mycelium-porcini"
 	species = "porcini"
 	plantname = "Porcini Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
@@ -359,7 +359,7 @@
 	icon_state = "mycelium-inocybe"
 	species = "inocybe"
 	plantname = "Inocybe Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
@@ -371,6 +371,6 @@
 	icon_state = "mycelium-ember"
 	species = "ember"
 	plantname = "Embershroom Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'

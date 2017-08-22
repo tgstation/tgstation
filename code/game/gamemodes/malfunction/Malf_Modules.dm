@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	owner_AI.nuking = TRUE
 	owner_AI.doomsday_device = DOOM
 	owner_AI.doomsday_device.start()
-	for(var/obj/item/weapon/pinpointer/nuke/P in GLOB.pinpointer_list)
+	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 	qdel(src)
 
@@ -461,8 +461,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/destroy_rcds/Activate()
 	for(var/I in GLOB.rcd_list)
-		if(!istype(I, /obj/item/weapon/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			var/obj/item/weapon/construction/rcd/RCD = I
+		if(!istype(I, /obj/item/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/construction/rcd/RCD = I
 			RCD.detonate_pulse()
 	to_chat(owner, "<span class='danger'>RCD detonation pulse emitted.</span>")
 	owner.playsound_local(owner, 'sound/machines/twobeep.ogg', 50, 0)

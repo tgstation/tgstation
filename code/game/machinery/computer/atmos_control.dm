@@ -64,7 +64,7 @@
 	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control
+	circuit = /obj/item/circuitboard/computer/atmos_control
 
 	var/frequency = 1441
 	var/list/sensors = list(
@@ -139,7 +139,7 @@
 	var/input_tag
 	var/output_tag
 	frequency = 1441
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control/tank
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank
 
 	var/list/input_info
 	var/list/output_info

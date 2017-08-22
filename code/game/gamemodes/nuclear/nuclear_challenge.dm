@@ -49,7 +49,7 @@
 	to_chat(user, "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
 
 	for(var/V in GLOB.syndicate_shuttle_boards)
-		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = V
+		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		board.challenge = TRUE
 
 	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user))
@@ -74,7 +74,7 @@
 		to_chat(user, "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand.")
 		return 0
 	for(var/V in GLOB.syndicate_shuttle_boards)
-		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = V
+		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		if(board.moved)
 			to_chat(user, "The shuttle has already been moved! You have forfeit the right to declare war.")
 			return 0

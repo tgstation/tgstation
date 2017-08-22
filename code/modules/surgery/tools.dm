@@ -1,77 +1,77 @@
-/obj/item/weapon/retractor
+/obj/item/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 
 
-/obj/item/weapon/retractor/augment
+/obj/item/retractor/augment
 	name = "toolarm retractor"
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 
 
-/obj/item/weapon/hemostat
+/obj/item/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
 
-/obj/item/weapon/hemostat/augment
+/obj/item/hemostat/augment
 	name = "toolarm hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
 
 
-/obj/item/weapon/cautery
+/obj/item/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
 
-/obj/item/weapon/cautery/augment
+/obj/item/cautery/augment
 	name = "toolarm cautery"
 	desc = "A heated element that cauterizes wounds."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("burnt")
 
 
-/obj/item/weapon/surgicaldrill
+/obj/item/surgicaldrill
 	name = "surgical drill"
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
@@ -80,21 +80,21 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
 
-/obj/item/weapon/surgicaldrill/augment
+/obj/item/surgicaldrill/augment
 	name = "toolarm surgical drill"
 	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "materials=1;biotech=1"
@@ -102,14 +102,14 @@
 	attack_verb = list("drilled")
 
 
-/obj/item/weapon/scalpel
+/obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -121,12 +121,12 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
-/obj/item/weapon/scalpel/augment
+/obj/item/scalpel/augment
 	name = "toolarm scalpel"
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -139,12 +139,12 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
-/obj/item/weapon/scalpel/suicide_act(mob/user)
+/obj/item/scalpel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 
-/obj/item/weapon/circular_saw
+/obj/item/circular_saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
@@ -153,7 +153,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 9
@@ -164,14 +164,14 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
-/obj/item/weapon/circular_saw/augment
+/obj/item/circular_saw/augment
 	name = "toolarm circular saw"
 	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 9
@@ -183,7 +183,7 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
-/obj/item/weapon/surgical_drapes
+/obj/item/surgical_drapes
 	name = "surgical drapes"
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
 	icon = 'icons/obj/surgery.dmi'
@@ -192,17 +192,17 @@
 	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
 
-/obj/item/weapon/surgical_drapes/attack(mob/living/M, mob/user)
+/obj/item/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
 
-/obj/item/weapon/organ_storage //allows medical cyborgs to manipulate organs without hands
+/obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"
 	desc = "A container for holding body parts."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 
-/obj/item/weapon/organ_storage/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity)
 		return
 	if(contents.len)
@@ -228,7 +228,7 @@
 	I.loc = src
 	w_class = I.w_class
 
-/obj/item/weapon/organ_storage/attack_self(mob/user)
+/obj/item/organ_storage/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] dumps [I] from [src].", "<span class='notice'>You dump [I] from [src].</span>")

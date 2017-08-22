@@ -154,9 +154,9 @@
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/storage/box/snappops{
+/obj/item/storage/firstaid/toxin,
+/obj/item/crowbar/red,
+/obj/item/storage/box/snappops{
 	pixel_x = 4;
 	pixel_y = -4
 	},

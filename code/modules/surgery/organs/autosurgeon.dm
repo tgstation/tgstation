@@ -51,7 +51,7 @@
 		I.forceMove(src)
 		storedorgan = I
 		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/screwdriver))
 		if(!storedorgan)
 			to_chat(user, "<span class='notice'>There's no implant in [src] for you to remove.</span>")
 		else

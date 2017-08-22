@@ -117,7 +117,7 @@
 
 /mob/living/simple_animal/bot/Initialize()
 	. = ..()
-	access_card = new /obj/item/weapon/card/id(src)
+	access_card = new /obj/item/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.access += ACCESS_ROBOTICS
 	set_custom_texts()
@@ -241,14 +241,14 @@
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
 
-/mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/mob/living/simple_animal/bot/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
 		else
 			to_chat(user, "<span class='warning'>The maintenance panel is locked.</span>")
-	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "Controls are now [locked ? "locked." : "unlocked."]")
@@ -261,7 +261,7 @@
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/device/paicard))
 		insertpai(user, W)
-	else if(istype(W, /obj/item/weapon/hemostat) && paicard)
+	else if(istype(W, /obj/item/hemostat) && paicard)
 		if(open)
 			to_chat(user, "<span class='warning'>Close the access panel before manipulating the personality slot!</span>")
 		else
@@ -272,14 +272,14 @@
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
+		if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
 				return
 			if(!open)
 				to_chat(user, "<span class='warning'>Unable to repair with the maintenance panel closed!</span>")
 				return
-			var/obj/item/weapon/weldingtool/WT = W
+			var/obj/item/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
 				adjustHealth(-10)
 				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
@@ -469,10 +469,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/area/end_area = get_area(waypoint)
 
 	if(client) //Player bots instead get a location command from the AI
-		to_chat(src, "<span class='noticebig'>Priority waypoint set by [bicon(caller)] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.")
+		to_chat(src, "<span class='noticebig'>Priority waypoint set by [icon2html(caller, src)] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.")
 
 	//For giving the bot temporary all-access.
-	var/obj/item/weapon/card/id/all_access = new /obj/item/weapon/card/id
+	var/obj/item/card/id/all_access = new /obj/item/card/id
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
@@ -485,7 +485,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card = all_access //Give the bot all-access while under the AI's command.
 		if(message)
-			to_chat(calling_ai, "<span class='notice'>[bicon(src)] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
+			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0
@@ -500,7 +500,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/success = bot_move(ai_waypoint, 3)
 	if(!success)
 		if(calling_ai)
-			to_chat(calling_ai, "[bicon(src)] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]")
+			to_chat(calling_ai, "[icon2html(src, calling_ai)] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]")
 			calling_ai = null
 		bot_reset()
 
