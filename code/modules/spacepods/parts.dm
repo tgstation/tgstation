@@ -12,8 +12,8 @@
 	name = "Space Pod Frame"
 	icon_state = ""
 	flags_2 = CONDUCT_1
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	var/link_to = null
 	var/link_angle = 0
 

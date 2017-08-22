@@ -20,8 +20,7 @@
 
 	anchored = TRUE
 
-	layer = 3.9
-	infra_luminosity = 15
+	layer = SPACEPOD_LAYER
 
 	var/list/mob/living/pilot	//There is only ever one pilot and he gets all the privledge
 	var/list/mob/living/passengers = list() //passengers can't do anything and are variable in number
@@ -120,7 +119,7 @@
 	else
 		pod_armor = new
 	update_icons()
-	dir = EAST
+	setDir(EAST)
 	cell = new cell_type(src)
 	add_cabin()
 	add_airtank()
@@ -952,7 +951,7 @@
 	else
 		move_delay = 2
 	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)
-		dir = direction
+		setDir(direction)
 		switch(direction)
 			if(NORTH)
 				if(inertia_dir == SOUTH)

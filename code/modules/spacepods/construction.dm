@@ -3,7 +3,7 @@
 	opacity = 0
 
 	anchored = 1
-	layer = 3.9
+	layer = SPACEPOD_LAYER
 
 	name = "\improper spacepod frame"
 
@@ -19,7 +19,7 @@
 
 	construct = new /datum/construction/reversible2/pod(src)
 
-	dir = EAST
+	setDir(EAST)
 
 /obj/structure/spacepod_frame/Destroy()
 	QDEL_NULL(construct)
