@@ -78,7 +78,7 @@ STI KALY - blind
 	else
 		var/mob/living/carbon/H = affected_mob
 		if(prob(chance))
-			var/obj/item/weapon/staff/S = new(H)
+			var/obj/item/staff/S = new(H)
 			if(!H.put_in_hands(S))
 				qdel(S)
 

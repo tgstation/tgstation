@@ -1,7 +1,7 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -58,9 +58,9 @@
 /obj/item/wallframe/proc/after_attach(var/obj/O)
 	transfer_fingerprints_to(O)
 
-/obj/item/wallframe/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/wallframe/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		// For camera-building borgs
 		var/turf/T = get_step(get_turf(user), user.dir)
 		if(iswallturf(T))
@@ -69,7 +69,7 @@
 	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
 	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
 
-	if(istype(W, /obj/item/weapon/wrench) && (metal_amt || glass_amt))
+	if(istype(W, /obj/item/wrench) && (metal_amt || glass_amt))
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
 			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)
@@ -111,13 +111,13 @@
 	return TRUE
 
 
-/obj/item/weapon/electronics
+/obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50, MAT_GLASS=50)

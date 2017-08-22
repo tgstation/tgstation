@@ -35,12 +35,12 @@
 	desc = "Generates cannon pulse. Needs to be linked with a fusor. "
 	icon_state = "power_box"
 
-/obj/machinery/bsa/back/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/bsa/back/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
 	else
@@ -51,12 +51,12 @@
 	desc = "Do not stand in front of cannon during operation. Needs to be linked with a fusor."
 	icon_state = "emitter_center"
 
-/obj/machinery/bsa/front/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/bsa/front/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
 	else
@@ -69,7 +69,7 @@
 	var/obj/machinery/bsa/back/back
 	var/obj/machinery/bsa/front/front
 
-/obj/machinery/bsa/middle/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/bsa/middle/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer)
@@ -81,7 +81,7 @@
 				front = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
 	else
@@ -212,7 +212,7 @@
 	var/notice
 	var/target
 	use_power = NO_POWER_USE
-	circuit = /obj/item/weapon/circuitboard/computer/bsa_control
+	circuit = /obj/item/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	var/area_aim = FALSE //should also show areas for targeting

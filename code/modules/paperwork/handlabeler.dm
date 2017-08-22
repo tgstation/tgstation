@@ -1,4 +1,4 @@
-/obj/item/weapon/hand_labeler
+/obj/item/hand_labeler
 	name = "hand labeler"
 	desc = "A combined label printer and applicator in a portable device, designed to be easy to operate and use."
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -8,7 +8,7 @@
 	var/labels_left = 30
 	var/mode = 0
 
-/obj/item/weapon/hand_labeler/suicide_act(mob/user)
+/obj/item/hand_labeler/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!</span>")
 	labels_left = max(labels_left - 1, 0)
 
@@ -16,8 +16,8 @@
 	user.real_name += " (suicide)"
 	// no conflicts with their identification card
 	for(var/atom/A in user.GetAllContents())
-		if(istype(A, /obj/item/weapon/card/id))
-			var/obj/item/weapon/card/id/their_card = A
+		if(istype(A, /obj/item/card/id))
+			var/obj/item/card/id/their_card = A
 
 			// only renames their card, as opposed to tagging everyone's
 			if(their_card.registered_name != old_real_name)
@@ -35,7 +35,7 @@
 
 	return OXYLOSS
 
-/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user,proximity)
+/obj/item/hand_labeler/afterattack(atom/A, mob/user,proximity)
 	if(!proximity) return
 	if(!mode)	//if it's off, give up.
 		return
@@ -59,7 +59,7 @@
 	labels_left--
 
 
-/obj/item/weapon/hand_labeler/attack_self(mob/user)
+/obj/item/hand_labeler/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to use [src]!</span>")
 		return
@@ -77,17 +77,17 @@
 	else
 		to_chat(user, "<span class='notice'>You turn off [src].</span>")
 
-/obj/item/weapon/hand_labeler/attackby(obj/item/I, mob/user, params)
+/obj/item/hand_labeler/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		qdel(I)
 		labels_left = initial(labels_left)	//Yes, it's capped at its initial value
 
-/obj/item/weapon/hand_labeler/borg
+/obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
 
-/obj/item/weapon/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
+/obj/item/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
 	..(A, user, proximity)
 	if(!iscyborg(user))
 		return

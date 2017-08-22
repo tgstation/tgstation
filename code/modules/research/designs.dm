@@ -51,7 +51,7 @@ other types of metals and chemistry for reagents).
 //Disks for transporting design datums//
 ////////////////////////////////////////
 
-/obj/item/weapon/disk/design_disk
+/obj/item/disk/design_disk
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
@@ -59,14 +59,14 @@ other types of metals and chemistry for reagents).
 	var/list/blueprints = list()
 	var/max_blueprints = 1
 
-/obj/item/weapon/disk/design_disk/Initialize()
+/obj/item/disk/design_disk/Initialize()
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_blueprints)
 		blueprints += null
 
-/obj/item/weapon/disk/design_disk/adv
+/obj/item/disk/design_disk/adv
 	name = "Advanced Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER = 50)

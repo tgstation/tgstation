@@ -3,7 +3,7 @@
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
-	flags = HEAR
+	flags_1 = HEAR_1
 	attachable = 1
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -64,7 +64,7 @@
 			if(length(raw_message))
 				. = 1
 
-/obj/item/device/assembly/voice/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/voice/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		mode %= modes.len
 		mode++

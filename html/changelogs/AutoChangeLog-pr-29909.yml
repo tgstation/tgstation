@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - rscadd: "The syndicate shuttle now has a navigation computer that allows it to fly to any unoccupied location on the station z-level."

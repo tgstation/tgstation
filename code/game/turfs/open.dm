@@ -18,6 +18,7 @@
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
+	..()
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
@@ -124,7 +125,7 @@
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
 			return
-		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
+		if(!(I.flags_2 & FROZEN_2)) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
@@ -266,7 +267,7 @@
 		wet_time = MAXIMUM_WET_TIME
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
 		for(var/obj/O in contents)
-			if(HAS_SECONDARY_FLAG(O, FROZEN))
+			if(O.flags_2 & FROZEN_2)
 				O.make_unfrozen()
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
@@ -298,3 +299,9 @@
 		wet_time = 0
 	if(wet)
 		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)
+
+/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
+	wet = TURF_DRY
+	UpdateSlip()
+	if(wet_overlay)
+		cut_overlay(wet_overlay)

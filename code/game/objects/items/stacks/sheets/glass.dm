@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	return ..()
 
 
-/obj/item/weapon/shard
+/obj/item/shard
 	name = "shard"
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
@@ -194,12 +194,12 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	var/cooldown = 0
 	sharpness = IS_SHARP
 
-/obj/item/weapon/shard/suicide_act(mob/user)
+/obj/item/shard/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 	return (BRUTELOSS)
 
 
-/obj/item/weapon/shard/Initialize()
+/obj/item/shard/Initialize()
 	. = ..()
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
@@ -213,12 +213,12 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
 
-/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
+/obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity || !(src in user))
 		return
 	if(isturf(A))
 		return
-	if(istype(A, /obj/item/weapon/storage))
+	if(istype(A, /obj/item/storage))
 		return
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
@@ -232,11 +232,11 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 		M.apply_damage(force*0.5, BRUTE, hit_hand)
 
 
-/obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
+/obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/lightreplacer))
 		I.attackby(src, user)
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
+	else if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
 			for(var/obj/item/stack/sheet/glass/G in user.loc)
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	else
 		return ..()
 
-/obj/item/weapon/shard/Crossed(mob/AM)
+/obj/item/shard/Crossed(mob/AM)
 	if(istype(AM) && has_gravity(loc))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))

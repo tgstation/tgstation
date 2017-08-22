@@ -11,7 +11,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	density = TRUE//Can't pass through.
 	opacity = 0//Can see through.
-	mouse_opacity = 1//So you can hit it with stuff.
+	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = TRUE//Can't drag/grab the trapped mob.
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 25 //How much health it has.

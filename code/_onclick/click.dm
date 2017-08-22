@@ -144,7 +144,7 @@
 		else
 			RangedAttack(A,params)
 
-//Is the atom obscured by a PREVENT_CLICK_UNDER object above it
+//Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
@@ -152,13 +152,13 @@
 	if(!T)
 		return FALSE
 	for(var/atom/movable/AM in T)
-		if(AM.flags & PREVENT_CLICK_UNDER && AM.density && AM.layer > layer)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
 			return TRUE
 	return FALSE
 
 /turf/IsObscured()
 	for(var/atom/movable/AM in src)
-		if(AM.flags & PREVENT_CLICK_UNDER && AM.density)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density)
 			return TRUE
 	return FALSE
 
@@ -180,7 +180,7 @@
 /atom/proc/CanReachStorage(atom/target,user,depth)
 	return FALSE
 
-/obj/item/weapon/storage/CanReachStorage(atom/target,user,depth)
+/obj/item/storage/CanReachStorage(atom/target,user,depth)
 	while(target && depth > 0)
 		target = target.loc
 		depth--
@@ -434,7 +434,7 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "flash"
 	plane = CLICKCATCHER_PLANE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)

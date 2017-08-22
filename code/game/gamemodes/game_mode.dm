@@ -120,7 +120,7 @@
 	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew.len)
 	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
-		if(G.reroll_friendly)
+		if(G.reroll_friendly && living_crew >= G.required_players)
 			usable_modes += G
 		else
 			qdel(G)

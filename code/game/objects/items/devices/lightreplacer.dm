@@ -49,12 +49,11 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 
 	var/max_uses = 20
 	var/uses = 0
-	var/emagged = FALSE
 	var/failmsg = ""
 	// How much to increase per each glass?
 	var/increment = 5
@@ -90,7 +89,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need one sheet of glass to replace lights!</span>")
 
-	if(istype(W, /obj/item/weapon/shard))
+	if(istype(W, /obj/item/shard))
 		if(uses >= max_uses)
 			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
 			return
@@ -101,8 +100,8 @@
 		qdel(W)
 		return
 
-	if(istype(W, /obj/item/weapon/light))
-		var/obj/item/weapon/light/L = W
+	if(istype(W, /obj/item/light))
+		var/obj/item/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				if(!user.temporarilyRemoveItemFromInventory(W))
@@ -117,14 +116,14 @@
 			qdel(L)
 		return
 
-	if(istype(W, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
+	if(istype(W, /obj/item/storage))
+		var/obj/item/storage/S = W
 		var/found_lightbulbs = FALSE
 		var/replaced_something = TRUE
 
 		for(var/obj/item/I in S.contents)
-			if(istype(I, /obj/item/weapon/light))
-				var/obj/item/weapon/light/L = I
+			if(istype(I, /obj/item/light))
+				var/obj/item/light/L = I
 				found_lightbulbs = TRUE
 				if(src.uses >= max_uses)
 					break
@@ -200,7 +199,7 @@
 				target.status = LIGHT_EMPTY
 				target.update()
 
-			var/obj/item/weapon/light/L2 = new target.light_type()
+			var/obj/item/light/L2 = new target.light_type()
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount

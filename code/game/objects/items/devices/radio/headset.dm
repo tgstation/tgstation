@@ -43,10 +43,7 @@
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs. \nTo access the syndicate channel, use ; before speaking."
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
-
-/obj/item/device/radio/headset/syndicate/alt/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
+	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -74,10 +71,7 @@
 	desc = "This is used by your elite security force. Protects ears from flashbangs. \nTo access the security channel, use :s."
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
-
-/obj/item/device/radio/headset/headset_sec/alt/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
+	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -129,10 +123,7 @@
 	desc = "The headset of the boss. Protects ears from flashbangs. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-
-/obj/item/device/radio/headset/heads/captain/alt/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
+	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -151,10 +142,7 @@
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs. \nTo access the security channel, use :s. For command, use :c."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-
-/obj/item/device/radio/headset/heads/hos/alt/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
+	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -208,10 +196,7 @@
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
-
-/obj/item/device/radio/headset/headset_cent/alt/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
+	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
@@ -221,10 +206,10 @@
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(keyslot || keyslot2)
 
 

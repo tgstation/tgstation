@@ -20,10 +20,10 @@ doesn't have toxins access.
 	name = "R&D Console"
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/computer/rdconsole
 	var/datum/techweb/stored_research					//Reference to global science techweb.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	circuit = /obj/item/circuitboard/computer/rdconsole
 
 	var/obj/machinery/rnd/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/rnd/protolathe/linked_lathe = null				//Linked Protolathe
@@ -109,6 +109,7 @@ doesn't have toxins access.
 	selected_design = null
 	return ..()
 
+<<<<<<< HEAD
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
@@ -128,6 +129,19 @@ doesn't have toxins access.
 			if(!user.drop_item())
 				to_chat(user, "<span class='danger'>[D] is stuck to your hand!</span>")
 				return
+=======
+/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
+
+	//Loading a disk into it.
+	if(istype(D, /obj/item/disk))
+		if(t_disk || d_disk)
+			to_chat(user, "A disk is already loaded into the machine.")
+			return
+
+		if(istype(D, /obj/item/disk/tech_disk))
+			t_disk = D
+		else if (istype(D, /obj/item/disk/design_disk))
+>>>>>>> tgstation/master
 			d_disk = D
 		else
 			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
@@ -307,7 +321,367 @@ doesn't have toxins access.
 				if(istype(D))
 					data["ddisk_designs"] += list(list("pos" = "[i]", "name" = D.name, "id" = D.id))
 				else
+<<<<<<< HEAD
 					data["ddisk_designs"] += list(list("pos" = "[i]", "name" = "Empty Slot", "id" = "null"))
+=======
+					files.AddDesign2Known(d_disk.blueprints[n])
+				updateUsrDialog()
+				griefProtection() //Update centcom too
+
+	else if(href_list["clear_design"]) //Erases data on the design disk.
+		if(d_disk)
+			var/n = text2num(href_list["clear_design"])
+			if(!n)
+				for(var/i in 1 to d_disk.max_blueprints)
+					d_disk.blueprints[i] = null
+			else
+				d_disk.blueprints[n] = null
+
+	else if(href_list["eject_design"]) //Eject the design disk.
+		if(d_disk)
+			d_disk.loc = src.loc
+			d_disk = null
+		screen = 1.0
+
+	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
+		var/slot = text2num(href_list["copy_design"])
+		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
+		if(D)
+			var/autolathe_friendly = 1
+			if(D.reagents_list.len)
+				autolathe_friendly = 0
+				D.category -= "Imported"
+			else
+				for(var/x in D.materials)
+					if( !(x in list(MAT_METAL, MAT_GLASS)))
+						autolathe_friendly = 0
+						D.category -= "Imported"
+
+			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
+				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
+				D.category |= "Imported"
+			d_disk.blueprints[slot] = D
+		screen = 1.4
+
+	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
+		if(linked_destroy)
+			if(linked_destroy.busy)
+				to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
+
+			else if(linked_destroy.loaded_item)
+				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
+				linked_destroy.loaded_item = null
+				linked_destroy.icon_state = "d_analyzer"
+				screen = 1.0
+
+	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
+		if(!linked_destroy || linked_destroy.busy || !linked_destroy.loaded_item)
+			updateUsrDialog()
+			return
+
+		var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
+		var/cancontinue = FALSE
+		for(var/T in temp_tech)
+			if(files.IsTechHigher(T, temp_tech[T]))
+				cancontinue = TRUE
+				break
+		if(!cancontinue)
+			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
+			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
+		linked_destroy.busy = TRUE
+		screen = 0.1
+		updateUsrDialog()
+		flick("d_analyzer_process", linked_destroy)
+		spawn(24)
+			if(linked_destroy)
+				linked_destroy.busy = FALSE
+				if(!linked_destroy.loaded_item)
+					screen = 1.0
+					return
+
+				for(var/T in temp_tech)
+					var/datum/tech/KT = files.known_tech[T] //For stat logging of high levels
+					if(files.IsTechHigher(T, temp_tech[T]) && KT.level >= 5) //For stat logging of high levels
+						SSblackbox.add_details("high_research_level","[KT][KT.level + 1]") //+1 to show the level which we're about to get
+					files.UpdateTech(T, temp_tech[T])
+
+				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+					for(var/material in linked_destroy.loaded_item.materials)
+						linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
+				linked_destroy.loaded_item = null
+				for(var/obj/I in linked_destroy.contents)
+					for(var/mob/M in I.contents)
+						M.death()
+					if(istype(I, /obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+						var/obj/item/stack/sheet/S = I
+						if(S.amount > 1)
+							S.amount--
+							linked_destroy.loaded_item = S
+						else
+							qdel(S)
+							linked_destroy.icon_state = "d_analyzer"
+					else
+						if(!(I in linked_destroy.component_parts))
+							qdel(I)
+							linked_destroy.icon_state = "d_analyzer"
+			screen = 1.0
+			use_power(250)
+			updateUsrDialog()
+
+	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
+		if(src.allowed(usr))
+			screen = text2num(href_list["lock"])
+		else
+			to_chat(usr, "Unauthorized Access.")
+
+	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
+		screen = 0.0
+		if(!sync)
+			to_chat(usr, "<span class='danger'>You must connect to the network first!</span>")
+		else
+			griefProtection() //Putting this here because I dont trust the sync process
+			spawn(30)
+				if(src)
+					for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+						var/server_processed = 0
+						if(S.disabled)
+							continue
+						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
+							for(var/v in files.known_tech)
+								var/datum/tech/T = files.known_tech[v]
+								S.files.AddTech2Known(T)
+							for(var/v in files.known_designs)
+								var/datum/design/D = files.known_designs[v]
+								S.files.AddDesign2Known(D)
+							S.files.RefreshResearch()
+							server_processed = 1
+						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
+							for(var/v in S.files.known_tech)
+								var/datum/tech/T = S.files.known_tech[v]
+								files.AddTech2Known(T)
+							for(var/v in S.files.known_designs)
+								var/datum/design/D = S.files.known_designs[v]
+								files.AddDesign2Known(D)
+							files.RefreshResearch()
+							server_processed = 1
+						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
+							S.produce_heat(100)
+					screen = 1.6
+					updateUsrDialog()
+
+	else if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
+		sync = !sync
+
+	else if(href_list["build"]) //Causes the Protolathe to build something.
+		var/datum/design/being_built = files.known_designs[href_list["build"]]
+		var/amount = text2num(href_list["amount"])
+
+		if(being_built.make_reagents.len)
+			return 0
+
+		if(!linked_lathe || !being_built || !amount)
+			updateUsrDialog()
+			return
+
+		if(linked_lathe.busy)
+			to_chat(usr, "<span class='danger'>Protolathe is busy at the moment.</span>")
+			return
+
+		var/coeff = linked_lathe.efficiency_coeff
+		var/power = 1000
+		var/old_screen = screen
+
+		amount = max(1, min(10, amount))
+		for(var/M in being_built.materials)
+			power += round(being_built.materials[M] * amount / 5)
+		power = max(3000, power)
+		screen = 0.3
+		var/key = usr.key	//so we don't lose the info during the spawn delay
+		if (!(being_built.build_type & PROTOLATHE))
+			message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
+			updateUsrDialog()
+			return
+
+		var/g2g = 1
+		var/enough_materials = 1
+		linked_lathe.busy = TRUE
+		flick("protolathe_n",linked_lathe)
+		use_power(power)
+
+		var/list/efficient_mats = list()
+		for(var/MAT in being_built.materials)
+			efficient_mats[MAT] = being_built.materials[MAT]*coeff
+
+		if(!linked_lathe.materials.has_materials(efficient_mats, amount))
+			linked_lathe.say("Not enough materials to complete prototype.")
+			enough_materials = 0
+			g2g = 0
+		else
+			for(var/R in being_built.reagents_list)
+				if(!linked_lathe.reagents.has_reagent(R, being_built.reagents_list[R]*coeff))
+					linked_lathe.say("Not enough reagents to complete prototype.")
+					enough_materials = 0
+					g2g = 0
+
+		if(enough_materials)
+			linked_lathe.materials.use_amount(efficient_mats, amount)
+			for(var/R in being_built.reagents_list)
+				linked_lathe.reagents.remove_reagent(R, being_built.reagents_list[R]*coeff)
+
+		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+
+		coeff *= being_built.lathe_time_factor
+
+		spawn(32*coeff*amount**0.8)
+			if(linked_lathe)
+				if(g2g) //And if we only fail the material requirements, we still spend time and power
+					var/already_logged = 0
+					for(var/i = 0, i<amount, i++)
+						var/obj/item/new_item = new P(src)
+						if( new_item.type == /obj/item/storage/backpack/holding )
+							new_item.investigate_log("built by [key]", INVESTIGATE_SINGULO)
+						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/ore/bluespace_crystal)) // To avoid materials dupe glitches
+							new_item.materials = efficient_mats.Copy()
+						new_item.loc = linked_lathe.loc
+						if(!already_logged)
+							SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
+							already_logged = 1
+				screen = old_screen
+				linked_lathe.busy = FALSE
+			else
+				say("Protolathe connection failed. Production halted.")
+				screen = 1.0
+			updateUsrDialog()
+
+	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
+		var/datum/design/being_built = files.known_designs[href_list["imprint"]]
+
+		if(!linked_imprinter || !being_built)
+			updateUsrDialog()
+			return
+
+		if(linked_imprinter.busy)
+			to_chat(usr, "<span class='danger'>Circuit Imprinter is busy at the moment.</span>")
+			updateUsrDialog()
+			return
+
+		var/coeff = linked_imprinter.efficiency_coeff
+
+		var/power = 1000
+		var/old_screen = screen
+		for(var/M in being_built.materials)
+			power += round(being_built.materials[M] / 5)
+		power = max(4000, power)
+		screen = 0.4
+		if (!(being_built.build_type & IMPRINTER))
+			message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
+			updateUsrDialog()
+			return
+
+		var/g2g = 1
+		var/enough_materials = 1
+		linked_imprinter.busy = TRUE
+		flick("circuit_imprinter_ani", linked_imprinter)
+		use_power(power)
+
+		var/list/efficient_mats = list()
+		for(var/MAT in being_built.materials)
+			efficient_mats[MAT] = being_built.materials[MAT]/coeff
+
+		if(!linked_imprinter.materials.has_materials(efficient_mats))
+			linked_imprinter.say("Not enough materials to complete prototype.")
+			enough_materials = 0
+			g2g = 0
+		else
+			for(var/R in being_built.reagents_list)
+				if(!linked_imprinter.reagents.has_reagent(R, being_built.reagents_list[R]/coeff))
+					linked_imprinter.say("Not enough reagents to complete prototype.")
+					enough_materials = 0
+					g2g = 0
+
+		if(enough_materials)
+			linked_imprinter.materials.use_amount(efficient_mats)
+			for(var/R in being_built.reagents_list)
+				linked_imprinter.reagents.remove_reagent(R, being_built.reagents_list[R]/coeff)
+
+		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+		spawn(16)
+			if(linked_imprinter)
+				if(g2g)
+					var/obj/item/new_item = new P(src)
+					new_item.loc = linked_imprinter.loc
+					new_item.materials = efficient_mats.Copy()
+					SSblackbox.add_details("circuit_printed","[new_item.type]")
+				screen = old_screen
+				linked_imprinter.busy = FALSE
+			else
+				say("Circuit Imprinter connection failed. Production halted.")
+				screen = 1.0
+			updateUsrDialog()
+
+	//Protolathe Materials
+	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
+		linked_lathe.reagents.del_reagent(href_list["disposeP"])
+
+	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
+		linked_lathe.reagents.clear_reagents()
+
+	else if(href_list["ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
+		linked_lathe.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["ejectsheet"])
+
+	//Circuit Imprinter Materials
+	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
+		linked_imprinter.reagents.del_reagent(href_list["disposeI"])
+
+	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
+		linked_imprinter.reagents.clear_reagents()
+
+	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the imprinter to eject a sheet of material
+		linked_imprinter.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["imprinter_ejectsheet"])
+
+
+	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
+		screen = 0.0
+		spawn(20)
+			SyncRDevices()
+			screen = 1.7
+			updateUsrDialog()
+
+	else if(href_list["disconnect"]) //The R&D console disconnects with a specific device.
+		switch(href_list["disconnect"])
+			if("destroy")
+				linked_destroy.linked_console = null
+				linked_destroy = null
+			if("lathe")
+				linked_lathe.linked_console = null
+				linked_lathe = null
+			if("imprinter")
+				linked_imprinter.linked_console = null
+				linked_imprinter = null
+
+	else if(href_list["reset"]) //Reset the R&D console's database.
+		griefProtection()
+		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
+		if(choice == "Continue" && usr.canUseTopic(src))
+			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
+			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
+			screen = 0.0
+			qdel(files)
+			files = new /datum/research(src)
+			spawn(20)
+				screen = 1.6
+				updateUsrDialog()
+
+	else if(href_list["search"]) //Search for designs with name matching pattern
+		var/compare
+
+		matching_designs.Cut()
+
+		if(href_list["type"] == "proto")
+			compare = PROTOLATHE
+			screen = 3.17
+>>>>>>> tgstation/master
 		else
 			data["ddisk_possible_designs"] = list()
 			for(var/i in stored_research.researched_designs)
