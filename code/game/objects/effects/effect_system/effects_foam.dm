@@ -271,10 +271,7 @@
 	. = ..()
 	if(isopenturf(loc))
 		var/turf/open/O = loc
-		O.wet = TURF_DRY
-		O.UpdateSlip()
-		if(O.wet_overlay)
-			O.cut_overlay(O.wet_overlay)
+		O.ClearWet()
 		if(O.air)
 			var/datum/gas_mixture/G = O.air
 			G.temperature = 293.15
