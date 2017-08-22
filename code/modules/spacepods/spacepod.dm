@@ -325,7 +325,7 @@
 	S.channel = 0 //Any channel
 	S.volume = 50
 	for(var/mob/living/M in passengers | pilot)
-		M << S
+		SEND_SOUND(M, S)
 
 /obj/spacepod/proc/message_to_riders(mymessage)
 	if(length(passengers | pilot) == 0)
