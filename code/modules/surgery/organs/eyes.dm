@@ -313,3 +313,7 @@
 	parent = loc
 	if(!istype(parent))
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/organ/eyes/night_vision/alien/sling
+	name = "shadowling eyes"
+	desc = "The eyes of a creature of the night."

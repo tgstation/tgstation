@@ -927,6 +927,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	spawn(200 * severity)
 		emped -= 1
 
+/obj/item/device/pda/disable_light()
+	fon = FALSE
+
 /proc/get_viewable_pdas()
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.

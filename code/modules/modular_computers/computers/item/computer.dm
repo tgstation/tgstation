@@ -69,6 +69,8 @@
 	physical = null
 	return ..()
 
+/obj/item/device/modular_computer/disable_light()
+	set_light(0)
 
 /obj/item/device/modular_computer/proc/add_verb(var/path)
 	switch(path)

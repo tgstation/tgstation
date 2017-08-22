@@ -157,6 +157,13 @@
 	else
 		return ..()
 
+/obj/item/device/flashlight/disable_light()
+	on = FALSE
+	update_brightness()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
 /obj/item/device/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
@@ -258,6 +265,9 @@
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
+/obj/item/device/flashlight/flare/disable_light()
+	return FALSE
+
 /obj/item/device/flashlight/flare/process()
 	open_flame(heat)
 	fuel = max(fuel - 1, 0)
@@ -343,6 +353,9 @@
 	slot_flags = SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
+
+/obj/item/device/flashlight/slime/disable_light()
+	return 0
 
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=3;syndicate=1"
@@ -526,3 +539,4 @@
 	flashlight_power = 1
 	flags_1 = CONDUCT_1 | DROPDEL_1
 	actions_types = list()
+
