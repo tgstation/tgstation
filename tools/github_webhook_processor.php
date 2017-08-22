@@ -35,7 +35,7 @@ $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 $validation = "org";
 
 //how many merged prs must they have under the rules above to have their pr announced to the game servers.
-$validation_count = 1
+$validation_count = 1;
 
 //servers to announce PRs to.
 $servers = array();
@@ -134,7 +134,7 @@ function apisend($url, $method = 'GET', $content = NULL) {
 	if ($content)
 		$scontext['content'] = $content;
 	
-	return file_get_contents($url, false, stream_context_create($scontext)));
+	return file_get_contents($url, false, stream_context_create($scontext));
 }
 function validate_user($payload) {
 	global $validation, $validation_count;
@@ -155,8 +155,8 @@ function validate_user($payload) {
 	$query['is'] = 'merged';
 	$querystring = '';
 	foreach($query as $key => $value)
-		$querystring += ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($value);
-	$res = apisend('https://api.github.com/search/issues/?q='.$querystring);
+		$querystring .= ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($value);
+	$res = apisend('https://api.github.com/search/issues?q='.$querystring);
 	$res = json_decode($res, TRUE);
 	return $res['total_count'] >= (int)$validation_count;
 	
