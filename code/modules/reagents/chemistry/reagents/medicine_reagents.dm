@@ -519,15 +519,17 @@
 /datum/reagent/medicine/perfluorodecalin
 	name = "Perfluorodecalin"
 	id = "perfluorodecalin"
-	description = "Extremely rapidly restores oxygen deprivation, but inhibits speech. May also heal small amounts of bruising and burns."
+	description = "Extremely rapidly restores serious oxygen deprivation, but may inhibit speech. May also heal small amounts of bruising and burns."
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-12*REM, 0)
-	M.silent = max(M.silent, 5)
-	if(prob(33))
+	if(M.getOxyLoss() < 50)
+		M.adjustOxyLoss(-6*REM, 0)
+	else
+		M.adjustOxyLoss(-12*REM, 0)
+		M.silent = max(M.silent, 5)
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 	..()
