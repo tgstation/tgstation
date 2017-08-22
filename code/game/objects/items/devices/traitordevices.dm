@@ -103,7 +103,7 @@ effective or pretty fucking useless.
 /obj/item/device/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)
 
-/obj/item/device/healthanalyzer/proc/GetCooldown()
+/obj/item/device/healthanalyzer/rad_laser/proc/GetCooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
 
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
