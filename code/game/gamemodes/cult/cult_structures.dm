@@ -1,6 +1,6 @@
 /obj/structure/destructible/cult
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	var/cooldowntime = 0
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
@@ -33,7 +33,7 @@
 		..()
 
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+	if(istype(I, /obj/item/tome) && iscultist(user))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
 		if(!anchored)
@@ -78,11 +78,11 @@
 	var/pickedtype
 	switch(choice)
 		if("Eldritch Whetstone")
-			pickedtype = /obj/item/weapon/sharpener/cult
+			pickedtype = /obj/item/sharpener/cult
 		if("Zealot's Blindfold")
 			pickedtype = /obj/item/clothing/glasses/night/cultblind
 		if("Flask of Unholy Water")
-			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+			pickedtype = /obj/item/reagent_containers/food/drinks/bottle/unholywater
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
@@ -129,7 +129,7 @@
 	icon_state = "pylon"
 	light_range = 5
 	light_color = LIGHT_COLOR_RED
-	break_sound = 'sound/effects/Glassbr2.ogg'
+	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25
 	var/last_heal = 0
@@ -152,7 +152,7 @@
 		for(var/mob/living/L in range(5, src))
 			if(iscultist(L) || isshade(L) || isconstruct(L))
 				if(L.health != L.maxHealth)
-					new /obj/effect/overlay/temp/heal(get_turf(src), "#960000")
+					new /obj/effect/temp_visual/heal(get_turf(src), "#960000")
 					if(ishuman(L))
 						L.adjustBruteLoss(-1, 0)
 						L.adjustFireLoss(-1, 0)
@@ -175,7 +175,7 @@
 				/turf/closed,
 				/turf/open/floor/engine/cult,
 				/turf/open/space,
-				/turf/open/floor/plating/lava,
+				/turf/open/lava,
 				/turf/open/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue
@@ -190,7 +190,7 @@
 		else
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
-				new /obj/effect/overlay/temp/cult/turf/floor(F)
+				new /obj/effect/temp_visual/cult/turf/floor(F)
 			else
 				// Are we in space or something? No cult turfs or
 				// convertable turfs?
@@ -218,7 +218,7 @@
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")
-			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
+			pickedtype += /obj/item/paper/talisman/supply/weak
 		if("Shuttle Curse")
 			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")
@@ -235,5 +235,5 @@
 	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE

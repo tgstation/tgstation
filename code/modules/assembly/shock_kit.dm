@@ -6,15 +6,15 @@
 	var/obj/item/clothing/head/helmet/part1 = null
 	var/obj/item/device/electropack/part2 = null
 	w_class = WEIGHT_CLASS_HUGE
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 
 /obj/item/assembly/shock_kit/Destroy()
 	qdel(part1)
 	qdel(part2)
 	return ..()
 
-/obj/item/assembly/shock_kit/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+/obj/item/assembly/shock_kit/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench))
 		var/turf/T = loc
 		if(ismob(T))
 			T = T.loc

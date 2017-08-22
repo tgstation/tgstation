@@ -4,7 +4,7 @@
 		humans, butchering all other living things to \
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
-	flags = NODROP|ABSTRACT|DROPDEL
+	flags_1 = NODROP_1|ABSTRACT_1|DROPDEL_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
@@ -46,7 +46,8 @@
 	var/obj/item/organ/zombie_infection/infection
 	infection = target.getorganslot("zombie_infection")
 	if(!infection)
-		infection = new(target)
+		infection = new()
+		infection.Insert(target)
 
 /obj/item/zombie_hand/proc/check_feast(mob/living/target, mob/living/user)
 	if(target.stat == DEAD)

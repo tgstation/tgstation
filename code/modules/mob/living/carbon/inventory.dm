@@ -44,7 +44,7 @@
 			var/mob/dead/observe = M
 			if(observe.client)
 				observe.client.screen -= I
-	I.loc = src
+	I.forceMove(src)
 	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
@@ -72,7 +72,7 @@
 			put_in_hands(I)
 			update_inv_hands()
 		if(slot_in_backpack)
-			var/obj/item/weapon/storage/B = back
+			var/obj/item/storage/B = back
 			var/prev_jimmies = B.rustle_jimmies
 			B.rustle_jimmies = FALSE //don't conspicously rustle
 			B.handle_item_insertion(I, 1, src)

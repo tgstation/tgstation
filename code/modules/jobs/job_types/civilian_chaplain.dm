@@ -15,14 +15,14 @@ Chaplain
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
-	minimal_access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
+	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	if(H.mind)
 		H.mind.isholy = TRUE
 
-	var/obj/item/weapon/storage/book/bible/booze/B = new
+	var/obj/item/storage/book/bible/booze/B = new
 
 	if(SSreligion.religion)
 		B.deity_name = SSreligion.deity
@@ -31,7 +31,8 @@ Chaplain
 		B.item_state = SSreligion.bible_item_state
 		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, slot_in_backpack)
-		var/obj/item/weapon/nullrod/N = new SSreligion.holy_weapon_type(H)
+		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
+		var/obj/item/nullrod/N = new nrt(H)
 		H.equip_to_slot_or_del(N, slot_in_backpack)
 		return
 
@@ -73,16 +74,14 @@ Chaplain
 		else
 			B.name = "The Holy Book of [new_religion]"
 
-
-	if(SSreligion)
-		SSreligion.religion = new_religion
-		SSreligion.bible_name = B.name
-		SSreligion.deity = B.deity_name
+	SSreligion.religion = new_religion
+	SSreligion.bible_name = B.name
+	SSreligion.deity = B.deity_name
 
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 
-	feedback_set_details("religion_name","[new_religion]")
-	feedback_set_details("religion_deity","[new_deity]")
+	SSblackbox.set_details("religion_name","[new_religion]")
+	SSblackbox.set_details("religion_deity","[new_deity]")
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"
@@ -91,5 +90,6 @@ Chaplain
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
-	backpack = /obj/item/weapon/storage/backpack/cultpack
-	satchel = /obj/item/weapon/storage/backpack/cultpack
+	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
+	backpack = /obj/item/storage/backpack/cultpack
+	satchel = /obj/item/storage/backpack/cultpack

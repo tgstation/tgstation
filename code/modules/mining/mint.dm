@@ -5,27 +5,25 @@
 	name = "coin press"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/datum/material_container/materials
 	var/newCoins = 0   //how many coins the machine made in it's last load
-	var/processing = 0
+	var/processing = FALSE
 	var/chosen = MAT_METAL //which material will be used to make coins
 	var/coinsToProduce = 10
 	speed_process = 1
 
 
-/obj/machinery/mineral/mint/New()
-	..()
+/obj/machinery/mineral/mint/Initialize()
+	. = ..()
 	materials = new /datum/material_container(src,
 		list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM),
 		max_amt = MINERAL_MATERIAL_AMOUNT*50)
 
 /obj/machinery/mineral/mint/Destroy()
-	qdel(materials)
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
-
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
@@ -77,7 +75,7 @@
 		coinsToProduce = Clamp(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce
-		processing = 1
+		processing = TRUE
 		icon_state = "coinpress1"
 		var/coin_mat = MINERAL_MATERIAL_AMOUNT * 0.2
 		var/datum/material/M = materials.materials[chosen]
@@ -93,7 +91,7 @@
 			sleep(5)
 
 		icon_state = "coinpress0"
-		processing = 0
+		processing = FALSE
 		coinsToProduce = temp_coins
 	src.updateUsrDialog()
 	return
@@ -102,8 +100,8 @@
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new P(src)
-		var/obj/item/weapon/storage/bag/money/M = locate(/obj/item/weapon/storage/bag/money, T)
+		var/obj/item/storage/bag/money/M = locate(/obj/item/storage/bag/money, T)
 		if(!M)
-			M = new /obj/item/weapon/storage/bag/money(src)
+			M = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
 		O.loc = M

@@ -71,25 +71,22 @@
 		computerid = bancid
 		ip = banip
 
-	var/datum/DBQuery/query_add_ban_get_id = SSdbcore.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
-	if(!query_add_ban_get_id.warn_execute())
+	var/datum/DBQuery/query_add_ban_get_ckey = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+	if(!query_add_ban_get_ckey.warn_execute())
 		return
-	var/validckey = 0
-	if(query_add_ban_get_id.NextRow())
-		validckey = 1
-	if(!validckey)
+	if(!query_add_ban_get_ckey.NextRow())
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
-			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
-			return
+			if(alert(usr, "[ckey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+				return
 
 	var/a_ckey
 	var/a_computerid
 	var/a_ip
 
-	if(src.owner && istype(src.owner, /client))
-		a_ckey = src.owner:ckey
-		a_computerid = src.owner:computer_id
-		a_ip = src.owner:address
+	if(istype(owner))
+		a_ckey = owner.ckey
+		a_computerid = owner.computer_id
+		a_ip = owner.address
 
 	if(blockselfban)
 		if(a_ckey == ckey)
@@ -125,17 +122,21 @@
 		computerid = "0"
 	if(!ip)
 		ip = "0.0.0.0"
-	var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON('[world.internet_address]'), '[world.port]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', INET_ATON('[ip]'), '[a_ckey]', '[a_computerid]', INET_ATON('[a_ip]'), '[who]', '[adminwho]')"
+	var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', INET_ATON('[ip]'), '[a_ckey]', '[a_computerid]', INET_ATON('[a_ip]'), '[who]', '[adminwho]')"
 	var/datum/DBQuery/query_add_ban = SSdbcore.NewQuery(sql)
 	if(!query_add_ban.warn_execute())
 		return
 	to_chat(usr, "<span class='adminnotice'>Ban saved to database.</span>")
-	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
+	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database."
+	message_admins(msg,1)
+	var/datum/admin_help/AH = admin_ticket_log(ckey, msg)
 
 	if(announceinirc)
 		send2irc("BAN ALERT","[a_ckey] applied a [bantype_str] on [ckey]")
 
 	if(kickbannedckey)
+		if(AH)
+			AH.Resolve()	//with prejudice
 		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
 			qdel(banned_mob.client)
 	return 1
@@ -308,12 +309,12 @@
 		to_chat(usr, "<span class='danger'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>")
 		return
 
-	if(!src.owner || !istype(src.owner, /client))
+	if(!istype(owner))
 		return
 
-	var/unban_ckey = src.owner:ckey
-	var/unban_computerid = src.owner:computer_id
-	var/unban_ip = src.owner:address
+	var/unban_ckey = owner.ckey
+	var/unban_computerid = owner.computer_id
+	var/unban_ip = owner.address
 
 	var/sql_update = "UPDATE [format_table_name("ban")] SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[unban_ckey]', unbanned_computerid = '[unban_computerid]', unbanned_ip = INET_ATON('[unban_ip]') WHERE id = [id]"
 	var/datum/DBQuery/query_unban = SSdbcore.NewQuery(sql_update)

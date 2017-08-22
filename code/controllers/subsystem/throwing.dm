@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(throwing)
 	priority = 25
 	wait = 1
 	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun
 	var/list/processing = list()
@@ -102,7 +103,7 @@ SUBSYSTEM_DEF(throwing)
 			finalize()
 			return
 
-/datum/thrownthing/proc/finalize(hit = FALSE)
+/datum/thrownthing/proc/finalize(hit = FALSE, target=null)
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
@@ -119,20 +120,21 @@ SUBSYSTEM_DEF(throwing)
 			thrownthing.newtonian_move(init_dir)
 	else
 		thrownthing.newtonian_move(init_dir)
+
+	if(target)
+		thrownthing.throw_impact(target, src)
+
 	if (callback)
 		callback.Invoke()
 
 /datum/thrownthing/proc/hit_atom(atom/A)
-	thrownthing.throw_impact(A, src)
-	thrownthing.newtonian_move(init_dir)
-	finalize(TRUE)
+	finalize(hit=TRUE, target=A)
 
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
 		if (AM == thrownthing)
 			continue
-		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
-			thrownthing.throwing = null
-			thrownthing.throw_impact(AM, src)
+		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
+			finalize(hit=TRUE, target=AM)
 			return TRUE

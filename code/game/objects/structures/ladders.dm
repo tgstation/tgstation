@@ -14,18 +14,15 @@
 
 
 /obj/structure/ladder/Initialize(mapload)
-	if(!initialized)
-		GLOB.ladders += src
-		..()
-	if(mapload)
-		return TRUE
-	update_link()
+	GLOB.ladders += src
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy()
 	GLOB.ladders -= src
 	. = ..()
 
-/obj/structure/ladder/proc/update_link()
+/obj/structure/ladder/LateInitialize()
 	for(var/obj/structure/ladder/L in GLOB.ladders)
 		if(L.id == id)
 			if(L.height == (height - 1))
@@ -91,7 +88,7 @@
 /obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/ladder/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/ladder/attackby(obj/item/W, mob/user, params)
 	return attack_hand(user)
 
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)

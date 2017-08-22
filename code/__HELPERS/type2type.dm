@@ -72,9 +72,8 @@
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
-/proc/file2list(filename, seperator="\n")
-	return splittext(return_file_text(filename),seperator)
-
+/world/proc/file2list(filename, seperator="\n")
+	return splittext(file2text(filename),seperator)
 
 //Turns a direction into text
 /proc/dir2text(direction)
@@ -200,8 +199,8 @@
 		. += "[seperator]+PERMISSIONS"
 	if(rights & R_STEALTH)
 		. += "[seperator]+STEALTH"
-	if(rights & R_REJUVINATE)
-		. += "[seperator]+REJUVINATE"
+	if(rights & R_POLL)
+		. += "[seperator]+POLL"
 	if(rights & R_VAREDIT)
 		. += "[seperator]+VAREDIT"
 	if(rights & R_SOUNDS)
@@ -538,3 +537,18 @@
 	if(!istype(the_matrix) || the_matrix.len != 20)
 		return "#ffffffff"
 	return rgb(the_matrix[1]*255, the_matrix[6]*255, the_matrix[11]*255, the_matrix[16]*255)
+
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj || /mob)
+				return /atom/movable
+			if(/area || /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))

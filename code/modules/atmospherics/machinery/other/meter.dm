@@ -4,33 +4,27 @@
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/atom/target = null
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id_tag
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
-	obj_integrity = 150
 	max_integrity = 150
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
 
 
-/obj/machinery/meter/New()
-	..()
+/obj/machinery/meter/Initialize(mapload)
+	. = ..()
 	SSair.atmos_machinery += src
-	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
-	return 1
+	if (!target)
+		target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	src.target = null
 	return ..()
-
-/obj/machinery/meter/Initialize(mapload)
-	..()
-	if (mapload && !target)
-		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/process_atmos()
 	if(!target)
@@ -97,8 +91,8 @@
 	to_chat(user, status())
 
 
-/obj/machinery/meter/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
+/obj/machinery/meter/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/wrench))
 		playsound(src.loc, W.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 		if (do_after(user, 40*W.toolspeed, target = src))

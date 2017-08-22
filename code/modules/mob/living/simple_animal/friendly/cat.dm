@@ -22,7 +22,7 @@
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -67,7 +67,7 @@
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
@@ -129,7 +129,7 @@
 				family[C.type] += 1
 			else
 				family[C.type] = 1
-	S["family"]				<< family
+	WRITE_FILE(S["family"], family)
 	memory_saved = 1
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
@@ -215,7 +215,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client), 20)
+				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)
@@ -231,8 +231,8 @@
 	maxHealth = 50
 	gender = FEMALE
 	harm_intent_damage = 10
-	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
-	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
+	/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
@@ -258,7 +258,7 @@
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(D.icon_state != "donut2")
 			D.name = "frosted donut"
 			D.icon_state = "donut2"

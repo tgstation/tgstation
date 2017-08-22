@@ -32,7 +32,7 @@
 #define BOTANIST			(1<<2)
 #define COOK				(1<<3)
 #define JANITOR			(1<<4)
-#define LIBRARIAN			(1<<5)
+#define CURATOR			(1<<5)
 #define QUARTERMASTER		(1<<6)
 #define CARGOTECH			(1<<7)
 #define MINER				(1<<8)

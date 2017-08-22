@@ -4,9 +4,8 @@
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "close"
-	anchored = 1
-	density = 1
-	obj_integrity = 250
+	anchored = TRUE
+	density = TRUE
 	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
@@ -36,7 +35,7 @@
 /obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
@@ -54,12 +53,12 @@
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/internals/oxygen
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas
-	storage_type = /obj/item/weapon/watertank/atmos
+	storage_type = /obj/item/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
@@ -80,30 +79,30 @@
 /obj/machinery/suit_storage_unit/syndicate
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	storage_type = /obj/item/tank/jetpack/oxygen/harness
 
 /obj/machinery/suit_storage_unit/ert/command
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/engineer
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/medical
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
-/obj/machinery/suit_storage_unit/New()
-	..()
+/obj/machinery/suit_storage_unit/Initialize()
+	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)
 		suit = new suit_type(src)
@@ -116,18 +115,10 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/Destroy()
-	if(suit)
-		qdel(suit)
-		suit = null
-	if(helmet)
-		qdel(helmet)
-		helmet = null
-	if(mask)
-		qdel(mask)
-		mask = null
-	if(storage)
-		qdel(storage)
-		storage = null
+	QDEL_NULL(suit)
+	QDEL_NULL(helmet)
+	QDEL_NULL(mask)
+	QDEL_NULL(storage)
 	return ..()
 
 /obj/machinery/suit_storage_unit/update_icon()
@@ -170,7 +161,7 @@
 	occupant = null
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_contents()
 		new /obj/item/stack/sheet/metal (loc, 2)
@@ -212,12 +203,12 @@
 		locked = TRUE
 		update_icon()
 		if(occupant)
+			var/mob/living/mob_occupant = occupant
 			if(uv_super)
-				occupant.adjustFireLoss(rand(20, 36))
+				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
-				occupant.adjustFireLoss(rand(10, 16))
-			if(iscarbon(occupant))
-				occupant.emote("scream")
+				mob_occupant.adjustFireLoss(rand(10, 16))
+			mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
 		uv_cycles = initial(uv_cycles)
@@ -241,7 +232,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
-			playsound(src, 'sound/machines/AirlockClose.ogg', 25, 1)
+			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
 				I.fingerprints = list()
@@ -321,7 +312,7 @@
 
 	return ..()
 
-/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -369,13 +360,14 @@
 				return
 			else
 				if(occupant)
-					to_chat(occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>")
+					var/mob/living/mob_occupant = occupant
+					to_chat(mob_occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!</span>")
 				cook()
 				. = TRUE
 		if("dispense")
 			if(!state_open)
 				return
-			
+
 			var/static/list/valid_items = list("helmet", "suit", "mask", "storage")
 			var/item_name = params["item"]
 			if(item_name in valid_items)

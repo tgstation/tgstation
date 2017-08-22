@@ -16,7 +16,7 @@
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
-		if(istype(brain,/obj/item/organ/brain/alien))
+		if(istype(brain, /obj/item/organ/brain/alien))
 			if(brainmob && brainmob.stat == DEAD)
 				icon_state = "mmi_alien_dead"
 			else
@@ -31,18 +31,15 @@
 	else
 		icon_state = "mmi_empty"
 
-/obj/item/device/mmi/New()
-	..()
+/obj/item/device/mmi/Initialize()
+	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-
-/obj/item/device/mmi/Initialize()
-	..()
 	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
+	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
 			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")
@@ -73,7 +70,7 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		feedback_inc("cyborg_mmis_filled",1)
+		SSblackbox.inc("cyborg_mmis_filled",1)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee

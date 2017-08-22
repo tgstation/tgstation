@@ -2,12 +2,34 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "artificer"
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
 	cult_req = 1
 	charge_max = 2500
+
+
+/obj/effect/proc_holder/spell/aoe_turf/area_conversion
+	name = "Area Conversion"
+	desc = "This spell instantly converts a small area around you."
+
+	school = "transmutation"
+	charge_max = 50
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 2
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "areaconvert"
+	action_background_icon_state = "bg_cult"
+
+/obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user = usr)
+	playsound(get_turf(user), 'sound/items/welder.ogg', 75, 1)
+	for(var/turf/T in targets)
+		T.narsie_act(FALSE, TRUE, 100 - (get_dist(user, T) * 25))
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Summon Cult Floor"
@@ -20,6 +42,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/open/floor/engine/cult)
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
 
@@ -34,6 +57,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
 
@@ -63,6 +87,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
 
@@ -89,6 +114,7 @@
 	range = 0
 	summon_type = list(/obj/effect/forcefield/cult)
 	summon_lifespan = 200
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultforcewall"
 	action_background_icon_state = "bg_demon"
 
@@ -98,18 +124,19 @@
 	desc = "This spell allows you to pass through walls"
 
 	school = "transmutation"
-	charge_max = 200
+	charge_max = 250
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
 	include_user = 1
 	jaunt_duration = 50 //in deciseconds
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "phaseshift"
 	action_background_icon_state = "bg_demon"
 	jaunt_in_time = 12
-	jaunt_in_type = /obj/effect/overlay/temp/dir_setting/wraith
-	jaunt_out_type = /obj/effect/overlay/temp/dir_setting/wraith/out
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(mobloc)
 	return
@@ -144,7 +171,7 @@
 
 	smoke_spread = 3
 	smoke_amt = 4
-	action_icon_state = "parasmoke"
+	action_icon_state = "smoke"
 	action_background_icon_state = "bg_cult"
 
 
@@ -162,6 +189,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"
 	action_icon_state = "abyssal_gaze"
 
@@ -202,6 +230,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"
 	action_icon_state = "dominate"
 
@@ -236,7 +265,7 @@
 	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
 	S.faction = list("cult")
 	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, 1)
-	new /obj/effect/overlay/temp/cult/sac(get_turf(S))
+	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
 /obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
 	if(!isanimal(target) || target.stat)
@@ -247,5 +276,5 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem
 	charge_max = 800
-	jaunt_in_type = /obj/effect/overlay/temp/dir_setting/cult/phase
-	jaunt_out_type = /obj/effect/overlay/temp/dir_setting/cult/phase/out
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out

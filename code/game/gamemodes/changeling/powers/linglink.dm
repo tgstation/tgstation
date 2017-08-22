@@ -4,7 +4,6 @@
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
-	max_genetic_damage = 100
 
 /obj/effect/proc_holder/changeling/linglink/can_sting(mob/living/carbon/user)
 	if(!..())
@@ -56,7 +55,7 @@
 				to_chat(target, "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>")
 				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
-		feedback_add_details("changeling_powers","Hivemind Link|[i]")
+		SSblackbox.add_details("changeling_powers","Hivemind Link|[i]")
 		if(!do_mob(user, target, 20))
 			to_chat(user, "<span class='warning'>Our link with [target] has ended!</span>")
 			changeling.islinking = 0

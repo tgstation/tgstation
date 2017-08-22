@@ -3,7 +3,7 @@
 	desc = "A shooting target."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_h"
-	density = 0
+	density = FALSE
 	var/hp = 1800
 	var/obj/structure/target_stake/pinnedLoc
 
@@ -15,7 +15,7 @@
 
 /obj/item/target/proc/nullPinnedLoc()
 	pinnedLoc = null
-	density = 0
+	density = FALSE
 
 /obj/item/target/proc/removeOverlays()
 	cut_overlays()
@@ -26,8 +26,8 @@
 		pinnedLoc.loc = loc
 
 /obj/item/target/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			removeOverlays()
 			to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
@@ -48,6 +48,9 @@
 	icon_state = "target_q"
 	desc = "A shooting target that looks like a xenomorphic alien."
 	hp = 2350
+
+/obj/item/target/alien/anchored
+	anchored = TRUE
 
 /obj/item/target/clown
 	icon_state = "target_c"
@@ -73,18 +76,18 @@
 		if(hp <= 0)
 			visible_message("<span class='danger'>[src] breaks into tiny pieces and collapses!</span>")
 			qdel(src)
-		var/image/I = image("icon"='icons/effects/effects.dmi', "icon_state"="scorch", "layer"=OBJ_LAYER+0.5)
-		I.pixel_x = p_x - 1 //offset correction
-		I.pixel_y = p_y - 1
+		var/image/bullet_hole = image('icons/effects/effects.dmi', "scorch", OBJ_LAYER + 0.5)
+		bullet_hole.pixel_x = p_x - 1 //offset correction
+		bullet_hole.pixel_y = p_y - 1
 		if(decaltype == DECALTYPE_SCORCH)
-			I.setDir(pick(NORTH,SOUTH,EAST,WEST))// random scorch design
+			bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))// random scorch design
 			if(P.damage >= 20 || istype(P, /obj/item/projectile/beam/practice))
-				I.setDir(pick(NORTH,SOUTH,EAST,WEST))
+				bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))
 			else
-				I.icon_state = "light_scorch"
+				bullet_hole.icon_state = "light_scorch"
 		else
-			I.icon_state = "dent"
-		add_overlay(I)
+			bullet_hole.icon_state = "dent"
+		add_overlay(bullet_hole)
 		return
 	return -1
 

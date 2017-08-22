@@ -45,6 +45,9 @@
 			index = findtext(t, char, index+1)
 	return t
 
+/proc/sanitize_filename(t)
+	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
+
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)
 	return html_encode(sanitize_simple(t,repl_chars))
@@ -553,14 +556,14 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/list/tosend = list()
 	tosend["data"] = finalized
-	log << json_encode(tosend)
+	WRITE_FILE(log, json_encode(tosend))
 
 //Used for applying byonds text macros to strings that are loaded at runtime
 /proc/apply_text_macros(string)
 	var/next_backslash = findtext(string, "\\")
 	if(!next_backslash)
 		return string
-	
+
 	var/leng = length(string)
 
 	var/next_space = findtext(string, " ", next_backslash + 1)

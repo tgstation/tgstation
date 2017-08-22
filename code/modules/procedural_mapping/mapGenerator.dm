@@ -17,7 +17,6 @@
 //All
 #define CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all
 
-
 /datum/mapGenerator
 
 	//Map information
@@ -26,8 +25,12 @@
 	//mapGeneratorModule information
 	var/list/modules = list()
 
+	var/buildmode_name = "Undocumented"
+
 /datum/mapGenerator/New()
 	..()
+	if(buildmode_name == "Undocumented")
+		buildmode_name = copytext("[type]", 20)	// / d a t u m / m a p g e n e r a t o r / = 20 characters.
 	initialiseModules()
 
 //Defines the region the map represents, sets map
@@ -107,8 +110,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/mapGeneratorModule/mod in modules)
-		spawn(0)
-			mod.generate()
+		INVOKE_ASYNC(mod, /datum/mapGeneratorModule.proc/generate)
 
 
 //Requests the mapGeneratorModule(s) to (re)generate this one turf
@@ -119,8 +121,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/mapGeneratorModule/mod in modules)
-		spawn(0)
-			mod.place(T)
+		INVOKE_ASYNC(mod, /datum/mapGeneratorModule.proc/place, T)
 
 
 //Replaces all paths in the module list with actual module datums

@@ -46,8 +46,18 @@
 /turf/open/floor/circuit/airless
 	initial_gas_mix = "TEMP=2.7"
 
+/turf/open/floor/circuit/killroom
+	name = "Killroom Floor"
+	initial_gas_mix = "n2=500;TEMP=80"
+
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
+
+/turf/open/floor/circuit/telecomms/mainframe
+	name = "Mainframe Base"
+
+/turf/open/floor/circuit/telecomms/server
+	name = "Server Base"
 
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
@@ -69,6 +79,9 @@
 
 /turf/open/floor/circuit/green/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
+
+/turf/open/floor/circuit/green/telecomms/mainframe
+	name = "Mainframe Base"
 
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"
@@ -133,8 +146,8 @@
 
 /turf/open/floor/clockwork/Initialize()
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor(src)
-	new /obj/effect/overlay/temp/ratvar/beam(src)
+	new /obj/effect/temp_visual/ratvar/floor(src)
+	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor(src)
 	realappearence.linked = src
 	change_construction_value(1)
@@ -181,7 +194,7 @@
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, I.usesound, 20, 1)
 		if(!do_after(user, 70*I.toolspeed, target = src))
@@ -250,9 +263,10 @@
 	if(severity < 3 || target == src)
 		ChangeTurf(src.baseturf)
 
-/turf/open/floor/vines/narsie_act()
-	if(prob(20))
-		ChangeTurf(src.baseturf) //nar sie eats this shit
+/turf/open/floor/vines/narsie_act(force, ignore_mobs, probability = 20)
+	if(prob(probability) || force)
+		ChangeTurf(baseturf) //nar sie eats this shit
+		narsie_act(force, ignore_mobs, probability)
 
 /turf/open/floor/vines/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

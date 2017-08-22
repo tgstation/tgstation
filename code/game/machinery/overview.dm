@@ -95,8 +95,9 @@
 								colour = rgb(255,255,0)
 								colour2 = rgb(255,128,0)
 
-						if(istype(AM, /mob))
-							if(AM:client)
+						if(ismob(AM))
+							var/mob/M = AM
+							if(M.client)
 								colour = rgb(255,0,0)
 							else
 								colour = rgb(255,128,128)
@@ -146,7 +147,7 @@
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
 
-			//to_chat(world, "icon: \icon[I]")
+			//to_chat(world, "icon: [icon2html(I, world)]")
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
@@ -163,7 +164,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//to_chat(world, "\icon[I] at [H.screen_loc]")
+		//to_chat(world, "[icon2html(I, world)] at [H.screen_loc]")
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -241,8 +242,9 @@
 							if(AM.icon_state=="alarm:1")
 								colour = rgb(255,255,0)
 
-						if(istype(AM, /mob))
-							if(AM:client)
+						if(ismob(AM))
+							var/mob/M = AM
+							if(M.client)
 								colour = rgb(255,0,0)
 							else
 								colour = rgb(255,128,128)
@@ -274,7 +276,7 @@
 			var/icon/I = imap[1+(ix + icx*iy)]
 
 
-			//to_chat(world, "icon: \icon[I]")
+			//to_chat(world, "icon: [icon2html(I, world)]")
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
@@ -289,7 +291,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//to_chat(world, "\icon[I] at [H.screen_loc]")
+		//to_chat(world, "[icon2html(I, world)] at [H.screen_loc]")
 
 		H.name = (i==0)?"maprefresh":"map"
 

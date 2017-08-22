@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
@@ -35,7 +35,7 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
@@ -49,7 +49,7 @@
 /area/ruin/unpowered)
 "n" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "o" = (

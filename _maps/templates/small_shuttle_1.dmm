@@ -6,14 +6,12 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/space)
 "c" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless,
 /area/space)
 "d" = (
 /turf/open/space,
 /turf/closed/wall/shuttle{
-	tag = "icon-swall_f10";
 	icon_state = "swall_f10"
 	},
 /area/space)
@@ -31,13 +29,11 @@
 /area/space)
 "h" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall13";
 	icon_state = "swall13"
 	},
 /area/space)
 "i" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall8";
 	icon_state = "swall8"
 	},
 /area/space)
@@ -47,7 +43,6 @@
 /area/space)
 "k" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall4";
 	icon_state = "swall4"
 	},
 /area/space)
@@ -70,14 +65,11 @@
 "o" = (
 /turf/open/space,
 /turf/closed/wall/shuttle{
-	tag = "icon-swall_f5";
 	icon_state = "swall_f5"
 	},
 /area/space)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/space)
 "q" = (
@@ -85,15 +77,12 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/space)
 "s" = (
 /turf/open/space,
 /turf/closed/wall/shuttle{
-	tag = "icon-swall_f9";
 	icon_state = "swall_f9"
 	},
 /area/space)

@@ -8,9 +8,9 @@
 /obj/item/seeds/sample/New()
 	..()
 	if(sample_color)
-		var/image/I = image(icon, icon_state = "sample-filling")
-		I.color = sample_color
-		add_overlay(I)
+		var/mutable_appearance/filling = mutable_appearance(icon, "sample-filling")
+		filling.color = sample_color
+		add_overlay(filling)
 
 /obj/item/seeds/sample/get_analyzer_text()
 	return " The DNA of this sample is damaged beyond recovery, it can't support life on its own.\n*---------*"

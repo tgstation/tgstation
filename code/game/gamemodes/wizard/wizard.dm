@@ -110,6 +110,10 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+
+		/* Wizards by nature cannot be too young. */
+		if(wizard_mob.age < WIZARD_AGE_MIN)
+			wizard_mob.age = WIZARD_AGE_MIN
 	return
 
 
@@ -148,10 +152,10 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(wizard_mob), slot_shoes)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(wizard_mob), slot_in_backpack)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
-	var/obj/item/weapon/spellbook/spellbook = new /obj/item/weapon/spellbook(wizard_mob)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/storage/backpack(wizard_mob), slot_back)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/storage/box/survival(wizard_mob), slot_in_backpack)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/teleportation_scroll(wizard_mob), slot_r_store)
+	var/obj/item/spellbook/spellbook = new /obj/item/spellbook(wizard_mob)
 	spellbook.owner = wizard_mob
 	wizard_mob.put_in_hands_or_del(spellbook)
 
@@ -176,7 +180,7 @@
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
-		feedback_set_details("round_end_result","loss - wizard killed")
+		SSticker.mode_result = "loss - wizard killed"
 		to_chat(world, "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>")
 
 		SSticker.news_report = WIZARD_KILLED
@@ -208,19 +212,19 @@
 			for(var/datum/objective/objective in wizard.objectives)
 				if(objective.check_completion())
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-					feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
+					SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
 				else
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-					feedback_add_details("wizard_objective","[objective.type]|FAIL")
+					SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
 					wizardwin = 0
 				count++
 
 			if(wizard.current && wizard.current.stat!=2 && wizardwin)
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
-				feedback_add_details("wizard_success","SUCCESS")
+				SSblackbox.add_details("wizard_success","SUCCESS")
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
-				feedback_add_details("wizard_success","FAIL")
+				SSblackbox.add_details("wizard_success","FAIL")
 			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1

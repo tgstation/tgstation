@@ -31,18 +31,28 @@
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?_src_=holder;editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		if(config.use_exp_tracking)
+			body += "\[<A href='?_src_=holder;getplaytimewindow=\ref[M]'>" + M.client.get_exp_living() + "</a>\]"
 
 	if(isnewplayer(M))
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?_src_=holder;revive=\ref[M]'>Heal</A>\] "
 
+	if(M.client)
+		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+		body += "<br><br><b>Show related accounts by:</b> "
+		body += "\[ <a href='?_src_=holder;showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
+		body += "<a href='?_src_=holder;showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
+
+
 	body += "<br><br>\[ "
 	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;subtlemessage=\ref[M]'>SM</a> - "
-	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>"
+	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a> - "
+	body += "<a href='?_src_=holder;individuallog=\ref[M]'>LOGS</a>\] <br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
@@ -81,7 +91,6 @@
 	body += "<A href='?_src_=holder;traitor=\ref[M]'>Traitor panel</A> | "
 	body += "<A href='?_src_=holder;narrateto=\ref[M]'>Narrate to</A> | "
 	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A> | "
-	body += "<A href='?_src_=holder;individuallog=\ref[M]'>Individual Round Logs</A> | "
 	body += "<A href='?_src_=holder;languagemenu=\ref[M]'>Language Menu</A>"
 
 	if (M.client)
@@ -166,7 +175,7 @@
 	body += "</body></html>"
 
 	usr << browse(body, "window=adminplayeropts-\ref[M];size=550x515")
-	feedback_add_details("admin_verb","Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/access_news_network() //MARKER
@@ -174,9 +183,9 @@
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
-	if (!istype(src,/datum/admins))
+	if (!istype(src, /datum/admins))
 		src = usr.client.holder
-	if (!istype(src,/datum/admins))
+	if (!istype(src, /datum/admins))
 		to_chat(usr, "Error: you are not an admin!")
 		return
 	var/dat
@@ -410,17 +419,35 @@
 
 /datum/admins/proc/restart()
 	set category = "Server"
-	set name = "Hard Restart"
+	set name = "Reboot World"
 	set desc="Restarts the world immediately"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Yes")
-		SSticker.delay_end = 0
-		feedback_add_details("admin_verb","Hard Restart") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+
+	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
+	if(world.RunningService())
+		options += "Service Restart (Force restart DD)";
+
+	var/rebootconfirm
+	if(SSticker.admin_delay_notice)
+		if(alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") == "Yes")
+			rebootconfirm = TRUE
+	else
+		rebootconfirm = TRUE
+	if(rebootconfirm)
+		var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+		if(result)
+			SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			switch(result)
+				if("Regular Restart")
+					SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+				if("Hard Restart (No Delay, No Feeback Reason)")
+					world.Reboot()
+				if("Hardest Restart (No actions, just reboot)")
+					world.Reboot(fast_track = TRUE)
+				if("Service Restart (Force restart DD)")
+					GLOB.reboot_mode = REBOOT_MODE_HARD
+					world.ServiceReboot()
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -434,7 +461,7 @@
 		return
 	if(confirm == "Yes")
 		SSticker.force_ending = 1
-		feedback_add_details("admin_verb","End Round") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","End Round") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/announce()
@@ -450,7 +477,7 @@
 			message = adminscrub(message,500)
 		to_chat(world, "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]")
 		log_admin("Announce: [key_name(usr)] : [message]")
-	feedback_add_details("admin_verb","Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
 	set category = "Special Verbs"
@@ -471,7 +498,7 @@
 		message_admins("[key_name(usr)] set the admin notice.")
 		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
 		to_chat(world, "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>")
-	feedback_add_details("admin_verb","Set Admin Notice") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Set Admin Notice") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	GLOB.admin_notice = new_admin_notice
 	return
 
@@ -482,7 +509,7 @@
 	toggle_ooc()
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.")
-	feedback_add_details("admin_toggle","Toggle OOC|[GLOB.ooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle OOC|[GLOB.ooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
@@ -492,7 +519,7 @@
 
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
-	feedback_add_details("admin_toggle","Toggle Dead OOC|[GLOB.dooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Dead OOC|[GLOB.dooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/startnow()
 	set category = "Server"
@@ -507,7 +534,7 @@
 				started as soon as possible.)"
 		message_admins("<font color='blue'>\
 			[usr.key] has started the game.[msg]</font>")
-		feedback_add_details("admin_verb","Start Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Start Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
 	else
 		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
@@ -526,7 +553,7 @@
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
-	feedback_add_details("admin_toggle","Toggle Entering|[GLOB.enter_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Entering|[GLOB.enter_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleAI()
 	set category = "Server"
@@ -539,7 +566,7 @@
 		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
-	feedback_add_details("admin_toggle","Toggle AI|[config.allow_ai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle AI|[config.allow_ai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleaban()
 	set category = "Server"
@@ -553,7 +580,7 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].</span>")
 	log_admin("[key_name(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].")
 	world.update_status()
-	feedback_add_details("admin_toggle","Toggle Respawn|[GLOB.abandon_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Respawn|[GLOB.abandon_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/delay()
 	set category = "Server"
@@ -570,20 +597,20 @@
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
 			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
-			world << 'sound/ai/attention.ogg'
+			SEND_SOUND(world, sound('sound/ai/attention.ogg'))
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
-		feedback_add_details("admin_verb","Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == ZLEVEL_CENTCOM)
-		M.loc = pick(GLOB.latejoin)
+		SSjob.SendToLateJoin(M)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
 		alert("[M.name] is not prisoned.")
-	feedback_add_details("admin_verb","Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
@@ -597,7 +624,7 @@
 		if(3)
 			var/count = 0
 			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z == 1)
+				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
 		if(4)
@@ -616,7 +643,7 @@
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
-	if(ispath(chosen,/turf))
+	if(ispath(chosen, /turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
@@ -624,7 +651,7 @@
 		A.admin_spawned = TRUE
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
-	feedback_add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
@@ -640,7 +667,7 @@
 		return
 
 	M.mind.edit_memory()
-	feedback_add_details("admin_verb","Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/toggletintedweldhelmets()
@@ -654,7 +681,7 @@
 		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
-	feedback_add_details("admin_toggle","Toggle Tinted Welding Helmets|[GLOB.tinted_weldhelh]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Tinted Welding Helmets|[GLOB.tinted_weldhelh]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleguests()
 	set category = "Server"
@@ -667,7 +694,7 @@
 		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.</span>")
-	feedback_add_details("admin_toggle","Toggle Guests|[GLOB.guests_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Guests|[GLOB.guests_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
@@ -677,7 +704,7 @@
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
 		else if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
+			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independent)"]: laws:</b>")
 		else if (ispAI(S))
 			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>")
 		else
@@ -699,7 +726,7 @@
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
-	if(istype(M) && M.mind && M.mind.devilinfo)
+	if(is_devil(M))
 		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
@@ -710,34 +737,33 @@
 	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
 
-	if(SSticker && !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
-	if(SSjob)
-		for(var/datum/job/job in SSjob.occupations)
-			count++
-			var/J_title = html_encode(job.title)
-			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
-			var/J_totPos = html_encode(job.total_positions)
-			if(job.total_positions < 0)
-				dat += "[J_title]: [J_opPos]   (unlimited)"
-			else
-				dat += "[J_title]: [J_opPos]/[J_totPos]"
+	for(var/datum/job/job in SSjob.occupations)
+		count++
+		var/J_title = html_encode(job.title)
+		var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
+		var/J_totPos = html_encode(job.total_positions)
+		if(job.total_positions < 0)
+			dat += "[J_title]: [J_opPos]   (unlimited)"
+		else
+			dat += "[J_title]: [J_opPos]/[J_totPos]"
 
-			if(job.title == "AI" || job.title == "Cyborg")
-				dat += "   (Cannot Late Join)<br>"
-				continue
-			if(job.total_positions >= 0)
-				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
-				if(job.total_positions > job.current_positions)
-					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
-				else
-					dat += "Remove  |  "
-				dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+		if(job.title == "AI" || job.title == "Cyborg")
+			dat += "   (Cannot Late Join)<br>"
+			continue
+		if(job.total_positions >= 0)
+			dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
+			if(job.total_positions > job.current_positions)
+				dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
 			else
-				dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
-			dat += "<br>"
+				dat += "Remove  |  "
+			dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+		else
+			dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
+		dat += "<br>"
 
 	dat += "</body>"
 	var/winheight = 100 + (count * 20)
@@ -796,7 +822,7 @@
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
-	feedback_add_details("admin_verb","Ghost Drag Control")
+	SSblackbox.add_details("admin_verb","Ghost Drag Control")
 
 	tomob.ckey = frommob.ckey
 	qdel(frommob)
@@ -804,7 +830,7 @@
 	return 1
 
 /client/proc/adminGreet(logout)
-	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker.HasRoundStarted())
 		var/string
 		if(logout && config && config.announce_admin_logout)
 			string = pick(

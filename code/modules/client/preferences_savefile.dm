@@ -1,8 +1,8 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	10
+#define SAVEFILE_VERSION_MIN	15
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	17
+#define SAVEFILE_VERSION_MAX	18
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -88,15 +88,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 10)
-		toggles |= MEMBER_PUBLIC
-	if(current_version < 11)
-		chat_toggles = TOGGLES_DEFAULT_CHAT
-		toggles = TOGGLES_DEFAULT
-	if(current_version < 12)
-		ignoring = list()
-	if(current_version < 15)
-		toggles |= SOUND_ANNOUNCEMENTS
 
 
 //should this proc get fairly long (say 3 versions long),
@@ -106,16 +97,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //It's only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(pref_species && !(pref_species.id in GLOB.roundstart_species))
-		var/rando_race = pick(config.roundstart_races)
-		pref_species = new rando_race()
-
-	if(current_version < 13 || !istext(backbag))
-		switch(backbag)
-			if(2)
-				backbag = DSATCHEL
-			else
-				backbag = DBACKPACK
 	if(current_version < 16)
 		var/berandom
 		S["userandomjob"] >> berandom
@@ -156,12 +137,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
 	S["windowflash"]		>> windowflashing
+	S["be_special"] 		>> be_special
 
-	if(islist(S["be_special"]))
-		S["be_special"] 	>> be_special
-	else //force update and store the old bitflag version of be_special
-		needs_update = 11
-		S["be_special"] 	>> old_be_special
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -177,6 +154,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
+	S["menuoptions"]		>> menuoptions
+	S["enable_tips"]		>> enable_tips
+	S["tip_delay"]			>> tip_delay
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -199,6 +179,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	menuoptions		= SANITIZE_LIST(menuoptions)
+	be_special		= SANITIZE_LIST(be_special)
+
 
 	return 1
 
@@ -210,31 +193,34 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/"
 
-	S["version"] << SAVEFILE_VERSION_MAX		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
+	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	//general preferences
-	S["ooccolor"]			<< ooccolor
-	S["lastchangelog"]		<< lastchangelog
-	S["UI_style"]			<< UI_style
-	S["hotkeys"]			<< hotkeys
-	S["tgui_fancy"]			<< tgui_fancy
-	S["tgui_lock"]			<< tgui_lock
-	S["windowflash"]		<< windowflashing
-	S["be_special"]			<< be_special
-	S["default_slot"]		<< default_slot
-	S["toggles"]			<< toggles
-	S["chat_toggles"]		<< chat_toggles
-	S["ghost_form"]			<< ghost_form
-	S["ghost_orbit"]		<< ghost_orbit
-	S["ghost_accs"]			<< ghost_accs
-	S["ghost_others"]		<< ghost_others
-	S["preferred_map"]		<< preferred_map
-	S["ignoring"]			<< ignoring
-	S["ghost_hud"]			<< ghost_hud
-	S["inquisitive_ghost"]	<< inquisitive_ghost
-	S["uses_glasses_colour"]<< uses_glasses_colour
-	S["clientfps"]			<< clientfps
-	S["parallax"]			<< parallax
+	WRITE_FILE(S["ooccolor"], ooccolor)
+	WRITE_FILE(S["lastchangelog"], lastchangelog)
+	WRITE_FILE(S["UI_style"], UI_style)
+	WRITE_FILE(S["hotkeys"], hotkeys)
+	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
+	WRITE_FILE(S["tgui_lock"], tgui_lock)
+	WRITE_FILE(S["windowflash"], windowflashing)
+	WRITE_FILE(S["be_special"], be_special)
+	WRITE_FILE(S["default_slot"], default_slot)
+	WRITE_FILE(S["toggles"], toggles)
+	WRITE_FILE(S["chat_toggles"], chat_toggles)
+	WRITE_FILE(S["ghost_form"], ghost_form)
+	WRITE_FILE(S["ghost_orbit"], ghost_orbit)
+	WRITE_FILE(S["ghost_accs"], ghost_accs)
+	WRITE_FILE(S["ghost_others"], ghost_others)
+	WRITE_FILE(S["preferred_map"], preferred_map)
+	WRITE_FILE(S["ignoring"], ignoring)
+	WRITE_FILE(S["ghost_hud"], ghost_hud)
+	WRITE_FILE(S["inquisitive_ghost"], inquisitive_ghost)
+	WRITE_FILE(S["uses_glasses_colour"], uses_glasses_colour)
+	WRITE_FILE(S["clientfps"], clientfps)
+	WRITE_FILE(S["parallax"], parallax)
+	WRITE_FILE(S["menuoptions"], menuoptions)
+	WRITE_FILE(S["enable_tips"], enable_tips)
+	WRITE_FILE(S["tip_delay"], tip_delay)
 
 	return 1
 
@@ -252,7 +238,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
-		S["default_slot"] << slot
+		WRITE_FILE(S["default_slot"] , slot)
 
 	S.cd = "/character[slot]"
 	var/needs_update = savefile_needs_update(S)
@@ -265,12 +251,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
 		var/newtype = GLOB.roundstart_species[species_id]
 		pref_species = new newtype()
-	else
+	else if (config.roundstart_races.len)
 		var/rando_race = pick(config.roundstart_races)
-		pref_species = new rando_race()
+		if (rando_race)
+			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
-		S["features["mcolor"]"]	<< "#FFF"
+		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
 
 	//Character
 	S["OOC_Notes"]			>> metadata
@@ -388,63 +375,64 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/character[default_slot]"
 
-	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.
+	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
-	S["OOC_Notes"]			<< metadata
-	S["real_name"]			<< real_name
-	S["name_is_always_random"] << be_random_name
-	S["body_is_always_random"] << be_random_body
-	S["gender"]				<< gender
-	S["age"]				<< age
-	S["hair_color"]			<< hair_color
-	S["facial_hair_color"]	<< facial_hair_color
-	S["eye_color"]			<< eye_color
-	S["skin_tone"]			<< skin_tone
-	S["hair_style_name"]	<< hair_style
-	S["facial_style_name"]	<< facial_hair_style
-	S["underwear"]			<< underwear
-	S["undershirt"]			<< undershirt
-	S["socks"]				<< socks
-	S["backbag"]			<< backbag
-	S["uplink_loc"]			<< uplink_spawn_loc
-	S["species"]			<< pref_species.id
-	S["feature_mcolor"]					<< features["mcolor"]
-	S["feature_lizard_tail"]			<< features["tail_lizard"]
-	S["feature_human_tail"]				<< features["tail_human"]
-	S["feature_lizard_snout"]			<< features["snout"]
-	S["feature_lizard_horns"]			<< features["horns"]
-	S["feature_human_ears"]				<< features["ears"]
-	S["feature_lizard_frills"]			<< features["frills"]
-	S["feature_lizard_spines"]			<< features["spines"]
-	S["feature_lizard_body_markings"]	<< features["body_markings"]
-	S["feature_lizard_legs"]			<< features["legs"]
-	S["clown_name"]			<< custom_names["clown"]
-	S["mime_name"]			<< custom_names["mime"]
-	S["ai_name"]			<< custom_names["ai"]
-	S["cyborg_name"]		<< custom_names["cyborg"]
-	S["religion_name"]		<< custom_names["religion"]
-	S["deity_name"]			<< custom_names["deity"]
-	S["prefered_security_department"] << prefered_security_department
+	WRITE_FILE(S["OOC_Notes"]			, metadata)
+	WRITE_FILE(S["real_name"]			, real_name)
+	WRITE_FILE(S["name_is_always_random"] , be_random_name)
+	WRITE_FILE(S["body_is_always_random"] , be_random_body)
+	WRITE_FILE(S["gender"]				, gender)
+	WRITE_FILE(S["age"]				, age)
+	WRITE_FILE(S["hair_color"]			, hair_color)
+	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)
+	WRITE_FILE(S["eye_color"]			, eye_color)
+	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["hair_style_name"]	, hair_style)
+	WRITE_FILE(S["facial_style_name"]	, facial_hair_style)
+	WRITE_FILE(S["underwear"]			, underwear)
+	WRITE_FILE(S["undershirt"]			, undershirt)
+	WRITE_FILE(S["socks"]				, socks)
+	WRITE_FILE(S["backbag"]			, backbag)
+	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
+	WRITE_FILE(S["species"]			, pref_species.id)
+	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
+	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])
+	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
+	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])
+	WRITE_FILE(S["feature_lizard_horns"]			, features["horns"])
+	WRITE_FILE(S["feature_human_ears"]				, features["ears"])
+	WRITE_FILE(S["feature_lizard_frills"]			, features["frills"])
+	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
+	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
+	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
+	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
+	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
+	WRITE_FILE(S["ai_name"]			, custom_names["ai"])
+	WRITE_FILE(S["cyborg_name"]		, custom_names["cyborg"])
+	WRITE_FILE(S["religion_name"]		, custom_names["religion"])
+	WRITE_FILE(S["deity_name"]			, custom_names["deity"])
+	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs
-	S["joblessrole"]		<< joblessrole
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
+	WRITE_FILE(S["joblessrole"]		, joblessrole)
+	WRITE_FILE(S["job_civilian_high"]	, job_civilian_high)
+	WRITE_FILE(S["job_civilian_med"]	, job_civilian_med)
+	WRITE_FILE(S["job_civilian_low"]	, job_civilian_low)
+	WRITE_FILE(S["job_medsci_high"]	, job_medsci_high)
+	WRITE_FILE(S["job_medsci_med"]		, job_medsci_med)
+	WRITE_FILE(S["job_medsci_low"]		, job_medsci_low)
+	WRITE_FILE(S["job_engsec_high"]	, job_engsec_high)
+	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
+	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
 	return 1
 
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
-/*
+
+#ifdef TESTING
 //DEBUG
 //Some crude tools for testing savefiles
 //path is the savefile path
@@ -455,4 +443,5 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /client/verb/savefile_import(path as text)
 	var/savefile/S = new /savefile(path)
 	S.ImportText("/",file("[path].txt"))
-*/
+
+#endif

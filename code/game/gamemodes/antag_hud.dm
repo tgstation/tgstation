@@ -1,9 +1,9 @@
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
-	var/self_visible = 1
+	var/self_visible = TRUE
 
 /datum/atom_hud/antag/hidden
-	self_visible = 0
+	self_visible = FALSE
 
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	//sees_hud should be set to 0 if the mob does not get to see it's own hud type.
@@ -49,7 +49,7 @@
 
 /datum/mind/proc/leave_all_antag_huds()
 	for(var/datum/atom_hud/antag/hud in GLOB.huds)
-		if(current in hud.hudusers)
+		if(hud.hudusers[current])
 			hud.leave_hud(current)
 
 /datum/atom_hud/antag/gang

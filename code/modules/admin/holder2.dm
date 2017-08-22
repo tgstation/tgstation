@@ -31,6 +31,11 @@ GLOBAL_PROTECT(admin_datums)
 	GLOB.admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin_private("[key_name(usr)][msg]")
+		return
 	if(istype(C))
 		owner = C
 		owner.holder = src

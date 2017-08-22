@@ -20,7 +20,7 @@
 		<a href='?src=\ref[src];makeAntag=gangs'>Make Gangsters</a><br>
 		<a href='?src=\ref[src];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=centcom'>Make Centcom Response Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
 		"}
@@ -132,7 +132,7 @@
 
 /datum/admins/proc/makeWizard()
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", "wizard", null)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", "wizard", null)
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 
@@ -202,6 +202,7 @@
 			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
 			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
 			Ratvar, and you will bring him back.</span>")
+			H.playsound_local(get_turf(H), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
 			add_servant_of_ratvar(H, TRUE)
 			SSticker.mode.equip_servant(H)
 			candidates.Remove(H)
@@ -215,7 +216,7 @@
 /datum/admins/proc/makeNukeTeam()
 
 	var/datum/game_mode/nuclear/temp = new
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
 	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
 
@@ -288,7 +289,7 @@
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
 	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
 	var/squadSpawned = 0
 
 	if(candidates.len >= 2) //Minimum 2 to be considered a squad
@@ -396,7 +397,7 @@
 
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered to be a Centcom Official?", "deathsquad")
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered to be a CentCom Official?", "deathsquad")
 
 	if(candidates.len)
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -407,7 +408,7 @@
 		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.dna.update_dna_identity()
 		newmob.key = chosen_candidate.key
-		newmob.mind.assigned_role = "Centcom Official"
+		newmob.mind.assigned_role = "CentCom Official"
 		newmob.equipOutfit(/datum/outfit/centcom_official)
 
 		//Assign antag status and the mission
@@ -423,12 +424,12 @@
 			newmob.set_species(/datum/species/human)
 
 		//Greet the official
-		to_chat(newmob, "<B><font size=3 color=red>You are a Centcom Official.</font></B>")
+		to_chat(newmob, "<B><font size=3 color=red>You are a CentCom Official.</font></B>")
 		to_chat(newmob, "<BR>Central Command is sending you to [station_name()] with the task: [mission]")
 
 		//Logging and cleanup
-		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
-		log_game("[key_name(newmob)] has been selected as a Centcom Official")
+		message_admins("CentCom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
+		log_game("[key_name(newmob)] has been selected as a CentCom Official")
 
 		return 1
 
@@ -436,7 +437,7 @@
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
-	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: CentCom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
 	if(!alert)
 		return
 	switch(alert)
@@ -448,7 +449,7 @@
 			alert = "Amber"
 		if("Blue: Light ERT (No Armoury Access)")
 			alert = "Blue"
-		if("Green: Centcom Official")
+		if("Green: CentCom Official")
 			return makeOfficial()
 	var/teamcheck = input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num
 	if(isnull(teamcheck))
@@ -457,7 +458,7 @@
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.") as null|text
 	if(!mission)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 
 	if(candidates.len > 0)

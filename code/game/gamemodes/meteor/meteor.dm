@@ -37,8 +37,8 @@
 		if(player.stat != DEAD)
 			++survivors
 
-			if(player.onCentcom())
-				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
+			if(player.onCentCom())
+				text += "<br><b><font size=2>[player.real_name] escaped to the safety of CentCom.</font></b>"
 			else if(player.onSyndieBase())
 				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
 			else
@@ -50,8 +50,6 @@
 	else
 		to_chat(world, "<span class='boldnotice'>Nobody survived the meteor storm!</span>")
 
-	feedback_set_details("round_end_result","end - evacuation")
-	feedback_set("round_end_result",survivors)
-
+	SSticker.mode_result = "end - evacuation"
 	..()
 	return 1

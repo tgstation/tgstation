@@ -5,15 +5,16 @@
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "scrub_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 60
 	can_unwrench = 1
-	welded = 0
+	welded = FALSE
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = 0
+	var/on = FALSE
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/scrub_CO2 = 1
@@ -39,13 +40,16 @@
 		assign_uid()
 		id_tag = num2text(uid)
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on
+	on = TRUE
+	icon_state = "scrub_map_on"
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)
 	A.air_scrub_names -= id_tag
 	A.air_scrub_info -= id_tag
 
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	radio_connection = null
 
 	for(var/I in adjacent_turfs)
@@ -87,7 +91,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions))
+		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -155,7 +159,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!NODE1)
-		on = 0
+		on = FALSE
 	if(!on || welded)
 		return 0
 	scrub(loc)
@@ -335,22 +339,22 @@
 	..()
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			playsound(loc, WT.usesound, 40, 1)
 			to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
-					welded = 1
+					welded = TRUE
 				else
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
-					welded = 0
+					welded = FALSE
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 				pipe_vision_img.plane = ABOVE_HUD_PLANE
@@ -361,7 +365,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	if(..())
 		if (!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			return 1
 
@@ -372,7 +376,7 @@
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
-	welded = 0
+	welded = FALSE
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE

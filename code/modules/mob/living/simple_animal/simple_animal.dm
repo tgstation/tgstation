@@ -51,7 +51,7 @@
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
+	var/environment_smash = ENVIRONMENT_SMASH_NONE //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
 	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
@@ -61,7 +61,7 @@
 	var/animal_species //Sorry, no spider+corgi buttbabies.
 
 	//simple_animal access
-	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
+	var/obj/item/card/id/access_card = null	//innate access uses an internal ID card
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
@@ -86,7 +86,8 @@
 	var/tame = 0
 
 /mob/living/simple_animal/Initialize()
-	..()
+	. = ..()
+	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -95,26 +96,12 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
-	// goats bray, cows go moo, and the fox says Geckers
-	grant_language(/datum/language/common)
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
 		src.client.screen = list()
 		client.screen += client.void
 	..()
-
-/mob/living/simple_animal/Life()
-	if(..()) //alive
-		if(!ckey)
-			if(stat != DEAD)
-				handle_automated_movement()
-			if(stat != DEAD)
-				handle_automated_action()
-			if(stat != DEAD)
-				handle_automated_speech()
-		if(stat != DEAD)
-			return 1
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -137,21 +124,24 @@
 		stuttering = 0
 
 /mob/living/simple_animal/proc/handle_automated_action()
+	set waitfor = FALSE
 	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
+	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
 		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(GLOB.cardinal)
+					var/anydir = pick(GLOB.cardinals)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
 			return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
+	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
 			if(speak && speak.len)
@@ -259,12 +249,12 @@
 
 /mob/living/simple_animal/gib_animation()
 	if(icon_gib)
-		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
+		new /obj/effect/temp_visual/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/say_quote(input, list/spans)
+/mob/living/simple_animal/say_mod(input, message_mode)
 	if(speak_emote && speak_emote.len)
 		verb_say = pick(speak_emote)
-	return ..()
+	. = ..()
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null)
 	if(stat)
@@ -312,7 +302,7 @@
 	else
 		health = 0
 		icon_state = icon_dead
-		density = 0
+		density = FALSE
 		lying = 1
 		..()
 
@@ -347,7 +337,7 @@
 		. = 1
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || SSticker.current_state != GAME_STATE_PLAYING)
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
 		return
 	next_scan_time = world.time + 400
 	var/alone = 1
@@ -396,14 +386,14 @@
 	else
 		..()
 
-/mob/living/simple_animal/update_canmove()
-	if(paralysis || stunned || weakened || stat || resting)
+/mob/living/simple_animal/update_canmove(value_otherwise = TRUE)
+	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
 		drop_all_held_items()
-		canmove = 0
+		canmove = FALSE
 	else if(buckled)
-		canmove = 0
+		canmove = FALSE
 	else
-		canmove = 1
+		canmove = value_otherwise
 	update_transform()
 	update_action_buttons_icon()
 	return canmove
@@ -426,6 +416,7 @@
 	if(nest)
 		nest.spawned_mobs -= src
 	nest = null
+	GLOB.simple_animals -= src
 	return ..()
 
 
@@ -487,8 +478,8 @@
 		hand_index = (active_hand_index % held_items.len)+1
 	var/obj/item/held_item = get_active_held_item()
 	if(held_item)
-		if(istype(held_item, /obj/item/weapon/twohanded))
-			var/obj/item/weapon/twohanded/T = held_item
+		if(istype(held_item, /obj/item/twohanded))
+			var/obj/item/twohanded/T = held_item
 			if(T.wielded == 1)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return

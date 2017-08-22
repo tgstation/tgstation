@@ -16,6 +16,7 @@ Construction breaks otherwise
 #define PIPE_CONNECTOR			/obj/machinery/atmospherics/components/unary/portables_connector
 #define PIPE_UVENT				/obj/machinery/atmospherics/components/unary/vent_pump
 #define PIPE_SCRUBBER			/obj/machinery/atmospherics/components/unary/vent_scrubber
+#define PIPE_INJECTOR			/obj/machinery/atmospherics/components/unary/outlet_injector
 #define PIPE_HEAT_EXCHANGE      /obj/machinery/atmospherics/components/unary/heat_exchanger
 //Binary
 #define PIPE_PUMP				/obj/machinery/atmospherics/components/binary/pump

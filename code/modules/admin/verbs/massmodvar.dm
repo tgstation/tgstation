@@ -12,7 +12,7 @@
 		method = vv_subtype_prompt(A.type)
 
 	src.massmodify_variables(A, var_name, method)
-	feedback_add_details("admin_verb","Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/massmodify_variables(datum/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))

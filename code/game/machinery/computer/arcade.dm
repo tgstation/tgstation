@@ -6,15 +6,15 @@
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
 	var/list/prizes = list(
-		/obj/item/weapon/storage/box/snappops					= 2,
+		/obj/item/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,
 		/obj/item/toy/talking/codex_gigas						= 2,
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
-		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
-		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
-		/obj/item/weapon/storage/crayons						= 2,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow	= 2,
+		/obj/item/storage/box/fakesyndiesuit				= 2,
+		/obj/item/storage/crayons						= 2,
 		/obj/item/toy/spinningtoy								= 2,
 		/obj/item/toy/prize/ripley								= 1,
 		/obj/item/toy/prize/fireripley							= 1,
@@ -34,42 +34,39 @@
 		/obj/item/toy/redbutton									= 2,
 		/obj/item/toy/talking/owl								= 2,
 		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/weapon/coin/antagtoken						= 2,
+		/obj/item/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/stack/tile/fakepit/loaded						= 2,
 		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/weapon/storage/box/actionfigure				= 1,
-		/obj/item/weapon/restraints/handcuffs/fake              = 2,
-		/obj/item/weapon/grenade/chem_grenade/glitter/pink		= 1,
-		/obj/item/weapon/grenade/chem_grenade/glitter/blue		= 1,
-		/obj/item/weapon/grenade/chem_grenade/glitter/white		= 1,
-		/obj/item/toy/eightball									= 2)
+		/obj/item/storage/box/actionfigure				= 1,
+		/obj/item/restraints/handcuffs/fake              = 2,
+		/obj/item/grenade/chem_grenade/glitter/pink		= 1,
+		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
+		/obj/item/grenade/chem_grenade/glitter/white		= 1,
+		/obj/item/toy/eightball									= 2,
+		/obj/item/toy/windupToolbox								= 2)
 
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/New()
-	..()
+/obj/machinery/computer/arcade/Initialize()
+	. = ..()
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/computer/arcade))
-		var/obj/item/weapon/circuitboard/CB = new choice()
+		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
+		var/obj/item/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
-		qdel(src)
-
-/obj/machinery/computer/arcade/Initialize()
-	. = ..()
+		return INITIALIZE_HINT_QDEL
 	Reset()
-
 
 #define PULSE_MEDAL "Jackpot"
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
-		new /obj/item/weapon/gun/energy/pulse/prize(src)
+		new /obj/item/gun/energy/pulse/prize(src)
 		UnlockMedal(PULSE_MEDAL,usr.client)
 
 	if(!contents.len)
@@ -77,11 +74,9 @@
 		new prizeselect(src)
 
 	var/atom/movable/prize = pick(contents)
-	visible_message(
-		"<span class='notice'>[src] dispenses a [prize]!</span>",
-		"<span class='notice'>You hear a chime and a clunk.</span>")
+	visible_message("<span class='notice'>[src] dispenses a [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
-	prize.loc = loc
+	prize.forceMove(get_turf(src))
 #undef PULSE_MEDAL
 
 /obj/machinery/computer/arcade/emp_act(severity)
@@ -110,7 +105,7 @@
 	name = "arcade machine"
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/computer/arcade/battle
+	circuit = /obj/item/circuitboard/computer/arcade/battle
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -156,7 +151,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
@@ -167,7 +161,7 @@
 			blocked = TRUE
 			var/attackamt = rand(2,6)
 			temp = "You attack for [attackamt] damage!"
-			playsound(loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
 				turtle--
@@ -181,7 +175,7 @@
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
 			temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			playsound(loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/heal.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			turtle++
 
@@ -193,10 +187,10 @@
 			arcade_action()
 
 		else if (href_list["charge"])
-			blocked = 1
+			blocked = TRUE
 			var/chargeamt = rand(4,7)
 			temp = "You regain [chargeamt] points"
-			playsound(loc, 'sound/arcade/Mana.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
 			if(turtle > 0)
 				turtle--
@@ -220,7 +214,7 @@
 
 		if(emagged)
 			Reset()
-			emagged = 0
+			emagged = FALSE
 
 	add_fingerprint(usr)
 	updateUsrDialog()
@@ -231,30 +225,30 @@
 		if(!gameover)
 			gameover = TRUE
 			temp = "[enemy_name] has fallen! Rejoice!"
-			playsound(loc, 'sound/arcade/Win.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
 			if(emagged)
-				feedback_inc("arcade_win_emagged")
+				SSblackbox.inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
-				emagged = 0
+				emagged = FALSE
 			else
-				feedback_inc("arcade_win_normal")
+				SSblackbox.inc("arcade_win_normal")
 				prizevend()
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
 		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
-		playsound(loc, 'sound/arcade/Boom.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/boom.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_hp -= boomamt
 
 	else if ((enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
 		temp = "[enemy_name] steals [stealamt] of your power!"
-		playsound(loc, 'sound/arcade/Steal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/steal.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_mp -= stealamt
 		updateUsrDialog()
 
@@ -262,56 +256,57 @@
 			gameover = TRUE
 			sleep(10)
 			temp = "You have been drained! GAME OVER"
-			playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(emagged)
-				feedback_inc("arcade_loss_mana_emagged")
+				SSblackbox.inc("arcade_loss_mana_emagged")
 				usr.gib()
 			else
-				feedback_inc("arcade_loss_mana_normal")
+				SSblackbox.inc("arcade_loss_mana_normal")
 
 	else if ((enemy_hp <= 10) && (enemy_mp > 4))
 		temp = "[enemy_name] heals for 4 health!"
-		playsound(loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/heal.ogg', 50, 1, extrarange = -3, falloff = 10)
 		enemy_hp += 4
 		enemy_mp -= 4
 
 	else
 		var/attackamt = rand(3,6)
 		temp = "[enemy_name] attacks for [attackamt] damage!"
-		playsound(loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_hp -= attackamt
 
 	if ((player_mp <= 0) || (player_hp <= 0))
 		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
-		playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
-			feedback_inc("arcade_loss_hp_emagged")
+			SSblackbox.inc("arcade_loss_hp_emagged")
 			usr.gib()
 		else
-			feedback_inc("arcade_loss_hp_normal")
+			SSblackbox.inc("arcade_loss_hp_normal")
 
 	blocked = FALSE
 	return
 
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
-	if(!emagged)
-		temp = "If you die in the game, you die for real!"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = FALSE
-		blocked = FALSE
+	if(emagged)
+		return
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = FALSE
+	blocked = FALSE
 
-		emagged = TRUE
+	emagged = TRUE
 
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"
 
 
-		updateUsrDialog()
+	updateUsrDialog()
 
 
 
@@ -340,8 +335,8 @@
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/computer/arcade/orion_trail
-	var/busy = 0 //prevent clickspam that allowed people to ~speedrun~ the game.
+	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
+	var/busy = FALSE //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0
 	var/electronics = 0
@@ -439,7 +434,7 @@
 		if(emagged)
 			to_chat(user, "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>")
 			user.death()
-			emagged = 0 //removes the emagged status after you lose
+			emagged = FALSE //removes the emagged status after you lose
 			gameStatus = ORION_STATUS_START
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -481,7 +476,7 @@
 
 	if(busy)
 		return
-	busy = 1
+	busy = TRUE
 
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
@@ -517,18 +512,18 @@
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" )
 						if(severity == 2)
 							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>")
-							M.Stun(3)
+							M.Stun(60)
 						if(severity >= 3) //you didn't pray hard enough
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
-							M.Stun(5)
+							M.Stun(100)
 							sleep(30)
-							M.vomit(50)
+							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
-							M.Weaken(3)
+							M.Knockdown(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
-							playsound(loc, 'sound/weapons/Genhit.ogg', 100, 1)
+							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
@@ -541,7 +536,7 @@
 							if(hull)
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
-								playsound(loc, 'sound/weapons/Genhit.ogg', 100, 1)
+								playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
 								var/turf/open/space/T
 								for(T in orange(1, src))
 									T.ChangeTurf(/turf/open/floor/plating/)
@@ -549,7 +544,7 @@
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
 							playsound(loc, 'sound/effects/bang.ogg', 50, 1)
 					if(ORION_TRAIL_MALFUNCTION)
-						playsound(loc, 'sound/effects/EMPulse.ogg', 50, 1)
+						playsound(loc, 'sound/effects/empulse.ogg', 50, 1)
 						visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
 						var/oldfood = food
 						var/oldfuel = fuel
@@ -617,9 +612,11 @@
 				if(emagged) //has to be here because otherwise it doesn't work
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
-					usr.Stun(10) //you can't run :^)
+					if(isliving(usr))
+						var/mob/living/L = usr
+						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
-					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
+					emagged = FALSE //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 					sleep(50)
 					say("[S] winks out, just as suddenly as it appeared.")
 					qdel(S)
@@ -637,13 +634,13 @@
 	else if(href_list["killcrew"]) //shoot a crewmember
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/Gunshot.ogg', 100, 1)
+			playsound(loc,'sound/weapons/gunshot.ogg', 100, 1)
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 				if(emagged)
 					usr.death(0)
-					emagged = 0
+					emagged = FALSE
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
 			else if(emagged)
@@ -751,7 +748,7 @@
 
 	add_fingerprint(usr)
 	updateUsrDialog()
-	busy = 0
+	busy = FALSE
 	return
 
 
@@ -1028,46 +1025,32 @@
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
-		new /obj/item/weapon/orion_ship(loc)
+		new /obj/item/orion_ship(loc)
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
 		prizevend()
-	emagged = 0
+	emagged = FALSE
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
-		name = "The Orion Trail: Realism Edition"
-		desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
-		newgame()
-		emagged = 1
+	if(emagged)
+		return
+	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
+	name = "The Orion Trail: Realism Edition"
+	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
+	newgame()
+	emagged = TRUE
 
 /mob/living/simple_animal/hostile/syndicate/ranged/orion
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list()
+	del_on_death = TRUE
 
-/obj/effect/mob_spawn/human/corpse/orionsecurity
-	name = "Spaceport Security"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet/swat
-	back = /obj/item/weapon/storage/backpack
-	has_id = 1
-	id_job = "Officer"
-	id_access_list = list(GLOB.access_syndicate)
-
-/obj/item/weapon/orion_ship
+/obj/item/orion_ship
 	name = "model settler ship"
 	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
 	icon = 'icons/obj/toy.dmi'
@@ -1075,7 +1058,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/active = 0 //if the ship is on
 
-/obj/item/weapon/orion_ship/examine(mob/user)
+/obj/item/orion_ship/examine(mob/user)
 	..()
 	if(!(in_range(user, src)))
 		return
@@ -1084,7 +1067,7 @@
 	else
 		to_chat(user, "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>")
 
-/obj/item/weapon/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
+/obj/item/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
 	if(active)
 		return
 

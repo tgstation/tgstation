@@ -1,17 +1,17 @@
 /*
  * Gang Boss Pens
  */
-/obj/item/weapon/pen/gang
+/obj/item/pen/gang
 	origin_tech = "materials=2;syndicate=3"
 	var/cooldown
 	var/last_used = 0
 	var/charges = 1
 
-/obj/item/weapon/pen/gang/New()
+/obj/item/pen/gang/New()
 	..()
 	last_used = world.time
 
-/obj/item/weapon/pen/gang/attack(mob/living/M, mob/user)
+/obj/item/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE)
 	if(!istype(M))
 		return
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
@@ -25,8 +25,17 @@
 					var/datum/gang/G = user.mind.gang_datum
 					var/recruitable = SSticker.mode.add_gangster(M.mind,G)
 					switch(recruitable)
+						if(3)
+							for(var/obj/O in M.contents)
+								if(istype(O, /obj/item/device/gangtool/soldier))
+									to_chat(user, "<span class='warning'>This gangster already has an uplink!</span>")
+									return
+							new /obj/item/device/gangtool/soldier(M)
+							to_chat(user, "<span class='warning'>You inject [M] with a new gangtool!</span>")
+							cooldown(G)
 						if(2)
-							M.Paralyse(5)
+							new /obj/item/device/gangtool/soldier(M)
+							M.Unconscious(100)
 							cooldown(G)
 						if(1)
 							to_chat(user, "<span class='warning'>This mind is resistant to recruitment!</span>")
@@ -35,7 +44,7 @@
 			return
 	..()
 
-/obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
+/obj/item/pen/gang/proc/cooldown(datum/gang/gang)
 	set waitfor = FALSE
 	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
 
@@ -57,4 +66,4 @@
 	cooldown = 0
 	icon_state = "pen"
 	var/mob/M = get(src, /mob)
-	to_chat(M, "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")
+	to_chat(M, "<span class='notice'>[icon2html(src, M)] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")

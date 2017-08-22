@@ -28,7 +28,7 @@
 	card_text_file = "strings/cas_black.txt"
 
 /obj/item/toy/cards/deck/cas/New()
-	var/static/list/cards_against_space = list("cas_white" = file2list("strings/cas_white.txt"),"cas_black" = file2list("strings/cas_black.txt"))
+	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
 	if(possiblecards.len < decksize) // sanity check
@@ -136,7 +136,7 @@
 		icon_state = "[card_face]"
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/pen))
+	if(istype(I, /obj/item/pen))
 		if(!blank)
 			to_chat(user, "You cannot write on that card.")
 			return

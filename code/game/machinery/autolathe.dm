@@ -6,22 +6,24 @@
 	name = "autolathe"
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/autolathe
 
-	var/operating = 0
-	anchored = 1
+	var/operating = FALSE
 	var/list/L = list()
 	var/list/LL = list()
-	var/hacked = 0
+	var/hacked = FALSE
 	var/disabled = 0
-	var/shocked = 0
+	var/shocked = FALSE
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	use_power = 1
-	idle_power_usage = 10
-	active_power_usage = 100
-	var/busy = 0
+
+	var/busy = FALSE
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
@@ -45,30 +47,16 @@
 							"Imported"
 							)
 
-/obj/machinery/autolathe/New()
-	..()
+/obj/machinery/autolathe/Initialize()
 	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/autolathe(null)
-	B.apply_default_parts(src)
-
 	wires = new /datum/wires/autolathe(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
-
-/obj/item/weapon/circuitboard/machine/autolathe
-	name = "Autolathe (Machine Board)"
-	build_path = /obj/machinery/autolathe
-	origin_tech = "engineering=2;programming=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 3,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+	return ..()
 
 /obj/machinery/autolathe/Destroy()
-	qdel(wires)
-	wires = null
-	qdel(materials)
-	materials = null
+	QDEL_NULL(wires)
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/autolathe/interact(mob/user)
@@ -108,7 +96,7 @@
 		return
 
 	if(panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
+		if(istype(O, /obj/item/crowbar))
 			default_deconstruction_crowbar(O)
 			return 1
 		else if(is_wire_tool(O))
@@ -121,21 +109,21 @@
 	if(stat)
 		return 1
 
-	if(istype(O, /obj/item/weapon/disk/design_disk))
+	if(istype(O, /obj/item/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
 			"You hear the chatter of a floppy drive.")
-		busy = 1
-		var/obj/item/weapon/disk/design_disk/D = O
+		busy = TRUE
+		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
 					files.AddDesign2Known(B)
 
-		busy = 0
+		busy = FALSE
 		return 1
 
-	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
+	if(O.flags_2 & HOLOGRAM_2)
 		return 1
 
 	var/material_amount = materials.get_item_material_amount(O)
@@ -149,10 +137,10 @@
 		to_chat(user, "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>")
 		return 1
 
-	busy = 1
+	busy = TRUE
 	var/inserted = materials.insert_item(O)
 	if(inserted)
-		if(istype(O,/obj/item/stack))
+		if(istype(O, /obj/item/stack))
 			if (O.materials[MAT_METAL])
 				flick("autolathe_o",src)//plays metal insertion animation
 			if (O.materials[MAT_GLASS])
@@ -168,7 +156,7 @@
 	else
 		user.put_in_active_hand(O)
 
-	busy = 0
+	busy = FALSE
 	updateUsrDialog()
 	return 1
 
@@ -206,7 +194,7 @@
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
-				busy = 1
+				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
@@ -223,7 +211,7 @@
 						for(var/obj/item/stack/S in T.contents - N)
 							if(istype(S, N.merge_type))
 								N.merge(S)
-						busy = 0
+						busy = FALSE
 						updateUsrDialog()
 
 				else
@@ -236,7 +224,7 @@
 							for(var/mat in materials_used)
 								new_item.materials[mat] = materials_used[mat] / multiplier
 							new_item.autolathe_crafted(src)
-						busy = 0
+						busy = FALSE
 						updateUsrDialog()
 
 		if(href_list["search"])
@@ -256,11 +244,11 @@
 
 /obj/machinery/autolathe/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
 	materials.max_amount = T
 	T=1.2
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 
@@ -361,7 +349,7 @@
 	if(D.make_reagents.len)
 		return 0
 
-	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
+	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
 		return 0
@@ -370,7 +358,7 @@
 	return 1
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
-	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
+	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
 	if(D.materials[MAT_METAL])
 		dat += "[D.materials[MAT_METAL] * coeff] metal "

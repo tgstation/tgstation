@@ -3,9 +3,9 @@
 	desc = "A large delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	density = 1
+	density = TRUE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/giftwrapped = 0
+	var/giftwrapped = FALSE
 	var/sortTag = 0
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
@@ -32,7 +32,7 @@
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
@@ -44,7 +44,7 @@
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
 			user.visible_message("[user] wraps the package in festive paper!")
-			giftwrapped = 1
+			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
@@ -52,7 +52,7 @@
 		return ..()
 
 /obj/structure/bigDelivery/relay_container_resist(mob/living/user, obj/O)
-	if(istype(loc, /atom/movable))
+	if(ismovableatom(loc))
 		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
 		AM.relay_container_resist(user, O)
 		return
@@ -113,7 +113,7 @@
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
@@ -144,7 +144,9 @@
 
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)

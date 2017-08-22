@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
 	item_state = "flight"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/list/modes = list(
 		"grey"		= rgb(255,255,255),
 		"red"			= rgb(255,0,0),
@@ -23,7 +23,7 @@
 	if(!proximity_flag)
 		return
 
-	if(!istype(A,/obj/machinery/atmospherics/pipe))
+	if(!istype(A, /obj/machinery/atmospherics/pipe))
 		return
 
 	var/obj/machinery/atmospherics/pipe/P = A

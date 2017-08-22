@@ -3,8 +3,8 @@
 	plane = GAME_PLANE
 	var/level = 2
 
-	var/flags = 0
-	var/list/secondary_flags
+	var/flags_1 = 0
+	var/flags_2 = 0
 
 	var/list/fingerprints
 	var/list/fingerprintshidden
@@ -39,20 +39,21 @@
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSATOMS)
-		if(QDELETED(src))
-			CRASH("Found new qdeletion in type [type]!")
-		var/mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		args[1] = mapload
-		if(Initialize(arglist(args)) && mapload)
-			LAZYADD(SSatoms.late_loaders, src)
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		if(SSatoms.InitAtom(src, args))
+			//we were deleted
+			return
+
+	var/list/created = SSatoms.created_atoms
+	if(created)
+		created += src
 
 //Called after New if the map is being loaded. mapload = TRUE
-//Called from base of New if the map is being loaded. mapload = FALSE
-//This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
-//Derivatives must not sleep
-//Returning TRUE while mapload is TRUE will cause the object to be initialized again with mapload = FALSE when everything else is done
-//(Useful for things that requires turfs to have air). This base may only be called once, however
+//Called from base of New if the map is not being loaded. mapload = FALSE
+//This base must be called or derivatives must set initialized to TRUE
+//must not sleep
 //Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+//Must return an Initialize hint. Defined in __DEFINES/subsystems.dm
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
@@ -75,19 +76,18 @@
 	if (opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+	return INITIALIZE_HINT_NORMAL
 
+//called if Initialize returns INITIALIZE_HINT_LATELOAD
+/atom/proc/LateInitialize()
+	return
 
 /atom/Destroy()
 	if(alternate_appearances)
-		for(var/aakey in alternate_appearances)
-			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
-			qdel(AA)
-		alternate_appearances = null
-	if(viewing_alternate_appearances)
-		for(var/aakey in viewing_alternate_appearances)
-			for(var/aa in viewing_alternate_appearances[aakey])
-				var/datum/alternate_appearance/AA = aa
-				AA.hide(list(src))
+		for(var/K in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
 	if(reagents)
 		qdel(reagents)
 
@@ -95,27 +95,45 @@
 	LAZYCLEARLIST(priority_overlays)
 	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
+	QDEL_NULL(light)
+
 	return ..()
 
-/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
-	return (!density || !height)
+/atom/proc/handle_ricochet(obj/item/projectile/P)
+	return
 
-/atom/proc/onCentcom()
+/atom/proc/CanPass(atom/movable/mover, turf/target)
+	return !density
+
+/atom/proc/onCentCom()
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
+
+	if(T.z == ZLEVEL_TRANSIT)
+		for(var/A in SSshuttle.mobile)
+			var/obj/docking_port/mobile/M = A
+			if(M.launch_status == ENDGAME_TRANSIT)
+				for(var/place in M.shuttle_areas)
+					var/area/shuttle/shuttle_area = place
+					if(T in shuttle_area)
+						return TRUE
 
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
-		return 0
+		return FALSE
 
-	//check for centcomm shuttles
+	//Check for centcom itself
+	if(istype(T.loc, /area/centcom))
+		return TRUE
+
+	//Check for centcom shuttles
 	for(var/A in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = A
-		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
-			return 1
-
-	//finally check for centcom itself
-	return istype(T.loc,/area/centcom)
+		if(M.launch_status == ENDGAME_LAUNCHED)
+			for(var/place in M.shuttle_areas)
+				var/area/shuttle/shuttle_area = place
+				if(T in shuttle_area)
+					return TRUE
 
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
@@ -125,7 +143,7 @@
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
 		return 0
 
-	if(istype(T.loc,/area/shuttle/syndicate) || istype(T.loc,/area/syndicate_mothership))
+	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership))
 		return 1
 
 	return 0
@@ -143,7 +161,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(istype(A, /atom/movable))
+		else if(ismovableatom(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -168,20 +186,33 @@
 	return
 
 
-/atom/proc/Bumped(AM as mob|obj)
+/atom/proc/CollidedWith(atom/movable/AM)
 	return
 
 // Convenience proc to see if a container is open for chemistry handling
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return container_type & OPENCONTAINER
+	return container_type & OPENCONTAINER_1
 
 /atom/proc/is_transparent()
-	return container_type & TRANSPARENT
+	return container_type & TRANSPARENT_1
 
-/atom/proc/allow_drop()
-	return 1
+/atom/proc/is_injectable(allowmobs = TRUE)
+	if(isliving(src) && allowmobs)
+		var/mob/living/L = src
+		return L.can_inject()
+	if(container_type & OPENCONTAINER_1)
+		return TRUE
+	return container_type & INJECTABLE_1
+
+/atom/proc/is_drawable(allowmobs = TRUE)
+	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
+		return TRUE
+	return container_type & DRAWABLE_1
+
+/atom/proc/AllowDrop()
+	return FALSE
 
 /atom/proc/CheckExit()
 	return 1
@@ -190,7 +221,7 @@
 	return
 
 /atom/proc/emp_act(severity)
-	if(istype(wires) && !HAS_SECONDARY_FLAG(src, NO_EMP_WIRES))
+	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -239,7 +270,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "\icon[src] That's [f_name]")
+	to_chat(user, "[icon2html(src, user)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)
@@ -267,6 +298,7 @@
 	return
 
 /atom/proc/ex_act(severity, target)
+	set waitfor = FALSE
 	contents_explosion(severity, target)
 
 /atom/proc/blob_act(obj/structure/blob/B)
@@ -394,7 +426,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return 1
 
 /atom/proc/clean_blood()
-	if(istype(blood_DNA, /list))
+	if(islist(blood_DNA))
 		blood_DNA = null
 		return 1
 
@@ -447,14 +479,17 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/ratvar_act()
 	return
 
-/atom/proc/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
-/atom/proc/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	return FALSE
 
-/atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-    return 0
+/atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
+	return 0
+
+/atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
@@ -498,6 +533,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
+//If a mob logouts/logins in side of an object you can use this proc
+/atom/proc/on_log(login)
+	if(loc)
+		loc.on_log(login)
 
 
 /*
@@ -574,3 +613,12 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
 	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
+
+/atom/proc/drop_location()
+	var/atom/L = loc
+	if(!L)
+		return null
+	return L.AllowDrop() ? L : get_turf(L)
+
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)

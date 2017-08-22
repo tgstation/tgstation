@@ -16,13 +16,14 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	gvars_datum_in_built_vars = exclude_these.vars + list("gvars_datum_protected_varlist", "gvars_datum_in_built_vars", "gvars_datum_init_order")
 	qdel(exclude_these)
 
+	log_world("[vars.len - gvars_datum_in_built_vars.len] global variables")
+
 	Initialize()
 
 /datum/controller/global_vars/Destroy(force)
+	stack_trace("Some fucker qdel'd the global holder!")
 	if(!force)
 		return QDEL_HINT_LETMELIVE
-
-	stack_trace("Some fucker deleted the global holder!")
 	
 	QDEL_NULL(statclick)
 	gvars_datum_protected_varlist.Cut()
@@ -36,10 +37,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 	
-	var/static/num_globals
-	if(!num_globals)
-		num_globals = vars.len - gvars_datum_in_built_vars.len
-	stat("Globals:", statclick.update("Count: [num_globals]"))
+	stat("Globals:", statclick.update("Edit"))
 
 /datum/controller/global_vars/can_vv_get(var_name)
 	if(var_name in gvars_datum_protected_varlist)
@@ -54,9 +52,18 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 /datum/controller/global_vars/Initialize()
 	gvars_datum_init_order = list()
 	gvars_datum_protected_varlist = list("gvars_datum_protected_varlist")
-	for(var/I in vars - gvars_datum_in_built_vars)
+	var/list/global_procs = typesof(/datum/controller/global_vars/proc)
+	var/expected_len = vars.len - gvars_datum_in_built_vars.len
+	if(global_procs.len != expected_len)
+		warning("Unable to detect all global initialization procs! Expected [expected_len] got [global_procs.len]!")
+		if(global_procs.len)
+			var/list/expected_global_procs = vars - gvars_datum_in_built_vars
+			for(var/I in global_procs)
+				expected_global_procs -= replacetext("[I]", "InitGlobal", "")
+			log_world("Missing procs: [expected_global_procs.Join(", ")]")
+	for(var/I in global_procs)
 		var/start_tick = world.time
-		call(src, "InitGlobal[I]")()
+		call(src, I)()
 		var/end_tick = world.time
 		if(end_tick - start_tick)
-			warning("Global [I] slept during initialization!")
+			warning("Global [replacetext("[I]", "InitGlobal", "")] slept during initialization!")

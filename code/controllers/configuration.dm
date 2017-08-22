@@ -43,10 +43,8 @@
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
-	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
-	var/log_runtimes = FALSE			// log runtimes into a file
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -89,9 +87,8 @@
 
 	var/check_randomizer = 0
 
-	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
-	var/panic_server_name = "somewhere else"
-	var/panic_address = "byond://" //Reconnect a player this linked server if this server isn't accepting new players
+	var/panic_server_name
+	var/panic_address //Reconnect a player this linked server if this server isn't accepting new players
 
 	//IP Intel vars
 	var/ipintel_email
@@ -105,6 +102,13 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
+
+	var/use_exp_tracking = FALSE
+	var/use_exp_restrictions_heads = FALSE
+	var/use_exp_restrictions_heads_hours = 0
+	var/use_exp_restrictions_heads_department = FALSE
+	var/use_exp_restrictions_other = FALSE
+	var/use_exp_restrictions_admin_bypass = FALSE
 
 	//Population cap vars
 	var/soft_popcap				= 0
@@ -129,6 +133,7 @@
 	var/forbid_peaceborg = 0
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
+	var/notify_new_player_account_age = 0		// how long do we notify admins of a new byond account
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
@@ -163,8 +168,8 @@
 	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
-	var/revival_pod_plants = 1
-	var/revival_cloning = 1
+	var/revival_pod_plants = FALSE
+	var/revival_cloning = FALSE
 	var/revival_brain_life = -1
 
 	var/rename_cyborg = 0
@@ -195,7 +200,7 @@
 	var/allowwebclient = 0
 	var/webclientmembersonly = 0
 
-	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
+	var/sandbox_autoclose = FALSE // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
@@ -208,6 +213,8 @@
 	var/starlight = 0
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
+
+	var/id_console_jobslot_delay = 30
 
 	var/lavaland_budget = 60
 	var/space_budget = 16
@@ -262,6 +269,10 @@
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
 
+	var/irc_announce_new_game = FALSE
+
+	var/list/policies = list()
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -271,7 +282,7 @@
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				GLOB.diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				WRITE_FILE(GLOB.config_error_log, "Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
@@ -285,6 +296,7 @@
 /datum/configuration/proc/Reload()
 	load("config/config.txt")
 	load("config/game_options.txt","game_options")
+	load("config/policies.txt", "policies")
 	loadsql("config/dbconfig.txt")
 	if (maprotation)
 		loadmaplist("config/maps.txt")
@@ -293,7 +305,7 @@
 	GLOB.abandon_allowed = respawn
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
-	var/list/Lines = file2list(filename)
+	var/list/Lines = world.file2list(filename)
 
 	for(var/t in Lines)
 		if(!t)
@@ -330,6 +342,18 @@
 					use_age_restriction_for_jobs = 1
 				if("use_account_age_for_jobs")
 					use_account_age_for_jobs = 1
+				if("use_exp_tracking")
+					use_exp_tracking = TRUE
+				if("use_exp_restrictions_heads")
+					use_exp_restrictions_heads = TRUE
+				if("use_exp_restrictions_heads_hours")
+					use_exp_restrictions_heads_hours = text2num(value)
+				if("use_exp_restrictions_heads_department")
+					use_exp_restrictions_heads_department = TRUE
+				if("use_exp_restrictions_other")
+					use_exp_restrictions_other = TRUE
+				if("use_exp_restrictions_admin_bypass")
+					use_exp_restrictions_admin_bypass = TRUE
 				if("lobby_countdown")
 					lobby_countdown = text2num(value)
 				if("round_end_countdown")
@@ -360,8 +384,6 @@
 					log_adminchat = 1
 				if("log_pda")
 					log_pda = 1
-				if("log_hrefs")
-					log_hrefs = 1
 				if("log_twitter")
 					log_twitter = 1
 				if("log_world_topic")
@@ -412,6 +434,8 @@
 					usewhitelist = TRUE
 				if("allow_metadata")
 					allow_Metadata = 1
+				if("id_console_jobslot_delay")
+					id_console_jobslot_delay = text2num(value)
 				if("inactivity_period")
 					inactivity_period = text2num(value) * 10 //documented as seconds in config.txt
 				if("afk_period")
@@ -426,7 +450,7 @@
 					popup_admin_pm = 1
 				if("allow_holidays")
 					allow_holidays = 1
-				if("useircbot")
+				if("useircbot")	//tgs2 support
 					useircbot = 1
 				if("ticklag")
 					var/ticklag = text2num(value)
@@ -449,11 +473,12 @@
 				if("cross_comms_name")
 					cross_name = value
 				if("panic_server_name")
-					panic_server_name = value
+					if (value != "\[Put the name here\]")
+						panic_server_name = value
 				if("panic_server_address")
-					panic_address = value
-					if(value != "byond:\\address:port")
-						allow_panic_bunker_bounce = 1
+					if(value != "byond://address:port")
+						panic_address = value
+
 				if("medal_hub_address")
 					global.medal_hub = value
 				if("medal_hub_password")
@@ -478,6 +503,8 @@
 					panic_bunker = 1
 				if("notify_new_player_age")
 					notify_new_player_age = text2num(value)
+				if("notify_new_player_account_age")
+					notify_new_player_account_age = text2num(value)
 				if("irc_first_connection_alert")
 					irc_first_connection_alert = 1
 				if("check_randomizer")
@@ -495,12 +522,6 @@
 					ipintel_save_bad = text2num(value)
 				if("aggressive_changelog")
 					aggressive_changelog = 1
-				if("log_runtimes")
-					log_runtimes = TRUE
-					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
-					if(GLOB.runtime_diary != newlog)
-						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
-						GLOB.runtime_diary = newlog
 				if("autoconvert_notes")
 					autoconvert_notes = 1
 				if("allow_webclient")
@@ -543,17 +564,19 @@
 					error_silence_time = text2num(value)
 				if("error_msg_delay")
 					error_msg_delay = text2num(value)
+				if("irc_announce_new_game")
+					irc_announce_new_game = TRUE
 				else
-					GLOB.diary << "Unknown setting in configuration: '[name]'"
+					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 		else if(type == "game_options")
 			switch(name)
 				if("damage_multiplier")
 					damage_multiplier		= text2num(value)
 				if("revival_pod_plants")
-					revival_pod_plants		= text2num(value)
+					revival_pod_plants		= TRUE
 				if("revival_cloning")
-					revival_cloning			= text2num(value)
+					revival_cloning			= TRUE
 				if("revival_brain_life")
 					revival_brain_life		= text2num(value)
 				if("rename_cyborg")
@@ -607,13 +630,13 @@
 					if(mode_name in modes)
 						continuous[mode_name] = 1
 					else
-						GLOB.diary << "Unknown continuous configuration definition: [mode_name]."
+						WRITE_FILE(GLOB.config_error_log, "Unknown continuous configuration definition: [mode_name].")
 				if("midround_antag")
 					var/mode_name = lowertext(value)
 					if(mode_name in modes)
 						midround_antag[mode_name] = 1
 					else
-						GLOB.diary << "Unknown midround antagonist configuration definition: [mode_name]."
+						WRITE_FILE(GLOB.config_error_log, "Unknown midround antagonist configuration definition: [mode_name].")
 				if("midround_antag_time_check")
 					midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -629,9 +652,9 @@
 						if(mode_name in modes)
 							min_pop[mode_name] = text2num(mode_value)
 						else
-							GLOB.diary << "Unknown minimum population configuration definition: [mode_name]."
+							WRITE_FILE(GLOB.config_error_log, "Unknown minimum population configuration definition: [mode_name].")
 					else
-						GLOB.diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+						WRITE_FILE(GLOB.config_error_log, "Incorrect minimum population configuration definition: [mode_name]  [mode_value].")
 				if("max_pop")
 					var/pop_pos = findtext(value, " ")
 					var/mode_name = null
@@ -643,9 +666,9 @@
 						if(mode_name in modes)
 							max_pop[mode_name] = text2num(mode_value)
 						else
-							GLOB.diary << "Unknown maximum population configuration definition: [mode_name]."
+							WRITE_FILE(GLOB.config_error_log, "Unknown maximum population configuration definition: [mode_name].")
 					else
-						GLOB.diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
+						WRITE_FILE(GLOB.config_error_log, "Incorrect maximum population configuration definition: [mode_name]  [mode_value].")
 				if("shuttle_refuel_delay")
 					shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -673,9 +696,9 @@
 						if(prob_name in modes)
 							probabilities[prob_name] = text2num(prob_value)
 						else
-							GLOB.diary << "Unknown game mode probability configuration definition: [prob_name]."
+							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
-						GLOB.diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
@@ -722,7 +745,7 @@
 					// Value is in the form "LAWID,NUMBER"
 					var/list/L = splittext(value, ",")
 					if(L.len != 2)
-						GLOB.diary << "Invalid LAW_WEIGHT: " + t
+						WRITE_FILE(GLOB.config_error_log, "Invalid LAW_WEIGHT: " + t)
 						continue
 					var/lawid = L[1]
 					var/weight = text2num(L[2])
@@ -773,11 +796,13 @@
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
-					arrivals_shuttle_require_safe_latejoin = text2num(value)
+					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
 					mice_roundstart = text2num(value)
 				else
-					GLOB.diary << "Unknown setting in configuration: '[name]'"
+					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
+		else if(type == "policies")
+			policies[name] = value
 
 	fps = round(fps)
 	if(fps <= 0)
@@ -785,7 +810,7 @@
 
 
 /datum/configuration/proc/loadmaplist(filename)
-	var/list/Lines = file2list(filename)
+	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null
 	for(var/t in Lines)
@@ -830,12 +855,14 @@
 			if ("endmap")
 				maplist[currentmap.map_name] = currentmap
 				currentmap = null
+			if ("disabled")
+				currentmap = null
 			else
-				GLOB.diary << "Unknown command in map vote config: '[command]'"
+				WRITE_FILE(GLOB.config_error_log, "Unknown command in map vote config: '[command]'")
 
 
 /datum/configuration/proc/loadsql(filename)
-	var/list/Lines = file2list(filename)
+	var/list/Lines = world.file2list(filename)
 	for(var/t in Lines)
 		if(!t)
 			continue
@@ -875,7 +902,7 @@
 			if("feedback_tableprefix")
 				global.sqlfdbktableprefix = value
 			else
-				GLOB.diary << "Unknown setting in configuration: '[name]'"
+				WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

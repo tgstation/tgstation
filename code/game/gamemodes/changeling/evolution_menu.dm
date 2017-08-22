@@ -68,12 +68,17 @@
 				mind.changeling.purchasedpowers+=S
 			S.on_purchase(src, is_respec)
 	if(is_respec)
-		feedback_add_details("changeling_power_purchase","Readapt")
+		SSblackbox.add_details("changeling_power_purchase","Readapt")
 
 	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
 	if(ishuman(C))
 		var/datum/changelingprofile/prof = mind.changeling.add_new_profile(C, src)
 		mind.changeling.first_prof = prof
+
+		var/obj/item/organ/brain/B = C.getorganslot("brain")
+		if(B)
+			B.vital = FALSE
+			B.decoy_override = TRUE
 	return 1
 
 /datum/changeling/proc/reset()

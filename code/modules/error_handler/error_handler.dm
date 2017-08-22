@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("\[[time_stamp()]] Uncaught exception: [E]")
 		return ..()
-	
+
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
@@ -55,7 +55,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
-				world.log << "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line]."
+				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
 				GLOB.error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
@@ -92,9 +92,9 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
-	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	SEND_TEXT(world.log, "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]")
 	for(var/line in desclines)
-		world.log << line
+		SEND_TEXT(world.log, line)
 
 /* This logs the runtime in the old format */
 
@@ -107,9 +107,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		if (split[i] != "")
 			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
 	E.desc = jointext(split, "\n")
-	if(config && config.log_runtimes)
-		world.log = GLOB.runtime_diary
-		..(E)
+	world.log = GLOB.world_runtime_log
+	..(E)
 
 	world.log = null
 

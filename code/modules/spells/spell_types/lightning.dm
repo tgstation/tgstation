@@ -11,7 +11,7 @@
 	selection_type = "view"
 	random_target = 1
 	var/ready = 0
-	var/image/halo = null
+	var/static/mutable_appearance/halo
 	var/sound/Snd // so far only way i can think of to stop a sound, thank MSO for the idea.
 
 	action_icon_state = "lightning"
@@ -25,7 +25,7 @@
 	ready = 1
 	to_chat(user, "<span class='notice'>You start gathering the power.</span>")
 	Snd = new/sound('sound/magic/lightning_chargeup.ogg',channel = 7)
-	halo = image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = EFFECTS_LAYER)
+	halo = halo || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
 	user.add_overlay(halo)
 	playsound(get_turf(user), Snd, 50, 0)
 	if(do_mob(user,user,100,1))
@@ -38,8 +38,7 @@
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Reset(mob/user = usr)
 	ready = 0
-	if(halo)
-		user.cut_overlay(halo)
+	user.cut_overlay(halo)
 
 /obj/effect/proc_holder/spell/targeted/tesla/revert_cast(mob/user = usr, message = 1)
 	if(message)
@@ -68,10 +67,10 @@
 	var/mob/living/carbon/current = target
 	if(bounces < 1)
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
-		playsound(get_turf(current), 'sound/magic/LightningShock.ogg', 50, 1, -1)
+		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 	else
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
-		playsound(get_turf(current), 'sound/magic/LightningShock.ogg', 50, 1, -1)
+		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 		var/list/possible_targets = new
 		for(var/mob/living/M in view_or_range(range,target,"view"))
 			if(user == M || target == M && los_check(current,M)) // || origin == M ? Not sure double shockings is good or not

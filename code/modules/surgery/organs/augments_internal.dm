@@ -1,4 +1,4 @@
-#define STUN_SET_AMOUNT	2
+#define STUN_SET_AMOUNT 40
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -11,7 +11,7 @@
 	if(iscarbon(M))
 		src.Insert(M)
 	if(implant_overlay)
-		var/image/overlay = new /image(icon, implant_overlay)
+		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
 		overlay.color = implant_color
 		add_overlay(overlay)
 	return ..()
@@ -31,7 +31,7 @@
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
 		return
-	var/stun_amount = 5 + (severity-1 ? 0 : 5)
+	var/stun_amount = 200/severity
 	owner.Stun(stun_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
 	return stun_amount
@@ -51,8 +51,8 @@
 	active = !active
 	if(active)
 		for(var/obj/item/I in owner.held_items)
-			if(!(I.flags & NODROP))
-				stored_items += I
+			if(!(I.flags_1 & NODROP_1))
+				flags_1 += I
 
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)
@@ -62,7 +62,7 @@
 		else
 			for(var/obj/item/I in stored_items)
 				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
-				I.flags |= NODROP
+				I.flags_1 |= NODROP_1
 
 	else
 		release_items()
@@ -86,7 +86,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		I.flags &= ~NODROP
+		I.flags_1 &= ~NODROP_1
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
@@ -107,10 +107,10 @@
 	if(crit_fail)
 		return
 
-	if(owner.stunned > STUN_SET_AMOUNT)
-		owner.stunned = STUN_SET_AMOUNT
-	if(owner.weakened > STUN_SET_AMOUNT)
-		owner.weakened = STUN_SET_AMOUNT
+	if(owner.AmountStun() > STUN_SET_AMOUNT)
+		owner.SetStun(STUN_SET_AMOUNT)
+	if(owner.AmountKnockdown() > STUN_SET_AMOUNT)
+		owner.SetKnockdown(STUN_SET_AMOUNT)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	if(crit_fail)
@@ -144,7 +144,7 @@
 
 //BOX O' IMPLANTS
 
-/obj/item/weapon/storage/box/cyber_implants
+/obj/item/storage/box/cyber_implants
 	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
@@ -155,8 +155,7 @@
 		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 
-/obj/item/weapon/storage/box/cyber_implants/bundle/New()
-	..()
+/obj/item/storage/box/cyber_implants/PopulateContents()
 	var/implant
 	while(contents.len <= amount)
 		implant = pick(boxed)

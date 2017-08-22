@@ -51,7 +51,7 @@
 	name = "Solid Plasma"
 	id = "solidplasma"
 	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -62,7 +62,7 @@
 	name = "Solid Gold"
 	id = "solidgold"
 	required_reagents = list("frostoil" = 5, "gold" = 20, "iron" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -80,19 +80,19 @@
 	id = "soapification"
 	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
 	required_temp = 374
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/soap/homemade(location)
+		new /obj/item/soap/homemade(location)
 
 /datum/chemical_reaction/candlefication
 	name = "Candlefication"
 	id = "candlefication"
 	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5) //
 	required_temp = 374
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -103,12 +103,12 @@
 	name = "Meatification"
 	id = "meatification"
 	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
+		new /obj/item/reagent_containers/food/snacks/meat/slab/meatproduct(location)
 	return
 
 /datum/chemical_reaction/carbondioxide
@@ -121,8 +121,8 @@
 /datum/chemical_reaction/nitrous_oxide
 	name = "Nitrous Oxide"
 	id = "nitrous_oxide"
-	results = list("nitrous_oxide" = 2, "water" = 4)
-	required_reagents = list("ammonia" = 3, "nitrogen" = 1, "oxygen" = 2)
+	results = list("nitrous_oxide" = 5)
+	required_reagents = list("ammonia" = 2, "nitrogen" = 1, "oxygen" = 2)
 	required_temp = 525
 
 ////////////////////////////////// Mutation Toxins ///////////////////////////////////
@@ -291,7 +291,7 @@
 	results = list("blood" = 1)
 	required_reagents = list("virusfood" = 1)
 	required_catalysts = list("blood" = 1)
-	var/level_min = 0
+	var/level_min = 1
 	var/level_max = 2
 
 /datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, created_volume)
@@ -371,7 +371,7 @@
 
 	name = "Mix Virus 10"
 	id = "mixvirus10"
-	required_reagents = list("uraniumvirusfood" = 5)
+	required_reagents = list("uraniumvirusfood" = 1)
 	level_min = 6
 	level_max = 7
 
@@ -379,7 +379,7 @@
 
 	name = "Mix Virus 11"
 	id = "mixvirus11"
-	required_reagents = list("uraniumplasmavirusfood_unstable" = 5)
+	required_reagents = list("uraniumplasmavirusfood_unstable" = 1)
 	level_min = 7
 	level_max = 7
 
@@ -387,7 +387,7 @@
 
 	name = "Mix Virus 12"
 	id = "mixvirus12"
-	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
+	required_reagents = list("uraniumplasmavirusfood_stable" = 1)
 	level_min = 8
 	level_max = 8
 
@@ -406,6 +406,21 @@
 		if(D)
 			D.Devolve()
 
+/datum/chemical_reaction/mix_virus/neuter_virus
+
+	name = "Neuter Virus"
+	id = "neutervirus"
+	required_reagents = list("formaldehyde" = 1)
+	required_catalysts = list("blood" = 1)
+
+/datum/chemical_reaction/mix_virus/neuter_virus/on_reaction(datum/reagents/holder, created_volume)
+
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	if(B && B.data)
+		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+		if(D)
+			D.Neuter()
+
 
 
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////
@@ -421,7 +436,7 @@
 	name = "Foam"
 	id = "foam"
 	required_reagents = list("fluorosurfactant" = 1, "water" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -438,7 +453,7 @@
 	name = "Metal Foam"
 	id = "metalfoam"
 	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -451,11 +466,25 @@
 	s.start()
 	holder.clear_reagents()
 
+/datum/chemical_reaction/smart_foam
+	name = "Smart Metal Foam"
+	id = "smart_metal_foam"
+	required_reagents = list("aluminium" = 3, "smart_foaming_agent" = 1, "facid" = 1)
+	mob_react = TRUE
+
+/datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/location = get_turf(holder.my_atom)
+	location.visible_message("<span class='danger'>The solution spews out metallic foam!</span>")
+	var/datum/effect_system/foam_spread/metal/smart/s = new()
+	s.set_up(created_volume * 5, location, holder, TRUE)
+	s.start()
+	holder.clear_reagents()
+
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
 	id = "ironlfoam"
 	required_reagents = list("iron" = 3, "foaming_agent" = 1, "facid" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -471,6 +500,13 @@
 	id = "foaming_agent"
 	results = list("foaming_agent" = 1)
 	required_reagents = list("lithium" = 1, "hydrogen" = 1)
+
+/datum/chemical_reaction/smart_foaming_agent
+	name = "Smart foaming Agent"
+	id = "smart_foaming_agent"
+	results = list("smart_foaming_agent" = 3)
+	required_reagents = list("foaming_agent" = 3, "acetone" = 1, "iron" = 1)
+	mix_message = "The solution mixes into a frothy metal foam and conforms to the walls of its container."
 
 
 /////////////////////////////// Cleaning and hydroponics /////////////////////////////////////////////////
@@ -624,3 +660,14 @@
 	id = "laughter"
 	results = list("laughter" = 10) // Fuck it. I'm not touching this one.
 	required_reagents = list("sugar" = 1, "banana" = 1)
+
+/datum/chemical_reaction/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	required_reagents = list("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
+	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
+
+/datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to 10)
+		new /obj/item/stack/sheet/plastic(location)

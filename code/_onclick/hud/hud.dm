@@ -58,6 +58,8 @@
 
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(src)
+	if(mymob.client)
+		hide_actions_toggle.locked = mymob.client.prefs.buttons_locked
 
 	hand_slots = list()
 
@@ -143,6 +145,7 @@
 		return 0
 
 	screenmob.client.screen = list()
+	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -208,7 +211,6 @@
 	mymob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
-
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
 	hidden_inventory_update(viewmob)
@@ -266,3 +268,6 @@
 		E.screen_loc = ui_equip_position(mymob)
 	if(mymob.hud_used)
 		show_hud(HUD_STYLE_STANDARD,mymob)
+
+/datum/hud/proc/update_locked_slots()
+	return

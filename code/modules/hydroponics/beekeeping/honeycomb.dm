@@ -1,5 +1,5 @@
 
-/obj/item/weapon/reagent_containers/honeycomb
+/obj/item/reagent_containers/honeycomb
 	name = "honeycomb"
 	desc = "A hexagonal mesh of honeycomb."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -12,25 +12,23 @@
 	list_reagents = list("honey" = 5)
 	var/honey_color = ""
 
-/obj/item/weapon/reagent_containers/honeycomb/New()
+/obj/item/reagent_containers/honeycomb/New()
 	..()
 	pixel_x = rand(8,-8)
 	pixel_y = rand(8,-8)
 	update_icon()
 
 
-/obj/item/weapon/reagent_containers/honeycomb/update_icon()
+/obj/item/reagent_containers/honeycomb/update_icon()
 	cut_overlays()
-	var/image/honey
+	var/mutable_appearance/honey_overlay = mutable_appearance(icon, "honey")
 	if(honey_color)
-		honey = image(icon = 'icons/obj/hydroponics/harvest.dmi', icon_state = "greyscale_honey")
-		honey.color = honey_color
-	else
-		honey = image(icon = 'icons/obj/hydroponics/harvest.dmi', icon_state = "honey")
-	add_overlay(honey)
+		honey_overlay.icon_state = "greyscale_honey"
+		honey_overlay.color = honey_color
+	add_overlay(honey_overlay)
 
 
-/obj/item/weapon/reagent_containers/honeycomb/proc/set_reagent(reagent)
+/obj/item/reagent_containers/honeycomb/proc/set_reagent(reagent)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
 	if(istype(R))
 		name = "honeycomb ([R.name])"

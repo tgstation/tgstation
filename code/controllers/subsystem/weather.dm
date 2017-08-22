@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
+	runlevels = RUNLEVEL_GAME
 	var/list/processing = list()
 	var/list/existing_weather = list()
 	var/list/eligible_zlevels = list(ZLEVEL_LAVALAND)

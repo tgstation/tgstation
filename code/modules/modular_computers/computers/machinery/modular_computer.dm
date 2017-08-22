@@ -4,7 +4,7 @@
 	name = "modular computer"
 	desc = "An advanced computer."
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	var/hardware_flag = 0								// A flag that describes this device type
 	var/last_power_usage = 0							// Power usage during last tick
@@ -27,15 +27,13 @@
 
 	var/obj/item/device/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
-/obj/machinery/modular_computer/New()
-	..()
+/obj/machinery/modular_computer/Initialize()
+	. = ..()
 	cpu = new(src)
 	cpu.physical = src
 
 /obj/machinery/modular_computer/Destroy()
-	if(cpu)
-		qdel(cpu)
-		cpu = null
+	QDEL_NULL(cpu)
 	return ..()
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
@@ -108,7 +106,7 @@
 
 // Used in following function to reduce copypaste
 /obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
-	var/obj/item/weapon/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
+	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
 	if(cpu && cpu.enabled) // Shut down the computer
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
@@ -126,8 +124,8 @@
 	..()
 	update_icon()
 
-/obj/machinery/modular_computer/attackby(var/obj/item/weapon/W as obj, mob/user)
-	if(cpu && !(flags & NODECONSTRUCT))
+/obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
+	if(cpu && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
 	return ..()
 

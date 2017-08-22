@@ -19,7 +19,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	can_unwrench = 1
 
-	var/on = 0
+	var/on = FALSE
 	var/transfer_rate = MAX_TRANSFER_RATE
 
 	var/frequency = 0
@@ -27,12 +27,11 @@ Thus, the two variables affect pump operation are set in New():
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on
-	on = 1
+	on = TRUE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	if(stat & NOPOWER)
@@ -94,7 +93,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -119,7 +118,7 @@ Thus, the two variables affect pump operation are set in New():
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
 			var/rate = params["rate"]
@@ -135,7 +134,7 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
+				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
@@ -155,7 +154,7 @@ Thus, the two variables affect pump operation are set in New():
 		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
 	if("status" in signal.data)
 		broadcast_status()
@@ -172,7 +171,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	if(..())
 		if(!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			return 1
 

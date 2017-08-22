@@ -4,6 +4,7 @@
 
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "eightball"
+	w_class = WEIGHT_CLASS_TINY
 
 	verb_say = "rattles"
 
@@ -90,7 +91,7 @@
 // except it actually ASKS THE DEAD (wooooo)
 
 /obj/item/toy/eightball/haunted
-	flags = HEAR
+	flags_1 = HEAR_1
 	var/last_message
 	var/selected_message
 	var/list/votes
