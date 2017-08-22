@@ -47,6 +47,7 @@ Made by Xhuis
 	var/list/datum/mind/thralls = list()
 	var/list/shadow_objectives = list()
 	var/required_thralls = 15 //How many thralls are needed (this is changed in pre_setup, so it scales based on pop)
+	var/thrall_ratio = 1
 	var/shadowling_ascended = 0 //If at least one shadowling has ascended
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
@@ -99,6 +100,8 @@ Made by Xhuis
 
 	var/thrall_scaling = round(num_players() / 3)
 	required_thralls = Clamp(thrall_scaling, 15, 30)
+
+	thrall_ratio = required_thralls / 15
 
 	return 1
 

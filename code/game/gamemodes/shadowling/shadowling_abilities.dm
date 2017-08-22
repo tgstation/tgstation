@@ -312,18 +312,18 @@
 		to_chat(user, "<span class='warning'>Your concentration has been broken. The mental hooks you have sent out now retract into your mind.</span>")
 		return
 
-	if(thralls >= 3 && !screech_acquired)
+	if(thralls >= (3 * SSticker.mode.thrall_ratio) && !screech_acquired)
 		screech_acquired = 1
 		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech(null))
 
-	if(thralls >= 5 && !blind_smoke_acquired)
+	if(thralls >= (5 * SSticker.mode.thrall_ratio) && !blind_smoke_acquired)
 		blind_smoke_acquired = 1
 		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \
 			</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/self/blindness_smoke(null))
 
-	if(thralls >= 9 && !reviveThrallAcquired)
+	if(thralls >= (9 * SSticker.mode.thrall_ratio) && !reviveThrallAcquired)
 		reviveThrallAcquired = 1
 		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
 		with no bodily defects.</i></span>")
