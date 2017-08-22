@@ -323,7 +323,7 @@
 			</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/self/blindness_smoke(null))
 
-	if(thralls >= round(9 * SSticker.mode.thrall_ratio,1 ) && !reviveThrallAcquired)
+	if(thralls >= round(9 * SSticker.mode.thrall_ratio, 1) && !reviveThrallAcquired)
 		reviveThrallAcquired = 1
 		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
 		with no bodily defects.</i></span>")
@@ -695,7 +695,10 @@
 			to_chat(user, "<span class='warning'>Making an ally explode seems unwise.<span>")
 			revert_cast()
 			return
-
+		if(istype(/mob/living/boom, /mob/living/simple_animal/pet/dog/corgi))
+			to_chat(user, "<span class='warning'>Not even we are that bad of monsters..<span>")
+			revert_cast()
+			return
 		if (!boom.is_holding(/obj/item/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
 			user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
 								"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
