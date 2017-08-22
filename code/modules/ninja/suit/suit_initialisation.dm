@@ -47,7 +47,7 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize_seven(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name].</span>")
-	s_initialized = 1
+	s_initialized = TRUE
 	ntick()
 	s_busy = FALSE
 
@@ -88,5 +88,7 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_eight(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>")
+	unlock_suit()
 	U.regenerate_icons()
+	s_initialized = FALSE
 	s_busy = FALSE
