@@ -228,3 +228,65 @@
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"
 	item_state = "lightblade"
+
+/obj/item/weapon/melee/transforming/energy/sword/bikehorn
+	name = ""
+	desc = "An energy blade extends from the bikehorn. Where's your god now?"
+	var/canSword = FALSE
+	var/obj/item/weapon/bikehorn = new()
+	
+/obj/item/weapon/melee/energy/sword/bikehorn/Initialize()
+    update_icon()
+    return ..()
+
+/obj/item/weapon/melee/energy/sword/bikehorn/update_icon()
+    name = horn.name
+    icon_state = horn.icon_state
+    icon = horn.icon
+    horn.forceMove(src)
+	
+/obj/item/weapon/melee/transforming/energy/sword/bikehorn/examine(mob/user)
+	if(!active)
+		horn.examine(user)
+	else
+		..()
+	
+ /obj/item/weapon/melee/transforming/energy/sword/bikehorn/attack_self(mob/living/carbon/L)
+	if(canSword)
+		activate(L)
+		playsound(src, 'sound/items/bikehorn.ogg', 80, 1)
+	else
+		horn.attack_self(L)
+
+ /obj/item/weapon/melee/transforming/energy/sword/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!active)
+		horn.attack(M,user)
+	else
+		playsound(src, 'sound/items/bikehorn.ogg', 80, 1)
+		..()
+
+ /obj/item/weapon/melee/transforming/energy/sword/bikehorn/Crossed(mob/living/L)
+	if(!active)
+		horn.Crossed(L)
+	else
+		..()
+ 
+ /obj/item/weapon/melee/transforming/energy/sword/bikehorn/update_icon()
+	if(active)
+		item_state = "swordpink"
+		icon = 'icons/obj/weapons.dmi'
+		icon_state = "ehonk"
+	else
+		item_state = horn.item_state
+		icon = horn.icon
+		icon_state = horn.icon_state
+ 
+/obj/item/weapon/melee/transforming/energy/sword/bikehorn/AltClick(mob/living/carbon/L)
+	if(L.mind.special_role)
+		canSword = !canSword
+		if(canSword)
+			to_chat(user, "<span class='notice'>You squeeze the [src]. Honking it will now extend an energy sword.</span>")
+		else
+ 			to_chat(user, "<span class='notice'>You squeeze the [src]. It functions like a normal bikehorn again.</span>")
+		if(active)
+			activate(L) 
