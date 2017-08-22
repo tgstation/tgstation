@@ -13,7 +13,7 @@
 
 /obj/effect/proc_holder/spell/targeted/glare //Stuns and mutes a human target for 10 seconds
 	name = "Glare"
-	desc = "Stuns and mutes a target for a decent duration."
+	desc = "Causes damage to the target's motor and speech abilities."
 	panel = "Shadowling Abilities"
 	charge_max = 300
 	human_req = 1
@@ -44,15 +44,19 @@
 			revert_cast()
 			return
 		var/mob/living/carbon/human/M = target
-		user.visible_message("<span class='warning'><b>[user]'s eyes flash a blinding red!</b></span>")
-		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
-		if(in_range(target, user))
-			to_chat(target, "<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you are mesmerized by the heavenly lights...</span>")
-		else //Only alludes to the shadowling if the target is close by
-			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>")
-		target.Stun(100)
-		M.silent += 10
-
+		user.visible_message("<span class='warning'><b>[user]'s eyes flash a purpleish-red!</b></span>")
+		var/distance = get_dist(target, user)
+		if (distance <= 1) //Melee
+			target.visible_message("<span class='danger'>[target] suddendly collapses...</span>")
+			to_chat(target, "<span class='userdanger'>A purple light flashes across your vision, and you lose control of your movements!</span>")
+			target.Stun(100)
+			M.silent += 10
+		else //Distant glare
+			var/loss = 100 - ((distance - 1) * 15)
+			target.adjustStaminaLoss(loss)
+			target.stuttering = loss
+			to_chat(target, "<span class='userdanger'>A purple light flashes across your vision, and exhaustion floods your body...</span>")
+			target.visible_message("<span class='danger'>[target] looks very tired...</span>")
 
 /obj/effect/proc_holder/spell/aoe_turf/veil //Puts out most nearby lights except for flares and yellow slime cores
 	name = "Veil"
