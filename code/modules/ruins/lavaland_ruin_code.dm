@@ -115,17 +115,18 @@
 			qdel(O)
 			meat++
 			if(meat < 10)
-				to_chat(user, "You add [O] to the golem shell[isgolem(user) ? ", for some reason." : ""]. It now has [meat]/10 slabs of meat.")
+				to_chat(user, "You add [O] to the golem shell. It now has [meat]/10 slabs of meat.")
 			else
 				to_chat(user, "You finish up the golem shell with [O].[isgolem(user) ? " You feel weird about this." : ""]")
 				new /obj/effect/mob_spawn/human/meatgolem(get_turf(src))
 				qdel(src)
+			return
 
 		if(species)
 			if(meat)
 				to_chat(user, "This golem is being built out of meat. You cannot add other materials to it.")
 				return
-			if(istype(O, /obj/item/stack) //just to be safe
+			if(istype(O, /obj/item/stack)) //just to be safe
 				var/obj/item/stack/S = O
 				if(S.use(10))
 					to_chat(user, "You finish up the golem shell with ten sheets of [O].")
