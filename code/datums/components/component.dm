@@ -1,22 +1,35 @@
 /datum/component
 	var/enabled = TRUE
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
+	var/dupe_type
 	var/list/signal_procs
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
+	parent = P
+	var/list/arguments = args.Copy()
+	arguments.Cut(1, 2)
+	Initialize(arglist(arguments))
+
 	var/dm = dupe_mode
 	if(dm != COMPONENT_DUPE_ALLOWED)
-		var/datum/component/old = P.GetExactComponent(type)
-		if(old)
-			switch(dm)
-				if(COMPONENT_DUPE_HIGHLANDER)
-					InheritComponent(old, FALSE)
-					qdel(old)
-				if(COMPONENT_DUPE_UNIQUE)
-					old.InheritComponent(src, TRUE)
-					qdel(src)
-					return
+		var/dt = dupe_type
+		var/datum/component/old 
+		if(!dt)
+			old = P.GetExactComponent(type)
+		else
+			old = P.GetComponent(dt)
+		switch(dm)
+			if(COMPONENT_DUPE_UNIQUE)
+				old.InheritComponent(src, TRUE)
+				parent = null	//prevent COMPONENT_REMOVING signal
+				qdel(src)
+				return
+			if(COMPONENT_DUPE_HIGHLANDER)
+				InheritComponent(old, FALSE)
+				qdel(old)
+	
+	//let the others know
 	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
 	
 	//lazy init the parent's dc list
@@ -50,7 +63,8 @@
 		else	//only component of this type, no list
 			dc[I] = src
 
-	parent = P
+/datum/component/proc/Initialize(...)
+	return
 
 /datum/component/Destroy()
 	enabled = FALSE
@@ -176,6 +190,11 @@
 	args[1] = src
 	var/datum/component/C = new nt(arglist(args))
 	return QDELING(C) ? GetComponent(new_type) : C
+
+/datum/proc/LoadComponent(component_type, ...)
+	. = GetComponent(component_type)
+	if(!.)
+		return AddComponent(arglist(args))
 
 /datum/proc/TakeComponent(datum/component/C)
 	if(!C)
