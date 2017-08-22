@@ -253,6 +253,3 @@
 			G.anchored = TRUE
 			return TRUE
 	return FALSE
-
-/turf/open/floor/get_dumping_location()
-	return src
