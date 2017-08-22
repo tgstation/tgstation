@@ -51,6 +51,8 @@
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 
 
+//Contains the list of planetary z-levels defined by the planet_z helper.
+GLOBAL_LIST_EMPTY(z_is_planet)
 
 /obj/effect/mapping_helpers/planet_z //adds the map it is on to the z_is_planet list
 	name = "planet z helper"
@@ -62,6 +64,6 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(!turf_z_is_planet(T))
-		GLOB.z_is_planet.Add(T.z)
+		GLOB.z_is_planet["[T.z]"] = list()
 	qdel(src)
 

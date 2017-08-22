@@ -1456,4 +1456,4 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 
 //checks if a turf is in the planet z list.
 /proc/turf_z_is_planet(turf/T)
-	return (T.z in GLOB.z_is_planet)
+	return GLOB.z_is_planet["[T.z]"]
