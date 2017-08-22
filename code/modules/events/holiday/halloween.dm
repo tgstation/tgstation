@@ -12,7 +12,7 @@
 		var/obj/item/storage/backpack/b = locate() in H.contents
 		new /obj/item/storage/spooky(b)
 		if(ishuman(H) || islizard(H))
-			if(prob(50))
+			if(SSrng.probability(50))
 				H.set_species(/datum/species/skeleton)
 			else
 				H.set_species(/datum/species/zombie)
@@ -24,7 +24,7 @@
 		qdel(Poly)
 
 /datum/round_event/spooky/announce()
-	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
+	priority_announce(SSrng.pick_from_list("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
 
 //Eyeball migration
 /datum/round_event_control/carp_migration/eyeballs
@@ -78,21 +78,21 @@
 /datum/round_event/creepy_clowns/tick()
 	if(IsMultiple(activeFor, 4))
 		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-			if (prob(66))
-				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 100, 1)
-			if (prob(33))
+			if (SSrng.probability(66))
+				playsound(H.loc, SSrng.pick_from_list('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 100, 1)
+			if (SSrng.probability(33))
 				var/turf/T = get_turf(H)
 				if(T)
 					new /obj/effect/hallucination/simple/clown(T, H, 25)
-			else if (prob(25))
+			else if (SSrng.probability(25))
 				var/turf/T = get_turf(H)
 				if(T)
 					new /obj/effect/hallucination/simple/clown/scary(T, H, 25)
-			else if (prob(5))
+			else if (SSrng.probability(5))
 				var/turf/T = get_turf(H)
 				if(T)
 					spawn_atom_to_turf(/obj/effect/mob_spawn/human/clown/corpse, H, 1)
-			else if (prob(1))
+			else if (SSrng.probability(1))
 				spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown, H, 1)
 
 /datum/round_event/creepy_clowns/announce()
@@ -123,7 +123,7 @@
 /obj/item/storage/spooky/New()
 	..()
 	for(var/distrobuteinbag=0 to 5)
-		var/type = pick(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
+		var/type = SSrng.pick_from_list(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
 		/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
 		/obj/item/reagent_containers/food/snacks/candy_corn,
 		/obj/item/reagent_containers/food/snacks/candy,

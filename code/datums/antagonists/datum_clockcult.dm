@@ -22,13 +22,13 @@
 		if(!silent && new_owner.current)
 			if(.)
 				to_chat(new_owner.current, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(new_owner.current) ? "You cannot compute this truth!" : \
-				"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and all at once it comes to you.<br>\
+				"Your mind is racing!"] You hear the whooshing steam and cl[SSrng.pick_from_list("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and all at once it comes to you.<br>\
 				Ratvar, the Clockwork Justiciar, [GLOB.ratvar_awakens ? "has been freed from his eternal prison" : "lies in exile, derelict and forgotten in an unseen realm"].</span>")
 				flash_color(new_owner.current, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 50)
 			else
 				new_owner.current.visible_message("<span class='boldwarning'>[new_owner.current] seems to resist an unseen force!</span>", null, null, 7, new_owner.current)
 				to_chat(new_owner.current, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(new_owner.current) ? "You cannot compute this truth!" : \
-				"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and the sound</span> <span class='boldwarning'>\
+				"Your mind is racing!"] You hear the whooshing steam and cl[SSrng.pick_from_list("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and the sound</span> <span class='boldwarning'>\
 				is a meaningless cacophony.</span><br>\
 				<span class='userdanger'>You see an abomination of rusting parts[GLOB.ratvar_awakens ? ", and it is here.<br>It is too late" : \
 				" in an endless grey void.<br>It cannot be allowed to escape"].</span>")
@@ -90,7 +90,7 @@
 			A.requires_power = POWER_REQ_CLOCKCULT
 			var/list/AI_frame = list(mutable_appearance('icons/mob/clockwork_mobs.dmi', "aiframe")) //make the AI's cool frame
 			for(var/d in GLOB.cardinals)
-				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
+				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[SSrng.random(1, 10)]", dir = d) //the eyes are randomly fast or slow
 			A.add_overlay(AI_frame)
 			if(!A.lacks_power())
 				A.ai_restore_power()

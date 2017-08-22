@@ -252,7 +252,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/newtype = GLOB.roundstart_species[species_id]
 		pref_species = new newtype()
 	else if (config.roundstart_races.len)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = SSrng.pick_from_list(config.roundstart_races)
 		if (rando_race)
 			pref_species = new rando_race()
 
@@ -319,7 +319,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
-		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+		features["mcolor"] = SSrng.pick_from_list("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	if(!real_name)
 		real_name = random_unique_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))

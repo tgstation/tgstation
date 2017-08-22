@@ -208,7 +208,7 @@
 	for(var/i in 1 to 5)
 		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)
-	if(prob(50))
+	if(SSrng.probability(50))
 		var/obj/item/storage/pill_bottle/dice/D = new(src)
 		load(D)
 	else
@@ -322,7 +322,7 @@
 
 /obj/item/fakeartefact/Initialize()
 	. = ..()
-	var/obj/item/I = pick(possible)
+	var/obj/item/I = SSrng.pick_from_list(possible)
 	name = initial(I.name)
 	icon = initial(I.icon)
 	desc = initial(I.desc)

@@ -44,8 +44,8 @@ Bonus
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(3, 4)
-			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>")
+			if(SSrng.probability(base_message_chance) && !suppress_warning)
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You hear a ringing in your ear.", "Your ears pop.")]</span>")
 		if(5)
 			if(power > 2)
 				var/obj/item/organ/ears/ears = M.getorganslot("ears")

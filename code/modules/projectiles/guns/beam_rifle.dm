@@ -488,7 +488,7 @@
 		L.adjustFireLoss(aoe_mob_damage)
 		to_chat(L, "<span class='userdanger'>\The [src] sears you!</span>")
 	for(var/turf/T in range(aoe_fire_range, epicenter))		//handle aoe fire
-		if(prob(aoe_fire_chance))
+		if(SSrng.probability(aoe_fire_chance))
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
 		if(!isitem(O))
@@ -505,7 +505,7 @@
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
-			if(prob(wall_devastate))
+			if(SSrng.probability(wall_devastate))
 				if(istype(target, /turf/closed/wall))
 					var/turf/closed/wall/W = target
 					W.dismantle_wall(TRUE, TRUE)
@@ -641,7 +641,7 @@
 		if(!Angle)
 			Angle=round(Get_Angle(src,current))
 		if(spread)
-			Angle += (rand() - 0.5) * spread
+			Angle += (SSrng.random() - 0.5) * spread
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M

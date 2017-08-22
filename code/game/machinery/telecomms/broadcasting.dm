@@ -168,7 +168,7 @@
 	signal.data = list(
 		"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
 		"message" = "TEST",
-		"compression" = rand(45, 50), // If the signal is compressed, compress our message too.
+		"compression" = SSrng.random(45, 50), // If the signal is compressed, compress our message too.
 		"traffic" = 0, // dictates the total traffic sum that the signal went through
 		"type" = 4, // determines what type of radio input it is: test broadcast
 		"reject" = 0,
@@ -181,6 +181,6 @@
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
 
-	sleep(rand(10,25))
+	sleep(SSrng.random(10,25))
 
 	return signal

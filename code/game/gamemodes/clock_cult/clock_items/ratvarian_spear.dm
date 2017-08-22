@@ -88,6 +88,6 @@
 		if(!T)
 			T = get_turf(src)
 		if(T) //make sure we're not in null or something
-			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
+			T.visible_message("<span class='warning'>[src] [SSrng.pick_from_list("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
 		qdel(src)

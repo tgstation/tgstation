@@ -42,10 +42,10 @@
 
 	if(mind)
 		if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-			if(prob(mind.martial_art.deflection_chance))
+			if(SSrng.probability(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
 					visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+					playsound(src, SSrng.pick_from_list('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 					return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
@@ -55,8 +55,8 @@
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 				// Find a turf near or on the original location to bounce to
 				if(P.starting)
-					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/new_x = P.starting.x + SSrng.pick_from_list(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/new_y = P.starting.y + SSrng.pick_from_list(0, 0, 0, 0, 0, -1, 1, -2, 2)
 					var/turf/curloc = get_turf(src)
 
 					// redirect the projectile
@@ -105,7 +105,7 @@
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
-		if(mind.martial_art && prob(mind.martial_art.block_chance) && in_throw_mode && !stat && !IsKnockdown() && !IsStun())
+		if(mind.martial_art && SSrng.probability(mind.martial_art.block_chance) && in_throw_mode && !stat && !IsKnockdown() && !IsStun())
 			return TRUE
 	return FALSE
 
@@ -127,9 +127,9 @@
 	else if(I)
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
-				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.species_traits)))
+				if(SSrng.probability(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.species_traits)))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-					var/obj/item/bodypart/L = pick(bodyparts)
+					var/obj/item/bodypart/L = SSrng.pick_from_list(bodyparts)
 					L.embedded_objects |= I
 					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
@@ -172,7 +172,7 @@
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
-		var/hulk_verb = pick("smash","pummel")
+		var/hulk_verb = SSrng.pick_from_list("smash","pummel")
 		if(check_shields(user, 15, "the [hulk_verb]ing"))
 			return
 		..(user, 1)
@@ -196,7 +196,7 @@
 
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/dam_zone = SSrng.pick_from_list("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart("chest")
@@ -209,7 +209,7 @@
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
-		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
+		else if(!M.client || SSrng.probability(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			Knockdown(100)
 			add_logs(M, src, "tackled")
@@ -221,7 +221,7 @@
 
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/damage = rand(1, 3)
+			var/damage = SSrng.random(1, 3)
 			if(check_shields(M, damage, "the [M.name]"))
 				return 0
 			if(stat != DEAD)
@@ -238,7 +238,7 @@
 		if(M.a_intent == INTENT_HARM)
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/damage = prob(90) ? 20 : 0
+			var/damage = SSrng.probability(90) ? 20 : 0
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
@@ -274,7 +274,7 @@
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)
 
 	if(..()) //successful larva bite.
-		var/damage = rand(1, 3)
+		var/damage = SSrng.random(1, 3)
 		if(check_shields(L, damage, "the [L.name]"))
 			return 0
 		if(stat != DEAD)
@@ -290,10 +290,10 @@
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = SSrng.random(M.melee_damage_lower, M.melee_damage_upper)
 		if(check_shields(M, damage, "the [M.name]", MELEE_ATTACK, M.armour_penetration))
 			return FALSE
-		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+		var/dam_zone = dismembering_strike(M, SSrng.pick_from_list("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
@@ -306,14 +306,14 @@
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
-		var/damage = rand(5, 25)
+		var/damage = SSrng.random(5, 25)
 		if(M.is_adult)
-			damage = rand(10, 35)
+			damage = SSrng.random(10, 35)
 
 		if(check_shields(M, damage, "the [M.name]"))
 			return 0
 
-		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
+		var/dam_zone = dismembering_strike(M, SSrng.pick_from_list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
 			return 1
 
@@ -330,10 +330,10 @@
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
-		var/obj/item/bodypart/temp = get_bodypart(pick("chest", "chest", "chest", "head"))
+		var/obj/item/bodypart/temp = get_bodypart(SSrng.pick_from_list("chest", "chest", "chest", "head"))
 		if(temp)
 			var/update = 0
-			var/dmg = rand(M.force/2, M.force)
+			var/dmg = SSrng.random(M.force/2, M.force)
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 20)
@@ -372,7 +372,7 @@
 
 	switch (severity)
 		if (1)
-			if(prob(bomb_armor))
+			if(SSrng.probability(bomb_armor))
 				b_loss = 500
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(throw_target, 200, 4)
@@ -390,7 +390,7 @@
 			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(max(70 - (bomb_armor * 0.5), 0)))
+			if (SSrng.probability(max(70 - (bomb_armor * 0.5), 0)))
 				Unconscious(200)
 
 		if(3)
@@ -400,7 +400,7 @@
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(max(50 - (bomb_armor * 0.5), 0)))
+			if (SSrng.probability(max(50 - (bomb_armor * 0.5), 0)))
 				Unconscious(160)
 
 	take_overall_damage(b_loss,f_loss)
@@ -410,7 +410,7 @@
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+			if(SSrng.probability(50/severity) && !SSrng.probability(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
@@ -422,7 +422,7 @@
 	if(stat == DEAD)
 		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/dam_zone = SSrng.pick_from_list("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 
@@ -451,7 +451,7 @@
 			gloves_siemens_coeff = G.siemens_coefficient
 		siemens_coeff = gloves_siemens_coeff
 	if(undergoing_cardiac_arrest() && !illusion)
-		if(shock_damage * siemens_coeff >= 1 && prob(25))
+		if(shock_damage * siemens_coeff >= 1 && SSrng.probability(25))
 			var/obj/item/organ/heart/heart = getorganslot("heart")
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
@@ -594,7 +594,7 @@
 		affecting.receive_damage(acidity, 2*acidity)
 
 		if(affecting.name == "head")
-			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
+			if(SSrng.probability(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
 				affecting.receive_damage(acidity, 2*acidity)
 				emote("scream")
 				facial_hair_style = "Shaved"
@@ -624,7 +624,7 @@
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
 			gain = 100
 		if(mind.assigned_role == "Clown")
-			gain = rand(-300, 300)
+			gain = SSrng.random(-300, 300)
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
@@ -646,10 +646,10 @@
 				var/brutedamage = LB.brute_dam
 				var/burndamage = LB.burn_dam
 				if(hallucination)
-					if(prob(30))
-						brutedamage += rand(30,40)
-					if(prob(30))
-						burndamage += rand(30,40)
+					if(SSrng.probability(30))
+						brutedamage += SSrng.random(30,40)
+					if(SSrng.probability(30))
+						burndamage += SSrng.random(30,40)
 
 				if(brutedamage > 0)
 					status = "bruised"

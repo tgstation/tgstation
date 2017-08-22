@@ -646,7 +646,7 @@
 		update_icon()
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
-	take_damage(rand(25, 75), BRUTE)
+	take_damage(SSrng.random(25, 75), BRUTE)
 	if(src)
 		var/previouscolor = color
 		color = "#960000"
@@ -697,7 +697,7 @@
 /obj/structure/window/paperframe/Initialize()
 	. = ..()
 	QDEL_LIST(debris)
-	var/papers = rand(1,4)
+	var/papers = SSrng.random(1,4)
 	debris += new /obj/item/stack/sheet/mineral/wood()
 	for(var/i in 1 to papers)
 		debris += new /obj/item/paper/natural()

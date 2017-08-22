@@ -260,7 +260,7 @@
 		last_found = world.time
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
 			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/mcoming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/mhelp.ogg',"[H.name], you appear to be injured!" = 'sound/voice/minjured.ogg')
-			var/message = pick(messagevoice)
+			var/message = SSrng.pick_from_list(messagevoice)
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
 			last_newpatient_speak = world.time
@@ -286,9 +286,9 @@
 		soft_reset()
 
 	if(!patient)
-		if(!shut_up && prob(1))
+		if(!shut_up && SSrng.probability(1))
 			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/mradar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/mcatch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/msurgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/mflies.ogg',"Delicious!" = 'sound/voice/mdelicious.ogg')
-			var/message = pick(messagevoice)
+			var/message = SSrng.pick_from_list(messagevoice)
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
@@ -410,7 +410,7 @@
 
 	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
-		var/message = pick(messagevoice)
+		var/message = SSrng.pick_from_list(messagevoice)
 		speak(message)
 		playsound(loc, messagevoice[message], 50, 0)
 		oldpatient = patient
@@ -464,7 +464,7 @@
 		if(C.maxHealth - C.health < heal_threshold)
 			to_chat(src, "<span class='notice'>[C] is healthy! Your programming prevents you from injecting anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 15] for oxygen damage.)</span>")
 		var/list/messagevoice = list("All patched up!" = 'sound/voice/mpatchedup.ogg',"An apple a day keeps me away." = 'sound/voice/mapple.ogg',"Feel better soon!" = 'sound/voice/mfeelbetter.ogg')
-		var/message = pick(messagevoice)
+		var/message = SSrng.pick_from_list(messagevoice)
 		speak(message)
 		playsound(loc, messagevoice[message], 50, 0)
 		bot_reset()
@@ -526,10 +526,10 @@
 		reagent_glass.loc = Tsec
 		reagent_glass = null
 
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/bodypart/l_arm/robot(Tsec)
 
-	if(emagged && prob(25))
+	if(emagged && SSrng.probability(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
 
 	do_sparks(3, TRUE, src)

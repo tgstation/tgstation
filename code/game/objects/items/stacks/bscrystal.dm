@@ -18,8 +18,8 @@
 
 /obj/item/ore/bluespace_crystal/New()
 	..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = SSrng.random(-5, 5)
+	pixel_y = SSrng.random(-5, 5)
 
 /obj/item/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")

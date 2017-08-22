@@ -18,7 +18,7 @@
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
 	. = ..()
-	if(. && prob(40) && isliving(target))
+	if(. && SSrng.probability(40) && isliving(target))
 		var/mob/living/M = target
 		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
 			new /obj/effect/temp_visual/guardian/phase/out(get_turf(M))

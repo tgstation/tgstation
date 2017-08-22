@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(vote)
 				text = "\n<b>Vote Tied Between:</b>"
 				for(var/option in winners)
 					text += "\n\t[option]"
-			. = pick(winners)
+			. = SSrng.pick_from_list(winners)
 			text += "\n<b>Vote Result: [.]</b>"
 		else
 			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"

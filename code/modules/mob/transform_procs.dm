@@ -415,7 +415,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/alien_caste = pick("Hunter","Sentinel","Drone")
+	var/alien_caste = SSrng.pick_from_list("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
 	switch(alien_caste)
 		if("Hunter")
@@ -447,14 +447,14 @@
 
 	var/mob/living/simple_animal/slime/new_slime
 	if(reproduce)
-		var/number = pick(14;2,3,4)	//reproduce (has a small chance of producing 3 or 4 offspring)
+		var/number = text2num(pickweight(list("2" = 14, "3" = 1, "4" = 1)))	//reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
 			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
 			M.nutrition = round(nutrition/number)
 			step_away(M,src)
 			babies += M
-		new_slime = pick(babies)
+		new_slime = SSrng.pick_from_list(babies)
 	else
 		new_slime = new /mob/living/simple_animal/slime(loc)
 	new_slime.a_intent = INTENT_HARM

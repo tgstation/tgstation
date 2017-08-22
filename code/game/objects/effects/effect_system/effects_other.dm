@@ -129,9 +129,9 @@
 		s.start()
 
 		for(var/mob/living/L in viewers(1, location))
-			if(prob(50 * amount))
+			if(SSrng.probability(50 * amount))
 				to_chat(L, "<span class='danger'>The explosion knocks you down.</span>")
-				L.Knockdown(rand(20,100))
+				L.Knockdown(SSrng.random(20,100))
 		return
 	else
 		dyn_explosion(location, amount, flashing_factor)

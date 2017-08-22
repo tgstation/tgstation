@@ -320,18 +320,18 @@
 	// Make each item scatter a bit
 	for(var/obj/item/I in oldContents)
 		spawn()
-			for(var/i = 1, i <= rand(1,2), i++)
+			for(var/i = 1, i <= SSrng.random(1,2), i++)
 				if(I)
-					step(I, pick(NORTH,SOUTH,EAST,WEST))
-					sleep(rand(2,4))
+					step(I, SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST))
+					sleep(SSrng.random(2,4))
 
-	if(prob(50))
+	if(SSrng.probability(50))
 		playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 	else
 		playsound(M, 'sound/items/trayhit2.ogg', 50, 1)
 
 	if(ishuman(M) || ismonkey(M))
-		if(prob(10))
+		if(SSrng.probability(10))
 			M.Knockdown(40)
 
 /obj/item/storage/bag/tray/proc/rebuild_overlays()

@@ -195,7 +195,7 @@
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
-	addtimer(CALLBACK(src, .proc/Impregnate, M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+	addtimer(CALLBACK(src, .proc/Impregnate, M), SSrng.random(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/detach()
 	attached = 0
@@ -243,7 +243,7 @@
 	stat = UNCONSCIOUS
 	icon_state = "[initial(icon_state)]_inactive"
 
-	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
+	addtimer(CALLBACK(src, .proc/GoActive), SSrng.random(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)

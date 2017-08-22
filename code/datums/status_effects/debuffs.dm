@@ -60,10 +60,10 @@
 		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
+	if(SSrng.probability(20))
 		if(carbon_owner)
 			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
+		if(SSrng.probability(10) && owner.health > HEALTH_THRESHOLD_CRIT)
 			owner.emote("snore")
 
 /obj/screen/alert/status_effect/asleep
@@ -178,9 +178,9 @@
 	if(!motor.active) //it being off makes it fall off much faster
 		if(!is_servant && !warned_turnoff)
 			if(motor.total_accessable_power() > motor.mania_cost)
-				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(SSrng.pick_from_list(turnoff_messages))]\"</span>")
 			else
-				var/pickedmessage = pick(powerloss_messages)
+				var/pickedmessage = SSrng.pick_from_list(powerloss_messages)
 				to_chat(owner, "<span class='sevtug[span_part]'>[powerloss_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>")
 			warned_turnoff = TRUE
 		severity = max(severity - 2, 0)
@@ -188,17 +188,17 @@
 			qdel(src)
 			return
 	else
-		if(prob(severity * 2))
+		if(SSrng.probability(severity * 2))
 			warned_turnoff = FALSE
 		if(!(owner in viewers(7, motor))) //not being in range makes it fall off slightly faster
 			if(!is_servant && !warned_outofsight)
-				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(flee_messages))]\"</span>")
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(SSrng.pick_from_list(flee_messages))]\"</span>")
 				warned_outofsight = TRUE
 			severity = max(severity - 1, 0)
 			if(!severity)
 				qdel(src)
 				return
-		else if(prob(severity * 2))
+		else if(SSrng.probability(severity * 2))
 			warned_outofsight = FALSE
 	if(is_servant) //heals servants of braindamage, hallucination, druggy, dizziness, and confusion
 		if(owner.hallucination)
@@ -219,8 +219,8 @@
 					owner.log_message("<font color=#BE8700>Conversion was done with a Mania Motor.</font>", INDIVIDUAL_ATTACK_LOG)
 			owner.Unconscious(100)
 		else
-			if(prob(severity * 0.15))
-				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
+			if(SSrng.probability(severity * 0.15))
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(SSrng.pick_from_list(mania_messages))]\"</span>")
 			owner.playsound_local(get_turf(motor), hum, severity, 1)
 			owner.adjust_drugginess(Clamp(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
 			if(owner.hallucination < 50)
@@ -345,7 +345,7 @@
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
-		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
+		set_curse = SSrng.pick_from_list(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
 	if(QDELETED(C))
 		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
 	else
@@ -403,14 +403,14 @@
 			var/turf/spawn_turf
 			var/sanity = 10
 			while(!spawn_turf && sanity)
-				spawn_turf = locate(owner.x + pick(rand(10, 15), rand(-10, -15)), owner.y + pick(rand(10, 15), rand(-10, -15)), owner.z)
+				spawn_turf = locate(owner.x + SSrng.pick_from_list(SSrng.random(10, 15), SSrng.random(-10, -15)), owner.y + SSrng.pick_from_list(SSrng.random(10, 15), SSrng.random(-10, -15)), owner.z)
 				sanity--
 			if(spawn_turf)
 				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
 				C.set_target = owner
 				C.GiveTarget()
 		if(curse_flags & CURSE_GRASPING)
-			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
+			var/grab_dir = turn(owner.dir, SSrng.pick_from_list(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
 			if(spawn_turf)
 				grasp(spawn_turf)

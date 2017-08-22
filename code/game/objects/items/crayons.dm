@@ -85,7 +85,7 @@
 			graffiti |= "prolizard"
 
 	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
-	drawtype = pick(all_drawables)
+	drawtype = SSrng.pick_from_list(all_drawables)
 
 	refill()
 
@@ -258,17 +258,17 @@
 	var/drawing = drawtype
 	switch(drawtype)
 		if(RANDOM_LETTER)
-			drawing = pick(letters)
+			drawing = SSrng.pick_from_list(letters)
 		if(RANDOM_GRAFFITI)
-			drawing = pick(graffiti)
+			drawing = SSrng.pick_from_list(graffiti)
 		if(RANDOM_RUNE)
-			drawing = pick(runes)
+			drawing = SSrng.pick_from_list(runes)
 		if(RANDOM_ORIENTED)
-			drawing = pick(oriented)
+			drawing = SSrng.pick_from_list(oriented)
 		if(RANDOM_NUMBER)
-			drawing = pick(numerals)
+			drawing = SSrng.pick_from_list(numerals)
 		if(RANDOM_ANY)
-			drawing = pick(all_drawables)
+			drawing = SSrng.pick_from_list(all_drawables)
 
 	var/temp = "rune"
 	if(drawing in letters)
@@ -492,7 +492,7 @@
 	charges = -1
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity)
-	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	paint_color = rgb(SSrng.random(0,255), SSrng.random(0,255), SSrng.random(0,255))
 	. = ..()
 
 /*
@@ -599,7 +599,7 @@
 	..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
-		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
+		paint_color = SSrng.pick_from_list("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
 		"#DA00FF")
 	refill()
 	update_icon()

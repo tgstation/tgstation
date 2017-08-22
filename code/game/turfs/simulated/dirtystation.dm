@@ -8,7 +8,7 @@
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
 /turf/open/floor/proc/MakeDirty()
-	if(prob(66))	//fastest possible exit 2/3 of the time
+	if(SSrng.probability(66))	//fastest possible exit 2/3 of the time
 		return
 
 	if(!(flags_1 & CAN_BE_DIRTY_1))
@@ -29,16 +29,16 @@
 		new /obj/effect/decal/cleanable/dirt(src)	//vanilla, but it works
 		return
 
-	if(prob(80))	//mid dirt  - 1/15
+	if(SSrng.probability(80))	//mid dirt  - 1/15
 		return
 
 	if(istype(A, /area/engine)  || istype(A, /area/crew_quarters/heads/chief) || istype(A, /area/ruin/space/derelict/assembly_line) || istype(A, /area/science/robotics) || istype(A, /area/maintenance) || istype(A, /area/construction))
 	 	//Blood, sweat, and oil.  Oh, and dirt.
-		if(prob(3))
+		if(SSrng.probability(3))
 			new /obj/effect/decal/cleanable/blood/old(src)
 		else
-			if(prob(35))
-				if(prob(4))
+			if(SSrng.probability(35))
+				if(SSrng.probability(4))
 					new /obj/effect/decal/cleanable/robot_debris/old(src)
 				else
 					new /obj/effect/decal/cleanable/oil(src)
@@ -47,24 +47,24 @@
 		return
 
 	if(istype(A, /area/crew_quarters/toilet))
-		if(prob(40))
-			if(prob(90))
+		if(SSrng.probability(40))
+			if(SSrng.probability(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
 		return
 
 	if(istype(A, /area/quartermaster))
-		if(prob(25))
+		if(SSrng.probability(25))
 			new /obj/effect/decal/cleanable/oil(src)
 		return
 
-	if(prob(75))	//low dirt  - 1/60
+	if(SSrng.probability(75))	//low dirt  - 1/60
 		return
 
 	if(istype(A, /area/ai_monitored/turret_protected) || istype(A, /area/prison) || istype(A, /area/security) || istype(A, /area/crew_quarters/heads/hos))	//chance of incident
-		if(prob(20))
-			if(prob(5))
+		if(SSrng.probability(20))
+			if(SSrng.probability(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
@@ -72,20 +72,20 @@
 
 
 	if(istype(A, /area/crew_quarters/kitchen) || istype(A, /area/crew_quarters/cafeteria))	//Kitchen messes
-		if(prob(60))
-			if(prob(50))
+		if(SSrng.probability(60))
+			if(SSrng.probability(50))
 				new /obj/effect/decal/cleanable/egg_smudge(src)
 			else
 				new /obj/effect/decal/cleanable/flour(src)
 		return
 
 	if(istype(A, /area/medical) || istype(A, /area/crew_quarters/heads/cmo))	//Kept clean, but chance of blood
-		if(prob(66))
-			if(prob(5))
+		if(SSrng.probability(66))
+			if(SSrng.probability(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
-		else if(prob(30))
+		else if(SSrng.probability(30))
 			if(istype(A, /area/medical/morgue))
 				new /obj/item/ectoplasm(src)
 			else
@@ -93,7 +93,7 @@
 		return
 
 	if(istype(A, /area/science) || istype(A, /area/crew_quarters/heads/hor))
-		if(prob(20))
+		if(SSrng.probability(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
 

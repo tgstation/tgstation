@@ -11,7 +11,7 @@
 	earliest_start = 0
 
 /datum/round_event/easter/announce()
-	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
+	priority_announce(SSrng.pick_from_list("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
 
 
 /datum/round_event_control/rabbitrelease
@@ -28,7 +28,7 @@
 /datum/round_event/rabbitrelease/start()
 	for(var/obj/effect/landmark/R in GLOB.landmarks_list)
 		if(R.name != "blobspawn")
-			if(prob(35))
+			if(SSrng.probability(35))
 				if(isspaceturf(R.loc))
 					new /mob/living/simple_animal/chicken/rabbit/space(R.loc)
 				else
@@ -111,12 +111,12 @@
 
 /obj/item/reagent_containers/food/snacks/egg/loaded/New()
 	..()
-	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
+	var/eggcolor = SSrng.pick_from_list("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
 	item_color = "[eggcolor]"
 
 /obj/item/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
-	var/won = pick(/obj/item/clothing/head/bunnyhead,
+	var/won = SSrng.pick_from_list(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/reagent_containers/food/snacks/grown/carrot,
 	/obj/item/reagent_containers/food/snacks/chocolateegg,

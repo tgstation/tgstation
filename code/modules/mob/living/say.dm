@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 							if(2)
 								to_chat(M, msg)
 							if(1)
-								if(prob(40))
+								if(SSrng.probability(40))
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 							if(2)
 								to_chat(M, msg)
 							if(1)
-								if(prob(40))
+								if(SSrng.probability(40))
 									to_chat(M, "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
 			if(1)
 				to_chat(src, "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")

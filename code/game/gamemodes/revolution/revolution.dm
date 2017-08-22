@@ -52,7 +52,7 @@
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
 			break
-		var/datum/mind/lenin = pick(antag_candidates)
+		var/datum/mind/lenin = SSrng.pick_from_list(antag_candidates)
 		antag_candidates -= lenin
 		head_revolutionaries += lenin
 		lenin.restricted_roles = restricted_jobs
@@ -91,7 +91,7 @@
 					break
 
 	while(weighted_score < head_revolutionaries.len) //das vi danya
-		var/datum/mind/trotsky = pick(head_revolutionaries)
+		var/datum/mind/trotsky = SSrng.pick_from_list(head_revolutionaries)
 		antag_candidates += trotsky
 		head_revolutionaries -= trotsky
 		update_rev_icons_removed(trotsky)
@@ -101,7 +101,7 @@
 		for(var/datum/mind/head_mind in heads)
 			mark_for_death(rev_mind, head_mind)
 
-		spawn(rand(10,100))
+		spawn(SSrng.random(10,100))
 		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		//	Removing revolutionary uplinks.	-Pete
 			equip_revolutionary(rev_mind.current)
@@ -213,7 +213,7 @@
 				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 					promotable_revs += khrushchev
 		if(promotable_revs.len)
-			var/datum/mind/stalin = pick(promotable_revs)
+			var/datum/mind/stalin = SSrng.pick_from_list(promotable_revs)
 			revolutionaries -= stalin
 			head_revolutionaries += stalin
 			log_game("[stalin.key] (ckey) has been promoted to a head rev")

@@ -96,7 +96,7 @@
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
-	sleep(rand(50,100))
+	sleep(SSrng.random(50,100))
 	..()
 
 /datum/chemical_reaction/thermite
@@ -155,7 +155,7 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
-	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion 
+	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 	results = list("methboom1" = 4) // this is ugly. Sorry goof.
 
 /datum/chemical_reaction/sorium
@@ -297,7 +297,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+		C.soundbang_act(1, 100, SSrng.random(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -309,7 +309,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+		C.soundbang_act(1, 100, SSrng.random(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"

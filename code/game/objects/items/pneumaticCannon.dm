@@ -120,14 +120,14 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
-	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
+	if(user.disabilities & CLUMSY && SSrng.probability(75) && clumsyCheck)
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		user.drop_item()
-		if(prob(10))
+		if(SSrng.probability(10))
 			target = get_turf(user)
 		else
 			var/list/possible_targets = range(3,src)
-			target = pick(possible_targets)
+			target = SSrng.pick_from_list(possible_targets)
 		discharge = 1
 	if(!discharge)
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \

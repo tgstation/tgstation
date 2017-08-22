@@ -97,8 +97,8 @@
 
 /obj/effect/temp_visual/ratvar/ocular_warden/Initialize()
 	. = ..()
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-10, 10)
+	pixel_x = SSrng.random(-8, 8)
+	pixel_y = SSrng.random(-10, 10)
 	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
 
 /obj/effect/temp_visual/ratvar/prolonging_prism
@@ -137,8 +137,8 @@
 /obj/effect/temp_visual/ratvar/component/Initialize()
 	. = ..()
 	transform = matrix()*0.75
-	pixel_x = rand(-10, 10)
-	pixel_y = rand(-10, -2)
+	pixel_x = SSrng.random(-10, 10)
+	pixel_y = SSrng.random(-10, -2)
 	animate(src, pixel_y = pixel_y + 10, alpha = 50, time = 10, easing = EASE_OUT)
 
 /obj/effect/temp_visual/ratvar/component/cogwheel

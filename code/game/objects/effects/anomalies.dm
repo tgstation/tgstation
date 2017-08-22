@@ -25,9 +25,9 @@
 
 	aSignal = new(src)
 	aSignal.name = "[name] core"
-	aSignal.code = rand(1,100)
+	aSignal.code = SSrng.random(1,100)
 
-	aSignal.frequency = rand(1200, 1599)
+	aSignal.frequency = SSrng.random(1200, 1599)
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
@@ -53,8 +53,8 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
-	if(prob(movechance))
-		step(src,pick(GLOB.alldirs))
+	if(SSrng.probability(movechance))
+		step(src,SSrng.pick_from_list(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return
@@ -202,7 +202,7 @@
 			possible += W
 
 		if(possible.len > 0)
-			chosen = pick(possible)
+			chosen = SSrng.pick_from_list(possible)
 
 		if(chosen)
 				// Calculate previous position for transition
@@ -273,7 +273,7 @@
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
-	var/new_colour = pick("red", "orange")
+	var/new_colour = SSrng.pick_from_list("red", "orange")
 	var/mob/living/simple_animal/slime/S = new(T, new_colour)
 	S.rabid = TRUE
 	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
@@ -297,7 +297,7 @@
 		qdel(src)
 		return
 
-	grav(rand(0,3), rand(2,3), 50, 25)
+	grav(SSrng.random(0,3), SSrng.random(2,3), 50, 25)
 
 	//Throwing stuff around!
 	for(var/obj/O in range(2,src))
@@ -324,7 +324,7 @@
 		return
 
 	//Pulling and/or ex_act-ing movable atoms in that turf
-	if(prob(pull_chance))
+	if(SSrng.probability(pull_chance))
 		for(var/obj/O in T.contents)
 			if(O.anchored)
 				O.ex_act(ex_act_force)
@@ -334,5 +334,5 @@
 			step_towards(M,src)
 
 	//Damaging the turf
-	if( T && prob(turf_removal_chance) )
+	if( T && SSrng.probability(turf_removal_chance) )
 		T.ex_act(ex_act_force)

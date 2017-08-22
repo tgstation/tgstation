@@ -5,7 +5,7 @@
 	target_amount = 4
 
 /datum/objective/devil/soulquantity/New()
-	target_amount = pick(6,7,8)
+	target_amount = SSrng.pick_from_list(6,7,8)
 	update_explanation_text()
 
 /datum/objective/devil/soulquantity/update_explanation_text()
@@ -29,8 +29,8 @@
 	var/contractName
 
 /datum/objective/devil/soulquality/New()
-	contractType = pick(CONTRACT_POWER, CONTRACT_WEALTH, CONTRACT_PRESTIGE, CONTRACT_MAGIC, CONTRACT_REVIVE, CONTRACT_KNOWLEDGE/*, CONTRACT_UNWILLING*/)
-	target_amount = pick(1,2)
+	contractType = SSrng.pick_from_list(CONTRACT_POWER, CONTRACT_WEALTH, CONTRACT_PRESTIGE, CONTRACT_MAGIC, CONTRACT_REVIVE, CONTRACT_KNOWLEDGE/*, CONTRACT_UNWILLING*/)
+	target_amount = SSrng.pick_from_list(1,2)
 	switch(contractType)
 		if(CONTRACT_POWER)
 			contractName = "for power"
@@ -67,7 +67,7 @@
 	explanation_text = "You shouldn't see this text.  Error:DEVIL3"
 
 /datum/objective/devil/sintouch/New()
-	target_amount = pick(4,5)
+	target_amount = SSrng.pick_from_list(4,5)
 	explanation_text = "Ensure at least [target_amount] mortals are sintouched."
 
 /datum/objective/devil/sintouch/check_completion()

@@ -8,11 +8,11 @@
 	order_id = id
 	order_cost = cost
 
-	if(prob(MANIFEST_ERROR_CHANCE))
+	if(SSrng.probability(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_NAME
-	if(prob(MANIFEST_ERROR_CHANCE))
+	if(SSrng.probability(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_CONTENTS
-	if(prob(MANIFEST_ERROR_CHANCE))
+	if(SSrng.probability(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_ITEM
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
@@ -68,7 +68,7 @@
 	P.info += "<ul>"
 	for(var/atom/movable/AM in C.contents - P)
 		if((P.errors & MANIFEST_ERROR_CONTENTS))
-			if(prob(50))
+			if(SSrng.probability(50))
 				P.info += "<li>[AM.name]</li>"
 			else
 				continue
@@ -93,5 +93,5 @@
 		else
 			var/lost = max(round(C.contents.len / 10), 1)
 			while(--lost >= 0)
-				qdel(pick(C.contents))
+				qdel(SSrng.pick_from_list(C.contents))
 	return C

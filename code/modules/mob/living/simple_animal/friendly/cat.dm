@@ -86,7 +86,7 @@
 	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/Initialize()
-	if(prob(5))
+	if(SSrng.probability(5))
 		icon_state = "original"
 		icon_living = "original"
 		icon_dead = "original_dead"
@@ -146,24 +146,24 @@
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
-		if(prob(1))
-			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
+		if(SSrng.probability(1))
+			emote("me", 1, SSrng.pick_from_list("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			resting = 1
 			update_canmove()
-		else if (prob(1))
-			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
+		else if (SSrng.probability(1))
+			emote("me", 1, SSrng.pick_from_list("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			resting = 1
 			update_canmove()
-		else if (prob(1))
+		else if (SSrng.probability(1))
 			if (resting)
-				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
+				emote("me", 1, SSrng.pick_from_list("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				resting = 0
 				update_canmove()
 			else
-				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
+				emote("me", 1, SSrng.pick_from_list("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))

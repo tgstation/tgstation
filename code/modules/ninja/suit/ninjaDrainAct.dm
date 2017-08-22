@@ -32,7 +32,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && cell.charge> 0 && !maxcapacity)
-			drain = rand(G.mindrain, G.maxdrain)
+			drain = SSrng.random(G.mindrain, G.maxdrain)
 
 			if(cell.charge < drain)
 				drain = cell.charge
@@ -76,7 +76,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && charge > 0 && !maxcapacity)
-			drain = rand(G.mindrain, G.maxdrain)
+			drain = SSrng.random(G.mindrain, G.maxdrain)
 
 			if(charge < drain)
 				drain = charge
@@ -190,7 +190,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	var/datum/powernet/PN = powernet
 	while(G.candrain && !maxcapacity && src)
-		drain = (round((rand(G.mindrain, G.maxdrain))/2))
+		drain = (round((SSrng.random(G.mindrain, G.maxdrain))/2))
 		var/drained = 0
 		if(PN && do_after(H,10, target = src))
 			drained = min(drain, PN.avail)
@@ -226,7 +226,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	occupant_message("<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
 	if(get_charge())
 		while(G.candrain && cell.charge > 0 && !maxcapacity)
-			drain = rand(G.mindrain,G.maxdrain)
+			drain = SSrng.random(G.mindrain,G.maxdrain)
 			if(cell.charge < drain)
 				drain = cell.charge
 			if(S.cell.charge + drain > S.cell.maxcharge)
@@ -254,7 +254,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	if(cell && cell.charge)
 		while(G.candrain && cell.charge > 0 && !maxcapacity)
-			drain = rand(G.mindrain,G.maxdrain)
+			drain = SSrng.random(G.mindrain,G.maxdrain)
 			if(cell.charge < drain)
 				drain = cell.charge
 			if(S.cell.charge+drain > S.cell.maxcharge)

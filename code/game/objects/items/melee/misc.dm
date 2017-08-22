@@ -100,7 +100,7 @@
 		return ..()
 
 	add_fingerprint(user)
-	if((CLUMSY in user.disabilities) && prob(50))
+	if((CLUMSY in user.disabilities) && SSrng.probability(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))

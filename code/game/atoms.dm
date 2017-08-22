@@ -400,7 +400,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /obj/item/clothing/gloves/add_blood(list/blood_dna)
 	. = ..()
-	transfer_blood = rand(2, 4)
+	transfer_blood = SSrng.random(2, 4)
 
 /turf/add_blood(list/blood_dna)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
@@ -421,7 +421,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 		G.add_blood(blood_dna)
 	else
 		transfer_blood_dna(blood_dna)
-		bloody_hands = rand(2, 4)
+		bloody_hands = SSrng.random(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1
 
@@ -513,7 +513,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 		// Make toxins vomit look different
 		if(toxvomit)
-			V.icon_state = "vomittox_[pick(1,4)]"
+			V.icon_state = "vomittox_[SSrng.pick_from_list(1,4)]"
 		if(M.reagents)
 			clear_reagents_to_vomit_pool(M,V)
 

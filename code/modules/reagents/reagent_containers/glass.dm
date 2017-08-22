@@ -51,7 +51,7 @@
 			reagents.reaction(M, INGEST, fraction)
 			spawn(5)
 				reagents.trans_to(M, 5)
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', SSrng.random(10,50), 1)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	if((!proximity) || !check_allowed_items(target,target_self=1)) return

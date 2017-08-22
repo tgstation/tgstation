@@ -46,7 +46,7 @@
 		if(T.air && T.air.gases["co2"])
 			var/co2 = T.air.gases["co2"][MOLES]
 			if(co2 > 0)
-				if(prob(25))
+				if(SSrng.probability(25))
 					var/amt = min(co2, 9)
 					T.air.gases["co2"][MOLES] -= amt
 					T.atmos_spawn_air("o2=[amt]")
@@ -55,7 +55,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(prob(15))
+		if(SSrng.probability(15))
 			C.Knockdown(60)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")

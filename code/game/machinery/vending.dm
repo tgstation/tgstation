@@ -76,7 +76,7 @@
 	// So not all machines speak at the exact same time.
 	// The first time this machine says something will be at slogantime + this random value,
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
-	last_slogan = world.time + rand(0, slogan_delay)
+	last_slogan = world.time + SSrng.random(0, slogan_delay)
 	power_change()
 
 /obj/machinery/vending/Destroy()
@@ -124,7 +124,7 @@
 
 			while(R.amount>0)
 				var/obj/O = new dump_path(loc)
-				step(O, pick(GLOB.alldirs)) 	//we only drop 20% of the total of each products and spread it
+				step(O, SSrng.pick_from_list(GLOB.alldirs)) 	//we only drop 20% of the total of each products and spread it
 				R.amount -= 5  			//around to not fill the turf with too many objects.
 				dump_amount++
 			if(dump_amount > 15) //so we don't drop too many items (e.g. ClothesMate)
@@ -145,7 +145,7 @@
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.display_color = pick("red","blue","green")
+		R.display_color = SSrng.pick_from_list("red","blue","green")
 
 		if(hidden)
 			hidden_records += R
@@ -488,7 +488,7 @@
 				vend_ready = 1
 				return
 			if(coin && coin.string_attached)
-				if(prob(50))
+				if(SSrng.probability(50))
 					if(usr.put_in_hands(coin))
 						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
@@ -545,12 +545,12 @@
 		seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && prob(5))
-		var/slogan = pick(slogan_list)
+	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && SSrng.probability(5))
+		var/slogan = SSrng.pick_from_list(slogan_list)
 		speak(slogan)
 		last_slogan = world.time
 
-	if(shoot_inventory && prob(shoot_inventory_chance))
+	if(shoot_inventory && SSrng.probability(shoot_inventory_chance))
 		throw_item()
 
 
@@ -607,7 +607,7 @@
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
@@ -704,7 +704,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/snack/random/Initialize()
     ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+    var/T = SSrng.pick_from_list(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
     new T(get_turf(src))
     qdel(src)
 
@@ -756,7 +756,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/cola/random/Initialize()
     . = ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+    var/T = SSrng.pick_from_list(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))
     qdel(src)
 

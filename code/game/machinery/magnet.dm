@@ -120,8 +120,8 @@
 				center_x = 0
 				center_y = 0
 			if("R") // RANDOM
-				center_x = rand(-max_dist, max_dist)
-				center_y = rand(-max_dist, max_dist)
+				center_x = SSrng.random(-max_dist, max_dist)
+				center_y = SSrng.random(-max_dist, max_dist)
 
 			if("set-code")
 				if(modifier)

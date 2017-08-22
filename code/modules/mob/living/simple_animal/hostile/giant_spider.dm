@@ -132,9 +132,9 @@
 		return 0
 	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
-		if(!busy && prob(1))
+		if(!busy && SSrng.probability(1))
 			stop_automated_movement = 1
-			Goto(pick(urange(20, src, 1)), move_to_delay)
+			Goto(SSrng.pick_from_list(urange(20, src, 1)), move_to_delay)
 			spawn(50)
 				stop_automated_movement = 0
 				walk(src,0)
@@ -151,7 +151,7 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/handle_automated_action()
 	if(..())
 		var/list/can_see = view(src, 10)
-		if(!busy && prob(30))	//30% chance to stop wandering and do something
+		if(!busy && SSrng.probability(30))	//30% chance to stop wandering and do something
 			//first, check for potential food nearby to cocoon
 			for(var/mob/living/C in can_see)
 				if(C.stat && !istype(C, /mob/living/simple_animal/hostile/poison/giant_spider) && !C.anchored)
@@ -260,7 +260,7 @@
 				cocoon_target.forceMove(C)
 
 				if(cocoon_target.density || ismob(cocoon_target))
-					C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+					C.icon_state = SSrng.pick_from_list("cocoon_large1","cocoon_large2","cocoon_large3")
 	cocoon_target = null
 	busy = SPIDER_IDLE
 	stop_automated_movement = FALSE

@@ -11,7 +11,7 @@
 	new /obj/item/clothing/under/shorts/red(src)
 	new /obj/item/clothing/under/shorts/blue(src)
 	new /obj/item/clothing/under/shorts/green(src)
-	if(prob(3))
+	if(SSrng.probability(3))
 		new /obj/item/clothing/under/jabroni(src)
 
 

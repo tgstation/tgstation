@@ -18,7 +18,7 @@
 	qdel(SV)
 
 	if(turfs.len) //Pick a turf to spawn at if we can
-		var/turf/T = pick(turfs)
+		var/turf/T = SSrng.pick_from_list(turfs)
 		new /datum/spacevine_controller(T) //spawn a controller at turf
 
 
@@ -125,7 +125,7 @@
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
 		return
-	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
+	if(SSrng.probability(severity) && istype(crosser) && !isvineimmune(crosser))
 		to_chat(crosser, "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>")
 		crosser.adjustToxLoss(5)
 
@@ -261,13 +261,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
+	if(SSrng.probability(severity) && istype(crosser) && !isvineimmune(holder))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
+	if(SSrng.probability(severity) && istype(hitter) && !isvineimmune(holder))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
@@ -297,11 +297,11 @@
 	severity = 10
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
-	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
+	if(holder.energy == 2 && SSrng.probability(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
 		new/obj/structure/alien/resin/flower_bud_enemy(get_turf(holder))
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(25))
+	if(SSrng.probability(25))
 		holder.entangle(crosser)
 
 
@@ -353,7 +353,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_chem(src, R)
 	if(!override && istype(R, /datum/reagent/toxin/plantbgone))
-		if(prob(50))
+		if(SSrng.probability(50))
 			qdel(src)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
@@ -458,8 +458,8 @@
 		SV.mutations |= parent.mutations
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
-		if(prob(mutativeness))
-			var/datum/spacevine_mutation/randmut = pick(vine_mutations_list - SV.mutations)
+		if(SSrng.probability(mutativeness))
+			var/datum/spacevine_mutation/randmut = SSrng.pick_from_list(vine_mutations_list - SV.mutations)
 			randmut.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
@@ -500,12 +500,12 @@
 		for(var/datum/spacevine_mutation/SM in SV.mutations)
 			SM.process_mutation(SV)
 		if(SV.energy < 2) //If tile isn't fully grown
-			if(prob(20))
+			if(SSrng.probability(20))
 				SV.grow()
 		else //If tile is fully grown
 			SV.entangle_mob()
 
-		//if(prob(25))
+		//if(SSrng.probability(25))
 		SV.spread()
 		if(i >= length)
 			break
@@ -514,18 +514,18 @@
 
 /obj/structure/spacevine/proc/grow()
 	if(!energy)
-		src.icon_state = pick("Med1", "Med2", "Med3")
+		src.icon_state = SSrng.pick_from_list("Med1", "Med2", "Med3")
 		energy = 1
 		set_opacity(1)
 	else
-		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
+		src.icon_state = SSrng.pick_from_list("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
 
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_grow(src)
 
 /obj/structure/spacevine/proc/entangle_mob()
-	if(!has_buckled_mobs() && prob(25))
+	if(!has_buckled_mobs() && SSrng.probability(25))
 		for(var/mob/living/V in src.loc)
 			entangle(V)
 			if(has_buckled_mobs())
@@ -538,11 +538,11 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
-		to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
+		to_chat(V, "<span class='danger'>The vines [SSrng.pick_from_list("wind", "tangle", "tighten")] around you!</span>")
 		buckle_mob(V, 1)
 
 /obj/structure/spacevine/proc/spread()
-	var/direction = pick(GLOB.cardinals)
+	var/direction = SSrng.pick_from_list(GLOB.cardinals)
 	var/turf/stepturf = get_step(src,direction)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_spread(src, stepturf)
@@ -558,7 +558,7 @@
 	var/i
 	for(var/datum/spacevine_mutation/SM in mutations)
 		i += SM.on_explosion(severity, target, src)
-	if(!i && prob(100/severity))
+	if(!i && SSrng.probability(100/severity))
 		qdel(src)
 
 /obj/structure/spacevine/temperature_expose(null, temp, volume)

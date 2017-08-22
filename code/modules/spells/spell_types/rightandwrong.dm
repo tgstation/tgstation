@@ -13,7 +13,7 @@
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
-		if(prob(survivor_probability) && !(H.mind in SSticker.mode.traitors))
+		if(SSrng.probability(survivor_probability) && !(H.mind in SSticker.mode.traitors))
 			SSticker.mode.traitors += H.mind
 			if(!summon_type)
 				var/datum/objective/steal_five_of_type/summon_guns/guns = new
@@ -32,9 +32,9 @@
 			H.mind.objectives += survive
 			H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
 			H.mind.announce_objectives()
-		var/randomizeguns 			= pick(gunslist)
-		var/randomizemagic 			= pick(magiclist)
-		var/randomizemagicspecial 	= pick(magicspeciallist)
+		var/randomizeguns 			= SSrng.pick_from_list(gunslist)
+		var/randomizemagic 			= SSrng.pick_from_list(magiclist)
+		var/randomizemagicspecial 	= SSrng.pick_from_list(magicspeciallist)
 		if(!summon_type)
 			var/obj/item/gun/G
 			switch (randomizeguns)

@@ -32,8 +32,8 @@
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
-	if(prob(12))
-		icon_state = "necro[rand(2,3)]"
+	if(SSrng.probability(12))
+		icon_state = "necro[SSrng.random(2,3)]"
 
 /turf/open/indestructible/necropolis/air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -245,7 +245,7 @@
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
 		return
-	spawn(rand(0,20))
+	spawn(SSrng.random(0,20))
 		if(wet == TURF_WET_PERMAFROST)
 			wet = TURF_WET_ICE
 		else if(wet == TURF_WET_ICE)

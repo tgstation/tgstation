@@ -225,7 +225,7 @@
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
-			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+			target = get_offset_target_turf(src.loc, SSrng.random(5)-SSrng.random(5), SSrng.random(5)-SSrng.random(5))
 
 			AM.forceMove(T)
 			AM.pipe_eject(0)
@@ -340,7 +340,7 @@
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
-		if(prob(75))
+		if(SSrng.probability(75))
 			I.forceMove(src)
 			visible_message("<span class='notice'>[I] lands in [src].</span>")
 			update_icon()
@@ -479,7 +479,7 @@
 		O.loc = src
 	else if(ismob(AM))
 		var/mob/M = AM
-		if(prob(2)) // to prevent mobs being stuck in infinite loops
+		if(SSrng.probability(2)) // to prevent mobs being stuck in infinite loops
 			to_chat(M, "<span class='warning'>You hit the edge of the chute.</span>")
 			return
 		M.forceMove(src)

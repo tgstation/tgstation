@@ -6,7 +6,7 @@
 
 	var/freq = 1
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
+		freq = SSrng.pick_from_list(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		to_chat(src, "You feel the Honkmother messing with your song...")
 
 	var/sound/admin_sound = new()
@@ -17,7 +17,7 @@
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
-		
+
 	var/res = alert(usr, "Show the title of this song to the players?",, "No", "Yes", "Cancel")
 	switch(res)
 		if("Yes")

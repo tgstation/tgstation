@@ -31,7 +31,7 @@
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/Initialize()
-	if(prob(50))
+	if(SSrng.probability(50))
 		icon_state = "stickyweb2"
 	. = ..()
 
@@ -39,11 +39,11 @@
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	else if(isliving(mover))
-		if(prob(50))
+		if(SSrng.probability(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return 0
 	else if(istype(mover, /obj/item/projectile))
-		return prob(30)
+		return SSrng.probability(30)
 	return 1
 
 /obj/structure/spider/eggcluster
@@ -57,15 +57,15 @@
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/eggcluster/Initialize()
-	pixel_x = rand(3,-3)
-	pixel_y = rand(3,-3)
+	pixel_x = SSrng.random(3,-3)
+	pixel_y = SSrng.random(3,-3)
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/structure/spider/eggcluster/process()
-	amount_grown += rand(0,2)
+	amount_grown += SSrng.random(0,2)
 	if(amount_grown >= 100)
-		var/num = rand(3,12)
+		var/num = SSrng.random(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
 			S.poison_type = poison_type
@@ -92,8 +92,8 @@
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/spiderling/Initialize()
-	pixel_x = rand(6,-6)
-	pixel_y = rand(6,-6)
+	pixel_x = SSrng.random(6,-6)
+	pixel_y = SSrng.random(6,-6)
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
@@ -123,12 +123,12 @@
 			if(!vents.len)
 				entry_vent = null
 				return
-			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			if(prob(50))
+			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = SSrng.pick_from_list(vents)
+			if(SSrng.probability(50))
 				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
 								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 
-			spawn(rand(20,60))
+			spawn(SSrng.random(20,60))
 				loc = exit_vent
 				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
 				spawn(travel_time)
@@ -138,7 +138,7 @@
 						entry_vent = null
 						return
 
-					if(prob(50))
+					if(SSrng.probability(50))
 						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 					sleep(travel_time)
 
@@ -153,14 +153,14 @@
 						new_area.Entered(src)
 	//=================
 
-	else if(prob(33))
+	else if(SSrng.probability(33))
 		var/list/nearby = oview(10, src)
 		if(nearby.len)
-			var/target_atom = pick(nearby)
+			var/target_atom = SSrng.pick_from_list(nearby)
 			walk_to(src, target_atom)
-			if(prob(40))
-				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
-	else if(prob(10))
+			if(SSrng.probability(40))
+				src.visible_message("<span class='notice'>\The [src] skitters[SSrng.pick_from_list(" away"," around","")].</span>")
+	else if(SSrng.probability(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
@@ -168,10 +168,10 @@
 				walk_to(src, entry_vent, 1)
 				break
 	if(isturf(loc))
-		amount_grown += rand(0,2)
+		amount_grown += SSrng.random(0,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
-				grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
+				grow_as = SSrng.pick_from_list(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
@@ -190,7 +190,7 @@
 	max_integrity = 60
 
 /obj/structure/spider/cocoon/Initialize()
-	icon_state = pick("cocoon1","cocoon2","cocoon3")
+	icon_state = SSrng.pick_from_list("cocoon1","cocoon2","cocoon3")
 	. = ..()
 
 /obj/structure/spider/cocoon/container_resist(mob/living/user)

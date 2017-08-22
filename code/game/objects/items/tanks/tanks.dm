@@ -121,8 +121,8 @@
 	if (!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
 		for(var/obj/item/W in H)
 			H.dropItemToGround(W)
-			if(prob(50))
-				step(W, pick(GLOB.alldirs))
+			if(SSrng.probability(50))
+				step(W, SSrng.pick_from_list(GLOB.alldirs))
 		H.status_flags |= DISFIGURED
 		H.bleed_rate = 5
 		H.gib_animation()

@@ -179,7 +179,7 @@
 			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
 			user.update_icons()
-			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
+			new_name = "GORE-DRENCHED CLAYMORE OF [SSrng.pick_from_list("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_valhalla"
 			item_state = "cultblade"
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
@@ -512,13 +512,13 @@
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	if(homerun_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
-		target.throw_at(throw_target, rand(8,10), 14, user)
+		target.throw_at(throw_target, SSrng.random(8,10), 14, user)
 		target.ex_act(EXPLODE_HEAVY)
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, 1)
 		homerun_ready = 0
 		return
 	else if(!target.anchored)
-		target.throw_at(throw_target, rand(1,2), 7, user)
+		target.throw_at(throw_target, SSrng.random(1,2), 7, user)
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
@@ -529,7 +529,7 @@
 	throwforce = 15
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
-	var/picksound = rand(1,2)
+	var/picksound = SSrng.random(1,2)
 	var/turf = get_turf(src)
 	if(picksound == 1)
 		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, 1)

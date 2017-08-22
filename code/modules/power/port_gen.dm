@@ -131,7 +131,7 @@
 	if (current_heat < lower_limit)
 		current_heat += 4 - consumption
 	else
-		current_heat += rand(-7 + bias, 7 + bias)
+		current_heat += SSrng.random(-7 + bias, 7 + bias)
 		if (current_heat < lower_limit)
 			current_heat = lower_limit
 		if (current_heat > upper_limit)

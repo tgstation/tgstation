@@ -56,7 +56,7 @@
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
+		var/choice = SSrng.pick_from_list(subtypesof(/obj/item/circuitboard/computer/arcade))
 		var/obj/item/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		return INITIALIZE_HINT_QDEL
@@ -65,7 +65,7 @@
 #define PULSE_MEDAL "Jackpot"
 
 /obj/machinery/computer/arcade/proc/prizevend()
-	if(prob(0.0001)) //1 in a million
+	if(SSrng.probability(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		UnlockMedal(PULSE_MEDAL,usr.client)
 
@@ -73,7 +73,7 @@
 		var/prizeselect = pickweight(prizes)
 		new prizeselect(src)
 
-	var/atom/movable/prize = pick(contents)
+	var/atom/movable/prize = SSrng.pick_from_list(contents)
 	visible_message("<span class='notice'>[src] dispenses a [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 	prize.forceMove(get_turf(src))
@@ -89,9 +89,9 @@
 	var/num_of_prizes = 0
 	switch(severity)
 		if(1)
-			num_of_prizes = rand(1,4)
+			num_of_prizes = SSrng.random(1,4)
 		if(2)
-			num_of_prizes = rand(0,2)
+			num_of_prizes = SSrng.random(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
 		empprize = pickweight(prizes)
 		new empprize(loc)
@@ -121,10 +121,10 @@
 	var/name_part1
 	var/name_part2
 
-	name_action = pick("Defeat ", "Annihilate ", "Save ", "Strike ", "Stop ", "Destroy ", "Robust ", "Romance ", "Pwn ", "Own ", "Ban ")
+	name_action = SSrng.pick_from_list("Defeat ", "Annihilate ", "Save ", "Strike ", "Stop ", "Destroy ", "Robust ", "Romance ", "Pwn ", "Own ", "Ban ")
 
-	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
-	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn", "Bloopers")
+	name_part1 = SSrng.pick_from_list("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
+	name_part2 = SSrng.pick_from_list("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn", "Bloopers")
 
 	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	name = (name_action + name_part1 + name_part2)
@@ -159,7 +159,7 @@
 	if (!blocked && !gameover)
 		if (href_list["attack"])
 			blocked = TRUE
-			var/attackamt = rand(2,6)
+			var/attackamt = SSrng.random(2,6)
 			temp = "You attack for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
@@ -172,8 +172,8 @@
 
 		else if (href_list["heal"])
 			blocked = TRUE
-			var/pointamt = rand(1,3)
-			var/healamt = rand(6,8)
+			var/pointamt = SSrng.random(1,3)
+			var/healamt = SSrng.random(6,8)
 			temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			playsound(loc, 'sound/arcade/heal.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
@@ -188,7 +188,7 @@
 
 		else if (href_list["charge"])
 			blocked = TRUE
-			var/chargeamt = rand(4,7)
+			var/chargeamt = SSrng.random(4,7)
 			temp = "You regain [chargeamt] points"
 			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
@@ -240,13 +240,13 @@
 				prizevend()
 
 	else if (emagged && (turtle >= 4))
-		var/boomamt = rand(5,10)
+		var/boomamt = SSrng.random(5,10)
 		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
 		playsound(loc, 'sound/arcade/boom.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_hp -= boomamt
 
-	else if ((enemy_mp <= 5) && (prob(70)))
-		var/stealamt = rand(2,3)
+	else if ((enemy_mp <= 5) && (SSrng.probability(70)))
+		var/stealamt = SSrng.random(2,3)
 		temp = "[enemy_name] steals [stealamt] of your power!"
 		playsound(loc, 'sound/arcade/steal.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_mp -= stealamt
@@ -270,7 +270,7 @@
 		enemy_mp -= 4
 
 	else
-		var/attackamt = rand(3,6)
+		var/attackamt = SSrng.random(3,6)
 		temp = "[enemy_name] attacks for [attackamt] damage!"
 		playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_hp -= attackamt
@@ -485,13 +485,13 @@
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
-				if(turns == 2 && prob(30))
+				if(turns == 2 && SSrng.probability(30))
 					event = ORION_TRAIL_COLLISION
 					event()
-				else if(prob(75))
+				else if(SSrng.probability(75))
 					event = pickweight(events)
 					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55))
+						if(event == ORION_TRAIL_LING || SSrng.probability(55))
 							event = ORION_TRAIL_LING_ATTACK
 					event()
 				turns += 1
@@ -499,7 +499,7 @@
 				var/mob/living/carbon/M = usr //for some vars
 				switch(event)
 					if(ORION_TRAIL_RAIDERS)
-						if(prob(50))
+						if(SSrng.probability(50))
 							to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 							M.hallucination += 30
 						else
@@ -507,7 +507,7 @@
 							M.take_bodypart_damage(30)
 							playsound(loc, 'sound/weapons/genhit2.ogg', 100, 1)
 					if(ORION_TRAIL_ILLNESS)
-						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
+						var/severity = SSrng.random(1,3) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" )
 						if(severity == 2)
@@ -519,7 +519,7 @@
 							sleep(30)
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
-						if(prob(75))
+						if(SSrng.probability(75))
 							M.Knockdown(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
@@ -527,7 +527,7 @@
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
-						if(prob(90))
+						if(SSrng.probability(90))
 							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
@@ -548,8 +548,8 @@
 						visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
 						var/oldfood = food
 						var/oldfuel = fuel
-						food = rand(10,80) / rand(1,2)
-						fuel = rand(10,60) / rand(1,2)
+						food = SSrng.random(10,80) / SSrng.random(1,2)
+						fuel = SSrng.random(10,60) / SSrng.random(1,2)
 						if(electronics)
 							sleep(10)
 							if(oldfuel > fuel && oldfood > food)
@@ -599,14 +599,14 @@
 			event = null
 	else if(href_list["keepspeed"]) //keep speed
 		if(event == ORION_TRAIL_FLUX)
-			if(prob(75))
+			if(SSrng.probability(75))
 				event = "Breakdown"
 				event()
 			else
 				event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
-			if(prob(75))
+			if(SSrng.probability(75))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(emagged) //has to be here because otherwise it doesn't work
@@ -688,18 +688,18 @@
 
 				var/FU = 0
 				var/FO = 0
-				if(prob(success))
-					FU = rand(5,15)
-					FO = rand(5,15)
+				if(SSrng.probability(success))
+					FU = SSrng.random(5,15)
+					FO = SSrng.random(5,15)
 					last_spaceport_action = "You successfully raided the spaceport! you gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
 				else
-					FU = rand(-5,-15)
-					FO = rand(-5,-15)
+					FU = SSrng.random(-5,-15)
+					FO = SSrng.random(-5,-15)
 					last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
 
 					//your chance of lose a crewmember is 1/2 your chance of success
 					//this makes higher % failures hurt more, don't get cocky space cowboy!
-					if(prob(success*5))
+					if(SSrng.probability(success*5))
 						var/lost_crew = remove_crewmember()
 						last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
 						if(emagged)
@@ -758,13 +758,13 @@
 	switch(event)
 		if(ORION_TRAIL_RAIDERS)
 			eventdat += "Raiders have come aboard your ship!"
-			if(prob(50))
-				var/sfood = rand(1,10)
-				var/sfuel = rand(1,10)
+			if(SSrng.probability(50))
+				var/sfood = SSrng.random(1,10)
+				var/sfuel = SSrng.random(1,10)
 				food -= sfood
 				fuel -= sfuel
 				eventdat += "<br>They have stolen [sfood] <b>Food</b> and [sfuel] <b>Fuel</b>."
-			else if(prob(10))
+			else if(SSrng.probability(10))
 				var/deadname = remove_crewmember()
 				eventdat += "<br>[deadname] tried to fight back but was killed."
 			else
@@ -807,13 +807,13 @@
 
 		if(ORION_TRAIL_COLLISION)
 			eventdat += "Something hit us! Looks like there's some hull damage."
-			if(prob(25))
-				var/sfood = rand(5,15)
-				var/sfuel = rand(5,15)
+			if(SSrng.probability(25))
+				var/sfood = SSrng.random(5,15)
+				var/sfuel = SSrng.random(5,15)
 				food -= sfood
 				fuel -= sfuel
 				eventdat += "<br>[sfood] <b>Food</b> and [sfuel] <b>Fuel</b> was vented out into space."
-			if(prob(10))
+			if(SSrng.probability(10))
 				var/deadname = remove_crewmember()
 				eventdat += "<br>[deadname] was killed by rapid depressurization."
 			eventdat += "<br>You can repair the damage with hull plates, or you can spend the next 3 days welding scrap together."
@@ -835,13 +835,13 @@
 				eventdat += "<br>Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
-				if(prob(10)) // "likely", I didn't say it was guaranteed!
+				if(SSrng.probability(10)) // "likely", I didn't say it was guaranteed!
 					lings_aboard = min(++lings_aboard,2)
 			else
 				if(lings_aboard) //less likely to stack lings
-					if(prob(20))
+					if(SSrng.probability(20))
 						lings_aboard = min(++lings_aboard,2)
-				else if(prob(70))
+				else if(SSrng.probability(70))
 					lings_aboard = min(++lings_aboard,2)
 
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a crewmember</a></P>"
@@ -866,9 +866,9 @@
 					eventdat += "<br>[ling1]'s arm twists and contorts into a grotesque blade!"
 
 				var/chance2attack = alive*20
-				if(prob(chance2attack))
+				if(SSrng.probability(chance2attack))
 					var/chancetokill = 30*lings_aboard-(5*alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
-					if(prob(chancetokill))
+					if(SSrng.probability(chancetokill))
 						var/deadguy = remove_crewmember()
 						eventdat += "<br>The Changeling[ling2 ? "s":""] run[ling2 ? "":"s"] up to [deadguy] and capitulates them!"
 					else
@@ -918,11 +918,11 @@
 					var/FU = 10
 					var/FO = 10
 					var/freecrew = 0
-					if(prob(30))
+					if(SSrng.probability(30))
 						FU = 25
 						FO = 25
 
-					if(prob(10))
+					if(SSrng.probability(10))
 						add_crewmember()
 						freecrew++
 
@@ -992,10 +992,10 @@
 	if(specific)
 		newcrew = specific
 	else
-		if(prob(50))
-			newcrew = pick(GLOB.first_names_male)
+		if(SSrng.probability(50))
+			newcrew = SSrng.pick_from_list(GLOB.first_names_male)
 		else
-			newcrew = pick(GLOB.first_names_female)
+			newcrew = SSrng.pick_from_list(GLOB.first_names_female)
 	if(newcrew)
 		settlers += newcrew
 		alive++
@@ -1011,10 +1011,10 @@
 	if(specific && specific != dont_remove)
 		safe2remove = list(specific)
 	else
-		removed = pick(safe2remove)
+		removed = SSrng.pick_from_list(safe2remove)
 
 	if(removed)
-		if(lings_aboard && prob(40*lings_aboard)) //if there are 2 lings you're twice as likely to get one, obviously
+		if(lings_aboard && SSrng.probability(40*lings_aboard)) //if there are 2 lings you're twice as likely to get one, obviously
 			lings_aboard = max(0,--lings_aboard)
 		settlers -= removed
 		alive--
@@ -1037,7 +1037,7 @@
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
 	if(emagged)
 		return
-	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
+	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[SSrng.random(1, 50)]: Realism Mode.</span>")
 	name = "The Orion Trail: Realism Edition"
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()
@@ -1078,7 +1078,7 @@
 	active = 1
 	visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
 	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
-	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
+	say("This is ship ID #[SSrng.random(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
 	sleep(20)
 	visible_message("<span class='warning'>[src] begins to vibrate...</span>")
 	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")

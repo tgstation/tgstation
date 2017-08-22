@@ -37,7 +37,7 @@
 	var/hungry = 0
 	if (nutrition < get_starve_nutrition())
 		hungry = 2
-	else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
+	else if (nutrition < get_grow_nutrition() && SSrng.probability(25) || nutrition < get_hunger_nutrition())
 		hungry = 1
 
 	AIproc = 1
@@ -72,7 +72,7 @@
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
 					return
-				if(!Target.lying && prob(80))
+				if(!Target.lying && SSrng.probability(80))
 
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)
@@ -175,7 +175,7 @@
 
 /mob/living/simple_animal/slime/handle_status_effects()
 	..()
-	if(prob(30) && !stat)
+	if(SSrng.probability(30) && !stat)
 		adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_feeding()
@@ -190,7 +190,7 @@
 		if(!client)
 			if(!rabid && !attacked)
 				if(M.LAssailant && M.LAssailant != M)
-					if(prob(50))
+					if(SSrng.probability(50))
 						if(!(M.LAssailant in Friends))
 							Friends[M.LAssailant] = 1
 						else
@@ -199,7 +199,7 @@
 			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
 		if(M.client && ishuman(M))
-			if(prob(85))
+			if(SSrng.probability(85))
 				rabid = 1 //we go rabid after finishing to feed on a human with a client.
 
 		Feedstop()
@@ -207,11 +207,11 @@
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.adjustCloneLoss(rand(2,4))
-		C.adjustToxLoss(rand(1,2))
+		C.adjustCloneLoss(SSrng.random(2,4))
+		C.adjustToxLoss(SSrng.random(1,2))
 
-		if(prob(10) && C.client)
-			to_chat(C, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
+		if(SSrng.probability(10) && C.client)
+			to_chat(C, "<span class='userdanger'>[SSrng.pick_from_list("You can feel your body becoming weak!", \
 			"You feel like you're about to die!", \
 			"You feel every part of your body screaming in agony!", \
 			"A low, rolling pain passes through your body!", \
@@ -223,8 +223,8 @@
 		var/mob/living/simple_animal/SA = M
 
 		var/totaldamage = 0 //total damage done to this unfortunate animal
-		totaldamage += SA.adjustCloneLoss(rand(2,4))
-		totaldamage += SA.adjustToxLoss(rand(1,2))
+		totaldamage += SA.adjustCloneLoss(SSrng.random(2,4))
+		totaldamage += SA.adjustToxLoss(SSrng.random(1,2))
 
 		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
 			Feedstop(0, 0)
@@ -234,7 +234,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition((rand(7,15) * config.damage_multiplier))
+	add_nutrition((SSrng.random(7,15) * config.damage_multiplier))
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
@@ -245,13 +245,13 @@
 		nutrition = 700
 		return
 
-	if(prob(15))
+	if(SSrng.probability(15))
 		nutrition -= 1 + is_adult
 
 	if(nutrition <= 0)
 		nutrition = 0
-		if(prob(75))
-			adjustBruteLoss(rand(0,5))
+		if(SSrng.probability(75))
+			adjustBruteLoss(SSrng.random(0,5))
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		nutrition -= 20
@@ -268,11 +268,11 @@
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
 	if(nutrition >= get_grow_nutrition())
 		if(powerlevel<10)
-			if(prob(30-powerlevel*2))
+			if(SSrng.probability(30-powerlevel*2))
 				powerlevel++
 	else if(nutrition >= get_hunger_nutrition() + 100) //can't get power levels unless you're a bit above hunger level.
 		if(powerlevel<5)
-			if(prob(25-powerlevel*5))
+			if(SSrng.probability(25-powerlevel*5))
 				powerlevel++
 
 
@@ -294,10 +294,10 @@
 	if(Discipline > 0)
 
 		if(Discipline >= 5 && rabid)
-			if(prob(60))
+			if(SSrng.probability(60))
 				rabid = 0
 
-		if(prob(10))
+		if(SSrng.probability(10))
 			Discipline--
 
 	if(!client)
@@ -320,12 +320,12 @@
 
 		if (nutrition < get_starve_nutrition())
 			hungry = 2
-		else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
+		else if (nutrition < get_grow_nutrition() && SSrng.probability(25) || nutrition < get_hunger_nutrition())
 			hungry = 1
 
 		if(hungry == 2 && !client) // if a slime is starving, it starts losing its friends
-			if(Friends.len > 0 && prob(1))
-				var/mob/nofriend = pick(Friends)
+			if(Friends.len > 0 && SSrng.probability(1))
+				var/mob/nofriend = SSrng.pick_from_list(Friends)
 				--Friends[nofriend]
 
 		if(!Target)
@@ -358,7 +358,7 @@
 						Target = targets[1] // I am attacked and am fighting back or so hungry I don't even care
 					else
 						for(var/mob/living/carbon/C in targets)
-							if(!Discipline && prob(5))
+							if(!Discipline && SSrng.probability(5))
 								if(ishuman(C) || isalienadult(C))
 									Target = C
 									break
@@ -368,7 +368,7 @@
 								break
 
 			if (Target)
-				target_patience = rand(5,7)
+				target_patience = SSrng.random(5,7)
 				if (is_adult)
 					target_patience += 3
 
@@ -382,16 +382,16 @@
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
-				else if(canmove && isturf(loc) && prob(50))
-					step(src, pick(GLOB.cardinals))
+				else if(canmove && isturf(loc) && SSrng.probability(50))
+					step(src, SSrng.pick_from_list(GLOB.cardinals))
 
 			else
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if (docile && pulledby)
 					holding_still = 10
-				else if(canmove && isturf(loc) && prob(33))
-					step(src, pick(GLOB.cardinals))
+				else if(canmove && isturf(loc) && SSrng.probability(33))
+					step(src, SSrng.pick_from_list(GLOB.cardinals))
 		else if(!AIproc)
 			INVOKE_ASYNC(src, .proc/AIprocess)
 
@@ -411,13 +411,13 @@
 		newmood = "mischevous"
 
 	if (!newmood)
-		if (Discipline && prob(25))
+		if (Discipline && SSrng.probability(25))
 			newmood = "pout"
-		else if (prob(1))
-			newmood = pick("sad", ":3", "pout")
+		else if (SSrng.probability(1))
+			newmood = SSrng.pick_from_list("sad", ":3", "pout")
 
 	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
-		if(prob(75))
+		if(SSrng.probability(75))
 			newmood = mood
 
 	if (newmood != mood) // This is so we don't redraw them every time
@@ -432,11 +432,11 @@
 		var/phrase = speech_buffer[2] // What did they say?
 		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
 			if (findtext(phrase, "hello") || findtext(phrase, "hi"))
-				to_say = pick("Hello...", "Hi...")
+				to_say = SSrng.pick_from_list("Hello...", "Hi...")
 			else if (findtext(phrase, "follow"))
 				if (Leader)
 					if (Leader == who) // Already following him
-						to_say = pick("Yes...", "Lead...", "Follow...")
+						to_say = SSrng.pick_from_list("Yes...", "Lead...", "Follow...")
 					else if (Friends[who] > Friends[Leader]) // VIVA
 						Leader = who
 						to_say = "Yes... I follow [who]..."
@@ -447,7 +447,7 @@
 						Leader = who
 						to_say = "I follow..."
 					else // Not friendly enough
-						to_say = pick("No...", "I no follow...")
+						to_say = SSrng.pick_from_list("No...", "I no follow...")
 			else if (findtext(phrase, "stop"))
 				if (buckled) // We are asked to stop feeding
 					if (Friends[who] >= SLIME_FRIENDSHIP_STOPEAT)
@@ -493,7 +493,7 @@
 					else
 						to_say = "No... won't stay..."
 			else if (findtext(phrase, "attack"))
-				if (rabid && prob(20))
+				if (rabid && SSrng.probability(20))
 					Target = who
 					AIprocess() //Wake up the slime's Target AI, needed otherwise this doesn't work
 					to_say = "ATTACK!?!?"
@@ -519,8 +519,8 @@
 	//Speech starts here
 	if (to_say)
 		say (to_say)
-	else if(prob(1))
-		emote(pick("bounce","sway","light","vibrate","jiggle"))
+	else if(SSrng.probability(1))
+		emote(SSrng.pick_from_list("bounce","sway","light","vibrate","jiggle"))
 	else
 		var/t = 10
 		var/slimes_near = 0
@@ -538,7 +538,7 @@
 			t += 10
 		if (nutrition < get_starve_nutrition())
 			t += 10
-		if (prob(2) && prob(t))
+		if (SSrng.probability(2) && SSrng.probability(t))
 			var/phrases = list()
 			if (Target)
 				phrases += "[Target]... look yummy..."
@@ -593,7 +593,7 @@
 				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
-			say (pick(phrases))
+			say (SSrng.pick_from_list(phrases))
 
 /mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult)

@@ -58,9 +58,9 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(rand(100, 250), BRUTE, "bomb", 0)
+			take_damage(SSrng.random(100, 250), BRUTE, "bomb", 0)
 		if(3)
-			take_damage(rand(10, 90), BRUTE, "bomb", 0)
+			take_damage(SSrng.random(10, 90), BRUTE, "bomb", 0)
 
 /obj/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -77,7 +77,7 @@
 		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		if(density)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+			user.say(SSrng.pick_from_list(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		take_damage(hulk_damage(), BRUTE, "melee", 0, get_dir(src, user))
@@ -111,14 +111,14 @@
 		if(M.obj_damage)
 			. = attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect)
 		else
-			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect)
+			. = attack_generic(M, SSrng.random(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect)
 		if(. && !play_soundeffect)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
 		return
-	attack_generic(user, rand(10, 15), "melee", 1)
+	attack_generic(user, SSrng.random(10, 15), "melee", 1)
 
 /obj/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
@@ -171,7 +171,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		for(var/armour_value in armor)
 			if(armour_value != "acid" && armour_value != "fire")
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
-		if(prob(33))
+		if(SSrng.probability(33))
 			playsound(loc, 'sound/items/welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)
 

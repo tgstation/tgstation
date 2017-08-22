@@ -150,11 +150,11 @@
 /datum/teleport/instant/science/setPrecision(aprecision)
 	..()
 	if(istype(teleatom, /obj/item/storage/backpack/holding))
-		precision = rand(1,100)
+		precision = SSrng.random(1,100)
 
 	var/list/bagholding = teleatom.search_contents_for(/obj/item/storage/backpack/holding)
 	if(bagholding.len)
-		precision = max(rand(1,100)*bagholding.len,100)
+		precision = max(SSrng.random(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
 			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
@@ -168,9 +168,9 @@
 	var/cycles = 1000
 	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
-		var/x = rand(1, world.maxx)
-		var/y = rand(1, world.maxy)
-		var/z = pick(zlevels)
+		var/x = SSrng.random(1, world.maxx)
+		var/y = SSrng.random(1, world.maxy)
+		var/z = SSrng.pick_from_list(zlevels)
 		var/random_location = locate(x,y,z)
 
 		if(!isfloorturf(random_location))

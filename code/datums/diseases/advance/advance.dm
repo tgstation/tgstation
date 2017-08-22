@@ -147,7 +147,7 @@
 	var/number_of = amount_get
 	if(!amount_get)
 		number_of = 1
-		while(prob(20))
+		while(SSrng.probability(20))
 			number_of += 1
 
 	for(var/i = 1; number_of >= i && possible_symptoms.len; i++)
@@ -307,10 +307,10 @@
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < (SYMPTOM_LIMIT - 1) + rand(-1, 1))
+	if(symptoms.len < (SYMPTOM_LIMIT - 1) + SSrng.random(-1, 1))
 		symptoms += S
 	else
-		RemoveSymptom(pick(symptoms))
+		RemoveSymptom(SSrng.pick_from_list(symptoms))
 		symptoms += S
 	return
 
@@ -344,7 +344,7 @@
 	if(!diseases.len)
 		return null
 	if(diseases.len <= 1)
-		return pick(diseases) // Just return the only entry.
+		return SSrng.pick_from_list(diseases) // Just return the only entry.
 
 	var/i = 0
 	// Mix our diseases until we are left with only one result.
@@ -352,15 +352,15 @@
 
 		i++
 
-		var/datum/disease/advance/D1 = pick(diseases)
+		var/datum/disease/advance/D1 = SSrng.pick_from_list(diseases)
 		diseases -= D1
 
-		var/datum/disease/advance/D2 = pick(diseases)
+		var/datum/disease/advance/D2 = SSrng.pick_from_list(diseases)
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
 	//to_chat(world, "END MIXING!!!!!")
-	var/datum/disease/advance/to_return = pick(diseases)
+	var/datum/disease/advance/to_return = SSrng.pick_from_list(diseases)
 	to_return.Refresh(1)
 	return to_return
 

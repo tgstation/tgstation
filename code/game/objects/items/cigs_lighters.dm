@@ -198,7 +198,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(prob(15)) // so it's not an instarape in case of acid
+				if(SSrng.probability(15)) // so it's not an instarape in case of acid
 					var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
 					reagents.reaction(C, INGEST, fraction)
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
@@ -297,8 +297,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = SSrng.random(-5, 5)
+	src.pixel_y = SSrng.random(-5, 5)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
@@ -311,8 +311,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigbutt/roach/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = SSrng.random(-5, 5)
+	src.pixel_y = SSrng.random(-5, 5)
 
 
 ////////////
@@ -522,7 +522,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				else
 					prot = TRUE
 
-				if(prot || prob(75))
+				if(prot || SSrng.probability(75))
 					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
@@ -643,7 +643,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.add_reagent("nicotine", 50)
 	if(!icon_state)
 		if(!param_color)
-			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
+			param_color = SSrng.pick_from_list("red","blue","black","white","green","purple","yellow","orange")
 		icon_state = "[param_color]_vape"
 		item_state = "[param_color]_vape"
 
@@ -774,7 +774,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		s.set_up(reagents, 4, loc, silent=TRUE)
 		s.start()
 		vapetime = 0
-		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
+		if(SSrng.probability(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, "head")
 			M.Knockdown(300, 1, 0)

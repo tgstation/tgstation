@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		A.cost = max(round(A.cost * discount),1)
 		A.category = "Discounted Gear"
 		A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
-		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
+		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [SSrng.pick_from_list(disclaimer)]"
 		A.item = I.item
 
 		if(!filtered_uplink_items[A.category])
@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 
 /datum/uplink_item/proc/get_discount()
-	return pick(4;0.75,2;0.5,1;0.25)
+	return text2num(pickweight(list("0.75" = 4,"0.5" = 2, "0.25" = 1)))
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 16
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
-	return pick(4;0.8,2;0.65,1;0.5)
+	return text2num(pickweight(list("0.8" = 4,"0.65" = 2, "0.5" = 1)))
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -1384,11 +1384,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	var/crate_value = 50
 	var/obj/structure/closet/crate/C = new(loc)
 	while(crate_value)
-		var/category = pick(uplink_items)
-		var/item = pick(uplink_items[category])
+		var/category = SSrng.pick_from_list(uplink_items)
+		var/item = SSrng.pick_from_list(uplink_items[category])
 		var/datum/uplink_item/I = uplink_items[category][item]
 
-		if(!I.surplus || prob(100 - I.surplus))
+		if(!I.surplus || SSrng.probability(100 - I.surplus))
 			continue
 		if(crate_value < I.cost)
 			continue
@@ -1419,7 +1419,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			possible_items += I
 
 	if(possible_items.len)
-		var/datum/uplink_item/I = pick(possible_items)
+		var/datum/uplink_item/I = SSrng.pick_from_list(possible_items)
 		U.telecrystals -= I.cost
 		U.spent_telecrystals += I.cost
 		SSblackbox.add_details("traitor_uplink_items_bought","[name]|[I.cost]")

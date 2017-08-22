@@ -5,8 +5,8 @@
 /datum/objective/sintouched/lust
 
 /datum/objective/sintouched/lust/New()
-	var/mob/dead/D = pick(dead_mob_list)
-	if(prob(50) && D)
+	var/mob/dead/D = SSrng.pick_from_list(dead_mob_list)
+	if(SSrng.probability(50) && D)
 		explanation_text = "You know that [D] has perished.... and you think [D] is kinda cute.  Make sure everyone knows how HOT [D]'s lifeless body is."
 	else
 		explanation_text = "Go get married, then immediately cheat on your new spouse." */

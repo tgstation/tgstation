@@ -248,7 +248,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
-	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
+	icon_state = "[tile_key][SSrng.random(1, tile_random_sprite_max)]"
 
 /obj/structure/stone_tile/Destroy(force)
 	if(force || fallen)

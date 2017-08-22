@@ -831,10 +831,10 @@
 	if(SSticker.HasRoundStarted())
 		var/string
 		if(logout && config && config.announce_admin_logout)
-			string = pick(
+			string = SSrng.pick_from_list(
 				"Admin logout: [key_name(src)]")
 		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
-			string = pick(
+			string = SSrng.pick_from_list(
 				"Admin login: [key_name(src)]")
 		if(string)
 			message_admins("[string]")

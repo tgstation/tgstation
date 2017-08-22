@@ -130,7 +130,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart("head")
 		if(BP)
 			BP.drop_limb()
-			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+			playsound(loc,SSrng.pick_from_list('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attackby(atom/A, mob/living/user, params)
@@ -164,8 +164,8 @@
 
 /obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
 	. = ..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = SSrng.random(-5, 5)
+	src.pixel_y = SSrng.random(-5, 5)
 
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez

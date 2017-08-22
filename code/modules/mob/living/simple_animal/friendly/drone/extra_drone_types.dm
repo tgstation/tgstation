@@ -81,9 +81,9 @@
 /mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
 	liberate()
-	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
+	visualAppearence = SSrng.pick_from_list(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
 	if(visualAppearence == MAINTDRONE)
-		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
+		var/colour = SSrng.pick_from_list("grey", "blue", "red", "green", "pink", "orange")
 		icon_state = "[visualAppearence]_[colour]"
 	else
 		icon_state = visualAppearence

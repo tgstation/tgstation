@@ -146,7 +146,7 @@
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return 0
-	if (prob(hit_reflect_chance))
+	if (SSrng.probability(hit_reflect_chance))
 		return 1
 
 /obj/item/clothing/suit/armor/vest/det_suit
@@ -205,7 +205,7 @@
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
-	if(prob(hit_reaction_chance))
+	if(SSrng.probability(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
@@ -221,8 +221,8 @@
 				continue
 			turfs += T
 		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
-		var/turf/picked = pick(turfs)
+			turfs += SSrng.pick_from_list(/turf in orange(tele_range, H))
+		var/turf/picked = SSrng.pick_from_list(turfs)
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
@@ -238,7 +238,7 @@
 /obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
-	if(prob(hit_reaction_chance))
+	if(SSrng.probability(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</spawn>")
 			return
@@ -260,7 +260,7 @@
 /obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
-	if(prob(hit_reaction_chance))
+	if(SSrng.probability(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] activates, but is still recharging its holographic emitters!</spawn>")
 			return
@@ -287,7 +287,7 @@
 /obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
-	if(prob(hit_reaction_chance))
+	if(SSrng.probability(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
@@ -307,7 +307,7 @@
 /obj/item/clothing/suit/armor/reactive/table/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return 0
-	if(prob(hit_reaction_chance))
+	if(SSrng.probability(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive table armor's fabricators are still on cooldown!</span>")
@@ -325,8 +325,8 @@
 				continue
 			turfs += T
 		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
-		var/turf/picked = pick(turfs)
+			turfs += SSrng.pick_from_list(/turf in orange(tele_range, H))
+		var/turf/picked = SSrng.pick_from_list(turfs)
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)

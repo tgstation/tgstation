@@ -49,11 +49,11 @@ BONUS
 		return
 	var/mob/living/M = A.affected_mob
 	if(power < 2)
-		if(prob(base_message_chance) || A.stage >=4)
-			to_chat(M, "<span class='warning'>[pick("Your head hurts.", "Your head pounds.")]</span>")
+		if(SSrng.probability(base_message_chance) || A.stage >=4)
+			to_chat(M, "<span class='warning'>[SSrng.pick_from_list("Your head hurts.", "Your head pounds.")]</span>")
 	if(power >= 2 && A.stage >= 4)
-		to_chat(M, "<span class='warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.")]</span>")
+		to_chat(M, "<span class='warning'>[SSrng.pick_from_list("Your head hurts a lot.", "Your head pounds incessantly.")]</span>")
 		M.adjustStaminaLoss(25)
 	if(power >= 3 && A.stage >= 5)
-		to_chat(M, "<span class='userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
+		to_chat(M, "<span class='userdanger'>[SSrng.pick_from_list("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
 		M.Stun(35)

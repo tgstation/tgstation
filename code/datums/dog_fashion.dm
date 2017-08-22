@@ -96,7 +96,7 @@
 
 /datum/dog_fashion/head/pirate/New(mob/M)
 	..()
-	name = "[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
+	name = "[SSrng.pick_from_list("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [SSrng.pick_from_list("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
 
 /datum/dog_fashion/head/ushanka
 	name = "Communist-title Realname"
@@ -105,7 +105,7 @@
 
 /datum/dog_fashion/head/ushanka/New(mob/M)
 	..()
-	name = "[pick("Comrade","Commissar","Glorious Leader")] [M.real_name]"
+	name = "[SSrng.pick_from_list("Comrade","Commissar","Glorious Leader")] [M.real_name]"
 
 /datum/dog_fashion/head/warden
 	name = "Officer REAL_NAME"

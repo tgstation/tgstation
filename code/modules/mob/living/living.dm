@@ -11,7 +11,7 @@
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
 	if(unique_name)
-		name = "[name] ([rand(1, 1000)])"
+		name = "[name] ([SSrng.random(1, 1000)])"
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
@@ -170,7 +170,7 @@
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
-			if(prob(I.block_chance*2))
+			if(SSrng.probability(I.block_chance*2))
 				return 1
 
 //Called when we bump onto an obj
@@ -443,7 +443,7 @@
 		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
 			if(isliving(pulling))
 				var/mob/living/M = pulling
-				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
+				if(M.lying && !M.buckled && (SSrng.probability(M.getBruteLoss()*200/M.maxHealth)))
 					M.makeTrail(T)
 			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
 			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
@@ -491,7 +491,7 @@
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
-				if((newdir in GLOB.cardinals) && (prob(50)))
+				if((newdir in GLOB.cardinals) && (SSrng.probability(50)))
 					newdir = turn(get_dir(T, src.loc), 180)
 				if(!blood_exists)
 					new /obj/effect/decal/cleanable/trail_holder(src.loc)
@@ -508,9 +508,9 @@
 
 /mob/living/proc/getTrail()
 	if(getBruteLoss() < 300)
-		return pick("ltrails_1", "ltrails_2")
+		return SSrng.pick_from_list("ltrails_1", "ltrails_2")
 	else
-		return pick("trails_1", "trails_2")
+		return SSrng.pick_from_list("trails_1", "trails_2")
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	if (client && client.move_delay >= world.time + world.tick_lag*2)
@@ -584,7 +584,7 @@
 /mob/living/resist_grab(moving_resist)
 	. = 1
 	if(pulledby.grab_state)
-		if(prob(30/pulledby.grab_state))
+		if(SSrng.probability(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			add_logs(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
@@ -691,8 +691,8 @@
 
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
-	var/pixel_x_diff = rand(-amplitude, amplitude)
-	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+	var/pixel_x_diff = SSrng.random(-amplitude, amplitude)
+	var/pixel_y_diff = SSrng.random(-amplitude/3, amplitude/3)
 	var/final_pixel_x = get_standard_pixel_x_offset(lying)
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
@@ -918,7 +918,7 @@
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
 	if(C.key) //save us from monkey hordes
-		C.visible_message("<span class='warning'>[pick( \
+		C.visible_message("<span class='warning'>[SSrng.pick_from_list( \
 						"[C] dives out of [src]'s way!", \
 						"[C] stumbles over [src]!", \
 						"[C] jumps out of [src]'s path!", \

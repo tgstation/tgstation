@@ -132,22 +132,22 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		var/ratvarian_prob = 0
 		switch(primary_component)
 			if(BELLIGERENT_EYE)
-				message = pick(neovgre_penalty)
+				message = SSrng.pick_from_list(neovgre_penalty)
 				ratvarian_prob = 55
 			if(VANGUARD_COGWHEEL)
-				message = pick(inathneq_penalty)
+				message = SSrng.pick_from_list(inathneq_penalty)
 				ratvarian_prob = 25
 			if(GEIS_CAPACITOR)
-				message = pick(sevtug_penalty)
+				message = SSrng.pick_from_list(sevtug_penalty)
 				ratvarian_prob = 40
 			if(REPLICANT_ALLOY)
-				message = pick(nezbere_penalty)
+				message = SSrng.pick_from_list(nezbere_penalty)
 				ratvarian_prob = 10
 			if(HIEROPHANT_ANSIBLE)
-				message = pick(nzcrentr_penalty)
+				message = SSrng.pick_from_list(nzcrentr_penalty)
 				ratvarian_prob = 70
 		if(message)
-			if(prob(ratvarian_prob))
+			if(SSrng.probability(ratvarian_prob))
 				message = text2ratvar(message)
 			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
 			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
@@ -209,7 +209,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	for(var/i in 1 to chant_amount)
 		if(!do_after(invoker, chant_interval, target = invoker, extra_checks = CALLBACK(src, .proc/can_recite)))
 			break
-		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
+		clockwork_say(invoker, text2ratvar(SSrng.pick_from_list(chant_invocations)), whispered)
 		if(!chant_effects(i))
 			break
 	if(invoker && slab)

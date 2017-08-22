@@ -51,7 +51,7 @@
 	if(C == operator)
 		operator = null
 		if(clients.len)
-			var/datum/computer_file/program/chatclient/newop = pick(clients)
+			var/datum/computer_file/program/chatclient/newop = SSrng.pick_from_list(clients)
 			changeop(newop)
 
 

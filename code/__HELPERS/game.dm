@@ -542,7 +542,7 @@
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
 		return
 
-	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+	var/obj/machinery/announcement_system/announcer = SSrng.pick_from_list(GLOB.announcement_systems)
 	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /proc/GetRedPart(const/hexa)

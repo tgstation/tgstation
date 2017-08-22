@@ -12,8 +12,8 @@
 	riding_datum = new/datum/riding/bicycle
 
 /obj/vehicle/bicycle/buckle_mob(mob/living/M, force = 0, check_loc = 1)
-	if(prob(easter_egg_chance) || (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
-		SEND_SOUND(M, sound(pick(bike_music), repeat = 1, wait = 0, volume = 80, channel = CHANNEL_BICYCLE))
+	if(SSrng.probability(easter_egg_chance) || (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+		SEND_SOUND(M, sound(SSrng.pick_from_list(bike_music), repeat = 1, wait = 0, volume = 80, channel = CHANNEL_BICYCLE))
 	. = ..()
 
 /obj/vehicle/bicycle/unbuckle_mob(mob/living/buckled_mob,force = 0)

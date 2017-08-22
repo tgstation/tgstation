@@ -134,7 +134,7 @@
 /obj/item/stock_parts/cell/proc/corrupt()
 	charge /= 2
 	maxcharge = max(maxcharge/2, chargerate)
-	if (prob(10))
+	if (SSrng.probability(10))
 		rigged = 1 //broken batterys are dangerous
 
 /obj/item/stock_parts/cell/emp_act(severity)
@@ -148,10 +148,10 @@
 	if(!QDELETED(src))
 		switch(severity)
 			if(2)
-				if(prob(50))
+				if(SSrng.probability(50))
 					corrupt()
 			if(3)
-				if(prob(25))
+				if(SSrng.probability(25))
 					corrupt()
 
 
@@ -160,7 +160,7 @@
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
-		return Clamp(round(charge/10000), 10, 90) + rand(-5,5)
+		return Clamp(round(charge/10000), 10, 90) + SSrng.random(-5,5)
 	else
 		return 0
 

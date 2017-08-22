@@ -27,7 +27,7 @@
 	sleep(50)
 	icon_state = "slots1"
 	in_use = FALSE
-	if(prob(win_prob))
+	if(SSrng.probability(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, 0)
 		new/obj/structure/cursed_money(get_turf(src))
 		if(user)

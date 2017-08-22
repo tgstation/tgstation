@@ -34,10 +34,10 @@
 
 	zone = check_zone(zone)
 
-	if(prob(probability))
+	if(SSrng.probability(probability))
 		return zone
 
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
+	var/t = SSrng.random(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
 		if(1)
 			return "head"
@@ -76,7 +76,7 @@
 	var/p = null
 	p = 1
 	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
+		if ((copytext(te, p, p + 1) == " " || SSrng.probability(pr)))
 			t = text("[][]", t, copytext(te, p, p + 1))
 		else
 			t = text("[]*", t)
@@ -91,7 +91,7 @@
 	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
+		if(SSrng.random(1,3)==3)
 			if(lowertext(newletter)=="o")
 				newletter="u"
 			if(lowertext(newletter)=="s")
@@ -102,12 +102,12 @@
 				newletter="oo"
 			if(lowertext(newletter)=="c")
 				newletter="k"
-		if(rand(1,20)==20)
+		if(SSrng.random(1,20)==20)
 			if(newletter==" ")
 				newletter="...huuuhhh..."
 			if(newletter==".")
 				newletter=" *BURP*."
-		switch(rand(1,20))
+		switch(SSrng.random(1,20))
 			if(1)
 				newletter+="'"
 			if(10)
@@ -126,7 +126,7 @@
 	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,2)==2)
+		if(SSrng.random(1,2)==2)
 			if(lowertext(newletter)=="o")
 				newletter="u"
 			if(lowertext(newletter)=="t")
@@ -139,13 +139,13 @@
 				newletter=" NAR "
 			if(lowertext(newletter)=="s")
 				newletter=" SIE "
-		if(rand(1,4)==4)
+		if(SSrng.random(1,4)==4)
 			if(newletter==" ")
 				newletter=" no hope... "
 			if(newletter=="H")
 				newletter=" IT COMES... "
 
-		switch(rand(1,15))
+		switch(SSrng.random(1,15))
 			if(1)
 				newletter="'"
 			if(2)
@@ -168,14 +168,14 @@
 	p = 1//1 is the start of any word
 	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
 		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
-			if (prob(10))
+		if (SSrng.probability(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
+			if (SSrng.probability(10))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
 			else
-				if (prob(20))
+				if (SSrng.probability(20))
 					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
 				else
-					if (prob(5))
+					if (SSrng.probability(5))
 						n_letter = null
 					else
 						n_letter = text("[n_letter]-[n_letter]")
@@ -193,10 +193,10 @@
 	message = replacetext(message, "space", "spess")
 	message = replacetext(message, "carp", "crap")
 	message = replacetext(message, "reason", "raisin")
-	if(prob(50))
+	if(SSrng.probability(50))
 		message = uppertext(message)
-		message += "[stutter(pick("!", "!!", "!!!"))]"
-	if(!stuttering && prob(15))
+		message += "[stutter(SSrng.pick_from_list("!", "!!", "!!!"))]"
+	if(!stuttering && SSrng.probability(15))
 		message = stutter(message)
 	return message
 
@@ -207,12 +207,12 @@
 	for(var/i = 1, i <= length(t), i++)
 
 		var/letter = copytext(t, i, i+1)
-		if(prob(50))
+		if(SSrng.probability(50))
 			if(p >= 70)
 				letter = ""
 
-			for(var/j = 1, j <= rand(0, 2), j++)
-				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+			for(var/j = 1, j <= SSrng.random(0, 2), j++)
+				letter += SSrng.pick_from_list("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
 		returntext += letter
 
@@ -231,13 +231,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	var/p = 1
 	while(p <= n)
 		var/n_letter
-		var/n_mod = rand(1,4)
+		var/n_mod = SSrng.random(1,4)
 		if(p+n_mod>n+1)
 			n_letter = copytext(te, p, n+1)
 		else
 			n_letter = copytext(te, p, p+n_mod)
-		if (prob(50))
-			if (prob(30))
+		if (SSrng.probability(50))
+			if (SSrng.probability(30))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
 			else
 				n_letter = text("[n_letter]-[n_letter]")
@@ -259,9 +259,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	for(var/i in 0 to duration-1)
 		if (i == 0)
-			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+			animate(C, pixel_x=SSrng.random(min,max), pixel_y=SSrng.random(min,max), time=1)
 		else
-			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+			animate(pixel_x=SSrng.random(min,max), pixel_y=SSrng.random(min,max), time=1)
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
 
@@ -449,7 +449,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)
-		theghost = pick(candidates)
+		theghost = SSrng.pick_from_list(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
@@ -472,7 +472,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(L!=src)
 			nearby_mobs |= L
 	if(nearby_mobs.len)
-		var/mob/living/T = pick(nearby_mobs)
+		var/mob/living/T = SSrng.pick_from_list(nearby_mobs)
 		ClickOn(T)
 
 /mob/proc/log_message(message, message_type)

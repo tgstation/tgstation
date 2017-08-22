@@ -137,7 +137,7 @@
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
 			var/chemname = temp.name
-			if(is_hallucinating && prob(5))
+			if(is_hallucinating && SSrng.probability(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
 			chemicals.Add(list(list("title" = chemname, "id" = temp.id)))
 	data["chemicals"] = chemicals
@@ -193,7 +193,7 @@
 		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
 
 		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
-		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
+		beaker_overlay.pixel_x = SSrng.random(-10, 5)//randomize beaker overlay position.
 		add_overlay(beaker_overlay)
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
@@ -206,12 +206,12 @@
 
 /obj/machinery/chem_dispenser/emp_act(severity)
 	var/list/datum/reagents/R = list()
-	var/total = min(rand(7,15), Floor(cell.charge*powerefficiency))
+	var/total = min(SSrng.random(7,15), Floor(cell.charge*powerefficiency))
 	var/datum/reagents/Q = new(total*10)
 	if(beaker && beaker.reagents)
 		R += beaker.reagents
 	for(var/i in 1 to total)
-		Q.add_reagent(pick(dispensable_reagents), 10)
+		Q.add_reagent(SSrng.pick_from_list(dispensable_reagents), 10)
 	R += Q
 	chem_splash(get_turf(src), 3, R)
 	if(beaker && beaker.reagents)

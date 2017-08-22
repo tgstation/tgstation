@@ -16,30 +16,30 @@
 	var/item_multiplier = isitem(src)?1.2:1
 	if(M.wear_suit)
 		fibertext = "Material from \a [M.wear_suit]."
-		if(prob(10*item_multiplier) && !(fibertext in suit_fibers))
+		if(SSrng.probability(10*item_multiplier) && !(fibertext in suit_fibers))
 			suit_fibers += fibertext
 		if(!(M.wear_suit.body_parts_covered & CHEST))
 			if(M.w_uniform)
 				fibertext = "Fibers from \a [M.w_uniform]."
-				if(prob(12*item_multiplier) && !(fibertext in suit_fibers)) //Wearing a suit means less of the uniform exposed.
+				if(SSrng.probability(12*item_multiplier) && !(fibertext in suit_fibers)) //Wearing a suit means less of the uniform exposed.
 					suit_fibers += fibertext
 		if(!(M.wear_suit.body_parts_covered & HANDS))
 			if(M.gloves)
 				fibertext = "Material from a pair of [M.gloves.name]."
-				if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
+				if(SSrng.probability(20*item_multiplier) && !(fibertext in suit_fibers))
 					suit_fibers += fibertext
 	else if(M.w_uniform)
 		fibertext = "Fibers from \a [M.w_uniform]."
-		if(prob(15*item_multiplier) && !(fibertext in suit_fibers))
+		if(SSrng.probability(15*item_multiplier) && !(fibertext in suit_fibers))
 			// "Added fibertext: [fibertext]"
 			suit_fibers += fibertext
 		if(M.gloves)
 			fibertext = "Material from a pair of [M.gloves.name]."
-			if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
+			if(SSrng.probability(20*item_multiplier) && !(fibertext in suit_fibers))
 				suit_fibers += "Material from a pair of [M.gloves.name]."
 	else if(M.gloves)
 		fibertext = "Material from a pair of [M.gloves.name]."
-		if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
+		if(SSrng.probability(20*item_multiplier) && !(fibertext in suit_fibers))
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 
 

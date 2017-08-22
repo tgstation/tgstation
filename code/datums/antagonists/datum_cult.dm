@@ -21,7 +21,7 @@
 				target_candidates += player.mind
 	listclearnulls(target_candidates)
 	if(LAZYLEN(target_candidates))
-		GLOB.sac_mind = pick(target_candidates)
+		GLOB.sac_mind = SSrng.pick_from_list(target_candidates)
 		if(!GLOB.sac_mind)
 			message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 		else
@@ -39,7 +39,7 @@
 	SSticker.mode.cult_objectives += "sacrifice"
 	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
-			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
+			var/area/summon = SSrng.pick_from_list(GLOB.sortedAreas - GLOB.summon_spots)
 			if(summon && (summon.z == ZLEVEL_STATION) && summon.valid_territory)
 				GLOB.summon_spots += summon
 	SSticker.mode.cult_objectives += "eldergod"

@@ -399,11 +399,11 @@
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
-					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
+					var/newname = "[forename]-[SSrng.pick_from_list(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
 					H.update_mutant_bodyparts()
 					if(animetype == "Yes")
-						var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
+						var/seifuku = SSrng.pick_from_list(typesof(/obj/item/clothing/under/schoolgirl))
 						var/obj/item/clothing/under/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)

@@ -69,7 +69,7 @@
 	var/total_transfered = 0
 	var/current_list_element = 1
 
-	current_list_element = rand(1, cached_reagents.len)
+	current_list_element = SSrng.random(1, cached_reagents.len)
 
 	while(total_transfered != amount)
 		if(total_transfered >= amount)
@@ -768,5 +768,5 @@
 			var/datum/reagent/R = thing
 			if(initial(R.can_synth))
 				random_reagents += initial(R.id)
-	var/picked_reagent = pick(random_reagents)
+	var/picked_reagent = SSrng.pick_from_list(random_reagents)
 	return picked_reagent

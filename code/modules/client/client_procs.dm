@@ -359,7 +359,7 @@ GLOBAL_LIST(external_rsc_urls)
 		GLOB.admins -= src
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
-				var/cheesy_message = pick(
+				var/cheesy_message = SSrng.pick_from_list(
 					"I have no admins online!",\
 					"I'm all alone :(",\
 					"I'm feeling lonely :(",\
@@ -551,7 +551,7 @@ GLOBAL_LIST(external_rsc_urls)
 			return TRUE
 
 /client/proc/cid_check_reconnect()
-	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
+	var/token = md5("[SSrng.random(0,9999)][world.time][SSrng.random(0,9999)][ckey][SSrng.random(0,9999)][address][SSrng.random(0,9999)][computer_id][SSrng.random(0,9999)]")
 	. = token
 	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
 	var/url = winget(src, null, "url")

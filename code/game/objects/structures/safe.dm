@@ -25,11 +25,11 @@ FLOOR SAFES
 
 /obj/structure/safe/New()
 	..()
-	tumbler_1_pos = rand(0, 71)
-	tumbler_1_open = rand(0, 71)
+	tumbler_1_pos = SSrng.random(0, 71)
+	tumbler_1_open = SSrng.random(0, 71)
 
-	tumbler_2_pos = rand(0, 71)
-	tumbler_2_open = rand(0, 71)
+	tumbler_2_pos = SSrng.random(0, 71)
+	tumbler_2_open = SSrng.random(0, 71)
 
 
 /obj/structure/safe/Initialize(mapload)
@@ -49,11 +49,11 @@ FLOOR SAFES
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
-			to_chat(user, "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
+			to_chat(user, "<span class='italics'>You hear a [SSrng.pick_from_list("tonk", "krunk", "plunk")] from [src].</span>")
 		if(tumbler_2_pos == tumbler_2_open)
-			to_chat(user, "<span class='italics'>You hear a [pick("tink", "krink", "plink")] from [src].</span>")
+			to_chat(user, "<span class='italics'>You hear a [SSrng.pick_from_list("tink", "krink", "plink")] from [src].</span>")
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
-		if(user) visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
+		if(user) visible_message("<i><b>[SSrng.pick_from_list("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
 		return 1
 	return 0
 
@@ -117,11 +117,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos + 1 || dial == tumbler_1_pos - 71)
 			tumbler_1_pos = decrement(tumbler_1_pos)
 			if(canhear)
-				to_chat(user, "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
+				to_chat(user, "<span class='italics'>You hear a [SSrng.pick_from_list("clack", "scrape", "clank")] from [src].</span>")
 			if(tumbler_1_pos == tumbler_2_pos + 37 || tumbler_1_pos == tumbler_2_pos - 35)
 				tumbler_2_pos = decrement(tumbler_2_pos)
 				if(canhear)
-					to_chat(user, "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
+					to_chat(user, "<span class='italics'>You hear a [SSrng.pick_from_list("click", "chink", "clink")] from [src].</span>")
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return
@@ -131,11 +131,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos - 1 || dial == tumbler_1_pos + 71)
 			tumbler_1_pos = increment(tumbler_1_pos)
 			if(canhear)
-				to_chat(user, "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
+				to_chat(user, "<span class='italics'>You hear a [SSrng.pick_from_list("clack", "scrape", "clank")] from [src].</span>")
 			if(tumbler_1_pos == tumbler_2_pos - 37 || tumbler_1_pos == tumbler_2_pos + 35)
 				tumbler_2_pos = increment(tumbler_2_pos)
 				if(canhear)
-					to_chat(user, "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
+					to_chat(user, "<span class='italics'>You hear a [SSrng.pick_from_list("click", "chink", "clink")] from [src].</span>")
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return

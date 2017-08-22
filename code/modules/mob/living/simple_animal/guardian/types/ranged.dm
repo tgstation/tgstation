@@ -88,7 +88,7 @@
 		var/turf/snare_loc = get_turf(src.loc)
 		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
 		S.spawner = src
-		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
+		S.name = "[get_area(snare_loc)] snare ([SSrng.random(1, 1000)])"
 		src.snares |= S
 		to_chat(src, "<span class='danger'><B>Surveillance snare deployed!</span></B>")
 	else

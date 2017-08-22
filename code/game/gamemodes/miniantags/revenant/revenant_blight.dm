@@ -26,11 +26,11 @@
 
 /datum/disease/revblight/stage_act()
 	if(!finalstage)
-		if(affected_mob.lying && prob(stage*6))
+		if(affected_mob.lying && SSrng.probability(stage*6))
 			cure()
 			return
-		if(prob(stage*3))
-			to_chat(affected_mob, "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>")
+		if(SSrng.probability(stage*3))
+			to_chat(affected_mob, "<span class='revennotice'>You suddenly feel [SSrng.pick_from_list("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>")
 			affected_mob.confused += 8
 			affected_mob.adjustStaminaLoss(8)
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
@@ -38,23 +38,23 @@
 			stagedamage++
 			affected_mob.adjustToxLoss(stage*2) //should, normally, do about 30 toxin damage.
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
-		if(prob(45))
+		if(SSrng.probability(45))
 			affected_mob.adjustStaminaLoss(stage)
 	..() //So we don't increase a stage before applying the stage damage.
 	switch(stage)
 		if(2)
-			if(prob(5))
+			if(SSrng.probability(5))
 				affected_mob.emote("pale")
 		if(3)
-			if(prob(10))
-				affected_mob.emote(pick("pale","shiver"))
+			if(SSrng.probability(10))
+				affected_mob.emote(SSrng.pick_from_list("pale","shiver"))
 		if(4)
-			if(prob(15))
-				affected_mob.emote(pick("pale","shiver","cries"))
+			if(SSrng.probability(15))
+				affected_mob.emote(SSrng.pick_from_list("pale","shiver","cries"))
 		if(5)
 			if(!finalstage)
 				finalstage = TRUE
-				to_chat(affected_mob, "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>")
+				to_chat(affected_mob, "<span class='revenbignotice'>You feel like [SSrng.pick_from_list("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>")
 				affected_mob.adjustStaminaLoss(45)
 				new /obj/effect/temp_visual/revenant(affected_mob.loc)
 				if(affected_mob.dna && affected_mob.dna.species)

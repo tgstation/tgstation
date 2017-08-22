@@ -24,7 +24,7 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 	if(. > UI_CLOSE)
 		. = min(., shared_living_ui_distance(src_object)) // Check the distance...
 		// Derp a bit if we have brain loss.
-		if(prob(getBrainLoss()))
+		if(SSrng.probability(getBrainLoss()))
 			return UI_UPDATE
 
 /mob/living/silicon/robot/default_can_use_topic(src_object)

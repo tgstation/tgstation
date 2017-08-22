@@ -79,62 +79,62 @@
 		hands_ch = 0
 		feet_ch = 100
 
-	if(prob(15/D.permeability_mod))
+	if(SSrng.probability(15/D.permeability_mod))
 		return
 
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+	if(satiety>0 && SSrng.probability(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 
-	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)
+	var/target_zone = pickweight(list("head" = head_ch, "body" = body_ch, "hands" = hands_ch, "feet" = feet_ch))
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
-			if(1)
+			if("head")
 				if(isobj(H.head) && !istype(H.head, /obj/item/paper))
 					Cl = H.head
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_neck))
 					Cl = H.wear_neck
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if(2)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
+			if("body")
 				if(isobj(H.wear_suit))
 					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(slot_w_uniform))
 					Cl = slot_w_uniform
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if(3)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
+			if("hands")
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
 					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
 
 				if(passed && isobj(H.gloves))
 					Cl = H.gloves
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if(4)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
+			if("feet")
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
 					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
 
 				if(passed && isobj(H.shoes))
 					Cl = H.shoes
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
 
 	else if(ismonkey(src))
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
-			if(1)
+			if("head")
 				if(M.wear_mask && isobj(M.wear_mask))
 					Cl = M.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+					passed = SSrng.probability((Cl.permeability_coefficient*100) - 1)
 
 	if(!passed && (D.spread_flags & AIRBORNE) && !internal)
-		passed = (prob((50*D.permeability_mod) - 1))
+		passed = (SSrng.probability((50*D.permeability_mod) - 1))
 
 	if(passed)
 		AddDisease(D)

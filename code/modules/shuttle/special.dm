@@ -16,7 +16,7 @@
 
 /obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
-	if(prob(50))
+	if(SSrng.probability(50))
 		desc = "Oh no, not again."
 	update_icon()
 
@@ -116,7 +116,7 @@
 
 	if(sleepers.len)
 		our_statue.active_tables |= src
-		if(never_spoken || prob(5))
+		if(never_spoken || SSrng.probability(5))
 			say(desc)
 			never_spoken = FALSE
 	else

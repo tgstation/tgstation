@@ -190,7 +190,7 @@
 /obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return
 	if(force > 0)
-		force -= rand(1, (force / 3) + 1)
+		force -= SSrng.random(1, (force / 3) + 1)
 	else
 		to_chat(usr, "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>")
 		qdel(src)
@@ -199,4 +199,4 @@
 	..()
 	if(!user.gloves)
 		to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
-		user.adjustFireLoss(rand(1, 5))
+		user.adjustFireLoss(SSrng.random(1, 5))

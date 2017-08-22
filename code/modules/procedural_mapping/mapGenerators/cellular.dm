@@ -33,7 +33,7 @@
 	for(var/i = 1,i<=width,i++)
 		old_state[i] = new/list(height)
 		for(var/j = 1,j<=height,j++)
-			old_state[i][j] = rand(0,1)
+			old_state[i][j] = SSrng.random(0,1)
 
 	current_state = old_state.Copy()
 

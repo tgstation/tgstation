@@ -63,7 +63,7 @@
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
 		if(!mob_gender)
-			mob_gender = pick(MALE, FEMALE)
+			mob_gender = SSrng.pick_from_list(MALE, FEMALE)
 		M.gender = mob_gender
 	if(faction)
 		M.faction = list(faction)

@@ -62,7 +62,7 @@
 		pixel_x = -32
 		pixel_y = -32
 		for (var/ball in orbiting_balls)
-			var/range = rand(1, Clamp(orbiting_balls.len, 3, 7))
+			var/range = SSrng.random(1, Clamp(orbiting_balls.len, 3, 7))
 			tesla_zap(ball, range, TESLA_MINI_POWER/7*range, TRUE)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
@@ -77,8 +77,8 @@
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(GLOB.alldirs + first_move) //give the first move direction a bit of favoring.
-		if(target && prob(60))
+		var/move_dir = SSrng.pick_from_list(GLOB.alldirs + first_move) //give the first move direction a bit of favoring.
+		if(target && SSrng.probability(60))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
@@ -100,7 +100,7 @@
 		energy_to_raise = energy_to_raise / 1.25
 		energy_to_lower = (energy_to_raise / 1.25) - 20
 
-		var/Orchiectomy_target = pick(orbiting_balls)
+		var/Orchiectomy_target = SSrng.pick_from_list(orbiting_balls)
 		qdel(Orchiectomy_target)
 
 	else if(orbiting_balls.len)
@@ -111,13 +111,13 @@
 		return
 	var/obj/singularity/energy_ball/EB = new(loc, 0, TRUE)
 
-	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
+	EB.transform *= SSrng.pick_from_list(0.3, 0.4, 0.5, 0.6, 0.7)
 	var/icon/I = icon(icon,icon_state,dir)
 
-	var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
+	var/orbitsize = (I.Width() + I.Height()) * SSrng.pick_from_list(0.4, 0.5, 0.6, 0.7, 0.8)
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 
-	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
+	EB.orbit(src, orbitsize, SSrng.pick_from_list(FALSE, TRUE), SSrng.random(10, 25), SSrng.pick_from_list(3, 4, 5, 6, 36))
 
 
 /obj/singularity/energy_ball/Collide(atom/A)
@@ -255,7 +255,7 @@
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
+		source.Beam(closest_atom, icon_state="lightning[SSrng.random(1,12)]", time=5, maxdistance = INFINITY)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
@@ -268,7 +268,7 @@
 		closest_grounding_rod.tesla_act(power, explosive, stun_mobs)
 
 	else if(closest_mob)
-		var/shock_damage = Clamp(round(power/400), 10, 90) + rand(-5, 5)
+		var/shock_damage = Clamp(round(power/400), 10, 90) + SSrng.random(-5, 5)
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1, stun = stun_mobs)
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob

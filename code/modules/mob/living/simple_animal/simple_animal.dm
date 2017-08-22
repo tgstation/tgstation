@@ -90,7 +90,7 @@
 	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)
-		gender = pick(MALE,FEMALE)
+		gender = SSrng.pick_from_list(MALE,FEMALE)
 	if(!real_name)
 		real_name = name
 	if(!loc)
@@ -134,7 +134,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(GLOB.cardinals)
+					var/anydir = SSrng.pick_from_list(GLOB.cardinals)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
@@ -143,7 +143,7 @@
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	set waitfor = FALSE
 	if(speak_chance)
-		if(prob(speak_chance) || override)
+		if(SSrng.probability(speak_chance) || override)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
 					var/length = speak.len
@@ -151,29 +151,29 @@
 						length += emote_hear.len
 					if(emote_see && emote_see.len)
 						length += emote_see.len
-					var/randomValue = rand(1,length)
+					var/randomValue = SSrng.random(1,length)
 					if(randomValue <= speak.len)
-						say(pick(speak))
+						say(SSrng.pick_from_list(speak))
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("me [pick(emote_see)]", 1)
+							emote("me [SSrng.pick_from_list(emote_see)]", 1)
 						else
-							emote("me [pick(emote_hear)]", 2)
+							emote("me [SSrng.pick_from_list(emote_hear)]", 2)
 				else
-					say(pick(speak))
+					say(SSrng.pick_from_list(speak))
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote("me", 1, pick(emote_see))
+					emote("me", 1, SSrng.pick_from_list(emote_see))
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote("me", 2, pick(emote_hear))
+					emote("me", 2, SSrng.pick_from_list(emote_hear))
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
-					var/pick = rand(1,length)
+					var/pick = SSrng.random(1,length)
 					if(pick <= emote_see.len)
-						emote("me", 1, pick(emote_see))
+						emote("me", 1, SSrng.pick_from_list(emote_see))
 					else
-						emote("me", 2, pick(emote_hear))
+						emote("me", 2, SSrng.pick_from_list(emote_hear))
 
 
 /mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)
@@ -253,7 +253,7 @@
 
 /mob/living/simple_animal/say_mod(input, message_mode)
 	if(speak_emote && speak_emote.len)
-		verb_say = pick(speak_emote)
+		verb_say = SSrng.pick_from_list(speak_emote)
 	. = ..()
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null)

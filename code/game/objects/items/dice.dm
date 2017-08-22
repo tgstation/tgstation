@@ -6,7 +6,7 @@
 
 /obj/item/storage/pill_bottle/dice/New()
 	..()
-	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
+	var/special_die = SSrng.pick_from_list("1","2","fudge","space","00","8bd20","4dd6","100")
 	if(special_die == "1")
 		new /obj/item/dice/d1(src)
 	if(special_die == "2")
@@ -43,7 +43,7 @@
 	var/rigged = FALSE
 
 /obj/item/dice/New()
-	result = rand(1, sides)
+	result = SSrng.random(1, sides)
 	update_icon()
 	..()
 
@@ -75,7 +75,7 @@
 
 /obj/item/dice/d6/space/New()
 	..()
-	if(prob(10))
+	if(SSrng.probability(10))
 		name = "spess cube"
 
 /obj/item/dice/fudge
@@ -153,11 +153,11 @@
 	diceroll(thrower)
 
 /obj/item/dice/proc/diceroll(mob/user)
-	result = rand(1, sides)
+	result = SSrng.random(1, sides)
 	if(rigged && result != rigged)
-		if(prob(Clamp(1/(sides - 1) * 100, 25, 80)))
+		if(SSrng.probability(Clamp(1/(sides - 1) * 100, 25, 80)))
 			result = rigged
-	var/fake_result = rand(1, sides)//Daredevil isn't as good as he used to be
+	var/fake_result = SSrng.random(1, sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
 	if(sides == 20 && result == 20)
 		comment = "Nat 20!"
@@ -180,7 +180,7 @@
 		if(PIERCEIMMUNE in H.dna.species.species_traits)
 			return 0
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
-		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
+		H.apply_damage(4,BRUTE,(SSrng.pick_from_list("l_leg", "r_leg")))
 		H.Knockdown(60)
 
 /obj/item/dice/update_icon()

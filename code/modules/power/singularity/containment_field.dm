@@ -98,14 +98,14 @@
 	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
-	var/shock_damage = min(rand(30,40),rand(30,40))
+	var/shock_damage = min(SSrng.random(30,40),SSrng.random(30,40))
 
 	if(iscarbon(user))
 		user.Knockdown(300)
 		user.electrocute_act(shock_damage, src, 1)
 
 	else if(issilicon(user))
-		if(prob(20))
+		if(SSrng.probability(20))
 			user.Stun(40)
 		user.take_overall_damage(0, shock_damage)
 		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \

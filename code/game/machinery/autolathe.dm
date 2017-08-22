@@ -381,7 +381,7 @@
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return 0
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)

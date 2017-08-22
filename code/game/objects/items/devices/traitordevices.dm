@@ -42,9 +42,9 @@ effective or pretty fucking useless.
 	add_logs(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
-		if(prob(50))
+		if(SSrng.probability(50))
 
-			M.Knockdown(rand(200,400))
+			M.Knockdown(SSrng.random(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else

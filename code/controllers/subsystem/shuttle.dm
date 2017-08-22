@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 
-	ordernum = rand(1, 9000)
+	ordernum = SSrng.random(1, 9000)
 
 	for(var/pack in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new pack()
@@ -226,7 +226,7 @@ SUBSYSTEM_DEF(shuttle)
 	emergency.cancel()
 
 	if(!admiral_message)
-		admiral_message = pick(GLOB.admiral_messages)
+		admiral_message = SSrng.pick_from_list(GLOB.admiral_messages)
 	var/intercepttext = "<font size = 3><b>Nanotrasen Update</b>: Request For Shuttle.</font><hr>\
 						To whom it may concern:<br><br>\
 						We have taken note of the situation upon [station_name()] and have come to the \

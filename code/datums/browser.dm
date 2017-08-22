@@ -142,7 +142,7 @@
 
 	output += {"</div>"}
 
-	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 150, src)
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[SSrng.random(1,10000)]"), Title, 350, 150, src)
 	set_content(output)
 	stealfocus = StealFocus
 	if (!StealFocus)

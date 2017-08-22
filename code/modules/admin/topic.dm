@@ -1303,7 +1303,7 @@
 		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
 			return
 
-		M.loc = pick(GLOB.prisonwarp)
+		M.loc = SSrng.pick_from_list(GLOB.prisonwarp)
 		to_chat(M, "<span class='adminnotice'>You have been sent to Prison!</span>")
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
@@ -1354,7 +1354,7 @@
 
 		L.Unconscious(100)
 		sleep(5)
-		L.forceMove(pick(GLOB.tdome1))
+		L.forceMove(SSrng.pick_from_list(GLOB.tdome1))
 		spawn(50)
 			to_chat(L, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 1)")
@@ -1381,7 +1381,7 @@
 
 		L.Unconscious(100)
 		sleep(5)
-		L.forceMove(pick(GLOB.tdome2))
+		L.forceMove(SSrng.pick_from_list(GLOB.tdome2))
 		spawn(50)
 			to_chat(L, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 2)")
@@ -1405,7 +1405,7 @@
 
 		L.Unconscious(100)
 		sleep(5)
-		L.forceMove(pick(GLOB.tdomeadmin))
+		L.forceMove(SSrng.pick_from_list(GLOB.tdomeadmin))
 		spawn(50)
 			to_chat(L, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Admin.)")
@@ -1436,7 +1436,7 @@
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), slot_shoes)
 		L.Unconscious(100)
 		sleep(5)
-		L.forceMove(pick(GLOB.tdomeobserve))
+		L.forceMove(SSrng.pick_from_list(GLOB.tdomeobserve))
 		spawn(50)
 			to_chat(L, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Observer.)")

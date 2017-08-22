@@ -208,11 +208,11 @@
 		switch(fitting)
 			if("tube")
 				brightness = 8
-				if(prob(2))
+				if(SSrng.probability(2))
 					break_light_tube(1)
 			if("bulb")
 				brightness = 4
-				if(prob(5))
+				if(SSrng.probability(5))
 					break_light_tube(1)
 		spawn(1)
 			update(0)
@@ -250,7 +250,7 @@
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
-			else if( prob( min(60, switchcount*switchcount*0.01) ) )
+			else if( SSrng.probability( min(60, switchcount*switchcount*0.01) ) )
 				if(trigger)
 					burn_out()
 			else
@@ -349,8 +349,8 @@
 			to_chat(user, "<span class='userdanger'>You stick \the [W] into the light socket!</span>")
 			if(has_power() && (W.flags_1 & CONDUCT_1))
 				do_sparks(3, TRUE, src)
-				if (prob(75))
-					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
+				if (SSrng.probability(75))
+					electrocute_mob(user, get_area(src), src, SSrng.random(0.7,1.0), TRUE)
 	else
 		return ..()
 
@@ -384,13 +384,13 @@
 	..()
 	if(status == LIGHT_BROKEN || status == LIGHT_EMPTY)
 		if(on && (I.flags_1 & CONDUCT_1))
-			if(prob(12))
+			if(SSrng.probability(12))
 				electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 
 /obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
 	if(. && !QDELETED(src))
-		if(prob(damage_amount * 5))
+		if(SSrng.probability(damage_amount * 5))
 			break_light_tube()
 
 
@@ -416,7 +416,7 @@
 	var/area/A = get_area(src)
 	return A.lightswitch && A.power_light
 
-/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(var/amount = SSrng.random(10, 20))
 	set waitfor = 0
 	if(flickering) return
 	flickering = 1
@@ -425,7 +425,7 @@
 			if(status != LIGHT_OK) break
 			on = !on
 			update(0)
-			sleep(rand(5, 15))
+			sleep(SSrng.random(5, 15))
 		on = (status == LIGHT_OK)
 		update(0)
 	flickering = 0
@@ -544,7 +544,7 @@
 // called when on fire
 
 /obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
+	if(SSrng.probability(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		break_light_tube()
 
 // explode the light

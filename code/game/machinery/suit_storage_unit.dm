@@ -205,9 +205,9 @@
 		if(occupant)
 			var/mob/living/mob_occupant = occupant
 			if(uv_super)
-				mob_occupant.adjustFireLoss(rand(20, 36))
+				mob_occupant.adjustFireLoss(SSrng.random(20, 36))
 			else
-				mob_occupant.adjustFireLoss(rand(10, 16))
+				mob_occupant.adjustFireLoss(SSrng.random(10, 16))
 			mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
@@ -241,7 +241,7 @@
 			dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()

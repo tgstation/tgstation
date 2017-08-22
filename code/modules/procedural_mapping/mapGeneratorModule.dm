@@ -41,7 +41,7 @@
 
 			//You're the same as me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
-				clustering = rand(clusterMin,clusterMax)
+				clustering = SSrng.random(clusterMin,clusterMax)
 				for(var/turf/F in RANGE_TURFS(clustering,T))
 					if(istype(F,turfPath))
 						skipLoopIteration = TRUE
@@ -52,7 +52,7 @@
 
 			//You're DIFFERENT to me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
-				clustering = rand(clusterMin,clusterMax)
+				clustering = SSrng.random(clusterMin,clusterMax)
 				for(var/turf/F in RANGE_TURFS(clustering,T))
 					if(!(istype(F,turfPath)))
 						skipLoopIteration = TRUE
@@ -62,7 +62,7 @@
 					continue
 
 		//Success!
-		if(prob(spawnableTurfs[turfPath]))
+		if(SSrng.probability(spawnableTurfs[turfPath]))
 			T.ChangeTurf(turfPath)
 
 
@@ -76,7 +76,7 @@
 
 				//You're the same as me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
-					clustering = rand(clusterMin, clusterMax)
+					clustering = SSrng.random(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
 						if(istype(M,atomPath))
 							skipLoopIteration = TRUE
@@ -87,7 +87,7 @@
 
 				//You're DIFFERENT from me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
-					clustering = rand(clusterMin, clusterMax)
+					clustering = SSrng.random(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
 						if(!(istype(M,atomPath)))
 							skipLoopIteration = TRUE
@@ -97,7 +97,7 @@
 						continue
 
 			//Success!
-			if(prob(spawnableAtoms[atomPath]))
+			if(SSrng.probability(spawnableAtoms[atomPath]))
 				new atomPath(T)
 
 	. = 1

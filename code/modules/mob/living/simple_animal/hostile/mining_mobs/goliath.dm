@@ -125,7 +125,7 @@
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 		M.Stun(100)
-		M.adjustBruteLoss(rand(10,15))
+		M.adjustBruteLoss(SSrng.random(10,15))
 		latched = TRUE
 	if(!latched)
 		qdel(src)

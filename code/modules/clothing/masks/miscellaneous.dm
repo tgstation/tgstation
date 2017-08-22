@@ -61,7 +61,7 @@
 
 /obj/item/clothing/mask/pig/speechModification(message)
 	if(voicechange)
-		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
+		message = SSrng.pick_from_list("Oink!","Squeeeeeeee!","Oink Oink!")
 	return message
 
 /obj/item/clothing/mask/spig //needs to be different otherwise you could turn the speedmodification off and on
@@ -75,7 +75,7 @@
 
 /obj/item/clothing/mask/spig/speechModification(message)
 	if(voicechange)
-		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
+		message = SSrng.pick_from_list("Oink!","Squeeeeeeee!","Oink Oink!")
 	return message
 
 /obj/item/clothing/mask/cowmask
@@ -90,7 +90,7 @@
 
 /obj/item/clothing/mask/cowmask/speechModification(message)
 	if(voicechange)
-		message = pick("Moooooooo!","Moo!","Moooo!")
+		message = SSrng.pick_from_list("Moooooooo!","Moo!","Moooo!")
 	return message
 
 /obj/item/clothing/mask/horsehead
@@ -104,7 +104,7 @@
 
 /obj/item/clothing/mask/horsehead/speechModification(message)
 	if(voicechange)
-		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+		message = SSrng.pick_from_list("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	return message
 
 /obj/item/clothing/mask/rat

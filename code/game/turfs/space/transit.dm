@@ -44,23 +44,23 @@
 		if(config_list[a] == CROSSLINKED) // Only pick z-levels connected to station space
 			possible_transtitons += k
 		k++
-	var/_z = pick(possible_transtitons)
+	var/_z = SSrng.pick_from_list(possible_transtitons)
 
 	//now select coordinates for a border turf
 	var/_x
 	var/_y
 	switch(dir)
 		if(SOUTH)
-			_x = rand(min,max)
+			_x = SSrng.random(min,max)
 			_y = max
 		if(WEST)
 			_x = max
-			_y = rand(min,max)
+			_y = SSrng.random(min,max)
 		if(EAST)
 			_x = min
-			_y = rand(min,max)
+			_y = SSrng.random(min,max)
 		else
-			_x = rand(min,max)
+			_x = SSrng.random(min,max)
 			_y = min
 
 	var/turf/T = locate(_x, _y, _z)

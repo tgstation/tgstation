@@ -129,7 +129,7 @@
 	operating = TRUE
 	update_icon()
 
-	var/offset = prob(50) ? -2 : 2
+	var/offset = SSrng.probability(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	var/mob/living/mob_occupant = occupant
 	var/sourcename = mob_occupant.real_name
@@ -184,13 +184,13 @@
 		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 		var/obj/item/skin = allskin
 		skin.loc = src.loc
-		skin.throw_at(pick(nearby_turfs),meat_produced,3)
+		skin.throw_at(SSrng.pick_from_list(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
 			meatslab.loc = src.loc
-			meatslab.throw_at(pick(nearby_turfs),i,3)
+			meatslab.throw_at(SSrng.pick_from_list(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced)
-				var/turf/gibturf = pick(nearby_turfs)
+				var/turf/gibturf = SSrng.pick_from_list(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))
 					new gibtype(gibturf,i)
 

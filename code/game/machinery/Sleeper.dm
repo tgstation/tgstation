@@ -156,7 +156,7 @@
 				return
 			if(inject_chem(chem))
 				. = TRUE
-				if(scrambled_chems && prob(5))
+				if(scrambled_chems && SSrng.probability(5))
 					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)

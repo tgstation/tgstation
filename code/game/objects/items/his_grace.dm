@@ -103,7 +103,7 @@
 		targets += L
 	if(!LAZYLEN(targets))
 		return
-	var/mob/living/L = pick(targets)
+	var/mob/living/L = SSrng.pick_from_list(targets)
 	step_to(src, L)
 	if(Adjacent(L))
 		if(!L.stat)

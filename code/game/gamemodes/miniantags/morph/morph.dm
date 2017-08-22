@@ -150,8 +150,8 @@
 /mob/living/simple_animal/hostile/morph/proc/barf_contents()
 	for(var/atom/movable/AM in src)
 		AM.loc = loc
-		if(prob(90))
-			step(AM, pick(GLOB.alldirs))
+		if(SSrng.probability(90))
+			step(AM, SSrng.pick_from_list(GLOB.alldirs))
 
 /mob/living/simple_animal/hostile/morph/wabbajack_act(mob/living/new_mob)
 	barf_contents()
@@ -171,7 +171,7 @@
 		for(var/atom/movable/A in view(src))
 			if(allowed(A))
 				things += A
-		var/atom/movable/T = pick(things)
+		var/atom/movable/T = SSrng.pick_from_list(things)
 		assume(T)
 
 /mob/living/simple_animal/hostile/morph/can_track(mob/living/user)
@@ -218,7 +218,7 @@
 	player_mind.active = 1
 	if(!GLOB.xeno_spawn)
 		return MAP_ERROR
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
+	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(SSrng.pick_from_list(GLOB.xeno_spawn))
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"

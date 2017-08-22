@@ -218,7 +218,7 @@
 	R.anchored = TRUE
 	sleep(2)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
+		playsound(R, SSrng.pick_from_list('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 		sleep(12)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)

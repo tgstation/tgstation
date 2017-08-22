@@ -61,7 +61,7 @@
 		var/area/A = V
 		if(A.z == target_z)
 			impacted_areas |= A
-	weather_duration = rand(weather_duration_lower, weather_duration_upper)
+	weather_duration = SSrng.random(weather_duration_lower, weather_duration_upper)
 	update_areas()
 	for(var/V in GLOB.player_list)
 		var/mob/M = V

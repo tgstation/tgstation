@@ -45,7 +45,7 @@
 	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage)
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
-	chambered.projectile_type = pick(allowed_projectile_types)
+	chambered.projectile_type = SSrng.pick_from_list(allowed_projectile_types)
 	. = ..(target, user, message, params, zone_override, bonus_spread)
 
 /obj/item/gun/magic/staff/door

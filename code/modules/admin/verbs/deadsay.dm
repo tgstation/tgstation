@@ -21,7 +21,7 @@
 		return
 	var/static/nicknames = world.file2list("config/admin_nicknames.txt")
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? SSrng.pick_from_list(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
 	for (var/mob/M in GLOB.player_list)
 		if(isnewplayer(M))

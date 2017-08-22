@@ -19,7 +19,7 @@
 				check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 			else
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
-		if(. >= 5 || prob(33))
+		if(. >= 5 || SSrng.probability(33))
 			occupant_message("<span class='userdanger'>Taking damage!</span>")
 		log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
 
@@ -44,7 +44,7 @@
 		var/facing_modifier = get_armour_facing(dir2angle(attack_dir) - dir2angle(src))
 		booster_damage_modifier /= facing_modifier
 		booster_deflection_modifier *= facing_modifier
-	if(prob(deflect_chance * booster_deflection_modifier))
+	if(SSrng.probability(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_append_to_last("Armor saved.")
 		return 0
@@ -79,7 +79,7 @@
 		if(user.environment_smash)
 			play_soundeffect = 0
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
+		var/animal_damage = SSrng.random(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
 		animal_damage = min(animal_damage, 20*user.environment_smash)
@@ -114,7 +114,7 @@
 
 /obj/mecha/ex_act(severity, target)
 	log_message("Affected by explosion of severity: [severity].",1)
-	if(prob(deflect_chance))
+	if(SSrng.probability(deflect_chance))
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
 	. = ..()

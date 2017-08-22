@@ -42,7 +42,7 @@
 	if(possible_changelings.len>0)
 		for(var/j = 0, j < num_changelings, j++)
 			if(!possible_changelings.len) break
-			var/datum/mind/changeling = pick(possible_changelings)
+			var/datum/mind/changeling = SSrng.pick_from_list(possible_changelings)
 			antag_candidates -= changeling
 			possible_changelings -= changeling
 			changeling.special_role = "Changeling"
@@ -67,7 +67,7 @@
 	if(SSticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return
-	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
+	if(SSticker.mode.changelings.len <= (changelingcap - 2) || SSrng.probability(100 / (config.changeling_scaling_coeff * 4)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))

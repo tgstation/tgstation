@@ -55,7 +55,7 @@
 		var/numTraitors = min(candidates.len, 3)
 
 		for(var/i = 0, i<numTraitors, i++)
-			H = pick(candidates)
+			H = SSrng.pick_from_list(candidates)
 			H.mind.make_Traitor()
 			candidates.Remove(H)
 
@@ -90,7 +90,7 @@
 		var/numChanglings = min(candidates.len, 3)
 
 		for(var/i = 0, i<numChanglings, i++)
-			H = pick(candidates)
+			H = SSrng.pick_from_list(candidates)
 			H.mind.make_Changling()
 			candidates.Remove(H)
 
@@ -123,7 +123,7 @@
 		var/numRevs = min(candidates.len, 3)
 
 		for(var/i = 0, i<numRevs, i++)
-			H = pick(candidates)
+			H = SSrng.pick_from_list(candidates)
 			H.mind.make_Rev()
 			candidates.Remove(H)
 		return 1
@@ -165,7 +165,7 @@
 		var/numCultists = min(candidates.len, 4)
 
 		for(var/i = 0, i<numCultists, i++)
-			H = pick(candidates)
+			H = SSrng.pick_from_list(candidates)
 			H.mind.make_Cultist()
 			candidates.Remove(H)
 
@@ -198,7 +198,7 @@
 		var/numCultists = min(candidates.len, 4)
 
 		for(var/i = 0, i<numCultists, i++)
-			H = pick(candidates)
+			H = SSrng.pick_from_list(candidates)
 			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
 			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
 			Ratvar, and you will bring him back.</span>")
@@ -301,7 +301,7 @@
 				numagents--
 				continue // This guy's unlucky, not enough spawn points, we skip him.
 			var/spawnloc = spawnpoints[numagents]
-			var/mob/dead/observer/chosen_candidate = pick(candidates)
+			var/mob/dead/observer/chosen_candidate = SSrng.pick_from_list(candidates)
 			candidates -= chosen_candidate
 			if(!chosen_candidate.key)
 				continue
@@ -310,10 +310,10 @@
 			var/mob/living/carbon/human/Commando = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(Commando)
 			if(numagents == 1) //If Squad Leader
-				Commando.real_name = "Officer [pick(GLOB.commando_names)]"
+				Commando.real_name = "Officer [SSrng.pick_from_list(GLOB.commando_names)]"
 				Commando.equipOutfit(/datum/outfit/death_commando/officer)
 			else
-				Commando.real_name = "Trooper [pick(GLOB.commando_names)]"
+				Commando.real_name = "Trooper [SSrng.pick_from_list(GLOB.commando_names)]"
 				Commando.equipOutfit(/datum/outfit/death_commando)
 			Commando.dna.update_dna_identity()
 			Commando.key = chosen_candidate.key
@@ -382,7 +382,7 @@
 
 	if(candidates.len >= 2)
 		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
-			H = pick(candidates)
+			H = SSrng.pick_from_list(candidates)
 			if(GLOB.gang_colors_pool.len)
 				var/datum/gang/newgang = new()
 				SSticker.mode.gangs += newgang
@@ -400,10 +400,10 @@
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered to be a CentCom Official?", "deathsquad")
 
 	if(candidates.len)
-		var/mob/dead/observer/chosen_candidate = pick(candidates)
+		var/mob/dead/observer/chosen_candidate = SSrng.pick_from_list(candidates)
 
 		//Create the official
-		var/mob/living/carbon/human/newmob = new (pick(GLOB.emergencyresponseteamspawn))
+		var/mob/living/carbon/human/newmob = new (SSrng.pick_from_list(GLOB.emergencyresponseteamspawn))
 		chosen_candidate.client.prefs.copy_to(newmob)
 		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.dna.update_dna_identity()
@@ -474,7 +474,7 @@
 				numagents--
 				continue // This guy's unlucky, not enough spawn points, we skip him.
 			var/spawnloc = spawnpoints[numagents]
-			var/mob/dead/observer/chosen_candidate = pick(candidates)
+			var/mob/dead/observer/chosen_candidate = SSrng.pick_from_list(candidates)
 			candidates -= chosen_candidate
 			if(!chosen_candidate.key)
 				continue
@@ -483,7 +483,7 @@
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
 			var/list/lastname = GLOB.last_names
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
-			var/ertname = pick(lastname)
+			var/ertname = SSrng.pick_from_list(lastname)
 			switch(numagents)
 				if(1)
 					ERTOperative.real_name = "Commander [ertname]"

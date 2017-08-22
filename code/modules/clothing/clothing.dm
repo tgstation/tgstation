@@ -559,7 +559,7 @@ BLIND     // can't see anything
 /obj/item/clothing/under/New()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
-		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
+		sensor_mode = SSrng.pick_from_list(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 	adjusted = NORMAL_STYLE
 	..()
 

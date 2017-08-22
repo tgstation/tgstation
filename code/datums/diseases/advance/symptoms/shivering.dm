@@ -43,9 +43,9 @@ Bonus
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	if(!unsafe || A.stage < 4)
-		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You shiver.")]</span>")
+		to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel cold.", "You shiver.")]</span>")
 	else
-		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
+		to_chat(M, "<span class='userdanger'>[SSrng.pick_from_list("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
 	if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT || unsafe)
 		Chill(M, A)
 

@@ -524,7 +524,7 @@
 		"<span class='notice'>You hear a string being pulled.</span>")
 
 /obj/item/toy/talking/proc/generate_messages()
-	return list(pick(messages))
+	return list(SSrng.pick_from_list(messages))
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
 	user.loc.visible_message("<span class='[span]'>[icon2html(src, viewers(user.loc))] [message]</span>")
@@ -1084,7 +1084,7 @@
 		sleep(5)
 		audible_message("<span class='danger'>[icon2html(src, viewers(src))] Hiss!</span>")
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
-		var/chosen_sound = pick(possible_sounds)
+		var/chosen_sound = SSrng.pick_from_list(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
 		spawn(45)
 			if(src)

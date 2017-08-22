@@ -117,9 +117,9 @@
 			nerf(emagged)
 
 /obj/machinery/computer/holodeck/process()
-	if(damaged && prob(10))
+	if(damaged && SSrng.probability(10))
 		for(var/turf/T in linked)
-			if(prob(5))
+			if(SSrng.probability(5))
 				do_sparks(2, 1, T)
 				return
 
@@ -133,7 +133,7 @@
 			M.show_message("The holodeck overloads!")
 
 		for(var/turf/T in linked)
-			if(prob(30))
+			if(SSrng.probability(30))
 				do_sparks(2, 1, T)
 			T.ex_act(EXPLODE_LIGHT)
 			T.hotspot_expose(1000,500,1)
@@ -271,7 +271,7 @@
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
 	// Emagging a machine creates an anomaly in the derez systems.
 	if(O && emagged && !stat && !forced)
-		if((ismob(O) || ismob(O.loc)) && prob(50))
+		if((ismob(O) || ismob(O.loc)) && SSrng.probability(50))
 			addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
 			return
 

@@ -24,7 +24,7 @@
 			if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
 				possibleEpicentres += newEpicentre
 		if(possibleEpicentres.len)
-			epicentreList += pick(possibleEpicentres)
+			epicentreList += SSrng.pick_from_list(possibleEpicentres)
 		else
 			break
 

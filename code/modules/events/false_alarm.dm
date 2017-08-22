@@ -16,7 +16,7 @@
 	var/gamemode = SSticker.mode.config_tag
 
 	var/events_list = gather_false_events(players_amt, gamemode)
-	var/datum/round_event_control/event_control = pick(events_list)
+	var/datum/round_event_control/event_control = SSrng.pick_from_list(events_list)
 	if(event_control)
 		var/datum/round_event/Event = new event_control.typepath()
 		message_admins("False Alarm: [Event]")

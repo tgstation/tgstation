@@ -15,7 +15,7 @@
 
 /obj/machinery/computer/teleporter/Initialize()
 	. = ..()
-	id = "[rand(1000, 9999)]"
+	id = "[SSrng.random(1000, 9999)]"
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()

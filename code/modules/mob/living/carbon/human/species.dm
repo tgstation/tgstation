@@ -95,14 +95,14 @@
 
 	var/randname
 	if(gender == MALE)
-		randname = pick(GLOB.first_names_male)
+		randname = SSrng.pick_from_list(GLOB.first_names_male)
 	else
-		randname = pick(GLOB.first_names_female)
+		randname = SSrng.pick_from_list(GLOB.first_names_female)
 
 	if(lastname)
 		randname += " [lastname]"
 	else
-		randname += " [pick(GLOB.last_names)]"
+		randname += " [SSrng.pick_from_list(GLOB.last_names)]"
 
 	return randname
 
@@ -885,7 +885,7 @@
 			H.satiety--
 		if(H.satiety < 0)
 			H.satiety++
-			if(prob(round(-H.satiety/40)))
+			if(SSrng.probability(round(-H.satiety/40)))
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
 		H.nutrition = max(0, H.nutrition - hunger_rate)
@@ -938,19 +938,19 @@
 				to_chat(H, "<span class='danger'>You feel weak.</span>")
 			switch(H.radiation)
 				if(50 to 75)
-					if(prob(5))
+					if(SSrng.probability(5))
 						if(!H.IsKnockdown())
 							H.emote("collapse")
 						H.Knockdown(60)
 						to_chat(H, "<span class='danger'>You feel weak.</span>")
 
-					if(prob(15))
+					if(SSrng.probability(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
 							to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...<span>")
 							addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 				if(75 to 100)
-					if(prob(1))
+					if(SSrng.probability(1))
 						to_chat(H, "<span class='danger'>You mutate!</span>")
 						H.randmutb()
 						H.emote("gasp")
@@ -1099,7 +1099,7 @@
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		var/damage = SSrng.random(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
@@ -1143,7 +1143,7 @@
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
-		var/randn = rand(1, 100)
+		var/randn = SSrng.random(1, 100)
 		if(randn <= 25)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
@@ -1237,16 +1237,16 @@
 
 	//dismemberment
 	var/probability = I.get_dismemberment_chance(affecting)
-	if(prob(probability) || ((EASYDISMEMBER in species_traits) && prob(2*probability)))
+	if(SSrng.probability(probability) || ((EASYDISMEMBER in species_traits) && SSrng.probability(2*probability)))
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
+	if(((I.damtype == BRUTE) && I.force && SSrng.probability(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
-			if(prob(I.force * 2))	//blood spatter!
+			if(SSrng.probability(I.force * 2))	//blood spatter!
 				bloody = 1
 				var/turf/location = H.loc
 				if(istype(location))
@@ -1257,13 +1257,13 @@
 		switch(hit_area)
 			if("head")
 				if(H.stat == CONSCIOUS && armor_block < 50)
-					if(prob(I.force))
+					if(SSrng.probability(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
 										"<span class='userdanger'>[H] has been knocked senseless!</span>")
 						H.confused = max(H.confused, 20)
 						H.adjust_blurriness(10)
 
-					if(prob(I.force + ((100 - H.health)/2)) && H != user)
+					if(SSrng.probability(I.force + ((100 - H.health)/2)) && H != user)
 						SSticker.mode.remove_revolutionary(H.mind)
 
 				if(bloody)	//Apply blood
@@ -1273,13 +1273,13 @@
 					if(H.head)
 						H.head.add_mob_blood(H)
 						H.update_inv_head()
-					if(H.glasses && prob(33))
+					if(H.glasses && SSrng.probability(33))
 						H.glasses.add_mob_blood(H)
 						H.update_inv_glasses()
 
 			if("chest")
 				if(H.stat == CONSCIOUS && armor_block < 50)
-					if(prob(I.force))
+					if(SSrng.probability(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
 						H.apply_effect(60, KNOCKDOWN, armor_block)
@@ -1292,7 +1292,7 @@
 						H.w_uniform.add_mob_blood(H)
 						H.update_inv_w_uniform()
 
-		if(Iforce > 10 || Iforce >= 5 && prob(33))
+		if(Iforce > 10 || Iforce >= 5 && SSrng.probability(33))
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
@@ -1401,7 +1401,7 @@
 				else
 					burn_damage = HEAT_DAMAGE_LEVEL_2
 		burn_damage *= heatmod
-		if((prob(burn_damage) * 10) / 4)	//40% for level 3 damage on humans
+		if((SSrng.probability(burn_damage) * 10) / 4)	//40% for level 3 damage on humans
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))

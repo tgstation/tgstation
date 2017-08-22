@@ -82,7 +82,7 @@ obj/item/construction
 
 /obj/item/construction/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-	if(prob(20))
+	if(SSrng.probability(20))
 		spark_system.start()
 
 /obj/item/construction/proc/useResource(amount, mob/user)

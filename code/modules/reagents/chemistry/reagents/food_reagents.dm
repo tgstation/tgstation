@@ -31,7 +31,7 @@
 	var/burn_heal = 0
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
-	if(prob(50))
+	if(SSrng.probability(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
 		. = 1
 	..()
@@ -145,19 +145,19 @@
 			if(holder.has_reagent("cryostylane"))
 				holder.remove_reagent("cryostylane", 5)
 			if(isslime(M))
-				M.bodytemperature += rand(5,20)
+				M.bodytemperature += SSrng.random(5,20)
 		if(15 to 25)
 			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(10,20)
+				M.bodytemperature += SSrng.random(10,20)
 		if(25 to 35)
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(15,20)
+				M.bodytemperature += SSrng.random(15,20)
 		if(35 to INFINITY)
 			M.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(20,25)
+				M.bodytemperature += SSrng.random(20,25)
 	..()
 
 /datum/reagent/consumable/frostoil
@@ -174,29 +174,29 @@
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
-				M.bodytemperature -= rand(5,20)
+				M.bodytemperature -= SSrng.random(5,20)
 		if(15 to 25)
 			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature -= rand(10,20)
+				M.bodytemperature -= SSrng.random(10,20)
 		if(25 to 35)
 			M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(1))
+			if(SSrng.probability(1))
 				M.emote("shiver")
 			if(isslime(M))
-				M.bodytemperature -= rand(15,20)
+				M.bodytemperature -= SSrng.random(15,20)
 		if(35 to INFINITY)
 			M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(5))
+			if(SSrng.probability(5))
 				M.emote("shiver")
 			if(isslime(M))
-				M.bodytemperature -= rand(20,25)
+				M.bodytemperature -= SSrng.random(20,25)
 	..()
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(15,30))
+			M.adjustToxLoss(SSrng.random(15,30))
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(isopenturf(T))
 			var/turf/open/OT = T
@@ -249,7 +249,7 @@
 		if ( eyes_covered && mouth_covered )
 			return
 		else if ( mouth_covered )	// Reduced effects if partially protected
-			if(prob(5))
+			if(SSrng.probability(5))
 				victim.emote("scream")
 			victim.blur_eyes(3)
 			victim.blind_eyes(2)
@@ -263,7 +263,7 @@
 			victim.damageoverlaytemp = 30
 			return
 		else // Oh dear :D
-			if(prob(5))
+			if(SSrng.probability(5))
 				victim.emote("scream")
 			victim.blur_eyes(5)
 			victim.blind_eyes(3)
@@ -274,8 +274,8 @@
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
-	if(prob(5))
-		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+	if(SSrng.probability(5))
+		M.visible_message("<span class='warning'>[M] [SSrng.pick_from_list("dry heaves!","coughs!","splutters!")]</span>")
 	..()
 
 /datum/reagent/consumable/sodiumchloride
@@ -347,20 +347,20 @@
 		if(1 to 5)
 			M.Dizzy(5)
 			M.set_drugginess(30)
-			if(prob(10))
-				M.emote(pick("twitch","giggle"))
+			if(SSrng.probability(10))
+				M.emote(SSrng.pick_from_list("twitch","giggle"))
 		if(5 to 10)
 			M.Jitter(10)
 			M.Dizzy(10)
 			M.set_drugginess(35)
-			if(prob(20))
-				M.emote(pick("twitch","giggle"))
+			if(SSrng.probability(20))
+				M.emote(SSrng.pick_from_list("twitch","giggle"))
 		if (10 to INFINITY)
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.set_drugginess(40)
-			if(prob(30))
-				M.emote(pick("twitch","giggle"))
+			if(SSrng.probability(30))
+				M.emote(SSrng.pick_from_list("twitch","giggle"))
 	..()
 
 /datum/reagent/consumable/sprinkles
@@ -518,7 +518,7 @@
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",3)
-	if(prob(55))
+	if(SSrng.probability(55))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 		M.adjustOxyLoss(-1*REM, 0)
@@ -565,7 +565,7 @@
 	..()
 	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
 		M.blur_eyes(4)
-		if(prob(10))
+		if(SSrng.probability(10))
 			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
 			M.blind_eyes(2)
 
@@ -584,7 +584,7 @@
 	if(current_cycle >= 10)
 		M.Unconscious(40, 0)
 		. = 1
-	if(prob(20))
+	if(SSrng.probability(20))
 		M.losebreath += 4
 		M.adjustBrainLoss(2*REM)
 		M.adjustToxLoss(3*REM,0)
@@ -615,7 +615,7 @@
 	taste_description = "fruity mushroom"
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
-	if(prob(80))
+	if(SSrng.probability(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 		. = TRUE

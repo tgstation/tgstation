@@ -56,13 +56,13 @@
 /datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
 	if(istype(T, /turf/open/floor/plating))
 		var/turf/open/floor/plating/F = T
-		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
+		if(SSrng.probability(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
 	if(isfloorturf(T))
 		var/turf/open/floor/F = T
-		if(prob(reac_volume))
+		if(SSrng.probability(reac_volume))
 			F.make_plating()
-		else if(prob(reac_volume))
+		else if(SSrng.probability(reac_volume))
 			F.burn_tile()
 		if(isfloorturf(F))
 			for(var/turf/turf in range(1,F))
@@ -70,7 +70,7 @@
 					new /obj/effect/hotspot(F)
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
-		if(prob(reac_volume))
+		if(SSrng.probability(reac_volume))
 			W.ChangeTurf(/turf/open/floor/plating)
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -201,7 +201,7 @@
 /datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(15,30))
+			M.adjustToxLoss(SSrng.random(15,30))
 
 /datum/reagent/pyrosium
 	name = "Pyrosium"
@@ -236,8 +236,8 @@
 
 /datum/reagent/teslium/on_mob_life(mob/living/M)
 	shock_timer++
-	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
+	if(shock_timer >= SSrng.random(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+		M.electrocute_act(SSrng.random(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
 	..()

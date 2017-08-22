@@ -48,8 +48,8 @@ Bonus
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
-			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("Your head hurts.", "Your mind blanks for a moment.")]</span>")
+			if(SSrng.probability(base_message_chance) && !suppress_warning)
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("Your head hurts.", "Your mind blanks for a moment.")]</span>")
 		else
 			to_chat(M, "<span class='userdanger'>You can't think straight!</span>")
 			M.confused = min(100 * power, M.confused + 8)

@@ -19,13 +19,13 @@
 	timerid = QDEL_IN(src, 15)
 	var/obj/structure/destructible/clockwork/taunting_trail/Tt = locate(/obj/structure/destructible/clockwork/taunting_trail) in loc
 	if(Tt && Tt != src)
-		if(!step(src, pick(GLOB.alldirs)))
+		if(!step(src, SSrng.pick_from_list(GLOB.alldirs)))
 			qdel(Tt)
 		else
 			for(var/obj/structure/destructible/clockwork/taunting_trail/TT in loc)
 				if(TT != src)
 					qdel(TT)
-	setDir(pick(GLOB.cardinals))
+	setDir(SSrng.pick_from_list(GLOB.cardinals))
 	transform = matrix()*1.3
 	animate(src, alpha = 100, time = 15)
 

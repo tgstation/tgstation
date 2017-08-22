@@ -15,5 +15,5 @@
 
 /datum/language/ratvar/get_spoken_verb(msg_end)
 	if(!msg_end)
-		return pick(random_speech_verbs)
+		return SSrng.pick_from_list(random_speech_verbs)
 	return ..()

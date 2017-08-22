@@ -87,7 +87,7 @@
 					to_chat(M, "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>")
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 					playsound(src, 'sound/machines/terminal_alert.ogg', 25, 0)
-					if(prob(25))
+					if(SSrng.probability(25))
 						for(var/mob/living/silicon/ai/AI in active_ais())
 							SEND_SOUND(AI, sound('sound/machines/terminal_alert.ogg', volume = 10)) //Very quiet for balance reasons
 		if("logout")

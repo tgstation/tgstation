@@ -51,10 +51,10 @@
 	else
 		myseed = new myseed(src)
 	if(mutate_stats) //baby mushrooms have different stats :3
-		myseed.adjust_potency(rand(-3,6))
-		myseed.adjust_yield(rand(-1,2))
-		myseed.adjust_production(rand(-3,6))
-		myseed.adjust_endurance(rand(-3,6))
+		myseed.adjust_potency(SSrng.random(-3,6))
+		myseed.adjust_yield(SSrng.random(-1,2))
+		myseed.adjust_production(SSrng.random(-3,6))
+		myseed.adjust_endurance(SSrng.random(-3,6))
 	delay = delay - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
 	obj_integrity = myseed.endurance
 	max_integrity = myseed.endurance
@@ -73,7 +73,7 @@
 				pixel_x = 32
 			if(WEST)
 				pixel_x = -32
-		icon_state = "[base_icon_state][rand(1,3)]"
+		icon_state = "[base_icon_state][SSrng.random(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "[base_icon_state]f"
 
@@ -83,11 +83,11 @@
 	var/turf/ownturf = get_turf(src)
 	var/shrooms_planted = 0
 	for(var/i in 1 to myseed.yield)
-		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
+		if(SSrng.probability(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 			var/list/possibleLocs = list()
 			var/spreadsIntoAdjacent = FALSE
 
-			if(prob(spreadIntoAdjacentChance))
+			if(SSrng.probability(spreadIntoAdjacentChance))
 				spreadsIntoAdjacent = TRUE
 
 			for(var/turf/open/floor/earth in view(3,src))
@@ -102,7 +102,7 @@
 			if(!possibleLocs.len)
 				break
 
-			var/turf/newLoc = pick(possibleLocs)
+			var/turf/newLoc = SSrng.pick_from_list(possibleLocs)
 
 			var/shroomCount = 0 //hacky
 			var/placeCount = 1
@@ -149,7 +149,7 @@
 			dirList += i
 
 	if(dirList.len)
-		var/newDir = pick(dirList)
+		var/newDir = SSrng.pick_from_list(dirList)
 		if(newDir == 16)
 			floor = 1
 			newDir = 1

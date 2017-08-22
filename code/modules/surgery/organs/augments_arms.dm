@@ -54,7 +54,7 @@
 	return 0
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
-	if(prob(15/severity) && owner)
+	if(SSrng.probability(15/severity) && owner)
 		to_chat(owner, "<span class='warning'>[src] is hit by EMP!</span>")
 		// give the owner an idea about why his implant is glitching
 		Retract()
@@ -136,7 +136,7 @@
 
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
-	if(prob(30/severity) && owner && !crit_fail)
+	if(SSrng.probability(30/severity) && owner && !crit_fail)
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == "r_arm" ? "right" : "left"] arm!</span>")
 		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)

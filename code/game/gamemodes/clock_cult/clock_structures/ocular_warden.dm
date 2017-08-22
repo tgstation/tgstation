@@ -67,7 +67,7 @@
 							R.unreveal_time += 2
 						else
 							R.reveal(10)
-					if(prob(50))
+					if(SSrng.probability(50))
 						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',50,1)
 					else
 						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',50,1)
@@ -84,7 +84,7 @@
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
-			target = pick(validtargets)
+			target = SSrng.pick_from_list(validtargets)
 			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,1)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
@@ -93,11 +93,11 @@
 			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
-		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
-			if(prob(50))
-				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
+		else if(SSrng.probability(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
+			if(SSrng.probability(50))
+				visible_message("<span class='notice'>[src][SSrng.pick_from_list(idle_messages)]</span>")
 			else
-				setDir(pick(GLOB.cardinals))//Random rotation
+				setDir(SSrng.pick_from_list(GLOB.cardinals))//Random rotation
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()

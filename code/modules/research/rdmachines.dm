@@ -27,7 +27,7 @@
 /obj/machinery/r_n_d/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return 0
 	do_sparks(5, TRUE, src)
 	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))

@@ -16,22 +16,22 @@
 		return
 	if(!target.stat)
 		to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul is too strong to harvest.</span>")
-		if(prob(10))
+		if(SSrng.probability(10))
 			to_chat(target, "You feel as if you are being watched.")
 		return
 	draining = TRUE
-	essence_drained += rand(15, 20)
+	essence_drained += SSrng.random(15, 20)
 	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")
-	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
+	if(do_after(src, SSrng.random(10, 20), 0, target)) //did they get deleted in that second?
 		if(target.ckey)
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul burns with intelligence.</span>")
-			essence_drained += rand(20, 30)
+			essence_drained += SSrng.random(20, 30)
 		if(target.stat != DEAD)
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul blazes with life!</span>")
-			essence_drained += rand(40, 50)
+			essence_drained += SSrng.random(40, 50)
 		else
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul is weak and faltering.</span>")
-		if(do_after(src, rand(15, 20), 0, target)) //did they get deleted NOW?
+		if(do_after(src, SSrng.random(15, 20), 0, target)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
 					to_chat(src, "<span class='revennotice'>[target] will not yield much essence. Still, every bit counts.</span>")
@@ -41,7 +41,7 @@
 					to_chat(src, "<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>")
 				if(90 to INFINITY)
 					to_chat(src, "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>")
-			if(do_after(src, rand(15, 25), 0, target)) //how about now
+			if(do_after(src, SSrng.random(15, 25), 0, target)) //how about now
 				if(!target.stat)
 					to_chat(src, "<span class='revenwarning'>[target.p_they(TRUE)] [target.p_are()] now powerful enough to fight off your draining.</span>")
 					to_chat(target, "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>")
@@ -241,17 +241,17 @@
 	if(T.flags_1 & NOJAUNT_1)
 		T.flags_1 &= ~NOJAUNT_1
 		new /obj/effect/temp_visual/revenant(T)
-	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
+	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && SSrng.probability(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
 			new floor.floor_tile(floor)
 		floor.broken = 0
 		floor.burnt = 0
 		floor.make_plating(1)
-	if(T.type == /turf/closed/wall && prob(15))
+	if(T.type == /turf/closed/wall && SSrng.probability(15))
 		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/rust)
-	if(T.type == /turf/closed/wall/r_wall && prob(10))
+	if(T.type == /turf/closed/wall/r_wall && SSrng.probability(10))
 		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
 	for(var/obj/structure/closet/closet in T.contents)
@@ -262,7 +262,7 @@
 	for(var/obj/machinery/dna_scannernew/dna in T)
 		dna.open_machine()
 	for(var/obj/structure/window/window in T)
-		window.take_damage(rand(30,80))
+		window.take_damage(SSrng.random(30,80))
 		if(window && window.fulltile)
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in T)
@@ -294,14 +294,14 @@
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
-		to_chat(human, "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
+		to_chat(human, "<span class='revenwarning'>You feel [SSrng.pick_from_list("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
 		new /obj/effect/temp_visual/revenant(human.loc)
 		human.emp_act(EMP_HEAVY)
 	for(var/obj/thing in T)
 		if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 			continue
-		if(prob(20))
-			if(prob(50))
+		if(SSrng.probability(20))
+			if(SSrng.probability(50))
 				new /obj/effect/temp_visual/revenant(thing.loc)
 			thing.emag_act(null)
 		else
@@ -345,7 +345,7 @@
 						blight.stage++
 				if(!blightfound)
 					H.AddDisease(new /datum/disease/revblight)
-					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
+					to_chat(H, "<span class='revenminor'>You feel [SSrng.pick_from_list("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
 					mob.reagents.add_reagent("plasma", 5)
@@ -361,6 +361,6 @@
 		QDEL_IN(shroom, 10)
 	for(var/obj/machinery/hydroponics/tray in T)
 		new /obj/effect/temp_visual/revenant(tray.loc)
-		tray.pestlevel = rand(8, 10)
-		tray.weedlevel = rand(8, 10)
-		tray.toxic = rand(45, 55)
+		tray.pestlevel = SSrng.random(8, 10)
+		tray.weedlevel = SSrng.random(8, 10)
+		tray.toxic = SSrng.random(45, 55)

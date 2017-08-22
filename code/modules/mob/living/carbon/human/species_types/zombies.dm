@@ -28,8 +28,8 @@
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
 	C.heal_overall_damage(4,4)
-	if(prob(4))
-		playsound(C, pick(spooks), 50, TRUE, 10)
+	if(SSrng.probability(4))
+		playsound(C, SSrng.pick_from_list(spooks), 50, TRUE, 10)
 	if(C.InCritical())
 		C.death()
 		// Zombies only move around when not in crit, they instantly

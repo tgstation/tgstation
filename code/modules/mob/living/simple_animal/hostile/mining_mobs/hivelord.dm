@@ -237,7 +237,7 @@
 //Legion infested mobs
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
-	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist")) = 4))
+	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, SSrng.pick_from_list(list("Shadow", "YeOlde","Operative", "Cultist")) = 4))
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
@@ -247,9 +247,9 @@
 				belt = /obj/item/tank/internals/plasmaman/belt
 			else
 				uniform = /obj/item/clothing/under/rank/miner/lavaland
-				if (prob(4))
+				if (SSrng.probability(4))
 					belt = pickweight(list(/obj/item/storage/belt/mining = 2, /obj/item/storage/belt/mining/alt = 2))
-				else if(prob(10))
+				else if(SSrng.probability(10))
 					belt = pickweight(list(/obj/item/pickaxe = 8, /obj/item/pickaxe/mini = 4, /obj/item/pickaxe/silver = 2, /obj/item/pickaxe/diamond = 1))
 				else
 					belt = /obj/item/tank/internals/emergency_oxygen/engi
@@ -257,52 +257,52 @@
 				shoes = /obj/item/clothing/shoes/workboots/mining
 			gloves = /obj/item/clothing/gloves/color/black
 			mask = /obj/item/clothing/mask/gas/explorer
-			if(prob(20))
+			if(SSrng.probability(20))
 				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
-			if(prob(30))
+			if(SSrng.probability(30))
 				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
-			if(prob(10))
+			if(SSrng.probability(10))
 				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
 		if("Ashwalker")
 			mob_species = /datum/species/lizard/ashwalker
 			uniform = /obj/item/clothing/under/gladiator/ash_walker
-			if(prob(95))
+			if(SSrng.probability(95))
 				head = /obj/item/clothing/head/helmet/gladiator
 			else
 				head = /obj/item/clothing/head/helmet/skull
 				suit = /obj/item/clothing/suit/armor/bone
 				gloves = /obj/item/clothing/gloves/bracer
-			if(prob(5))
+			if(SSrng.probability(5))
 				back = pickweight(list(/obj/item/twohanded/bonespear = 3, /obj/item/twohanded/fireaxe/boneaxe = 2))
-			if(prob(10))
+			if(SSrng.probability(10))
 				belt = /obj/item/storage/belt/mining/primitive
-			if(prob(30))
+			if(SSrng.probability(30))
 				r_pocket = /obj/item/kitchen/knife/combat/bone
-			if(prob(30))
+			if(SSrng.probability(30))
 				l_pocket = /obj/item/kitchen/knife/combat/bone
 		if("Clown")
-			name = pick(GLOB.clown_names)
+			name = SSrng.pick_from_list(GLOB.clown_names)
 			outfit = /datum/outfit/job/clown
 			belt = null
 			backpack_contents = list()
-			if(prob(70))
-				backpack_contents += pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie = 1))
-			if(prob(30))
+			if(SSrng.probability(70))
+				backpack_contents += SSrng.pick_from_list(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie = 1))
+			if(SSrng.probability(30))
 				backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
-			if(prob(10))
+			if(SSrng.probability(10))
 				l_pocket = pickweight(list(/obj/item/bikehorn/golden = 3, /obj/item/bikehorn/airhorn= 1 ))
-			if(prob(10))
+			if(SSrng.probability(10))
 				r_pocket = /obj/item/implanter/sad_trombone
 		if("Golem")
-			mob_species = pick(list(/datum/species/golem/adamantine, /datum/species/golem/plasma, /datum/species/golem/diamond, /datum/species/golem/gold, /datum/species/golem/silver, /datum/species/golem/plasteel, /datum/species/golem/titanium, /datum/species/golem/plastitanium))
-			if(prob(30))
+			mob_species = SSrng.pick_from_list(list(/datum/species/golem/adamantine, /datum/species/golem/plasma, /datum/species/golem/diamond, /datum/species/golem/gold, /datum/species/golem/silver, /datum/species/golem/plasteel, /datum/species/golem/titanium, /datum/species/golem/plastitanium))
+			if(SSrng.probability(30))
 				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 2, /obj/item/clothing/glasses/hud/health = 2, /obj/item/clothing/glasses/hud/diagnostic =2, /obj/item/clothing/glasses/science = 2, /obj/item/clothing/glasses/welding = 2, /obj/item/clothing/glasses/night = 1))
-			if(prob(10))
-				belt = pick(list(/obj/item/storage/belt/mining/vendor, /obj/item/storage/belt/utility/full))
-			if(prob(50))
+			if(SSrng.probability(10))
+				belt = SSrng.pick_from_list(list(/obj/item/storage/belt/mining/vendor, /obj/item/storage/belt/utility/full))
+			if(SSrng.probability(50))
 				neck = /obj/item/bedsheet/rd/royal_cape
-			if(prob(10))
-				l_pocket = pick(list(/obj/item/crowbar/power, /obj/item/wrench/power, /obj/item/weldingtool/experimental))
+			if(SSrng.probability(10))
+				l_pocket = SSrng.pick_from_list(list(/obj/item/crowbar/power, /obj/item/wrench/power, /obj/item/weldingtool/experimental))
 		if("YeOlde")
 			mob_gender = FEMALE
 			uniform = /obj/item/clothing/under/maid

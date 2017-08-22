@@ -16,7 +16,7 @@
 /obj/item/reagent_containers/pill/Initialize()
 	. = ..()
 	if(!icon_state)
-		icon_state = "pill[rand(1,20)]"
+		icon_state = "pill[SSrng.random(1,20)]"
 	if(reagents.total_volume && roundstart)
 		name += " ([reagents.total_volume]u)"
 

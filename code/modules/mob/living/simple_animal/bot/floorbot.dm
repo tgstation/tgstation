@@ -180,7 +180,7 @@
 	if(mode == BOT_REPAIRING)
 		return
 
-	if(prob(5))
+	if(SSrng.probability(5))
 		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
@@ -244,7 +244,7 @@
 		if(loc == target || loc == target.loc)
 			if(check_bot(target))	//Target is not defined at the parent
 				shuffle = TRUE
-				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
+				if(SSrng.probability(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
 					path = list()
 					return
@@ -375,7 +375,7 @@
 	if(specialtiles && tiletype != null)
 		empty_tiles()
 
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/bodypart/l_arm/robot(Tsec)
 
 	var/obj/item/stack/tile/plasteel/T = new (Tsec)

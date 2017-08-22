@@ -50,14 +50,14 @@
 
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
-	if (prob(50))
+	if (SSrng.probability(50))
 		qdel(src)
 
 /obj/machinery/chem_master/power_change()
 	if(powered())
 		stat &= ~NOPOWER
 	else
-		spawn(rand(0, 15))
+		spawn(SSrng.random(0, 15))
 			stat |= NOPOWER
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
@@ -219,8 +219,8 @@
 					else
 						P = new/obj/item/reagent_containers/pill(src.loc)
 					P.name = trim("[name] pill")
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					P.pixel_x = SSrng.random(-7, 7) //random position
+					P.pixel_y = SSrng.random(-7, 7)
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
@@ -253,8 +253,8 @@
 			for(var/i = 0; i < amount; i++)
 				P = new/obj/item/reagent_containers/pill/patch(src.loc)
 				P.name = trim("[name] patch")
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
+				P.pixel_x = SSrng.random(-7, 7) //random position
+				P.pixel_y = SSrng.random(-7, 7)
 				reagents.trans_to(P,vol_each)
 			. = TRUE
 
@@ -284,8 +284,8 @@
 				var/obj/item/reagent_containers/glass/bottle/P
 				for(var/i = 0; i < amount_full; i++)
 					P = new/obj/item/reagent_containers/glass/bottle(src.loc)
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					P.pixel_x = SSrng.random(-7, 7) //random position
+					P.pixel_y = SSrng.random(-7, 7)
 					P.name = trim("[name] bottle")
 					reagents.trans_to(P, 30)
 

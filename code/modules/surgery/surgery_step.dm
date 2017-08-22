@@ -56,7 +56,7 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= surgery.get_propability_multiplier()
 
-		if(prob(prob_chance) || iscyborg(user))
+		if(SSrng.probability(prob_chance) || iscyborg(user))
 			if(success(user, target, target_zone, tool, surgery))
 				advance = 1
 		else

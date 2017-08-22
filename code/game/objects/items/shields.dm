@@ -81,7 +81,7 @@
 	return (active)
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.disabilities & CLUMSY && SSrng.probability(50))
 		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	active = !active

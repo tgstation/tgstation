@@ -16,15 +16,15 @@
 		if(ancestor_chain > 1)
 			name += " \Roman[ancestor_chain]"
 	else
-		if(prob(5))
-			name = pick(rare_pet_monkey_names)
+		if(SSrng.probability(5))
+			name = SSrng.pick_from_list(rare_pet_monkey_names)
 		else
-			name = pick(pet_monkey_names)
-		gender = pick(MALE, FEMALE)
+			name = SSrng.pick_from_list(pet_monkey_names)
+		gender = SSrng.pick_from_list(MALE, FEMALE)
 	..()
 
 	//These have to be after the parent new to ensure that the monkey
-	//bodyparts are actually created before we try to equip things to 
+	//bodyparts are actually created before we try to equip things to
 	//those slots
 	if(relic_hat)
 		equip_to_slot_or_del(new relic_hat, slot_head)

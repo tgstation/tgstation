@@ -155,8 +155,8 @@
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/card/id/ID = new(src)
-		var/datum/job/J = pick(SSjob.occupations)
-		ID.registered_name = S.random_name(pick(MALE, FEMALE))
+		var/datum/job/J = SSrng.pick_from_list(SSjob.occupations)
+		ID.registered_name = S.random_name(SSrng.pick_from_list(MALE, FEMALE))
 		ID.assignment = J.title
 
 		authorized += ID
@@ -225,7 +225,7 @@
 
 	SSshuttle.emergencyCallAmount++
 
-	if(prob(70))
+	if(SSrng.probability(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	else
 		SSshuttle.emergencyLastCallLoc = null
@@ -241,7 +241,7 @@
 	invertTimer()
 	mode = SHUTTLE_RECALL
 
-	if(prob(70))
+	if(SSrng.probability(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	else
 		SSshuttle.emergencyLastCallLoc = null
@@ -476,12 +476,12 @@
 		return
 
 	var/list/turfs = get_area_turfs(target_area)
-	var/turf/T = pick(turfs)
+	var/turf/T = SSrng.pick_from_list(turfs)
 
 	while(turfs.len)
 		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
 			turfs -= T
-			T = pick(turfs)
+			T = SSrng.pick_from_list(turfs)
 		else
 			src.loc = T
 			break

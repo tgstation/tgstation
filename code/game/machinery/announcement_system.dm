@@ -158,8 +158,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	stat |= BROKEN
 	update_icon()
 
-	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
-	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
+	arrival = SSrng.pick_from_list("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
+	newhead = SSrng.pick_from_list("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
 /obj/machinery/announcement_system/emp_act(severity)
 	if(!(stat & (NOPOWER|BROKEN)))

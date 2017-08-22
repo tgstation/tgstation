@@ -17,7 +17,7 @@
 /obj/item/device/modular_computer/tablet/update_icon()
 	..()
 	if(!finish_color)
-		finish_color = pick("red","blue","brown","green","black")
+		finish_color = SSrng.pick_from_list("red","blue","brown","green","black")
 	icon_state = "tablet-[finish_color]"
 	icon_state_unpowered = "tablet-[finish_color]"
 	icon_state_powered = "tablet-[finish_color]"

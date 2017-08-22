@@ -91,7 +91,7 @@
 	var/result = ""
 	for(var/datum/mutation/human/A in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
 		if(A.name == RACEMUT && ismonkey(holder))
-			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
+			sorting[A.dna_block] = num2hex(A.lowest_value + SSrng.random(0, 256 * 6), DNA_BLOCK_SIZE)
 			mutations |= A
 		else
 			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
@@ -257,7 +257,7 @@
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
 	if(!dna.species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = SSrng.pick_from_list(config.roundstart_races)
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed
@@ -319,31 +319,31 @@
 /mob/living/carbon/proc/randmut(list/candidates, difficulty = 2)
 	if(!has_dna())
 		return
-	var/datum/mutation/human/num = pick(candidates)
+	var/datum/mutation/human/num = SSrng.pick_from_list(candidates)
 	. = num.force_give(src)
 
 /mob/living/carbon/proc/randmutb()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT])
+	var/datum/mutation/human/HM = SSrng.pick_from_list((GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT])
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmutg()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick(GLOB.good_mutations)
+	var/datum/mutation/human/HM = SSrng.pick_from_list(GLOB.good_mutations)
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmutvg()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((GLOB.good_mutations) - GLOB.mutations_list[HULK] - GLOB.mutations_list[DWARFISM])
+	var/datum/mutation/human/HM = SSrng.pick_from_list((GLOB.good_mutations) - GLOB.mutations_list[HULK] - GLOB.mutations_list[DWARFISM])
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmuti()
 	if(!has_dna())
 		return
-	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
+	var/num = SSrng.random(1, DNA_UNI_IDENTITY_BLOCKS)
 	var/newdna = setblock(dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	dna.uni_identity = newdna
 	updateappearance(mutations_overlay_update=1)
@@ -362,12 +362,12 @@
 		return 0
 	if(se)
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
-			if(prob(probability))
+			if(SSrng.probability(probability))
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 		M.domutcheck()
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
-			if(prob(probability))
+			if(SSrng.probability(probability))
 				M.dna.uni_identity = setblock(M.dna.uni_identity, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 		M.updateappearance(mutations_overlay_update=1)
 	return 1
@@ -378,7 +378,7 @@
 	var/width = round((16**blocksize)/values)
 	if(value < 1)
 		value = 1
-	value = (value * width) - rand(1,width)
+	value = (value * width) - SSrng.random(1,width)
 	return num2hex(value, blocksize)
 
 //value is hex

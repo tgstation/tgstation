@@ -570,7 +570,7 @@
 	var/targetturf = find_safe_turf(ZLEVEL_STATION)
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
-			targetturf = get_turf(pick(GLOB.blobstart))
+			targetturf = get_turf(SSrng.pick_from_list(GLOB.blobstart))
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark")
 

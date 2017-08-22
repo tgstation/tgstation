@@ -28,27 +28,27 @@ STI KALY - blind
 
 	switch(stage)
 		if(2)
-			if(prob(1)&&prob(50))
-				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
-			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='danger'>You feel [pick("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>")
+			if(SSrng.probability(1)&&SSrng.probability(50))
+				affected_mob.say(SSrng.pick_from_list("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
+			if(SSrng.probability(1)&&SSrng.probability(50))
+				to_chat(affected_mob, "<span class='danger'>You feel [SSrng.pick_from_list("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>")
 
 
 		if(3)
-			if(prob(1)&&prob(50))
-				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
-			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>")
+			if(SSrng.probability(1)&&SSrng.probability(50))
+				affected_mob.say(SSrng.pick_from_list("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
+			if(SSrng.probability(1)&&SSrng.probability(50))
+				to_chat(affected_mob, "<span class='danger'>You feel [SSrng.pick_from_list("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>")
 
 		if(4)
 
-			if(prob(1))
-				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
+			if(SSrng.probability(1))
+				affected_mob.say(SSrng.pick_from_list("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
 				return
-			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='danger'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
+			if(SSrng.probability(1)&&SSrng.probability(50))
+				to_chat(affected_mob, "<span class='danger'>You feel [SSrng.pick_from_list("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
 				spawn_wizard_clothes(50)
-			if(prob(1)&&prob(1))
+			if(SSrng.probability(1)&&SSrng.probability(1))
 				teleport()
 	return
 
@@ -57,19 +57,19 @@ STI KALY - blind
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
-		if(prob(chance))
+		if(SSrng.probability(chance))
 			if(!istype(H.head, /obj/item/clothing/head/wizard))
 				if(!H.dropItemToGround(H.head))
 					qdel(H.head)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), slot_head)
 			return
-		if(prob(chance))
+		if(SSrng.probability(chance))
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
 				if(!H.dropItemToGround(H.wear_suit))
 					qdel(H.wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), slot_wear_suit)
 			return
-		if(prob(chance))
+		if(SSrng.probability(chance))
 			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))
 				if(!H.dropItemToGround(H.shoes))
 					qdel(H.shoes)
@@ -77,7 +77,7 @@ STI KALY - blind
 			return
 	else
 		var/mob/living/carbon/H = affected_mob
-		if(prob(chance))
+		if(SSrng.probability(chance))
 			var/obj/item/staff/S = new(H)
 			if(!H.put_in_hands(S))
 				qdel(S)
@@ -91,7 +91,7 @@ STI KALY - blind
 	if(!theareas||!theareas.len)
 		return
 
-	var/area/thearea = pick(theareas)
+	var/area/thearea = SSrng.pick_from_list(theareas)
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
@@ -110,6 +110,6 @@ STI KALY - blind
 		return
 
 	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!")
-	affected_mob.loc = pick(L)
+	affected_mob.loc = SSrng.pick_from_list(L)
 
 	return

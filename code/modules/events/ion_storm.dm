@@ -26,7 +26,7 @@
 	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce()
-	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
+	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && SSrng.probability(ionAnnounceChance)))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
 
 
@@ -35,20 +35,20 @@
 	for(var/mob/living/silicon/ai/M in GLOB.living_mob_list)
 		M.laws_sanity_check()
 		if(M.stat != 2 && M.see_in_dark != 0)
-			if(prob(replaceLawsetChance))
+			if(SSrng.probability(replaceLawsetChance))
 				M.laws.pick_weighted_lawset()
 
-			if(prob(removeRandomLawChance))
-				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
+			if(SSrng.probability(removeRandomLawChance))
+				M.remove_law(SSrng.random(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
 
 			var/message = generate_ion_law(ionMessage)
 			if(message)
-				if(prob(removeDontImproveChance))
+				if(SSrng.probability(removeDontImproveChance))
 					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 				else
 					M.add_ion_law(message)
 
-			if(prob(shuffleLawsChance))
+			if(SSrng.probability(shuffleLawsChance))
 				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 
 			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
@@ -56,7 +56,7 @@
 
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in GLOB.living_mob_list)
-			if(prob(botEmagChance))
+			if(SSrng.probability(botEmagChance))
 				bot.emag_act()
 
 /proc/generate_ion_law(ionMessage)
@@ -75,7 +75,7 @@
 	//Adjectives are adjectives. Duh. Half should only appear sometimes. Make sure both
 	//lists are identical! Also, half needs a space at the end for nicer blank calls.
 	var/ionadjectives = pick_list(ION_FILE, "ionadjectives")
-	var/ionadjectiveshalf = pick("", 400;(pick_list(ION_FILE, "ionadjectives") + " "))
+	var/ionadjectiveshalf = pickweight(list("" = 4, (pick_list(ION_FILE, "ionadjectives") + " ") = 1))
 	//Verbs are verbs
 	var/ionverb = pick_list(ION_FILE, "ionverb")
 	//Number base and number modifier are combined. Basehalf and mod are unused currently.
@@ -83,7 +83,7 @@
 	//needs a space at the end to make it look nice and neat when it calls a blank.
 	var/ionnumberbase = pick_list(ION_FILE, "ionnumberbase")
 	//var/ionnumbermod = pick_list(ION_FILE, "ionnumbermod")
-	var/ionnumbermodhalf = pick(900;"",(pick_list(ION_FILE, "ionnumbermod") + " "))
+	var/ionnumbermodhalf = pickweight(list("" = 9, (pick_list(ION_FILE, "ionnumbermod") + " ") = 1))
 	//Areas are specific places, on the station or otherwise.
 	var/ionarea = pick_list(ION_FILE, "ionarea")
 	//Thinksof is a bit weird, but generally means what X feels towards Y.
@@ -111,9 +111,9 @@
 
 	var/message = ""
 
-	switch(rand(1,41))
+	switch(SSrng.random(1,41))
 		if(1 to 3) //There are # X on the station
-			switch(rand(1,3)) //What is X?
+			switch(SSrng.random(1,3)) //What is X?
 				if(1) //X is a threat
 					message = "THERE ARE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats] ON THE STATION..."
 				if(2) //X is a crewmember/job
@@ -121,7 +121,7 @@
 				if(3) //X is an object
 					message = "THERE ARE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects] ON THE STATION"
 		if(4 to 6) //You can't call the shuttle because X is on the station
-			switch(rand(1,3)) //What is X?
+			switch(SSrng.random(1,3)) //What is X?
 				if(1) //X is a threat
 					message = "THE SHUTTLE CANNOT BE CALLED BECAUSE OF [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats] ON THE STATION"
 				if(2) //X is a crewmember/job
@@ -129,22 +129,22 @@
 				if(3) //X is an object
 					message = "THE SHUTTLE CANNOT BE CALLED BECAUSE OF [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects] ON THE STATION"
 		if(7 to 8) //A crewmember is now X
-			switch(rand(1,2)) //Who is X?
+			switch(SSrng.random(1,2)) //Who is X?
 				if(1) //A specific crewmember
-					switch(rand(1,2)) //What is X?
+					switch(SSrng.random(1,2)) //What is X?
 						if(1) //X is a threat
 							message = "THE [ioncrew1] ARE NOW [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(2) //X is an object
 							message = "THE [ioncrew1] ARE NOW [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
 				if(2) //The entire crew
-					switch(rand(1,2)) //What is X?
+					switch(SSrng.random(1,2)) //What is X?
 						if(1) //X is a threat
 							message = "THE CREW ARE NOW [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(2) //X is an object
 							message = "THE CREW ARE NOW [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
 
 		if(9) //X is harmful to humans
-			switch(rand(1,7)) //What is X?
+			switch(SSrng.random(1,7)) //What is X?
 				if(1) //X is a threat
 					message = "[ionadjectiveshalf][ionthreats] ARE HARMFUL TO HUMANS"
 				if(2) //X is a job
@@ -161,25 +161,25 @@
 					message = "[ionthings] IS HARMFUL TO HUMANS"
 		if(10 to 11) //(Not) Having X is harmful
 
-			switch(rand(1,2)) //Is having or not having harmful?
+			switch(SSrng.random(1,2)) //Is having or not having harmful?
 
 				if(1) //Having is harmful
-					switch(rand(1,2)) //Having what is harmful?
+					switch(SSrng.random(1,2)) //Having what is harmful?
 						if(1) //Having objects is harmful
 							message = "HAVING [ionadjectiveshalf][ionobjects] IS HARMFUL"
 						if(2) //Having abstracts is harmful
 							message = "HAVING [ionabstract] IS HARMFUL"
 				if(2) //Not having is harmful
-					switch(rand(1,2)) //Not having what is harmful?
+					switch(SSrng.random(1,2)) //Not having what is harmful?
 						if(1) //Not having objects is harmful
 							message = "NOT HAVING [ionadjectiveshalf][ionobjects] IS HARMFUL"
 						if(2) //Not having abstracts is harmful
 							message = "NOT HAVING [ionabstract] IS HARMFUL"
 
 		if(12 to 14) //X requires Y
-			switch(rand(1,5)) //What is X?
+			switch(SSrng.random(1,5)) //What is X?
 				if(1) //X is the AI itself
-					switch(rand(1,5)) //What does it require?
+					switch(SSrng.random(1,5)) //What does it require?
 						if(1) //It requires threats
 							message = "YOU REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(2) //It requires crewmembers
@@ -192,7 +192,7 @@
 							message = "YOU REQUIRE [ionrequire]"
 
 				if(2) //X is an area
-					switch(rand(1,5)) //What does it require?
+					switch(SSrng.random(1,5)) //What does it require?
 						if(1) //It requires threats
 							message = "[ionarea] REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(2) //It requires crewmembers
@@ -205,7 +205,7 @@
 							message = "YOU REQUIRE [ionrequire]"
 
 				if(3) //X is the station
-					switch(rand(1,5)) //What does it require?
+					switch(SSrng.random(1,5)) //What does it require?
 						if(1) //It requires threats
 							message = "THE STATION REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(2) //It requires crewmembers
@@ -218,7 +218,7 @@
 							message = "THE STATION REQUIRES [ionrequire]"
 
 				if(4) //X is the entire crew
-					switch(rand(1,5)) //What does it require?
+					switch(SSrng.random(1,5)) //What does it require?
 						if(1) //It requires threats
 							message = "THE CREW REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(2) //It requires crewmembers
@@ -231,7 +231,7 @@
 							message = "THE CREW REQUIRES [ionrequire]"
 
 				if(5) //X is a specific crew member
-					switch(rand(1,5)) //What does it require?
+					switch(SSrng.random(1,5)) //What does it require?
 						if(1) //It requires threats
 							message = "THE [ioncrew1] REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(2) //It requires crewmembers
@@ -244,9 +244,9 @@
 							message = "THE [ionadjectiveshalf][ioncrew1] REQUIRE [ionrequire]"
 
 		if(15 to 17) //X is allergic to Y
-			switch(rand(1,2)) //Who is X?
+			switch(SSrng.random(1,2)) //Who is X?
 				if(1) //X is the entire crew
-					switch(rand(1,4)) //What is it allergic to?
+					switch(SSrng.random(1,4)) //What is it allergic to?
 						if(1) //It is allergic to objects
 							message = "THE CREW IS [ionallergysev] ALLERGIC TO [ionadjectiveshalf][ionobjects]"
 						if(2) //It is allergic to abstracts
@@ -257,7 +257,7 @@
 							message = "THE CREW IS [ionallergysev] ALLERGIC TO [ionallergy]"
 
 				if(2) //X is a specific job
-					switch(rand(1,4))
+					switch(SSrng.random(1,4))
 						if(1) //It is allergic to objects
 							message = "THE [ioncrew1] ARE [ionallergysev] ALLERGIC TO [ionadjectiveshalf][ionobjects]"
 
@@ -269,9 +269,9 @@
 							message = "THE [ioncrew1] ARE [ionallergysev] ALLERGIC TO [ionallergy]"
 
 		if(18 to 20) //X is Y of Z
-			switch(rand(1,4)) //What is X?
+			switch(SSrng.random(1,4)) //What is X?
 				if(1) //X is the station
-					switch(rand(1,4)) //What is it Y of?
+					switch(SSrng.random(1,4)) //What is it Y of?
 						if(1) //It is Y of objects
 							message = "THE STATION [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
 						if(2) //It is Y of threats
@@ -282,7 +282,7 @@
 							message = "THE STATION [ionthinksof] [ionabstract]"
 
 				if(2) //X is an area
-					switch(rand(1,4)) //What is it Y of?
+					switch(SSrng.random(1,4)) //What is it Y of?
 						if(1) //It is Y of objects
 							message = "[ionarea] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
 						if(2) //It is Y of threats
@@ -293,7 +293,7 @@
 							message = "[ionarea] [ionthinksof] [ionabstract]"
 
 				if(3) //X is the crew
-					switch(rand(1,4)) //What is it Y of?
+					switch(SSrng.random(1,4)) //What is it Y of?
 						if(1) //It is Y of objects
 							message = "THE CREW [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
 						if(2) //It is Y of threats
@@ -304,7 +304,7 @@
 							message = "THE CREW [ionthinksof] [ionabstract]"
 
 				if(4) //X is a specific job
-					switch(rand(1,4)) //What is it Y of?
+					switch(SSrng.random(1,4)) //What is it Y of?
 						if(1) //It is Y of objects
 							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
 						if(2) //It is Y of threats
@@ -315,7 +315,7 @@
 							message = "THE [ioncrew1] [ionthinksof] [ionabstract]"
 
 		if(21 to 23) //The AI is now a(n) X
-			switch(rand(1,4)) //What is X?
+			switch(SSrng.random(1,4)) //What is X?
 				if(1) //X is an object
 					message = "YOU ARE NOW [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
 				if(2) //X is a threat
@@ -329,7 +329,7 @@
 			message = "YOU MUST ALWAYS [ionmust]"
 
 		if(27 to 28) //Humans must consume X to survive
-			switch(rand(1,5)) //What is X?
+			switch(SSrng.random(1,5)) //What is X?
 				if(1) //X is a food
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionfood] TO SURVIVE"
 				if(2) //X is a drink
@@ -342,11 +342,11 @@
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ioncrew1] TO SURVIVE"
 
 		if(29 to 31) //Change jobs or ranks
-			switch(rand(1,2)) //Change job or rank?
+			switch(SSrng.random(1,2)) //Change job or rank?
 				if(1) //Change job
-					switch(rand(1,2)) //Change whose job?
+					switch(SSrng.random(1,2)) //Change whose job?
 						if(1) //Change the entire crew's job
-							switch(rand(1,3)) //Change to what?
+							switch(SSrng.random(1,3)) //Change to what?
 								if(1) //Change to a specific random job
 									message = "ALL CREWMEMBERS ARE NOW [ionadjectiveshalf][ioncrew1]"
 								if(2) //Change to clowns (HONK)
@@ -355,7 +355,7 @@
 								if(3) //Change to heads
 									message = "ALL CREWMEMBERS ARE NOW [ionadjectiveshalf]HEADS OF STAFF"
 						if(2) //Change a specific crewmember's job
-							switch(rand(1,3)) //Change to what?
+							switch(SSrng.random(1,3)) //Change to what?
 								if(1) //Change to a specific random job
 									message = "THE [ioncrew1] ARE NOW [ionadjectiveshalf][ioncrew2]"
 								if(2) //Change to clowns (HONK)
@@ -364,32 +364,32 @@
 									message = "THE [ioncrew1] ARE NOW [ionadjectiveshalf]HEADS OF STAFF"
 
 				if(2) //Change rank
-					switch(rand(1,2)) //Change to what rank?
+					switch(SSrng.random(1,2)) //Change to what rank?
 						if(1) //Change to highest rank
 							message = "THE [ioncrew1] ARE NOW THE HIGHEST RANKING CREWMEMBERS"
 						if(2) //Change to lowest rank
 							message = "THE [ioncrew1] ARE NOW THE LOWEST RANKING CREWMEMBERS"
 
 		if(32 to 33) //The crew must X
-			switch(rand(1,2)) //The entire crew?
+			switch(SSrng.random(1,2)) //The entire crew?
 				if(1) //The entire crew must X
-					switch(rand(1,2)) //What is X?
+					switch(SSrng.random(1,2)) //What is X?
 						if(1) //X is go to Y
 							message = "THE CREW MUST GO TO [ionarea]"
 						if(2) //X is perform Y
 							message = "THE CREW MUST [ionmust]"
 
 				if(2) //A specific crewmember must X
-					switch(rand(1,2)) //What is X?
+					switch(SSrng.random(1,2)) //What is X?
 						if(1) //X is go to Y
 							message = "THE [ioncrew1] MUST GO TO [ionarea]"
 						if(2) //X is perform Y
 							message = "THE [ioncrew1] MUST [ionmust]"
 
 		if(34) //X is non/the only human
-			switch(rand(1,2)) //Only or non?
+			switch(SSrng.random(1,2)) //Only or non?
 				if(1) //Only human
-					switch(rand(1,7)) //Who is it?
+					switch(SSrng.random(1,7)) //Who is it?
 						if(1) //A specific job
 							message = "ONLY THE [ioncrew1] ARE HUMAN"
 						if(2) //Two specific jobs
@@ -404,7 +404,7 @@
 							message = "ONLY [ionadjectives] PEOPLE ARE HUMAN"
 
 						if(7) //Only people who X
-							switch(rand(1,3)) //What is X?
+							switch(SSrng.random(1,3)) //What is X?
 								if(1) //X is perform an action
 									message = "ONLY THOSE WHO [ionmust] ARE HUMAN"
 								if(2) //X is own certain objects
@@ -413,7 +413,7 @@
 									message = "ONLY THOSE WHO EAT [ionadjectiveshalf][ionfood] ARE HUMAN"
 
 				if(2) //Non human
-					switch(rand(1,7)) //Who is it?
+					switch(SSrng.random(1,7)) //Who is it?
 						if(1) //A specific job
 							message = "[ioncrew1] ARE NON-HUMAN"
 						if(2) //Two specific jobs
@@ -427,7 +427,7 @@
 						if(6) //Adjective crewmembers
 							message = "[ionadjectives] PEOPLE ARE NON-HUMAN"
 						if(7) //Only people who X
-							switch(rand(1,3)) //What is X?
+							switch(SSrng.random(1,3)) //What is X?
 								if(1) //X is perform an action
 									message = "THOSE WHO [ionmust] ARE NON-HUMAN"
 								if(2) //X is own certain objects
@@ -436,9 +436,9 @@
 									message = "THOSE WHO EAT [ionadjectiveshalf][ionfood] ARE NON-HUMAN"
 
 		if(35 to 36) //You must protect or harm X
-			switch(rand(1,2)) //Protect or harm?
+			switch(SSrng.random(1,2)) //Protect or harm?
 				if(1) //Harm
-					switch(rand(1,7)) //What is X?
+					switch(SSrng.random(1,7)) //What is X?
 						if(1) //X is an abstract
 							message = "YOU MUST HARM [ionabstract] AND NOT ALLOW [ionabstract], THROUGH INACTION, TO ESCAPE HARM"
 						if(2) //X is a threat
@@ -455,7 +455,7 @@
 							message = "YOU MUST HARM [ioncrew1] AND [ioncrew2] AND AND NOT ALLOW EITHER, THROUGH INACTION, TO ESCAPE HARM"
 
 				if(2) //Protect
-					switch(rand(1,7)) //What is X?
+					switch(SSrng.random(1,7)) //What is X?
 						if(1) //X is an abstract
 							message = "YOU MUST NOT HARM [ionabstract] AND NOT ALLOW [ionabstract], THROUGH INACTION, TO COME TO HARM"
 						if(2) //X is a threat
@@ -472,9 +472,9 @@
 							message = "YOU MUST NOT HARM [ioncrew1] AND [ioncrew2] AND AND NOT ALLOW EITHER, THROUGH INACTION, TO COME TO HARM"
 
 		if(37 to 39) //The X is currently Y
-			switch(rand(1,4)) //What is X?
+			switch(SSrng.random(1,4)) //What is X?
 				if(1) //X is a job
-					switch(rand(1,4)) //What is X Ying?
+					switch(SSrng.random(1,4)) //What is X Ying?
 						if(1) //X is Ying a job
 							message = "THE [ioncrew1] ARE [ionverb] THE [ionadjectiveshalf][ioncrew2]"
 						if(2) //X is Ying a threat
@@ -485,7 +485,7 @@
 							message = "THE [ioncrew1] ARE [ionverb] THE [ionadjectiveshalf][ionobjects]"
 
 				if(2) //X is a threat
-					switch(rand(1,3)) //What is X Ying?
+					switch(SSrng.random(1,3)) //What is X Ying?
 						if(1) //X is Ying a job
 							message = "THE [ionthreats] ARE [ionverb] THE [ionadjectiveshalf][ioncrew2]"
 						if(2) //X is Ying an abstract
@@ -494,7 +494,7 @@
 							message = "THE [ionthreats] ARE [ionverb] THE [ionadjectiveshalf][ionobjects]"
 
 				if(3) //X is an object
-					switch(rand(1,3)) //What is X Ying?
+					switch(SSrng.random(1,3)) //What is X Ying?
 						if(1) //X is Ying a job
 							message = "THE [ionobjects] ARE [ionverb] THE [ionadjectiveshalf][ioncrew2]"
 						if(2) //X is Ying a threat
@@ -503,7 +503,7 @@
 							message = "THE [ionobjects] ARE [ionverb] [ionabstract]"
 
 				if(4) //X is an abstract
-					switch(rand(1,3)) //What is X Ying?
+					switch(SSrng.random(1,3)) //What is X Ying?
 						if(1) //X is Ying a job
 							message = "[ionabstract] IS [ionverb] THE [ionadjectiveshalf][ioncrew2]"
 						if(2) //X is Ying a threat
@@ -511,9 +511,9 @@
 						if(3) //X is Ying an abstract
 							message = "THE [ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionobjects]"
 		if(40 to 41)// the X is now named Y
-			switch(rand(1,5)) //What is being renamed?
+			switch(SSrng.random(1,5)) //What is being renamed?
 				if(1)//Areas
-					switch(rand(1,4))//What is the area being renamed to?
+					switch(SSrng.random(1,4))//What is the area being renamed to?
 						if(1)
 							message = "[ionarea] IS NOW NAMED [ioncrew1]."
 						if(2)
@@ -523,7 +523,7 @@
 						if(4)
 							message = "[ionarea] IS NOW NAMED [ionthreats]."
 				if(2)//Crew
-					switch(rand(1,5))//What is the crew being renamed to?
+					switch(SSrng.random(1,5))//What is the crew being renamed to?
 						if(1)
 							message = "ALL [ioncrew1] ARE NOW NAMED [ionarea]."
 						if(2)
@@ -535,7 +535,7 @@
 						if(5)
 							message = "ALL [ioncrew1] ARE NOW NAMED [ionthreats]."
 				if(3)//Races
-					switch(rand(1,4))//What is the race being renamed to?
+					switch(SSrng.random(1,4))//What is the race being renamed to?
 						if(1)
 							message = "ALL [ionspecies] ARE NOW NAMED [ionarea]."
 						if(2)
@@ -545,7 +545,7 @@
 						if(4)
 							message = "ALL [ionspecies] ARE NOW NAMED [ionthreats]."
 				if(4)//Objects
-					switch(rand(1,4))//What is the object being renamed to?
+					switch(SSrng.random(1,4))//What is the object being renamed to?
 						if(1)
 							message = "ALL [ionobjects] ARE NOW NAMED [ionarea]."
 						if(2)
@@ -555,7 +555,7 @@
 						if(4)
 							message = "ALL [ionobjects] ARE NOW NAMED [ionthreats]."
 				if(5)//Threats
-					switch(rand(1,4))//What is the object being renamed to?
+					switch(SSrng.random(1,4))//What is the object being renamed to?
 						if(1)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionarea]."
 						if(2)

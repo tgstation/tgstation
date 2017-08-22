@@ -270,7 +270,7 @@
 			if (pressure_resistance > 0)
 				move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 			move_prob += pressure_resistance_prob_delta
-			if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+			if (move_prob > PROBABILITY_OFFSET && SSrng.probability(move_prob))
 				step(src, direction)
 				last_high_pressure_movement_air_cycle = SSair.times_fired
 

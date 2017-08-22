@@ -161,7 +161,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
 		do_sparks(5, TRUE, src)
@@ -509,8 +509,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		amount = new_amount
 	if(param_color)
 		item_color = param_color
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = SSrng.random(-2,2)
+	pixel_y = SSrng.random(-2,2)
 	update_icon()
 	recipes = GLOB.cable_coil_recipes
 
@@ -539,7 +539,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/update_icon()
 	if(!item_color)
-		item_color = pick("red", "yellow", "blue", "green")
+		item_color = SSrng.pick_from_list("red", "yellow", "blue", "green")
 	item_state = "coil_[item_color]"
 	if(amount == 1)
 		icon_state = "coil_[item_color]1"
@@ -627,7 +627,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	use(1)
 
 	if(C.shock(user, 50))
-		if(prob(50)) //fail
+		if(SSrng.probability(50)) //fail
 			new /obj/item/stack/cable_coil(get_turf(C), 1, C.color)
 			C.deconstruct()
 
@@ -697,7 +697,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 			use(1)
 
 			if (NC.shock(user, 50))
-				if (prob(50)) //fail
+				if (SSrng.probability(50)) //fail
 					NC.deconstruct()
 
 			return
@@ -749,7 +749,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		use(1)
 
 		if (C.shock(user, 50))
-			if (prob(50)) //fail
+			if (SSrng.probability(50)) //fail
 				C.deconstruct()
 				return
 
@@ -765,9 +765,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/cut/Initialize(mapload)
 	. =..()
-	amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	amount = SSrng.random(1,2)
+	pixel_x = SSrng.random(-2,2)
+	pixel_y = SSrng.random(-2,2)
 	update_icon()
 
 /obj/item/stack/cable_coil/red
@@ -805,7 +805,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/random/Initialize(mapload)
 	. = ..()
-	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
+	item_color = SSrng.pick_from_list("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 
 

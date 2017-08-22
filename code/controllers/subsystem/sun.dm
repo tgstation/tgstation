@@ -10,8 +10,8 @@ SUBSYSTEM_DEF(sun)
 
 /datum/controller/subsystem/sun/PreInit()
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
-	rate = rand(50,200)/100			// 50% - 200% of standard rotation
-	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
+	rate = SSrng.random(50,200)/100			// 50% - 200% of standard rotation
+	if(SSrng.probability(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
 /datum/controller/subsystem/sun/stat_entry(msg)

@@ -43,7 +43,7 @@
 	icon_state = "asteroid0"
 
 /turf/open/floor/holofloor/asteroid/Initialize()
-	icon_state = "asteroid[rand(0, 12)]"
+	icon_state = "asteroid[SSrng.random(0, 12)]"
 	. = ..()
 
 /turf/open/floor/holofloor/basalt
@@ -52,8 +52,8 @@
 
 /turf/open/floor/holofloor/basalt/Initialize()
 	. = ..()
-	if(prob(15))
-		icon_state = "basalt[rand(0, 12)]"
+	if(SSrng.probability(15))
+		icon_state = "basalt[SSrng.random(0, 12)]"
 		set_basalt_light(src)
 
 /turf/open/floor/holofloor/space

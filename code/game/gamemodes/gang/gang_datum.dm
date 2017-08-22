@@ -105,34 +105,34 @@
 		throw EXCEPTION("Maximum number of gangs has been exceeded")
 		return
 	else
-		color = pick(GLOB.gang_colors_pool)
+		color = SSrng.pick_from_list(GLOB.gang_colors_pool)
 		GLOB.gang_colors_pool -= color
 		switch(color)
 			if("red")
 				color_hex = "#DA0000"
-				inner_outfit = pick(/obj/item/clothing/under/color/red, /obj/item/clothing/under/lawyer/red)
+				inner_outfit = SSrng.pick_from_list(/obj/item/clothing/under/color/red, /obj/item/clothing/under/lawyer/red)
 			if("orange")
 				color_hex = "#FF9300"
-				inner_outfit = pick(/obj/item/clothing/under/color/orange, /obj/item/clothing/under/geisha)
+				inner_outfit = SSrng.pick_from_list(/obj/item/clothing/under/color/orange, /obj/item/clothing/under/geisha)
 			if("yellow")
 				color_hex = "#FFF200"
-				inner_outfit = pick(/obj/item/clothing/under/color/yellow, /obj/item/clothing/under/burial, /obj/item/clothing/under/suit_jacket/tan)
+				inner_outfit = SSrng.pick_from_list(/obj/item/clothing/under/color/yellow, /obj/item/clothing/under/burial, /obj/item/clothing/under/suit_jacket/tan)
 			if("green")
 				color_hex = "#A8E61D"
-				inner_outfit = pick(/obj/item/clothing/under/color/green, /obj/item/clothing/under/syndicate/camo, /obj/item/clothing/under/suit_jacket/green)
+				inner_outfit = SSrng.pick_from_list(/obj/item/clothing/under/color/green, /obj/item/clothing/under/syndicate/camo, /obj/item/clothing/under/suit_jacket/green)
 			if("blue")
 				color_hex = "#00B7EF"
-				inner_outfit = pick(/obj/item/clothing/under/color/blue, /obj/item/clothing/under/suit_jacket/navy)
+				inner_outfit = SSrng.pick_from_list(/obj/item/clothing/under/color/blue, /obj/item/clothing/under/suit_jacket/navy)
 			if("purple")
 				color_hex = "#DA00FF"
-				inner_outfit = pick(/obj/item/clothing/under/color/lightpurple, /obj/item/clothing/under/lawyer/purpsuit)
+				inner_outfit = SSrng.pick_from_list(/obj/item/clothing/under/color/lightpurple, /obj/item/clothing/under/lawyer/purpsuit)
 			if("white")
 				color_hex = "#FFFFFF"
-				inner_outfit = pick(/obj/item/clothing/under/color/white, /obj/item/clothing/under/suit_jacket/white)
+				inner_outfit = SSrng.pick_from_list(/obj/item/clothing/under/color/white, /obj/item/clothing/under/suit_jacket/white)
 
-	name = (gangname ? gangname : pick(GLOB.gang_name_pool))
+	name = (gangname ? gangname : SSrng.pick_from_list(GLOB.gang_name_pool))
 	GLOB.gang_name_pool -= name
-	outer_outfit = pick(GLOB.gang_outfit_pool)
+	outer_outfit = SSrng.pick_from_list(GLOB.gang_outfit_pool)
 	ganghud = new()
 	ganghud.color = color_hex
 	log_game("The [name] Gang has been created. Their gang color is [color].")

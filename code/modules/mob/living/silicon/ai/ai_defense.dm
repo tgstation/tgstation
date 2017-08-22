@@ -23,8 +23,8 @@
 
 /mob/living/silicon/ai/emp_act(severity)
 	disconnect_shell()
-	if (prob(30))
-		switch(pick(1,2))
+	if (SSrng.probability(30))
+		switch(SSrng.pick_from_list(1,2))
 			if(1)
 				view_core()
 			if(2)

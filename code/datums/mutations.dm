@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return
 	var/before = copytext(se_string, 1, ((dna_block - 1) * DNA_BLOCK_SIZE) + 1)
-	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
+	var/injection = num2hex(on ? SSrng.random(lowest_value, (256 * 16) - 1) : SSrng.random(0, lowest_value - 1), DNA_BLOCK_SIZE)
 	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
 	return before + injection + after
 
@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/proc/check_block(mob/living/carbon/human/owner, force_powers=0)
 	if(check_block_string(owner.dna.struc_enzymes))
-		if(prob(get_chance)||force_powers)
+		if(SSrng.probability(get_chance)||force_powers)
 			. = on_acquiring(owner)
 	else
 		. = on_losing(owner)
@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
-		if(prob(1))
+		if(SSrng.probability(1))
 			owner.heal_bodypart_damage(0,1)   //Is this really needed?
 
 /datum/mutation/human/x_ray
@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
-	if(prob(1) && owner.stat == CONSCIOUS)
+	if(SSrng.probability(1) && owner.stat == CONSCIOUS)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Unconscious(200)
 		owner.Jitter(1000)
@@ -251,8 +251,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
-	if(prob(95))
-		if(prob(50))
+	if(SSrng.probability(95))
+		if(SSrng.probability(50))
 			new_mob = owner.randmutb()
 		else
 			new_mob = owner.randmuti()
@@ -269,7 +269,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
-	if(prob(5) && owner.stat == CONSCIOUS)
+	if(SSrng.probability(5) && owner.stat == CONSCIOUS)
 		owner.drop_item()
 		owner.emote("cough")
 
@@ -317,17 +317,17 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
-	if(prob(10) && owner.stat == CONSCIOUS)
+	if(SSrng.probability(10) && owner.stat == CONSCIOUS)
 		owner.Stun(200)
-		switch(rand(1, 3))
+		switch(SSrng.random(1, 3))
 			if(1)
 				owner.emote("twitch")
 			if(2 to 3)
-				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+				owner.say("[SSrng.probability(50) ? ";" : ""][SSrng.pick_from_list("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
 		var/x_offset_old = owner.pixel_x
 		var/y_offset_old = owner.pixel_y
-		var/x_offset = owner.pixel_x + rand(-2,2)
-		var/y_offset = owner.pixel_y + rand(-1,1)
+		var/x_offset = owner.pixel_x + SSrng.random(-2,2)
+		var/y_offset = owner.pixel_y + SSrng.random(-1,1)
 		animate(owner, pixel_x = x_offset, pixel_y = y_offset, time = 1)
 		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
 
@@ -337,7 +337,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
 /datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
-	if(prob(10))
+	if(SSrng.probability(10))
 		owner.stuttering = max(10, owner.stuttering)
 
 /datum/mutation/human/deaf
@@ -456,7 +456,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		message = replacetext(message," unrobust "," robust ")
 		message = replacetext(message," dumb "," smart ")
 		message = replacetext(message," awful "," great ")
-		message = replacetext(message," gay ",pick(" nice "," ok "," alright "))
+		message = replacetext(message," gay ",SSrng.pick_from_list(" nice "," ok "," alright "))
 		message = replacetext(message," horrible "," fun ")
 		message = replacetext(message," terrible "," terribly fun ")
 		message = replacetext(message," terrifying "," wonderful ")
@@ -516,7 +516,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		var/list/words = splittext(message," ")
 		var/list/rearranged = list()
 		for(var/i=1;i<=words.len;i++)
-			var/cword = pick(words)
+			var/cword = SSrng.pick_from_list(words)
 			words.Remove(cword)
 			var/suffix = copytext(cword,length(cword)-1,length(cword))
 			while(length(cword)>0 && suffix in list(".",",",";","!",":","?"))
@@ -538,11 +538,11 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	if(message)
 		message = replacetext(message,"w","v")
 		message = replacetext(message,"j","y")
-		message = replacetext(message,"a",pick("�","�","�","a"))
+		message = replacetext(message,"a",SSrng.pick_from_list("�","�","�","a"))
 		message = replacetext(message,"bo","bjo")
-		message = replacetext(message,"o",pick("�","�","o"))
-		if(prob(30))
-			message += " Bork[pick("",", bork",", bork, bork")]!"
+		message = replacetext(message,"o",SSrng.pick_from_list("�","�","o"))
+		if(SSrng.probability(30))
+			message += " Bork[SSrng.pick_from_list("",", bork",", bork, bork")]!"
 	return message
 
 /datum/mutation/human/chav
@@ -558,7 +558,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		message = replacetext(message," looking at  ","  gawpin' at ")
 		message = replacetext(message," great "," bangin' ")
 		message = replacetext(message," man "," mate ")
-		message = replacetext(message," friend ",pick(" mate "," bruv "," bledrin "))
+		message = replacetext(message," friend ",SSrng.pick_from_list(" mate "," bruv "," bledrin "))
 		message = replacetext(message," what "," wot ")
 		message = replacetext(message," drink "," wet ")
 		message = replacetext(message," get "," giz ")
@@ -586,26 +586,26 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
 /datum/mutation/human/elvis/on_life(mob/living/carbon/human/owner)
-	switch(pick(1,2))
+	switch(SSrng.pick_from_list(1,2))
 		if(1)
-			if(prob(15))
+			if(SSrng.probability(15))
 				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing", "smashing")
-				var/dancemoves = pick(dancetypes)
+				var/dancemoves = SSrng.pick_from_list(dancetypes)
 				owner.visible_message("<b>[owner]</b> busts out some [dancemoves] moves!")
 		if(2)
-			if(prob(15))
-				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
+			if(SSrng.probability(15))
+				owner.visible_message("<b>[owner]</b> [SSrng.pick_from_list("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
 /datum/mutation/human/elvis/say_mod(message)
 	if(message)
 		message = " [message] "
 		message = replacetext(message," i'm not "," I aint ")
-		message = replacetext(message," girl ",pick(" honey "," baby "," baby doll "))
-		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
+		message = replacetext(message," girl ",SSrng.pick_from_list(" honey "," baby "," baby doll "))
+		message = replacetext(message," man ",SSrng.pick_from_list(" son "," buddy "," brother"," pal "," friendo "))
 		message = replacetext(message," out of "," outta ")
 		message = replacetext(message," thank you "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
-		message = replacetext(message," yes ",pick(" sure", "yea "))
+		message = replacetext(message," yes ",SSrng.pick_from_list(" sure", "yea "))
 		message = replacetext(message," faggot "," square ")
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)

@@ -187,7 +187,7 @@
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
 
-	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+	var/hat = SSrng.pick_from_list(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
 	H.equip_to_slot_or_del(new hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
@@ -261,7 +261,7 @@
 		else
 			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
-				var/client/C = pick(candidates)
+				var/client/C = SSrng.pick_from_list(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
 				to_chat(user, "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>")
 				cooldown = world.time + 400
@@ -285,13 +285,13 @@
 	M.real_name = user.real_name
 	M.name = user.real_name
 	M.faction = list("[user.real_name]")
-	if(prob(50))
+	if(SSrng.probability(50))
 		var/list/all_species = list()
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = speciestype
 			if(!initial(S.dangerous_existence))
 				all_species += speciestype
-		M.set_species(pick(all_species), icon_update=0)
+		M.set_species(SSrng.pick_from_list(all_species), icon_update=0)
 	M.update_body()
 	M.update_hair()
 	M.update_body_parts()
@@ -304,7 +304,7 @@
 	sword.assigned = assigned
 	sword.faction = list("[assigned]")
 
-	var/randomize = pick("mobster","roman","wizard","cyborg","syndicate","assistant", "animu", "cultist", "highlander", "clown", "killer", "pirate", "soviet", "officer", "gladiator")
+	var/randomize = SSrng.pick_from_list("mobster","roman","wizard","cyborg","syndicate","assistant", "animu", "cultist", "highlander", "clown", "killer", "pirate", "soviet", "officer", "gladiator")
 
 	switch(randomize)
 		if("mobster")
@@ -317,7 +317,7 @@
 			M.put_in_hands_or_del(sword)
 
 		if("roman")
-			var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+			var/hat = SSrng.pick_from_list(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
 			M.equip_to_slot_or_del(new hat(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/roman(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(M), slot_shoes)
@@ -523,7 +523,7 @@
 					user.unset_machine()
 			if("r_leg","l_leg")
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(GLOB.cardinals))
+				var/turf/T = get_step(target,SSrng.pick_from_list(GLOB.cardinals))
 				target.Move(T)
 			if("r_arm","l_arm")
 				target.click_random_mob()
@@ -544,10 +544,10 @@
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
-	if(prob(50) || force)
+	if(SSrng.probability(50) || force)
 		var/way = dir2text(get_dir(victim,get_turf(src)))
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [way]</span>")
-	if(prob(20) || force)
+	if(SSrng.probability(20) || force)
 		var/area/A = get_area(src)
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 

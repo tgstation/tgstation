@@ -100,7 +100,7 @@
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
-		if(prob(1 + I.force * 2))
+		if(SSrng.probability(1 + I.force * 2))
 			unload(0)
 			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>",
 									"<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
@@ -148,9 +148,9 @@
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/item/projectile/Proj)
 	if(..())
-		if(prob(50) && !isnull(load))
+		if(SSrng.probability(50) && !isnull(load))
 			unload(0)
-		if(prob(25))
+		if(SSrng.probability(25))
 			visible_message("<span class='danger'>Something shorts out inside [src]!</span>")
 			wires.cut_random()
 
@@ -653,7 +653,7 @@
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
-	var/damage = rand(5,15)
+	var/damage = SSrng.random(5,15)
 	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
 	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))

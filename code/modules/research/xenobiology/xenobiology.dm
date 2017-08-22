@@ -189,7 +189,7 @@
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
-		theghost = pick(candidates)
+		theghost = SSrng.pick_from_list(candidates)
 		SM.key = theghost.key
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()

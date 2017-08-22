@@ -341,7 +341,7 @@ Contains:
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!torn && prob(50))
+	if(!torn && SSrng.probability(50))
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
 		src.flags_1 &= ~STOPSPRESSUREDMAGE_1
 		src.name = "torn [src]."

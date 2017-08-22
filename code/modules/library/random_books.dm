@@ -1,7 +1,7 @@
 /obj/item/book/manual/random/Initialize()
 	. = ..()
 	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
-	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
+	var/newtype = SSrng.pick_from_list(subtypesof(/obj/item/book/manual) - banned_books)
 	new newtype(loc)
 	qdel(src)
 
@@ -28,7 +28,7 @@
 	if(!book_count || !isnum(book_count))
 		update_icon()
 		return
-	book_count += pick(-1,-1,0,1,1)
+	book_count += SSrng.pick_from_list(-1,-1,0,1,1)
 	create_random_books(book_count, src, FALSE, category)
 	update_icon()
 
@@ -37,15 +37,15 @@
 	if(!isnum(amount) || amount<1)
 		return
 	if (!SSdbcore.Connect())
-		if(fail_loud || prob(5))
+		if(fail_loud || SSrng.probability(5))
 			var/obj/item/paper/P = new(location)
 			P.info = "There once was a book from Nantucket<br>But the database failed us, so f*$! it.<br>I tried to be good to you<br>Now this is an I.O.U<br>If you're feeling entitled, well, stuff it!<br><br><font color='gray'>~</font>"
 			P.update_icon()
 		return
-	if(prob(25))
+	if(SSrng.probability(25))
 		category = null
 	var/c = category? " AND category='[sanitizeSQL(category)]'" :""
-	var/datum/DBQuery/query_get_random_books = SSdbcore.NewQuery("SELECT * FROM [format_table_name("library")] WHERE isnull(deleted)[c] GROUP BY title ORDER BY rand() LIMIT [amount];") // isdeleted copyright (c) not me
+	var/datum/DBQuery/query_get_random_books = SSdbcore.NewQuery("SELECT * FROM [format_table_name("library")] WHERE isnull(deleted)[c] GROUP BY title ORDER BY SSrng.random() LIMIT [amount];") // isdeleted copyright (c) not me
 	if(query_get_random_books.Execute())
 		while(query_get_random_books.NextRow())
 			var/obj/item/book/B = new(location)
@@ -54,7 +54,7 @@
 			B.title		=	query_get_random_books.item[3]
 			B.dat		=	query_get_random_books.item[4]
 			B.name		=	"Book: [B.title]"
-			B.icon_state=	"book[rand(1,8)]"
+			B.icon_state=	"book[SSrng.random(1,8)]"
 	else
 		return
 
@@ -78,6 +78,6 @@
 
 /obj/structure/bookcase/random/reference/Initialize(mapload)
 	. = ..()
-	while(book_count > 0 && prob(ref_book_prob))
+	while(book_count > 0 && SSrng.probability(ref_book_prob))
 		book_count--
 		new /obj/item/book/manual/random(src)

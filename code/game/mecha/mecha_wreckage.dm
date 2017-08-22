@@ -39,7 +39,7 @@
 			return
 		var/obj/item/weldingtool/WT = I
 		if(welder_salvage && welder_salvage.len && WT.remove_fuel(0, user))
-			var/type = prob(70) ? pick(welder_salvage) : null
+			var/type = SSrng.probability(70) ? SSrng.pick_from_list(welder_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
 				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
@@ -56,7 +56,7 @@
 			to_chat(user, "<span class='warning'>You don't see anything that can be cut with [I]!</span>")
 			return
 		else if(wirecutters_salvage && wirecutters_salvage.len)
-			var/type = prob(70) ? pick(wirecutters_salvage) : null
+			var/type = SSrng.probability(70) ? SSrng.pick_from_list(wirecutters_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
 				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
@@ -66,7 +66,7 @@
 
 	else if(istype(I, /obj/item/crowbar))
 		if(crowbar_salvage && crowbar_salvage.len)
-			var/obj/S = pick(crowbar_salvage)
+			var/obj/S = SSrng.pick_from_list(crowbar_salvage)
 			if(S)
 				S.loc = get_turf(user)
 				crowbar_salvage -= S
@@ -92,7 +92,7 @@
 			to_chat(AI, "The remains of your file system have been recovered on a mobile storage device.")
 		else //Give the AI a heads-up that it is probably going to get fixed.
 			AI.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
-		to_chat(user, "<span class='boldnotice'>Backup files recovered</span>: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
+		to_chat(user, "<span class='boldnotice'>Backup files recovered</span>: [AI.name] ([SSrng.random(1000,9999)].exe) salvaged from [name] and stored within local memory.")
 
 	else
 		return ..()
@@ -111,8 +111,8 @@
 								/obj/item/mecha_parts/part/gygax_left_leg,
 								/obj/item/mecha_parts/part/gygax_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
-			var/part = pick(parts)
+		if(parts.len && SSrng.probability(40))
+			var/part = SSrng.pick_from_list(parts)
 			welder_salvage += part
 			parts -= part
 
@@ -153,8 +153,8 @@
 								/obj/item/mecha_parts/part/ripley_left_leg,
 								/obj/item/mecha_parts/part/ripley_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
-			var/part = pick(parts)
+		if(parts.len && SSrng.probability(40))
+			var/part = SSrng.pick_from_list(parts)
 			welder_salvage += part
 			parts -= part
 
@@ -172,8 +172,8 @@
 								/obj/item/mecha_parts/part/ripley_right_leg,
 								/obj/item/clothing/suit/fire)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
-			var/part = pick(parts)
+		if(parts.len && SSrng.probability(40))
+			var/part = SSrng.pick_from_list(parts)
 			welder_salvage += part
 			parts -= part
 
@@ -199,8 +199,8 @@
 							/obj/item/mecha_parts/part/honker_left_leg,
 							/obj/item/mecha_parts/part/honker_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
-			var/part = pick(parts)
+		if(parts.len && SSrng.probability(40))
+			var/part = SSrng.pick_from_list(parts)
 			welder_salvage += part
 			parts -= part
 
@@ -219,8 +219,8 @@
 								/obj/item/mecha_parts/part/durand_left_leg,
 								/obj/item/mecha_parts/part/durand_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
-			var/part = pick(parts)
+		if(parts.len && SSrng.probability(40))
+			var/part = SSrng.pick_from_list(parts)
 			welder_salvage += part
 			parts -= part
 
@@ -244,7 +244,7 @@
 								/obj/item/mecha_parts/part/odysseus_left_leg,
 								/obj/item/mecha_parts/part/odysseus_right_leg)
 	for(var/i = 0; i < 2; i++)
-		if(parts.len && prob(40))
-			var/part = pick(parts)
+		if(parts.len && SSrng.probability(40))
+			var/part = SSrng.pick_from_list(parts)
 			welder_salvage += part
 			parts -= part

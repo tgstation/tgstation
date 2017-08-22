@@ -20,7 +20,7 @@
 
 		if(issilicon(M))
 			SEND_SOUND(M, sound('sound/weapons/flash.ogg'))
-			M.Knockdown(rand(100,200))
+			M.Knockdown(SSrng.random(100,200))
 
 	for(var/obj/machinery/light/L in range(4, user))
 		L.on = 1

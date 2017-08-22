@@ -93,7 +93,7 @@
 
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new /obj/effect/proc_holder/spell/targeted/mind_transfer
 	while(mobs.len > 1)
-		var/mob/living/carbon/human/H = pick(mobs)
+		var/mob/living/carbon/human/H = SSrng.pick_from_list(mobs)
 		mobs -= H
 		swapper.cast(list(H), mobs[mobs.len], 1)
 		mobs -= mobs[mobs.len]

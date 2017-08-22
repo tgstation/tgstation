@@ -121,13 +121,13 @@
 
 	if(abilities)
 		chance_to_hold_onto_points = highest_cost*0.5
-		if(points != 100 && prob(chance_to_hold_onto_points))
+		if(points != 100 && SSrng.probability(chance_to_hold_onto_points))
 			return //Let's save our points for a better ability (unless we're at max points, in which case we can't save anymore!)
 		if(!boss.client)
 			abilities = shuffle(abilities)
 			for(var/ab in abilities)
 				var/datum/action/boss/AB = ab
-				if(prob(AB.usage_probability) && AB.Trigger())
+				if(SSrng.probability(AB.usage_probability) && AB.Trigger())
 					break
 
 

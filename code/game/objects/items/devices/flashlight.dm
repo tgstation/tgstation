@@ -48,7 +48,7 @@
 	add_fingerprint(user)
 	if(istype(M) && on && user.zone_selected in list("eyes", "mouth"))
 
-		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && SSrng.probability(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
@@ -255,7 +255,7 @@
 	light_color = LIGHT_COLOR_FLARE
 
 /obj/item/device/flashlight/flare/New()
-	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
+	fuel = SSrng.random(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
 /obj/item/device/flashlight/flare/process()
@@ -405,7 +405,7 @@
 	var/fuel = 0
 
 /obj/item/device/flashlight/glowstick/Initialize()
-	fuel = rand(1600, 2000)
+	fuel = SSrng.random(1600, 2000)
 	light_color = color
 	..()
 
@@ -490,7 +490,7 @@
 	var/list/glowtypes = typesof(/obj/item/device/flashlight/glowstick)
 	glowtypes -= /obj/item/device/flashlight/glowstick/random
 
-	var/obj/item/device/flashlight/glowstick/glowtype = pick(glowtypes)
+	var/obj/item/device/flashlight/glowstick/glowtype = SSrng.pick_from_list(glowtypes)
 
 	name = initial(glowtype.name)
 	color = initial(glowtype.color)

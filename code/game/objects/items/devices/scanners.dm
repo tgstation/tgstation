@@ -85,7 +85,7 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
+	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && SSrng.probability(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
@@ -117,7 +117,7 @@ MASS SPECTROMETER
 
 	if(M.status_flags & FAKEDEATH)
 		mob_status = "<span class='alert'>Deceased</span>"
-		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
+		oxy_loss = max(SSrng.random(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

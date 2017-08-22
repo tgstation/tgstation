@@ -181,7 +181,7 @@
 
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
-	var/runed = prob(20)
+	var/runed = SSrng.probability(20)
 	if(glass)
 		if(runed)
 			new/obj/machinery/door/airlock/cult/glass(T)
@@ -233,7 +233,7 @@
 					return
 			else /*if(src.justzap)*/
 				return
-		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
+		else if(user.hallucinating() && ishuman(user) && SSrng.probability(4) && !operating)
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
@@ -345,7 +345,7 @@
 		return FALSE
 	if(hasShocked > world.time)
 		return FALSE	//Already shocked someone recently?
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return FALSE //you lucked out, no shock for you
 	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
@@ -741,7 +741,7 @@
 			if(src.shock(user, 100))
 				return
 
-	if(ishuman(user) && prob(40) && src.density)
+	if(ishuman(user) && SSrng.probability(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60 && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)

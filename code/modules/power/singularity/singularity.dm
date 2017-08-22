@@ -115,7 +115,7 @@
 	if(current_size >= STAGE_TWO)
 		move()
 		pulse()
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		if(SSrng.probability(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
 	dissipate()
@@ -286,12 +286,12 @@
 	if(!move_self)
 		return 0
 
-	var/movement_dir = pick(GLOB.alldirs - last_failed_movement)
+	var/movement_dir = SSrng.pick_from_list(GLOB.alldirs - last_failed_movement)
 
 	if(force_move)
 		movement_dir = force_move
 
-	if(target && prob(60))
+	if(target && SSrng.probability(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
 	step(src, movement_dir)
@@ -367,7 +367,7 @@
 
 
 /obj/singularity/proc/event()
-	var/numb = pick(1,2,3,4,5,6)
+	var/numb = SSrng.pick_from_list(1,2,3,4,5,6)
 	switch(numb)
 		if(1)//EMP
 			emp_area()
@@ -392,7 +392,7 @@
 		radiation += round((energy-150)/10,1)
 		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
-		M.rad_act(rand(radiationmin,radiation))
+		M.rad_act(SSrng.random(radiationmin,radiation))
 
 
 /obj/singularity/proc/combust_mobs()

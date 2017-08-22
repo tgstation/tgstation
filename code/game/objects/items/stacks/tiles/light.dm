@@ -10,11 +10,11 @@
 
 /obj/item/stack/tile/light/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-	if(prob(5))
+	if(SSrng.probability(5))
 		state = 3 //broken
-	else if(prob(5))
+	else if(SSrng.probability(5))
 		state = 2 //breaking
-	else if(prob(10))
+	else if(SSrng.probability(10))
 		state = 1 //flickering occasionally
 	else
 		state = 0 //fine

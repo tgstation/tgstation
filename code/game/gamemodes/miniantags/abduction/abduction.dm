@@ -43,7 +43,7 @@
 
 /datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
-	team_names[team_number] = "Mothership [pick(GLOB.possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	team_names[team_number] = "Mothership [SSrng.pick_from_list(GLOB.possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
 	//Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
@@ -58,13 +58,13 @@
 	var/datum/mind/agent
 
 	if(!preset_scientist)
-		scientist = pick(antag_candidates)
+		scientist = SSrng.pick_from_list(antag_candidates)
 		antag_candidates -= scientist
 	else
 		scientist = preset_scientist
 
 	if(!preset_agent)
-		agent = pick(antag_candidates)
+		agent = SSrng.pick_from_list(antag_candidates)
 		antag_candidates -= agent
 	else
 		agent = preset_agent

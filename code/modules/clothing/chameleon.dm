@@ -105,7 +105,7 @@
 	update_look(user, picked_item)
 
 /datum/action/item_action/chameleon/change/proc/random_look(mob/user)
-	var/picked_name = pick(chameleon_list)
+	var/picked_name = SSrng.pick_from_list(chameleon_list)
 	// If a user is provided, then this item is in use, and we
 	// need to update our icons and stuff
 

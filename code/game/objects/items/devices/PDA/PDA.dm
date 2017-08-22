@@ -478,7 +478,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (mode == 2 || mode == 21)//To clear message overlays.
 		update_icon()
 
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if ((honkamt > 0) && (SSrng.probability(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 

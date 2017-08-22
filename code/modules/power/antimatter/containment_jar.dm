@@ -22,7 +22,7 @@
 			if(src)
 				qdel(src)
 		if(2)
-			if(prob((fuel/10)-stability))
+			if(SSrng.probability((fuel/10)-stability))
 				explosion(get_turf(src), 1, 2, 3, 5)
 				if(src)
 					qdel(src)

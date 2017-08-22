@@ -5,8 +5,8 @@
 		var/regex/tongueless_lower = new("\[gdntke]+", "g")
 		var/regex/tongueless_upper = new("\[GDNTKE]+", "g")
 		if(copytext(message, 1, 2) != "*")
-			message = tongueless_lower.Replace(message, pick("aa","oo","'"))
-			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
+			message = tongueless_lower.Replace(message, SSrng.pick_from_list("aa","oo","'"))
+			message = tongueless_upper.Replace(message, SSrng.pick_from_list("AA","OO","'"))
 	else
 		message = T.TongueSpeech(message)
 	if(wear_mask)

@@ -82,7 +82,7 @@
 	stored_power = (fuel/core_power)*fuel*200000
 	//Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
 	if(fuel > (2*core_power))//More fuel has been put in than the current cores can deal with
-		if(prob(50))
+		if(SSrng.probability(50))
 			core_damage = 1//Small chance of damage
 		if((fuel-core_power) > 5)
 			core_damage = 5//Now its really starting to overload the cores
@@ -102,18 +102,18 @@
 		if(1)
 			if(active)
 				toggle_power()
-			stability -= rand(15,30)
+			stability -= SSrng.random(15,30)
 		if(2)
 			if(active)
 				toggle_power()
-			stability -= rand(10,20)
+			stability -= SSrng.random(10,20)
 	..()
 	return 0
 
 
 /obj/machinery/power/am_control_unit/blob_act()
 	stability -= 20
-	if(prob(100-stability))//Might infect the rest of the machine
+	if(SSrng.probability(100-stability))//Might infect the rest of the machine
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.blob_act()
 		qdel(src)

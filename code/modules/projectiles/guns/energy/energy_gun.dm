@@ -117,7 +117,7 @@
 	..()
 
 /obj/item/gun/energy/e_gun/nuclear/proc/failcheck()
-	if(prob(fail_chance) && isliving(loc))
+	if(SSrng.probability(fail_chance) && isliving(loc))
 		var/mob/living/M = loc
 		switch(fail_tick)
 			if(0 to 200)

@@ -50,7 +50,7 @@ Clown
 	if(visualsOnly)
 		return
 
-	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names))
+	H.fully_replace_character_name(H.real_name, SSrng.pick_from_list(GLOB.clown_names))
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

@@ -15,9 +15,9 @@
 		if(!S.dangerous_existence)
 			all_species += speciestype
 
-	var/datum/species/new_species = pick(all_species)
+	var/datum/species/new_species = SSrng.pick_from_list(all_species)
 
-	if(prob(50))
+	if(SSrng.probability(50))
 		all_the_same = 1
 
 	for(var/mob/living/carbon/human/H in GLOB.mob_list) //yes, even the dead
@@ -26,4 +26,4 @@
 		H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
 		to_chat(H, "<span class='notice'>You feel somehow... different?</span>")
 		if(!all_the_same)
-			new_species = pick(all_species)
+			new_species = SSrng.pick_from_list(all_species)

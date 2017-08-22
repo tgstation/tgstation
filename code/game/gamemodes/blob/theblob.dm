@@ -24,7 +24,7 @@
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		GLOB.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
-	setDir(pick(GLOB.cardinals))
+	setDir(SSrng.pick_from_list(GLOB.cardinals))
 	update_icon()
 	.= ..()
 	ConsumeTile()
@@ -90,7 +90,7 @@
 /obj/structure/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
 	var/expanded = FALSE
-	if(prob(70) && expand())
+	if(SSrng.probability(70) && expand())
 		expanded = TRUE
 	var/list/blobs_to_affect = list()
 	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
@@ -98,7 +98,7 @@
 	shuffle_inplace(blobs_to_affect)
 	for(var/L in blobs_to_affect)
 		var/obj/structure/blob/B = L
-		if(!B.overmind && !istype(B, /obj/structure/blob/core) && prob(30))
+		if(!B.overmind && !istype(B, /obj/structure/blob/core) && SSrng.probability(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 			B.update_icon()
 		var/distance = get_dist(get_turf(src), get_turf(B))
@@ -109,7 +109,7 @@
 			var/can_expand = TRUE
 			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
 				can_expand = FALSE
-			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity))
+			if(can_expand && B.pulse_timestamp <= world.time && SSrng.probability(expand_probablity))
 				var/obj/structure/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
 				if(newB)
 					if(expanded)
@@ -152,7 +152,7 @@
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
-			var/dirn = pick(dirs)
+			var/dirn = SSrng.pick_from_list(dirs)
 			dirs.Remove(dirn)
 			T = get_step(src, dirn)
 			if(!(locate(/obj/structure/blob) in T))
@@ -163,7 +163,7 @@
 		return 0
 	var/make_blob = TRUE //can we make a blob?
 
-	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
+	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && SSrng.probability(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
@@ -203,7 +203,7 @@
 	if(severity > 0)
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
-		if(prob(100 - severity * 30))
+		if(SSrng.probability(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/tesla_act(power)

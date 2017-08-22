@@ -119,5 +119,5 @@
 
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
 	if(breath && breath.total_moles() > 0 && !sneaking)
-		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
+		playsound(get_turf(src), SSrng.pick_from_list('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
 	..()

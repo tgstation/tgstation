@@ -126,7 +126,7 @@
 	if(check_streak(A,D))
 		return 1
 	add_logs(A, D, "punched")
-	var/picked_hit_type = pick("punches", "kicks")
+	var/picked_hit_type = SSrng.pick_from_list("punches", "kicks")
 	var/bonus_damage = 10
 	if(D.IsKnockdown() || D.resting || D.lying)
 		bonus_damage += 5
@@ -147,7 +147,7 @@
 	if(check_streak(A,D))
 		return 1
 	var/obj/item/I = null
-	if(prob(60))
+	if(SSrng.probability(60))
 		I = D.get_active_held_item()
 		if(I)
 			if(D.drop_item())

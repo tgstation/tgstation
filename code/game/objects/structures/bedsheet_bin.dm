@@ -232,7 +232,7 @@ LINEN BINS
 /obj/item/bedsheet/random/Initialize()
 	. = INITIALIZE_HINT_QDEL
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
+	var/type = SSrng.pick_from_list(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
 	new type(loc)
 
 /obj/structure/bedsheetbin

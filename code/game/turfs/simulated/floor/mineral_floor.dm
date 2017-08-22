@@ -222,7 +222,7 @@
 
 /turf/open/floor/mineral/abductor/Initialize()
 	..()
-	icon_state = "alienpod[rand(1,9)]"
+	icon_state = "alienpod[SSrng.random(1,9)]"
 
 /turf/open/floor/mineral/abductor/break_tile()
 	return //unbreakable

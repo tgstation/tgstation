@@ -62,7 +62,7 @@
 
 	var/datum/reagent/R = null
 	if(random_reagent)
-		R = pick(subtypesof(/datum/reagent))
+		R = SSrng.pick_from_list(subtypesof(/datum/reagent))
 		R = GLOB.chemical_reagents_list[initial(R.id)]
 
 	queen_bee = new(src)
@@ -99,7 +99,7 @@
 			var/freebee = FALSE //a freebee, geddit?, hahaha HAHAHAHA
 			if(bees.len <= 1) //there's always one set of worker bees, this isn't colony collapse disorder its 2d spessmen
 				freebee = TRUE
-			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
+			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && SSrng.probability(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
 				var/mob/living/simple_animal/hostile/poison/bees/B = new(src)

@@ -411,7 +411,7 @@
 	if(hitdamage)
 		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
-	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	A.BB.color = rgb(SSrng.random(0, 255), SSrng.random(0, 255), SSrng.random(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
