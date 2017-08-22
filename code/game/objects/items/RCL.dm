@@ -19,11 +19,13 @@
 	var/list/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
 	var/current_color_index = 1
 	var/ghetto = FALSE
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
-		
+
 		if(!loaded)
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
@@ -168,13 +170,18 @@
 		loaded.item_color	 = colors[current_color_index]
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
+	update_icon()
 
 
-/obj/item/twohanded/rcl/pre_loaded/Initialize () //Comes preloaded with cable, for testing stuff
+/obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
 	. = ..()
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
+	update_icon()
+
+/obj/item/twohanded/rcl/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/twohanded/rcl/ui_action_click(mob/user, action)

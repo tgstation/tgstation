@@ -22,7 +22,7 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
-	var/atmos_sealed = (H.wear_suit && (H.wear_suit.flags & STOPSPRESSUREDMAGE)) && (H.head && (H.head.flags & STOPSPRESSUREDMAGE))
+	var/atmos_sealed = (H.wear_suit && (H.wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (H.head && (H.head.flags_1 & STOPSPRESSUREDMAGE_1))
 	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
 		if(environment)
 			if(environment.total_moles())

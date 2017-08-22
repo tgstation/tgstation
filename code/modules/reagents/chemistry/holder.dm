@@ -370,9 +370,8 @@
 					else
 						if(cached_my_atom.type == C.required_container)
 							matching_container = 1
-					if (isliving(cached_my_atom)) //Makes it so certain chemical reactions don't occur in mobs
-						if (C.mob_react)
-							return
+					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+						return
 					if(!C.required_other)
 						matching_other = 1
 

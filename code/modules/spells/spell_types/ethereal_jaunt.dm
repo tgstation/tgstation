@@ -90,7 +90,7 @@
 	if ((movedelay > world.time) || reappearing || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	setDir(direction)
-	if(!(newLoc.flags & NOJAUNT))
+	if(!(newLoc.flags_1 & NOJAUNT_1))
 		loc = newLoc
 	else
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")

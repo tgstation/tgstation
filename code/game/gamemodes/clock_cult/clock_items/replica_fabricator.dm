@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/stored_power = 0 //Requires power to function
 	var/max_power = CLOCKCULT_POWER_UNIT * 10
 	var/uses_power = TRUE
@@ -297,7 +297,7 @@
 			if(!silent)
 				to_chat(user, "<span class='warning'>[L] does not serve Ratvar!</span>")
 			return FALSE
-		if(L.health >= L.maxHealth || (L.flags & GODMODE))
+		if(L.health >= L.maxHealth || (L.flags_1 & GODMODE))
 			if(!silent)
 				to_chat(user, "<span class='warning'>[L == user ? "You are" : "[L] is"] at maximum health!</span>")
 			return FALSE

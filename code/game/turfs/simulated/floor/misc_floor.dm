@@ -46,11 +46,18 @@
 /turf/open/floor/circuit/airless
 	initial_gas_mix = "TEMP=2.7"
 
+/turf/open/floor/circuit/killroom
+	name = "Killroom Floor"
+	initial_gas_mix = "n2=500;TEMP=80"
+
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "Mainframe Base"
+
+/turf/open/floor/circuit/telecomms/server
+	name = "Server Base"
 
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"

@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 10
 	throwforce = 10
 	throw_speed = 1
