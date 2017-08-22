@@ -99,11 +99,7 @@
 	var/turf/T = get_turf(holder)
 	if(istype(T, /turf/open/floor/vines))
 		T.ChangeTurf(T.baseturf)
-
-/datum/spacevine_mutation/bluespace
-	name = "bluespace"
-	hue = "#3333ff"
-	quality = MINOR_NEGATIVE
+		b
 
 /datum/spacevine_mutation/light
 	name = "light"
