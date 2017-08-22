@@ -57,9 +57,7 @@
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				var/datum/symptom/new_symp = new S.type
-				new_symp.name = S.name
-				new_symp.neutered = S.neutered
+				var/datum/symptom/new_symp = S.Copy()
 				symptoms += new_symp
 
 	Refresh()

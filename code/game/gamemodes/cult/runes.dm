@@ -476,7 +476,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	//BEGIN THE SUMMONING
 	used = TRUE
 	..()
-	send_to_playing_players('sound/effects/dimensional_rend.ogg')
+	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)

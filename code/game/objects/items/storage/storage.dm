@@ -71,7 +71,7 @@
 					handle_item_insertion(I, 0 , L)
 
 
-/obj/item/weapon/storage/get_dumping_location(obj/item/weapon/storage/source,mob/user)
+/obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
 	return src
 
 //Tries to dump content
@@ -416,6 +416,8 @@
 
 	handle_item_insertion(W, 0 , user)
 
+/obj/item/storage/AllowDrop()
+	return TRUE
 
 /obj/item/storage/attack_hand(mob/user)
 	if(user.s_active == src && loc == user) //if you're already looking inside the storage item

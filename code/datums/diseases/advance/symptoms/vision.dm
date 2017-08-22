@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/visionloss
 
 	name = "Hyphema"
+	desc = "The virus causes inflammation of the retina, leading to eye damage and eventually blindness."
 	stealth = -1
 	resistance = -4
 	stage_speed = -4
@@ -28,6 +29,8 @@ Bonus
 	symptom_delay_min = 25
 	symptom_delay_max = 80
 	var/remove_eyes = FALSE
+	threshold_desc = "<b>Resistance 12:</b> Weakens extraocular muscles, eventually leading to complete detachment of the eyes.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/visionloss/Start(datum/disease/advance/A)
 	..()
@@ -88,6 +91,7 @@ Bonus
 /datum/symptom/visionaid
 
 	name = "Ocular Restoration"
+	desc = "The virus stimulates the production and replacement of eye cells, causing the host to regenerate its eyes when damaged."
 	stealth = -1
 	resistance = -3
 	stage_speed = -2
