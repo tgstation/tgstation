@@ -76,6 +76,6 @@
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 	..()
 
-/mob/living/simple_animal/hostile/gorilla/can_use_guns(var/obj/item/G)
+/mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
 	to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 	return FALSE
