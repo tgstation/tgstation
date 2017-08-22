@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/blob,
 		/obj/effect/rune,
 		/obj/structure/spider/spiderling,
-		/obj/item/weapon/disk/nuclear,
+		/obj/item/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/device/radio/beacon,
 		/obj/singularity,
@@ -18,7 +18,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/device/warp_cube,
 		/obj/machinery/r_n_d/protolathe, //print tracking beacons, send shuttle
-		/obj/machinery/autolathe //same
+		/obj/machinery/autolathe, //same
+		/obj/item/projectile/beam/wormhole,
+		/obj/effect/portal,
+		/obj/item/device/shared_storage
 	)))
 
 /obj/docking_port/mobile/supply

@@ -156,8 +156,13 @@
 	if(!I || !user)
 		return 0
 
-	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected)) //what we're actually ending up trying to hit.
+	var/obj/item/bodypart/affecting
+	if(user == src)
+		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
+	else
+		affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
+
 	SSblackbox.add_details("item_used_for_combat","[I.type]|[I.force]")
 	SSblackbox.add_details("zone_targeted","[target_area]")
 
@@ -437,7 +442,7 @@
 			else if(S.siemens_coefficient == (-1))
 				total_coeff -= 1
 		siemens_coeff = total_coeff
-		if(HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+		if(flags_2 & TESLA_IGNORE_2)
 			siemens_coeff = 0
 	else if(!safety)
 		var/gloves_siemens_coeff = 1

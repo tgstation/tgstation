@@ -63,7 +63,7 @@
 	density = TRUE
 	anchored = FALSE
 	light_range = 4
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 	critical_machine = TRUE
 
@@ -131,8 +131,6 @@
 	var/produces_gas = TRUE
 	var/obj/effect/countdown/supermatter/countdown
 
-/obj/machinery/power/supermatter_shard/make_frozen_visual()
-	return
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
@@ -221,7 +219,7 @@
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
-			M << 'sound/magic/charge.ogg'
+			SEND_SOUND(M, 'sound/magic/charge.ogg')
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
@@ -459,7 +457,7 @@
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
 	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
-			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
+			SEND_SOUND(M, 'sound/effects/supermatter.ogg') //everyone goan know bout this
 			to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
 	qdel(src)
 	return gain
@@ -526,9 +524,9 @@
 			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
-	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
+	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
-	if(istype(W, /obj/item/weapon/scalpel/supermatter))
+	if(istype(W, /obj/item/scalpel/supermatter))
 		playsound(src, W.usesound, 100, 1)
 		to_chat(user, "<span class='notice'>You carefully begin to scrape \the [src] with \the [W]...</span>")
 		if(do_after(user, 60 * W.toolspeed, TRUE, src))
@@ -584,7 +582,7 @@
 			L.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
 				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
 		else
-			L.show_message("<span class='italics'>You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
+			L.show_message("<span class='italics'>You hear an unearthly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
 
 // When you wanna make a supermatter shard for the dramatic effect, but
 // don't want it exploding suddenly

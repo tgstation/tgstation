@@ -54,11 +54,11 @@
 
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
+	circuit = /obj/item/circuitboard/machine/pacman
 	var/sheets = 0
 	var/max_sheets = 100
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
-	var/board_path = /obj/item/weapon/circuitboard/machine/pacman
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 260
 	var/current_heat = 0
@@ -68,33 +68,11 @@
 	if(anchored)
 		connect_to_network()
 
-/obj/machinery/power/port_gen/pacman/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
-	B.apply_default_parts(src)
+/obj/machinery/power/port_gen/pacman/Initialize()
+	. = ..()
 
 	var/obj/sheet = new sheet_path(null)
 	sheet_name = sheet.name
-
-/obj/item/weapon/circuitboard/machine/pacman
-	name = "PACMAN-type Generator (Machine Board)"
-	build_path = /obj/machinery/power/port_gen/pacman
-	origin_tech = "programming=2;powerstorage=3;plasmatech=3;engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1)
-
-/obj/item/weapon/circuitboard/machine/pacman/super
-	name = "SUPERPACMAN-type Generator (Machine Board)"
-	build_path = /obj/machinery/power/port_gen/pacman/super
-	origin_tech = "programming=3;powerstorage=4;engineering=4"
-
-/obj/item/weapon/circuitboard/machine/pacman/mrs
-	name = "MRSPACMAN-type Generator (Machine Board)"
-	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
-	origin_tech = "programming=3;powerstorage=4;engineering=4;plasmatech=4"
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
@@ -103,10 +81,10 @@
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
 	var/consumption_coeff = 0
-	for(var/obj/item/weapon/stock_parts/SP in component_parts)
-		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
+	for(var/obj/item/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/stock_parts/matter_bin))
 			max_sheets = SP.rating * SP.rating * 50
-		else if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
+		else if(istype(SP, /obj/item/stock_parts/capacitor))
 			temp_rating += SP.rating
 		else
 			consumption_coeff += SP.rating
@@ -190,7 +168,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/wrench))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -203,7 +181,7 @@
 
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			return
-		else if(istype(O, /obj/item/weapon/screwdriver))
+		else if(istype(O, /obj/item/screwdriver))
 			panel_open = !panel_open
 			playsound(src.loc, O.usesound, 50, 1)
 			if(panel_open)
@@ -294,10 +272,10 @@
 	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen1_0"
 	base_icon = "portgen1"
+	circuit = /obj/item/circuitboard/machine/pacman/super
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 85
-	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
 
 /obj/machinery/power/port_gen/pacman/super/overheat()
 	explosion(src.loc, 3, 3, 3, -1)
@@ -306,10 +284,10 @@
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
 	base_icon = "portgen2"
 	icon_state = "portgen2_0"
+	circuit = /obj/item/circuitboard/machine/pacman/mrs
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80
-	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
 
 /obj/machinery/power/port_gen/pacman/mrs/overheat()
 	explosion(src.loc, 4, 4, 4, -1)

@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(radiochannels, list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
-	"Centcom" = 1337,
+	"CentCom" = 1337,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"1355" = "Medical",
 	"1357" = "Engineering",
 	"1359" = "Security",
-	"1337" = "Centcom",
+	"1337" = "CentCom",
 	"1213" = "Syndicate",
 	"1347" = "Supply",
 	"1349" = "Service",
@@ -292,7 +292,7 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 /datum/signal/proc/debug_print()
 	if (source)
-		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
+		. = "signal = {source = '[source]' [COORD(source)]\n"
 	else
 		. = "signal = {source = '[source]' ()\n"
 	for (var/i in data)

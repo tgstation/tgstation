@@ -49,7 +49,7 @@
 /turf/open/floor/plating/ashplanet/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
-/turf/open/floor/plating/lava/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+/turf/open/lava/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
 /turf/open/floor/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
@@ -328,7 +328,7 @@
 		return
 	if(health == maxHealth)
 		return FALSE
-	else if(!(flags & GODMODE))
+	else if(!(flags_1 & GODMODE))
 		user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
 		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
 		fabricator.repairing = src

@@ -24,6 +24,7 @@
 
 	var/datum/material_container/materials
 	var/list/using_materials
+	var/starting_amount = 0
 	var/metal_cost = 1000
 	var/glass_cost = 1000
 	var/power_used = 1000
@@ -52,34 +53,27 @@
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
-/obj/machinery/droneDispenser/New()
-	..()
-	obj_integrity = max_integrity
-	materials = new(src, list(MAT_METAL, MAT_GLASS),
-		MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
-
+/obj/machinery/droneDispenser/Initialize()
+	. = ..()
+	materials = new(src, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
+	materials.insert_amount(starting_amount)
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
 
 /obj/machinery/droneDispenser/Destroy()
-	qdel(materials)
-	. = ..()
+	QDEL_NULL(materials)
+	return ..()
 
-/obj/machinery/droneDispenser/preloaded/New()
-	..()
-	materials.insert_amount(5000)
+/obj/machinery/droneDispenser/preloaded
+	starting_amount = 5000
 
 /obj/machinery/droneDispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
-	desc = "A suspicious machine that will create Syndicate \
-		exterminator drones when supplied with metal and glass. Disgusting."
+	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting."
 	dispense_type = /obj/item/drone_shell/syndrone
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
-
-/obj/machinery/droneDispenser/syndrone/New()
-	..()
-	materials.insert_amount(25000)
+	starting_amount = 25000
 
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
@@ -101,10 +95,7 @@
 	metal_cost = 2000
 	glass_cost = 2000
 	power_used = 2000
-
-/obj/machinery/droneDispenser/snowflake/preloaded/New()
-	..()
-	materials.insert_amount(10000)
+	starting_amount = 10000
 
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
@@ -127,25 +118,6 @@
 	end_create_message = "slams open, revealing out a hivebot!"
 	recharge_sound = null
 	recharge_message = null
-	var/static/list/hivebot_dispensable_types = list(/mob/living/simple_animal/hostile/hivebot, /mob/living/simple_animal/hostile/hivebot/range, /mob/living/simple_animal/hostile/hivebot/rapid)
-
-/obj/machinery/droneDispenser/hivebot/invasion
-	name = "invasion fabricator"
-	desc = "A huge machine designed to withstand intense pressures. It whirs with activity as steam hisses from vents in its sides."
-	production_time = 10
-	dispense_type = /mob/living/simple_animal/hostile/hivebot
-	work_sound = 'sound/machines/copier.ogg'
-	begin_create_message = "closes, humming and whirring..."
-	end_create_message = "slams open, revealing a hivebot!"
-	recharge_sound = null
-	recharge_message = null
-
-/obj/machinery/droneDispenser/hivebot/invasion/Dispense()
-	dispense_type = pick(hivebot_dispensable_types)
-	return ..()
-
-/obj/machinery/droneDispenser/hivebot/invasion/ex_act(severity)
-	return //hivebot don give a fuck about bombs
 
 /obj/machinery/droneDispenser/swarmer
 	name = "swarmer fabricator"
@@ -189,10 +161,6 @@
 		stat |= NOPOWER
 	update_icon()
 
-/obj/machinery/droneDispenser/proc/Dispense()
-	var/atom/A = new dispense_type(get_turf(src))
-	A.admin_spawned = admin_spawned
-
 /obj/machinery/droneDispenser/process()
 	..()
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
@@ -223,8 +191,9 @@
 			materials.use_amount(using_materials)
 			if(power_used)
 				use_power(power_used)
-			
-			Dispense()
+
+			var/atom/A = new dispense_type(loc)
+			A.admin_spawned = admin_spawned
 
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)
@@ -281,17 +250,17 @@
 		else
 			to_chat(user, "<span class='warning'>The [src] isn't accepting the [sheets].</span>")
 
-	else if(istype(O, /obj/item/weapon/crowbar))
+	else if(istype(O, /obj/item/crowbar))
 		materials.retrieve_all()
 		playsound(loc, O.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
-	else if(istype(O, /obj/item/weapon/weldingtool))
+	else if(istype(O, /obj/item/weldingtool))
 		if(!(stat & BROKEN))
 			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
-		var/obj/item/weapon/weldingtool/WT = O
+		var/obj/item/weldingtool/WT = O
 
 		if(!WT.isOn())
 			return
@@ -323,7 +292,7 @@
 		return ..()
 
 /obj/machinery/droneDispenser/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			if(break_message)
 				audible_message("<span class='warning'>[src] \
@@ -334,7 +303,7 @@
 			update_icon()
 
 /obj/machinery/droneDispenser/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 5)
 	qdel(src)
 

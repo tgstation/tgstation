@@ -35,7 +35,7 @@
 /obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
@@ -53,12 +53,12 @@
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/internals/oxygen
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas
-	storage_type = /obj/item/weapon/watertank/atmos
+	storage_type = /obj/item/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
@@ -79,30 +79,30 @@
 /obj/machinery/suit_storage_unit/syndicate
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	storage_type = /obj/item/tank/jetpack/oxygen/harness
 
 /obj/machinery/suit_storage_unit/ert/command
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/engineer
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/medical
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
-/obj/machinery/suit_storage_unit/New()
-	..()
+/obj/machinery/suit_storage_unit/Initialize()
+	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)
 		suit = new suit_type(src)
@@ -115,18 +115,10 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/Destroy()
-	if(suit)
-		qdel(suit)
-		suit = null
-	if(helmet)
-		qdel(helmet)
-		helmet = null
-	if(mask)
-		qdel(mask)
-		mask = null
-	if(storage)
-		qdel(storage)
-		storage = null
+	QDEL_NULL(suit)
+	QDEL_NULL(helmet)
+	QDEL_NULL(mask)
+	QDEL_NULL(storage)
 	return ..()
 
 /obj/machinery/suit_storage_unit/update_icon()
@@ -169,7 +161,7 @@
 	occupant = null
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_contents()
 		new /obj/item/stack/sheet/metal (loc, 2)

@@ -30,7 +30,7 @@
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
-	sound_to_playing_players("im_here")
+	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
 
 	var/area/A = get_area(src)
 	if(A)
@@ -44,17 +44,11 @@
 	var/souls = 0
 	var/resolved = FALSE
 
-/obj/singularity/narsie/large/cult/proc/resize(var/ratio)
-	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	ntransform.Scale(ratio)
-	animate(src, transform = ntransform, time = 40, easing = EASE_IN|EASE_OUT)
-
 /obj/singularity/narsie/large/cult/Initialize()
 	. = ..()
 	GLOB.cult_narsie = src
 	deltimer(GLOB.blood_target_reset_timer)
 	GLOB.blood_target = src
-	resize(0.6)
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
 		if(isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current
@@ -77,7 +71,7 @@
 	sleep(1150)
 	if(resolved == FALSE)
 		resolved = TRUE
-		world << sound('sound/machines/alarm.ogg')
+		sound_to_playing_players('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 

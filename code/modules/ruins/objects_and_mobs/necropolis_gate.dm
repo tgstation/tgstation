@@ -4,7 +4,7 @@
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
-	flags = ON_BORDER
+	flags_1 = ON_BORDER_1
 	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
@@ -72,7 +72,7 @@
 	layer = EDGED_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	opacity = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
@@ -175,10 +175,12 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		else
 			message_admins("[user ? key_name_admin(user):"Unknown"] has released Legion!")
 			log_game("[user ? key_name(user):"Unknown"] released Legion.")
+
+		var/sound/legion_sound = sound('sound/creatures/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
-				M.playsound_local(T, 'sound/creatures/legion_spawn.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
+				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, S = legion_sound)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
@@ -258,7 +260,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(falling || fallen)
 		return
 	var/turf/T = get_turf(src)
-	if(!istype(T, /turf/open/floor/plating/lava) && !istype(T, /turf/open/chasm)) //nothing to sink or fall into
+	if(!istype(T, /turf/open/lava) && !istype(T, /turf/open/chasm)) //nothing to sink or fall into
 		return
 	var/obj/item/I
 	if(istype(AM, /obj/item))

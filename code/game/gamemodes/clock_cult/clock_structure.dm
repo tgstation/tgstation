@@ -99,7 +99,7 @@
 		return ..()
 
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
-	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
+	if(is_servant_of_ratvar(user) && istype(I, /obj/item/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
 			update_anchored(user)
 		return 1
@@ -133,7 +133,7 @@
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
 	density = FALSE
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
 /obj/structure/destructible/clockwork/massive/Initialize()
 	. = ..()

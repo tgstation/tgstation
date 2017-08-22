@@ -5,9 +5,10 @@
 	icon_state = "dnamod"
 	density = TRUE
 	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/plantgenes
 
 	var/obj/item/seeds/seed
-	var/obj/item/weapon/disk/plantgene/disk
+	var/obj/item/disk/plantgene/disk
 
 	var/list/core_genes = list()
 	var/list/reagent_genes = list()
@@ -22,23 +23,8 @@
 	var/min_wchance = 67
 	var/min_wrate = 10
 
-/obj/machinery/plantgenes/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/plantgenes
-	name = "Plant DNA Manipulator (Machine Board)"
-	build_path = /obj/machinery/plantgenes
-	origin_tech = "programming=3;biotech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/scanning_module = 1)
-
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if(M.rating > 3)
 			max_potency = 95
 		else
@@ -46,7 +32,7 @@
 
 		max_yield = initial(max_yield) + (M.rating*2) // 4,6,8,10 	Clamps at 10
 
-	for(var/obj/item/weapon/stock_parts/scanning_module/SM in component_parts)
+	for(var/obj/item/stock_parts/scanning_module/SM in component_parts)
 		if(SM.rating > 3) //If you create t5 parts I'm a step ahead mwahahaha!
 			min_production = 1
 		else
@@ -54,12 +40,12 @@
 
 		max_endurance = initial(max_endurance) + (SM.rating * 25) // 35,60,85,100	Clamps at 10min 100max
 
-	for(var/obj/item/weapon/stock_parts/micro_laser/ML in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
 		var/wratemod = ML.rating * 2.5
 		min_wrate = Floor(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
 		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
-	for(var/obj/item/weapon/circuitboard/machine/plantgenes/vaultcheck in component_parts)
-		if(istype(vaultcheck, /obj/item/weapon/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
+	for(var/obj/item/circuitboard/machine/plantgenes/vaultcheck in component_parts)
+		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
 			max_potency = 100
 			max_yield = 10
 			min_production = 1
@@ -100,7 +86,7 @@
 			to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 		return
-	else if(istype(I, /obj/item/weapon/disk/plantgene))
+	else if(istype(I, /obj/item/disk/plantgene))
 		if(disk)
 			to_chat(user, "<span class='warning'>A data disk is already loaded into the machine!</span>")
 		else
@@ -296,7 +282,7 @@
 			update_genes()
 		else
 			var/obj/item/I = usr.get_active_held_item()
-			if(istype(I, /obj/item/weapon/disk/plantgene))
+			if(istype(I, /obj/item/disk/plantgene))
 				if(!usr.drop_item())
 					return
 				disk = I
@@ -421,29 +407,15 @@
 	seed.name = "experimental " + seed.name
 	seed.icon_state = "seed-x"
 
-
-
 // Gene modder for seed vault ship, built with high tech alien parts.
-/obj/machinery/plantgenes/seedvault/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes/vault(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/plantgenes/vault
-	name = "alien board (Plant DNA Manipulator)"
-	icon_state = "abductor_mod"
-	origin_tech = "programming=5;biotech=5"
-	// It wasn't made by actual abductors race, so no abductor tech here.
-	def_components = list(
-		/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/femto,
-		/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/quadultra,
-		/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/triphasic)
+/obj/machinery/plantgenes/seedvault
+	circuit = /obj/item/circuitboard/machine/plantgenes/vault
 
 /*
  *  Plant DNA disk
  */
 
-/obj/item/weapon/disk/plantgene
+/obj/item/disk/plantgene
 	name = "plant data disk"
 	desc = "A disk for storing plant genetic data."
 	icon_state = "datadisk_hydro"
@@ -452,22 +424,22 @@
 	var/read_only = 0 //Well, it's still a floppy disk
 	unique_rename = 1
 
-/obj/item/weapon/disk/plantgene/New()
+/obj/item/disk/plantgene/New()
 	..()
 	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
-/obj/item/weapon/disk/plantgene/proc/update_name()
+/obj/item/disk/plantgene/proc/update_name()
 	if(gene)
 		name = "[gene.get_name()] (Plant Data Disk)"
 	else
 		name = "plant data disk"
 
-/obj/item/weapon/disk/plantgene/attack_self(mob/user)
+/obj/item/disk/plantgene/attack_self(mob/user)
 	read_only = !read_only
 	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
-/obj/item/weapon/disk/plantgene/examine(mob/user)
+/obj/item/disk/plantgene/examine(mob/user)
 	..()
 	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")

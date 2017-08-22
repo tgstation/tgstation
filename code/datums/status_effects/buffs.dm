@@ -37,7 +37,7 @@
 	icon_state = "shadow_mend"
 
 /datum/status_effect/void_price/tick()
-	owner << sound('sound/magic/summon_karp.ogg', volume = 25)
+	SEND_SOUND(owner, sound('sound/magic/summon_karp.ogg', volume = 25))
 	owner.adjustBruteLoss(3)
 
 
@@ -192,7 +192,7 @@
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG in owner.held_items)
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
 		if(HG.awakened)
@@ -247,7 +247,7 @@
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))
 			var/mob/living/M = B.current
-			M << 'sound/hallucinations/veryfar_noise.ogg'
+			SEND_SOUND(M, sound('sound/hallucinations/veryfar_noise.ogg'))
 			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in \the [A]!</span>")
 
 /datum/status_effect/cult_master/tick()

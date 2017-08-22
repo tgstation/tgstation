@@ -11,8 +11,8 @@
 	idle_power_usage = 0
 	var/obj/item/device/radio/beacon/Beacon
 
-/obj/machinery/bluespace_beacon/New()
-	..()
+/obj/machinery/bluespace_beacon/Initialize()
+	. = ..()
 	var/turf/T = loc
 	Beacon = new /obj/item/device/radio/beacon
 	Beacon.invisibility = INVISIBILITY_MAXIMUM
@@ -21,9 +21,7 @@
 	hide(T.intact)
 
 /obj/machinery/bluespace_beacon/Destroy()
-	if(Beacon)
-		qdel(Beacon)
-	Beacon = null
+	QDEL_NULL(Beacon)
 	return ..()
 
 // update the invisibility and icon

@@ -72,8 +72,9 @@
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-	//Logs all hrefs
-	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	//Logs all hrefs, except chat pings
+	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -626,7 +627,7 @@ GLOBAL_LIST(external_rsc_urls)
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
+		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
 
 
 //Hook, override it to run code when dir changes
@@ -643,12 +644,6 @@ GLOBAL_LIST(external_rsc_urls)
 		if ("key")
 			return FALSE
 
-/client/proc/clear_click_catcher()
-	if(!LAZYLEN(click_catcher_tiles))
-		return
-	for(var/I in click_catcher_tiles)
-		screen -= I
-		qdel(I)
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -663,12 +658,8 @@ GLOBAL_LIST(external_rsc_urls)
 		screen += void
 
 /client/proc/apply_clickcatcher()
-	clear_click_catcher()
 	generate_clickcatcher()
-	click_catcher_tiles = void.UpdateGreed(view,view)
-	for(var/obj/screen/OS in click_catcher_tiles)
-		screen += OS
-
+	void.UpdateGreed(view,view)
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

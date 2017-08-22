@@ -6,13 +6,13 @@
 	icon_keyboard = "no_keyboard"
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
-	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
+	circuit = /obj/item/circuitboard/computer/stockexchange
 	clockwork = TRUE //it'd look weird
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/stockexchange/New()
-	..()
+/obj/machinery/computer/stockexchange/Initialize()
+	. = ..()
 	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()

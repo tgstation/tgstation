@@ -46,7 +46,7 @@
 	melee_damage_upper = 20
 	deathmessage = "collapses into a pile of bones, its gear falling to the floor!"
 	loot = list(/obj/effect/decal/remains/human,
-				/obj/item/weapon/twohanded/spear,
+				/obj/item/twohanded/spear,
 				/obj/item/clothing/shoes/winterboots,
 				/obj/item/clothing/suit/hooded/wintercoat)
 
@@ -71,7 +71,7 @@
 	loot = list(/obj/effect/decal/remains/human,
 				/obj/item/clothing/suit/armor/riot/knight/templar,
 				/obj/item/clothing/head/helmet/knight/templar,
-				/obj/item/weapon/claymore/weak{name = "holy sword"})
+				/obj/item/claymore/weak{name = "holy sword"})
 
 /mob/living/simple_animal/hostile/skeleton/ice
 	name = "ice skeleton"

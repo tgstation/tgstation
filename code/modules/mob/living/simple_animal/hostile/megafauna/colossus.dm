@@ -48,7 +48,7 @@ Difficulty: Very Hard
 	score_type = COLOSSUS_SCORE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
-	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
+	butcher_results = list(/obj/item/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
 
@@ -78,7 +78,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			INVOKE_ASYNC(src, .proc/spiral_shoot, rand(0, 1))
+			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -142,46 +142,11 @@ Difficulty: Very Hard
 
 	sleep(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot)
-	INVOKE_ASYNC(src, .proc/spiral_shoot, 1)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = FALSE, counter_start = 8)
 	var/counter = counter_start
-	var/turf/marker
 	for(var/i in 1 to 80)
-		switch(counter)
-			if(1)
-				marker = locate(x, y - 2, z)
-			if(2)
-				marker = locate(x - 1, y - 2, z)
-			if(3)
-				marker = locate(x - 2, y - 2, z)
-			if(4)
-				marker = locate(x - 2, y - 1, z)
-			if(5)
-				marker = locate(x - 2, y, z)
-			if(6)
-				marker = locate(x - 2, y + 1, z)
-			if(7)
-				marker = locate(x - 2, y + 2, z)
-			if(8)
-				marker = locate(x - 1, y + 2, z)
-			if(9)
-				marker = locate(x, y + 2, z)
-			if(10)
-				marker = locate(x + 1, y + 2, z)
-			if(11)
-				marker = locate(x + 2, y + 2, z)
-			if(12)
-				marker = locate(x + 2, y + 1, z)
-			if(13)
-				marker = locate(x + 2, y, z)
-			if(14)
-				marker = locate(x + 2, y - 1, z)
-			if(15)
-				marker = locate(x + 2, y - 2, z)
-			if(16)
-				marker = locate(x + 1, y - 2, z)
-
 		if(negative)
 			counter--
 		else
@@ -190,25 +155,25 @@ Difficulty: Very Hard
 			counter = 1
 		if(counter < 1)
 			counter = 16
-		shoot_projectile(marker)
+		shoot_projectile(null, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
-	if(!marker || marker == loc)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
+	if(!isnum(set_angle) && (!marker || marker == loc))
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
 	P.current = startloc
 	P.starting = startloc
 	P.firer = src
-	P.yo = marker.y - startloc.y
-	P.xo = marker.x - startloc.x
+	if(marker)
+		P.yo = marker.y - startloc.y
+		P.xo = marker.x - startloc.x
+		P.original = marker
 	if(target)
 		P.original = target
-	else
-		P.original = marker
-	P.fire()
+	P.fire(set_angle)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
 	var/turf/U = get_turf(src)
@@ -217,17 +182,21 @@ Difficulty: Very Hard
 		if(prob(5))
 			shoot_projectile(T)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	var/turf/T = get_turf(target)
-	newtonian_move(get_dir(T, targets_from))
-	for(var/turf/turf in range(1, T))
-		shoot_projectile(turf)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
+	var/turf/target_turf = get_turf(target)
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	newtonian_move(get_dir(target_turf, src))
+	var/angle_to_target = Get_Angle(src, target_turf)
+	if(isnum(set_angle))
+		angle_to_target = set_angle
+	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
+	for(var/i in colossus_shotgun_shot_angles)
+		shoot_projectile(null, angle_to_target + i)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	for(var/d in dirs)
 		var/turf/E = get_step(src, d)
 		shoot_projectile(E)
@@ -235,9 +204,9 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
 	for(var/mob/M in range(10,src))
 		if(M.client)
-			flash_color(M.client, rgb(200, 0, 0), 1)
+			flash_color(M.client, "#C80000", 1)
 			shake_camera(M, 4, 3)
-	playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
+	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
 
 
 
@@ -281,7 +250,7 @@ Difficulty: Very Hard
 	use_power = NO_POWER_USE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
+	var/static/list/blacklist = typecacheof(list(/obj/item/spellbook))
 
 /obj/machinery/smartfridge/black_box/update_icon()
 	return
@@ -293,14 +262,14 @@ Difficulty: Very Hard
 		return FALSE
 	return TRUE
 
-/obj/machinery/smartfridge/black_box/New()
+/obj/machinery/smartfridge/black_box/Initialize()
+	. = ..()
 	var/static/obj/machinery/smartfridge/black_box/current
 	if(current && current != src)
 		qdel(src, force=TRUE)
 		return
 	current = src
 	ReadMemory()
-	. = ..()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()
@@ -314,7 +283,7 @@ Difficulty: Very Hard
 	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
 
-	S["stored_items"]				<< stored_items
+	WRITE_FILE(S["stored_items"], stored_items)
 	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
@@ -382,7 +351,7 @@ Difficulty: Very Hard
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = NO_POWER_USE
 	density = TRUE
-	flags = HEAR
+	flags_1 = HEAR_1
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
 
@@ -495,8 +464,7 @@ Difficulty: Very Hard
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/wood
 			NewFlora = list(/obj/structure/flora/ausbushes/sparsegrass, /obj/structure/flora/ausbushes/fernybush, /obj/structure/flora/ausbushes/leafybush,
-							/obj/structure/flora/ausbushes/grassybush, /obj/structure/flora/ausbushes/sunnybush, /obj/structure/flora/tree/palm, /mob/living/carbon/monkey,
-							/obj/item/weapon/gun/ballistic/bow, /obj/item/weapon/storage/backpack/quiver/full)
+							/obj/structure/flora/ausbushes/grassybush, /obj/structure/flora/ausbushes/sunnybush, /obj/structure/flora/tree/palm, /mob/living/carbon/monkey)
 			florachance = 20
 		if("ayy lmao") //Beneficial, turns stuff into alien alloy which is useful to cargo and research. Also repairs atmos.
 			NewTerrainFloors = /turf/open/floor/plating/abductor
@@ -684,7 +652,7 @@ Difficulty: Very Hard
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 50
 	activation_sound = 'sound/magic/timeparadox2.ogg'
-	var/list/banned_items_typecache = list(/obj/item/weapon/storage, /obj/item/weapon/implant, /obj/item/weapon/implanter, /obj/item/weapon/disk/nuclear, /obj/item/projectile, /obj/item/weapon/spellbook)
+	var/list/banned_items_typecache = list(/obj/item/storage, /obj/item/implant, /obj/item/implanter, /obj/item/disk/nuclear, /obj/item/projectile, /obj/item/spellbook)
 
 /obj/machinery/anomalous_crystal/refresher/Initialize()
 	. = ..()
@@ -699,7 +667,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!W.admin_spawned && !HAS_SECONDARY_FLAG(W, HOLOGRAM) && !(W.flags & ABSTRACT))
+				if(!W.admin_spawned && !(W.flags_2 & HOLOGRAM_2) && !(W.flags_1 & ABSTRACT_1))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)
@@ -786,6 +754,7 @@ Difficulty: Very Hard
 	range = -1
 	include_user = 1
 	selection_type = "view"
+	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "exit_possession"
 	sound = null
 

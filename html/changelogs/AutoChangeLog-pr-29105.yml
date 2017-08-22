@@ -1,0 +1,5 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - experiment: "The amount of time spent playing, and jobs played are now tracked per player."
+  - experiment: "This tracking can be used as a requirement of playtime to unlock jobs."

@@ -12,7 +12,7 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
-// 
+//
 	var/id
 	// this should point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
@@ -71,6 +71,12 @@
 		_y + (-dwidth+width-1)*sin + (-dheight+height-1)*cos
 		)
 
+//returns turfs within our projected rectangle in no particular order
+/obj/docking_port/proc/return_turfs()
+	var/list/L = return_coords()
+	var/turf/T0 = locate(L[1],L[2],z)
+	var/turf/T1 = locate(L[3],L[4],z)
+	return block(T0,T1)
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
@@ -178,7 +184,7 @@
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
 			T.ChangeTurf(/turf/open/space,/turf/open/space)
-			T.flags |= UNUSED_TRANSIT_TURF
+			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
@@ -481,7 +487,7 @@
 
 	var/rotation = 0
 	if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
-		rotation = dir2angle(new_dock)-dir2angle(dir)
+		rotation = dir2angle(new_dock.dir)-dir2angle(dir)
 		if ((rotation % 90) != 0)
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
 		rotation = SimplifyDegrees(rotation)
@@ -527,7 +533,7 @@
 		return DOCKING_AREA_EMPTY
 
 	/*******************************************All onShuttleMove procs******************************************/
-	
+
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
@@ -535,7 +541,7 @@
 			continue
 		for(var/thing in oldT) //Needs to be this kind of loop in case, because of shuttle rotation shenanigans, the destination turf is the same as the source turf
 			var/atom/movable/moving_atom = thing
-			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)	//atoms
 			moved_atoms += moving_atom
 		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force, movement_direction) 	//turfs
 		var/area/shuttle_area = oldT.loc
@@ -550,9 +556,9 @@
 			var/atom/movable/moving_atom = thing
 			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
 			moved_atoms += moving_atom
-	
+
 	/******************************************All afterShuttleMove procs****************************************/
-	
+
 	for(var/i in 1 to new_turfs.len)
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
@@ -767,7 +773,7 @@
 		return TRUE
 	return FALSE
 
-// Losing all initial engines should get you 2 
+// Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
 /obj/docking_port/mobile/proc/alter_engines(mod)
 	if(mod == 0)
@@ -806,7 +812,7 @@
 		if(initial_engines > 0)
 			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
 		return Clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
-		
+
 
 /obj/docking_port/mobile/proc/in_flight()
 	switch(mode)
@@ -838,15 +844,15 @@
 
 //Called when emergency shuttle docks at centcom
 /obj/docking_port/mobile/proc/on_emergency_dock()
-	//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+	//Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space, just let them keep flying off into the sunset for their greentext
 	if(launch_status == ENDGAME_LAUNCHED)
 		launch_status = ENDGAME_TRANSIT
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcomm
+		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
-		
+
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
 

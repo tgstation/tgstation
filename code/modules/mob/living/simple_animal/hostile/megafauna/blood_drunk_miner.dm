@@ -38,13 +38,13 @@ Difficulty: Medium
 	ranged = 1
 	ranged_cooldown_time = 16
 	pixel_x = -16
-	crusher_loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
-	loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator)
+	crusher_loot = list(/obj/item/melee/transforming/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
+	loot = list(/obj/item/melee/transforming/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 	medal_type = MEDAL_PREFIX
-	var/obj/item/weapon/melee/transforming/cleaving_saw/miner/miner_saw
+	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
 	var/dash_cooldown = 15
@@ -60,11 +60,11 @@ Difficulty: Medium
 	if(. && prob(12))
 		INVOKE_ASYNC(src, .proc/dash)
 
-/obj/item/weapon/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
+/obj/item/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
 	force = 6
 	force_on = 10
 
-/obj/item/weapon/melee/transforming/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/transforming/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
 	target.add_stun_absorption("miner", 10, INFINITY)
 	..()
 	target.stun_absorption -= "miner"
@@ -93,7 +93,7 @@ Difficulty: Medium
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
-	if(dashing || (newloc && newloc.z == z && (istype(newloc, /turf/open/floor/plating/lava) || istype(newloc, /turf/open/chasm)))) //we're not stupid!
+	if(dashing || (newloc && newloc.z == z && (istype(newloc, /turf/open/lava) || istype(newloc, /turf/open/chasm)))) //we're not stupid!
 		return FALSE
 	return ..()
 
@@ -186,7 +186,7 @@ Difficulty: Medium
 		var/turf_dist_to_target = 0
 		if(!QDELETED(dash_target))
 			turf_dist_to_target += get_dist(dash_target, O)
-		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm))
+		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/lava) && !istype(O, /turf/open/chasm))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
 				if(is_blocked_turf(T, TRUE))

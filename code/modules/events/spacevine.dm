@@ -314,7 +314,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = SPACEVINE_LAYER
-	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
+	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0
@@ -362,17 +362,6 @@
 		override += SM.on_eat(src, eater)
 	if(!override)
 		qdel(src)
-
-/obj/structure/spacevine/attackby(obj/item/weapon/W, mob/user, params)
-
-	if(istype(W, /obj/item/weapon/scythe))
-		user.changeNext_move(CLICK_CD_MELEE)
-		for(var/obj/structure/spacevine/B in orange(1,src))
-			B.take_damage(W.force * 4, BRUTE, "melee", 1)
-		return
-	else
-		return ..()
-
 
 /obj/structure/spacevine/attacked_by(obj/item/I, mob/living/user)
 	var/damage_dealt = I.force

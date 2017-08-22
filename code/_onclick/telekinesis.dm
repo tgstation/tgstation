@@ -15,6 +15,7 @@
 		return
 	new /obj/effect/temp_visual/telekinesis(loc)
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
+	add_hiddenprint(user)
 	return
 
 /obj/attack_tk(mob/user)
@@ -34,6 +35,7 @@
 	O.tk_user = user
 	if(O.focus_object(src))
 		user.put_in_active_hand(O)
+		add_hiddenprint(user)
 
 /mob/attack_tk(mob/user)
 	return
@@ -66,7 +68,7 @@
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags_1 = NOBLUDGEON_1 | ABSTRACT_1 | DROPDEL_1
 	//item_state = null
 	w_class = WEIGHT_CLASS_GIGANTIC
 	layer = ABOVE_HUD_LAYER

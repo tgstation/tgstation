@@ -11,7 +11,7 @@
 	if(prob(66))	//fastest possible exit 2/3 of the time
 		return
 
-	if(!(flags & CAN_BE_DIRTY))
+	if(!(flags_1 & CAN_BE_DIRTY_1))
 		return
 
 	if(locate(/obj/structure/grille) in contents)
@@ -19,20 +19,20 @@
 
 	var/area/A = get_area(src)
 
-	if(A && !(A.flags & CAN_BE_DIRTY))
+	if(A && !(A.flags_1 & CAN_BE_DIRTY_1))
 		return
 
 	//The code below here isn't exactly optimal, but because of the individual decals that each area uses it's still applicable.
 
 				//high dirt - 1/3
-	if(istype(A, /area/science/test_area) || istype(A, /area/mine/production) || istype(A, /area/mine/living_quarters) || istype(A, /area/mine/north_outpost) || istype(A, /area/mine/west_outpost) || istype(A, /area/wreck) || istype(A, /area/derelict) || istype(A, /area/djstation))
+	if(istype(A, /area/science/test_area) || istype(A, /area/mine/production) || istype(A, /area/mine/living_quarters) || istype(A, /area/mine/north_outpost) || istype(A, /area/mine/west_outpost) || istype(A, /area/ruin/space))
 		new /obj/effect/decal/cleanable/dirt(src)	//vanilla, but it works
 		return
 
 	if(prob(80))	//mid dirt  - 1/15
 		return
 
-	if(istype(A, /area/engine)  || istype(A, /area/crew_quarters/heads/chief) || istype(A, /area/assembly) || istype(A, /area/science/robotics) || istype(A, /area/maintenance) || istype(A, /area/construction))
+	if(istype(A, /area/engine)  || istype(A, /area/crew_quarters/heads/chief) || istype(A, /area/ruin/space/derelict/assembly_line) || istype(A, /area/science/robotics) || istype(A, /area/maintenance) || istype(A, /area/construction))
 	 	//Blood, sweat, and oil.  Oh, and dirt.
 		if(prob(3))
 			new /obj/effect/decal/cleanable/blood/old(src)
@@ -87,7 +87,7 @@
 				new /obj/effect/decal/cleanable/blood/old(src)
 		else if(prob(30))
 			if(istype(A, /area/medical/morgue))
-				new /obj/item/weapon/ectoplasm(src)
+				new /obj/item/ectoplasm(src)
 			else
 				new /obj/effect/decal/cleanable/vomit/old(src)
 		return

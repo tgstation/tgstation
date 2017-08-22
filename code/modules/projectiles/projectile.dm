@@ -4,9 +4,9 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
-	flags = ABSTRACT
+	flags_1 = ABSTRACT_1
 	pass_flags = PASSTABLE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
@@ -170,7 +170,7 @@
 			permutated.Add(A)
 		return FALSE
 	else
-		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
+		if(A && A.density && !ismob(A) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
 			for(var/mob/living/L in target_turf)
 				mobs_list += L
@@ -188,7 +188,7 @@
 	return FALSE
 
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
-	if(A.flags & CHECK_RICOCHET)
+	if(A.flags_1 & CHECK_RICOCHET_1)
 		return TRUE
 	return FALSE
 
@@ -203,7 +203,7 @@
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
 		return
-	if(setAngle)
+	if(isnum(setAngle))
 		Angle = setAngle
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
@@ -223,10 +223,10 @@
 				Angle=round(Get_Angle(src,current))
 			if(spread)
 				Angle += (rand() - 0.5) * spread
-			var/matrix/M = new
 			if(!nondirectional_sprite)
+				var/matrix/M = new
 				M.Turn(Angle)
-			transform = M
+				transform = M
 
 			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
 			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)

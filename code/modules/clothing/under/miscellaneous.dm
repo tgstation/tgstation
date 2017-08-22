@@ -104,16 +104,16 @@
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/centcom_officer
-	desc = "It's a jumpsuit worn by Centcom Officers."
-	name = "\improper Centcom officer's jumpsuit"
+	desc = "It's a jumpsuit worn by CentCom Officers."
+	name = "\improper CentCom officer's jumpsuit"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/centcom_commander
-	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
-	name = "\improper Centcom officer's jumpsuit"
+	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
+	name = "\improper CentCom officer's jumpsuit"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
@@ -387,7 +387,7 @@
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -585,6 +585,9 @@
 	item_color = "jester"
 	can_adjust = 0
 
+/obj/item/clothing/under/jester/alt
+	icon_state = "jester2"
+
 /obj/item/clothing/under/geisha
 	name = "geisha suit"
 	desc = "Cute space ninja senpai not included."
@@ -667,3 +670,36 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/mummy
+	name = "mummy wrapping"
+	desc = "Return the slab or suffer my stale references."
+	icon_state = "mummy"
+	item_state = "mummy"
+	item_color = "mummy"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+	resistance_flags = NONE
+
+/obj/item/clothing/under/scarecrow
+	name = "scarecrow clothes"
+	desc = "Perfect camouflage for hiding in botany."
+	icon_state = "scarecrow"
+	item_state = "scarecrow"
+	item_color = "scarecrow"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+	resistance_flags = NONE
+
+/obj/item/clothing/under/skeleton
+	name = "skeleton jumpsuit"
+	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
+	icon_state = "skeleton"
+	item_state = "skeleton"
+	item_color = "skeleton"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+	resistance_flags = NONE

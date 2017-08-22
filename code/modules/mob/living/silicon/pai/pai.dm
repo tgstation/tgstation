@@ -4,7 +4,7 @@
 	var/obj/machinery/camera/current = null
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
@@ -24,7 +24,7 @@
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
-	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
+	var/obj/item/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
@@ -53,7 +53,7 @@
 
 	var/holoform = FALSE
 	var/canholo = TRUE
-	var/obj/item/weapon/card/id/access_card = null
+	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
 
@@ -161,6 +161,7 @@
 
 /datum/action/innate/pai
 	name = "PAI Action"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	var/mob/living/silicon/pai/P
 
 /datum/action/innate/pai/Trigger()
@@ -197,8 +198,10 @@
 /datum/action/innate/pai/rest/Trigger()
 	..()
 	P.lay_down()
+
 /datum/action/innate/pai/light
 	name = "Toggle Integrated Lights"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "emp"
 	background_icon_state = "bg_tech"
 
