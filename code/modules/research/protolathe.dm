@@ -184,9 +184,9 @@ Note: Must be placed west/left of and R&D console to function.
 		return FALSE
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
-		if(istype(I, /obj/item/weapon/storage/backpack/holding))
+		if(istype(I, /obj/item/storage/backpack/holding))
 			if(usr)
 				I.investigate_log("built by [usr.key]", INVESTIGATE_SINGULO)
-		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/weapon/ore/bluespace_crystal))
+		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
 	SSblackbox.add_details("item_printed","[path]|[amount]")

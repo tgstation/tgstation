@@ -138,7 +138,7 @@
 		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_HEAT]'>Burn</A></b>"
 		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_COLD]'>Freeze</A></b>"
 		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b>"
-		if(istype(loaded_item,/obj/item/weapon/relic))
+		if(istype(loaded_item,/obj/item/relic))
 			dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
 		dat += "<b><a href='byond://?src=\ref[src];function=eject'>Eject</A>"
 		var/list/input = techweb_item_boost_check(src)

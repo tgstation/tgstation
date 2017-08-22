@@ -301,7 +301,7 @@
 /datum/design/piercesyringe
 	name = "Piercing Syringe"
 	id = "piercesyringe"
-	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
+	build_path = /obj/item/reagent_containers/syringe/piercing
 /datum/design/plasmarefiller
 	name = "Plasma-Man Jumpsuit Refill"
 	id = "plasmarefiller"
@@ -780,11 +780,11 @@
 /datum/design/board/announcement_system
 	name = "Machine Design (Automated Announcement System Board)"
 	id = "automated_announcement"
-	build_path = /obj/item/weapon/circuitboard/machine/announcement_system
+	build_path = /obj/item/circuitboard/machine/announcement_system
 /datum/design/board/turbine_computer
 	name = "Computer Design (Power Turbine Console Board)"
 	id = "power_turbine_console"
-	build_path = /obj/item/weapon/circuitboard/computer/turbine_computer
+	build_path = /obj/item/circuitboard/computer/turbine_computer
 	category = list ("Engineering Machinery")
 /datum/design/board/emitter
 	name = "Machine Design (Emitter Board)"
@@ -793,12 +793,12 @@
 /datum/design/board/power_compressor
 	name = "Machine Design (Power Compressor Board)"
 	id = "power_compressor"
-	build_path = /obj/item/weapon/circuitboard/machine/power_compressor
+	build_path = /obj/item/circuitboard/machine/power_compressor
 	category = list ("Engineering Machinery")
 /datum/design/board/power_turbine
 	name = "Machine Design (Power Turbine Board)"
 	id = "power_turbine"
-	build_path = /obj/item/weapon/circuitboard/machine/power_turbine
+	build_path = /obj/item/circuitboard/machine/power_turbine
 	category = list ("Engineering Machinery")
 /datum/design/board/thermomachine
 	name = "Machine Design (Freezer/Heater Board)"
@@ -807,17 +807,17 @@
 /datum/design/board/space_heater
 	name = "Machine Design (Space Heater Board)"
 	id = "space_heater"
-	build_path = /obj/item/weapon/circuitboard/machine/space_heater
+	build_path = /obj/item/circuitboard/machine/space_heater
 	category = list ("Engineering Machinery")
 /datum/design/board/teleport_station
 	name = "Machine Design (Teleportation Station Board)"
 	id = "tele_station"
-	build_path = /obj/item/weapon/circuitboard/machine/teleporter_station
+	build_path = /obj/item/circuitboard/machine/teleporter_station
 	category = list ("Teleportation Machinery")
 /datum/design/board/teleport_hub
 	name = "Machine Design (Teleportation Hub Board)"
 	id = "tele_hub"
-	build_path = /obj/item/weapon/circuitboard/machine/teleporter_hub
+	build_path = /obj/item/circuitboard/machine/teleporter_hub
 	category = list ("Teleportation Machinery")
 /datum/design/board/quantumpad
 	name = "Machine Design (Quantum Pad Board)"
@@ -830,7 +830,7 @@
 /datum/design/board/launchpad_console
 	name = "Machine Design (Bluespace Launchpad Console Board)"
 	id = "launchpad_console"
-	build_path = /obj/item/weapon/circuitboard/computer/launchpad_console
+	build_path = /obj/item/circuitboard/computer/launchpad_console
 	category = list ("Teleportation Machinery")
 /datum/design/board/teleconsole
 	name = "Computer Design (Teleporter Console)"
@@ -842,17 +842,17 @@
 /datum/design/board/chem_dispenser
 	name = "Machine Design (Portable Chem Dispenser Board)"
 	id = "chem_dispenser"
-	build_path = /obj/item/weapon/circuitboard/machine/chem_dispenser
+	build_path = /obj/item/circuitboard/machine/chem_dispenser
 	category = list ("Medical Machinery")
 /datum/design/board/chem_master
 	name = "Machine Design (Chem Master Board)"
 	id = "chem_master"
-	build_path = /obj/item/weapon/circuitboard/machine/chem_master
+	build_path = /obj/item/circuitboard/machine/chem_master
 	category = list ("Medical Machinery")
 /datum/design/board/chem_heater
 	name = "Machine Design (Chemical Heater Board)"
 	id = "chem_heater"
-	build_path = /obj/item/weapon/circuitboard/machine/chem_heater
+	build_path = /obj/item/circuitboard/machine/chem_heater
 	category = list ("Medical Machinery")
 /datum/design/board/clonecontrol
 	name = "Computer Design (Cloning Machine Console)"
@@ -877,7 +877,7 @@
 /datum/design/board/mech_recharger
 	name = "Machine Design (Mechbay Recharger Board)"
 	id = "mech_recharger"
-	build_path = /obj/item/weapon/circuitboard/machine/mech_recharger
+	build_path = /obj/item/circuitboard/machine/mech_recharger
 /datum/design/board/microwave
 	name = "Machine Design (Microwave Board)"
 	id = "microwave"
@@ -893,12 +893,12 @@
 /datum/design/board/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
 	id = "monkey_recycler"
-	build_path = /obj/item/weapon/circuitboard/machine/monkey_recycler
+	build_path = /obj/item/circuitboard/machine/monkey_recycler
 	category = list ("Misc. Machinery")
 /datum/design/board/seed_extractor
 	name = "Machine Design (Seed Extractor Board)"
 	id = "seed_extractor"
-	build_path = /obj/item/weapon/circuitboard/machine/seed_extractor
+	build_path = /obj/item/circuitboard/machine/seed_extractor
 	category = list ("Misc. Machinery")
 /datum/design/board/processor
 	name = "Machine Design (Processor Board)"
@@ -926,22 +926,22 @@
 /datum/design/board/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"
 	id = "ore_redemption"
-	build_path = /obj/item/weapon/circuitboard/machine/ore_redemption
+	build_path = /obj/item/circuitboard/machine/ore_redemption
 	category = list ("Misc. Machinery")
 /datum/design/board/mining_equipment_vendor
 	name = "Machine Design (Mining Rewards Vender Board)"
 	id = "mining_equipment_vendor"
-	build_path = /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
+	build_path = /obj/item/circuitboard/machine/mining_equipment_vendor
 	category = list ("Misc. Machinery")
 /datum/design/board/tesla_coil
 	name = "Machine Design (Tesla Coil Board)"
 	id = "tesla_coil"
-	build_path = /obj/item/weapon/circuitboard/machine/tesla_coil
+	build_path = /obj/item/circuitboard/machine/tesla_coil
 	category = list ("Misc. Machinery")
 /datum/design/board/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
 	id = "grounding_rod"
-	build_path = /obj/item/weapon/circuitboard/machine/grounding_rod
+	build_path = /obj/item/circuitboard/machine/grounding_rod
 	category = list ("Misc. Machinery")
 /datum/design/board/plantgenes
 	name = "Machine Design (Plant DNA Manipulator Board)"
@@ -950,14 +950,14 @@
 /datum/design/board/ntnet_relay
 	name = "Machine Design (NTNet Relay Board)"
 	id = "ntnet_relay"
-	build_path = /obj/item/weapon/circuitboard/machine/ntnet_relay
+	build_path = /obj/item/circuitboard/machine/ntnet_relay
 /datum/design/board/limbgrower
 	name = "Machine Design (Limb Grower Board)"
 	id = "limbgrower"
 /datum/design/board/deepfryer
 	name = "Machine Design (Deep Fryer)"
 	id = "deepfryer"
-	build_path = /obj/item/weapon/circuitboard/machine/deep_fryer
+	build_path = /obj/item/circuitboard/machine/deep_fryer
 	category = list ("Misc. Machinery")
 ///////////////////////////////////
 //////////Mecha Module Disks///////
@@ -1175,7 +1175,7 @@
 /datum/design/board/scan_console
 	name = "Computer Design (DNA Machine)"
 	id = "scan_console"
-	build_path = /obj/item/weapon/circuitboard/computer/scan_consolenew
+	build_path = /obj/item/circuitboard/computer/scan_consolenew
 /datum/design/board/comconsole
 	name = "Computer Design (Communications)"
 	id = "comconsole"
@@ -1188,11 +1188,11 @@
 /datum/design/board/atmosalerts
 	name = "Computer Design (Atmosphere Alert)"
 	id = "atmosalerts"
-	build_path = /obj/item/weapon/circuitboard/computer/atmos_alert
+	build_path = /obj/item/circuitboard/computer/atmos_alert
 /datum/design/board/atmos_control
 	name = "Computer Design (Atmospheric Monitor)"
 	id = "atmos_control"
-	build_path = /obj/item/weapon/circuitboard/computer/atmos_control
+	build_path = /obj/item/circuitboard/computer/atmos_control
 /datum/design/board/robocontrol
 	name = "Computer Design (Robotics Control Console)"
 	id = "robocontrol"
@@ -1202,18 +1202,18 @@
 /datum/design/board/solarcontrol
 	name = "Computer Design (Solar Control)"
 	id = "solarcontrol"
-	build_path = /obj/item/weapon/circuitboard/computer/solar_control
+	build_path = /obj/item/circuitboard/computer/solar_control
 /datum/design/board/prisonmanage
 	name = "Computer Design (Prisoner Management Console)"
 	id = "prisonmanage"
 /datum/design/board/mechacontrol
 	name = "Computer Design (Exosuit Control Console)"
 	id = "mechacontrol"
-	build_path = /obj/item/weapon/circuitboard/computer/mecha_control
+	build_path = /obj/item/circuitboard/computer/mecha_control
 /datum/design/board/mechapower
 	name = "Computer Design (Mech Bay Power Control Console)"
 	id = "mechapower"
-	build_path = /obj/item/weapon/circuitboard/computer/mech_bay_power_console
+	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
 /datum/design/board/rdconsole
 	name = "Computer Design (R&D Console)"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
@@ -1233,15 +1233,15 @@
 /datum/design/board/comm_monitor
 	name = "Computer Design (Telecommunications Monitoring Console)"
 	id = "comm_monitor"
-	build_path = /obj/item/weapon/circuitboard/computer/comm_monitor
+	build_path = /obj/item/circuitboard/computer/comm_monitor
 /datum/design/board/comm_server
 	name = "Computer Design (Telecommunications Server Monitoring Console)"
 	id = "comm_server"
-	build_path = /obj/item/weapon/circuitboard/computer/comm_server
+	build_path = /obj/item/circuitboard/computer/comm_server
 /datum/design/board/message_monitor
 	name = "Computer Design (Messaging Monitor Console)"
 	id = "message_monitor"
-	build_path = /obj/item/weapon/circuitboard/computer/message_monitor
+	build_path = /obj/item/circuitboard/computer/message_monitor
 /datum/design/board/aifixer
 	name = "Computer Design (AI Integrity Restorer)"
 	id = "aifixer"
@@ -1251,7 +1251,7 @@
 /datum/design/board/apc_control
 	name = "Computer Design (APC Control)"
 	id = "apc_control"
-	build_path = /obj/item/weapon/circuitboard/computer/apc_control
+	build_path = /obj/item/circuitboard/computer/apc_control
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
 /////////////////////////////////////////
@@ -1261,7 +1261,7 @@
 /datum/design/bluespace_crystal
 	name = "Artificial Bluespace Crystal"
 	id = "bluespace_crystal"
-	build_path = /obj/item/weapon/ore/bluespace_crystal/artificial
+	build_path = /obj/item/ore/bluespace_crystal/artificial
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	id = "minerbag_holding"
@@ -1280,18 +1280,18 @@
 /datum/design/stunrevolver
 	name = "Tesla Revolver"
 	id = "stunrevolver"
-	build_path = /obj/item/weapon/gun/energy/tesla_revolver
+	build_path = /obj/item/gun/energy/tesla_revolver
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
 	id = "nuclear_gun"
-	build_path = /obj/item/weapon/gun/energy/e_gun/nuclear
+	build_path = /obj/item/gun/energy/e_gun/nuclear
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
 	id = "tele_shield"
 /datum/design/beamrifle
 	name = "Beam Marksman Rifle"
 	id = "beamrifle"
-	build_path = /obj/item/weapon/gun/energy/beam_rifle
+	build_path = /obj/item/gun/energy/beam_rifle
 /datum/design/decloner
 	name = "Decloner"
 	id = "decloner"
@@ -1310,15 +1310,15 @@
 /datum/design/large_grenade
 	name = "Large Grenade"
 	id = "large_Grenade"
-	build_path = /obj/item/weapon/grenade/chem_grenade/large
+	build_path = /obj/item/grenade/chem_grenade/large
 /datum/design/pyro_grenade
 	name = "Pyro Grenade"
 	id = "pyro_Grenade"
-	build_path = /obj/item/weapon/grenade/chem_grenade/pyro
+	build_path = /obj/item/grenade/chem_grenade/pyro
 /datum/design/adv_grenade
 	name = "Advanced Release Grenade"
 	id = "adv_Grenade"
-	build_path = /obj/item/weapon/grenade/chem_grenade/adv_release
+	build_path = /obj/item/grenade/chem_grenade/adv_release
 /datum/design/xray
 	name = "Xray Laser Gun"
 	id = "xray"
@@ -1328,7 +1328,7 @@
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	id = "wormholeprojector"
-	build_path = /obj/item/weapon/gun/energy/wormhole_projector
+	build_path = /obj/item/gun/energy/wormhole_projector
 //WT550 Mags
 /datum/design/mag_oldsmg
 	name = "WT-550 Auto Gun Magazine (4.6x30mm)"
@@ -1360,11 +1360,11 @@
 /datum/design/gravitygun
 	name = "One-point Bluespace-gravitational Manipulator"
 	id = "gravitygun"
-	build_path = /obj/item/weapon/gun/energy/gravity_gun
+	build_path = /obj/item/gun/energy/gravity_gun
 /datum/design/largecrossbow
 	name = "Energy Crossbow"
 	id = "largecrossbow"
-	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 ////////////////////////////////////////
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
@@ -1372,87 +1372,87 @@
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
 	id = "adv_capacitor"
-	build_path = /obj/item/weapon/stock_parts/capacitor/adv
+	build_path = /obj/item/stock_parts/capacitor/adv
 	lathe_time_factor = 0.2
 /datum/design/super_capacitor
 	name = "Super Capacitor"
 	id = "super_capacitor"
-	build_path = /obj/item/weapon/stock_parts/capacitor/super
+	build_path = /obj/item/stock_parts/capacitor/super
 	lathe_time_factor = 0.2
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
 	id = "quadratic_capacitor"
-	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
+	build_path = /obj/item/stock_parts/capacitor/quadratic
 	lathe_time_factor = 0.2
 /datum/design/phasic_scanning
 	name = "Phasic Scanning Module"
 	id = "phasic_scanning"
-	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
+	build_path = /obj/item/stock_parts/scanning_module/phasic
 	lathe_time_factor = 0.2
 /datum/design/triphasic_scanning
 	name = "Triphasic Scanning Module"
 	id = "triphasic_scanning"
-	build_path = /obj/item/weapon/stock_parts/scanning_module/triphasic
+	build_path = /obj/item/stock_parts/scanning_module/triphasic
 	lathe_time_factor = 0.2
 /datum/design/pico_mani
 	name = "Pico Manipulator"
 	id = "pico_mani"
-	build_path = /obj/item/weapon/stock_parts/manipulator/pico
+	build_path = /obj/item/stock_parts/manipulator/pico
 	lathe_time_factor = 0.2
 /datum/design/femto_mani
 	name = "Femto Manipulator"
 	id = "femto_mani"
-	build_path = /obj/item/weapon/stock_parts/manipulator/femto
+	build_path = /obj/item/stock_parts/manipulator/femto
 	lathe_time_factor = 0.2
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
 	id = "ultra_micro_laser"
-	build_path = /obj/item/weapon/stock_parts/micro_laser/ultra
+	build_path = /obj/item/stock_parts/micro_laser/ultra
 	lathe_time_factor = 0.2
 /datum/design/quadultra_micro_laser
 	name = "Quad-Ultra Micro-Laser"
 	id = "quadultra_micro_laser"
-	build_path = /obj/item/weapon/stock_parts/micro_laser/quadultra
+	build_path = /obj/item/stock_parts/micro_laser/quadultra
 	lathe_time_factor = 0.2
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
 	id = "super_matter_bin"
-	build_path = /obj/item/weapon/stock_parts/matter_bin/super
+	build_path = /obj/item/stock_parts/matter_bin/super
 	lathe_time_factor = 0.2
 /datum/design/bluespace_matter_bin
 	name = "Bluespace Matter Bin"
 	id = "bluespace_matter_bin"
-	build_path = /obj/item/weapon/stock_parts/matter_bin/bluespace
+	build_path = /obj/item/stock_parts/matter_bin/bluespace
 	lathe_time_factor = 0.2
 //T-Comms devices
 /datum/design/subspace_ansible
 	name = "Subspace Ansible"
 	id = "s-ansible"
-	build_path = /obj/item/weapon/stock_parts/subspace/ansible
+	build_path = /obj/item/stock_parts/subspace/ansible
 /datum/design/hyperwave_filter
 	name = "Hyperwave Filter"
 	id = "s-filter"
-	build_path = /obj/item/weapon/stock_parts/subspace/filter
+	build_path = /obj/item/stock_parts/subspace/filter
 /datum/design/subspace_amplifier
 	name = "Subspace Amplifier"
 	id = "s-amplifier"
-	build_path = /obj/item/weapon/stock_parts/subspace/amplifier
+	build_path = /obj/item/stock_parts/subspace/amplifier
 /datum/design/subspace_treatment
 	name = "Subspace Treatment Disk"
 	id = "s-treatment"
-	build_path = /obj/item/weapon/stock_parts/subspace/treatment
+	build_path = /obj/item/stock_parts/subspace/treatment
 /datum/design/subspace_analyzer
 	name = "Subspace Analyzer"
 	id = "s-analyzer"
-	build_path = /obj/item/weapon/stock_parts/subspace/analyzer
+	build_path = /obj/item/stock_parts/subspace/analyzer
 /datum/design/subspace_crystal
 	name = "Ansible Crystal"
 	id = "s-crystal"
-	build_path = /obj/item/weapon/stock_parts/subspace/crystal
+	build_path = /obj/item/stock_parts/subspace/crystal
 /datum/design/subspace_transmitter
 	name = "Subspace Transmitter"
 	id = "s-transmitter"
-	build_path = /obj/item/weapon/stock_parts/subspace/transmitter
+	build_path = /obj/item/stock_parts/subspace/transmitter
 ////////////////////////////////////////
 //////////////////Power/////////////////
 ////////////////////////////////////////
@@ -1460,27 +1460,27 @@
 	name = "Basic Power Cell"
 	id = "basic_cell"
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell
+	build_path = /obj/item/stock_parts/cell
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
 	id = "high_cell"
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/high
+	build_path = /obj/item/stock_parts/cell/high
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
 	id = "super_cell"
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/super
+	build_path = /obj/item/stock_parts/cell/super
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
 	id = "hyper_cell"
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/hyper
+	build_path = /obj/item/stock_parts/cell/hyper
 /datum/design/bluespace_cell
 	name = "Bluespace Power Cell"
 	id = "bluespace_cell"
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/bluespace
+	build_path = /obj/item/stock_parts/cell/bluespace
 /datum/design/light_replacer
 	name = "Light Replacer"///////////////////////////////////
 //////////AI Module Disks//////////

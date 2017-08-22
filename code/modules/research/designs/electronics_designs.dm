@@ -34,7 +34,7 @@
 	req_tech = list("programming" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/weapon/disk/design_disk
+	build_path = /obj/item/disk/design_disk
 	category = list("Electronics")
 
 /datum/design/design_disk_adv
@@ -44,7 +44,7 @@
 	req_tech = list("programming" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
-	build_path = /obj/item/weapon/disk/design_disk/adv
+	build_path = /obj/item/disk/design_disk/adv
 	category = list("Electronics")
 
 /datum/design/tech_disk
@@ -54,7 +54,7 @@
 	req_tech = list("programming" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/weapon/disk/tech_disk
+	build_path = /obj/item/disk/tech_disk
 	category = list("Electronics")
 
 

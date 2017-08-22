@@ -34,7 +34,7 @@
 /obj/machinery/rnd/server/Initialize(mapload)
 	SSresearch.servers |= src
 	stored_research = SSresearch.science_tech
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
 	. = ..()
 

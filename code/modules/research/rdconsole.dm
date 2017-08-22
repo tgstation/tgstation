@@ -21,8 +21,8 @@ doesn't have toxins access.
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	var/datum/techweb/stored_research					//Reference to global science techweb.
-	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
-	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/obj/item/disk/tech_disk/t_disk = null	//Stores the technology disk.
+	var/obj/item/disk/design_disk/d_disk = null	//Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 
 	var/obj/machinery/rnd/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
@@ -110,10 +110,10 @@ doesn't have toxins access.
 	return ..()
 
 <<<<<<< HEAD
-/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
+/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
 	//Loading a disk into it.
-	if(istype(D, /obj/item/weapon/disk))
-		if(istype(D, /obj/item/weapon/disk/tech_disk))
+	if(istype(D, /obj/item/disk))
+		if(istype(D, /obj/item/disk/tech_disk))
 			if(t_disk)
 				to_chat(user, "<span class='danger'>A technology disk is already loaded!</span>")
 				return
@@ -122,7 +122,7 @@ doesn't have toxins access.
 				return
 			D.forceMove(src)
 			t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk))
+		else if (istype(D, /obj/item/disk/design_disk))
 			if(d_disk)
 				to_chat(user, "<span class='danger'>A design disk is already loaded!</span>")
 				return
