@@ -17,6 +17,7 @@
 	var/recharge_delay = 5
 	var/mutable_appearance/beaker_overlay
 	var/obj/item/reagent_containers/beaker = null
+	var/upgraded = FALSE
 	var/list/dispensable_reagents = list(
 		"hydrogen",
 		"lithium",
@@ -51,6 +52,14 @@
 		"carpotoxin",
 		"mine_salve",
 		"toxin"
+	)
+	var/list/addin_reagents = list(
+		"oil",
+		"ash",
+		"acetone",
+		"saltpetre",
+		"ammonia",
+		"diethylamine"
 	)
 
 /obj/machinery/chem_dispenser/Initialize()
@@ -195,6 +204,33 @@
 		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
 		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
 		add_overlay(beaker_overlay)
+	else if (istype(I, /obj/item/device/chem_dispenser_auth_board))
+		var/obj/item/device/chem_dispenser_auth_board/A = I
+		if (A.isAuthorized())
+			if(emagged)
+				to_chat(user, "<span class='warning'>\The machine has no functional safeties to disable.</span>")
+				return
+			if(!user.drop_item())
+				return
+			A.loc = src
+			to_chat(user, "<span class='notice'>You insert the dangerous reagents authorization board, disabling the [src]'s safeties.</span>")
+			dispensable_reagents |= emagged_reagents //add the emagged reagents to the dispensable ones
+			emagged = TRUE
+			return
+		else
+			to_chat(user, "<span class='warning'>\The board has to be authorized for use by the Head of Security.</span>")
+			return ..()
+	else if (istype(I, /obj/item/device/chem_dispenser_addin_board))
+		if (!upgraded)
+			if(!user.drop_item())
+				return
+			I.loc = src
+			to_chat(user, "<span class='notice'>You insert the supplementary recipes add-in board to the [src].</span>")
+			dispensable_reagents |= addin_reagents
+			upgraded = TRUE
+			return
+		else
+			return ..()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
 		return ..()

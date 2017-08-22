@@ -275,3 +275,25 @@
 	req_tech = list("programming" = 4, "engineering" = 4, "powerstorage" = 5)
 	build_path = /obj/item/circuitboard/computer/apc_control
 	category = list("Computer Boards")
+
+/datum/design/chem_dispenser_addin_board
+	name = "Dispenser Design (Supplemental Chem Recipes)"
+	desc = "Allows for the construction of circuit boards used to provide supplemental recipes to non-portable chem dispensers."
+	id = "chem_dispenser_addin_board"
+	req_tech = list("materials" = 4, "programming" = 4, "engineering" = 4)
+	build_path = /obj/item/device/chem_dispenser_addin_board
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, MAT_GOLD = 500, MAT_DIAMOND = 500)
+	reagents_list = list("sacid" = 20)
+	category = list("Computer Boards")
+
+/datum/design/chem_dispenser_auth_board
+	name = "Dispenser Design (Toxic Chem Authorization)"
+	desc = "Allows for the construction of circuit boards used to unlock the safety features of a chem dispenser."
+	id = "chem_dispenser_auth_board"
+	req_tech = list("syndicate" = 1, "materials" = 4, "programming" = 4, "engineering" = 4)
+	build_path = /obj/item/device/chem_dispenser_auth_board
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, MAT_GOLD = 500)
+	reagents_list = list("sacid" = 20)
+	category = list("Computer Boards")
