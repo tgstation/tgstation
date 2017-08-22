@@ -5,11 +5,12 @@
 	step_in = 4 //Move speed, lower is faster.
 	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
 	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
-	max_temperature = 20000
-	max_integrity = 200
+	max_temperature = 65000
+	max_integrity = 250
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	deflect_chance = 15
-	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
