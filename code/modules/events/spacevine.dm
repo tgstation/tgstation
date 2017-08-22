@@ -88,9 +88,6 @@
 /datum/spacevine_mutation/space_covering/process_mutation(obj/structure/spacevine/holder)
 	var/turf/T = get_turf(holder)
 	if(is_type_in_typecache(T, coverable_turfs))
-		for(var/obj/machinery/door/airlock in T.contents)
-			if(airlock.density)
-				return
 		var/currtype = T.type
 		T.ChangeTurf(/turf/open/floor/vines)
 		T.baseturf = currtype
