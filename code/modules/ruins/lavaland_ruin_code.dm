@@ -46,12 +46,13 @@
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
 	var/shell_type = /obj/effect/mob_spawn/human/golem
 	var/has_owner = FALSE //if the resulting golem obeys someone
+	var/meat = 0 //meat does not stack
 
-/obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
+/obj/item/golem_shell/attackby(obj/item/O, mob/user, params)
 	..()
 	var/species
-	if(istype(I, /obj/item/stack/))
-		var/obj/item/stack/O = I
+
+	if(istype(O, /obj/item/stack) || istype(O, /obj/item/reagent_containers/food/snacks/meat/slab))
 
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem
@@ -110,13 +111,28 @@
 		if(istype(O, /obj/item/stack/sheet/plastic))
 			species = /datum/species/golem/plastic
 
-		if(species)
-			if(O.use(10))
-				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
-				new shell_type(get_turf(src), species, user)
-				qdel(src)
+		if(istype(O, /obj/item/reagent_containers/food/snacks/meat/slab))
+			qdel(O)
+			meat++
+			if(meat < 10)
+				to_chat(user, "You add [O] to the golem shell[isgolem(user) ? ", for some reason." : ""]. It now has [meat]/10 slabs of meat.")
 			else
-				to_chat(user, "You need at least ten sheets to finish a golem.")
+				to_chat(user, "You finish up the golem shell with [O].[isgolem(user) ? " You feel weird about this." : ""]")
+				new /obj/effect/mob_spawn/human/meatgolem(get_turf(src))
+				qdel(src)
+
+		if(species)
+			if(meat)
+				to_chat(user, "This golem is being built out of meat. You cannot add other materials to it.")
+				return
+			if(istype(O, /obj/item/stack) //just to be safe
+				var/obj/item/stack/S = O
+				if(S.use(10))
+					to_chat(user, "You finish up the golem shell with ten sheets of [O].")
+					new shell_type(get_turf(src), species, user)
+					qdel(src)
+				else
+					to_chat(user, "You need at least ten sheets to finish a golem.")
 		else
 			to_chat(user, "You can't build a golem out of this kind of material.")
 
