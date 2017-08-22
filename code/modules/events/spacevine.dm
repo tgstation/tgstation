@@ -99,7 +99,6 @@
 	var/turf/T = get_turf(holder)
 	if(istype(T, /turf/open/floor/vines))
 		T.ChangeTurf(T.baseturf)
-		b
 
 /datum/spacevine_mutation/light
 	name = "light"
