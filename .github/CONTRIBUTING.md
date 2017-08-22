@@ -277,6 +277,7 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 * Associated lists declarations must have their key value quoted if it's a string
 	* WRONG: list(a = "b")
 	* RIGHT: list("a" = "b")
+* Operator overloading is not permitted
 
 ### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
