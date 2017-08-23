@@ -30,8 +30,6 @@
 			Knockdown(200)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")
 		if(radiation > 30 && prob((radiation - 30) * (radiation - 30) * 0.0002))
-			if(ckey && !prob(1))
-				return
 			gorillize()
 			return
 		switch(radiation)
