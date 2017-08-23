@@ -6,7 +6,7 @@
 	var/flags_1 = 0
 	var/flags_2 = 0
 
-	var/container_type = 0
+	var/container_type = NONE
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 	var/datum/reagents/reagents
 	var/datum/forensics/forensics
