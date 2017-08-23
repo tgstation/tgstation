@@ -28475,7 +28475,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "buX" = (
-/obj/machinery/power/supermatter_shard/crystal,
+/obj/machinery/power/supermatter_shard/crystal/engine,
 /turf/open/floor/engine{
 	name = "reinforced floor"
 	},
