@@ -53,7 +53,7 @@
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
-	if(user.a_intent == INTENT_HARM || HAS_SECONDARY_FLAG(I, HOLOGRAM) || (tc && !is_type_in_typecache(I, tc)))
+	if(user.a_intent == INTENT_HARM || (I.flags_2 & HOLOGRAM_2) || (tc && !is_type_in_typecache(I, tc)))
 		return FALSE
 	. = TRUE
 	last_insert_success = FALSE
