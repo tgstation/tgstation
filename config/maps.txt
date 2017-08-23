@@ -13,11 +13,6 @@ Format:
 	disabled (disables the map)
 endmap
 
-map boxstation
-	default
-	#voteweight 1.5
-endmap
-
 map metastation
 	minplayers 25
 	#voteweight 0.5
