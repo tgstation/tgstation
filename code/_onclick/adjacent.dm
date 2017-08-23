@@ -72,6 +72,11 @@
 		return FALSE
 	if(loc.Adjacent(neighbor,target = neighbor, mover = src))
 		return TRUE
+	for(var/turf/T in locs)
+		if(isnull(T))
+			continue
+		if(T.Adjacent(neighbor,src))
+			return TRUE
 	return FALSE
 
 // This is necessary for storage items not on your person.

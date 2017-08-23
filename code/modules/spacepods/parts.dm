@@ -129,26 +129,31 @@
 /obj/item/pod_parts/armor/syndicate
 	armor_type = /datum/pod_armor/syndicate
 	name = "syndicate pod armor"
+	icon_state = "pod_armor_synd"
 	desc = "Tough-looking spacepod armor, with a bold \"FUCK NT\" stenciled directly into it."
 
 /obj/item/pod_parts/armor/black
 	armor_type = /datum/pod_armor/black
 	name = "black pod armor"
+	icon_state = "pod_armor_black"
 	desc = "Plain black spacepod armor, with no logos or insignias anywhere on it."
 
 /obj/item/pod_parts/armor/gold
 	armor_type = /datum/pod_armor/gold
 	name = "golden pod armor"
+	icon_state = "pod_armor_gold"
 	desc = "Golden spacepod armor. Looks like what a rich spessmen put on their spacepod."
 
 /obj/item/pod_parts/armor/industrial
 	armor_type = /datum/pod_armor/industrial
 	name = "industrial pod armor"
+	icon_state = "pod_armor_industrial"
 	desc = "Tough industrial-grade spacepod armor. While meant for construction work, it is commonly used in spacepod battles, too."
 
 /obj/item/pod_parts/armor/security
 	armor_type = /datum/pod_armor/security
 	name = "security pod armor"
+	icon_state = "pod_armor_mil"
 	desc = "Tough military-grade pod armor, meant for use by the NanoTrasen military and it's sub-divisons for space combat."
 
 
