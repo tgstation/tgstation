@@ -376,5 +376,5 @@
 	if(acceptLove)
 		to_chat(src, "<span class='warning'>You can now sense loving cuddles.</span>")
 	else
-		to_chat(src, "<span class='warning'>You can no longer sense loving cuddles.</span>"
+		to_chat(src, "<span class='warning'>You can no longer sense loving cuddles.</span>")
 	
