@@ -3569,7 +3569,7 @@
 /area/maintenance/asteroid/fore/com_north)
 "anj" = (
 /obj/structure/table/wood,
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)

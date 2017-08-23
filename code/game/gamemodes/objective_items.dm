@@ -158,7 +158,7 @@
 	difficulty = 10
 
 //Old ninja objectives.
-/datum/objective_item/special/pinpointer
+/datum/objective_item/special/pinpointer/nuke
 	name = "the captain's pinpointer."
 	targetitem = /obj/item/pinpointer
 	difficulty = 10
