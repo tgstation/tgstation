@@ -16,11 +16,7 @@
 			if(search)
 				emoji = lowertext(copytext(text, pos+1, search))
 				if(emoji in emojis)
-<<<<<<< HEAD
-					parsed += bicon(icon('hippiestation/icons/emoji.dmi', emoji))
-=======
 					parsed += icon2html('icons/emoji.dmi', world, emoji)
->>>>>>> f2cf4c2f5c... [ready]Makes bIcon better (#29690)
 					pos = search + 1
 				else
 					parsed += copytext(text, pos, search)
