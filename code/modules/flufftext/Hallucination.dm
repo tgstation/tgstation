@@ -662,7 +662,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			if(prob(15))
 				if(weapon_name)
 					my_target.playsound_local(my_target, weap.hitsound, weap.get_clamped_volume(), 1)
-					my_target.show_message("<span class='danger'>[src.name] attacked you with [weapon_name]!</span>", 1)
+					my_target.show_message("<span class='danger'>[src] attacked you with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
 						my_target.blur_eyes(3)
@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 							fake_blood(my_target)
 				else
 					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1)
-					my_target.show_message("<span class='userdanger'>[src.name] punched you!</span>", 1)
+					my_target.show_message("<span class='userdanger'>[src] punched you!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
