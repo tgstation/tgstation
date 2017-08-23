@@ -282,7 +282,7 @@
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
 	var/list/possible_modes = list()
-	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "gang", "malf", "nuclear", "revolution", "traitor", "wizard")
+	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "gang", "malf", "nuclear", "revolution", "traitor", "wizard", "shadowling")
 	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
 
 	for(var/i in 1 to 6) //Remove a few modes to leave four
