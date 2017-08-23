@@ -7,7 +7,7 @@
 SUBSYSTEM_DEF(rng)
 	name = "RNG"
 	init_order = INIT_ORDER_RNG
-	flags = SS_NO_FIRE
+	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/total_offset = 0
 	var/seed = -1 //if this is -1, we haven't initialized yet. Range is 24 bit precision, 0 to 2**24-1
@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(rng)
 	set_seed()
 
 /datum/controller/subsystem/rng/proc/set_seed(_seed)
-	if(!_seed || !isnum(_seed) || _seed <= -1)
+	if(!isnum(_seed) || !(_seed in 0 to 16777215))
 		_seed = rand(0, 16777215)
 	seed = _seed
 	rand_seed(seed)
@@ -33,29 +33,32 @@ SUBSYSTEM_DEF(rng)
 	while(total_offset < _offset)
 		random()
 
+//Only tests the seed if total_offset == 0 while incrementing it
+#define VALIDATE_SEED(procname) \
+	if(!total_offset++ && seed == -1) {\
+		total_offset = 0;\
+		stack_trace("SSrng.[##procname]() was called BEFORE a seed was set");\
+	}
+
 /datum/controller/subsystem/rng/proc/random(lower, upper) //replaces rand()
-	if(total_offset++ && seed == -1) //only tests the seed once
-		total_offset = 0
-		stack_trace("SSrng.random() was called BEFORE a seed was set")
+	VALIDATE_SEED("random")
 	if(lower != null || upper != null)
 		return rand(lower, upper)
 	else
 		return rand()
 
 /datum/controller/subsystem/rng/proc/probability(chance) //replaces prob()
-	if(total_offset++ && seed == -1)
-		total_offset = 0
-		stack_trace("SSrng.probability() was called BEFORE a seed was set")
+	VALIDATE_SEED("probability")
 	return prob(chance)
 
 /datum/controller/subsystem/rng/proc/pick_from_list() //replaces pick()
-	if(!total_offset++ && seed == -1)
-		total_offset = 0
-		stack_trace("SSrng.pick_from_list() was called BEFORE a seed was set")
+	VALIDATE_SEED("pick_from_list")
 	if(args.len == 1)
 		return pick(args[1])
 	else
 		return pick(args)
+
+#undef VALIDATE_SEED
 
 /datum/controller/subsystem/rng/vv_edit_var(var_name, var_value)
 	switch(var_name)
