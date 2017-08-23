@@ -23,7 +23,7 @@
 	..()
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 0)
 	else
 		return ..()

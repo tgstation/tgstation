@@ -11,7 +11,7 @@
 	opacity = 0
 	layer = FLY_LAYER
 	anchored = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = 0
 	var/amount = 4
 	var/lifetime = 5

@@ -11,7 +11,7 @@
 
 	var/blocks_air = FALSE
 
-	flags = CAN_BE_DIRTY
+	flags_1 = CAN_BE_DIRTY_1
 
 	var/image/obscured	//camerachunks
 
@@ -85,7 +85,7 @@
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
-/turf/proc/handleRCL(obj/item/weapon/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -104,7 +104,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/weapon/twohanded/rcl))
+	else if(istype(C, /obj/item/twohanded/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -133,7 +133,7 @@
 
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
+		if(border_obstacle.flags_1 & ON_BORDER_1)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
 				mover.Collide(border_obstacle)
 				return FALSE
@@ -174,7 +174,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(HAS_SECONDARY_FLAG(O, FROZEN))
+		if(O.flags_2 & FROZEN_2)
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -213,7 +213,7 @@
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
- 
+
 	var/old_exl = explosion_level
 	var/old_exi = explosion_id
 	var/old_bp = blueprint_data
@@ -237,7 +237,7 @@
 		W.AfterChange(ignore_air)
 
 	W.blueprint_data = old_bp
- 
+
 	if(SSlighting.initialized)
 		recalc_atom_opacity()
 		lighting_object = old_lighting_object
@@ -323,9 +323,9 @@
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
-	flags |= NOJAUNT
+	flags_1 |= NOJAUNT_1
 
-/turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)
 		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
@@ -333,7 +333,7 @@
 
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/weapon/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/storage.proc/mass_remove_from_storage, src, things, progress)))
 		sleep(1)
 	qdel(progress)
 
@@ -535,3 +535,6 @@
 		else
 			return I
 	return I
+
+/turf/AllowDrop()
+	return TRUE

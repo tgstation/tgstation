@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		U.spent_telecrystals += cost
 
 	var/atom/A = spawn_item(get_turf(user), U)
-	var/obj/item/weapon/storage/box/B = A
+	var/obj/item/storage/box/B = A
 	if(istype(B) && B.contents.len > 0)
 		for(var/obj/item/I in B)
 			U.purchase_log += "<big>[icon2base64html(I)]</big>"
@@ -145,41 +145,41 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/nukeoffer/c20r
 	name = "C-20r bundle"
 	desc = "Old faithful: The classic C-20r, bundled with two magazines, and a (surplus) suppressor at discount price."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/c20rbundle
+	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	cost = 14 // normally 16
 
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimised for people that want to get up close and personal. Contains the popular \
 			Bulldog shotgun, two 12g drums, and a pair of Thermal imaging goggles."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/bulldogbundle
+	item = /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
 	cost = 13 // normally 16
 
 /datum/uplink_item/nukeoffer/medical
 	name = "Medical bundle"
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a Donksoft machine gun, \
 			a box of ammo, and a pair of magboots to rescue your friends in no-gravity environments."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/med/medicalbundle
+	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	cost = 15 // normally 20
 
 /datum/uplink_item/nukeoffer/sniper
 	name = "Sniper bundle"
 	desc = "Elegant and refined: Contains a collapsed sniper rifle in an expensive carrying case, a hollow-point \
 			haemorrhage magazine, a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
-	item = /obj/item/weapon/storage/briefcase/sniperbundle
+	item = /obj/item/storage/briefcase/sniperbundle
 	cost = 20 // normally 26
 
 /datum/uplink_item/nukeoffer/chemical
 	name = "Bioterror bundle"
 	desc = "For the madman: Contains Bioterror spray, Bioterror grenade, chemicals, syringe gun, box of syringes,\
 			Donksoft assault rifle, and some darts. Remember: Seal suit and equip internals before use."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/med/bioterrorbundle
+	item = /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
 	cost = 30 // normally 42
 
 /datum/uplink_item/nukeoffer/firestarter
 	name = "Spetsnaz Pyro bundle"
 	desc = "For systematic suppression of carbon lifeforms in close range: Contains a specialist Pyrotechnic equipment, foreign pistol, two magazines, a pipebomb, and a stimulant syringe."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/firestarter
+	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
 
 // Dangerous Items
@@ -190,13 +190,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
-	item = /obj/item/weapon/gun/ballistic/automatic/pistol
+	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/weapon/gun/ballistic/revolver
+	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
 
@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatible with all 12g rounds. Designed for close \
 			quarter anti-personnel engagements."
-	item = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
+	item = /obj/item/gun/ballistic/automatic/shotgun/bulldog
 	cost = 8
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
@@ -213,20 +213,20 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			20-round magazine and is compatible with suppressors."
-	item = /obj/item/weapon/gun/ballistic/automatic/c20r
+	item = /obj/item/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg/unrestricted
-	item = /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
+	item = /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
-	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw
+	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/grenadier
 	name = "Grenadier's belt"
 	desc = "A belt of a large variety of lethally dangerous and destructive grenades."
-	item = /obj/item/weapon/storage/belt/grenade/full
+	item = /obj/item/storage/belt/grenade/full
 	include_modes = list(/datum/game_mode/nuclear)
 	cost = 22
 	surplus = 0
@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. Guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/syndicate
+	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
-	item = /obj/item/weapon/gun/ballistic/shotgun/boltaction
+	item = /obj/item/gun/ballistic/shotgun/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		targets and cause them to slur as if inebriated. It can produce an \
 		infinite number of bolts, but takes time to automatically recharge \
 		after each shot."
-	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Flamethrower"
 	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
 			stations. Make a statement by roasting the filth in their own greed. Use with caution."
-	item = /obj/item/weapon/flamethrower/full/tank
+	item = /obj/item/flamethrower/full/tank
 	cost = 4
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
@@ -280,14 +280,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/weapon/melee/transforming/energy/sword/saber
+	item = /obj/item/melee/transforming/energy/sword/saber
 	cost = 8
 
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
-	item = /obj/item/weapon/twohanded/dualsaber
+	item = /obj/item/twohanded/dualsaber
 	player_minimum = 25
 	cost = 16
 
@@ -300,27 +300,27 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		 Upon hitting a target, the piston-ram will extend forward to make contact for some serious damage. \
 		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
-	item = /obj/item/weapon/melee/powerfist
+	item = /obj/item/melee/powerfist
 	cost = 8
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
 			security's energy weapons, and silicon lifeforms when you're in a tight spot."
-	item = /obj/item/weapon/storage/box/syndie_kit/emp
+	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 2
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
 	desc = "The minibomb is a grenade with a five-second fuse. Upon detonation, it will create a small hull breach \
 			in addition to dealing high amounts of damage to nearby personnel."
-	item = /obj/item/weapon/grenade/syndieminibomb
+	item = /obj/item/grenade/syndieminibomb
 	cost = 6
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
-	item = /obj/item/weapon/gun/ballistic/automatic/c20r/toy
+	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -329,7 +329,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating \
 			riot grade darts, that can briefly incapacitate someone in just one volley."
-	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy
+	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -338,7 +338,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred \
 			any non-operatives in the area."
-	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
+	item = /obj/item/grenade/spawnergrenade/manhacks
 	cost = 5
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A powerful chemical foam grenade which creates a deadly torrent of foam that will mute, blind, confuse, \
 			mutate, and irritate carbon lifeforms. Specially brewed by Tiger Cooperative chemical weapons specialists \
 			using additional spore toxin. Ensure suit is sealed before use."
-	item = /obj/item/weapon/grenade/chem_grenade/bioterrorfoam
+	item = /obj/item/grenade/chem_grenade/bioterrorfoam
 	cost = 5
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
@@ -358,7 +358,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger \
 			Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
 			Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
-	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
+	item = /obj/item/reagent_containers/spray/chemsprayer/bioterror
 	cost = 20
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
@@ -368,7 +368,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
 			autoinjectors for rapid application on up to two targets each, a syringe, and a bottle containing \
 			the BVAK solution."
-	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
+	item = /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
 	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/shotgun
+	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
 	cost = 12
 
 /datum/uplink_item/ammo/smg
@@ -471,7 +471,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/ammo/smg/bag
 	name = ".45 Ammo Duffel Bag"
 	desc = "A duffel bag filled with enough .45 ammo to supply an entire team, at a discounted price."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg
+	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -549,7 +549,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Box of Bioterror Syringes"
 	desc = "A box full of preloaded syringes, containing various chemicals that seize up the victim's motor \
 			and broca systems, making it impossible for them to move or speak for some time."
-	item = /obj/item/weapon/storage/box/syndie_kit/bioterror
+	item = /obj/item/storage/box/syndie_kit/bioterror
 	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -563,21 +563,21 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Reinforcements"
 	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals \
 			to arm them as well."
-	item = /obj/item/weapon/antag_spawner/nuke_ops
+	item = /obj/item/antag_spawner/nuke_ops
 	cost = 25
 	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
-	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/assault
+	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	refundable = TRUE
 	cost = 65
 
 /datum/uplink_item/support/reinforcement/medical_borg
 	name = "Syndicate Medical Cyborg"
 	desc = "A combat medic cyborg, with potent healing reagents and a medical beam gun, but limited offensive potential."
-	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/medical
+	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	refundable = TRUE
 	cost = 35
 
@@ -604,7 +604,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
 			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
-	item = /obj/item/weapon/sleeping_carp_scroll
+	item = /obj/item/sleeping_carp_scroll
 	cost = 17
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
@@ -612,7 +612,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons/cqc
 	name = "CQC Manual"
 	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
-	item = /obj/item/weapon/cqc_manual
+	item = /obj/item/cqc_manual
 	include_modes = list(/datum/game_mode/nuclear)
 	cost = 13
 	surplus = 0
@@ -621,20 +621,20 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
-	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
+	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 3
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
-	item = /obj/item/weapon/pen/edagger
+	item = /obj/item/pen/edagger
 	cost = 2
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
-	item = /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
+	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/gang)
@@ -645,7 +645,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			strong anesthetic and a chemical that prevents the target from speaking. \
 			The pen holds one dose of the mixture, and cannot be refilled. Note that before the target \
 			falls asleep, they will be able to move and act."
-	item = /obj/item/weapon/pen/sleepy
+	item = /obj/item/pen/sleepy
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
@@ -653,21 +653,21 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. \
 			You can also drop it underfoot to slip people."
-	item = /obj/item/weapon/soap/syndie
+	item = /obj/item/soap/syndie
 	cost = 1
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
-	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	item = /obj/item/storage/box/syndie_kit/chemical
 	cost = 6
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	name = "Romerol"
 	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. On death, these nodules take control of the dead body, causing limited revivification, along with slurred speech, aggression, and the ability to infect others with this agent."
-	item = /obj/item/weapon/storage/box/syndie_kit/romerol
+	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	cant_discount = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
@@ -676,7 +676,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Dart Pistol"
 	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
 			space a small item can."
-	item = /obj/item/weapon/gun/syringe/syndicate
+	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
 
@@ -686,14 +686,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			detonate PDAs of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen \
 			them for longer. Beware, it has a chance to detonate your PDA."
-	item = /obj/item/weapon/cartridge/virus/syndicate
+	item = /obj/item/cartridge/virus/syndicate
 	cost = 6
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Universal Suppressor"
 	desc = "Fitted for use on any small caliber weapon with a threaded barrel, this suppressor will silence the \
 			shots of the weapon for increased stealth and superior ambushing capability."
-	item = /obj/item/weapon/suppressor
+	item = /obj/item/suppressor
 	cost = 3
 	surplus = 10
 
@@ -715,7 +715,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
-	item = /obj/item/weapon/grenade/clusterbuster/soap
+	item = /obj/item/grenade/clusterbuster/soap
 	cost = 6
 
 // Stealth Items
@@ -725,7 +725,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/chameleon
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
-	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
+	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 20
@@ -750,7 +750,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked.  \
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
-	item = /obj/item/weapon/cartridge/virus/frame
+	item = /obj/item/cartridge/virus/frame
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
@@ -769,7 +769,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			access gained from another. In addition, they can be forged to display a new assignment and name. \
 			This can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
 			with these cards."
-	item = /obj/item/weapon/card/id/syndicate
+	item = /obj/item/card/id/syndicate
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
@@ -793,7 +793,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
 			your stolen goods. Comes with a crowbar and a floor tile inside. Properly hidden satchels have been \
 			known to survive intact even beyond the current shift. "
-	item = /obj/item/weapon/storage/backpack/satchel/flat
+	item = /obj/item/storage/backpack/satchel/flat
 	cost = 2
 	surplus = 30
 
@@ -801,7 +801,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
-	item = /obj/item/weapon/reagent_containers/syringe/stimulants
+	item = /obj/item/reagent_containers/syringe/stimulants
 	cost = 5
 	surplus = 90
 
@@ -809,7 +809,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Mulligan"
 	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
 			and appearance."
-	item = /obj/item/weapon/reagent_containers/syringe/mulligan
+	item = /obj/item/reagent_containers/syringe/mulligan
 	cost = 4
 	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
@@ -826,14 +826,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Adaptive Cardboard Cutouts"
 	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. This pack contains three as well as a \
 	crayon for changing their appearances."
-	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
+	item = /obj/item/storage/box/syndie_kit/cutouts
 	cost = 1
 	surplus = 20
 
 /datum/uplink_item/stealthy_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
 	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny. Don't try to give this to us to complete your objective, we know better!"
-	item = /obj/item/weapon/disk/fakenucleardisk
+	item = /obj/item/disk/fakenucleardisk
 	cost = 1
 	surplus = 1
 
@@ -848,7 +848,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
 			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
 			sightings, however."
-	item = /obj/item/weapon/storage/box/syndie_kit/space
+	item = /obj/item/storage/box/syndie_kit/space
 	cost = 4
 
 /datum/uplink_item/suits/hardsuit
@@ -889,7 +889,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
-	item = /obj/item/weapon/card/emag
+	item = /obj/item/card/emag
 	cost = 6
 	exclude_modes = list(/datum/game_mode/gang)
 
@@ -897,20 +897,20 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Full Syndicate Toolbox"
 	desc = "The syndicate toolbox is a suspicious black and red. It comes loaded with a full tool set including a \
 			multitool and combat gloves that are resistant to shocks and heat."
-	item = /obj/item/weapon/storage/toolbox/syndicate
+	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/surgery
+	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
-	item = /obj/item/weapon/storage/belt/military
+	item = /obj/item/storage/belt/military
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
 
@@ -919,7 +919,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector \
 			for rapid healing, a medical HUD for quick identification of injured personnel, \
 			and other supplies helpful for a field medic."
-	item = /obj/item/weapon/storage/firstaid/tactical
+	item = /obj/item/storage/firstaid/tactical
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
@@ -929,7 +929,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
 			of the originals, these inferior copies are still quite useful, being able to provide \
 			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
-	item = /obj/item/weapon/storage/book/bible/syndicate
+	item = /obj/item/storage/book/bible/syndicate
 	cost = 9
 
 /datum/uplink_item/device_tools/thermal
@@ -969,7 +969,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/weapon/aiModule/syndicate
+	item = /obj/item/aiModule/syndicate
 	cost = 14
 
 /datum/uplink_item/device_tools/briefcase_launchpad
@@ -1004,13 +1004,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
 			an assembly to it in order to alter the way it detonates. It has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	item = /obj/item/weapon/grenade/plastic/c4
+	item = /obj/item/grenade/plastic/c4
 	cost = 1
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/c4
+	item = /obj/item/storage/backpack/duffelbag/syndie/c4
 	cost = 9 //10% discount!
 	cant_discount = TRUE
 
@@ -1018,7 +1018,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Bag of X-4 explosives"
 	desc = "Contains 3 X-4 plastic explosives. Similar, but more powerful than C-4. X-4 can be placed on a solid surface, such as a wall or window, and it will \
 			blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a wider, deeper, hole."
-	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/x4
+	item = /obj/item/storage/backpack/duffelbag/syndie/x4
 	cost = 4 //
 	cant_discount = TRUE
 
@@ -1081,7 +1081,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \
 			against other attacks. Pair with an Energy Sword for a killer combination."
-	item = /obj/item/weapon/shield/energy
+	item = /obj/item/shield/energy
 	cost = 16
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
@@ -1090,7 +1090,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
 			operatives in the fight, even while under fire."
-	item = /obj/item/weapon/gun/medbeam
+	item = /obj/item/gun/medbeam
 	cost = 15
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1133,7 +1133,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/codespeak_manual
 	name = "Codespeak Manual"
 	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
-	item = /obj/item/weapon/codespeak_manual
+	item = /obj/item/codespeak_manual
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 
@@ -1152,13 +1152,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Freedom Implant"
 	desc = "An implant injected into the body and later activated at the user's will. It will attempt to free the \
 			user from common restraints such as handcuffs."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
+	item = /obj/item/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. Has no telecrystals, must be charged by the use of physical telecrystals. Undetectable (except via surgery), and excellent for escaping confinement."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
+	item = /obj/item/storage/box/syndie_kit/imp_uplink
 	cost = 4
 	// An empty uplink is kinda useless.
 	surplus = 0
@@ -1167,7 +1167,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will inject a chemical \
 			cocktail which has a mild healing effect along with removing all stuns and increasing movement speed."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	item = /obj/item/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 	player_minimum = 25
 
@@ -1175,7 +1175,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Storage Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will open a small subspace \
 			pocket capable of storing two items."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_storage
+	item = /obj/item/storage/box/syndie_kit/imp_storage
 	cost = 8
 
 /datum/uplink_item/implants/microbomb
@@ -1183,7 +1183,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
 			The more implants inside of you, the higher the explosive power. \
 			This will permanently destroy your body, however."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
+	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1191,7 +1191,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Macrobomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
 			Upon death, releases a massive explosion that will wipe out everything nearby."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
+	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1206,7 +1206,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	if(item)
 		if(istype(item, /obj/item/organ))
 			SSblackbox.add_details("traitor_uplink_items_bought", "[item]|[cost]")
-			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
+			return new /obj/item/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
 
@@ -1238,7 +1238,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."
-	item = /obj/item/weapon/storage/box/cyber_implants
+	item = /obj/item/storage/box/cyber_implants
 	cost = 40
 	cant_discount = TRUE
 
@@ -1253,21 +1253,21 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
 	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
 	cost = 14
-	item = /obj/item/weapon/storage/box/hug/reverse_revolver
+	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. Obviously only works for Mimes."
 	cost = 12
-	item = /obj/item/weapon/storage/box/syndie_kit/mimery
+	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
 	surplus = 0
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
-	item = /obj/item/weapon/storage/box/syndie_kit/ez_clean
+	item = /obj/item/storage/box/syndie_kit/ez_clean
 	cost = 6
 	surplus = 20
 	restricted_roles = list("Janitor")
@@ -1278,7 +1278,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
 	However, if left alone for long enough, He will fall back to slumber. \
 	To activate His Grace, simply unlatch Him."
-	item = /obj/item/weapon/his_grace
+	item = /obj/item/his_grace
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
@@ -1287,7 +1287,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Banana Cream Pie Cannon"
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
 	cost = 10
-	item = /obj/item/weapon/pneumatic_cannon/pie/selfcharge
+	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	restricted_roles = list("Clown")
 	surplus = 0 //No fun unless you're the clown!
 
@@ -1310,7 +1310,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted/modified_syringe_gun
 	name = "Modified Syringe Gun"
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
-	item = /obj/item/weapon/gun/syringe/dna
+	item = /obj/item/gun/syringe/dna
 	cost = 14
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
@@ -1341,13 +1341,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
-	item = /obj/item/weapon/storage/secure/briefcase/syndie
+	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 1
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with omnizine."
-	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 
 /datum/uplink_item/badass/balloon
@@ -1363,7 +1363,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "Syndicate Bundles are specialized groups of items that arrive in a plain box. \
 			These items are collectively worth more than 20 telecrystals, but you do not know which specialization \
 			you will receive."
-	item = /obj/item/weapon/storage/box/syndicate
+	item = /obj/item/storage/box/syndicate
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	cant_discount = TRUE
@@ -1402,7 +1402,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/badass/random
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
-	item = /obj/item/weapon/paper
+	item = /obj/item/paper
 	cost = 0
 	cant_discount = TRUE
 

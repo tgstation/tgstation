@@ -25,7 +25,7 @@
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
-	var/cutting_tool = /obj/item/weapon/weldingtool
+	var/cutting_tool = /obj/item/weldingtool
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/welder.ogg'
@@ -110,17 +110,17 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	var/turf/T = get_turf(src)
+	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
-		AM.forceMove(T)
+		AM.forceMove(L)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)
 		throwing.finalize(FALSE)
 
 /obj/structure/closet/proc/take_contents()
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/AM in T)
+	var/atom/L = drop_location()
+	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
 
@@ -164,7 +164,7 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags & NODROP))
+		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags_1 & NODROP_1))
 			return
 	else
 		return
@@ -193,21 +193,21 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && material_drop_amount && !(flags & NODECONSTRUCT))
+	if(ispath(material_drop) && material_drop_amount && !(flags_1 & NODECONSTRUCT_1))
 		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 
-/obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
 	if(opened)
 		if(istype(W, cutting_tool))
-			if(istype(W, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = W
+			if(istype(W, /obj/item/weldingtool))
+				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0, user))
 					to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 					playsound(loc, cutting_sound, 40, 1)
@@ -228,8 +228,8 @@
 		if(user.drop_item()) // so we put in unlit welder too
 			W.forceMove(loc)
 			return 1
-	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
+		var/obj/item/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
 			return
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
@@ -243,7 +243,7 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/weapon/wrench) && anchorable)
+	else if(istype(W, /obj/item/wrench) && anchorable)
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
@@ -251,7 +251,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
+	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
@@ -448,3 +448,6 @@
 /obj/structure/closet/singularity_act()
 	dump_contents()
 	..()
+
+/obj/structure/closet/AllowDrop()
+	return TRUE

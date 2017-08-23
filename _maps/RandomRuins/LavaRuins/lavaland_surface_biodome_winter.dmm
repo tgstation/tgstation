@@ -32,7 +32,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ah" = (
-/obj/item/weapon/reagent_containers/food/drinks/mug,
+/obj/item/reagent_containers/food/drinks/mug,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ai" = (
@@ -92,7 +92,7 @@
 /area/ruin/powered/snow_biodome)
 "au" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "av" = (
@@ -105,7 +105,7 @@
 /area/ruin/powered/snow_biodome)
 "ax" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "ay" = (
@@ -150,7 +150,7 @@
 /area/ruin/powered/snow_biodome)
 "aF" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/mug/coco,
+/obj/item/reagent_containers/food/drinks/mug/coco,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aG" = (
@@ -322,7 +322,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/snow_biodome)
 "xU" = (
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "zT" = (
@@ -332,8 +332,8 @@
 /area/ruin/powered/snow_biodome)
 "AM" = (
 /obj/structure/table,
-/obj/item/weapon/pen,
-/obj/item/weapon/paper,
+/obj/item/pen,
+/obj/item/paper,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Dd" = (
@@ -365,7 +365,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "KS" = (
-/obj/item/weapon/twohanded/required/chainsaw,
+/obj/item/twohanded/required/chainsaw,
 /obj/structure/closet,
 /obj/machinery/light/small{
 	dir = 4
@@ -387,8 +387,8 @@
 /area/ruin/powered/snow_biodome)
 "PK" = (
 /obj/structure/table,
-/obj/item/weapon/pen,
-/obj/item/weapon/paper_bin,
+/obj/item/pen,
+/obj/item/paper_bin,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "QI" = (
@@ -396,7 +396,7 @@
 /area/lavaland/surface/outdoors/explored)
 "QK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp,
+/obj/item/storage/fancy/cigarettes/cigpack_carp,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "QN" = (

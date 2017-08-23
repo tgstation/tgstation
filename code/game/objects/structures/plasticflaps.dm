@@ -19,7 +19,7 @@
 
 /obj/structure/plasticflaps/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(state == PLASTIC_FLAPS_NORMAL)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
@@ -38,7 +38,7 @@
 				state = PLASTIC_FLAPS_NORMAL
 				anchored = TRUE
 				to_chat(user, "<span class='notice'>You screw [src] from the floor.</span>")
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/wirecutters))
 		if(state == PLASTIC_FLAPS_DETACHED)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
@@ -91,7 +91,7 @@
 	return ..()
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
 

@@ -18,6 +18,8 @@ BONUS
 /datum/symptom/youth
 
 	name = "Eternal Youth"
+	desc = "The virus becomes symbiotically connected to the cells in the host's body, preventing and reversing aging. \
+	The virus, in turn, becomes more resistant, spreads faster, and is harder to spot, although it doesn't thrive as well without a host."
 	stealth = 3
 	resistance = 4
 	stage_speed = 4

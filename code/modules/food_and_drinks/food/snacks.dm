@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/snacks
+/obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy."
 	icon = 'icons/obj/food/food.dmi'
@@ -24,7 +24,7 @@
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
-/obj/item/weapon/reagent_containers/food/snacks/add_initial_reagents()
+/obj/item/reagent_containers/food/snacks/add_initial_reagents()
 	if(tastes && tastes.len)
 		if(list_reagents)
 			for(var/rid in list_reagents)
@@ -36,7 +36,7 @@
 	else
 		..()
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
+/obj/item/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
 		return
 	if(!reagents.total_volume)
@@ -45,11 +45,11 @@
 		usr.put_in_hands(trash_item)
 
 
-/obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
+/obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
 
-/obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
@@ -117,11 +117,11 @@
 	return 0
 
 
-/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
+/obj/item/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
 	return
 
 
-/obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
+/obj/item/reagent_containers/food/snacks/examine(mob/user)
 	..()
 	if(bitecount == 0)
 		return
@@ -133,23 +133,23 @@
 		to_chat(user, "[src] was bitten multiple times!")
 
 
-/obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/storage))
+/obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/storage))
 		..() // -> item/attackby()
 		return 0
-	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
-		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+	if(istype(W, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > WEIGHT_CLASS_SMALL)
 				to_chat(user, "<span class='warning'>[S] is too big for [src]!</span>")
 				return 0
-			if(!S.customfoodfilling || istype(W, /obj/item/weapon/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
+			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
 				to_chat(user, "<span class='warning'>[src] can't be filled with [S]!</span>")
 				return 0
 			if(contents.len >= 20)
 				to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 				return 0
-			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
+			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
 	var/sharp = W.is_sharp()
@@ -160,10 +160,10 @@
 		..()
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)
+/obj/item/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)
 	..()
 	reagents.clear_reagents()
-	for(var/obj/item/weapon/reagent_containers/RC in contents)
+	for(var/obj/item/reagent_containers/RC in contents)
 		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
 	if(istype(R))
 		contents_loop:
@@ -182,7 +182,7 @@
 			else
 				reagents.add_reagent(r_id, amount)
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
+/obj/item/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
 		return FALSE
 
@@ -190,7 +190,7 @@
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/structure/table/optable) in src.loc) && \
-			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
+			!(locate(/obj/item/storage/bag/tray) in src.loc) \
 		)
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
 		return FALSE
@@ -210,12 +210,12 @@
 
 	var/reagents_per_slice = reagents.total_volume/slices_num
 	for(var/i=1 to (slices_num-slices_lost))
-		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
+		var/obj/item/reagent_containers/food/snacks/slice = new slice_path (loc)
 		initialize_slice(slice, reagents_per_slice)
 	qdel(src)
 	return TRUE
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
+/obj/item/reagent_containers/food/snacks/proc/initialize_slice(obj/item/reagent_containers/food/snacks/slice, reagents_per_slice)
 	slice.create_reagents(slice.volume)
 	reagents.trans_to(slice,reagents_per_slice)
 	if(name != initial(name))
@@ -223,7 +223,7 @@
 	if(desc != initial(desc))
 		slice.desc = "[desc]"
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)
+/obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)
 		if(ispath(trash, /obj/item))
 			. = new trash(location)
@@ -236,7 +236,7 @@
 			trash = null
 			return
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
+/obj/item/reagent_containers/food/snacks/proc/update_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
@@ -247,7 +247,7 @@
 	add_overlay(filling)
 
 // initialize_cooked_food() is called when microwaving the food
-/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency = 1)
+/obj/item/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/reagent_containers/food/snacks/S, cooking_efficiency = 1)
 	S.create_reagents(S.volume)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
@@ -259,27 +259,27 @@
 			else
 				S.reagents.add_reagent(r_id, amount)
 
-/obj/item/weapon/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
+/obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
 	if(cooked_type)
-		var/obj/item/weapon/reagent_containers/food/snacks/S = new cooked_type(get_turf(src))
+		var/obj/item/reagent_containers/food/snacks/S = new cooked_type(get_turf(src))
 		if(M)
 			initialize_cooked_food(S, M.efficiency)
 		else
 			initialize_cooked_food(S, 1)
 		SSblackbox.add_details("food_made","[type]")
 	else
-		new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
+		new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 		if(M && M.dirty < 100)
 			M.dirty++
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/Destroy()
+/obj/item/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
+/obj/item/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
 		if(iscorgi(M))
 			var/mob/living/L = M
@@ -311,11 +311,11 @@
 //	the bites. No more contained reagents = no more bites.
 
 //Here is an example of the new formatting for anyone who wants to add more food items.
-///obj/item/weapon/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
+///obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
-///obj/item/weapon/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
+///obj/item/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
 //		..()															//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
@@ -327,13 +327,13 @@
 // All the food items that can store an item inside itself, like bread or cake.
 
 
-/obj/item/weapon/reagent_containers/food/snacks/store
+/obj/item/reagent_containers/food/snacks/store
 	w_class = WEIGHT_CLASS_NORMAL
 	var/stored_item = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
-	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/weapon/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
+	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
 		if(W.is_sharp())
 			return 0
 		if(stored_item)
@@ -350,7 +350,7 @@
 		stored_item = 1
 		return 1 // no afterattack here
 
-/obj/item/weapon/reagent_containers/food/snacks/MouseDrop(atom/over)
+/obj/item/reagent_containers/food/snacks/MouseDrop(atom/over)
 	var/turf/T = get_turf(src)
 	var/obj/structure/table/TB = locate(/obj/structure/table) in T
 	if(TB)

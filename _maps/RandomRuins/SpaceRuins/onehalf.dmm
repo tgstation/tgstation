@@ -80,16 +80,16 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "an" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ao" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ap" = (
@@ -174,11 +174,11 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aC" = (
@@ -204,7 +204,7 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aF" = (
 /obj/structure/disposalpipe/trunk,
-/obj/item/weapon/ore/diamond,
+/obj/item/ore/diamond,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aG" = (
@@ -247,8 +247,8 @@
 /obj/structure/closet/crate/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/device/healthanalyzer,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Crew Quarters APC";
@@ -297,7 +297,7 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aS" = (
 /obj/structure/lattice,
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /turf/template_noop,
 /area/template_noop)
 "aT" = (
@@ -823,8 +823,8 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper,
-/obj/item/weapon/pen,
+/obj/item/paper,
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cc" = (
@@ -873,7 +873,7 @@
 	icon_state = "pipe-j1";
 	dir = 1
 	},
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless{
 	broken = 1;
 	icon_state = "platingdmg2"
@@ -897,7 +897,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/template_noop,
@@ -919,7 +919,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	total_paper = 12
 	},
 /turf/open/floor/plasteel,
@@ -951,7 +951,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
@@ -988,7 +988,7 @@
 /area/template_noop)
 "ct" = (
 /obj/structure/lattice,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/template_noop,
@@ -1082,18 +1082,18 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cH" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/item/device/multitool,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cI" = (
 /obj/structure/safe/floor,
-/obj/item/weapon/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/suit/space/hardsuit/syndi,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
-/obj/item/weapon/folder/syndicate/mining,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/folder/syndicate/mining,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cJ" = (
@@ -1212,8 +1212,8 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cZ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/ore/bluespace_crystal,
-/obj/item/weapon/coin/plasma,
+/obj/item/ore/bluespace_crystal,
+/obj/item/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "da" = (
@@ -1223,7 +1223,7 @@
 "db" = (
 /obj/machinery/light,
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
@@ -1243,7 +1243,7 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "dd" = (
 /obj/structure/grille,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
@@ -1309,7 +1309,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/lattice/catwalk,

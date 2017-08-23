@@ -15,9 +15,9 @@
 /datum/round_event/valentines/start()
 	..()
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		H.put_in_hands(new /obj/item/weapon/valentine)
-		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
-		new /obj/item/weapon/reagent_containers/food/snacks/candyheart(b)
+		H.put_in_hands(new /obj/item/valentine)
+		var/obj/item/storage/backpack/b = locate() in H.contents
+		new /obj/item/reagent_containers/food/snacks/candyheart(b)
 
 
 	var/list/valentines = list()
@@ -64,7 +64,7 @@
 /datum/round_event/valentines/announce()
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
 
-/obj/item/weapon/valentine
+/obj/item/valentine
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
 	icon = 'icons/obj/toy.dmi'
@@ -73,7 +73,7 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/valentine/New()
+/obj/item/valentine/New()
 	..()
 	message = pick("Roses are red / Violets are good / One day while Andy...",
 	               "My love for you is like the singularity. It cannot be contained.",
@@ -126,15 +126,15 @@
 	               "Not even sorium can drive me away from you.",
 	               "Wanna make like a borg and do some heavy petting?" )
 
-/obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
+	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
 		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
 		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
 		if(recipient && sender)
 			name = "valentine - To: [recipient] From: [sender]"
 
-/obj/item/weapon/valentine/examine(mob/user)
+/obj/item/valentine/examine(mob/user)
 	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(message)]</BODY></HTML>", "window=[name]")
@@ -145,10 +145,10 @@
 	else
 		to_chat(user, "<span class='notice'>It is too far away.</span>")
 
-/obj/item/weapon/valentine/attack_self(mob/user)
+/obj/item/valentine/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/candyheart
+/obj/item/reagent_containers/food/snacks/candyheart
 	name = "candy heart"
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "candyheart"
@@ -156,7 +156,7 @@
 	list_reagents = list("sugar" = 2)
 	junkiness = 5
 
-/obj/item/weapon/reagent_containers/food/snacks/candyheart/New()
+/obj/item/reagent_containers/food/snacks/candyheart/New()
 	..()
 	desc = pick("A heart-shaped candy that reads: HONK ME",
                 "A heart-shaped candy that reads: ERP",

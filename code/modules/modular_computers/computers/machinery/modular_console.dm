@@ -22,24 +22,24 @@
 /obj/machinery/modular_computer/console/buildable/Initialize()
 	. = ..()
 	// User-built consoles start as empty frames.
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/network_card = cpu.all_components[MC_NET]
-	var/obj/item/weapon/computer_hardware/hard_drive/recharger = cpu.all_components[MC_CHARGE]
+	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/network_card = cpu.all_components[MC_NET]
+	var/obj/item/computer_hardware/hard_drive/recharger = cpu.all_components[MC_CHARGE]
 	qdel(recharger)
 	qdel(network_card)
 	qdel(hard_drive)
 
 /obj/machinery/modular_computer/console/Initialize()
 	. = ..()
-	var/obj/item/weapon/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
+	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
 	if(battery_module)
 		qdel(battery_module)
 
-	var/obj/item/weapon/computer_hardware/network_card/wired/network_card = new()
+	var/obj/item/computer_hardware/network_card/wired/network_card = new()
 
 	cpu.install_component(network_card)
-	cpu.install_component(new /obj/item/weapon/computer_hardware/recharger/APC)
-	cpu.install_component(new /obj/item/weapon/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
+	cpu.install_component(new /obj/item/computer_hardware/recharger/APC)
+	cpu.install_component(new /obj/item/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
 
 	var/area/A = get_area(src)
 	// Attempts to set this console's tag according to our area. Since some areas have stuff like "XX - YY" in their names we try to remove that too.
