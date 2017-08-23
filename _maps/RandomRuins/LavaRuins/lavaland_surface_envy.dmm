@@ -60,7 +60,7 @@
 	pixel_y = 28;
 	broken = 1
 	},
-/obj/item/weapon/kitchen/knife/envy,
+/obj/item/kitchen/knife/envy,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (

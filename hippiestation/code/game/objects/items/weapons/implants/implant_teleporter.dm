@@ -1,4 +1,4 @@
-/obj/item/weapon/implant/teleporter
+/obj/item/implant/teleporter
 	var/list/whitelist = list()
 	var/list/blacklist = list()
 	var/pointofreturn = null //where to return them to if they go out of bounds
@@ -7,10 +7,10 @@
 	var/on = FALSE
 	var/retrievalmessage = "Retrieval complete."
 
-/obj/item/weapon/implant/teleporter/Initialize()
+/obj/item/implant/teleporter/Initialize()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/implant/teleporter/process()
+/obj/item/implant/teleporter/process()
 
 	if(usewhitelist)
 		useblacklist = FALSE
@@ -43,18 +43,18 @@
 				if(on && pointofreturn)
 					retrieve_exile()
 
-/obj/item/weapon/implant/teleporter/proc/retrieve_exile()
+/obj/item/implant/teleporter/proc/retrieve_exile()
 	if(imp_in.z != ZLEVEL_CENTCOM)
 		do_teleport(imp_in, pointofreturn)
 		say(retrievalmessage)
 
-/obj/item/weapon/implant/teleporter/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/teleporter/implant(mob/living/target, mob/user, silent = 0)
 	LAZYINITLIST(target.implants)
 	if(!target.can_be_implanted() || !can_be_implanted_in(target))
 		return 0
 	for(var/X in target.implants)
 		if(istype(X, type))
-			var/obj/item/weapon/implant/imp_e = X
+			var/obj/item/implant/imp_e = X
 			if(!allow_multiple)
 				if(imp_e.uses < initial(imp_e.uses)*2)
 					if(uses == -1)
@@ -89,12 +89,12 @@
 
 	return 1
 
-/obj/item/weapon/implant/teleporter/removed(mob/living/source, silent = 0, special = 0)
+/obj/item/implant/teleporter/removed(mob/living/source, silent = 0, special = 0)
 	..()
 	say("Implant tampering detected.")
 	source.gib()
 
-/obj/item/weapon/implant/teleporter/ghost_role
+/obj/item/implant/teleporter/ghost_role
 	name = "employee retrieval implant"
 	usewhitelist = TRUE
 	retrievalmessage = "Employee retrieval complete."

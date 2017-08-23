@@ -11,7 +11,7 @@
 	environment_smash = 0
 	speak_chance = 0
 	turns_per_move = 3
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 3)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat = 3)
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"

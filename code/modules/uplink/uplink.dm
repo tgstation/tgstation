@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE
 
-/obj/item/weapon/pen/uplink/Initialize()
+/obj/item/pen/uplink/Initialize()
 	. = ..()
 	hidden_uplink = new(src)
 	traitor_unlock_degrees = 360

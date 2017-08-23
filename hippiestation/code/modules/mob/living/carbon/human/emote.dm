@@ -67,7 +67,7 @@
 	if(istype(user,/mob/living/carbon/alien))
 		fartsound = 'hippiestation/sound/effects/alienfart.ogg'
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
-	var/obj/item/weapon/storage/book/bible/Y = locate() in get_turf(user.loc)
+	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
 	if(istype(Y))
 		user.Stun(20)
 		playsound(Y,'hippiestation/sound/effects/thunder.ogg', 90, 1)
@@ -78,21 +78,21 @@
 			H.electrocution_animation(10)
 		addtimer(CALLBACK(user, /mob/proc/gib), 10)
 	else
-		var/obj/item/weapon/storage/internal/pocket/butt/theinv = B.inv
+		var/obj/item/storage/internal/pocket/butt/theinv = B.inv
 		if(theinv.contents.len)
 			var/obj/item/O = pick(theinv.contents)
-			if(istype(O, /obj/item/weapon/lighter))
-				var/obj/item/weapon/lighter/G = O
+			if(istype(O, /obj/item/lighter))
+				var/obj/item/lighter/G = O
 				if(G.lit && user.loc)
 					new/obj/effect/hotspot(user.loc)
 					playsound(user, fartsound, 50, 1, 5)
-			else if(istype(O, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/J = O
+			else if(istype(O, /obj/item/weldingtool))
+				var/obj/item/weldingtool/J = O
 				if(J.welding && user.loc)
 					new/obj/effect/hotspot(user.loc)
 					playsound(user, fartsound, 50, 1, 5)
-			else if(istype(O, /obj/item/weapon/bikehorn))
-				for(var/obj/item/weapon/bikehorn/Q in theinv.contents)
+			else if(istype(O, /obj/item/bikehorn))
+				for(var/obj/item/bikehorn/Q in theinv.contents)
 					playsound(Q, pick(Q.honksound), 50, 1, 5)
 				message = "<span class='clown'>farts.</span>"
 			else if(istype(O, /obj/item/device/megaphone))
@@ -143,7 +143,7 @@
 			fart_type = 3
 		else
 			fart_type = 2
-	var/obj/item/weapon/storage/book/bible/Y = locate() in get_turf(user.loc)
+	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
 	if(istype(Y))
 		user.Stun(20)
 		playsound(Y,'hippiestation/sound/effects/thunder.ogg', 90, 1)
@@ -156,7 +156,7 @@
 			playsound(user, 'hippiestation/sound/effects/fart.ogg', 50, 1, 5)
 			sleep(1)
 		playsound(user, 'hippiestation/sound/effects/fartmassive.ogg', 75, 1, 5)
-		var/obj/item/weapon/storage/internal/pocket/butt/theinv = B.inv
+		var/obj/item/storage/internal/pocket/butt/theinv = B.inv
 		if(theinv.contents.len)
 			for(var/obj/item/O in theinv.contents)
 				theinv.remove_from_storage(O, user.loc)

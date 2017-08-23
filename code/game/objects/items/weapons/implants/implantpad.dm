@@ -1,7 +1,7 @@
-/obj/item/weapon/implantpad
+/obj/item/implantpad
 	name = "implantpad"
 	desc = "Used to modify implants."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "implantpad-0"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -9,19 +9,19 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	var/obj/item/weapon/implantcase/case = null
+	var/obj/item/implantcase/case = null
 	var/broadcasting = null
 	var/listening = 1
 
 
-/obj/item/weapon/implantpad/update_icon()
+/obj/item/implantpad/update_icon()
 	if(case)
 		icon_state = "implantpad-1"
 	else
 		icon_state = "implantpad-0"
 
 
-/obj/item/weapon/implantpad/attack_hand(mob/user)
+/obj/item/implantpad/attack_hand(mob/user)
 	if(case && user.is_holding(src))
 		user.put_in_active_hand(case)
 
@@ -34,8 +34,8 @@
 		return ..()
 
 
-/obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/implantcase))
+/obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
+	if(istype(C, /obj/item/implantcase))
 		if(!case)
 			if(!user.transferItemToLoc(C, src))
 				return
@@ -44,12 +44,12 @@
 	else
 		return ..()
 
-/obj/item/weapon/implantpad/attack_self(mob/user)
+/obj/item/implantpad/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = "<B>Implant Mini-Computer:</B><HR>"
 	if(case)
 		if(case.imp)
-			if(istype(case.imp, /obj/item/weapon/implant))
+			if(istype(case.imp, /obj/item/implant))
 				dat += case.imp.get_data()
 		else
 			dat += "The implant casing is empty."
@@ -59,7 +59,7 @@
 	onclose(user, "implantpad")
 
 
-/obj/item/weapon/implantpad/Topic(href, href_list)
+/obj/item/implantpad/Topic(href, href_list)
 	..()
 	if(usr.stat)
 		return

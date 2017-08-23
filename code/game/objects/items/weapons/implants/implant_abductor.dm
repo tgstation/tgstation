@@ -1,4 +1,4 @@
-/obj/item/weapon/implant/abductor
+/obj/item/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
 	icon = 'icons/obj/abductor.dmi'
@@ -8,7 +8,7 @@
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30
 
-/obj/item/weapon/implant/abductor/activate()
+/obj/item/implant/abductor/activate()
 	if(cooldown == initial(cooldown))
 		home.Retrieve(imp_in,1)
 		cooldown = 0
@@ -16,13 +16,13 @@
 	else
 		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
 
-/obj/item/weapon/implant/abductor/process()
+/obj/item/implant/abductor/process()
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
 			STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/implant/abductor/implant(mob/living/target, mob/user)
+/obj/item/implant/abductor/implant(mob/living/target, mob/user)
 	if(..())
 		var/obj/machinery/abductor/console/console
 		if(ishuman(target))
@@ -37,7 +37,7 @@
 			home = console.pad
 		return 1
 
-/obj/item/weapon/implant/abductor/proc/get_team_console(var/team)
+/obj/item/implant/abductor/proc/get_team_console(var/team)
 	var/obj/machinery/abductor/console/console
 	for(var/obj/machinery/abductor/console/c in GLOB.machines)
 		if(c.team == team)

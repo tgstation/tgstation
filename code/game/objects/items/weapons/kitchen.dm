@@ -8,13 +8,13 @@
  *		Rolling Pins
  */
 
-/obj/item/weapon/kitchen
+/obj/item/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 	origin_tech = "materials=1"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 
-/obj/item/weapon/kitchen/fork
+/obj/item/kitchen/fork
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
@@ -30,7 +30,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/datum/reagent/forkload //used to eat omelette
 
-/obj/item/weapon/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
 
@@ -52,7 +52,7 @@
 		return ..()
 
 
-/obj/item/weapon/kitchen/knife
+/obj/item/kitchen/knife
 	name = "kitchen knife"
 	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
@@ -69,7 +69,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
 
-/obj/item/weapon/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
 		if(user.disabilities & CLUMSY && prob(50))
 			M = user
@@ -77,13 +77,13 @@
 	else
 		return ..()
 
-/obj/item/weapon/kitchen/knife/suicide_act(mob/user)
+/obj/item/kitchen/knife/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
 
-/obj/item/weapon/kitchen/knife/ritual
+/obj/item/kitchen/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
@@ -91,7 +91,7 @@
 	item_state = "knife"
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/kitchen/knife/butcher
+/obj/item/kitchen/knife/butcher
 	name = "butcher's cleaver"
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
@@ -102,7 +102,7 @@
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/kitchen/knife/combat
+/obj/item/kitchen/knife/combat
 	name = "combat knife"
 	icon_state = "buckknife"
 	item_state = "knife"
@@ -113,7 +113,7 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 	bayonet = TRUE
 
-/obj/item/weapon/kitchen/knife/combat/survival
+/obj/item/kitchen/knife/combat/survival
 	name = "survival knife"
 	icon_state = "survivalknife"
 	item_state = "knife"
@@ -122,7 +122,7 @@
 	throwforce = 15
 	bayonet = TRUE
 
-/obj/item/weapon/kitchen/knife/combat/bone
+/obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
 	item_state = "bone_dagger"
 	icon_state = "bone_dagger"
@@ -133,14 +133,14 @@
 	throwforce = 15
 	materials = list()
 
-/obj/item/weapon/kitchen/knife/combat/cyborg
+/obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 	origin_tech = null
 
-/obj/item/weapon/kitchen/knife/carrotshiv
+/obj/item/kitchen/knife/carrotshiv
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
 	item_state = "carrotshiv"
@@ -154,7 +154,7 @@
 	attack_verb = list("shanked", "shivved")
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 
-/obj/item/weapon/kitchen/rollingpin
+/obj/item/kitchen/rollingpin
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
@@ -165,4 +165,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
-/* Trays  moved to /obj/item/weapon/storage/bag */
+/* Trays  moved to /obj/item/storage/bag */

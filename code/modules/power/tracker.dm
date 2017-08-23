@@ -60,9 +60,9 @@
 	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
 		control.currentdir = angle
 
-/obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/power/tracker/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(istype(W, /obj/item/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
 		if(do_after(user, 50*W.toolspeed, target = src))
@@ -87,11 +87,11 @@
 				S.give_glass(stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, 1)
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
+			new /obj/item/shard(src.loc)
+			new /obj/item/shard(src.loc)
 	qdel(src)
 
 // Tracker Electronic
 
-/obj/item/weapon/electronics/tracker
+/obj/item/electronics/tracker
 	name = "tracker electronics"

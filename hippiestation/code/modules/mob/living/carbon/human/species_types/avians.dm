@@ -9,7 +9,7 @@
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/bird
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/bird
 
 /datum/species/bird/on_species_gain(mob/living/carbon/human/C)
 	C.draw_hippie_parts()

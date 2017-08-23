@@ -14,7 +14,7 @@
 	var/max_implants = 5
 	var/injection_cooldown = 600
 	var/replenish_cooldown = 6000
-	var/implant_type = /obj/item/weapon/implant/mindshield
+	var/implant_type = /obj/item/implant/mindshield
 	var/auto_inject = FALSE
 	var/auto_replenish = TRUE
 	var/special = FALSE
@@ -85,7 +85,7 @@
 	update_icon()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
-	var/obj/item/weapon/implant/I = new implant_type
+	var/obj/item/implant/I = new implant_type
 	if(I.implant(M))
 		visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
 		return 1

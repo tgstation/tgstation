@@ -11,7 +11,7 @@
 
 #define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 0.1
 
-/obj/item/weapon/gun/energy/beam_rifle
+/obj/item/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
 	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targetted by one. \
 		<span class='boldnotice'>Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or \
@@ -31,7 +31,7 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
-	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
+	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
 	pin = null
 	var/aiming = FALSE
@@ -81,26 +81,26 @@
 	var/datum/action/item_action/zoom_speed_action/zoom_speed_action
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
 
-/obj/item/weapon/gun/energy/beam_rifle/debug
+/obj/item/gun/energy/beam_rifle/debug
 	delay = 0
-	cell_type = /obj/item/weapon/stock_parts/cell/infinite
+	cell_type = /obj/item/stock_parts/cell/infinite
 	aiming_time = 0
 	recoil = 0
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
+/obj/item/gun/energy/beam_rifle/equipped(mob/user)
 	set_user(user)
 	. = ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
+/obj/item/gun/energy/beam_rifle/pickup(mob/user)
 	set_user(user)
 	. = ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/dropped()
+/obj/item/gun/energy/beam_rifle/dropped()
 	set_user()
 	. = ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/ui_action_click(owner, action)
+/obj/item/gun/energy/beam_rifle/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/zoom_speed_action))
 		zoom_speed++
 		if(zoom_speed > 1)
@@ -125,7 +125,7 @@
 				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
 	reset_zooming()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
+/obj/item/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
 	if(!check_user() || !zooming || zoom_lock == ZOOM_LOCK_OFF || zoom_lock == ZOOM_LOCK_CENTER_VIEW)
 		return
 	if(zoom_animating && delay_override != 0)
@@ -139,13 +139,13 @@
 	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
 	zoom_animating = 0
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
+/obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
 		return
 	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_current_view_increase
 	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_current_view_increase
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
+/obj/item/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
 	if(zoom_speed == ZOOM_SPEED_INSTANT)
@@ -161,16 +161,16 @@
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
 	smooth_zooming(SSfastprocess.wait * zoom_target_view_increase * zoom_speed)
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming()
+/obj/item/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
 		return
 	zooming = TRUE
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/stop_zooming()
+/obj/item/gun/energy/beam_rifle/proc/stop_zooming()
 	zooming = FALSE
 	reset_zooming()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/reset_zooming()
+/obj/item/gun/energy/beam_rifle/proc/reset_zooming()
 	if(!check_user(FALSE))
 		return
 	zoom_animating = 0
@@ -181,7 +181,7 @@
 	current_zoom_x = 0
 	current_zoom_y = 0
 
-/obj/item/weapon/gun/energy/beam_rifle/update_icon()
+/obj/item/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
 	if(cell.charge > primary_ammo.e_cost)
@@ -189,34 +189,34 @@
 	else
 		add_overlay(drained_overlay)
 
-/obj/item/weapon/gun/energy/beam_rifle/attack_self(mob/user)
+/obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 	aiming_beam()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
+/obj/item/gun/energy/beam_rifle/proc/update_slowdown()
 	if(aiming)
 		slowdown = scoped_slow
 	else
 		slowdown = initial(slowdown)
 
-/obj/item/weapon/gun/energy/beam_rifle/Initialize()
+/obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 	zoom_speed_action = new(src)
 	zoom_lock_action = new(src)
 
-/obj/item/weapon/gun/energy/beam_rifle/Destroy()
+/obj/item/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_NULL(current_tracer)
 	return ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
+/obj/item/gun/energy/beam_rifle/emp_act(severity)
 	chambered = null
 	recharge_newshot()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
+/obj/item/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
 	var/diff = abs(aiming_lastangle - lastangle)
 	check_user()
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
@@ -241,7 +241,7 @@
 	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
 
-/obj/item/weapon/gun/energy/beam_rifle/process()
+/obj/item/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
 	check_user()
@@ -250,7 +250,7 @@
 		aiming_time_left--
 		aiming_beam(TRUE)
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
+/obj/item/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
 		if(automatic_cleanup)
 			stop_aiming()
@@ -258,7 +258,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
+/obj/item/gun/energy/beam_rifle/proc/process_aim()
 	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
 		var/angle = mouse_angle_from_client(current_user.client)
 		switch(angle)
@@ -278,14 +278,14 @@
 		delay_penalty(difference * aiming_time_increase_angle_multiplier)
 		lastangle = angle
 
-/obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
+/obj/item/gun/energy/beam_rifle/on_mob_move()
 	check_user()
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
 		process_aim()
 		aiming_beam(TRUE)
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming()
+/obj/item/gun/energy/beam_rifle/proc/start_aiming()
 	aiming_time_left = aiming_time
 	aiming = TRUE
 	process_aim()
@@ -293,14 +293,14 @@
 	zooming_angle = lastangle
 	start_zooming()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/stop_aiming()
+/obj/item/gun/energy/beam_rifle/proc/stop_aiming()
 	set waitfor = FALSE
 	aiming_time_left = aiming_time
 	aiming = FALSE
 	QDEL_NULL(current_tracer)
 	stop_zooming()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/set_user(mob/user)
+/obj/item/gun/energy/beam_rifle/proc/set_user(mob/user)
 	if(user == current_user)
 		return
 	stop_aiming()
@@ -311,7 +311,7 @@
 		current_user = user
 		LAZYADD(current_user.mousemove_intercept_objects, src)
 
-/obj/item/weapon/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
+/obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)
 		process_aim()
 		aiming_beam()
@@ -321,7 +321,7 @@
 			smooth_zooming(2)
 	return ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
+/obj/item/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
 	if(istype(mob))
 		set_user(mob)
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
@@ -331,7 +331,7 @@
 	start_aiming()
 	return ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
+/obj/item/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
@@ -342,7 +342,7 @@
 	QDEL_NULL(current_tracer)
 	return ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+/obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
@@ -358,11 +358,11 @@
 	stop_aiming()
 	return ..()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
+/obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
 		AC.sync_stats()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/delay_penalty(amount)
+/obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
 	aiming_time_left = Clamp(aiming_time_left + amount, 0, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
@@ -382,10 +382,10 @@
 	var/structure_piercing = 2
 	var/structure_bleed_coeff = 0.7
 	var/do_pierce = TRUE
-	var/obj/item/weapon/gun/energy/beam_rifle/host
+	var/obj/item/gun/energy/beam_rifle/host
 
 /obj/item/ammo_casing/energy/beam_rifle/proc/sync_stats()
-	var/obj/item/weapon/gun/energy/beam_rifle/BR = loc
+	var/obj/item/gun/energy/beam_rifle/BR = loc
 	if(!istype(BR))
 		stack_trace("Beam rifle syncing error")
 	host = BR
@@ -430,7 +430,7 @@
 	var/turf/curloc = get_turf(user)
 	if(!istype(curloc) || !BB)
 		return FALSE
-	var/obj/item/weapon/gun/energy/beam_rifle/gun = loc
+	var/obj/item/gun/energy/beam_rifle/gun = loc
 	if(!targloc && gun)
 		targloc = get_turf_in_angle(gun.lastangle, curloc, 10)
 	else if(!targloc)
@@ -460,7 +460,7 @@
 	flag = "energy"
 	range = 150
 	jitter = 10
-	var/obj/item/weapon/gun/energy/beam_rifle/gun
+	var/obj/item/gun/energy/beam_rifle/gun
 	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
 	var/structure_pierce = 0

@@ -1,12 +1,12 @@
 #define FAXE_GOUT_TIME 15
 #define FAXE_BURNWALL_TIME 100
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe
+/obj/item/twohanded/fireaxe/fireyaxe
 	desc = "This axe has become touched by the very flames it was built to destroy..."
 	force_wielded = 5
 	damtype = "fire" //do do doooo, I'll take you to buurn.
 	heat = 1000
-	icon = 'hippiestation/icons/obj/weapons.dmi'
+	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
 	icon_state = "fireaxe0"
 	alternate_worn_icon = 'hippiestation/icons/mob/back.dmi'
 	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
@@ -16,10 +16,10 @@
 	var/burnwall = TRUE
 	var/static/list/extra_damage_targets = typecacheof(list(/obj/structure/door_assembly, /obj/structure/grille, /obj/structure/mineral_door, /obj/structure/window, /obj/machinery/door))
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/Initialize()
+/obj/item/twohanded/fireaxe/fireyaxe/Initialize()
 	.=..()
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/update_icon()
+/obj/item/twohanded/fireaxe/fireyaxe/update_icon()
 	icon_state = "fireaxe[wielded]"
 	return
 
@@ -27,7 +27,7 @@
 	name = "fiery gout"
 	damage = 0 //Its for burnin' not shootin'
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/attack(mob/living/carbon/M, mob/user)
+/obj/item/twohanded/fireaxe/fireyaxe/attack(mob/living/carbon/M, mob/user)
 	if(!wielded)
 		return ..()
 	if(isliving(M))
@@ -42,7 +42,7 @@
 			log_game("[key_name(user)] set [key_name(M)] on fire")
 	..()
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/afterattack(atom/target, mob/living/user, proximity_flag)
+/obj/item/twohanded/fireaxe/fireyaxe/afterattack(atom/target, mob/living/user, proximity_flag)
 	if(!proximity_flag && charged && wielded)
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
@@ -74,12 +74,12 @@
 			to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
 		..()
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/recharge()
+/obj/item/twohanded/fireaxe/fireyaxe/proc/recharge()
 	if(!charged)
 		charged = TRUE
 		playsound(src.loc, 'hippiestation/sound/effects/corpseexplosion.ogg', 100, 1)
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/rekindle()
+/obj/item/twohanded/fireaxe/fireyaxe/proc/rekindle()
 	if(!burnwall)
 		burnwall = TRUE
 		var/mob/M = get(src, /mob)

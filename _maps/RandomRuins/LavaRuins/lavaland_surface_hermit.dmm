@@ -26,13 +26,13 @@
 	},
 /area/ruin/powered)
 "h" = (
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "i" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
@@ -50,7 +50,7 @@
 	},
 /area/ruin/powered)
 "l" = (
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
@@ -60,7 +60,7 @@
 /obj/item/seeds/reishi,
 /obj/item/seeds/plump,
 /obj/item/seeds/plump,
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 "n" = (
@@ -72,9 +72,9 @@
 /area/ruin/powered)
 "p" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/bag/plants/portaseeder,
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/ore,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 "q" = (
@@ -83,8 +83,8 @@
 /area/ruin/powered)
 "r" = (
 /obj/structure/rack,
-/obj/item/weapon/pickaxe/emergency,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/pickaxe/emergency,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 "s" = (
@@ -95,7 +95,7 @@
 /area/ruin/powered)
 "u" = (
 /obj/structure/bed/pod,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/plating,
 /area/ruin/powered)
 "v" = (
@@ -122,7 +122,7 @@
 /area/ruin/powered)
 "A" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/knife/combat/survival,
+/obj/item/kitchen/knife/combat/survival,
 /turf/open/floor/plating,
 /area/ruin/powered)
 "B" = (
@@ -131,7 +131,7 @@
 /area/ruin/powered)
 "C" = (
 /obj/structure/tubes,
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)

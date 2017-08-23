@@ -1,20 +1,20 @@
-/obj/item/weapon/storage/box
+/obj/item/storage/box
 	icon = 'hippiestation/icons/obj/storage.dmi'
 
-/obj/item/weapon/storage/box/monkeycubes
+/obj/item/storage/box/monkeycubes
 	icon = 'icons/obj/storage.dmi'
 
-/obj/item/weapon/storage/box/papersack
+/obj/item/storage/box/papersack
 	icon = 'icons/obj/storage.dmi'
 
-/obj/item/weapon/storage/box/cyber_implants
+/obj/item/storage/box/cyber_implants
 	icon = 'icons/obj/storage.dmi'
 
-/obj/item/weapon/storage/box/emergency/old
+/obj/item/storage/box/emergency/old
 	icon = 'icons/obj/storage.dmi'
 
-/obj/item/weapon/storage/box/mechanical/old
+/obj/item/storage/box/mechanical/old
 	icon = 'icons/obj/storage.dmi'
 
-/obj/item/weapon/storage/toolbox/brass
+/obj/item/storage/toolbox/brass
 	icon = 'icons/obj/storage.dmi'

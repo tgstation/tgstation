@@ -1,4 +1,4 @@
-/obj/item/weapon/implant/mindslave
+/obj/item/implant/mindslave
 	name = "mindslave implant"
 	desc = "Now YOU too can have your very own mindslave! Pop this implant into anybody and they'll obey any command you give for around 15 to 20 minutes."
 	origin_tech = "materials=2;biotech=4;programming=4"
@@ -8,7 +8,7 @@
 	var/timerid
 	var/datum/objective/protect/protect_objective
 
-/obj/item/weapon/implant/mindslave/get_data()
+/obj/item/implant/mindslave/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Syndicate Mindslave implant MK1<BR>
 				<b>Life:</b> Varies between 15 and 20 minutes.<BR>
@@ -20,7 +20,7 @@
 				<b>Integrity:</b> Implant will last around 15 and 20 minutes."}
 	return dat
 
-/obj/item/weapon/implant/mindslave/implant(mob/target,mob/user,silent=0)
+/obj/item/implant/mindslave/implant(mob/target,mob/user,silent=0)
 	if(target.mind)
 		if(target == user)
 			to_chat(target,"<span class='notice'>You can't implant yourself!</span>")
@@ -48,22 +48,22 @@
 	to_chat(user,"<span class='notice'>[target] has no mind!</span>")
 	return 0
 
-/obj/item/weapon/implant/mindslave/removed(mob/source)
+/obj/item/implant/mindslave/removed(mob/source)
 	deltimer(timerid)
 	remove_mindslave()
 	..()
 
-/obj/item/weapon/implant/mindslave/Destroy()
+/obj/item/implant/mindslave/Destroy()
 	deltimer(timerid)
 	remove_mindslave()
 	..()
 
-/obj/item/weapon/implant/mindslave/greater
+/obj/item/implant/mindslave/greater
 	name = "greater mindslave implant"
 	desc = "Like the normal mindslave implant, but this one lasts forever."
 	permanent = TRUE
 
-/obj/item/weapon/implant/mindslave/greater/get_data()
+/obj/item/implant/mindslave/greater/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Syndicate Mindslave implant MK2<BR>
 				<b>Life:</b> Permanent.<BR>
@@ -75,7 +75,7 @@
 				<b>Integrity:</b> Implant will last forever."}
 	return dat
 
-/obj/item/weapon/implant/mindslave/proc/remove_mindslave()
+/obj/item/implant/mindslave/proc/remove_mindslave()
 	if(imp_in)
 		if(imp_in.mind.special_role == "Mindslave")
 			imp_in.mind.special_role = ""
@@ -86,10 +86,10 @@
 		qdel(protect_objective)
 		message_admins("[imp_in]/([imp_in.ckey]) is no longer a mindslave.")
 
-/obj/item/weapon/implanter/mindslave
+/obj/item/implanter/mindslave
 	name = "implanter (mindslave)"
-	imp_type = /obj/item/weapon/implant/mindslave
+	imp_type = /obj/item/implant/mindslave
 
-/obj/item/weapon/implanter/mindslave/greater
+/obj/item/implanter/mindslave/greater
 	name = "implanter (greater mindslave)"
-	imp_type = /obj/item/weapon/implant/mindslave/greater
+	imp_type = /obj/item/implant/mindslave/greater

@@ -1,4 +1,4 @@
-/obj/item/weapon/implant
+/obj/item/implant
 	name = "implant"
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
@@ -12,16 +12,16 @@
 	flags = DROPDEL
 
 
-/obj/item/weapon/implant/proc/trigger(emote, mob/living/carbon/source)
+/obj/item/implant/proc/trigger(emote, mob/living/carbon/source)
 	return
 
-/obj/item/weapon/implant/proc/activate()
+/obj/item/implant/proc/activate()
 	return
 
-/obj/item/weapon/implant/ui_action_click()
+/obj/item/implant/ui_action_click()
 	activate("action_button")
 
-/obj/item/weapon/implant/proc/can_be_implanted_in(mob/living/target) // for human-only and other special requirements
+/obj/item/implant/proc/can_be_implanted_in(mob/living/target) // for human-only and other special requirements
 	return TRUE
 
 /mob/living/proc/can_be_implanted()
@@ -38,13 +38,13 @@
 //What does the implant do upon injection?
 //return 1 if the implant injects
 //return 0 if there is no room for implant / it fails
-/obj/item/weapon/implant/proc/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = 0)
 	LAZYINITLIST(target.implants)
 	if(!target.can_be_implanted() || !can_be_implanted_in(target))
 		return 0
 	for(var/X in target.implants)
 		if(istype(X, type))
-			var/obj/item/weapon/implant/imp_e = X
+			var/obj/item/implant/imp_e = X
 			if(!allow_multiple)
 				if(imp_e.uses < initial(imp_e.uses)*2)
 					if(uses == -1)
@@ -72,7 +72,7 @@
 
 	return 1
 
-/obj/item/weapon/implant/proc/removed(mob/living/source, silent = 0, special = 0)
+/obj/item/implant/proc/removed(mob/living/source, silent = 0, special = 0)
 	src.loc = null
 	imp_in = null
 	source.implants -= src
@@ -85,14 +85,14 @@
 
 	return 1
 
-/obj/item/weapon/implant/Destroy()
+/obj/item/implant/Destroy()
 	if(imp_in)
 		removed(imp_in)
 	return ..()
 
-/obj/item/weapon/implant/proc/get_data()
+/obj/item/implant/proc/get_data()
 	return "No information available"
 
-/obj/item/weapon/implant/dropped(mob/user)
+/obj/item/implant/dropped(mob/user)
 	. = 1
 	..()

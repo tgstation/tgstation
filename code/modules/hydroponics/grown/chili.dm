@@ -5,7 +5,7 @@
 	icon_state = "seed-chili"
 	species = "chili"
 	plantname = "Chili Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
+	product = /obj/item/reagent_containers/food/snacks/grown/chili
 	lifespan = 20
 	maturation = 5
 	production = 5
@@ -18,7 +18,7 @@
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
 	reagents_add = list("capsaicin" = 0.25, "vitamin" = 0.04, "nutriment" = 0.04)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/chili
+/obj/item/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chili
 	name = "chili"
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
@@ -34,7 +34,7 @@
 	icon_state = "seed-icepepper"
 	species = "chiliice"
 	plantname = "Ice Pepper Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
+	product = /obj/item/reagent_containers/food/snacks/grown/icepepper
 	lifespan = 25
 	maturation = 4
 	production = 4
@@ -42,7 +42,7 @@
 	mutatelist = list()
 	reagents_add = list("frostoil" = 0.25, "vitamin" = 0.02, "nutriment" = 0.02)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
+/obj/item/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/chili/ice
 	name = "ice pepper"
 	desc = "It's a mutant strain of chili"
@@ -59,7 +59,7 @@
 	icon_state = "seed-chilighost"
 	species = "chilighost"
 	plantname = "Ghost Chili Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
+	product = /obj/item/reagent_containers/food/snacks/grown/ghost_chili
 	endurance = 10
 	maturation = 10
 	production = 10
@@ -68,7 +68,7 @@
 	mutatelist = list()
 	reagents_add = list("condensedcapsaicin" = 0.3, "capsaicin" = 0.55, "nutriment" = 0.04)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili
 	seed = /obj/item/seeds/chili/ghost
 	name = "ghost chili"
 	desc = "It seems to be vibrating gently."
@@ -79,13 +79,13 @@
 	origin_tech = "biotech=4;magnets=5"
 	foodtype = VEGETABLES
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
 	if( ismob(loc) )
 		held_mob = loc
 		START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && loc == held_mob)
 		if(held_mob.is_holding(src))
 			if(istype(held_mob) && held_mob.gloves)

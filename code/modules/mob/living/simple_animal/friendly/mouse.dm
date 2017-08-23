@@ -13,7 +13,7 @@
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
@@ -42,7 +42,7 @@
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(loc)
+		var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
 		M.icon_state = icon_dead
 		M.name = name
 		if(toast)
@@ -100,7 +100,7 @@
 	response_harm   = "splats"
 	gold_core_spawnable = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/deadmouse
+/obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
 	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'

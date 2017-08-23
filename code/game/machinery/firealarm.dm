@@ -1,4 +1,4 @@
-/obj/item/weapon/electronics/firealarm
+/obj/item/electronics/firealarm
 	name = "fire alarm electronics"
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
@@ -145,7 +145,7 @@
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
+	if(istype(W, /obj/item/screwdriver) && buildstage == 2)
 		playsound(src.loc, W.usesound, 50, 1)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -154,8 +154,8 @@
 
 	if(panel_open)
 
-		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
-			var/obj/item/weapon/weldingtool/WT = W
+		if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+			var/obj/item/weldingtool/WT = W
 			if(obj_integrity < max_integrity)
 				if(WT.remove_fuel(0,user))
 					to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
@@ -178,7 +178,7 @@
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 					return
 
-				else if (istype(W, /obj/item/weapon/wirecutters))
+				else if (istype(W, /obj/item/wirecutters))
 					buildstage = 1
 					playsound(src.loc, W.usesound, 50, 1)
 					new /obj/item/stack/cable_coil(user.loc, 5)
@@ -197,7 +197,7 @@
 						update_icon()
 					return
 
-				else if(istype(W, /obj/item/weapon/crowbar))
+				else if(istype(W, /obj/item/crowbar))
 					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
@@ -208,19 +208,19 @@
 								stat &= ~BROKEN
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
-								new /obj/item/weapon/electronics/firealarm(user.loc)
+								new /obj/item/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
 					return
 			if(0)
-				if(istype(W, /obj/item/weapon/electronics/firealarm))
+				if(istype(W, /obj/item/electronics/firealarm))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					qdel(W)
 					buildstage = 1
 					update_icon()
 					return
 
-				else if(istype(W, /obj/item/weapon/wrench))
+				else if(istype(W, /obj/item/wrench))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
@@ -247,7 +247,7 @@
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 1)
 		if(!(stat & BROKEN))
-			var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
+			var/obj/item/I = new /obj/item/electronics/firealarm(loc)
 			if(!disassembled)
 				I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)

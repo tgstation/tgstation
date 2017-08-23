@@ -18,25 +18,25 @@
 
 /obj/machinery/power/tesla_coil/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/tesla_coil(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/tesla_coil(null)
 	B.apply_default_parts(src)
 	wires = new /datum/wires/tesla_coil(src)
 
-/obj/item/weapon/circuitboard/machine/tesla_coil
+/obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Coil (Machine Board)"
 	build_path = /obj/machinery/power/tesla_coil
 	origin_tech = "programming=3;magnets=3;powerstorage=3"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	req_components = list(/obj/item/stock_parts/capacitor = 1)
 
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
 	zap_cooldown = 100
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		power_multiplier += C.rating
 		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
 
-/obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(panel_open)
@@ -111,16 +111,16 @@
 
 /obj/machinery/power/grounding_rod/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/grounding_rod(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/grounding_rod(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/grounding_rod
+/obj/item/circuitboard/machine/grounding_rod
 	name = "Grounding Rod (Machine Board)"
 	build_path = /obj/machinery/power/grounding_rod
 	origin_tech = "programming=3;powerstorage=3;magnets=3;plasmatech=2"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	req_components = list(/obj/item/stock_parts/capacitor = 1)
 
-/obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(panel_open)

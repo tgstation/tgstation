@@ -3,7 +3,7 @@
 //dakimakuras
 //////////////////////////////////
 
-/obj/item/weapon/storage/daki
+/obj/item/storage/daki
 	name = "dakimakura"
 	var/custom_name = null
 	desc = "A large pillow depicting a girl in a compromising position. Featuring as many dimensions as you."
@@ -19,7 +19,7 @@
 	var/spam_flag = 0
 	var/cooldowntime = 20
 
-/obj/item/weapon/storage/daki/attack_self(mob/living/user)
+/obj/item/storage/daki/attack_self(mob/living/user)
 	var/body_choice
 	if(icon_state == "daki_base")
 		body_choice = input("Pick a body.") in list(
