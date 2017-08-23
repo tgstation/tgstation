@@ -188,7 +188,7 @@
 	for(var/turf/T in oview(3,owner)) //Make this respect walls and such
 		owner.add_splatter_floor(T)
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
-		H.add_mob_blood(owner)
+		H.forensics.add_mob_blood(owner)
 
 
 /obj/item/organ/heart/gland/bodysnatch

@@ -36,6 +36,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	origin_tech = "combat=5;biotech=5"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20

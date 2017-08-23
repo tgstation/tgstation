@@ -194,6 +194,9 @@
 	. = ..()
 	animate(src, alpha = 0, time = duration)
 
+/obj/effect/temp_visual/decoy/fading/threesecond
+	duration = 40
+
 /obj/effect/temp_visual/decoy/fading/fivesecond
 	duration = 50
 

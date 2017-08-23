@@ -12,7 +12,7 @@
 	desc = "PRESENTS!!!! eek!"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "giftdeliverypackage3"
-	item_state = "gift1"
+	item_state = "gift"
 	resistance_flags = FLAMMABLE
 
 /obj/item/a_gift/New()

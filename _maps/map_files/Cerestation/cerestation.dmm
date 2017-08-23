@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -72742,10 +72742,11 @@
 	pixel_x = -32
 	},
 /obj/item/clipboard,
-/obj/item/toy/figure/syndie,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/folder/red,
+/obj/item/toy/figure/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -72784,10 +72785,10 @@
 	},
 /area/shuttle/syndicate)
 "fXq" = (
+/turf/open/space,
 /obj/machinery/porta_turret/syndicate{
 	dir = 9
 	},
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -73544,10 +73545,10 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/asteroid/disposal/south)
 "qah" = (
+/turf/open/space,
 /obj/machinery/porta_turret/syndicate{
 	dir = 10
 	},
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -75054,8 +75055,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "HmY" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/red,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -76501,10 +76501,10 @@
 /turf/open/floor/plating,
 /area/maintenance/asteroid/disposal/south/west)
 "ZfX" = (
+/turf/open/space,
 /obj/machinery/porta_turret/syndicate{
 	dir = 5
 	},
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -76532,10 +76532,10 @@
 	},
 /area/shuttle/syndicate)
 "ZYy" = (
+/turf/open/space,
 /obj/machinery/porta_turret/syndicate{
 	dir = 6
 	},
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"

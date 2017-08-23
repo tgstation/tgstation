@@ -165,7 +165,7 @@
 		if("animal")
 			var/path
 			if(SSrng.probability(50))
-				var/beast = SSrng.pick_from_list("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon")
+				var/beast = SSrng.pick_from_list("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon", "gorilla")
 				switch(beast)
 					if("carp")
 						path = /mob/living/simple_animal/hostile/carp
@@ -205,6 +205,8 @@
 						path = /mob/living/simple_animal/hostile/stickman/dog
 					if("lesserdragon")
 						path = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+					if("gorilla")
+						path = /mob/living/simple_animal/hostile/gorilla
 			else
 				var/animal = SSrng.pick_from_list("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
 				switch(animal)

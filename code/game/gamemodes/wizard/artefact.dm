@@ -8,7 +8,9 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "render"
+	item_state = "knife"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -540,7 +542,7 @@
 	if(!link)
 		return
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(md5(H.dna.uni_identity) in link.fingerprints)
+		if(md5(H.dna.uni_identity) in link.forensics.prints)
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)

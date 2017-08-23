@@ -78644,8 +78644,7 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "cTE" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/red,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -78668,10 +78667,11 @@
 	pixel_x = -32
 	},
 /obj/item/clipboard,
-/obj/item/toy/figure/syndie,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/folder/red,
+/obj/item/toy/figure/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -136448,8 +136448,8 @@ cgD
 chW
 cjl
 ckK
-bCC
-bCC
+dbu
+dbu
 ckM
 aaf
 bKK
@@ -136704,9 +136704,9 @@ ccY
 ccY
 ccY
 cjm
-bCC
+dbu
 cme
-bCC
+dbu
 cjo
 aaa
 bKK
@@ -136962,8 +136962,8 @@ cgE
 chX
 cjn
 ckL
-bCC
-bCC
+dbu
+dbu
 bxc
 aaf
 aai

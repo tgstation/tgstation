@@ -149,7 +149,7 @@
 /atom/movable/proc/clean_on_move()
 	var/turf/tile = loc
 	if(isturf(tile))
-		tile.clean_blood()
+		tile.forensics.clean_blood()
 		for(var/A in tile)
 			if(is_cleanable(A))
 				qdel(A)
@@ -171,7 +171,7 @@
 					if(cleaned_human.shoes)
 						cleaned_human.shoes.clean_blood()
 						cleaned_human.update_inv_shoes()
-					cleaned_human.clean_blood()
+					cleaned_human.forensics.clean_blood()
 					cleaned_human.wash_cream()
 					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
