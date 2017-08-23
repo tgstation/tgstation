@@ -47,7 +47,7 @@
 	if(..()) //if harm or disarm intent.
 		if(M.a_intent == INTENT_DISARM)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
+			visible_message("<span class='danger'>[M] [response_disarm] [src]!</span>", \
 					"<span class='userdanger'>[M] [response_disarm] you!</span>", null, COMBAT_MESSAGE_RANGE)
 			add_logs(M, src, "disarmed")
 		else
