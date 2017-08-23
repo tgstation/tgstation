@@ -76,11 +76,13 @@
 
 		// Start gathering
 
-		if(A.blood_DNA && A.blood_DNA.len)
-			blood = A.blood_DNA.Copy()
 
-		if(A.suit_fibers && A.suit_fibers.len)
-			fibers = A.suit_fibers.Copy()
+
+		if(LAZYLEN(A.forensics.blood))
+			blood = A.forensics.blood.Copy()
+
+		if(LAZYLEN(A.forensics.fibers))
+			fibers = A.forensics.fibers.Copy()
 
 		if(ishuman(A))
 
@@ -90,11 +92,11 @@
 
 		else if(!ismob(A))
 
-			if(A.fingerprints && A.fingerprints.len)
-				fingerprints = A.fingerprints.Copy()
+			if(LAZYLEN(A.forensics.prints))
+				fingerprints = A.forensics.prints.Copy()
 
 			// Only get reagents from non-mobs.
-			if(A.reagents && A.reagents.reagent_list.len)
+			if(LAZYLEN(A.reagents.reagent_list))
 
 				for(var/datum/reagent/R in A.reagents.reagent_list)
 					reagents[R.name] = R.volume
@@ -113,7 +115,7 @@
 		add_log("<B>[worldtime2text()][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
-		if(fingerprints && fingerprints.len)
+		if(LAZYLEN(forensics.prints))
 			sleep(30)
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
@@ -121,7 +123,7 @@
 			found_something = 1
 
 		// Blood
-		if (blood && blood.len)
+		if (LAZYLEN(forensics.blood))
 			sleep(30)
 			add_log("<span class='info'><B>Blood:</B></span>")
 			found_something = 1
@@ -129,7 +131,7 @@
 				add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
 
 		//Fibers
-		if(fibers && fibers.len)
+		if(LAZYLEN(forensics.fibers))
 			sleep(30)
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
@@ -137,7 +139,7 @@
 			found_something = 1
 
 		//Reagents
-		if(reagents && reagents.len)
+		if(LAZYLEN(reagents)) //reagants aren't forensics, so they aren't in the datum
 			sleep(30)
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)

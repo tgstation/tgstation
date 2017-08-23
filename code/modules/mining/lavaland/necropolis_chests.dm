@@ -480,6 +480,8 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "oar"
 	item_state = "oar"
+	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'	
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
@@ -835,6 +837,8 @@
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
