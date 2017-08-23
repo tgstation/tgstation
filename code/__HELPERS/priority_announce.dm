@@ -28,7 +28,7 @@
 	for(var/mob/M in GLOB.player_list)
 		if(!isnewplayer(M) && M.can_hear())
 			to_chat(M, announcement)
-			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+			if(M.client && M.client.prefs && M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				SEND_SOUND(M, s)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
