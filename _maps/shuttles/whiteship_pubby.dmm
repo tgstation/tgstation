@@ -38,7 +38,7 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/gun/medbeam,
+/obj/item/gun/medbeam,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
@@ -55,7 +55,7 @@
 	},
 /obj/structure/table/glass,
 /obj/machinery/recharger,
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "k" = (
@@ -106,7 +106,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/table/glass,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/hardsuit/engine/elite,
 /turf/open/floor/plating/abductor,

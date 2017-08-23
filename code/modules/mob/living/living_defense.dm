@@ -68,7 +68,7 @@
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
 		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
-			var/obj/item/weapon/W = I
+			var/obj/item/W = I
 			dtype = W.damtype
 
 			if (W.throwforce > 0) //If the weapon's throwforce is greater than zero...
@@ -339,7 +339,7 @@
 		return
 
 	if(stat != DEAD && !is_servant_of_ratvar(src))
-		for(var/obj/item/weapon/implant/mindshield/M in implants)
+		for(var/obj/item/implant/mindshield/M in implants)
 			qdel(M)
 		if(!add_servant_of_ratvar(src))
 			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")

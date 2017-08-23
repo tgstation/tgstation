@@ -1,10 +1,10 @@
-/obj/item/weapon/implant/mindshield
+/obj/item/implant/mindshield
 	name = "mindshield implant"
 	desc = "Protects against brainwashing."
 	origin_tech = "materials=2;biotech=4;programming=4"
 	activated = 0
 
-/obj/item/weapon/implant/mindshield/get_data()
+/obj/item/implant/mindshield/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
 				<b>Life:</b> Ten years.<BR>
@@ -17,7 +17,7 @@
 	return dat
 
 
-/obj/item/weapon/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
 	if(..())
 		if((target.mind in (SSticker.mode.head_revolutionaries | SSticker.mode.get_gang_bosses())))
 			if(!silent)
@@ -42,18 +42,18 @@
 		return 1
 	return 0
 
-/obj/item/weapon/implant/mindshield/removed(mob/target, silent = 0, special = 0)
+/obj/item/implant/mindshield/removed(mob/target, silent = 0, special = 0)
 	if(..())
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
 		return 1
 	return 0
 
-/obj/item/weapon/implanter/mindshield
+/obj/item/implanter/mindshield
 	name = "implanter (mindshield)"
-	imp_type = /obj/item/weapon/implant/mindshield
+	imp_type = /obj/item/implant/mindshield
 
-/obj/item/weapon/implantcase/mindshield
+/obj/item/implantcase/mindshield
 	name = "implant case - 'Mindshield'"
 	desc = "A glass case containing a mindshield implant."
-	imp_type = /obj/item/weapon/implant/mindshield
+	imp_type = /obj/item/implant/mindshield

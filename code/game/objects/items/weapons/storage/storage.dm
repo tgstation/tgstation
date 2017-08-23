@@ -5,7 +5,7 @@
 // -- c0
 
 
-/obj/item/weapon/storage
+/obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -27,7 +27,7 @@
 	var/rustle_jimmies = TRUE	//Play the rustle sound on insertion
 
 
-/obj/item/weapon/storage/MouseDrop(atom/over_object)
+/obj/item/storage/MouseDrop(atom/over_object)
 	if(ismob(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
@@ -61,7 +61,7 @@
 			add_fingerprint(usr)
 
 
-/obj/item/weapon/storage/MouseDrop_T(atom/movable/O, mob/user)
+/obj/item/storage/MouseDrop_T(atom/movable/O, mob/user)
 	if(isitem(O))
 		var/obj/item/I = O
 		if(iscarbon(user) || isdrone(user))
@@ -72,7 +72,7 @@
 
 
 //Check if this storage can dump the items
-/obj/item/weapon/storage/proc/content_can_dump(atom/dest_object, mob/user)
+/obj/item/storage/proc/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user) && dest_object.Adjacent(user))
 		if(dest_object.storage_contents_dump_act(src, user))
 			playsound(loc, "rustle", 50, 1, -5)
@@ -80,7 +80,7 @@
 	return 0
 
 //Object behaviour on storage dump
-/obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/obj/item/storage/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(src, .proc/handle_mass_item_insertion, things, src_object, user, progress)))
@@ -93,7 +93,7 @@
 		user.s_active.show_to(user)
 	return 1
 
-/obj/item/weapon/storage/proc/handle_mass_item_insertion(list/things, obj/item/weapon/storage/src_object, mob/user, datum/progressbar/progress)
+/obj/item/storage/proc/handle_mass_item_insertion(list/things, obj/item/storage/src_object, mob/user, datum/progressbar/progress)
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != src_object)
@@ -110,16 +110,16 @@
 	progress.update(progress.goal - things.len)
 	return FALSE
 
-/obj/item/weapon/storage/proc/return_inv()
+/obj/item/storage/proc/return_inv()
 	var/list/L = list()
 	L += contents
 
-	for(var/obj/item/weapon/storage/S in src)
+	for(var/obj/item/storage/S in src)
 		L += S.return_inv()
 	return L
 
 
-/obj/item/weapon/storage/proc/show_to(mob/user)
+/obj/item/storage/proc/show_to(mob/user)
 	if(!user.client)
 		return
 	if(user.s_active != src && (user.stat == CONSCIOUS))
@@ -135,11 +135,11 @@
 	is_seeing |= user
 
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	close_all()
 	return ..()
 
-/obj/item/weapon/storage/proc/hide_from(mob/user)
+/obj/item/storage/proc/hide_from(mob/user)
 	if(!user.client)
 		return
 	user.client.screen -= boxes
@@ -150,7 +150,7 @@
 	is_seeing -= user
 
 
-/obj/item/weapon/storage/proc/can_see_contents()
+/obj/item/storage/proc/can_see_contents()
 	var/list/cansee = list()
 	for(var/mob/M in is_seeing)
 		if(M.s_active == src && M.client)
@@ -160,12 +160,12 @@
 	return cansee
 
 
-/obj/item/weapon/storage/proc/close(mob/user)
+/obj/item/storage/proc/close(mob/user)
 	hide_from(user)
 	user.s_active = null
 
 
-/obj/item/weapon/storage/proc/close_all()
+/obj/item/storage/proc/close_all()
 	for(var/mob/M in can_see_contents())
 		close(M)
 		. = 1 //returns 1 if any mobs actually got a close(M) call
@@ -173,7 +173,7 @@
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
-/obj/item/weapon/storage/proc/orient_objs(tx, ty, mx, my)
+/obj/item/storage/proc/orient_objs(tx, ty, mx, my)
 	var/cx = tx
 	var/cy = ty
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
@@ -189,14 +189,14 @@
 
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
-/obj/item/weapon/storage/proc/standard_orient_objs(rows, cols, list/obj/item/display_contents)
+/obj/item/storage/proc/standard_orient_objs(rows, cols, list/obj/item/display_contents)
 	var/cx = 4
 	var/cy = 2+rows
 	boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
 
 	if(display_contents_with_number)
 		for(var/datum/numbered_display/ND in display_contents)
-			ND.sample_object.mouse_opacity = 2
+			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
@@ -207,7 +207,7 @@
 				cy--
 	else
 		for(var/obj/O in contents)
-			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
+			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
@@ -231,7 +231,7 @@
 
 
 //This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
-/obj/item/weapon/storage/proc/orient2hud(mob/user)
+/obj/item/storage/proc/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 
 	//Numbered contents display
@@ -260,7 +260,7 @@
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
-/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
+/obj/item/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(!istype(W) || (W.flags & ABSTRACT))
 		return //Not an item
 
@@ -296,8 +296,8 @@
 			to_chat(usr, "<span class='warning'>[W] won't fit in [src], make some space!</span>")
 		return 0
 
-	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
-		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
+	if(W.w_class >= w_class && (istype(W, /obj/item/storage)))
+		if(!istype(src, /obj/item/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
 				to_chat(usr, "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>")
 			return 0 //To prevent the stacking of same sized storage items.
@@ -312,7 +312,7 @@
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
-/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+/obj/item/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(!istype(W))
 		return 0
 	if(usr)
@@ -350,18 +350,18 @@
 		orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
-	W.mouse_opacity = 2 //So you can click on the area around the item to equip it, instead of having to pixel hunt
+	W.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	update_icon()
 	return 1
 
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
 	if(!istype(W))
 		return 0
 
-	if(istype(src, /obj/item/weapon/storage/fancy))
-		var/obj/item/weapon/storage/fancy/F = src
+	if(istype(src, /obj/item/storage/fancy))
+		var/obj/item/storage/fancy/F = src
 		F.update_icon(1)
 
 	for(var/mob/M in can_see_contents())
@@ -386,7 +386,7 @@
 	W.mouse_opacity = initial(W.mouse_opacity)
 	return 1
 
-/obj/item/weapon/storage/deconstruct(disassembled = TRUE)
+/obj/item/storage/deconstruct(disassembled = TRUE)
 	var/drop_loc = loc
 	if(ismob(loc))
 		drop_loc = get_turf(src)
@@ -395,10 +395,10 @@
 	qdel(src)
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/hand_labeler))
-		var/obj/item/weapon/hand_labeler/labeler = W
+	if(istype(W, /obj/item/hand_labeler))
+		var/obj/item/hand_labeler/labeler = W
 		if(labeler.mode)
 			return 0
 	. = 1 //no afterattack
@@ -413,7 +413,7 @@
 	handle_item_insertion(W, 0 , user)
 
 
-/obj/item/weapon/storage/attack_hand(mob/user)
+/obj/item/storage/attack_hand(mob/user)
 	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
 		user.s_active.close(user)
 		close(user)
@@ -445,10 +445,10 @@
 				close(M)
 	add_fingerprint(user)
 
-/obj/item/weapon/storage/attack_paw(mob/user)
+/obj/item/storage/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/storage/verb/toggle_gathering_mode()
+/obj/item/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
@@ -465,7 +465,7 @@
 			to_chat(usr, "[src] now picks up one item at a time.")
 
 // Empty all the contents onto the current turf
-/obj/item/weapon/storage/verb/quick_empty()
+/obj/item/storage/verb/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
 
@@ -478,7 +478,7 @@
 		sleep(1)
 	qdel(progress)
 
-/obj/item/weapon/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
+/obj/item/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
 	for(var/obj/item/I in things)
 		things -= I
 		if (I.loc != src)
@@ -492,7 +492,7 @@
 	return FALSE
 
 // Empty all the contents onto the current turf, without checking the user's status.
-/obj/item/weapon/storage/proc/do_quick_empty()
+/obj/item/storage/proc/do_quick_empty()
 	var/turf/T = get_turf(src)
 	if(usr)
 		hide_from(usr)
@@ -500,21 +500,21 @@
 		remove_from_storage(I, T)
 
 
-/obj/item/weapon/storage/Initialize(mapload)
+/obj/item/storage/Initialize(mapload)
 	. = ..()
 
 	can_hold = typecacheof(can_hold)
 	cant_hold = typecacheof(cant_hold)
 
 	if(allow_quick_empty)
-		verbs += /obj/item/weapon/storage/verb/quick_empty
+		verbs += /obj/item/storage/verb/quick_empty
 	else
-		verbs -= /obj/item/weapon/storage/verb/quick_empty
+		verbs -= /obj/item/storage/verb/quick_empty
 
 	if(allow_quick_gather)
-		verbs += /obj/item/weapon/storage/verb/toggle_gathering_mode
+		verbs += /obj/item/storage/verb/toggle_gathering_mode
 	else
-		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
+		verbs -= /obj/item/storage/verb/toggle_gathering_mode
 
 	boxes = new /obj/screen/storage()
 	boxes.name = "storage"
@@ -533,7 +533,7 @@
 	PopulateContents()
 
 
-/obj/item/weapon/storage/Destroy()
+/obj/item/storage/Destroy()
 	for(var/obj/O in contents)
 		O.mouse_opacity = initial(O.mouse_opacity)
 
@@ -543,29 +543,29 @@
 	return ..()
 
 
-/obj/item/weapon/storage/emp_act(severity)
+/obj/item/storage/emp_act(severity)
 	if(!isliving(loc))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 	..()
 
 
-/obj/item/weapon/storage/attack_self(mob/user)
+/obj/item/storage/attack_self(mob/user)
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_held_item() == src)
-		if(verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
+		if(verbs.Find(/obj/item/storage/verb/quick_empty))
 			quick_empty()
 
-/obj/item/weapon/storage/handle_atom_del(atom/A)
+/obj/item/storage/handle_atom_del(atom/A)
 	if(A in contents)
 		usr = null
 		remove_from_storage(A, null)
 
-/obj/item/weapon/storage/contents_explosion(severity, target)
+/obj/item/storage/contents_explosion(severity, target)
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
 		CHECK_TICK
 
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 
-/obj/item/weapon/storage/proc/PopulateContents()
+/obj/item/storage/proc/PopulateContents()

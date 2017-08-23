@@ -3,7 +3,7 @@ CONTAINS:
 RSF
 
 */
-/obj/item/weapon/rsf
+/obj/item/rsf
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
@@ -19,15 +19,15 @@ RSF
 	var/mode = 1
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/rsf/examine(mob/user)
+/obj/item/rsf/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>")
 
-/obj/item/weapon/rsf/cyborg
+/obj/item/rsf/cyborg
 	matter = 30
 
-/obj/item/weapon/rsf/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/rcd_ammo))
+/obj/item/rsf/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rcd_ammo))
 		if((matter + 10) > 30)
 			to_chat(user, "The RSF can't hold any more matter.")
 			return
@@ -38,7 +38,7 @@ RSF
 	else
 		return ..()
 
-/obj/item/weapon/rsf/attack_self(mob/user)
+/obj/item/rsf/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 	switch(mode)
 		if(1)
@@ -61,7 +61,7 @@ RSF
 			to_chat(user, "Changed dispensing mode to 'Dosh'")
 	// Change mode
 
-/obj/item/weapon/rsf/afterattack(atom/A, mob/user, proximity)
+/obj/item/rsf/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
@@ -85,26 +85,26 @@ RSF
 			use_matter(200, user)
 		if(2)
 			to_chat(user, "Dispensing Drinking Glass...")
-			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(T)
+			new /obj/item/reagent_containers/food/drinks/drinkingglass(T)
 			use_matter(20, user)
 		if(3)
 			to_chat(user, "Dispensing Paper Sheet...")
-			new /obj/item/weapon/paper(T)
+			new /obj/item/paper(T)
 			use_matter(10, user)
 		if(4)
 			to_chat(user, "Dispensing Pen...")
-			new /obj/item/weapon/pen(T)
+			new /obj/item/pen(T)
 			use_matter(50, user)
 		if(5)
 			to_chat(user, "Dispensing Dice Pack...")
-			new /obj/item/weapon/storage/pill_bottle/dice(T)
+			new /obj/item/storage/pill_bottle/dice(T)
 			use_matter(200, user)
 		if(6)
 			to_chat(user, "Dispensing Cigarette...")
 			new /obj/item/clothing/mask/cigarette(T)
 			use_matter(10, user)
 
-/obj/item/weapon/rsf/proc/use_matter(charge, mob/user)
+/obj/item/rsf/proc/use_matter(charge, mob/user)
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= charge
@@ -112,7 +112,7 @@ RSF
 		matter--
 		to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 
-/obj/item/weapon/cookiesynth
+/obj/item/cookiesynth
 	name = "Cookie Synthesizer"
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon = 'icons/obj/tools.dmi'
@@ -126,14 +126,14 @@ RSF
 	var/emagged = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/cookiesynth/examine(mob/user)
+/obj/item/cookiesynth/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>")
 
-/obj/item/weapon/cookiesynth/attackby()
+/obj/item/cookiesynth/attackby()
 	return
 
-/obj/item/weapon/cookiesynth/emag_act(mob/user)
+/obj/item/cookiesynth/emag_act(mob/user)
 	emagged = !emagged
 	if(emagged)
 		to_chat(user, "<span class='warning'>You short out the [src]'s reagent safety checker!</span>")
@@ -141,7 +141,7 @@ RSF
 		to_chat(user, "<span class='warning'>You reset the [src]'s reagent safety checker!</span>")
 		toxin = 0
 
-/obj/item/weapon/cookiesynth/attack_self(mob/user)
+/obj/item/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
@@ -155,11 +155,11 @@ RSF
 		toxin = 0
 		to_chat(user, "Cookie Synthesizer Reset")
 
-/obj/item/weapon/cookiesynth/process()
+/obj/item/cookiesynth/process()
 	if(matter < 10)
 		matter++
 
-/obj/item/weapon/cookiesynth/afterattack(atom/A, mob/user, proximity)
+/obj/item/cookiesynth/afterattack(atom/A, mob/user, proximity)
 	if(cooldown > world.time)
 		return
 	if(!proximity)
@@ -177,7 +177,7 @@ RSF
 	var/turf/T = get_turf(A)
 	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 	to_chat(user, "Fabricating Cookie..")
-	var/obj/item/weapon/reagent_containers/food/snacks/cookie/S = new /obj/item/weapon/reagent_containers/food/snacks/cookie(T)
+	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
 		S.reagents.add_reagent("chloralhydrate2", 10)
 	if (iscyborg(user))

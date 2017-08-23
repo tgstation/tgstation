@@ -1,3 +1,3 @@
 
-/obj/item/weapon/reagent_containers/pill/patch
+/obj/item/reagent_containers/pill/patch
 	self_delay = 0

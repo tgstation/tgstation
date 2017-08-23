@@ -95,7 +95,7 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("baton")
-				Dispense(/obj/item/weapon/abductor_baton,cost=2)
+				Dispense(/obj/item/abductor_baton,cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")

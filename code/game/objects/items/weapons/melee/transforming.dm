@@ -1,4 +1,4 @@
-/obj/item/weapon/melee/transforming //TODO: make transforming energy weapons a subtype of this
+/obj/item/melee/transforming //TODO: make transforming energy weapons a subtype of this
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -13,7 +13,7 @@
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
 
-/obj/item/weapon/melee/transforming/Initialize()
+/obj/item/melee/transforming/Initialize()
 	. = ..()
 	if(active)
 		if(attack_verb_on.len)
@@ -22,11 +22,11 @@
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
 
-/obj/item/weapon/melee/transforming/attack_self(mob/living/carbon/user)
+/obj/item/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
 		clumsy_transform_effect(user)
 
-/obj/item/weapon/melee/transforming/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/transforming/attack(mob/living/target, mob/living/carbon/human/user)
 	var/nemesis_faction = FALSE
 	if(LAZYLEN(nemesis_factions))
 		for(var/F in target.faction)
@@ -39,7 +39,7 @@
 	if(nemesis_faction)
 		force -= faction_bonus_force
 
-/obj/item/weapon/melee/transforming/proc/transform_weapon(mob/living/user, supress_message_text)
+/obj/item/melee/transforming/proc/transform_weapon(mob/living/user, supress_message_text)
 	active = !active
 	if(active)
 		force = force_on
@@ -63,15 +63,15 @@
 	add_fingerprint(user)
 	return TRUE
 
-/obj/item/weapon/melee/transforming/proc/nemesis_effects(mob/living/user, mob/living/target)
+/obj/item/melee/transforming/proc/nemesis_effects(mob/living/user, mob/living/target)
 	return
 
-/obj/item/weapon/melee/transforming/proc/transform_messages(mob/living/user, supress_message_text)
+/obj/item/melee/transforming/proc/transform_messages(mob/living/user, supress_message_text)
 	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
-/obj/item/weapon/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
+/obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)

@@ -8,7 +8,7 @@
 	name = "message monitor console"
 	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
 	icon_screen = "comm_logs"
-	circuit = /obj/item/weapon/circuitboard/computer/message_monitor
+	circuit = /obj/item/circuitboard/computer/message_monitor
 	//Server linked to.
 	var/obj/machinery/message_server/linkedServer = null
 	//Sparks effect - For emag
@@ -32,8 +32,8 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user, params)
-	if(istype(O, /obj/item/weapon/screwdriver) && emagged)
+/obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
+	if(istype(O, /obj/item/screwdriver) && emagged)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else
@@ -47,7 +47,7 @@
 		screen = 2
 		spark_system.set_up(5, 0, src)
 		src.spark_system.start()
-		var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
+		var/obj/item/paper/monitorkey/MK = new/obj/item/paper/monitorkey
 		MK.loc = src.loc
 		// Will help make emagging the console not so easy to get away with.
 		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
@@ -451,16 +451,16 @@
 	return src.attack_hand(usr)
 
 
-/obj/item/weapon/paper/monitorkey
+/obj/item/paper/monitorkey
 	//..()
 	name = "monitor decryption key"
 	var/obj/machinery/message_server/server = null
 
-/obj/item/weapon/paper/monitorkey/Initialize()
+/obj/item/paper/monitorkey/Initialize()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/weapon/paper/monitorkey/LateInitialize()
+/obj/item/paper/monitorkey/LateInitialize()
 	if(GLOB.message_servers)
 		for(var/obj/machinery/message_server/server in GLOB.message_servers)
 			if(!isnull(server))

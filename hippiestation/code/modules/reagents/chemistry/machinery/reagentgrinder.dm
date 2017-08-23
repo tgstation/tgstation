@@ -11,13 +11,13 @@
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
 	var/operating = FALSE
-	var/obj/item/weapon/reagent_containers/beaker = null
+	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
 	var/list/holdingitems
 
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
-	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
@@ -63,7 +63,7 @@
 	LAZYINITLIST(holdingitems)
 	if(operating) //to avoid weird bugs
 		return ..()
-	if (istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER) ) //All open containers. Too bad they all look like beakers in the machine.
+	if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER) ) //All open containers. Too bad they all look like beakers in the machine.
 		if (!beaker)
 			if(!user.drop_item())
 				return 1
@@ -76,8 +76,8 @@
 	if(!is_type_in_list(I, blend_items) && !I.reagents)
 		return ..()
 	if(is_type_in_list(I, dried_items))
-		if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			var/obj/item/weapon/reagent_containers/food/snacks/grown/G = I
+		if(istype(I, /obj/item/reagent_containers/food/snacks/grown))
+			var/obj/item/reagent_containers/food/snacks/grown/G = I
 			if(!G.dry)
 				to_chat(user, "<span class='warning'>You must dry that first!</span>")
 			user.drop_item()
@@ -87,9 +87,9 @@
 	if(LAZYLEN(holdingitems) >= limit)
 		to_chat(usr, "The machine cannot hold anymore items.")
 		return 1
-	if(istype(I, /obj/item/weapon/storage/bag))
-		var/obj/item/weapon/storage/bag/B = I
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in B.contents)
+	if(istype(I, /obj/item/storage/bag))
+		var/obj/item/storage/bag/B = I
+		for (var/obj/item/reagent_containers/food/snacks/grown/G in B.contents)
 			B.remove_from_storage(G, src)
 			LAZYADD(holdingitems, G)
 			if(LAZYLEN(holdingitems) >= limit) //Sanity checking so the blender doesn't overfill
@@ -118,7 +118,7 @@
 		if (istype(O, i))
 			return TRUE
 
-/obj/machinery/reagentgrinder/proc/get_grownweapon_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
+/obj/machinery/reagentgrinder/proc/get_grownweapon_amount(var/obj/item/reagent_containers/food/snacks/grown/O)
 	if (!istype(O) || !O.seed)
 		return 5
 	else if (O.seed.potency <= 5)
@@ -153,7 +153,7 @@
 				beaker.reagents.add_reagent("slimejelly",min(20, space))
 			remove_object(O)
 		else if(check_blend(O))
-			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown)) //This adds reagents based on POTENCY.
+			if(istype(O, /obj/item/reagent_containers/food/snacks/grown)) //This adds reagents based on POTENCY.
 				var/allowed = get_allowed_by_id(O)
 				for (var/r_id in allowed)
 					var/amount = round((sqrt(get_grownweapon_amount(O)) / (O.reagents.reagent_list.len) + 2))
@@ -285,14 +285,14 @@ var/list/global/blend_items = list (
 	/obj/item/stack/sheet/mineral/bananium = list("banana" = 20),
 	/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 	/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
-	/obj/item/weapon/coin/gold = list("gold" = 4),
-	/obj/item/weapon/coin/silver = list("silver" = 4),
-	/obj/item/weapon/coin/iron = list("iron" = 4),
-	/obj/item/weapon/coin/plasma = list("plasma" = 4),
-	/obj/item/weapon/coin/uranium = list("uranium" = 4),
-	/obj/item/weapon/coin/clown = list("banana" = 4),
+	/obj/item/coin/gold = list("gold" = 4),
+	/obj/item/coin/silver = list("silver" = 4),
+	/obj/item/coin/iron = list("iron" = 4),
+	/obj/item/coin/plasma = list("plasma" = 4),
+	/obj/item/coin/uranium = list("uranium" = 4),
+	/obj/item/coin/clown = list("banana" = 4),
 	/obj/item/stack/sheet/bluespace_crystal = list("bluespace = 20"),
-	/obj/item/weapon/ore/bluespace_crystal = list("bluespace = 20"), //This isn't a sheet actually, but you break it off
+	/obj/item/ore/bluespace_crystal = list("bluespace = 20"), //This isn't a sheet actually, but you break it off
 	
 	//Crayons (for overriding colours)
 	/obj/item/toy/crayon/red = list("redcrayonpowder" = 50),
@@ -305,47 +305,47 @@ var/list/global/blend_items = list (
 	/obj/item/toy/crayon/rainbow = list("colorful_reagent" = 100),
 
 	//Blender Stuff
-	/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = 20),
+	/obj/item/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/wheat = list("flour" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/oat = list("flour" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
+	/obj/item/reagent_containers/food/snacks/egg = list("eggyolk" = 20),
 
 	//Grinder stuff, but only if dry. Add it to the dried list below.
-	/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 
 
 	//Juicer Stuff
-	/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("corn_starch" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = list("lemonjuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = list("orangejuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = list("limejuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list("watermelonjuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = list("pumpkinjuice" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/corn = list("corn_starch" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/citrus/lemon = list("lemonjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/citrus/orange = list("orangejuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/citrus/lime = list("limejuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/watermelon = list("watermelonjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/pumpkin = list("pumpkinjuice" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
 
 	//Random Meme-tier stuff!!
 	/obj/item/organ/butt = list("fartium" = 20),
-	/obj/item/weapon/storage/book/bible = list("holywater" = 100)
+	/obj/item/storage/book/bible = list("holywater" = 100)
 )
 
 var/list/global/dried_items = list(
 	//Grinder stuff, but only if dry,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0)
+	/obj/item/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
+	/obj/item/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0)
 )

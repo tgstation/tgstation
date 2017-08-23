@@ -8,7 +8,7 @@
 	flags = NODROP | DROPDEL
 	slowdown = SHOES_SLOWDOWN+1
 	var/footstep = 1
-	pockets = /obj/item/weapon/storage/internal/pocket/shoes/clown
+	pockets = /obj/item/storage/internal/pocket/shoes/clown
 
 /obj/item/clothing/shoes/hippie/cluwne/step_action()
 	if(footstep > 1)

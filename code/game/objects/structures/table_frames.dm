@@ -22,7 +22,7 @@
 	var/framestackamount = 2
 
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))

@@ -327,7 +327,7 @@
 	desc = "A weapon for combat exosuits. Launches primed flashbangs."
 	icon_state = "mecha_grenadelnchr"
 	origin_tech = "combat=4;engineering=4"
-	projectile = /obj/item/weapon/grenade/flashbang
+	projectile = /obj/item/grenade/flashbang
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 6
 	missile_speed = 1.5
@@ -335,18 +335,18 @@
 	equip_cooldown = 60
 	var/det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/weapon/grenade/flashbang/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
-	addtimer(CALLBACK(F, /obj/item/weapon/grenade/flashbang.proc/prime), det_time)
+	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	origin_tech = "combat=4;materials=4"
 	projectiles = 3
-	projectile = /obj/item/weapon/grenade/clusterbuster
+	projectile = /obj/item/grenade/clusterbuster
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
 	equip_cooldown = 90
 
@@ -354,7 +354,7 @@
 	name = "banana mortar"
 	desc = "Equipment for clown exosuits. Launches banana peels."
 	icon_state = "mecha_bananamrtr"
-	projectile = /obj/item/weapon/grown/bananapeel
+	projectile = /obj/item/grown/bananapeel
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5

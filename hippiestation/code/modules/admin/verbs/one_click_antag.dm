@@ -27,6 +27,7 @@
 		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>")
 		to_chat(H, "<span class='shadowling'>Don't know how to play Shadowling? Read the wiki at https://wiki.hippiestation.com/index.php?title=Shadowling</span>")
 		SSticker.mode.finalize_shadowling(H.mind)
+		H.playsound_local(get_turf(H), 'hippiestation/sound/ambience/antag/sling.ogg', 100, FALSE, pressure_affected = FALSE)
 		message_admins("[H] has been made into a shadowling.")
 		candidates.Remove(H)
 		return 1

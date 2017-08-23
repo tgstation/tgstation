@@ -1,4 +1,4 @@
-/obj/item/weapon/vending_refill
+/obj/item/vending_refill
 	name = "resupply canister"
 	var/machine_name = "Generic"
 
@@ -18,13 +18,13 @@
 	var/init_charges = list(0, 0, 0)
 
 
-/obj/item/weapon/vending_refill/New(amt = -1)
+/obj/item/vending_refill/New(amt = -1)
 	..()
 	name = "\improper [machine_name] restocking unit"
 	if(isnum(amt) && amt > -1)
 		charges[1] = amt
 
-/obj/item/weapon/vending_refill/examine(mob/user)
+/obj/item/vending_refill/examine(mob/user)
 	..()
 	if(charges[1] > 0)
 		to_chat(user, "It can restock [charges[1]+charges[2]+charges[3]] item(s).")
@@ -33,48 +33,48 @@
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 
-/obj/item/weapon/vending_refill/boozeomat
+/obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
 	charges = list(54, 4, 0)//of 159 standard, 12 contraband
 	init_charges = list(54, 4, 0)
 
-/obj/item/weapon/vending_refill/coffee
+/obj/item/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"
 	icon_state = "refill_joe"
 	charges = list(25, 4, 0)//of 75 standard, 12 contraband
 	init_charges = list(25, 4, 0)
 
-/obj/item/weapon/vending_refill/snack
+/obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
 	charges = list(12, 2, 0)//of 36 standard, 6 contraband
 	init_charges = list(12, 2, 0)
 
-/obj/item/weapon/vending_refill/cola
+/obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
 	charges = list(30, 4, 1)//of 90 standard, 12 contraband, 1 premium
 	init_charges = list(30, 4, 1)
 
-/obj/item/weapon/vending_refill/cigarette
+/obj/item/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"
 	icon_state = "refill_smoke"
 	charges = list(12, 3, 2)// of 36 standard, 9 contraband, 6 premium
 	init_charges = list(12, 3, 2)
 
-/obj/item/weapon/vending_refill/autodrobe
+/obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
 	charges = list(32, 2, 3)// of 96 standard, 6 contraband, 9 premium
 	init_charges = list(32, 2, 3)
 
-/obj/item/weapon/vending_refill/clothing
+/obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
 	charges = list(37, 4, 4)// of 111 standard, 12 contraband, 10 premium(?)
 	init_charges = list(37, 4, 4)
 
-/obj/item/weapon/vending_refill/medical
+/obj/item/vending_refill/medical
 	machine_name = "NanoMed"
 	icon_state = "refill_medical"
 	charges = list(26, 5, 3)// of 76 standard, 13 contraband, 8 premium

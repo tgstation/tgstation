@@ -1,11 +1,11 @@
-/obj/item/weapon/extinguisher/attack_obj(obj/O, mob/living/user)
+/obj/item/extinguisher/attack_obj(obj/O, mob/living/user)
 	if(attempt_refill_hippie(O, user))
 		refilling = TRUE
 		return FALSE
 	else
 		return ..()
 
-/obj/item/weapon/extinguisher/proc/attempt_refill_hippie(atom/target, mob/user)
+/obj/item/extinguisher/proc/attempt_refill_hippie(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers) && target.Adjacent(user))
 		var/safety_save = safety
 		safety = TRUE

@@ -1,4 +1,4 @@
-/obj/item/weapon/grenade/flashbang
+/obj/item/grenade/flashbang
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
@@ -6,7 +6,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	origin_tech = "materials=2;combat=3"
 
-/obj/item/weapon/grenade/flashbang/prime()
+/obj/item/grenade/flashbang/prime()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
@@ -20,7 +20,7 @@
 		B.take_damage(damage, BURN, "energy")
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
+/obj/item/grenade/flashbang/proc/bang(turf/T , mob/living/M)
 	if(M.stat == DEAD)	//They're dead!
 		return
 	M.show_message("<span class='warning'>BANG</span>", 2)

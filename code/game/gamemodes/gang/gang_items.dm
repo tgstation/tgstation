@@ -174,16 +174,16 @@
 	name = "Badass Belt"
 	id = "belt"
 	cost = 13
-	item_path = /obj/item/weapon/storage/belt/military/gang
+	item_path = /obj/item/storage/belt/military/gang
 
-/obj/item/weapon/storage/belt/military/gang
+/obj/item/storage/belt/military/gang
 	name = "badass belt"
 	icon_state = "gangbelt"
 	item_state = "gang"
 	desc = "The belt buckle simply reads 'BAMF'."
 	storage_slots = 1
 
-/obj/item/weapon/storage/belt/military/gang/gang_contraband_value()
+/obj/item/storage/belt/military/gang/gang_contraband_value()
 	return 4
 
 ///////////////////
@@ -202,19 +202,19 @@
 	name = "Shuriken"
 	id = "shuriken"
 	cost = 3
-	item_path = /obj/item/weapon/throwing_star
+	item_path = /obj/item/throwing_star
 
 /datum/gang_item/weapon/switchblade
 	name = "Switchblade"
 	id = "switchblade"
 	cost = 5
-	item_path = /obj/item/weapon/switchblade
+	item_path = /obj/item/switchblade
 
 /datum/gang_item/weapon/surplus
 	name = "Surplus Rifle"
 	id = "surplus"
 	cost = 8
-	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus
+	item_path = /obj/item/gun/ballistic/automatic/surplus
 
 /datum/gang_item/weapon/ammo/surplus_ammo
 	name = "Surplus Rifle Ammo"
@@ -226,19 +226,19 @@
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
 	cost = 6
-	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
+	item_path = /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/improvised_ammo
 	name = "Box of Buckshot"
 	id = "buckshot"
 	cost = 5
-	item_path = /obj/item/weapon/storage/box/lethalshot
+	item_path = /obj/item/storage/box/lethalshot
 
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
 	cost = 30
-	item_path = /obj/item/weapon/gun/ballistic/automatic/pistol
+	item_path = /obj/item/gun/ballistic/automatic/pistol
 
 /datum/gang_item/weapon/ammo/pistol_ammo
 	name = "10mm Ammo"
@@ -250,7 +250,7 @@
 	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
 	cost = 40
-	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
+	item_path = /obj/item/gun/ballistic/automatic/sniper_rifle/gang
 
 /datum/gang_item/weapon/ammo/sniper_ammo
 	name = "Smuggled .50cal Sniper Rounds"
@@ -277,7 +277,7 @@
 	name = "Uzi SMG"
 	id = "uzi"
 	cost = 60
-	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
+	item_path = /obj/item/gun/ballistic/automatic/mini_uzi
 
 
 /datum/gang_item/weapon/ammo/uzi_ammo
@@ -304,38 +304,38 @@
 	name = "Sharpener"
 	id = "whetstone"
 	cost = 3
-	item_path = /obj/item/weapon/sharpener
+	item_path = /obj/item/sharpener
 
 
 /datum/gang_item/equipment/emp
 	name = "EMP Grenade"
 	id = "EMP"
 	cost = 5
-	item_path = /obj/item/weapon/grenade/empgrenade
+	item_path = /obj/item/grenade/empgrenade
 
 /datum/gang_item/equipment/c4
 	name = "C4 Explosive"
 	id = "c4"
 	cost = 7
-	item_path = /obj/item/weapon/grenade/plastic/c4
+	item_path = /obj/item/grenade/plastic/c4
 
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
 	cost = 18
-	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
+	item_path = /obj/item/grenade/syndieminibomb/concussion/frag
 
 /datum/gang_item/equipment/stimpack
 	name = "Black Market Stimulants"
 	id = "stimpack"
 	cost = 12
-	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
+	item_path = /obj/item/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
 	id = "implant_breaker"
 	cost = 10
-	item_path = /obj/item/weapon/implanter/gang
+	item_path = /obj/item/implanter/gang
 	spawn_msg = "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
 
 /datum/gang_item/equipment/implant_breaker/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
@@ -361,7 +361,7 @@
 	name = "Recruitment Pen"
 	id = "pen"
 	cost = 50
-	item_path = /obj/item/weapon/pen/gang
+	item_path = /obj/item/pen/gang
 	spawn_msg = "<span class='notice'>More <b>recruitment pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
 
 /datum/gang_item/equipment/pen/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)

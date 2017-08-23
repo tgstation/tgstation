@@ -99,7 +99,7 @@
 	uid = gl_uid
 	gl_uid++
 	component_parts = list()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ntnet_relay(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/ntnet_relay(null)
 	B.apply_default_parts(src)
 
 	if(GLOB.ntnet_global)
@@ -120,10 +120,10 @@
 
 	return ..()
 
-/obj/item/weapon/circuitboard/machine/ntnet_relay
+/obj/item/circuitboard/machine/ntnet_relay
 	name = "NTNet Relay (Machine Board)"
 	build_path = /obj/machinery/ntnet_relay
 	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
+							/obj/item/stock_parts/subspace/filter = 1)

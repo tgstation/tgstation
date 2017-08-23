@@ -19,21 +19,21 @@
 
 /obj/machinery/launchpad/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/launchpad/B = new
+	var/obj/item/circuitboard/machine/launchpad/B = new
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/launchpad
+/obj/item/circuitboard/machine/launchpad
 	name = "Bluespace Launchpad (Machine Board)"
 	build_path = /obj/machinery/launchpad
 	origin_tech = "programming=3;engineering=3;plasmatech=2;bluespace=3"
 	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+							/obj/item/ore/bluespace_crystal = 1,
+							/obj/item/stock_parts/manipulator = 1)
+	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = -1 //to make default parts have the base value
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	range = initial(range)
 	range += E

@@ -1,24 +1,24 @@
-/obj/item/weapon/implant/tracking
+/obj/item/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
 	activated = 0
 	origin_tech = "materials=2;magnets=2;programming=2;biotech=2"
 
-/obj/item/weapon/implant/tracking/New()
+/obj/item/implant/tracking/New()
 	..()
 	GLOB.tracked_implants += src
 
-/obj/item/weapon/implant/tracking/Destroy()
+/obj/item/implant/tracking/Destroy()
 	. = ..()
 	GLOB.tracked_implants -= src
 
-/obj/item/weapon/implanter/tracking
-	imp_type = /obj/item/weapon/implant/tracking
+/obj/item/implanter/tracking
+	imp_type = /obj/item/implant/tracking
 
-/obj/item/weapon/implanter/tracking/gps
+/obj/item/implanter/tracking/gps
 	imp_type = /obj/item/device/gps/mining/internal
 
-/obj/item/weapon/implant/tracking/get_data()
+/obj/item/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>
 				<b>Life:</b> 10 minutes after death of host<BR>
@@ -35,7 +35,7 @@
 	return dat
 
 
-/obj/item/weapon/implantcase/track
+/obj/item/implantcase/track
 	name = "implant case - 'Tracking'"
 	desc = "A glass case containing a tracking implant."
-	imp_type = /obj/item/weapon/implant/tracking
+	imp_type = /obj/item/implant/tracking

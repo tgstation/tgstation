@@ -26,8 +26,8 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
-		var/obj/item/weapon/weldingtool/WT = I
+	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
+		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
@@ -108,7 +108,7 @@
 		visible_message("<span class='warning'>[src] deploys!</span>")
 
 
-/obj/item/weapon/grenade/barrier
+/obj/item/grenade/barrier
 	name = "barrier grenade"
 	desc = "Instant cover. Alt+click to toggle modes."
 	icon = 'icons/obj/grenade.dmi'
@@ -117,12 +117,12 @@
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 
-/obj/item/weapon/grenade/barrier/AltClick(mob/living/user)
+/obj/item/grenade/barrier/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())
 		return
 	toggle_mode(user)
 
-/obj/item/weapon/grenade/barrier/proc/toggle_mode(mob/user)
+/obj/item/grenade/barrier/proc/toggle_mode(mob/user)
 	switch(mode)
 		if(SINGLE)
 			mode = VERTICAL
@@ -133,7 +133,7 @@
 
 	to_chat(user, "[src] is now in [mode] mode.")
 
-/obj/item/weapon/grenade/barrier/prime()
+/obj/item/grenade/barrier/prime()
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
 		if(VERTICAL)
@@ -154,7 +154,7 @@
 				new /obj/structure/barricade/security(target_turf2)
 	qdel(src)
 
-/obj/item/weapon/grenade/barrier/ui_action_click(mob/user)
+/obj/item/grenade/barrier/ui_action_click(mob/user)
 	toggle_mode(user)
 
 

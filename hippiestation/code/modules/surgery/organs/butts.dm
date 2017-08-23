@@ -18,7 +18,7 @@
 	var/max_combined_w_class = 3
 	var/max_w_class = 2
 	var/storage_slots = 2
-	var/obj/item/weapon/storage/internal/pocket/butt/inv = /obj/item/weapon/storage/internal/pocket/butt
+	var/obj/item/storage/internal/pocket/butt/inv = /obj/item/storage/internal/pocket/butt
 
 /obj/item/organ/butt/xeno //XENOMORPH BUTTS ARE BEST BUTTS yes i agree
 	name = "alien butt"

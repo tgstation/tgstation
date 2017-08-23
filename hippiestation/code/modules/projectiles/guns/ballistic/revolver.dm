@@ -1,8 +1,8 @@
-/obj/item/weapon/gun/ballistic/revolver
+/obj/item/gun/ballistic/revolver
 	fire_sound = 'hippiestation/sound/weapons/gunshot_magnum.ogg'
 
-/obj/item/weapon/gun/ballistic/revolver/detective
+/obj/item/gun/ballistic/revolver/detective
 	fire_sound = 'hippiestation/sound/weapons/gunshot_38special.ogg'
 
-/obj/item/weapon/gun/ballistic/revolver/doublebarrel
+/obj/item/gun/ballistic/revolver/doublebarrel
 	fire_sound = 'hippiestation/sound/weapons/shotgun_shoot.ogg'

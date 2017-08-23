@@ -87,7 +87,7 @@
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
 	H.set_light(blacklistLuminosity) //I hate lightcode for making me do it this way
-	
+
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets,mob/user = usr)
 	if(!shadowling_check(user) && !admin_override)
@@ -223,7 +223,7 @@
 							return
 						to_chat(user, "<span class='notice'>The nanobots composing the mindshield implant have been rendered inert. Now to continue.</span>")
 						user.visible_message("<span class='warning'>[user] relaxes again.</span>")
-						for(var/obj/item/weapon/implant/mindshield/L in target)
+						for(var/obj/item/implant/mindshield/L in target)
 							if(L)
 								qdel(L)
 						to_chat(target, "<span class='boldannounce'>Your mental protection unexpectedly falters, dims, dies.</span>")
@@ -269,6 +269,7 @@
 			to_chat(M, my_message)
 		if(M in GLOB.dead_mob_list)
 			to_chat(M, "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]")
+	log_say("[user.real_name]/[user.key] : [text]")
 
 
 
@@ -296,7 +297,6 @@
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(user), slot_head)
 	user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(user), slot_gloves)
 	user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(user), slot_wear_mask)
-	user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(user), slot_glasses)
 	user.set_species(/datum/species/shadow/ling)
 
 
@@ -386,7 +386,7 @@
 		return
 	user.visible_message("<span class='warning'>[user] bends over and coughs out a cloud of black smoke!</span>")
 	to_chat(user, "<span class='shadowling'>You regurgitate a vast cloud of blinding smoke.</span>")
-	var/obj/item/weapon/reagent_containers/glass/beaker/large/B = new /obj/item/weapon/reagent_containers/glass/beaker/large(user.loc) //hacky
+	var/obj/item/reagent_containers/glass/beaker/large/B = new /obj/item/reagent_containers/glass/beaker/large(user.loc) //hacky
 	B.reagents.clear_reagents() //Just in case!
 	B.invisibility = INFINITY //This ought to do the trick
 	B.reagents.add_reagent("blindness_smoke", 10)
@@ -716,7 +716,7 @@
 			revert_cast()
 			return
 
-		if (!boom.is_holding(/obj/item/weapon/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
+		if (!boom.is_holding(/obj/item/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
 			user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
 								"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
 			if(iscarbon(boom))

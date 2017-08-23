@@ -438,11 +438,11 @@
 	add_logs(A, D, "cinched")
 	return 1
 
-/obj/item/weapon/storage/belt/champion/wrestling
+/obj/item/storage/belt/champion/wrestling
 	name = "Wrestling Belt"
 	var/datum/martial_art/wrestling/style = new
 
-/obj/item/weapon/storage/belt/champion/wrestling/equipped(mob/user, slot)
+/obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
 	if(slot == slot_belt)
@@ -450,7 +450,7 @@
 		style.teach(H,1)
 	return
 
-/obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
+/obj/item/storage/belt/champion/wrestling/dropped(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user

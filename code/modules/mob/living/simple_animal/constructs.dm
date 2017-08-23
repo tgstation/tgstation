@@ -26,7 +26,7 @@
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
-	loot = list(/obj/item/weapon/ectoplasm)
+	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."

@@ -23,27 +23,27 @@
 
 /obj/machinery/microwave/New()
 	create_reagents(100)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/microwave(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/microwave(null)
 	B.apply_default_parts(src)
 	..()
 
-/obj/item/weapon/circuitboard/machine/microwave
+/obj/item/circuitboard/machine/microwave
 	name = "Microwave (Machine Board)"
 	build_path = /obj/machinery/microwave
 	origin_tech = "programming=2;magnets=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/micro_laser = 1,
+							/obj/item/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stock_parts/console_screen = 1,
 							/obj/item/stack/sheet/glass = 1)
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
 	var/max_items = 10
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		E += M.rating
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		max_items = 10 * M.rating
 	efficiency = E
 	max_n_of_items = max_items
@@ -67,7 +67,7 @@
 		return
 
 	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a screwdriver
+		if(src.broken == 2 && istype(O, /obj/item/wirecutters)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
@@ -78,7 +78,7 @@
 					"<span class='notice'>You fix part of the microwave.</span>" \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the wrench
+		else if(src.broken == 1 && istype(O, /obj/item/weldingtool)) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
@@ -96,8 +96,8 @@
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
 			return 1
-	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
-		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
+	else if(istype(O, /obj/item/reagent_containers/spray/))
+		var/obj/item/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
@@ -115,8 +115,8 @@
 			to_chat(user, "<span class='warning'>You need more space cleaner!<span>")
 			return 1
 
-	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
-		var/obj/item/weapon/soap/P = O
+	else if(istype(O, /obj/item/soap/)) // If they're trying to clean it then let them
+		var/obj/item/soap/P = O
 		user.visible_message( \
 			"[user] starts to clean the microwave.", \
 			"<span class='notice'>You start to clean the microwave...</span>" \
@@ -135,10 +135,10 @@
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
 		return 1
 
-	else if(istype(O, /obj/item/weapon/storage/bag/tray))
-		var/obj/item/weapon/storage/T = O
+	else if(istype(O, /obj/item/storage/bag/tray))
+		var/obj/item/storage/T = O
 		var/loaded = 0
-		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			if (contents.len>=max_n_of_items)
 				to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 				return 1
@@ -149,7 +149,7 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 
 
-	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
+	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
 		if (contents.len>=max_n_of_items)
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
@@ -271,8 +271,8 @@
 /obj/machinery/microwave/proc/has_extra_item()
 	for (var/obj/O in contents)
 		if ( \
-				!istype(O, /obj/item/weapon/reagent_containers/food) && \
-				!istype(O, /obj/item/weapon/grown) \
+				!istype(O, /obj/item/reagent_containers/food) && \
+				!istype(O, /obj/item/grown) \
 			)
 			return 1
 	return 0
@@ -309,9 +309,9 @@
 	icon_state = "mwbloody" // Make it look dirty too
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
-	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src)
+	for(var/obj/item/reagent_containers/food/snacks/S in src)
 		if(prob(50))
-			new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
+			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 			qdel(S)
 
 /obj/machinery/microwave/proc/broke()

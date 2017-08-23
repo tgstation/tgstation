@@ -34,18 +34,18 @@
 
 /obj/machinery/telecomms/server/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/server(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/telecomms/server(null)
 	B.apply_default_parts(src)
 	server_radio = new()
 
-/obj/item/weapon/circuitboard/machine/telecomms/server
+/obj/item/circuitboard/machine/telecomms/server
 	name = "Telecommunication Server (Machine Board)"
 	build_path = /obj/machinery/telecomms/server
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
+							/obj/item/stock_parts/subspace/filter = 1)
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(signal.data["message"])

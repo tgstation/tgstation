@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/dropper
+/obj/item/reagent_containers/dropper
 	name = "dropper"
 	desc = "A dropper. Holds up to 5 units."
 	icon = 'icons/obj/chemical.dmi'
@@ -8,7 +8,7 @@
 	volume = 5
 	container_type = TRANSPARENT
 
-/obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
+/obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -88,7 +88,7 @@
 
 		update_icon()
 
-/obj/item/weapon/reagent_containers/dropper/update_icon()
+/obj/item/reagent_containers/dropper/update_icon()
 	cut_overlays()
 	if(reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")

@@ -160,13 +160,13 @@
 	to_chat(usr, "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand.")
 	to_chat(usr, "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition.")
 
-/obj/item/weapon/sleeping_carp_scroll
+/obj/item/sleeping_carp_scroll
 	name = "mysterious scroll"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 
-/obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
+/obj/item/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	var/message = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
@@ -179,7 +179,7 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
 
-/obj/item/weapon/twohanded/bostaff
+/obj/item/twohanded/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
@@ -190,15 +190,15 @@
 	throwforce = 20
 	throw_speed = 2
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bostaff0"
 	block_chance = 50
 
-/obj/item/weapon/twohanded/bostaff/update_icon()
+/obj/item/twohanded/bostaff/update_icon()
 	icon_state = "bostaff[wielded]"
 	return
 
-/obj/item/weapon/twohanded/bostaff/attack(mob/target, mob/living/user)
+/obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
@@ -247,7 +247,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(wielded)
 		return ..()
 	return 0

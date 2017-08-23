@@ -81,8 +81,8 @@
 	..()
 	return
 
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/device/assembly_holder/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		var/turf/T = get_turf(src)
 		if(!T)
 			return 0
