@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - balance: "Morphlings now have to restore to their original form before taking a new one."
+  - bugfix: "Morphlings will no longer have combined object appearances"
