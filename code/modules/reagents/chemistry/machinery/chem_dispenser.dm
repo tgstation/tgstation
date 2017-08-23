@@ -228,7 +228,8 @@
 			upgraded = TRUE
 			return
 		else
-			return ..()
+			to_chat(user, "<span class='notice'>[src] has already been upgraded with [I].</span>")
+			return
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
 		return ..()

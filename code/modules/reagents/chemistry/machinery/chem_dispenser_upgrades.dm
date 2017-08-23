@@ -13,6 +13,9 @@
 	var/authorized = FALSE
 
 /obj/item/device/chem_dispenser_auth_board/attackby(obj/item/I, mob/user, params)
+	if (authorized)
+		to_chat(user, "[src] is already authorized.")
+		return
 	if (istype(I, /obj/item/card/id) && check_access(I))
 		to_chat(user, "You authorize the use of [src].")
 		authorized = TRUE
