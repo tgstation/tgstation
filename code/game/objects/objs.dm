@@ -228,3 +228,6 @@
 
 /obj/proc/gang_contraband_value()
 	return 0
+
+/obj/proc/return_temperature()
+	return
