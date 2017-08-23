@@ -164,6 +164,7 @@ function validate_user($payload) {
 //rip bs-12
 function tag_pr($payload, $opened) {
 	//get the mergeable state
+	$url = $payload['pull_request']['url'];
 	$payload['pull_request'] = json_decode(apisend($url));
 	if($payload['pull_request']['mergeable'] == null) {
 		//STILL not ready. Give it a bit, then try one more time
@@ -460,7 +461,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 	);
 
 	$filename = '/html/changelogs/AutoChangeLog-pr-'.$payload['pull_request']['number'].'.yml';
-	echo apisend($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, 'PUT', $context);
+	echo apisend($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, 'PUT', $content);
 }
 
 function sendtoallservers($str, $payload = null) {
