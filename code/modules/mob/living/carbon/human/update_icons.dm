@@ -166,7 +166,7 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_gloves]
 		inv.update_icon()
 
-	if(!gloves && blood_DNA)
+	if(!gloves && forensics.blood)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
 		if(get_num_arms() < 2)
 			if(has_left_hand())

@@ -304,10 +304,10 @@
 		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
-	src.blood_DNA = from.blood_DNA
-	src.fingerprints  = from.fingerprints
-	src.fingerprintshidden  = from.fingerprintshidden
-	src.fingerprintslast  = from.fingerprintslast
+	forensics.blood = from.forensics.blood
+	forensics.prints  = from.forensics.prints
+	forensics.hiddenprints  = from.forensics.hiddenprints
+	fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
