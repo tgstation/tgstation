@@ -1,5 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - balance: "Planting kudzu now has a short delay with a visible message to users around you. Hit-N-Run planting is no longer possible."
-  - rscdel: "kudzu bluespace mutation and spacewalk mutation are removed."
