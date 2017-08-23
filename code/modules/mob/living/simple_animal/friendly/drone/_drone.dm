@@ -182,7 +182,8 @@
 				msg += "It has [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
-  if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
+	var/flagcheck = internal_storage.flags_1&ABSTRACT_1
+	if(internal_storage && flagcheck)
 		if(LAZYLEN(internal_storage.forensics.blood))
 			msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
 		else
