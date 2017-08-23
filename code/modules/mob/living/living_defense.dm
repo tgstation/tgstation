@@ -191,8 +191,8 @@
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>The [M.name] glomped [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomped you!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>The [M] glomped [src]!</span>", \
+				"<span class='userdanger'>The [M] glomped you!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
@@ -223,12 +223,12 @@
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bit [src]!</span>", \
-					"<span class='userdanger'>[M.name] bit you!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[M] bit [src]!</span>", \
+					"<span class='userdanger'>[M] bit you!</span>", null, COMBAT_MESSAGE_RANGE)
 			return 1
 		else
-			visible_message("<span class='danger'>[M.name] attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] attempted to bite you!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[M] attempted to bite [src]!</span>", \
+				"<span class='userdanger'>[M] attempted to bite you!</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
@@ -241,13 +241,13 @@
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
-				visible_message("<span class='danger'>[L.name] bit [src]!</span>", \
-					"<span class='userdanger'>[L.name] bit you!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[L] bit [src]!</span>", \
+					"<span class='userdanger'>[L] bit you!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
-				visible_message("<span class='danger'>[L.name] attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] attempted to bite you!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[L] attempted to bite [src]!</span>", \
+					"<span class='userdanger'>[L] attempted to bite you!</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
