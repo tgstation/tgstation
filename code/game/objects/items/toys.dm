@@ -279,6 +279,8 @@
 	icon_state = "foamblade"
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 
